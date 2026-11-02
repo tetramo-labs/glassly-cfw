@@ -1,0 +1,114 @@
+{
+  "release": "minimal-owner-flash-004",
+  "version": "GLASSLYCFW/1",
+  "candidate": {
+    "release": "minimal-owner-flash-004",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+    "image_bytes": 2234179,
+    "header150_sha256": "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7",
+    "app_header256_sha256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+    "metadata_bytes": 171,
+    "metadata_sha256": "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6",
+    "app_packed_bytes": 963077,
+    "app_raw_bytes": 1844800,
+    "app_sha256": "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa",
+    "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
+    "runtime_bytes": 71584
+  },
+  "ota_transfer_verified": true,
+  "reboot_acknowledged": true,
+  "boot_verified": true,
+  "hardware_capacity_verified": true,
+  "physical_output_confirmed": false,
+  "state": "Boot verified;65535-byte raw message,262144-byte asset upload,4096-byte independent physical readback,cached-font rendering,180-second display hold and cleanup passed; physical visibility unconfirmed",
+  "transfer_verification": "analysis/minimal-owner-queue-fix-20261102/transfer-verification.json",
+  "first_boot_attempt": {
+    "complete": false,
+    "error": "RFCOMM open timed out",
+    "flashAssetWritesStarted": false,
+    "physicalOutputConfirmed": false,
+    "stage": "after"
+  },
+  "preflight": {
+    "appHeaderSHA256": "d4ad18483d7507826e4223d31f532bb85d5b193c92c1e69274506d04493c7603",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "00056fe8",
+    "physicalOutputConfirmed": false,
+    "release": "minimal-owner-flash-003",
+    "stage": "before",
+    "topologyAndBadmapVerified": true
+  },
+  "checks": {
+    "swift_tests": 113,
+    "host_sanitizers_passed": true,
+    "rv32_capacity_groups": 5,
+    "native_caller_groups": 1,
+    "native_queue_abi_passed": true,
+    "old_candidate_rejected_by_queue_test": true,
+    "retained_command_groups": 2,
+    "flash_glyph_pixels_checked": 4096,
+    "scope_tests": 9,
+    "full_aggregate_rerun": false
+  },
+  "limitations": [
+    "Raw-message carrier only; compressed transport histories remain unfinished.",
+    "Flash logical maps are volatile across reboot or new scene.",
+    "Display waits synchronously for worker I/O; throughput not established."
+  ],
+  "next_priority": [
+    "Wake/display ownership",
+    "Single-button events",
+    "Microphone control and streaming"
+  ],
+  "capture_sha256": {
+    "captures/swift-mac-minimal-owner-queue-flash-20261102-01/trace.jsonl": "d62065905562784f5094c20c577e966e23be13547f18db61493cb4e35e012f4a",
+    "captures/swift-mac-minimal-owner-queue-preflight-20261102-02/trace.jsonl": "53eb8869b1d2f012d18fe3ff3b1cc26f68cab332c42fb28eb06664c33cdeb427",
+    "captures/swift-mac-minimal-owner-queue-boot-20261102-01/trace.jsonl": "5076dacc4269f7ffb4faddbc608984577035a5d984b873de5fe72a38d117f5a7",
+    "captures/swift-mac-minimal-owner-queue-boot-20261102-02/trace.jsonl": "0190f7531f1a8f10d5c75408c030a14d7e16f87e32434b54bb2905d554bc54ca",
+    "captures/swift-mac-minimal-owner-queue-exercise-20261102-01/trace.jsonl": "3586ef0c85133034d334b37d8f87b7f1508d9b7b6115315a7d8fb9af538fcb7d",
+    "captures/swift-mac-minimal-owner-queue-exercise-20261102-01/result.json": "51d083449f61048997099b6825f31d4ead90f24a904dffe728941f01549765c1",
+    "analysis/minimal-owner-queue-fix-20261102/hardware-display.swift": "da32fadfc3237a8d6c32adf87d792400a14fd67f4d31c9b2f68fa76235af9f07",
+    "analysis/minimal-owner-queue-fix-20261102/asset-display.json": "9a48b851a6ee62a5d87d503a897f5b47c5cb15650f2f600c7ee0b29e978ee1aa",
+    "analysis/minimal-owner-queue-fix-20261102/scope-tests-02.log": "029b85a097e662f386a5eea5984b293d50662537898dbdd5d21aa6689a8515ca"
+  },
+  "boot": {
+    "appHeaderSHA256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "00056f60",
+    "physicalOutputConfirmed": false,
+    "release": "minimal-owner-flash-004",
+    "stage": "after",
+    "topologyAndBadmapVerified": true
+  },
+  "exercise": {
+    "appHeaderSHA256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+    "assetBytesAccepted": 262144,
+    "assetTransactions": 5,
+    "bootHeaderVerified": true,
+    "cleanupVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": true,
+    "flashBackedGlyphRenderAccepted": true,
+    "freeAfterHex": "00054868",
+    "freeBeforeHex": "00056ed8",
+    "independentReadbackBytes": 4096,
+    "nativeWriteReadbackRequired": true,
+    "physicalOutputConfirmed": false,
+    "rawMessage65535Verified": true,
+    "release": "minimal-owner-flash-004",
+    "stage": "exercise",
+    "topologyAndBadmapVerified": true
+  },
+  "exercise_capture": "captures/swift-mac-minimal-owner-queue-exercise-20261102-01",
+  "hardware_source": "analysis/minimal-owner-queue-fix-20261102/hardware-display.swift",
+  "free_bytes": {
+    "freeBefore": 356056,
+    "freeAfter": 346216,
+    "note": "Single samples, not a measured launcher RAM saving; persistent worker and native caches remain after cleanup."
+  }
+}

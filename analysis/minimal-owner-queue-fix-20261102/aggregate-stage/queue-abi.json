@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
+  "wrapper_sha256": "0a376a30ccc3d22f7891f1bf02b8c4dc14933e46ad0157779b0c3b2352c5cfc6",
+  "calls": [
+    {
+      "entry": "glassly_flash_broker_bind",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 1474,
+      "native_calls": [
+        "enter",
+        "leave",
+        "free_bytes",
+        "try_alloc",
+        "queue_primitive",
+        "queue_primitive",
+        "task_refused",
+        "queue_delete",
+        "queue_delete",
+        "free",
+        "enter",
+        "leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_flash_broker_bind",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 62,
+      "native_calls": [
+        "enter",
+        "leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    }
+  ],
+  "kernel_queue_arguments": [
+    [
+      1,
+      16,
+      0
+    ],
+    [
+      1,
+      4,
+      0
+    ]
+  ],
+  "hardware_tested": false,
+  "mock_boundaries": [
+    "Kernel allocation/delete",
+    "Task creation refused",
+    "Heap/critical sections"
+  ]
+}

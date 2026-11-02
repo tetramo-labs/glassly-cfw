@@ -6,7 +6,9 @@
     "excluded_features": [
       "Bluetooth keyboard/HOGP accessory support",
       "Ring battery",
-      "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)"
+      "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)",
+      "Mode5 sound and tone commands",
+      "Microphone volume gating"
     ],
     "required_hardware_features": [
       "Single-button input",
@@ -19,16 +21,18 @@
       "demos/keyboard.test.ts",
       "demos/keyboard.ts",
       "demos/ring-touch-test.ts",
+      "demos/sound-test.ts",
       "patches/host/keyboard_emulator_test.py",
-      "patches/host/keyboard_host_test.c"
+      "patches/host/keyboard_host_test.c",
+      "patches/host/volume_gate_host_test.c"
     ],
     "historical_tests_retained": true,
     "mixed_non_keyboard_suites_remain_required": true,
     "command_parity_map": "tests/g2_compat/COMMAND_PARITY.md"
   },
   "required_host_core_scenarios": {
-    "total": 39,
-    "original_assertion_sites": 654,
+    "total": 38,
+    "original_assertion_sites": 622,
     "native_adapter_coverage_included": false
   },
   "required_bun_test_cases": 11,
@@ -9896,7 +9900,7 @@
           "assertion_sites": 31,
           "status": "ported",
           "counterpart": "tests/g2_compat/portable_algorithms/volume_gate_core.h",
-          "parity_required": true
+          "parity_required": false
         }
       ],
       "dependencies": [
@@ -9906,8 +9910,9 @@
         "copied pinned C sources"
       ],
       "assertion_site_count": 32,
-      "parity_required": true,
-      "parity_scope": "required"
+      "parity_required": false,
+      "parity_scope": "optional-volume-gate-reference",
+      "exclusion_reason": "User excluded volume gating on 2026-11-02; microphone capture and streaming remain in scope; historical sources/tests retained, not counted as completed parity"
     },
     {
       "upstream_file": "demos/keyboard.test.ts",
@@ -10785,8 +10790,9 @@
         "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
       ],
       "reference_execution": "not-run; never counted as pass",
-      "parity_required": true,
-      "parity_scope": "required"
+      "parity_required": false,
+      "parity_scope": "optional-sound-reference",
+      "exclusion_reason": "User excluded mode5 sound/tone commands on 2026-11-02; microphone remains in scope; historical sources/tests retained, not counted as completed parity"
     },
     {
       "upstream_file": "demos/video-test.sh",

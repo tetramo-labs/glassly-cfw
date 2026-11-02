@@ -17,7 +17,10 @@ static RAM is reused.
 The display task remains the sole owner of scene metadata, timers, native font
 calls and pixels. A persistent ordinary worker owns the native flash adapter.
 Two one-slot queues implement synchronous I/O: the display task lends a buffer
-until the worker returns its status. The worker never accesses LVGL or the
+until the worker returns its status. The native constructor is
+`0200ee6a(owner, depth, itemBytes)`: owner `0xe6`, depth one, and 16/4 bytes
+for request/completion. Its actual RV32 wrapper is tested independently of the
+queue mock, including failed task creation and queue cleanup. The worker never accesses LVGL or the
 scene. No IRQ critical section covers a queue operation or driver call. A stalled
 native operation remains in flight; host timeout does not cancel it or free its
 buffer. This initial design pauses display processing during flash I/O. It does

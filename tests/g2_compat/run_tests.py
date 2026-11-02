@@ -18,6 +18,7 @@ def main():
     parser.add_argument('--cc',default='clang')
     parser.add_argument('--require-complete',action='store_true',help='Exit2 if required in-scope MemoMind coverage remains unimplemented/platform-specific')
     parser.add_argument('--include-keyboard-reference',action='store_true',help='Run optional historical keyboard checks; their failures do not block in-scope parity')
+    parser.add_argument('--include-volume-gate-reference',action='store_true',help='Run optional volume-gate reference; excluded from parity')
     parser.add_argument('--bun',default='bun')
     parser.add_argument('--demos-dependencies',type=Path,default=Path.home()/'dev/g2flash/demos/node_modules',
                         help='Existing installed dependency tree copied into output; no install scripts or downloads')
@@ -78,8 +79,9 @@ def main():
     run('ported_shapes','MemoMind geometry API: 14 original geometric assertion sites',
         [ROOT/'ported_shapes.c',REPO/'runtime/portable/geometry.c'],[patches,REPO/'runtime/portable'],argv=[out])
     run('ported_easing','portable copied algorithm; animation integration unimplemented',[ROOT/'ported_easing.c'])
-    run('ported_volume_gate','portable copied state machine; MemoMind audio integration unimplemented',
-        [patches/'host/volume_gate_host_test.c'],[ROOT/'portable_algorithms'])
+    if args.include_volume_gate_reference:
+        run('ported_volume_gate','Optional historical volume-gate reference; excluded from parity',
+            [patches/'host/volume_gate_host_test.c'],[ROOT/'portable_algorithms'])
     for test in ('ancs_relay','upstream','keyboard','transport','shapes','vector'):
         if test=='keyboard' and not args.include_keyboard_reference:continue
         run('reference_'+test,'G2 reference baseline only; not a MemoMind feature pass',
@@ -144,9 +146,10 @@ def main():
     results.append({'name':'keyboard_arm_emulator','scope':'Optional historical keyboard reference; excluded from required parity, not a pass','result':'excluded-not-run'})
     results.append({'name':'device_demos','scope':'require real G2 BLE/device hardware; no device actions permitted','result':'platform-specific-not-run'})
     for row in results:
-        row['parity_required']=row['name'] not in ('reference_keyboard','typescript_keyboard','typecheck_keyboard','keyboard_arm_emulator')
+        row['parity_required']=row['name'] not in ('reference_keyboard','typescript_keyboard','typecheck_keyboard','keyboard_arm_emulator','ported_volume_gate')
     report={'keyboard_reference_requested':args.include_keyboard_reference,
-            'excluded_features':['Bluetooth keyboard/HOGP accessory support'],
+            'volume_gate_reference_requested':args.include_volume_gate_reference,
+            'excluded_features':['Bluetooth keyboard/HOGP accessory support','Mode5 sound and tone commands','Microphone volume gating'],
             'source_commit':pin['commit'],'results':results,'hardware_tested':False,
             'memo_full_suite_port_complete':False,'skipped_or_unimplemented_count_as_pass':False}
     (out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

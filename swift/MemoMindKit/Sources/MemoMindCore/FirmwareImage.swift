@@ -232,10 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
-        FirmwareRelease(name: "minimal-owner-flash-003",
-                        sha256: "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
-                        byteCount: 2234130, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
-                        headerSHA256: "fab9f49ecc19601ef76fcac616a88255badb9559e3c712459eb1d9b200a43ca5",
+        FirmwareRelease(name: "minimal-owner-flash-004",
+                        sha256: "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+                        byteCount: 2234179, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        headerSHA256: "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7",
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
@@ -282,9 +282,9 @@ private struct FirmwareRelease {
             metadataHash = "fdeac5450e48ffc548b110450dc4b6117a8702bcf5bcd5bf197fb794c2d746e2"
             appHash = "1cf2a3d6a315d67764f4f43863f2d8ec802a5ef45eb82e1bc20a4b3b4fd833b6"
         case .minimalOwnerFlash:
-            metadata = 171; appPacked = 963028; appRaw = 1844784
-            metadataHash = "0c9e81a2cb000d96a0bceb84c2d28efdb216b5d67617ffccf2adf319772ff4f4"
-            appHash = "d3d4bec50f9bd5cb7bf97a6934ef24406a13e4eb850565627eacc376d717d570"
+            metadata = 171; appPacked = 963077; appRaw = 1844800
+            metadataHash = "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6"
+            appHash = "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa"
         case .dashboardRAM:
             metadata = 171; appPacked = 959569; appRaw = 1838672
             metadataHash = "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a"

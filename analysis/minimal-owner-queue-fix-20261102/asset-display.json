@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
+  "pixels_checked": 4096,
+  "flash_calls_during_draw": 16,
+  "hardware_tested": false,
+  "mock_boundaries": [
+    "Flash broker and physical I/O",
+    "LVGL scheduler/heap"
+  ]
+}

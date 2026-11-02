@@ -29,22 +29,21 @@
     "native_swift_canary_client": "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift"
   },
   "next_native_requirements": [
-    "Fresh header, effective full96-byte physical badmap and topology checks before each writer adoption; preserve absent/default provenance",
-    "Integrate validated serialized normal-worker flash callbacks into the full-capacity scene store; do not share LVGL framebuffer after invalidation",
-    "Measure native allocation, flash timing, cache coherence and fullscene performance; offline native mocks do not establish these"
+    "Maintain fresh pinned image/header, real badmap and topology admission for writes",
+    "Measure write/erase/render latency and worst-case RAM; full capacities do not imply target throughput",
+    "Integrate compressed transport under explicit RAM/worker ownership"
   ],
   "scene_integration": [
-    "Portable logical-offset reader, COW transactions and bounded image/font/path rendering are implemented and pass original fixtures.",
-    "Native LVGL must not consume a shared framebuffer marked invalid after read failure; resolve ownership or staging before binding.",
-    "Resolve full65535-byte ingress, two inflater histories and native heap budget; stock UI/plugin allocation compatibility need not constrain the new design.",
-    "Measure write/erase/render latency on hardware; one-byte updates currently rewrite4KiB and no30fps guarantee is established."
+    "Native minimal-owner flash-scene integration is installed;256KiB assets and65535-byte raw carrier verified on hardware",
+    "The display task detaches invalid raster sources and owns render/font calls; the persistent worker owns flash operations",
+    "The flash logical map is volatile across new scene/reboot",
+    "Two inflater histories and compressed transport remain unfinished;30fps performance not established"
   ],
   "not_completed": [
-    "native exclusive ownership adoption",
-    "native scene flash callbacks and worker",
-    "full65535 native ingress",
-    "full-capacity hardware/performance",
-    "remaining command/notification/transport/policy features"
+    "Compressed transport and inflater histories",
+    "Native flash/render throughput and broad performance validation",
+    "Wake/display ownership and single-button event controls",
+    "Microphone control/streaming and remaining in-scope command/notification/policy features"
   ],
   "native_preflight_observed": {
     "evidence": "analysis/storage-diag-hardware-verification.json",
@@ -89,13 +88,15 @@
   },
   "scene_worker_integration_review": "analysis/native-scene-store-integration-review-20261101/report.md",
   "canvas_quiescence_review": "analysis/ghidra/canvas-quiescence-review/report.md",
-  "current_priority": "Minimal display owner, flash-backed assets and larger raw-message handling",
+  "current_priority": "Wake/display ownership, single-button events, then microphone control/streaming",
   "excluded_features": [
     "Bluetooth keyboard/HOGP accessory support",
     "Ring battery",
-    "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)"
+    "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)",
+    "Mode5 sound and tone commands",
+    "Microphone volume gating"
   ],
-  "completion_scope": "G2 command/feature parity applicable to MemoMind One: excludes Bluetooth keyboard/HOGP, ring battery and gesture-specific behavior. Single-button input, compass/raw IMU data, ALS, generic wake ownership, settings, notifications, microphone, transport, drawing and full capacities remain required.",
+  "completion_scope": "G2 command/feature parity applicable to MemoMind One: excludes Bluetooth keyboard/HOGP, ring battery and gesture-specific behavior. Single-button input, compass/raw IMU data, ALS, generic wake ownership, settings, notifications, microphone, transport, drawing and full capacities remain required. Mode5 sound/tone commands are excluded; microphone capture/streaming remains in scope; volume gating is excluded.",
   "command_parity_map": "tests/g2_compat/COMMAND_PARITY.md",
   "command_priority": {
     "first": [
@@ -116,8 +117,8 @@
     ]
   },
   "required_reference_coverage": {
-    "host_scenarios": 39,
-    "assertion_sites": 654,
+    "host_scenarios": 38,
+    "assertion_sites": 622,
     "bun_cases": 11,
     "historical_inventory_preserved": true
   },
@@ -200,7 +201,6 @@
     "send_message_probe.py",
     "demos/bad-apple-tests.ts",
     "demos/cache-probe.ts",
-    "demos/sound-test.ts",
     "demos/video-test.sh",
     "build_cfw.sh",
     "demos/vector-suite.ts",
@@ -244,7 +244,7 @@
     "hardware_report": "analysis/diagnostics-native-20261102/hardware-awaiting-visual.json",
     "superseded_by": "dashboard-ram-002; diagnostic runtime unchanged"
   },
-  "updated_utc": "2026-11-02T23:05:24.283373+00:00",
+  "updated_utc": "2026-11-02T23:20:26.163025+00:00",
   "latest_offline_regression": {
     "report": "analysis/regression-20261102-05/report.json",
     "required_suites_passed": true,
@@ -280,10 +280,10 @@
   "extended_rx_profile": {
     "name": "app-rx-96k-v1",
     "limit_bytes": 98304,
-    "headroom_over_current_runtime_bytes": 26736,
+    "headroom_over_current_runtime_bytes": 26720,
     "report": "analysis/rx96-profile-20261102/report.json",
     "review": "analysis/rx-profile-review-20261102/report.json",
-    "state": "71568-byte runtime boot verified in minimal-owner-flash-003",
+    "state": "71584-byte minimal-owner-flash-004 runtime boot verified",
     "runtime_over_64k_hardware_verified": true,
     "live_profile_admitted": true
   },
@@ -348,11 +348,11 @@
     "measured_ram_saving_note": "Observed delta recorded separately; exact gate-only heap saving not isolated from reboot/cache effects.",
     "superseded_by": "reset-undo-trim-001; dashboard gates retained"
   },
-  "current_device_image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
-  "current_device_release": "minimal-owner-flash-003",
-  "current_device_ota": "captures/firmware/minimal-owner-flash-003/firmware.bin",
-  "current_device_build": "runtime/build/minimal-owner-flash-001",
-  "current_device_runtime_sha256": "f58010e662b17770082991d4c64159824b686d4016b4bd404468ab426a48645e",
+  "current_device_image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+  "current_device_release": "minimal-owner-flash-004",
+  "current_device_ota": "captures/firmware/minimal-owner-flash-004/firmware.bin",
+  "current_device_build": "runtime/build/minimal-owner-flash-002",
+  "current_device_runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
   "reset_undo_trim_candidate": {
     "state": "Boot verified; matched RAM RESET/PUT sequence and cleanup verified",
     "release": "reset-undo-trim-001",
@@ -492,7 +492,7 @@
     },
     "superseded_by": "minimal-owner-flash-003"
   },
-  "minimal_owner_flash_candidate": {
+  "minimal_owner_flash_initial_attempt": {
     "release": "minimal-owner-flash-003",
     "version": "GLASSLYCFW/1",
     "image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
@@ -511,9 +511,46 @@
       "Compressed transport/inflater integration",
       "Remaining applicable G2 command/feature parity"
     ],
-    "currently_installed": true,
+    "currently_installed": false,
     "ota_transfer_verified": true,
     "report": "analysis/minimal-owner-flash-20261102/hardware-result.json",
-    "firmware_bytes_sent": 2234130
-  }
+    "firmware_bytes_sent": 2234130,
+    "superseded_by": "minimal-owner-flash-004"
+  },
+  "minimal_owner_flash_candidate": {
+    "release": "minimal-owner-flash-004",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+    "image_bytes": 2234179,
+    "header150_sha256": "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7",
+    "app_header256_sha256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+    "metadata_bytes": 171,
+    "metadata_sha256": "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6",
+    "app_packed_bytes": 963077,
+    "app_raw_bytes": 1844800,
+    "app_sha256": "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa",
+    "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
+    "runtime_bytes": 71584,
+    "state": "Boot verified;65535-byte raw message,262144-byte asset upload,4096-byte independent physical readback,cached-font rendering,180-second display hold and cleanup passed; physical visibility unconfirmed",
+    "installed": true,
+    "currently_installed": true,
+    "boot_verified": true,
+    "hardware_capacity_verified": true,
+    "runtime_build": "runtime/build/minimal-owner-flash-002",
+    "offline_checkpoint": "analysis/minimal-owner-queue-fix-20261102/offline-checkpoint.json",
+    "remaining": [
+      "Physical visual confirmation",
+      "Compressed transport/inflater integration",
+      "Remaining applicable G2 command/feature parity"
+    ],
+    "ota_transfer_verified": true,
+    "report": "analysis/minimal-owner-queue-fix-20261102/hardware-result.json",
+    "visible_output_confirmed": false
+  },
+  "next_priority": [
+    "Wake/display ownership",
+    "Single-button events",
+    "Microphone control and streaming"
+  ],
+  "current_device_verification": "Boot and capacity tests verified; physical visibility pending"
 }

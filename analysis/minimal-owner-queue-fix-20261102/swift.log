@@ -1,0 +1,288 @@
+Building for debugging...
+[4 / 24] MemoMindCore
+[6 / 26] MemoMindCore
+[14 / 33] MemoMindCore
+[21 / 28] memomind-product
+[25 / 30] memomind-product
+[27 / 32] MemoMindCoreTests-product
+[31 / 34] MemoMindCoreTests-product
+[33 / 37] MemoMindCoreTests-product
+Build complete! (2.05 sec)
+Test Suite 'All tests' started at 2026-11-02 15:08:35.816.
+Test Suite 'MemoMindCoreTests.xctest' started at 2026-11-02 15:08:35.818.
+Test Suite 'BundleCommandTests' started at 2026-11-02 15:08:35.818.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testBuiltinTextEnvelopeAndHighBitWithoutSemanticClaims]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testBuiltinTextEnvelopeAndHighBitWithoutSemanticClaims]' passed (0.002 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEnvelopeChecksDoNotClaimChildSemanticAcceptance]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEnvelopeChecksDoNotClaimChildSemanticAcceptance]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEverySupportedBaseAndHighBitEnvelopePreserved]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEverySupportedBaseAndHighBitEnvelopePreserved]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEveryTruncatedEnvelopeAndDeclaredStringLengthRejected]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEveryTruncatedEnvelopeAndDeclaredStringLengthRejected]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEveryUnsupportedModeIncludingNestedAndControlRejected]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testEveryUnsupportedModeIncludingNestedAndControlRejected]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testIndependentPinnedOriginalBranchVectors]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testIndependentPinnedOriginalBranchVectors]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testLittleEndianLengthAndExact8192Admission]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testLittleEndianLengthAndExact8192Admission]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testOrderDataSlicesAndTypedChildComposition]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testOrderDataSlicesAndTypedChildComposition]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.BundleCommandTests testZeroAnd255CountsAnd256Rejection]' started.
+Test Case '-[MemoMindCoreTests.BundleCommandTests testZeroAnd255CountsAnd256Rejection]' passed (0.000 seconds).
+Test Suite 'BundleCommandTests' passed at 2026-11-02 15:08:35.822.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'DiagnosticCommandsTests' started at 2026-11-02 15:08:35.822.
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testCleanupUsesCanonicalSingleByte]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testCleanupUsesCanonicalSingleByte]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testDefinedDiagnosticsMatchPinnedContract]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testDefinedDiagnosticsMatchPinnedContract]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testDiagnosticsAndCleanupRemainForbiddenInBundles]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticCommandsTests testDiagnosticsAndCleanupRemainForbiddenInBundles]' passed (0.000 seconds).
+Test Suite 'DiagnosticCommandsTests' passed at 2026-11-02 15:08:35.823.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'DiagnosticSnapshotTests' started at 2026-11-02 15:08:35.823.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testActualGMFramingAndOneByteReads]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testActualGMFramingAndOneByteReads]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testCorrelationTLVAndBodyConsistency]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testCorrelationTLVAndBodyConsistency]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testEveryFlagBooleanReservedAndHexBoundary]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testEveryFlagBooleanReservedAndHexBoundary]' passed (0.008 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testExactSchemaTypesAndDuplicateRejection]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testExactSchemaTypesAndDuplicateRejection]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testIndependentLittleEndianGoldenAndCodable]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testIndependentLittleEndianGoldenAndCodable]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testTruncationBoundsNulAndSlicedData]' started.
+Test Case '-[MemoMindCoreTests.DiagnosticSnapshotTests testTruncationBoundsNulAndSlicedData]' passed (0.002 seconds).
+Test Suite 'DiagnosticSnapshotTests' passed at 2026-11-02 15:08:35.835.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'FirmwareImageTests' started at 2026-11-02 15:08:35.835.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBoundsHugeLengthsAndAllocationRanges]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBoundsHugeLengthsAndAllocationRanges]' passed (0.005 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBrokenQueueCandidateNoLongerAdmitted]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBrokenQueueCandidateNoLongerAdmitted]' passed (0.002 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBundleEligibilityRejectsRepairedCRCsAndRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testBundleEligibilityRejectsRepairedCRCsAndRawRuntime]' passed (2.849 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testCanaryEligibilityDoesNotAdmitAlteredBytesOrRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testCanaryEligibilityDoesNotAdmitAlteredBytesOrRawRuntime]' passed (3.265 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testDiagnosticEligibilityRejectsRepairedCRCsAndRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testDiagnosticEligibilityRejectsRepairedCRCsAndRawRuntime]' passed (2.872 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testIndependentHashAndCRCVectors]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testIndependentHashAndCRCVectors]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testInvalidOrUntrustedExpectedDigestCannotExpandCatalog]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testInvalidOrUntrustedExpectedDigestCannotExpandCatalog]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testLZMAHeadersAndExactTrailerBoundary]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testLZMAHeadersAndExactTrailerBoundary]' passed (0.008 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testMinimalOwnerFlashExactFixtureAndMutationRejection]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testMinimalOwnerFlashExactFixtureAndMutationRejection]' passed (3.253 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRasterEligibilityRejectsRepairedCRCsAndRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRasterEligibilityRejectsRepairedCRCsAndRawRuntime]' passed (2.851 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRectCopyEligibilityRejectsRepairedCRCsAndRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRectCopyEligibilityRejectsRepairedCRCsAndRawRuntime]' passed (2.833 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualBootVerifiedReaderFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualBootVerifiedReaderFixture]' passed (0.258 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineBundleFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineBundleFixture]' passed (0.386 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineCanaryFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineCanaryFixture]' passed (0.255 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineDiagnosticFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineDiagnosticFixture]' passed (0.382 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineRasterFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineRasterFixture]' passed (0.388 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineRectCopyFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineRectCopyFixture]' passed (0.382 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineTextFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualReviewedOfflineTextFixture]' passed (0.384 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualStockFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredActualStockFixture]' passed (0.252 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredDashboardRAMFixtureAndRejectedPrototype]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredDashboardRAMFixtureAndRejectedPrototype]' passed (3.247 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredResetUndoTrimFixture]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testRequiredResetUndoTrimFixture]' passed (3.104 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testSnapshotDoesNotRetainMutableCallerStorage]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testSnapshotDoesNotRetainMutableCallerStorage]' passed (0.128 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testTextEligibilityRejectsRepairedCRCsAndRawRuntime]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testTextEligibilityRejectsRepairedCRCsAndRawRuntime]' passed (2.830 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testThreeIndependentCRCLayers]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testThreeIndependentCRCLayers]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testTruncationLengthAndOuterVersion]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testTruncationLengthAndOuterVersion]' passed (0.003 seconds).
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testValidCRCsAndSyntaxNeverAuthorizeUncatalogedBytes]' started.
+Test Case '-[MemoMindCoreTests.FirmwareImageTests testValidCRCsAndSyntaxNeverAuthorizeUncatalogedBytes]' passed (2.919 seconds).
+Test Suite 'FirmwareImageTests' passed at 2026-11-02 15:09:08.695.
+	 Executed 26 tests, with 0 failures (0 unexpected) in 32.858 (32.860) seconds
+Test Suite 'FixedCanaryClientTests' started at 2026-11-02 15:09:08.695.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testEventWrapAndRunningPhaseProgression]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testEventWrapAndRunningPhaseProgression]' passed (0.033 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testExplicitProfileIdleAndOneStartExactWireToken]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testExplicitProfileIdleAndOneStartExactWireToken]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testLostDuplicateWrongEventAndWriteFailureNeverRepeat]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testLostDuplicateWrongEventAndWriteFailureNeverRepeat]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testMonotonicPhaseFlagsAndStartOperationMismatch]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testMonotonicPhaseFlagsAndStartOperationMismatch]' passed (0.002 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testProfileDuplicateAndRequestDeadlineAreFailClosed]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testProfileDuplicateAndRequestDeadlineAreFailClosed]' passed (0.003 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testRebootMismatchRegressionAndTerminalChangesStop]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testRebootMismatchRegressionAndTerminalChangesStop]' passed (0.002 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testStrictJSONTLVAndNativeErrors]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testStrictJSONTLVAndNativeErrors]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testSuccessSchemaAndSemanticRejections]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testSuccessSchemaAndSemanticRejections]' passed (0.003 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testTerminalFailureIsObservableAndImmutable]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testTerminalFailureIsObservableAndImmutable]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testUnsolicitedBusinessAndSplitDuplicateCorrelation]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testUnsolicitedBusinessAndSplitDuplicateCorrelation]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testValidationOperationAndImmediateCompletion]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testValidationOperationAndImmediateCompletion]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testWrongProfileAndEveryRangeMismatchNeverSendCanary]' started.
+Test Case '-[MemoMindCoreTests.FixedCanaryClientTests testWrongProfileAndEveryRangeMismatchNeverSendCanary]' passed (0.001 seconds).
+Test Suite 'FixedCanaryClientTests' passed at 2026-11-02 15:09:08.744.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.048 (0.049) seconds
+Test Suite 'LargeMessageTests' started at 2026-11-02 15:09:08.744.
+Test Case '-[MemoMindCoreTests.LargeMessageTests testInvalidBoundsAndExplicitEncoderCapacity]' started.
+Test Case '-[MemoMindCoreTests.LargeMessageTests testInvalidBoundsAndExplicitEncoderCapacity]' passed (0.010 seconds).
+Test Case '-[MemoMindCoreTests.LargeMessageTests testMaximumReconstructionCRCAndSlicedData]' started.
+Test Case '-[MemoMindCoreTests.LargeMessageTests testMaximumReconstructionCRCAndSlicedData]' passed (0.120 seconds).
+Test Case '-[MemoMindCoreTests.LargeMessageTests testSessionChunkACKsEventWrapAndNoCommitRetry]' started.
+Test Case '-[MemoMindCoreTests.LargeMessageTests testSessionChunkACKsEventWrapAndNoCommitRetry]' passed (0.004 seconds).
+Test Case '-[MemoMindCoreTests.LargeMessageTests testUnsupportedCapabilityStopsBeforeBegin]' started.
+Test Case '-[MemoMindCoreTests.LargeMessageTests testUnsupportedCapabilityStopsBeforeBegin]' passed (0.000 seconds).
+Test Suite 'LargeMessageTests' passed at 2026-11-02 15:09:08.879.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.135 (0.135) seconds
+Test Suite 'OTABoundaryTests' started at 2026-11-02 15:09:08.879.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testCompletionAndRebootStatusMustBeZero]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testCompletionAndRebootStatusMustBeZero]' passed (0.002 seconds).
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testDuplicateCompleteReplyAndWrongEnvelopeFailClosed]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testDuplicateCompleteReplyAndWrongEnvelopeFailClosed]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testDuplicateMalformedAttachAndUnsupportedIdentification]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testDuplicateMalformedAttachAndUnsupportedIdentification]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testModifiedFreshDynamicBlocksAndFinalPartialChunk]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testModifiedFreshDynamicBlocksAndFinalPartialChunk]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testModifiedNonFreshOffsetRejectsAllBeforeChunks]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testModifiedNonFreshOffsetRejectsAllBeforeChunks]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testPrematureTerminalAndBadEntryStatusFailWithoutCompletion]' started.
+Test Case '-[MemoMindCoreTests.OTABoundaryTests testPrematureTerminalAndBadEntryStatusFailWithoutCompletion]' passed (0.000 seconds).
+Test Suite 'OTABoundaryTests' passed at 2026-11-02 15:09:08.883.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'OTATransactionTests' started at 2026-11-02 15:09:08.883.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testAdditionalReplyBytesFailClosed]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testAdditionalReplyBytesFailClosed]' passed (0.436 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testCheckOnlyStopsBeforeEntry]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testCheckOnlyStopsBeforeEntry]' passed (0.436 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testCompleteCaptureWithThreeByteReads]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testCompleteCaptureWithThreeByteReads]' passed (1.651 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testControlHealthFailurePreventsNextWrite]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testControlHealthFailurePreventsNextWrite]' passed (0.440 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testEveryCapturedWriteAndAll494BlockACKs]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testEveryCapturedWriteAndAll494BlockACKs]' passed (1.645 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testIdentityAndTimingRejectedBeforeWrites]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testIdentityAndTimingRejectedBeforeWrites]' passed (0.442 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testInvalidBoundsNoncontiguousAndModifiedResumeStop]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testInvalidBoundsNoncontiguousAndModifiedResumeStop]' passed (0.440 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testLostACKWrongSequenceAndDelayNeverRetry]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testLostACKWrongSequenceAndDelayNeverRetry]' passed (0.446 seconds).
+Test Case '-[MemoMindCoreTests.OTATransactionTests testUnsupportedCanUpdateNeverEnters]' started.
+Test Case '-[MemoMindCoreTests.OTATransactionTests testUnsupportedCanUpdateNeverEnters]' passed (0.437 seconds).
+Test Suite 'OTATransactionTests' passed at 2026-11-02 15:09:15.256.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 6.372 (6.373) seconds
+Test Suite 'ProtocolTests' started at 2026-11-02 15:09:15.256.
+Test Case '-[MemoMindCoreTests.ProtocolTests testAllByteSplitsAndTLVCrossing]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testAllByteSplitsAndTLVCrossing]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testChecksumResetAndMalformedTLVs]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testChecksumResetAndMalformedTLVs]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testFragmentACKOrderingAndEarlyRejection]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testFragmentACKOrderingAndEarlyRejection]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testIndependentPythonVectors]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testIndependentPythonVectors]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testLegacyContinuationAndInterleavedFragmentACK]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testLegacyContinuationAndInterleavedFragmentACK]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testMalformedOTAAndCodecLimits]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testMalformedOTAAndCodecLimits]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.ProtocolTests testProbeAndPrivateNotifyStatus]' started.
+Test Case '-[MemoMindCoreTests.ProtocolTests testProbeAndPrivateNotifyStatus]' passed (0.000 seconds).
+Test Suite 'ProtocolTests' passed at 2026-11-02 15:09:15.260.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'RasterCommandsTests' started at 2026-11-02 15:09:15.260.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testAllCanonicalCountFormsAnd65535SplitAgainstDualReference]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testAllCanonicalCountFormsAnd65535SplitAgainstDualReference]' passed (0.191 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testBoxHeaderLittleEndianFIDAndHighNibbleFirst]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testBoxHeaderLittleEndianFIDAndHighNibbleFirst]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testDataSliceAndRepeatEncodingHaveNoState]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testDataSliceAndRepeatEncodingHaveNoState]' passed (0.003 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testEveryColorFullFrameAgainstDualReference]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testEveryColorFullFrameAgainstDualReference]' passed (0.026 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testExact8192ByteAdmissionAndOneByteOverflow]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testExact8192ByteAdmissionAndOneByteOverflow]' passed (0.032 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testExactByteCountStrideAndOverflowRejectedBeforeIndexing]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testExactByteCountStrideAndOverflowRejectedBeforeIndexing]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testMalformedBoundsIncludingIntOverflowRejected]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testMalformedBoundsIncludingIntOverflowRejected]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testRowPaddingIgnoredAndCrossRowRunsMatchReference]' started.
+Test Case '-[MemoMindCoreTests.RasterCommandsTests testRowPaddingIgnoredAndCrossRowRunsMatchReference]' passed (0.002 seconds).
+Test Suite 'RasterCommandsTests' passed at 2026-11-02 15:09:15.515.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.255 (0.255) seconds
+Test Suite 'RectangleCopyCommandTests' started at 2026-11-02 15:09:15.515.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testBothDimensionMismatchesRejected]' started.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testBothDimensionMismatchesRejected]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testOddAlignmentOverlapAndSelfCopyAreAllowed]' started.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testOddAlignmentOverlapAndSelfCopyAreAllowed]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testPinnedOriginalDispatcherWireVectors]' started.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testPinnedOriginalDispatcherWireVectors]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testRepeatEncodingAndCodableDoNotChangeCoordinates]' started.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testRepeatEncodingAndCodableDoNotChangeCoordinates]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testSourceAndDestinationMustFitWithoutClippingOrOverflow]' started.
+Test Case '-[MemoMindCoreTests.RectangleCopyCommandTests testSourceAndDestinationMustFitWithoutClippingOrOverflow]' passed (0.000 seconds).
+Test Suite 'RectangleCopyCommandTests' passed at 2026-11-02 15:09:15.516.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SensorCommandsTests' started at 2026-11-02 15:09:15.516.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testCanonicalModesAndContinuedBundleRejection]' started.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testCanonicalModesAndContinuedBundleRejection]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testExplicitDefaultsAndHeartbeatZero]' started.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testExplicitDefaultsAndHeartbeatZero]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testInvalidUnsignedFieldsRejectInsteadOfWrapping]' started.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testInvalidUnsignedFieldsRejectInsteadOfWrapping]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testPinnedOriginalControlGoldenFixtures]' started.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testPinnedOriginalControlGoldenFixtures]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testUInt16PreservationInsteadOfHostClampingOrUnitConversion]' started.
+Test Case '-[MemoMindCoreTests.SensorCommandsTests testUInt16PreservationInsteadOfHostClampingOrUnitConversion]' passed (0.000 seconds).
+Test Suite 'SensorCommandsTests' passed at 2026-11-02 15:09:15.517.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'SessionResponseFilterTests' started at 2026-11-02 15:09:15.517.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testCoalescedSameEventNotificationsDoNotReplaceReply]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testCoalescedSameEventNotificationsDoNotReplaceReply]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testDuplicateAcceptedRepliesRejectInFinalAndFragmentReads]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testDuplicateAcceptedRepliesRejectInFinalAndFragmentReads]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFilterErrorAndNotificationOnlyCannotBecomeSuccess]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFilterErrorAndNotificationOnlyCannotBecomeSuccess]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFragmentACKNotificationsAndEarlyRejectionStopRemainingWrites]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFragmentACKNotificationsAndEarlyRejectionStopRemainingWrites]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFullBundleNotificationCountKeepsOrderAndDuplicates]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testFullBundleNotificationCountKeepsOrderAndDuplicates]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testSplitLateNotificationIsRoutedOnSubsequentRead]' started.
+Test Case '-[MemoMindCoreTests.SessionResponseFilterTests testSplitLateNotificationIsRoutedOnSubsequentRead]' passed (0.000 seconds).
+Test Suite 'SessionResponseFilterTests' passed at 2026-11-02 15:09:15.519.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'TextCommandTests' started at 2026-11-02 15:09:15.519.
+Test Case '-[MemoMindCoreTests.TextCommandTests testAllSingleBytesAndExplicitControlSemantics]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testAllSingleBytesAndExplicitControlSemantics]' passed (0.001 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testByteLimitNotCharacterCountOrGlyphAvailability]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testByteLimitNotCharacterCountOrGlyphAvailability]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testEveryOptionPreservedAndNoHighBitEmitted]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testEveryOptionPreservedAndNoHighBitEmitted]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testIndependentPinnedG2ParserFixtures]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testIndependentPinnedG2ParserFixtures]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testMalformedUTF8RejectedWithoutRepair]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testMalformedUTF8RejectedWithoutRepair]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testSignedCoordinatesAndOffscreenBounds]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testSignedCoordinatesAndOffscreenBounds]' passed (0.000 seconds).
+Test Case '-[MemoMindCoreTests.TextCommandTests testSlicedDataHasNoHiddenPrefixAndBundlePreservesHighBit]' started.
+Test Case '-[MemoMindCoreTests.TextCommandTests testSlicedDataHasNoHiddenPrefixAndBundlePreservesHighBit]' passed (0.000 seconds).
+Test Suite 'TextCommandTests' passed at 2026-11-02 15:09:15.521.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'MemoMindCoreTests.xctest' passed at 2026-11-02 15:09:15.521.
+	 Executed 113 tests, with 0 failures (0 unexpected) in 39.696 (39.703) seconds
+Test Suite 'All tests' passed at 2026-11-02 15:09:15.521.
+	 Executed 113 tests, with 0 failures (0 unexpected) in 39.696 (39.705) seconds
+􀟈  Test run started.
+􀄵  Testing Library Version: 2084
+􀄵  Target Platform: arm64e-apple-macos14.0
+􁁛  Test run with 0 tests in 0 suites passed after 0.001 seconds.

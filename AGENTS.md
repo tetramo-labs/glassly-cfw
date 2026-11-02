@@ -16,5 +16,5 @@
   recipes, notes and verification summaries.
 - Preserve sealed historical captures and evidence. Use a new directory for
   each device attempt and record any later confirmation separately.
-- Keyboard/HOGP, ring battery and gestures are out of scope. Single-button input,
-  compass/raw IMU/ALS, notifications/audio and applicable G2 parity remain in scope.
+- Keyboard/HOGP, ring battery, gestures, mode5 sound/tone commands and volume gating are out of scope. Single-button input,
+  compass/raw IMU/ALS, notifications, microphone capture/streaming and applicable G2 parity remain in scope.

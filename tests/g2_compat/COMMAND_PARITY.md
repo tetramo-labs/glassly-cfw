@@ -4,7 +4,7 @@ Source snapshot: G2 commit `1a6db4fd75de202a96599cc8f9f12fa721e7c3ce`, pinned by
 [UPSTREAM.json](UPSTREAM.json). Memo source review date:2026-11-01. This maps the
 custom image dispatcher and custom settings extensions, plus the head-up settings
 used by the pinned test harness. It does not claim to inventory every stock G2
-application-service command. Bluetooth keyboard/HOGP, ring battery and gesture-specific behavior are excluded
+application-service command. Bluetooth keyboard/HOGP, ring battery, mode5 sound/tone commands, volume gating and gesture-specific behavior are excluded
 by the user's updated scope. Single-button input, compass and raw IMU data remain
 required; gesture exclusion does not exclude sensor data. No device was operated for this review.
 
@@ -25,7 +25,7 @@ command`0x7d`, one BYTES TLV; G2's original wire/ACK envelope is not installed.
 | G2 mode | Contract | Memo implementation / missing boundary |
 |---|---|---|
 |3|RLE bounding-box delta; scaled coordinates, diagnostic frame ID; optional per-lens boxes|Implemented behind `--raster-commands`: bounded window decode, first/left box for the high-bit variant, validation before scene takeover. Frame ID is accepted; the separate `--diagnostic-commands` candidate adds original16-bit history tracking, with offline validation only so far. Native Mac smoke acknowledged; user confirmed RLE letters and checkerboard visible. Pixel-perfect display comparison and performance remain unverified.|
-|5|Sound kinds0 preset,1 note,2 stop,3 frequency/duty/duration,4 owned tone sequence|Missing command and native audio/timer binding. Memo speaker availability is not a proven buzzer API.|
+|5|Sound kinds0 preset,1 note,2 stop,3 frequency/duty/duration,4 owned tone sequence|**Excluded:** mode5 sound/tone commands are out of scope. Historical reference tests remain unchanged; microphone capture/streaming remain separate requirements.|
 |6|Full packed GRAY4 RLE keyframe into persistent shadow|Implemented behind `--raster-commands`, using the existing owned raster without a second canvas. Full input is validated before takeover/draw. Native Mac smoke acknowledged; user confirmed RLE letters and checkerboard visible. Pixel-perfect display comparison and performance remain unverified.|
 |7|Sub0 reset diagnostics/frame history;1 hide diagnostic overlay;2 show|Implemented in the offline `--diagnostic-commands` candidate: original16-bit FID ring and deferred visibility, separate child overlay and strict20-byte native snapshot. Compact font, current-screen lifetime and limited native failure counters differ from G2. Hardware acceptance pending.|
 |8|Counted length-prefixed nonnested bundle, deferred sub-presents and one final presentation|Implemented behind `--command-bundles`: sequential supported children, one final explicit present, final cache scratch, bounded ordered settled collection. Mode15 text children are supported by `--text-commands`. Late errors preserve earlier changes; shared pixels can be read by incidental LVGL refresh. Native Swift smoke and visible B8/checkerboard confirmed.|
@@ -35,14 +35,14 @@ command`0x7d`, one BYTES TLV; G2's original wire/ACK envelope is not installed.
 |15|Immediate built-in UTF8 text; signed placement, options, control-byte x offsets, up to255 text bytes|Implemented behind `--text-commands`: exact255-byte-capable envelope, signed placement, UTF8/control validation, highbit and bundle dispatch with owned scratch. Native text visibly confirmed. Resource fonts/metrics and missing-glyph rejection differ from G2; retained shape text remains128 bytes.|
 |16|ALS query0/start1/stop2; interval100–5000ms, min delta, heartbeat, lease option; field105 reports|Missing command, native sample/brightness metadata and ownership adapter.|
 |17|Ring battery query `[17,0]`; field106 `RB` status with connected/valid/charging bits|**Excluded:** no ring battery hardware. Historical portable encoding/tests remain reference only; no native binding required.|
-|19|Immediate cached image|Implemented in scene core/native RAM session, subject to listed limits.|
-|20|Immediate cached-font text|Implemented in scene core/native RAM session; requires uploaded font asset.|
+|19|Immediate cached image|Implemented in scene core/native scene session, subject to listed limits.|
+|20|Immediate cached-font text|Implemented in scene core/native scene session; requires uploaded font asset.|
 |36|Immediate shapes1–18 in scene build, including images/text/paths|Implemented; geometry-only build supports1–13. Native empty `[36,0]` renews lease rather than original raster takeover.|
 |37|PUT object/asset chunks, replacements/reassertion, transaction|Implemented in `scene_cache.inc::cfw_cache_put`.|
-|38|SHOW ordering, visibility/movement/glide/tween/freeze/finish/rotation|Implemented in portable scene/native RAM session.|
-|39|HIDE/optional present/tag; retains cache|Implemented in portable scene/native RAM session.|
+|38|SHOW ordering, visibility/movement/glide/tween/freeze/finish/rotation|Implemented in portable scene/native scene session.|
+|39|HIDE/optional present/tag; retains cache|Implemented in portable scene/native scene session.|
 |40|STATE revision/page; unchanged/delta/snapshot replies|Implemented core. Native reply translation/size differs from G2.|
-|41|CONTROL reset/drop inactive/animation period10–250ms|Implemented in portable scene/native RAM session.|
+|41|CONTROL reset/drop inactive/animation period10–250ms|Implemented in portable scene/native scene session.|
 
 Detailed byte contracts, native discrepancies and regression requirements are in
 [the display review](../../analysis/command-parity-review/display-scene.md).
@@ -50,9 +50,15 @@ G2 masks the mode high bit. The optional mode3/6 implementation supports it for
 those modes and advertises `rasterLens:"first-left"`: mode3 uses the first box,
 while mode6 ignores the flag. Other modes still admit exact bytes. This is a
 single-display mapping, not dual-lens support.
-Current native limits are8192-byte ingress,64KiB cache,250-byte cache replies
-translated to JSON,600×350 display and1000-tick owner lease under launcher/UI
-ownership. Portable65535-byte/256KiB flash-backed tests do not remove those limits.
+The minimal-owner profile implements a 256 KiB logical flash asset store and
+65,535-byte raw commands through mode127 bounded chunks, with a 30-second lease.
+Native GM packets remain bounded to8192 bytes; cache replies remain250 bytes
+translated to JSON and the display is600×350. Native worker integration and its
+queue ABI have separate host/RV32 tests. Hardware outcomes are recorded in
+[the latest result](../../analysis/minimal-owner-queue-fix-20261102/hardware-result.json);
+code presence and capability advertisement alone do not prove capacity.
+The logical flash map is volatile across reboot/new scene. See
+[the ownership and carrier contracts](../../runtime/graphics/MINIMAL_OWNER.md).
 
 ## Settings, control and asynchronous events
 
@@ -70,7 +76,7 @@ composes responses; it is not registered as a native GM command adapter.
 |Field126 `AN`v1 ops1–5;125 output|Enable/disable/query/action/renew notification relay; source/attribute/app/status records|Production portable notification core and nine original scenarios exist. Native ANCS producer/action/task evidence exists, but no integrated runtime relay. Android app notifications must not be represented as true ANCS.|
 |Field127 `BL`v1 ops0/1;128 status|Stock/fast BLE link profile; actual interval/latency/status|Portable policy exists, native BLE lifecycle binding missing. RFCOMM transport/OTA performance cannot stand in for BLE interval control.|
 |Field130 keyboard control;131 keyboard output|Bluetooth HID/HOGP discovery, pairing, reports and keyboard lifecycle|**Excluded from required parity.** Historical portable/tests/ARM evidence remains optional. Mixed field-parser assertions remain required unchanged.|
-|Field132 `VG`v1 ops1/2;133 status|Configure/query microphone volume gate|Pure gate algorithm and original suite exist; native microphone pipeline/control/status binding missing.|
+|Field132 `VG`v1 ops1/2;133 status|Configure/query microphone volume gate|**Excluded:** volume gating is out of scope. Original algorithm and tests remain optional reference; microphone capture and streaming remain required.|
 |Head-up switch and angle settings used by `head-up-test.ts`|Write/readback settings, then physical head-up events under display/wake ownership|**Excluded gesture behavior.** Existing native setter/readback analysis is retained as reference. Compass and raw IMU data remain required independently of head-up recognition.|
 
 **Raw IMU data remains explicitly in scope.** A native sample/stream adapter,
@@ -94,9 +100,9 @@ not establish equal physical detection behavior.
 
 The required outer record transport is separately implemented as portable
 [transport.c](../../runtime/portable/transport.c): bounded records, CRC,
-reset/context, compression callback and reply/failure behavior. A native GM adapter
-preserving ordering, memory ownership and explicit logical-destination policy is
-still missing. Host zlib tests do not prove native inflation or full-size ingress.
+reset/context, compression callback and reply/failure behavior. The new raw mode127 carrier does not implement the compressed record protocol
+or its two inflater histories. Those adapters and explicit logical-destination
+policy remain missing. Host zlib tests do not prove native inflation.
 
 ## Next vertical command slice
 
@@ -104,7 +110,7 @@ Modes3/6/9/8/15 are installed and visibly confirmed. The mode7 diagnostics and
 mode11 implemented-session cleanup candidate now passes focused host/RV32 tests;
 hardware acceptance is pending. Its separate overlay leaves raster copying and
 composition unaffected in those tests. See [offline evidence](../../analysis/diagnostic-commands-001/report.json).
-Remaining compass/raw IMU/ALS, single-button ownership, audio/settings adapters
+Remaining compass/raw IMU/ALS, single-button ownership, microphone/settings adapters
 and full capacities stay on the parity plan.
 
 Required tests: original sender byte fixtures and pixel differentials; clipped or
@@ -118,7 +124,8 @@ and full storage are integrated; command presence alone is not full-capacity par
 The first mode3/6 implementation and actual-code tests are recorded in
 [the raster report](../../analysis/raster-commands-001/report.json). Native Swift
 `RasterCommands.fullFrame` and `boundingBox` generate their RLE payloads without
-Android, zlib or a subprocess; they enforce the current8192-byte command limit.
+Android, zlib or a subprocess; they default to8192 bytes and accept an explicit `maximumCommandBytes: 65535`
+for the new carrier. Direct GM ingress remains8192 bytes.
 
 Modes3/6 have live verification and remain in the current firmware. The native Swift smoke,
 independent trace verification and user visibility confirmation are recorded in

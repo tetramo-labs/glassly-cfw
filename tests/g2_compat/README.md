@@ -16,14 +16,14 @@ incomplete file status, with finer coverage in `test_groups`.
 
 ## Current scope (2026-11-02)
 
-The user excludes **Bluetooth keyboard/HOGP, ring battery and gesture-specific
+The user excludes **Bluetooth keyboard/HOGP, ring battery, mode5 sound/tone commands, volume gating and gesture-specific
 behavior**. The glasses have one button. Single-button events, generic wake
 ownership, compass data, **raw IMU data**, ambient-light sensing, settings,
 notifications, microphone, transport and drawing remain required.
 
 All 96 source/license files are retained. Original assertion expressions remain
 unchanged; the naming-only normalization is recorded separately.
-The required coverage inventory is **39 C scenarios /654 assertion sites and11
+The required coverage inventory is **38 C scenarios /622 assertion sites and11
 Bun cases**. The historical totals remain46 /746 and21. The dedicated battery
 scenario and head-up/ring-touch live harnesses are optional reference, not completed
 ports. There are now **19 incomplete required suite/integration entries**.
@@ -35,7 +35,8 @@ Native adapter acceptance must separate unsupported selectors from required
 settings/transport behavior. Compass headings must not be dropped with head-up
 gesture tests. Scope regressions check these distinctions and original hashes.
 
-Both runners keep keyboard-only stages optional via `--include-keyboard-reference`.
+Both runners keep keyboard-only stages optional via `--include-keyboard-reference`
+and volume-gate checks optional via `--include-volume-gate-reference`.
 The gesture live harnesses are inventoried, never run automatically. Historical
 pass counts below refer to their dated scope. `--require-complete` continues to
 fail until all currently required entries are implemented.
@@ -88,7 +89,7 @@ Out-of-panel pixel probes are explicitly omitted in the600×350 comparison.
 | --- | --- | --- |
 | Original immediate geometry partition | 14 original assertion sites passed | Original 22-record geometry fixture and pixel expectations run against `runtime/portable/geometry.c` |
 | Original easing tests | 69 assertion evaluations passed | Five original assertion sites exercise the unchanged copied easing functions |
-| Original volume gate suite | Passed, 32 source assertion sites | Complete unchanged pure state-machine suite; no MemoMind audio integration |
+| Original volume gate suite (optional reference) | Historically passed, 32 source assertion sites | Volume gating excluded; unchanged source retained |
 | Six original C host reference binaries | All passed under ASan/UBSan | Separate G2 reference baseline |
 | Full portable shape/vector suites | All424 original CHECK sites /42,466 evaluations passed | Actual portable scene/cache/asset/rendering implementation with explicit platform callbacks; native font callback pending |
 | Portable notification relay | All9 original scenarios,76 unchanged CHECK sites /266 evaluations passed | Production queue/chunking/lease/control core; G2 hook/layout/action checks use a test-only shim and do not establish MemoMind ANCS integration |

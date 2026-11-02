@@ -29,11 +29,11 @@ class ScopeTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256((ROOT / 'tests/g2_compat/upstream' / name).read_bytes()).hexdigest(), digest)
         rows = {r['upstream_file']: r for r in inventory['rows']}
         excluded = {name for name, row in rows.items() if not row['parity_required']}
-        self.assertEqual(excluded, {'patches/host/keyboard_host_test.c', 'patches/host/keyboard_emulator_test.py', 'demos/keyboard.test.ts', 'demos/keyboard.ts', 'demos/head-up-test.ts', 'demos/ring-touch-test.ts'})
+        self.assertEqual(excluded, {'patches/host/keyboard_host_test.c', 'patches/host/keyboard_emulator_test.py', 'demos/keyboard.test.ts', 'demos/keyboard.ts', 'demos/head-up-test.ts', 'demos/ring-touch-test.ts', 'demos/sound-test.ts', 'patches/host/volume_gate_host_test.c'})
         self.assertEqual(inventory['host_core_scenarios']['total'], 46)
         self.assertEqual(inventory['host_core_scenarios']['original_assertion_sites'], 746)
-        self.assertEqual(inventory['required_host_core_scenarios']['total'], 39)
-        self.assertEqual(inventory['required_host_core_scenarios']['original_assertion_sites'], 654)
+        self.assertEqual(inventory['required_host_core_scenarios']['total'], 38)
+        self.assertEqual(inventory['required_host_core_scenarios']['original_assertion_sites'], 622)
         self.assertEqual(inventory['required_bun_test_cases'], 11)
         mixed = rows['patches/host/upstream_host_test.c']
         self.assertTrue(mixed['parity_required'])
@@ -89,7 +89,7 @@ class ScopeTests(unittest.TestCase):
     def test_required_parity_still_incomplete(self):
         self.assertEqual(self.aggregate(require=True)[0], 2)
 
-    def compat(self, optional=False, fail=None):
+    def compat(self, optional=False, fail=None, volume=False):
         module = load('scope_compat', 'tests/g2_compat/run_tests.py')
         with tempfile.TemporaryDirectory() as temp:
             base = Path(temp)
@@ -99,6 +99,7 @@ class ScopeTests(unittest.TestCase):
             out = base / 'out'
             argv = ['run_tests.py', '--output', str(out), '--demos-dependencies', str(base / 'deps'), '--g2-media', str(base / 'media')]
             if optional: argv.append('--include-keyboard-reference')
+            if volume: argv.append('--include-volume-gate-reference')
             def run(command, **kwargs):
                 if '-o' in command:
                     Path(command[command.index('-o') + 1]).write_bytes(b'mocked compiler artifact')
@@ -115,6 +116,7 @@ class ScopeTests(unittest.TestCase):
         names = [r['name'] for r in report['results']]
         self.assertIn('reference_upstream', names)
         self.assertNotIn('reference_keyboard', names)
+        self.assertNotIn('ported_volume_gate', names)
         self.assertNotIn('typecheck_keyboard', names)
         self.assertNotIn('typescript_keyboard', names)
 
@@ -124,6 +126,13 @@ class ScopeTests(unittest.TestCase):
                 code, report = self.compat(optional=True, fail=name)
                 self.assertEqual(code, 0)
                 self.assertTrue(any(r['result'] in ('failed', 'build-failed') and not r['parity_required'] for r in report['results']))
+
+    def test_optional_volume_gate_failure_is_nonblocking(self):
+        code, report = self.compat(volume=True, fail='ported_volume_gate')
+        self.assertEqual(code, 0)
+        row = next(r for r in report['results'] if r['name'] == 'ported_volume_gate')
+        self.assertFalse(row['parity_required'])
+        self.assertIn(row['result'], ('failed', 'build-failed'))
 
     def test_compat_mixed_settings_failure_blocks(self):
         self.assertEqual(self.compat(fail='reference_upstream')[0], 1)

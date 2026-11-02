@@ -1,0 +1,15 @@
+{
+  "release": "minimal-owner-flash-004",
+  "version": "GLASSLYCFW/1",
+  "image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+  "image_bytes": 2234179,
+  "header150_sha256": "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7",
+  "app_header256_sha256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+  "metadata_bytes": 171,
+  "metadata_sha256": "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6",
+  "app_packed_bytes": 963077,
+  "app_raw_bytes": 1844800,
+  "app_sha256": "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa",
+  "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
+  "runtime_bytes": 71584
+}

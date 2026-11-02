@@ -276,13 +276,15 @@ def main():
                     'patches/host/keyboard_emulator_test.py',
                     'demos/keyboard.test.ts','demos/keyboard.ts'}
     gesture_files={'demos/head-up-test.ts','demos/ring-touch-test.ts'}
-    excluded_files=keyboard_files|gesture_files
+    sound_files={'demos/sound-test.ts'}
+    volume_files={'patches/host/volume_gate_host_test.c'}
+    excluded_files=keyboard_files|gesture_files|sound_files|volume_files
     for row in rows:
         excluded=row['upstream_file'] in excluded_files
         row['parity_required']=not excluded
-        row['parity_scope']=('optional-keyboard-reference' if row['upstream_file'] in keyboard_files else 'optional-gesture-reference') if excluded else 'required'
+        row['parity_scope']=('optional-keyboard-reference' if row['upstream_file'] in keyboard_files else 'optional-volume-gate-reference' if row['upstream_file'] in volume_files else 'optional-sound-reference' if row['upstream_file'] in sound_files else 'optional-gesture-reference') if excluded else 'required'
         if excluded:
-            row['exclusion_reason']=('User excluded Bluetooth keyboard/HOGP on 2026-11-01' if row['upstream_file'] in keyboard_files else 'User excluded gestures on 2026-11-02: hardware has one button; head-up and ring-touch acceptance are not required')+'; historical sources/tests retained, not counted as completed parity'
+            row['exclusion_reason']=('User excluded Bluetooth keyboard/HOGP on 2026-11-01' if row['upstream_file'] in keyboard_files else 'User excluded volume gating on 2026-11-02; microphone capture and streaming remain in scope' if row['upstream_file'] in volume_files else 'User excluded mode5 sound/tone commands on 2026-11-02; microphone remains in scope' if row['upstream_file'] in sound_files else 'User excluded gestures on 2026-11-02: hardware has one button; head-up and ring-touch acceptance are not required')+'; historical sources/tests retained, not counted as completed parity'
         for group in row.get('test_groups',[]):
             if isinstance(group,dict):group['parity_required']=not excluded
         if row['upstream_file']=='patches/host/upstream_host_test.c':
@@ -298,7 +300,7 @@ def main():
             row['optional_reference_stage_mapping']={'keyboard host/TypeScript reference':['keyboard','g2_compat --include-keyboard-reference']}
     required_host=[r for r in rows if Path(r['upstream_file']).name in GROUPS and r['parity_required']]
     report={'upstream_commit':pin['commit'],'inventory_scope':'all tracked patches/host C/Python files, demos *.test.ts, tracked test/probe/build harnesses',
-            'parity_scope':{'effective_date':'2026-11-02','excluded_features':['Bluetooth keyboard/HOGP accessory support','Ring battery','Gesture recognition and gesture-triggered controls (including head-up and ring-touch)'],
+            'parity_scope':{'effective_date':'2026-11-02','excluded_features':['Bluetooth keyboard/HOGP accessory support','Ring battery','Gesture recognition and gesture-triggered controls (including head-up and ring-touch)','Mode5 sound and tone commands','Microphone volume gating'],
                 'required_hardware_features':['Single-button input','Compass data','Raw IMU data','Ambient-light sensing'],
                 'excluded_upstream_files':sorted(excluded_files),'historical_tests_retained':True,
                 'mixed_non_keyboard_suites_remain_required':True,'command_parity_map':'tests/g2_compat/COMMAND_PARITY.md'},

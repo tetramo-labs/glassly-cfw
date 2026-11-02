@@ -203,3 +203,22 @@ by the receiver. Bundles accept text envelopes after checking native capability.
 `text-commands-001` is admitted by exact image/component pins and has boot/live
 text verification; shared core typechecks for iOS15, but native iOS transport is
 not established. [Hardware evidence](../../analysis/text-native-20261102/report.json).
+
+
+## Large raw commands
+
+The minimal-owner `GLASSLYCFW/1` profile adds a 256 KiB logical flash asset store
+and a bounded raw-command carrier. `LargeMessage(command:token:)` creates
+CRC32-checked begin/chunk/commit packets for 1...65,535 bytes, with a nonzero token.
+`GMSession.sendLargeGraphicsMessage(_:token:event:)` probes capabilities, waits
+for every chunk ACK, and returns the actual command reply. Serialize use of the
+session, supply fresh tokens, and validate that reply with the command's normal
+parser. A lost commit reply is ambiguous: there is no automatic retry or abort.
+This is available in the shared Swift core for eventual Glassly integration.
+
+Raster and bundle builders accept `maximumCommandBytes: 65535`; their default is
+8192. Use the carrier for these larger commands, since the native GM request cap
+is unchanged. Assets have an ephemeral logical flash map, not reboot persistence.
+Compressed transport and its inflater histories remain separate work. The
+[hardware record](../../analysis/minimal-owner-queue-fix-20261102/hardware-result.json)
+distinguishes advertised limits from completed device checks.

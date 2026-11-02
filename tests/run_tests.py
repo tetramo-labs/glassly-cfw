@@ -40,6 +40,7 @@ def main():
     parser.add_argument('--require-complete', action='store_true')
     parser.add_argument('--include-keyboard-reference', action='store_true',
                         help='Run optional historical keyboard checks; failures do not block required parity')
+    parser.add_argument('--include-volume-gate-reference', action='store_true', help='Run optional volume-gate reference')
     parser.add_argument('--rv32-python', type=Path,
                         default=ROOT / '.tools/rv32-tests-venv/bin/python')
     parser.add_argument('--demos-dependencies', type=Path,
@@ -410,6 +411,9 @@ def main():
     else:
         for name, scope, command in commands:
             if name == 'g2_compat':command.append('--include-keyboard-reference')
+    if args.include_volume_gate_reference:
+        for name, scope, command in commands:
+            if name == 'g2_compat':command.append('--include-volume-gate-reference')
     started = datetime.now(timezone.utc).isoformat()
     # Record sources independently of pass/fail. Raw firmware/build identities
     # are verified by the respective suites and their reports.

@@ -17,7 +17,9 @@ def main():
   for n in [0,1,2,3,4,11,12]:run('broker-'+str(n),[out/'broker',n])
   run('compile',[sys.executable,'scripts/compile_memomind_graphics.py',out/'build',*FLAGS])
   run('construct',[sys.executable,'scripts/build_memomind_minimal_owner.py','captures/firmware/ota-1.0.3.127-glassly-text.bin',out/'build',out/'candidate'])
+  run('queue-abi',[a.rv32_python,'tests/rv32/flash_broker_queue_abi_test.py','--build',out/'build','--image',out/'candidate/firmware.bin','--report',out/'queue-abi.json'])
   run('rv32',[a.rv32_python,'tests/rv32/minimal_owner_flash_runtime_emulator_test.py','--build',out/'build','--report',out/'rv32.json'])
+  run('asset-display',[a.rv32_python,'tests/rv32/flash_asset_display_test.py','--build',out/'build','--report',out/'asset-display.json'])
   run('native-callers',[a.rv32_python,'tests/rv32/minimal_launcher_native_callers_test.py','--build',out/'build','--image',out/'candidate/firmware.bin','--report',out/'native-callers.json'])
   build=json.loads((out/'build/build.json').read_text());report['runtime_sha256']=build['blob_sha256'];report['image_sha256']=hashlib.sha256((out/'candidate/firmware.bin').read_bytes()).hexdigest()
   report['source_drift']=[n for n,h in build['source_sha256'].items() if hashlib.sha256((ROOT/n).read_bytes()).hexdigest()!=h]

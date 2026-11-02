@@ -14,7 +14,7 @@ volatile mm_canary_registry *glassly_canary_registry(void){return &canary;}
 int glassly_canary_layout_valid(void){return failed!=1;}
 void glassly_canary_enter(void){assert(!critical);critical=1;}
 void glassly_canary_leave(void){assert(critical);critical=0;}
-static void *new_queue(uint32_t count,uint32_t size){assert(!critical&&count==1&&size<=32);if(++queue_count==failed-10)return 0;q *v=calloc(1,sizeof(*v));assert(v);pthread_mutex_init(&v->mutex,0);pthread_cond_init(&v->wake,0);v->size=size;return v;}
+static void *new_queue(uint32_t owner,uint32_t count,uint32_t size){assert(!critical&&owner==0xe6&&count==1&&size<=32);if(++queue_count==failed-10)return 0;q *v=calloc(1,sizeof(*v));assert(v);pthread_mutex_init(&v->mutex,0);pthread_cond_init(&v->wake,0);v->size=size;return v;}
 static int send_queue(void *arg,const void *p){assert(!critical);q *v=arg;pthread_mutex_lock(&v->mutex);int ok=!v->count;if(ok){memcpy(v->bytes,p,v->size);v->count=1;pthread_cond_signal(&v->wake);}pthread_mutex_unlock(&v->mutex);return ok;}
 static void unlock(void *p){pthread_mutex_unlock(p);}
 static int get_queue(void *arg,void *p,uint32_t timeout){assert(!critical&&timeout==UINT32_MAX);q *v=arg;pthread_mutex_lock(&v->mutex);pthread_cleanup_push(unlock,&v->mutex);while(!v->count)pthread_cond_wait(&v->wake,&v->mutex);memcpy(p,v->bytes,v->size);v->count=0;pthread_cleanup_pop(1);return 1;}

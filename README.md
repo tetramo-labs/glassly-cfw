@@ -13,13 +13,19 @@ Bundled reference names are normalized to Glassly with original hashes retained.
 
 ## Minimal owner and flash capacity
 
-The new `GLASSLYCFW/1` candidate replaces the dashboard launcher lifecycle with a
-minimal display owner, connects the 256 KiB COW asset store through a native I/O
-worker, and handles 65,535-byte raw commands through bounded CRC-checked chunks.
-Swift packet construction and sending are included. The complete 2,234,130-byte
-OTA and the running app header are verified. The first scene RESET lost its connection before replying, before any asset
-writes. A native queue ABI defect was identified; capacity checks remain pending. [the current result](analysis/minimal-owner-flash-20261102/hardware-result.json)
-records the exact image and runtime hashes. See [the ownership and wire contracts](runtime/graphics/MINIMAL_OWNER.md).
+The `GLASSLYCFW/1` profile replaces the dashboard launcher with a minimal display
+owner, connects a 256 KiB COW asset store through a native I/O worker, and handles
+65,535-byte raw commands through bounded CRC-checked chunks. Native Swift sending
+is included. The first installed build exposed a queue ABI defect at RESET,
+before any asset writes. The corrected 2,234,179-byte update is transferred and boot verified. Hardware
+accepted a 65,535-byte raw command and the full 262,144-byte asset upload, with
+4 KiB independent readback, a flash-backed glyph draw and successful cleanup.
+Physical visibility is still unconfirmed. See the
+[current result](analysis/minimal-owner-queue-fix-20261102/hardware-result.json)
+and [ownership/wire contracts](runtime/graphics/MINIMAL_OWNER.md).
+
+Next work is wake/display ownership, single-button events, then microphone
+control and streaming. Mode5 sound/tone commands and volume gating are excluded.
 
 ## Established results
 
@@ -82,7 +88,7 @@ argument errors were corrected and those checks rerun; the115 unchanged passes
 were retained with source and command verification. See the
 [regression report](analysis/regression-20261102-05/report.json). Unchanged G2
 reference checks and native-layout test shims remain separately labeled.
-Bluetooth keyboard/HOGP accessory support is out of scope. Command parity is the
+Bluetooth keyboard/HOGP accessory support and mode5 sound/tone commands are out of scope. Command parity is the
 current priority. Full in-scope CFW parity still requires native notification/transport/policy
 adapters, remaining drawing/message capacities, performance work, broader font
 coverage and complete app/pairing capture.
@@ -123,7 +129,7 @@ See the [RESET scratch hardware result](analysis/reset-undo-trim-20261102/hardwa
 
 A separate reviewed **96 KiB RX profile** permits32,848 bytes of growth beyond the
 previous 65,456-byte runtime within the existing app allocation. The new
-71,568-byte minimal-owner runtime is now boot verified using this profile.
+71,584-byte minimal-owner runtime is now boot verified using this profile.
 See the [profile review](analysis/rx-profile-review-20261102/report.json).
 Native Swift compass/ALS command encoders now match5,404 unchanged upstream
 reference checks, and all105 Swift tests pass. Their firmware adapters remain

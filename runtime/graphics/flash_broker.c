@@ -25,7 +25,7 @@ static volatile registry *reg(void){
     return (volatile registry *)(uintptr_t)(MM_CANARY_REGISTRY+64);
 #endif
 }
-static void *queue(unsigned size){typedef void *(*f)(uint32_t,uint32_t);return FN(0x0200ee6au,f)(1,size);}
+static void *queue(unsigned size){typedef void *(*f)(uint32_t,uint32_t,uint32_t);return FN(0x0200ee6au,f)(0xe6,1,size);}
 static int send(void *q,const void *p){typedef int (*f)(void *,const void *);return FN(0x0200ee8cu,f)(q,p);}
 static void receive(void *q,void *p){typedef int (*f)(void *,void *,uint32_t);while(!FN(0x0200ef7au,f)(q,p,UINT32_MAX)){} }
 static void remove_queue(void *q){typedef void (*f)(void *);FN(0x0200f08cu,f)(q);}

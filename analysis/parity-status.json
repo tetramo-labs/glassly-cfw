@@ -732,7 +732,7 @@
     "app_sha256": "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa",
     "runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
     "runtime_bytes": 71584,
-    "state": "Boot verified;65535-byte raw message,262144-byte asset upload,4096-byte independent physical readback,cached-font rendering,180-second display hold and cleanup passed; physical visibility unconfirmed",
+    "state": "Boot verified;65535-byte raw message,262144-byte asset upload,4096-byte independent physical readback,cached-font rendering,180-second display hold and cleanup passed; physical visibility confirmed separately",
     "installed": true,
     "currently_installed": true,
     "boot_verified": true,
@@ -740,18 +740,18 @@
     "runtime_build": "runtime/build/minimal-owner-flash-002",
     "offline_checkpoint": "analysis/minimal-owner-queue-fix-20261102/offline-checkpoint.json",
     "remaining": [
-      "Physical visual confirmation",
       "Compressed transport/inflater integration",
       "Remaining applicable G2 command/feature parity"
     ],
     "ota_transfer_verified": true,
     "report": "analysis/minimal-owner-queue-fix-20261102/hardware-result.json",
-    "visible_output_confirmed": false
+    "visible_output_confirmed": true,
+    "visual_confirmation": "analysis/minimal-owner-display-repeat-20261102/visual-confirmation.json"
   },
   "next_priority": [
     "Wake/display ownership",
     "Single-button events",
     "Microphone control and streaming"
   ],
-  "current_device_verification": "Boot and capacity tests verified; physical visibility pending"
+  "current_device_verification": "Boot, full capacity, flash-backed rendering and physical display confirmed"
 }

@@ -20,7 +20,9 @@ is included. The first installed build exposed a queue ABI defect at RESET,
 before any asset writes. The corrected 2,234,179-byte update is transferred and boot verified. Hardware
 accepted a 65,535-byte raw command and the full 262,144-byte asset upload, with
 4 KiB independent readback, a flash-backed glyph draw and successful cleanup.
-Physical visibility is still unconfirmed. See the
+The user confirmed the text and flash-backed checkerboard in a repeat display
+check; [visual confirmation](analysis/minimal-owner-display-repeat-20261102/visual-confirmation.json)
+is recorded separately from protocol evidence. See the
 [current result](analysis/minimal-owner-queue-fix-20261102/hardware-result.json)
 and [ownership/wire contracts](runtime/graphics/MINIMAL_OWNER.md).
 

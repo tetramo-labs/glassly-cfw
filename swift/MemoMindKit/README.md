@@ -13,6 +13,30 @@ swift/MemoMindKit/.build/release/memomind --help
 swift/MemoMindKit/.build/release/memomind devices
 ```
 
+Button and microphone captures use the same transport and durable trace:
+
+```sh
+swift/MemoMindKit/.build/release/memomind buttons \
+  --address 4C:3C:8F:90:CC:C3 --seconds 180 --output captures/buttons-new
+swift/MemoMindKit/.build/release/memomind microphone \
+  --address 4C:3C:8F:90:CC:C3 --seconds 10 --output captures/microphone-new
+```
+
+The button client subscribes to cooked events, saves each poll before ACK, and
+stops on transport or session errors. The microphone command enables ENC through
+GM `01/2f`, then uses the existing recording RFCOMM service `2024`. It requests
+legacy records and saves individual 40-byte Opus packets locally. Capture is
+bounded to 1–15 seconds; stop has no business ACK, so queued data is drained
+before closing. No firmware write occurs. This does not add the G2 microphone
+lease or configurable PCM/channel modes.
+
+On `minimal-owner-flash-004`, physical single/long/release button actions were
+captured without reported drops. Microphone start/stop and a second session
+passed; 488 frames from the first capture decoded to 9.76 seconds of mono PCM
+at 16 kHz, and the user confirmed the audio. See
+[the evidence](../../analysis/wake-display-20261102/microphone-verification.json)
+and [confirmation](../../analysis/wake-display-20261102/microphone-confirmation.json).
+
 The package requires Swift 5.9 or later and macOS 13 or later. The core library
 also targets iOS 15 or later; the RFCOMM transport and executable are Mac-specific.
 Tests require this repository's captured firmware and transcript fixtures, and

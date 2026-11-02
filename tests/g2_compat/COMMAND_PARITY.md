@@ -92,6 +92,13 @@ can be claimed.
 
 Microphone control magic is defined by `mic_control.c`; payload/configuration
 fields must be validated from that implementation before a native adapter.
+The Swift CLI now captures cooked single-button events and the existing native
+microphone service on `minimal-owner-flash-004`. Physical single/long/release
+actions passed with zero reported observer drops. Two native Opus sessions
+started and stopped; independent decoding passed and the user confirmed the
+first recording. This establishes native capture, not G2's field103 lease,
+configurable PCM/channel modes, or button takeover. See
+[the checkpoint](../../analysis/wake-display-20261102/checkpoint.json).
 [Head-up evidence](../../analysis/ghidra/input-settings/report.md) also maps native
 light-up/down durations, sensitivity and nod/shake controls. The native IMU enable
 function uses shared boolean ownership, not a per-client refcount; it cannot safely

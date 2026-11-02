@@ -65,6 +65,13 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
             result["imageSHA256"] = firmware.sha256
             result["releaseName"] = firmware.releaseName
             result["controlLinkPreserved"] = true
+        } else if args.command == "buttons" {
+            result = try captureButtons(session: session, capture: capture,
+                                        seconds: Int(args.value("--seconds"))!)
+        } else if args.command == "microphone" {
+            result = try captureMicrophone(session: session, recording: transport("recording"),
+                                           address: address, capture: capture,
+                                           seconds: Int(args.value("--seconds"))!)
         } else {
             result = try ["device": dictionary(identity), "heartbeatStatus": 0,
                           "operationsSent": ["heartbeat", "device_information"], "flashMutations": 0]
@@ -109,7 +116,7 @@ do {
                        "bluetoothAccessed": false])
     case "replay":
         try printJSON(replay(firmware: loadFirmware(args), path: args.value("--transcript")))
-    case "probe": try runLive(args, firmware: nil)
+    case "probe", "buttons", "microphone": try runLive(args, firmware: nil)
     case "check", "flash": try runLive(args, firmware: loadFirmware(args))
     default: throw CLIError(Arguments.usage)
     }

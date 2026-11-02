@@ -6,9 +6,14 @@
     public enum MemoMindBluetoothService: String, Sendable {
         case normal = "00007033-0000-1000-8000-00805f9b34fb"
         case ota = "00007034-0000-1000-8000-00805f9b34fb"
+        case recording = "00002024-0000-1000-8000-00805f9b34fb"
 
         fileprivate var shortUUID: BluetoothSDPUUID16 {
-            self == .normal ? 0x7033 : 0x7034
+            switch self {
+            case .normal: 0x7033
+            case .ota: 0x7034
+            case .recording: 0x2024
+            }
         }
     }
 

@@ -18,7 +18,12 @@
 #define MM_GRAPHICS_MAX_MESSAGE MM_GEOMETRY_MAX_MESSAGE
 #endif
 /* Native scheduler ticks: exact profile configures1000Hz (one millisecond). */
+#ifdef MM_FLASH_SCENE
+#define MM_GRAPHICS_LEASE_TICKS 30000u
+void glassly_graphics_detach(void *);
+#else
 #define MM_GRAPHICS_LEASE_TICKS 1000u
+#endif
 #define MM_GRAPHICS_TIMER_TICKS 20u
 #define MM_GRAPHICS_METADATA_MARGIN 65536u
 
@@ -60,6 +65,7 @@ typedef struct {
 } mm_graphics_platform;
 extern const mm_graphics_platform mm_graphics_native;
 
+void glassly_graphics_cleanup(void);
 void glassly_graphics_probe(uint32_t, void *, const uint8_t *, void **);
 void glassly_graphics_command(uint32_t, void *, const uint8_t *, void **);
 void glassly_graphics_display(void *envelope);

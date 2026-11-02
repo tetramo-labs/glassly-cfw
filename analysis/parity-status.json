@@ -1,8 +1,8 @@
 {
   "goal": "full cfw parity with ~/dev/g2flash",
-  "updated_utc": "2026-11-02T21:25:30.517566+00:00",
+  "updated_utc": "2026-11-02T23:05:24.282536+00:00",
   "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
-  "current_device_image_sha256": "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
+  "current_device_image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
   "verified": [
     "Stock OTA capture and byte-accurate independent sender",
     "Visible same-length text patch confirmed by user",
@@ -88,8 +88,8 @@
   },
   "graphics_hardware_evidence": "analysis/graphics-hardware-verification.json",
   "capture_caveat": "Diagnostic OTA independently reconstructs byte-for-byte before rotation. Later rotation tail5479bytes recovered by exact archived-last prefix match; combined and final segments inspected. Historical1us timestamp reversals remain; general app/pairing losslessness is unproven.",
-  "current_device_runtime_sha256": "93040b1de94b52b710d7a3e37a3adef2f1e840108fb53ab69b9ecf46e14102f4",
-  "current_device_build": "runtime/build/reset-undo-trim-003",
+  "current_device_runtime_sha256": "f58010e662b17770082991d4c64159824b686d4016b4bd404468ab426a48645e",
+  "current_device_build": "runtime/build/minimal-owner-flash-001",
   "scene_hardware_evidence": "analysis/scene-hardware-verification.json",
   "input_native_evidence": "analysis/ghidra/input-adapter/report.md",
   "input_candidate": {
@@ -309,7 +309,7 @@
     "independent_readback_verified": true,
     "superseded_by": "raster-commands-001 (retains fixed canary feature)"
   },
-  "current_priority": "Command parity",
+  "current_priority": "Minimal display owner, flash-backed assets and larger raw-message handling",
   "excluded_features": [
     "Bluetooth keyboard/HOGP accessory support",
     "Ring battery",
@@ -483,12 +483,12 @@
   "extended_rx_profile": {
     "name": "app-rx-96k-v1",
     "limit_bytes": 98304,
-    "headroom_over_current_runtime_bytes": 32848,
+    "headroom_over_current_runtime_bytes": 26736,
     "report": "analysis/rx96-profile-20261102/report.json",
     "review": "analysis/rx-profile-review-20261102/report.json",
-    "state": "Offline construction/linker profile reviewed; existing65456-byte diagnostic image reproduced exactly",
-    "runtime_over_64k_hardware_verified": false,
-    "live_profile_admitted": false
+    "state": "71568-byte runtime boot verified in minimal-owner-flash-003",
+    "runtime_over_64k_hardware_verified": true,
+    "live_profile_admitted": true
   },
   "sensor_command_progress": {
     "swift_reference_report": "analysis/sensor-swift-20261102/report.json",
@@ -551,8 +551,8 @@
     "measured_ram_saving_note": "Observed delta recorded separately; exact gate-only heap saving not isolated from reboot/cache effects.",
     "superseded_by": "reset-undo-trim-001; dashboard gates retained"
   },
-  "current_device_release": "reset-undo-trim-001",
-  "current_device_ota": "captures/firmware/reset-undo-trim-001/firmware.bin",
+  "current_device_release": "minimal-owner-flash-003",
+  "current_device_ota": "captures/firmware/minimal-owner-flash-003/firmware.bin",
   "reset_undo_trim_candidate": {
     "state": "Boot verified; matched RAM RESET/PUT sequence and cleanup verified",
     "release": "reset-undo-trim-001",
@@ -560,7 +560,7 @@
     "runtime_build": "runtime/build/reset-undo-trim-003",
     "runtime_bytes": 60256,
     "installed": true,
-    "currently_installed": true,
+    "currently_installed": false,
     "boot_verified": true,
     "ota_transfer_verified": true,
     "firmware_bytes_sent": 2226404,
@@ -689,6 +689,31 @@
       "after_reset_minus_put_median_bytes": 46392.0,
       "after_reset_minus_reacquired_median_bytes": 46382.0,
       "difference_of_reset_deltas_bytes": 46336.0
-    }
+    },
+    "superseded_by": "minimal-owner-flash-003"
+  },
+  "minimal_owner_flash_candidate": {
+    "release": "minimal-owner-flash-003",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
+    "runtime_sha256": "f58010e662b17770082991d4c64159824b686d4016b4bd404468ab426a48645e",
+    "runtime_bytes": 71568,
+    "runtime_build": "runtime/build/minimal-owner-flash-001",
+    "state": "Boot verified; scene RESET lost RFCOMM before reply; no asset writes started",
+    "installed": true,
+    "boot_verified": true,
+    "hardware_capacity_verified": false,
+    "offline_checkpoint": "analysis/minimal-owner-flash-20261102/offline-checkpoint.json",
+    "scope": "Minimal launcher;256KiB logical flash COW assets;65535-byte raw message carrier; native Swift sender",
+    "remaining": [
+      "Fix native queue ABI and validate scene initialization on hardware",
+      "Hardware asset/capacity/visual checks",
+      "Compressed transport/inflater integration",
+      "Remaining applicable G2 command/feature parity"
+    ],
+    "currently_installed": true,
+    "ota_transfer_verified": true,
+    "report": "analysis/minimal-owner-flash-20261102/hardware-result.json",
+    "firmware_bytes_sent": 2234130
   }
 }

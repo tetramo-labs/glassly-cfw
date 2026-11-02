@@ -399,6 +399,12 @@ def main():
             [str(args.rv32_python.absolute()), 'tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py',
              '--suite', suite, '--build', str(out / 'reset-undo-trim-build'),
              '--report', str(out / ('reset-undo-trim-' + suite + '.json'))]))
+    commands.append(('minimal_owner_flash', 'Minimal launcher lifecycle, native COW worker and full raw-message capacities',
+                     [python, 'runtime/graphics/tests/run_minimal_owner_flash_tests.py', '--output', str(out/'minimal-owner-flash'),
+                      '--rv32-python', str(args.rv32_python.absolute())]))
+    commands.append(('minimal_owner_flash_commands', 'Retained drawing, text, animation and diagnostic cleanup on flash scene',
+                     [str(args.rv32_python.absolute()), 'tests/rv32/minimal_owner_flash_commands_test.py',
+                      '--build', str(out/'minimal-owner-flash/build'), '--report', str(out/'minimal-owner-flash/retained-commands.json')]))
     if not args.include_keyboard_reference:
         commands = [entry for entry in commands if entry[0] != 'keyboard']
     else:

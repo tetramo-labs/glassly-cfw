@@ -1,6 +1,9 @@
 /* Own every scene allocation and adapt its one-shot timer to the serialized
  * MemoMind display worker. No stock addresses, writable globals or locks. */
 #include "scene_session.h"
+#ifdef MM_FLASH_SCENE
+#include "flash_broker.h"
+#endif
 #ifdef MM_RASTER_COMMANDS
 #include "raster_commands.h"
 #ifdef MM_RECT_COPY
@@ -66,6 +69,9 @@ static void present(void *user,mm_scene_context *ctx,const mm_raster *raster,
     /* The original timer deferred rendering to a second display task. Here
      * we already own that task: finish the pending frame before LVGL borrows it. */
     mm_scene_render_if_due(ctx,raster->pixels);
+#ifdef MM_FLASH_SCENE
+    if(ctx->shadow_invalid){dirty->direct_failed=1;return;}
+#endif
     s->hooks.present(s->hooks.user,raster);
     dirty->direct_submitted=1;
 }
@@ -92,7 +98,19 @@ int mm_scene_session_init(mm_scene_session *s,const mm_scene_session_hooks *hook
     s->timer_started=s->timer_period=0;
     mm_scene_platform p={s,allocate,deallocate,now,active,shadow,timer_new,timer_start,
         timer_stop,0,0,present,settled,0,hooks->builtin_text ? builtin_text:0};
+#ifdef MM_FLASH_SCENE
+    mm_flash_callbacks io;uint8_t unavailable[32];mm_scene_store backend;
+    mm_flash_geometry geometry={0x700000,MM_FLASH_PHYSICAL_BYTES,MM_FLASH_LOGICAL_BYTES,4096,256};
+    if(glassly_flash_broker_bind(&io,unavailable))return -4;
+    s->flash_workspace=allocate(s,MM_SCENE_WORKSPACE,4096);
+    if(!s->flash_workspace)return -1;
+    if(mm_flash_store_init(&s->flash,&geometry,&io,unavailable,s->flash_workspace,4096) ||
+       mm_scene_flash_store_bind(&backend,&s->flash) || mm_scene_init_with_store(&s->core,&p,&backend)){
+        deallocate(s,MM_SCENE_WORKSPACE,s->flash_workspace);s->flash_workspace=0;return -4;
+    }
+#else
     if (mm_scene_init(&s->core,&p,store_limit)) return -1;
+#endif
     s->initialized=1;s->core.cache_reply_cap=250;
     return 0;
 }
@@ -248,4 +266,7 @@ void mm_scene_session_pump(mm_scene_session *s) {
 void mm_scene_session_dispose(mm_scene_session *s) {
     if (!s || !s->initialized) return;
     s->timer_armed=0;mm_scene_release(&s->core);s->initialized=0;
+#ifdef MM_FLASH_SCENE
+    if(s->flash_workspace){deallocate(s,MM_SCENE_WORKSPACE,s->flash_workspace);s->flash_workspace=0;}
+#endif
 }

@@ -1,0 +1,89 @@
+{
+  "release": "minimal-owner-flash-003",
+  "version": "GLASSLYCFW/1",
+  "candidate": {
+    "release": "minimal-owner-flash-003",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
+    "image_bytes": 2234130,
+    "header150_sha256": "fab9f49ecc19601ef76fcac616a88255badb9559e3c712459eb1d9b200a43ca5",
+    "app_header256_sha256": "d4ad18483d7507826e4223d31f532bb85d5b193c92c1e69274506d04493c7603",
+    "metadata_bytes": 171,
+    "metadata_sha256": "0c9e81a2cb000d96a0bceb84c2d28efdb216b5d67617ffccf2adf319772ff4f4",
+    "app_packed_bytes": 963028,
+    "app_raw_bytes": 1844784,
+    "app_sha256": "d3d4bec50f9bd5cb7bf97a6934ef24406a13e4eb850565627eacc376d717d570",
+    "runtime_sha256": "f58010e662b17770082991d4c64159824b686d4016b4bd404468ab426a48645e"
+  },
+  "ota_transfer_verified": true,
+  "reboot_acknowledged": true,
+  "boot_verified": true,
+  "hardware_capacity_verified": false,
+  "physical_output_confirmed": false,
+  "state": "Boot verified; scene RESET lost RFCOMM before reply; no asset writes started",
+  "transfer_verification": "analysis/minimal-owner-flash-20261102/transfer-verification.json",
+  "boot": {
+    "appHeaderSHA256": "d4ad18483d7507826e4223d31f532bb85d5b193c92c1e69274506d04493c7603",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "00056f04",
+    "physicalOutputConfirmed": false,
+    "release": "minimal-owner-flash-003",
+    "stage": "after",
+    "topologyAndBadmapVerified": true
+  },
+  "first_boot_attempt": {
+    "complete": false,
+    "error": "RFCOMM open timed out",
+    "flashAssetWritesStarted": false,
+    "physicalOutputConfirmed": false,
+    "stage": "after"
+  },
+  "preflight": {
+    "appHeaderSHA256": "76d7bfc287aad7294d4d855a86d4d2cfbe8043a3b555eca41a891e17b1f7a4e6",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "000567bc",
+    "physicalOutputConfirmed": false,
+    "release": "reset-undo-trim-001",
+    "stage": "before",
+    "topologyAndBadmapVerified": true
+  },
+  "exercise_capture": "captures/swift-mac-minimal-owner-exercise-20261102-01",
+  "checks": {
+    "swift_tests": 112,
+    "asan_ubsan_large_and_broker": true,
+    "rv32_scene_groups": 5,
+    "native_caller_groups": 1,
+    "retained_command_groups": 2,
+    "default_runtime_byte_identical": true,
+    "full_aggregate_rerun": false
+  },
+  "limitations": [
+    "Raw-message carrier only; compressed transport histories remain unfinished.",
+    "Flash logical maps are volatile across reboot or new scene.",
+    "Display task waits synchronously for worker I/O; throughput not established.",
+    "Full applicable G2 parity remains incomplete."
+  ],
+  "exercise": {
+    "appHeaderSHA256": "d4ad18483d7507826e4223d31f532bb85d5b193c92c1e69274506d04493c7603",
+    "bootHeaderVerified": true,
+    "complete": false,
+    "error": "RFCOMM channel closed",
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "00056ce4",
+    "physicalOutputConfirmed": false,
+    "release": "minimal-owner-flash-003",
+    "stage": "exercise",
+    "topologyAndBadmapVerified": true
+  },
+  "diagnosis": "Broker calls native queue constructor0200ee6a with2arguments, but native wrapper takes3 and forwards a1/a2 as depth/item bytes. Host mock incorrectly mirrored the2argument signature. This is a confirmed ABI defect; causality for the observed disconnect is inferred, not a captured crash backtrace.",
+  "next": "Correct queue ABI and add actual native-wrapper execution regression before constructing a new candidate.",
+  "capture_sha256": {
+    "captures/swift-mac-minimal-owner-flash-20261102-01/trace.jsonl": "40f385e907d9197c3911dfe226d17ea068b345ce4a11a9cb0e9803f5b2365bf6",
+    "captures/swift-mac-minimal-owner-boot-20261102-02/trace.jsonl": "ad7bbf126b5d65945d3b395eb5493c8188e2f8df1912b7c051326f3c82d23a78",
+    "captures/swift-mac-minimal-owner-exercise-20261102-01/trace.jsonl": "938ff5033e714259e998300a5eef47b50eb42aa08da788e9dd7858c7cecdaccc"
+  }
+}

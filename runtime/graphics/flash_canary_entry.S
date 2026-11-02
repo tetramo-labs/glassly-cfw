@@ -49,3 +49,22 @@ glassly_flash_canary_command_entry:
     mv sp,t0
     ret
 .size glassly_flash_canary_command_entry,.-glassly_flash_canary_command_entry
+
+#ifdef MM_FLASH_SCENE
+.section .text.flash_broker_entry,"ax",@progbits
+.align 1
+.global glassly_flash_broker_entry
+.type glassly_flash_broker_entry,@function
+glassly_flash_broker_entry:
+    mv t0,sp
+    andi sp,sp,-16
+    addi sp,sp,-16
+    sw t0,0(sp)
+    sw ra,4(sp)
+    call glassly_flash_broker_worker
+    lw t0,0(sp)
+    lw ra,4(sp)
+    mv sp,t0
+    ret
+.size glassly_flash_broker_entry,.-glassly_flash_broker_entry
+#endif

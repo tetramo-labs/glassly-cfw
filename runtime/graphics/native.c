@@ -124,3 +124,12 @@ void glassly_diagnostics_source(void *image,const mm_native_image *source) {
     FN(0x042c96ecu,xy_fn)(image,(source->header>>10)&2047u,source->header>>21);
 }
 #endif
+
+#ifdef MM_FLASH_SCENE
+void glassly_graphics_detach(void *image) {
+    typedef void (*hide_fn)(void *,uint32_t);
+    typedef void (*source_fn)(void *,const mm_native_image *);
+    FN(0x042cde58u,hide_fn)(image,1);
+    FN(0x042bd7fau,source_fn)(image,0);
+}
+#endif

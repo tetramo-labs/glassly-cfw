@@ -32,15 +32,15 @@ public enum RasterCommands {
 
     /// Mode6: [6][RLE], seeds/replaces the complete persistent600x350 raster.
     /// Default input is exactly105000 bytes; hardware-stride320 input is112000.
-    public static func fullFrame(pixels: Data, rowStride: Int = 300) throws -> Data {
-        try encode(pixels: pixels, width: width, height: height, rowStride: rowStride, header: [6])
+    public static func fullFrame(pixels: Data, rowStride: Int = 300, maximumCommandBytes: Int = Self.maximumCommandBytes) throws -> Data {
+        try encode(pixels: pixels, width: width, height: height, rowStride: rowStride, header: [6], maximumCommandBytes: maximumCommandBytes)
     }
 
     /// Mode3: [3][x/4][y/2][width/4][height/2][fidLE16][RLE]. Input contains only
     /// the local box pixels. No clipping, crop, grayscale conversion or fid tracking
     /// occurs. Send a mode6 keyframe first to establish the intended base; fid is diagnostic only.
     public static func boundingBox(pixels: Data, x: Int, y: Int, width: Int, height: Int,
-                                   frameID: UInt16, rowStride: Int? = nil) throws -> Data
+                                   frameID: UInt16, rowStride: Int? = nil, maximumCommandBytes: Int = Self.maximumCommandBytes) throws -> Data
     {
         guard width > 0, width <= Self.width, height > 0, height <= Self.height,
               x >= 0, x <= Self.width - width, y >= 0, y <= Self.height - height,
@@ -51,17 +51,18 @@ public enum RasterCommands {
         let header: [UInt8] = [3, UInt8(x / 4), UInt8(y / 2), UInt8(width / 4), UInt8(height / 2),
                                UInt8(truncatingIfNeeded: frameID), UInt8(frameID >> 8)]
         return try encode(pixels: pixels, width: width, height: height,
-                          rowStride: rowStride ?? width / 2, header: header)
+                          rowStride: rowStride ?? width / 2, header: header, maximumCommandBytes: maximumCommandBytes)
     }
 
-    private static func encode(pixels: Data, width: Int, height: Int, rowStride: Int, header: [UInt8]) throws -> Data {
+    private static func encode(pixels: Data, width: Int, height: Int, rowStride: Int, header: [UInt8], maximumCommandBytes: Int) throws -> Data {
+        guard (1...65535).contains(maximumCommandBytes) else { throw RasterCommandError.capacityExceeded(maximumCommandBytes: maximumCommandBytes) }
         let rowBytes = width / 2
         guard rowStride >= rowBytes, rowStride <= Int.max / height else { throw RasterCommandError.invalidStride }
         let expectedBytes = rowStride * height
         guard pixels.count == expectedBytes else {
             throw RasterCommandError.incorrectByteCount(expected: expectedBytes, actual: pixels.count)
         }
-        // At most8192 output bytes are allocated, even for an incompressible input.
+        // Bound output by the explicitly admitted firmware command capacity.
         var output = header
         output.reserveCapacity(maximumCommandBytes)
         return try pixels.withUnsafeBytes { (source: UnsafeRawBufferPointer) in

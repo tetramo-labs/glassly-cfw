@@ -2,6 +2,9 @@
 #ifndef MM_SCENE_SESSION_H
 #define MM_SCENE_SESSION_H
 #include "scene.h"
+#ifdef MM_FLASH_SCENE
+#include "scene_flash_store.h"
+#endif
 
 /* Native policy, separate from the portable G2 capacities. Counts allocator
  * headers as well as scene storage; the caller owns the canvas and session. */
@@ -25,6 +28,10 @@ typedef struct {
 } mm_scene_session_hooks;
 
 typedef struct {
+#ifdef MM_FLASH_SCENE
+    mm_flash_store flash;
+    uint8_t *flash_workspace;
+#endif
     mm_scene_context core;
     mm_scene_session_hooks hooks;
     mm_raster raster;

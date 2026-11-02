@@ -40,6 +40,20 @@ final class FirmwareImageTests: XCTestCase {
         try Data(contentsOf: repositoryRoot().appendingPathComponent(relative))
     }
 
+    func testMinimalOwnerFlashExactFixtureAndMutationRejection() throws {
+        let bytes = try fixture("captures/firmware/minimal-owner-flash-003/firmware.bin")
+        let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f")
+        XCTAssertEqual(image.releaseName, "minimal-owner-flash-003"); XCTAssertEqual(bytes.count, 2234130)
+        let parsed = try FirmwareContainer.inspect(Array(bytes))
+        XCTAssertEqual(parsed.headerSHA256, "fab9f49ecc19601ef76fcac616a88255badb9559e3c712459eb1d9b200a43ca5")
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1844784)
+        let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
+        for i in [1,2,4,5,6] { XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256) }
+        var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f"))
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
+    }
+
     private func stock() throws -> Data {
         try fixture("captures/firmware/ota-1.0.3.127-jhv3_release.bin")
     }

@@ -43,7 +43,8 @@ public extension RasterCommands {
     /// Success schedules one final presentation, but this is not a transaction:
     /// a later failure can leave earlier pixel/cache mutations in place. Only the
     /// final cache-reply scratch survives; no per-child reply list is promised.
-    static func bundle(_ commands: [Data]) throws -> Data {
+    static func bundle(_ commands: [Data], maximumCommandBytes: Int = Self.maximumCommandBytes) throws -> Data {
+        guard (2...65535).contains(maximumCommandBytes) else { throw BundleCommandError.capacityExceeded(maximumCommandBytes: maximumCommandBytes) }
         guard commands.count <= 255 else { throw BundleCommandError.tooManyCommands(commands.count) }
         var total = 2
         for (index, command) in commands.enumerated() {

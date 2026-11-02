@@ -87,7 +87,7 @@ def check_stack_usage(rows):
             raise ValueError("Nonstatic or oversized function stack frame: "+row)
 
 
-def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, rx_profile=DEFAULT_RX_PROFILE):
+def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, rx_profile=DEFAULT_RX_PROFILE):
     limit = rx_limit(rx_profile)
     if reset_undo_trim and not scene_session:
         raise ValueError("RESET undo trimming requires scene-session")
@@ -115,6 +115,10 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         raise ValueError("Input observer requires the scene-session profile")
     if gate_fixture and scene_session:
         raise ValueError("Gate fixture and scene session are separate build profiles")
+    if flash_scene and not (minimal_launcher and flash_canary):
+        raise ValueError("Flash scene requires minimal launcher and reserved flash-canary profile")
+    if minimal_launcher and not diagnostic_commands:
+        raise ValueError("Minimal launcher requires full diagnostic scene profile")
     entry, linker = ROOT/"runtime/graphics/entry.S", ROOT/"runtime/graphics"/linker_name(rx_profile)
     sources = ([ROOT/"tests/rv32/graphics_gate_stubs.c"] if gate_fixture else
                [ROOT/"runtime/graphics/graphics.c", ROOT/"runtime/graphics/native.c",
@@ -122,6 +126,11 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if scene_session:
         sources += [ROOT/"runtime/graphics/scene_session.c", ROOT/"runtime/portable/scene.c",
                     ROOT/"runtime/portable/vector.c", ROOT/"runtime/graphics/native_text.c"]
+    if flash_scene:
+        sources += [ROOT/"runtime/graphics/freestanding.c", ROOT/"runtime/graphics/flash_broker.c", ROOT/"runtime/graphics/large_message.c",
+                    ROOT/"runtime/portable/flash_store.c", ROOT/"runtime/portable/scene_store.c", ROOT/"runtime/portable/scene_flash_store.c"]
+    if minimal_launcher:
+        sources += [ROOT/"runtime/graphics/minimal_launcher.c", ROOT/"runtime/graphics/minimal_launcher_entry.S"]
     if diagnostic_commands:
         sources += [ROOT/"runtime/graphics/diagnostics.c"]
     if rect_copy:
@@ -151,6 +160,10 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     flags = [*FLAGS, "-I"+str(ROOT/"runtime/graphics"), "-I"+str(ROOT/"runtime/portable")]
     if scene_session:
         flags += ["-DMM_GRAPHICS_SCENE=1", "-DMM_NATIVE_TEXT_FIRMWARE=1"]
+    if flash_scene:
+        flags += ["-DMM_FLASH_SCENE=1", "-DMM_SCENE_EXTERNAL_STORE=1"]
+    if minimal_launcher:
+        flags += ["-DMM_MINIMAL_LAUNCHER=1"]
     if reset_undo_trim:
         flags += ["-DMM_SCENE_RESET_UNDO_TRIM=1"]
     if diagnostic_commands:
@@ -186,6 +199,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         objects.append(obj)
     elf = out/"graphics.elf"
     retain = ["-Wl,--undefined="+name for name in SCENE_ENTRIES] if scene_session else []
+    if minimal_launcher:
+        retain += ["-Wl,--undefined=glassly_launcher_"+n+"_entry" for n in ("init","destroy","tick","event","message","home","suspend")]
     if input_observer:
         retain += ["-Wl,--undefined="+name for name in INPUT_ENTRIES]
     if flash_reader:
@@ -241,6 +256,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "text_commands": text_commands,
               "diagnostic_commands": diagnostic_commands,
               "reset_undo_trim": reset_undo_trim,
+              "minimal_launcher": minimal_launcher,
+              "flash_scene": flash_scene,
               "scene_extra_flags": ["-Os"] if reset_undo_trim else [],
               "diagnostics_extra_flags": ["-Oz"] if diagnostic_commands else [],
               "graphics_extra_flags": ["-Os"] if diagnostic_commands else [],
@@ -282,11 +299,13 @@ def main():
     parser.add_argument("--text-commands", action="store_true", help="Add mode15 native resource text; requires command-bundles")
     parser.add_argument("--command-bundles", action="store_true", help="Add mode8 sequential subdispatch/single present; requires rect-copy")
     parser.add_argument("--reset-undo-trim", action="store_true", help="Native standalone RESET scratch release and mandatory mutation rollback; requires scene-session")
+    parser.add_argument("--minimal-launcher", action="store_true", help="Cold-boot dashboard lifecycle replacement; requires separately constructed callback and external-entry gates")
+    parser.add_argument("--flash-scene", action="store_true", help="Flash COW assets via native worker and bounded large-message assembly; requires minimal launcher")
     add_rx_argument(parser)
     args = parser.parse_args()
     try:
         print(json.dumps(compile_graphics(args.output, gate_fixture=args.gate_fixture,
-                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, rx_profile=args.rx_profile), indent=2))
+                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, rx_profile=args.rx_profile), indent=2))
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         if isinstance(exc, subprocess.CalledProcessError):
             parser.exit(2, exc.stderr.decode()+str(exc)+"\n")

@@ -15,12 +15,18 @@
 #include "native_text.h"
 #endif
 
+#ifdef MM_FLASH_SCENE
+#include "large_message.h"
+#endif
 #define P mm_graphics_native
 #define OWNER_MAGIC 0x474c4931u
 typedef struct {
     uint32_t magic, started;
     void *parent, *image, *timer;
     mm_native_image descriptor;
+#ifdef MM_FLASH_SCENE
+    mm_large_message assembly;
+#endif
 #ifdef MM_GRAPHICS_SCENE
     mm_scene_session scene;
     uint16_t settled_tags[4];
@@ -46,7 +52,12 @@ static void *reply(const char *text) {
 }
 static int valid_message(const uint8_t *data, size_t length) {
 #ifdef MM_GRAPHICS_SCENE
+#ifdef MM_FLASH_SCENE
+    if (!data || !length || length>MM_SCENE_MAX_MESSAGE) return 0;
+    if(data[0]==MM_LARGE_WIRE_MODE)return length>=6 && length<=MM_LARGE_CHUNK+8;
+#else
     if (!data || !length || length>MM_GRAPHICS_MAX_MESSAGE) return 0;
+#endif
 #ifdef MM_RASTER_COMMANDS
     if ((data[0]&127u)==3 || (data[0]&127u)==6) return length>=3;
 #ifdef MM_RECT_COPY
@@ -74,6 +85,9 @@ static void deleted(void *event) {
     owner *o=P.event_userdata(event);
     if (!o || o->magic!=OWNER_MAGIC) return;
     o->magic=0;
+#ifdef MM_FLASH_SCENE
+    mm_large_clear(&o->assembly,P.free);
+#endif
     void *timer=o->timer;
     o->timer=0;
     if (timer) P.timer_delete(timer);
@@ -84,8 +98,27 @@ static void deleted(void *event) {
     if (o->descriptor.data) P.free((void *)o->descriptor.data);
     P.free(o);
 }
+#ifdef MM_MINIMAL_LAUNCHER
+/* Display-task lifecycle only. Never deletes the shared active screen. */
+void glassly_graphics_cleanup(void) {
+    void *parent=P.screen();
+    if(!parent)return;
+    owner *o=P.find_owner(parent,deleted);
+    if(o && o->magic==OWNER_MAGIC){
+        if(o->scene.initialized)mm_scene_session_dispose(&o->scene);
+        P.image_delete(o->image);
+    }
+#ifdef MM_DIAGNOSTIC_COMMANDS
+    mm_diagnostics_dispose(parent);
+    glassly_input_cleanup(parent);
+#endif
+}
+#endif
 #ifdef MM_GRAPHICS_SCENE
 static void flush_settled(owner *o);
+#ifdef MM_FLASH_SCENE
+static void scene_present(void *,const mm_raster *);
+#endif
 #endif
 static void tick(void *timer) {
     owner *o=P.timer_userdata(timer);
@@ -97,7 +130,14 @@ static void tick(void *timer) {
         return;
     }
 #ifdef MM_GRAPHICS_SCENE
+#ifdef MM_FLASH_SCENE
+    int detached=o->scene.timer_armed && (uint32_t)(P.now()-o->scene.timer_started)>=o->scene.timer_period;
+    if(detached)glassly_graphics_detach(o->image);
+#endif
     mm_scene_session_pump(&o->scene);
+#ifdef MM_FLASH_SCENE
+    if(detached)scene_present(o,&o->scene.raster);
+#endif
     flush_settled(o);
 #endif
 }
@@ -146,10 +186,16 @@ static int scene_active(void *user) {
 }
 static void scene_present(void *user,const mm_raster *raster) {
     owner *o=user;(void)raster;
+#ifdef MM_FLASH_SCENE
+    if(o->scene.core.shadow_invalid){glassly_graphics_detach(o->image);return;}
+#endif
 #ifdef MM_COMMAND_BUNDLES
     if(o->bundle_active && o->bundle_overflow)return;
 #endif
     P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
+#ifdef MM_FLASH_SCENE
+    glassly_diagnostics_hidden(o->image,0);
+#endif
 #ifdef MM_DIAGNOSTIC_COMMANDS
     mm_diagnostics_present(o->parent,o->image);
 #endif
@@ -263,6 +309,9 @@ void glassly_graphics_probe(uint32_t command, void *request,
      * allocating a formatting buffer. json() copies the string synchronously. */
     static const char template[]="{\"glassly\":\"graphics-runtime\",\"abi\":1,\"profile\":\"H001Y-1.0.3.127\","
                    "\"width\":600,\"height\":350,"
+#ifdef MM_MINIMAL_LAUNCHER
+                   "\"version\":\"GLASSLYCFW/1\",\"displayOwner\":\"minimal\","
+#endif
 #ifdef MM_GRAPHICS_FLASH_READ
                    "\"flashRead\":123,"
 #endif
@@ -290,15 +339,28 @@ void glassly_graphics_probe(uint32_t command, void *request,
 #else
                    "\"modes\":[3,6,11,19,20,36,37,38,39,40,41],\"rasterLens\":\"first-left\","
 #endif
+#ifdef MM_FLASH_SCENE
+                   "\"maxMessageBytes\":65535,\"maxWireMessageBytes\":8192,\"largeMessage\":{\"mode\":127,\"chunkBytes\":1024,\"crc\":\"crc32-ieee\"},"
+#else
                    "\"maxMessageBytes\":8192,"
+#endif
 #else
                    "\"modes\":[11,19,20,36,37,38,39,40,41],\"maxMessageBytes\":8192,"
 #endif
-                   "\"storeKiB\":64,\"builtinText\":true,\"emptyGeometry\":\"lease-only\","
+#ifdef MM_FLASH_SCENE
+                   "\"storeKiB\":256,\"assetStorage\":\"flash-volatile-map\","
+#else
+                   "\"storeKiB\":64,"
+#endif
+                   "\"builtinText\":true,\"emptyGeometry\":\"lease-only\","
 #else
                    "\"modes\":[11,36],\"shapeTypes\":[1,2,3,4,5,6,7,8,9,10,11,12,13],"
 #endif
+#ifdef MM_FLASH_SCENE
+                   "\"maxGeometryRecords\":255,\"leaseTicks\":30000,\"tickMs\":1,"
+#else
                    "\"maxGeometryRecords\":255,\"leaseTicks\":1000,\"tickMs\":1,"
+#endif
 #ifdef MM_FLASH_CANARY
                    "\"flashCanary\":122,\"registryBytes\":256,\"writableStaticBytes\":256,"
 #else
@@ -355,6 +417,11 @@ void glassly_graphics_command(uint32_t command, void *request,
     /* Admission may silently drop: no immediate success reply. Only execution
      * on the display worker produces the correlated completion. */
 }
+#ifdef MM_FLASH_SCENE
+#define EXEC_EVENT event
+static void execute(uint8_t event,const uint8_t *data,size_t length) {
+#else
+#define EXEC_EVENT job[1]
 void glassly_graphics_display(void *envelope) {
     const uint8_t *e=envelope;
     if (!e || (e[1]&63u)!=63u || ((uint32_t)e[4]|((uint32_t)e[5]<<8))!=MM_GRAPHICS_QUEUE_EVENT)
@@ -367,12 +434,17 @@ void glassly_graphics_display(void *envelope) {
     if (job[0]==2) {glassly_input_display(envelope);return;}
 #endif
     size_t length=(size_t)job[2]|((size_t)job[3]<<8);
+#endif
     const char *result=invalid;
 #ifdef MM_GRAPHICS_SCENE
     owner *executed=0;
     void *scene_response=0;
 #endif
+#ifdef MM_FLASH_SCENE
+    if (valid_message(data,length)) {
+#else
     if (job[0]==1 && length==size-MM_GRAPHICS_JOB_HEADER && valid_message(data,length)) {
+#endif
         void *parent=P.screen();
         owner *o=parent ? P.find_owner(parent,deleted) : 0;
         if (o && o->magic!=OWNER_MAGIC) o=0;
@@ -409,14 +481,31 @@ void glassly_graphics_display(void *envelope) {
             if (!o) result=no_memory;
             else {
 #ifdef MM_GRAPHICS_SCENE
-                o->started=P.now();o->event=job[1];executed=o;
+                o->started=P.now();o->event=EXEC_EVENT;executed=o;
+#ifdef MM_FLASH_SCENE
+                int initialized=initialize_scene(o);
+                if(initialized)result=initialized==-4 ? "{\"glassly\":\"graphics\",\"abi\":1,\"result\":\"storage-unavailable\"}":no_memory;
+#else
                 if (initialize_scene(o)) result=no_memory;
+#endif
                 else {
 #ifdef MM_COMMAND_BUNDLES
                     if((data[0]&127u)==8 && !begin_bundle(o,data[1])) result=no_memory;
                     else {
 #endif
+#ifdef MM_FLASH_SCENE
+                    glassly_graphics_detach(o->image);
+#endif
                     int status=mm_scene_session_dispatch(&o->scene,data,length);
+#ifdef MM_FLASH_SCENE
+                    if(o->scene.core.storage_io || o->scene.core.shadow_invalid){
+                        glassly_graphics_detach(o->image);
+                        result="{\"glassly\":\"graphics\",\"abi\":1,\"result\":\"storage-error\"}";
+                        status=-4;
+                    }
+                    /* Non-presenting commands retain a valid previous raster. */
+                    if(status!=-4)scene_present(o,&o->scene.raster);
+#endif
 #ifdef MM_DIAGNOSTIC_COMMANDS
                     if(status)mm_diagnostics_failure(parent,data[0],status==-3);
 #endif
@@ -433,6 +522,9 @@ void glassly_graphics_display(void *envelope) {
                     } else
 #ifdef MM_TEXT_COMMANDS
                     if(status==-3)result=no_memory;else
+#endif
+#ifdef MM_FLASH_SCENE
+                    if(status!=-4)
 #endif
                     result=status==-2 ? busy:invalid;
 #ifdef MM_COMMAND_BUNDLES
@@ -457,9 +549,59 @@ void glassly_graphics_display(void *envelope) {
 #else
     void *response=reply(result);
 #endif
-    if (response) { P.send(job[1],response); P.release(&response); }
+    if (response) { P.send(EXEC_EVENT,response); P.release(&response); }
 #ifdef MM_GRAPHICS_SCENE
     if (executed) flush_settled(executed);
 #endif
     /* Envelope is still exclusively owned/freed by the stock worker. */
 }
+
+#undef EXEC_EVENT
+#ifdef MM_FLASH_SCENE
+static const char large_ok[]="{\"glassly\":\"large-message\",\"abi\":1,\"result\":\"accepted\"}";
+static void *large_allocate(size_t n){return P.free_bytes()>=MM_GRAPHICS_QUEUE_HEADROOM+n?P.alloc(n):0;}
+void glassly_graphics_display(void *envelope) {
+    const uint8_t *e=envelope;
+    if (!e || (e[1]&63u)!=63u || ((uint32_t)e[4]|((uint32_t)e[5]<<8))!=MM_GRAPHICS_QUEUE_EVENT)
+        return;
+    size_t size=(size_t)e[6]|((size_t)e[7]<<8);
+    if (size<MM_GRAPHICS_JOB_HEADER || size>MM_GRAPHICS_JOB_HEADER+MM_GRAPHICS_MAX_MESSAGE)
+        return;
+    const uint8_t *job=e+8, *data=job+MM_GRAPHICS_JOB_HEADER;
+#ifdef MM_GRAPHICS_INPUT
+    if (job[0]==2) {glassly_input_display(envelope);return;}
+#endif
+    size_t length=(size_t)job[2]|((size_t)job[3]<<8);
+
+    if(job[0]!=1 || length!=size-MM_GRAPHICS_JOB_HEADER)return;
+#ifdef MM_FLASH_SCENE
+    void *parent=P.screen();owner *o=parent?P.find_owner(parent,deleted):0;
+    if(o && o->magic!=OWNER_MAGIC)o=0;
+    if(length && data[0]==MM_LARGE_WIRE_MODE){
+        const char *result=invalid;uint8_t *record=0;size_t record_length=0;
+        if(!parent || !P.launcher_active())result=busy;
+        else {
+            if(!o)o=create(parent);
+            if(!o)result=no_memory;
+            else {
+                o->started=P.now();
+                int rc=mm_large_accept(&o->assembly,data,length,large_allocate,P.free,&record,&record_length);
+                if(rc==MM_LARGE_DONE){
+                    if(record[0]!=MM_LARGE_WIRE_MODE)execute(job[1],record,record_length);
+                    else {void *r=reply(invalid);if(r){P.send(job[1],r);P.release(&r);}}
+                    P.free(record);return;
+                }
+                result=rc==MM_LARGE_OK?large_ok:rc==MM_LARGE_MEMORY?no_memory:invalid;
+            }
+        }
+        void *r=reply(result);if(r){P.send(job[1],r);P.release(&r);}return;
+    }
+    /* Preserve an incomplete record until commit/abort/lease cleanup. */
+    if(o && o->assembly.data && length && data[0]!=11 && !(length==2 && data[0]==36 && !data[1])){
+        void *r=reply(invalid);if(r){P.send(job[1],r);P.release(&r);}return;
+    }
+#endif
+    execute(job[1],data,length);
+}
+
+#endif /* MM_FLASH_SCENE wrapper */

@@ -87,3 +87,5 @@ void mm_diagnostics_present(void *parent,void *graphics_image) {
 void mm_diagnostics_failure(void *parent,unsigned mode,int allocation) {diagnostic_owner *d=diagnostic_find(parent);if(d){d->worker++;d->failed_mode=(uint8_t)mode;if(allocation)d->allocation++;}}
 void mm_diagnostics_cleanup(void *parent,uint16_t epoch) {diagnostic_owner *d=epoch?diagnostic_get(parent):diagnostic_find(parent);if(d){d->hidden=1;if(epoch)d->epoch=epoch;if(d->overlay)glassly_diagnostics_hidden(d->overlay,1);}}
 uint16_t mm_diagnostics_epoch(void *parent) {diagnostic_owner *d=diagnostic_find(parent);return d?d->epoch:0;}
+
+void mm_diagnostics_dispose(void *parent) {diagnostic_owner *d=diagnostic_find(parent);if(d)P.image_delete(d->image);}

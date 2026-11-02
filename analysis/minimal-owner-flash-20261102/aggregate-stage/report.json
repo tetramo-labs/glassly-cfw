@@ -1,0 +1,180 @@
+{
+  "passed": true,
+  "hardware_tested": false,
+  "commands": [
+    {
+      "name": "large-build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "runtime/graphics/large_message.c",
+        "runtime/graphics/tests/test_large_message.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/large"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "large",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/large"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-DMM_FLASH_BROKER_TEST=1",
+        "-DMM_FLASH_NATIVE_HOST_TEST=1",
+        "runtime/graphics/tests/test_flash_broker.c",
+        "runtime/graphics/flash_store_native.c",
+        "runtime/portable/flash_store.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-0",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "0"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-1",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-2",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "2"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-3",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "3"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-4",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-11",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "11"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "broker-12",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/broker",
+        "12"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "compile",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--text-commands",
+        "--diagnostic-commands",
+        "--reset-undo-trim",
+        "--minimal-launcher",
+        "--flash-scene",
+        "--rx-profile",
+        "app-rx-96k-v1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "construct",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/build_memomind_minimal_owner.py",
+        "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/candidate"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "rv32",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/minimal_owner_flash_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/rv32.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "native-callers",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/minimal_launcher_native_callers_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/build",
+        "--image",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/candidate/firmware.bin",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/minimal-owner-flash-20261102/aggregate-stage/native-callers.json"
+      ],
+      "returncode": 0
+    }
+  ],
+  "runtime_sha256": "f58010e662b17770082991d4c64159824b686d4016b4bd404468ab426a48645e",
+  "image_sha256": "b7d8cea506a21eb909e249a62c673a3834369b9171ed29a5b7a36a37bcb8e86f",
+  "source_drift": []
+}

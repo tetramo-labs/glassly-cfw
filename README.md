@@ -11,6 +11,16 @@ behavior is explicitly not required. The proven hardware drivers and OTA path
 remain development dependencies while useful. The pinned G2 assertion corpus and its feature semantics remain requirements.
 Bundled reference names are normalized to Glassly with original hashes retained.
 
+## Minimal owner and flash capacity
+
+The new `GLASSLYCFW/1` candidate replaces the dashboard launcher lifecycle with a
+minimal display owner, connects the 256 KiB COW asset store through a native I/O
+worker, and handles 65,535-byte raw commands through bounded CRC-checked chunks.
+Swift packet construction and sending are included. The complete 2,234,130-byte
+OTA and the running app header are verified. The first scene RESET lost its connection before replying, before any asset
+writes. A native queue ABI defect was identified; capacity checks remain pending. [the current result](analysis/minimal-owner-flash-20261102/hardware-result.json)
+records the exact image and runtime hashes. See [the ownership and wire contracts](runtime/graphics/MINIMAL_OWNER.md).
+
 ## Established results
 
 - The observed updater uses **Bluetooth Classic RFCOMM**, control UUID
@@ -59,7 +69,7 @@ capture. See [scene hardware evidence](analysis/scene-hardware-verification.json
 Visual acceptance of those earlier retained-scene/video tests remains unconfirmed.
 Later raster, copy, bundle and immediate-text patterns have separate user confirmations.
 Video trace spans of124/150 seconds do not establish
-30fps performance. Current native limits are a64KiB store and8192-byte messages.
+30fps performance. That earlier build used a 64 KiB store and 8192-byte messages.
 
 The [G2 test port](tests/g2_compat/README.md) preserves the pinned upstream corpus
 and maps original assertions to current MemoMind coverage. All46 unique C host
@@ -99,7 +109,7 @@ physical confirmation of “RAM” on black remains pending. The candidate passe
 was not rerun for this change. See the
 [RAM hardware result](analysis/dashboard-ram-native-20261102/hardware-result.json).
 
-The `reset-undo-trim-001` release is installed and boot verified. A successful
+The earlier `reset-undo-trim-001` release was installed and boot verified. A successful
 standalone RESET now releases undo scratch while retaining scene metadata, asset
 storage, vector workspace and pixels. In matched on-device measurements, RESET
 increased free RAM by **46,392 bytes** (median); the following PUT consumed
@@ -112,8 +122,8 @@ Python and 107 Swift tests passed, alongside native and sanitizer scene regressi
 See the [RESET scratch hardware result](analysis/reset-undo-trim-20261102/hardware-result.json).
 
 A separate reviewed **96 KiB RX profile** permits32,848 bytes of growth beyond the
-current runtime within the existing app allocation. It reproduces the installed
-image exactly; execution of a runtime larger than64 KiB is not yet verified.
+previous 65,456-byte runtime within the existing app allocation. The new
+71,568-byte minimal-owner runtime is now boot verified using this profile.
 See the [profile review](analysis/rx-profile-review-20261102/report.json).
 Native Swift compass/ALS command encoders now match5,404 unchanged upstream
 reference checks, and all105 Swift tests pass. Their firmware adapters remain

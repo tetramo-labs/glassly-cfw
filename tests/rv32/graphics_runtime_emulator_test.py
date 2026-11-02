@@ -313,7 +313,7 @@ class Machine:
         fp_initial = {i: self.uc.reg_read(getattr(r, f"UC_RISCV_REG_F{i}")) for i in FP_CALLEE}
         start = self.symbols[symbol] if isinstance(symbol, str) else symbol
         old_calls, old_instructions = len(self.calls), self.instructions
-        self.uc.emu_start(start, RET, count=3000000)
+        self.uc.emu_start(start, RET, count=getattr(self,"instruction_budget",3000000))
         assert self.uc.reg_read(r.UC_RISCV_REG_PC) == RET, "Instruction budget exhausted or no return"
         assert not self.callback_frames
         for i in CALLEE: assert self.reg(i) == initial[i], f"Handler corrupted x{i}"

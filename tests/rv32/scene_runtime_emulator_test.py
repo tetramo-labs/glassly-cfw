@@ -118,7 +118,7 @@ class SceneMachine(graphics.Machine):
         assert total <= 170*1024, "Actual live scene allocations exceeded configured budget"
         return total
 
-    def send_scene(self, payload, *, patch_epoch=True):
+    def send_scene(self, payload, *, patch_epoch=True, reply_mode=None):
         data = bytearray(payload)
         self.request_number += 1; self.sequence_number = (self.sequence_number+1) & 255
         if len(data) >= 5 and 37 <= data[0] <= 41:
@@ -140,7 +140,7 @@ class SceneMachine(graphics.Machine):
         for _, value in values:
             if "replyHex" in value:
                 cache = bytes.fromhex(value["replyHex"])
-                assert 10 <= len(cache) <= 250 and cache[0] == data[0]
+                assert 10 <= len(cache) <= 250 and cache[0] == (data[0] if reply_mode is None else reply_mode)
                 self.epoch = struct.unpack_from("<H", cache, 4)[0]
                 break
         core = self.core_bytes()

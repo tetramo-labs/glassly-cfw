@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleIdentifier</key><string>ai.glassly.memomind-cli</string>
+    <key>CFBundleName</key><string>MemoMind CLI</string>
+    <key>NSBluetoothAlwaysUsageDescription</key><string>Connect to your MemoMind glasses to inspect and install firmware.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key><string>Connect to your MemoMind glasses to inspect and install firmware.</string>
+</dict></plist>

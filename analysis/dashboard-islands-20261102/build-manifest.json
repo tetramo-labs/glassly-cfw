@@ -1,0 +1,90 @@
+{
+  "format": "memomind-dashboard-renderer-islands-v1",
+  "source_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "output_sha256": "0317abeac1d8b545216152b2d14220bdb91b99a14f5293c8444696769fa1af39",
+  "output_body_sha256": "2032f108fbd611506921c52573099024625e77c2e06536df85b7371fe6651240",
+  "islands": [
+    {
+      "entry": 69667042,
+      "end": 69667534,
+      "body_sha256": "fa69b39af67090767b9c39b898553e0ac4a45edf0b4bcbf1f0e9cdb796ad588c",
+      "before": "2d71232e1110",
+      "gate": "7d5582800100",
+      "return_code": -1,
+      "rx_start": 69667048,
+      "rx_end": 69667534,
+      "rx_capacity": 486,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": 69667534,
+      "end": 69667970,
+      "body_sha256": "e97ef6676f60d4aec3b34965748f5135d8cbee3377f26350936a95ac3999b310",
+      "before": "2971232e1112",
+      "gate": "7d5582800100",
+      "return_code": -1,
+      "rx_start": 69667540,
+      "rx_end": 69667970,
+      "rx_capacity": 430,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": 69667970,
+      "end": 69668306,
+      "body_sha256": "065b46cdbfd265abcd2c220bd4da3970f6ec76f745adeb370fd40c6c0caa0113",
+      "before": "157186cf",
+      "gate": "7d558280",
+      "return_code": -1,
+      "rx_start": 69667974,
+      "rx_end": 69668306,
+      "rx_capacity": 332,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": 69668306,
+      "end": 69668760,
+      "body_sha256": "dc1a59a810931b2a18353ef5509ff67c90ae6e742568248f78cb9e0a438c7cec",
+      "before": "5571a2c5",
+      "gate": "7d558280",
+      "return_code": -1,
+      "rx_start": 69668310,
+      "rx_end": 69668760,
+      "rx_capacity": 450,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": 69668760,
+      "end": 69669284,
+      "body_sha256": "100c520bf4b1f849c680d7d2032b055f9d89f5990c2213a734deb271ec2cada5",
+      "before": "497123248116",
+      "gate": "7d5582800100",
+      "return_code": -1,
+      "rx_start": 69668766,
+      "rx_end": 69669284,
+      "rx_capacity": 518,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": 69669284,
+      "end": 69669820,
+      "body_sha256": "bad031484ef0957c8c6405a06f2ac728b5db966e597b8d1244a6ced4de230ddd",
+      "before": "2971232e1112",
+      "gate": "7d5582800100",
+      "return_code": -1,
+      "rx_start": 69669290,
+      "rx_end": 69669820,
+      "rx_capacity": 530,
+      "payload_bytes": 0,
+      "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "rx_capacity": 2746,
+  "live_flashing_enabled": false,
+  "hardware_validated": false,
+  "dashboard_fully_removed": false
+}

@@ -1,0 +1,16 @@
+{
+  "count": 11,
+  "sha256": {
+    "captures/swift-mac-dashboard-ram-flash-20261102-02/result.json": "f683a7398cd51cc705e248f70898373f2dc5ebedc916a203cb5274a5d6f1dcac",
+    "captures/swift-mac-dashboard-ram-flash-20261102-02/trace.jsonl": "31b93cbff1e33b675979fb7c8207a78efe200048b6fbab1d12d93c3883da038f",
+    "captures/swift-mac-ram-after-20261102-01/trace.jsonl": "2ed6b5c61a936f6f31d49146fa4500a136b7bcb844d9a0f65f767ddd0447fb7e",
+    "analysis/dashboard-ram-native-20261102/transfer-checkpoint.json": "d2cd63b081ed4c78efe97b1307b9a42a51be1b51dd99fe7780bb2dbf90d12457",
+    "analysis/dashboard-ram-native-20261102/NEXT-after-transfer.json": "2b359836af38f5d4502619291183fba5214b09a375e7645281efb8a1e887199f",
+    "analysis/dashboard-ram-native-20261102/trace-verification.json": "20138411c5cb9a7630344fa5de544bc9e3afddf570a0e84a3a37aab752c74d55",
+    "analysis/dashboard-ram-native-20261102/verify-after.py": "3d97686de9c771fba8117199145e8671030a8fc72d7b07dc771a0d544319aa8b",
+    "analysis/dashboard-ram-native-20261102/verify-display.py": "4a7cb3829a6467a98c43971193c8e6d69e005473fcff0226b1b7889609c0a7c6",
+    "README.md": "3ecf1374655dcebd735180a623eaa5baf6c4893da93934e16a4c034120f4643a",
+    "analysis/parity-status.json": "b170e56cfa59e622fcef974f90fc703b4e817fda647bf5e9d0e8930abbb7d2f6",
+    "analysis/storage-integration-plan.json": "e17ae4b4a1569eb1819e09097e546d4aa8db982c93ac59e1acbf61e7265c2fb2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "state": "OTA verified; waiting for wake for boot and matched RAM check",
+  "do_not_repeat_flash": true,
+  "next_capture": "captures/swift-mac-reset-undo-after-20261102-03",
+  "probe_command": "analysis/reset-undo-trim-20261102/scratch-after captures/swift-mac-reset-undo-after-20261102-03",
+  "verify_command": "python3 analysis/reset-undo-trim-20261102/verify-scratch.py captures/swift-mac-reset-undo-after-20261102-03 reset-undo-trim-001 analysis/reset-undo-trim-20261102/after-verification.json",
+  "final_record_script": "python3 analysis/reset-undo-trim-20261102/record-hardware.py boot",
+  "scope": "Header validated before RAM-only RESET/PUT, lease renewal and cleanup. No canary or further OTA."
+}

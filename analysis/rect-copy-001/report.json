@@ -1,0 +1,76 @@
+{
+  "format": "memomind-rect-copy-offline-v1",
+  "frozen": true,
+  "hardware_tested": false,
+  "runtime": "runtime/build/rect-copy-001/graphics.bin",
+  "build_manifest": "runtime/build/rect-copy-001/build.json",
+  "blob_bytes": 62240,
+  "blob_sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+  "elf_sha256": "9216e3d9b724d4bd8dcf9934eb92ea3c302654611a2355e552ecc06a6091aa6b",
+  "changed_source_sha256": {
+    "runtime/portable/rect_copy_commands.c": "effeceea0b14098844ac1352a596f6e2f6a75ddf04a7a64208bbcc9e799d0e2a",
+    "runtime/portable/rect_copy_commands.h": "6ef6103b490f1294df4570b23088ba3b2d1420cff6e79f237859ee6f0e37d070",
+    "runtime/graphics/scene_session.c": "f1463d62b37711227e38978adc15833a7e7cfb2019f8c0c992f2304b432ad81c",
+    "runtime/graphics/graphics.c": "2da70a4d52b9c5ca8091b1f88ce53f2b0fdb7dc648d60f6101993f374d1992af",
+    "scripts/compile_memomind_graphics.py": "4d202c5c52eee24789f84296270d416821bcf05cd91d9bb0a25a5f7ea69d3bd2",
+    "scripts/test_compile_memomind_rect_copy.py": "01c981ad9488babceed0a5f0f7c5c89ba6b5ca7cd349f52a2dc28c86ac393d23",
+    "runtime/graphics/tests/test_rect_copy.c": "8d2efb4016afd15b663a137892066e8e425a5455e7fbe3bab430ca0c8271f107",
+    "runtime/graphics/tests/run_rect_copy_tests.py": "69aad634fe3f10c0ba17b35a292922178344b071bcaade6773cbc7881aa47559",
+    "tests/rv32/rect_copy_runtime_emulator_test.py": "1fecdd5e1335dc8f2f5bee9d5edfffbe045a2f7244fc91b1f08259fb29349963",
+    "tests/rv32/rect_copy_existing_runtime_emulator_test.py": "5464182e653ba8b6ba266a70a18f8b6f19c2a7b8ada55a7bbaf090e69a4e080f"
+  },
+  "source_drift_from_build": [],
+  "legacy_raster_byte_identical": {
+    "verified": true,
+    "bytes": 61392,
+    "sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328",
+    "manifest": "legacy-raster-build.json"
+  },
+  "host_cases": 26227,
+  "host_report": "host/report.json",
+  "actual_rv32_groups": 3,
+  "actual_rv32_calls": 75,
+  "observed_stack_bytes": {
+    "BT": 64,
+    "display": 1120
+  },
+  "native_firmware_mocked": true,
+  "gate_cases": 7955,
+  "retained_suite_groups": {
+    "canary": 10,
+    "reader_diagnostics": 12,
+    "input": 6
+  },
+  "strict_contract_reports": [
+    "canary-contract.json",
+    "reader-contract.json"
+  ],
+  "compiler_dependency_tests": {
+    "tests": 1,
+    "subcases": 3
+  },
+  "independent_review": "analysis/rect-copy-review-20261102/report.md",
+  "semantics": {
+    "opcode": 9,
+    "highbit_opcode": 137,
+    "minimum_bytes": 17,
+    "highbit_minimum_bytes": 33,
+    "highbit_policy": "first-left selected pair only",
+    "trailing_bytes": "accepted as upstream",
+    "invalid": "no pixels/presentation/animation takeover",
+    "valid": "freeze retained active list, copy existing framebuffer, present exactly once",
+    "allocation": "no new scratch/framebuffer/owner allocation beyond existing graphics lifecycle"
+  },
+  "not_changed": [
+    "Swift/catalog",
+    "aggregate runner/inventory/status",
+    "prior immutable builds/evidence",
+    "device state"
+  ],
+  "limitations": [
+    "Native8192-byte ingress/64KiB RAM scene remain unchanged",
+    "No mode8 bundle/single-present multi-command behavior yet",
+    "Native firmware APIs mocked; hardware/physical-panel behavior not tested here",
+    "Observed stacks do not prove full stock task/interrupt cumulative bounds"
+  ]
+}

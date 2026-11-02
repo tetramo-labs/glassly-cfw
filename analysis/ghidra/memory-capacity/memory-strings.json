@@ -1,0 +1,314 @@
+[
+  {
+    "file": "segment-1.body.bin",
+    "offset": "0xd8418",
+    "address_app": null,
+    "text": "wq_heap.c"
+  },
+  {
+    "file": "segment-1.body.bin",
+    "offset": "0xd8424",
+    "address_app": null,
+    "text": "wq_heap_caps_malloc"
+  },
+  {
+    "file": "segment-1.body.bin",
+    "offset": "0xd8438",
+    "address_app": null,
+    "text": "heap_tlsf.c"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7df04",
+    "address_app": null,
+    "text": "src/xa_enc.c:94 (((unsigned int)pv_arr_alloc_memory[pencoder_handle->g_w_malloc_count]) & 3) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7df68",
+    "address_app": null,
+    "text": "src/xa_enc.c:130 (((unsigned int)pv_arr_alloc_memory[pencoder_handle->g_w_malloc_count]) & 3) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7dfe0",
+    "address_app": null,
+    "text": "src/xa_enc.c:216 (((unsigned int)pv_arr_alloc_memory[pencoder_handle->g_w_malloc_count]) % ui_alignment) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7e0b4",
+    "address_app": null,
+    "text": "src/xa_dec.c:278 (((unsigned int)pdecoder_handle->g_pv_arr_alloc_memory[pdecoder_handle->g_w_malloc_count]) & 3) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7e12c",
+    "address_app": null,
+    "text": "src/xa_dec.c:342 (((unsigned int)pdecoder_handle->g_pv_arr_alloc_memory[pdecoder_handle->g_w_malloc_count]) & 3) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7e1c4",
+    "address_app": null,
+    "text": "src/xa_dec.c:424 (((unsigned int)pdecoder_handle->g_pv_arr_alloc_memory[pdecoder_handle->g_w_malloc_count]) % ui_alignment) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x7e248",
+    "address_app": null,
+    "text": "src/xa_dec.c:481 (((unsigned int)pdecoder_handle->g_pv_arr_alloc_memory[pdecoder_handle->g_w_malloc_count]) % ui_alignment) == 0"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x8d578",
+    "address_app": null,
+    "text": "wq_heap_caps_malloc"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x8d58c",
+    "address_app": null,
+    "text": "wq_heap.c"
+  },
+  {
+    "file": "segment-2.body.bin",
+    "offset": "0x8d598",
+    "address_app": null,
+    "text": "heap_tlsf.c"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c517",
+    "address_app": "0x4357537",
+    "text": " External SPI flash erase failed: offset=0x%X, len=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c58b",
+    "address_app": "0x43575ab",
+    "text": " External SPI flash erase verification failed: offset=0x%X, len=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c6d3",
+    "address_app": "0x43576f3",
+    "text": " Flash erase failed at page %u, count %u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c737",
+    "address_app": "0x4357757",
+    "text": " Flash erase failed at page %u, count %u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c9b4",
+    "address_app": "0x43579d4",
+    "text": " Flash erase failed at page %u; skip bad page"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16d8bc",
+    "address_app": "0x43588dc",
+    "text": "[T:0x%08X][app_recordsv_long.c:1537] [app_recordsv_long]  E:drop package: no heap drops=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16d97c",
+    "address_app": "0x435899c",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:556] [recordsv_ring_buf]  E:erase block failed: phys=0x%08x ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16d9e4",
+    "address_app": "0x4358a04",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:566] [recordsv_ring_buf]  E:erase page failed: phys=0x%08x ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16dba4",
+    "address_app": "0x4358bc4",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:241] [recordsv_ring_buf]  E:init failed: erase ring buffer range failed (base=0x%08x pages=%u)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16f16c",
+    "address_app": "0x435a18c",
+    "text": "[T:0x%08X][app_xgimisettings.c:756] [app_xgimisettings]  E:Insufficient heap memory for initialization: %zu bytes"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x171424",
+    "address_app": "0x435c444",
+    "text": "[T:0x%08X][bt_factory_test.c:201] factory_test E:[ft_flash] erase(dirty preamble) addr=0x%08X ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17148c",
+    "address_app": "0x435c4ac",
+    "text": "[T:0x%08X][bt_factory_test.c:206] factory_test E:[ft_flash] read(post-erase) addr=0x%08X ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1714ec",
+    "address_app": "0x435c50c",
+    "text": "[T:0x%08X][bt_factory_test.c:210] factory_test E:[ft_flash] not clean after erase addr=0x%08X"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17160c",
+    "address_app": "0x435c62c",
+    "text": "[T:0x%08X][bt_factory_test.c:229] factory_test E:[ft_flash] final erase addr=0x%08X ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x171668",
+    "address_app": "0x435c688",
+    "text": "[T:0x%08X][bt_factory_test.c:234] factory_test E:[ft_flash] read(post-final-erase) addr=0x%08X ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1716d0",
+    "address_app": "0x435c6f0",
+    "text": "[T:0x%08X][bt_factory_test.c:238] factory_test E:[ft_flash] not all 0xFF after final erase addr=0x%08X"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x178d54",
+    "address_app": "0x4363d74",
+    "text": "[T:0x%08X][ai_qa_app.c:2732] [ai_qa_app]  E:[AI_QA] label text guard malloc failed, len=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1791a4",
+    "address_app": "0x43641c4",
+    "text": "[T:0x%08X][ai_qa_app.c:3425] [ai_qa_app]  E:[AI_QA] question guard malloc failed, len=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x19a824",
+    "address_app": "0x4385844",
+    "text": "Out of memory, can't allocate a new buffer (increase your LV_MEM_SIZE/heap size)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a5694",
+    "address_app": "0x43906b4",
+    "text": "{\"schema\":1,\"packageFormat\":%u,\"abi\":%u,\"compression\":\"lz4-block\",\"compressionBlockBytes\":%u,\"maxPackageBytes\":%lu,\"chunkBytes\":%u,\"sequentialChunks\":true,\"streamedInstallChunks\":true,\"flashXip\":true,\"cacheResume\":true,\"singleSppLink\":true,\"cacheCapacityQuery\":true,\"runtimeStateQuery\":true,\"runtimeStateNotifications\":true,\"displayWidth\":%u,\"displayHeight\":%u,\"refreshHz\":%u,\"pixelFormat\":%u,\"logicalDisplays\":%u,\"capabilities\":%lu}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a6fdc",
+    "address_app": "0x4391ffc",
+    "text": "[T:0x%08X][bt_data_handler.c:2543] [bt_handler]  E:GET_INFO malloc(%d) failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a7154",
+    "address_app": "0x4392174",
+    "text": "[T:0x%08X][bt_data_handler.c:2562] [bt_handler]  E:UPLOAD_BURYPOINT malloc(%d) failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a71ac",
+    "address_app": "0x43921cc",
+    "text": "[T:0x%08X][bt_data_handler.c:2578] [bt_handler]  E:GET_STATUS malloc(%d) failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a8888",
+    "address_app": "0x43938a8",
+    "text": "[T:0x%08X][bt_data_report.c:2780] [bt_handler]  E:[SS-TX] idx=0x%04X tlv add INT16 failed (heap)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a88ec",
+    "address_app": "0x439390c",
+    "text": "[T:0x%08X][bt_data_report.c:2787] [bt_handler]  E:[SS-TX] idx=0x%04X tlv add JSON failed (heap)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a894c",
+    "address_app": "0x439396c",
+    "text": "[T:0x%08X][bt_data_report.c:2796] [bt_handler]  E:[SS-TX] idx=0x%04X tlv add BYTES failed (heap)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a89b0",
+    "address_app": "0x43939d0",
+    "text": "[T:0x%08X][bt_data_report.c:2806] [bt_handler]  E:[SS-TX] idx=0x%04X tlv add placeholder failed (heap)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a90e0",
+    "address_app": "0x4394100",
+    "text": "[T:0x%08X][gm_package.c:216] [gmpkg]  E:gmMallocTlvAdd: length %u exceeds GM_MAX_PACK_LEN %d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9140",
+    "address_app": "0x4394160",
+    "text": "[T:0x%08X][gm_package.c:224] [gmpkg]  E:gmMallocTlvAdd: gmmalloc node failed, length=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9198",
+    "address_app": "0x43941b8",
+    "text": "[T:0x%08X][gm_package.c:452] [gmpkg]  E:gmMallocAppendTlv: CRC mismatch,len=%u, expected=0x%04x, got=0x%04x"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9204",
+    "address_app": "0x4394224",
+    "text": "[T:0x%08X][gm_package.c:471] [gmpkg]  E:gmMallocAppendTlv: wait_len %d exceeds GM_MAX_PACK_LEN %d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9268",
+    "address_app": "0x4394288",
+    "text": "[T:0x%08X][gm_package.c:487] [gmpkg]  E:gmMallocAppendTlv: wait_len became negative (%d), packet length exceeds expected"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a92e4",
+    "address_app": "0x4394304",
+    "text": "[T:0x%08X][gm_package.c:497] [gmpkg]  E:gmMallocAppendTlv: expected head 0x%02x, got 0x%02x"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9340",
+    "address_app": "0x4394360",
+    "text": "[T:0x%08X][gm_package.c:536] [gmpkg]  E:gmMallocAppendTlv: byte4head overflow, len=%u, append=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a93a4",
+    "address_app": "0x43943c4",
+    "text": "[T:0x%08X][gm_package.c:563] [gmpkg]  E:gmMallocAppendTlv: tlv_len %u exceeds GM_MAX_PACK_LEN %d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9408",
+    "address_app": "0x4394428",
+    "text": "[T:0x%08X][gm_package.c:569] [gmpkg]  E:gmMallocAppendTlv: tlv_len %u exceeds package remaining %u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1ab1b4",
+    "address_app": "0x43961d4",
+    "text": "wq_heap.c"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1ab1c0",
+    "address_app": "0x43961e0",
+    "text": "wq_heap_caps_malloc"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1ab1d4",
+    "address_app": "0x43961f4",
+    "text": "heap_tlsf.c"
+  }
+]

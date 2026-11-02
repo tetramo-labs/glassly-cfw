@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "helpers": [
+    {
+      "name": "preflight",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-I",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug",
+        "analysis/diagnostics-native-20261102/preflight.swift",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o",
+        "-framework",
+        "IOBluetooth",
+        "-o",
+        "analysis/diagnostics-native-20261102/preflight"
+      ],
+      "source_sha256": "ba7b2a5b29f38f56e4870fa1a23dc4312385855bc2b47065beaaaf53e2ca6f24",
+      "binary_sha256": "e0e6229e499e888ec42681c32e5f486a8f70a125d36a538c588c90a6b5358d21"
+    },
+    {
+      "name": "cleanup",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-I",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug",
+        "analysis/diagnostics-native-20261102/cleanup.swift",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o",
+        "-framework",
+        "IOBluetooth",
+        "-o",
+        "analysis/diagnostics-native-20261102/cleanup"
+      ],
+      "source_sha256": "b5146c039cc3599da926395b06872fce839e482d58ea2de8baf486691095d055",
+      "binary_sha256": "04591dafe57a4322ea947999aa73679069758a9b2cf5cd00d1caf0edf3f8d305"
+    }
+  ],
+  "linked_objects": {
+    "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o": "0e6987b432d1883712bf510e1854398ddeddd6c6e3baa3a3d21cab8d8a6ec9da",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o": "1f3cf000f1e72256b8baed98c071b9a5c7f613576cc39edc84a61ee5b1bff7c8"
+  },
+  "device_actions": false
+}

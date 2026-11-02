@@ -1,0 +1,97 @@
+[
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-1.body.bin",
+    "bytes": 909644,
+    "sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+    "strings": []
+  },
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-2.body.bin",
+    "bytes": 695480,
+    "sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea",
+    "strings": []
+  },
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+    "bytes": 1773176,
+    "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "strings": [
+      {
+        "offset": "0x1727b4",
+        "string": "font OTA LZMA init failed"
+      },
+      {
+        "offset": "0x198000",
+        "string": "[T:0x%08X][img_utils.c:107] [img_utils]  E:LZMA unwrap failed res=%d status=%d src_used=%u/%u dst=%u/%u"
+      },
+      {
+        "offset": "0x1980b4",
+        "string": "[T:0x%08X][img_utils.c:417] [img_utils]  E:Failed to LZMA decode '%s'"
+      },
+      {
+        "offset": "0x1981c0",
+        "string": "[T:0x%08X][img_utils.c:540] [img_utils]  E:Decompression failed! Expected %u, got %u"
+      },
+      {
+        "offset": "0x198218",
+        "string": "ILZ4"
+      },
+      {
+        "offset": "0x198278",
+        "string": "[T:0x%08X][img_utils.c:156] [img_utils]  E:LZ4 unwrap failed: actual=%d expect=%u src=%u"
+      },
+      {
+        "offset": "0x199360",
+        "string": "[T:0x%08X][jbd013_api.c:1231] [JBD013] E:image lzma/check fail res=%d status=%d src_used=%u/%u"
+      },
+      {
+        "offset": "0x1a5694",
+        "string": "{\"schema\":1,\"packageFormat\":%u,\"abi\":%u,\"compression\":\"lz4-block\",\"compressionBlockBytes\":%u,\"maxPackageBytes\":%lu,\"chunkBytes\":%u,\"sequentialChunks\":true,\"streamedInstallChunks\":true,\"flashXip\":true,\"cacheResume\":true,\"singleSppLink\":true,\"cacheCapacityQuery\":true,\"runtimeStateQuery\":true,\"runtimeStateNotifications\":true,\"displayWidth\":%u,\"displayHeight\":%u,\"refreshHz\":%u,\"pixelFormat\":%u,\"logicalDisplays\":%u,\"capabilities\":%lu}"
+      },
+      {
+        "offset": "0x1a8d00",
+        "string": "[T:0x%08X][bt_data_report.c:3393] [bt_handler]  E:[SS] band %u LZ4 failed/oversize: raw=%u max_out=%u blen=%d"
+      },
+      {
+        "offset": "0x1a8d70",
+        "string": "LZ4 band failed"
+      },
+      {
+        "offset": "0x1a8d80",
+        "string": "{\"cmd_id\":%d,\"width\":%u,\"height\":%u,\"visible_width\":%u,\"bpp\":4,\"compression\":\"lz4\",\"format\":\"banded\",\"band_rows\":%u,\"band_count\":%u,\"original_size\":%u,\"data_size\":%u,\"total_chunks\":%u,\"status\":\"start\"}"
+      }
+    ]
+  },
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-4.body.bin",
+    "bytes": 284268,
+    "sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262",
+    "strings": [
+      {
+        "offset": "0x21c0",
+        "string": "zZip"
+      }
+    ]
+  },
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-5.body.bin",
+    "bytes": 3584,
+    "sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57",
+    "strings": []
+  },
+  {
+    "file": "analysis/extracted/validated-1.0.3.127/segment-6.body.bin",
+    "bytes": 81562,
+    "sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e",
+    "strings": [
+      {
+        "offset": "0x96ca",
+        "string": "IMLZ4"
+      },
+      {
+        "offset": "0xb44c",
+        "string": "IMLZ4"
+      }
+    ]
+  }
+]

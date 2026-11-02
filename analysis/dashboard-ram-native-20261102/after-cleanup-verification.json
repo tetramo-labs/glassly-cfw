@@ -1,0 +1,149 @@
+{
+  "passed": true,
+  "device_actions": false,
+  "capture": "captures/swift-mac-ram-after-cleanup-20261102-01",
+  "wire_requests": 13,
+  "wire_reply_pairs": 13,
+  "heap_samples": 10,
+  "wire_command_sequence": [
+    [
+      1,
+      1,
+      1,
+      ""
+    ],
+    [
+      2,
+      1,
+      2,
+      ""
+    ],
+    [
+      49,
+      15,
+      123,
+      "01000008010000b01e000001"
+    ],
+    [
+      50,
+      15,
+      126,
+      ""
+    ],
+    [
+      51,
+      15,
+      126,
+      ""
+    ],
+    [
+      52,
+      15,
+      126,
+      ""
+    ],
+    [
+      53,
+      15,
+      126,
+      ""
+    ],
+    [
+      54,
+      15,
+      126,
+      ""
+    ],
+    [
+      55,
+      15,
+      126,
+      ""
+    ],
+    [
+      56,
+      15,
+      126,
+      ""
+    ],
+    [
+      57,
+      15,
+      126,
+      ""
+    ],
+    [
+      58,
+      15,
+      126,
+      ""
+    ],
+    [
+      59,
+      15,
+      126,
+      ""
+    ]
+  ],
+  "no_display_or_ota_or_flash_mutation_commands": true,
+  "app_header_sha256": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+  "identity": {
+    "pver": 4,
+    "cap": 1,
+    "model": "H001Y",
+    "sn": "HBYSF7FS2205",
+    "mac": "4C:3C:8F:90:CC:C3",
+    "name": "MemoMind One",
+    "ver": "1.0.3.127",
+    "cver": "0.0.0",
+    "hver": "2.1.2",
+    "fver": "1.3"
+  },
+  "current_free_range": [
+    340684,
+    353808
+  ],
+  "low_water_range": [
+    245084,
+    245084
+  ],
+  "inter_request_pauses": [
+    0.5107470834627748,
+    0.5123414166737348,
+    0.5127659998834133,
+    0.5121204166207463,
+    0.5124709999654442,
+    0.5121391250286251,
+    0.5106563749723136,
+    0.510659666499123,
+    0.5114384167827666
+  ],
+  "saved_files_match_raw_replies": true,
+  "unsolicited_normal_messages": 1,
+  "source_sha256": {
+    "analysis/dashboard-ram-native-20261102/verify-after.py": "3d97686de9c771fba8117199145e8671030a8fc72d7b07dc771a0d544319aa8b",
+    "analysis/diagnostics-native-20261102/verify-smoke-v2.py": "120743caa379b9f5822393eafbf8a92141b6a1bd96f1fe2b2a6e561cadefcd68",
+    "scripts/memomind_transport.py": "3e0bcf1108a582359717216e6eea049bedd5dfa87277d20b9bb47bc4ba2859d0"
+  },
+  "capture_sha256": {
+    "capabilities-00.json": "f5c69700d0df101fcdab5d626b9ebbdc4f8df53a7640db3723856cbc9cb5da1b",
+    "capabilities-01.json": "17dacad27359b175564bc3ae5e4de2ce3fa102284223aa40cf8979dc9488c7f5",
+    "capabilities-02.json": "cfc212f4776a3f863acae8605705ec8409c59b934e85a85483c24dea206606e9",
+    "capabilities-03.json": "60f868dca51151f2ccb9782a5447dce9386cbc87d615ca44ae0425cfd96573f0",
+    "capabilities-04.json": "a425d74f167e0af5745c8168936f7e78ba48f7845f459749c15a6fcda5babfe7",
+    "capabilities-05.json": "616196d9ce7fec12c3277f6125e92bed5ed629344263ba7326565aef572fc0c1",
+    "capabilities-06.json": "1e40c2e4513804c733287b1adb77b6ba3214a3ebcaba9b8cfc73e363a164d598",
+    "capabilities-07.json": "99d662b78fca1c2e0529003f6a9bdf9cb6c07f376187e75a283b51362f0c476c",
+    "capabilities-08.json": "8bf77fe81dbe76bc87725e8080c21a2ea727bb43da230a5ad59ea540dcedca6a",
+    "capabilities-09.json": "5773b7af7cf93c4e1128c7210eabfb12a6636ccbdbe3e843a8dccb62ad67f971",
+    "device.json": "03d416e1c336bd494708439e40bd60bd4e94a5c255a5590239d30c2ea5ffef02",
+    "header-reply.json": "56ec91743eff7a263be3d168b0add66cc2c487c2165619ec942929ed34eedd15",
+    "result.json": "8634f849300aaa608ccb652f97c78143ea7cc076c4d59d4b548707bb6e55e723",
+    "trace.jsonl": "09c960a62a5ea1d0488a6ae07eab249b148c6895cf2c5de51c6817b892274e83"
+  },
+  "limitations": [
+    "Total pool accounting only; no largest block or owner attribution.",
+    "Telemetry includes temporary JSON allocation and connected transport activity.",
+    "Trace proves recorded transmitted commands and matching replies, not all autonomous device activity."
+  ]
+}

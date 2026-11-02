@@ -1,0 +1,110 @@
+[
+  {
+    "requested": "04320628",
+    "address": "ram:04320628",
+    "incoming_references": [
+      "ram:043207de UNCONDITIONAL_CALL",
+      "ram:04320bba UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04333a1e",
+    "address": "ram:04333a1e",
+    "incoming_references": [
+      "ram:04320470 UNCONDITIONAL_CALL",
+      "ram:04320b9c UNCONDITIONAL_CALL",
+      "ram:0431ff2a UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04333ade",
+    "address": "ram:04333ade",
+    "incoming_references": [
+      "ram:043207d6 UNCONDITIONAL_CALL",
+      "ram:04320bac UNCONDITIONAL_CALL",
+      "ram:0431ff34 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "02005eca",
+    "address": "ram:02005eca",
+    "incoming_references": [
+      "ram:02010898 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "02005dd4",
+    "address": "ram:02005dd4",
+    "incoming_references": [
+      "ram:020107f0 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a4628",
+    "address": "ram:042a4628",
+    "incoming_references": [
+      "ram:042a94ae UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a48f0",
+    "address": "ram:042a48f0",
+    "incoming_references": [
+      "ram:042a48d8 CONDITIONAL_JUMP"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04345f4c",
+    "address": "ram:04345f4c",
+    "incoming_references": [
+      "ram:0424bd20 UNCONDITIONAL_CALL",
+      "ram:0420ae8c COMPUTED_CALL",
+      "ram:04231c2c COMPUTED_CALL",
+      "ram:042326ec COMPUTED_CALL",
+      "ram:042397a4 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04320862",
+    "address": "ram:04320862",
+    "incoming_references": [
+      "ram:042ac8d4 UNCONDITIONAL_CALL",
+      "ram:042ac8ec UNCONDITIONAL_CALL",
+      "ram:04346258 UNCONDITIONAL_CALL",
+      "ram:04346410 UNCONDITIONAL_CALL",
+      "ram:043465cc UNCONDITIONAL_CALL",
+      "ram:04346b50 UNCONDITIONAL_CALL",
+      "ram:04346bd6 UNCONDITIONAL_CALL",
+      "ram:04346bf2 UNCONDITIONAL_CALL",
+      "ram:04346282 UNCONDITIONAL_CALL",
+      "ram:0434709c UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04333944",
+    "address": "ram:04333944",
+    "incoming_references": [
+      "ram:0432985a UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

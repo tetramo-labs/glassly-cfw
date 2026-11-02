@@ -1,0 +1,494 @@
+{
+  "objective": "Full g2flash capacity and behavior, including native integration and performance",
+  "source_requirements": {
+    "logical_asset_store_bytes": 262144,
+    "maximum_message_bytes": 65535,
+    "original_host_scenarios": 46,
+    "original_assertion_sites": 746,
+    "sources": [
+      "runtime/portable/scene.h",
+      "tests/g2_compat/upstream/patches/scene.c",
+      "tests/g2_compat/inventory.json"
+    ]
+  },
+  "implemented": {
+    "cow_core": "runtime/portable/flash_store.c",
+    "reservation_constructor": "scripts/build_memomind_storage.py",
+    "reservation_native_tests": "tests/rv32/external_reservation_emulator_test.py",
+    "reader_profile": "runtime/build/full-store-read-001",
+    "regression": "analysis/regression-20261102-03/report.json",
+    "portable_scene_backend": "runtime/portable/scene_flash_store.c",
+    "exclusive_owner_constructor": "scripts/build_memomind_exclusive_storage.py",
+    "exclusive_owner_tests": "tests/rv32/exclusive_storage_emulator_test.py",
+    "native_flash_adapter": "runtime/graphics/flash_store_native.c",
+    "fixed_canary": "runtime/graphics/flash_canary.c",
+    "canary_constructor": "scripts/build_memomind_flash_canary.py",
+    "worker_and_heap_review": "analysis/flash-worker-lifecycle-20261101/report.md",
+    "full_store_backup": "analysis/exclusive-store-backup-verification.json",
+    "post_reset_native_mac_backup": "analysis/native-mac-backup-20261101/verification.json",
+    "native_swift_canary_client": "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift"
+  },
+  "next_native_requirements": [
+    "Fresh header, effective full96-byte physical badmap and topology checks before each writer adoption; preserve absent/default provenance",
+    "Integrate validated serialized normal-worker flash callbacks into the full-capacity scene store; do not share LVGL framebuffer after invalidation",
+    "Measure native allocation, flash timing, cache coherence and fullscene performance; offline native mocks do not establish these"
+  ],
+  "scene_integration": [
+    "Portable logical-offset reader, COW transactions and bounded image/font/path rendering are implemented and pass original fixtures.",
+    "Native LVGL must not consume a shared framebuffer marked invalid after read failure; resolve ownership or staging before binding.",
+    "Resolve full65535-byte ingress, two inflater histories and native heap budget; stock UI/plugin allocation compatibility need not constrain the new design.",
+    "Measure write/erase/render latency on hardware; one-byte updates currently rewrite4KiB and no30fps guarantee is established."
+  ],
+  "not_completed": [
+    "native exclusive ownership adoption",
+    "native scene flash callbacks and worker",
+    "full65535 native ingress",
+    "full-capacity hardware/performance",
+    "remaining command/notification/transport/policy features"
+  ],
+  "native_preflight_observed": {
+    "evidence": "analysis/storage-diag-hardware-verification.json",
+    "badmap_record": "absent; native status7/effective zero96 map",
+    "tail_usable_sectors_per_native_map": 256,
+    "directory": "unchanged/allFF",
+    "topology": "recognizedXIP1 and readyknown generalSPI; stablepassivesnapshots",
+    "cus8_context_present": false,
+    "flash_mutations": 0
+  },
+  "xip_binding_evidence": "analysis/ghidra/external-xip-review/report.md",
+  "portable_scene_work": "Complete portable backend and scoped ownership fixes validated in regression-20261101-02; native binding pending.",
+  "scope": "Stock MemoMind UI/app/plugin compatibility is not required; preserve full G2 feature and capacity semantics.",
+  "storage_layout_direction": {
+    "device": 1,
+    "physical_start": 5242880,
+    "physical_end": 8388608,
+    "bytes": 3145728,
+    "exclusive_ownership_established": false,
+    "prior_reduced_stock_cache_design": "Superseded as preferred design; old constructor and native tests retained as historical/reference coverage.",
+    "cow_core": "Existing1MiB physical/256KiB logical core can use a subregion; remaining2MiB available for separately reviewed ingress/workspaces."
+  },
+  "exclusive_owner_review": "analysis/exclusive-store-review-20261101/report.md",
+  "completed_hardware_steps": [
+    "Six recognized native plugin owner gates installed and full256-byte app header boot verified",
+    "Full device1 [0x500000,0x800000) backup:3145728bytes,12288 independently hashed chunks,allFF",
+    "Whole installed OTA independently reconstructed from captured header and bulk bytes",
+    "Native Swift canary OTA boot verified; one fixed 4KiB erase/program/verify/erase-restore passed; independent target+neighbor readback matches erased preimage"
+  ],
+  "native_exclusive_reader_adoption": "Installed and bootverified with six known owner gates; not proof of a global flash firewall or arbitrary native writer exclusion",
+  "canary_candidate": {
+    "installed": false,
+    "runtime": "runtime/build/flash-canary-004",
+    "ota": "captures/firmware/flash-canary-001",
+    "offline_validation": "analysis/flash-canary/report.json",
+    "ota_transfer_verified": true,
+    "post_reboot_verified": true,
+    "hardware_canary_executed": true,
+    "hardware_report": "analysis/native-mac-canary-20261101/report.json",
+    "hardware_canary_passed": true,
+    "superseded_by": "raster-commands-001 (retains fixed canary feature)"
+  },
+  "scene_worker_integration_review": "analysis/native-scene-store-integration-review-20261101/report.md",
+  "canvas_quiescence_review": "analysis/ghidra/canvas-quiescence-review/report.md",
+  "current_priority": "Command parity before further storage integration",
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support",
+    "Ring battery",
+    "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)"
+  ],
+  "completion_scope": "G2 command/feature parity applicable to MemoMind One: excludes Bluetooth keyboard/HOGP, ring battery and gesture-specific behavior. Single-button input, compass/raw IMU data, ALS, generic wake ownership, settings, notifications, microphone, transport, drawing and full capacities remain required.",
+  "command_parity_map": "tests/g2_compat/COMMAND_PARITY.md",
+  "command_priority": {
+    "first": [
+      6,
+      3
+    ],
+    "next": [
+      7,
+      11
+    ],
+    "first_stage_status": "Modes6/3/9/8/15 installed and boot verified. Native text visibly confirmed, including maximum byte count, highbit and bundle execution. Remaining command adapters and full capacity are incomplete.",
+    "completed_visible_modes": [
+      6,
+      3,
+      9,
+      8,
+      15
+    ]
+  },
+  "required_reference_coverage": {
+    "host_scenarios": 39,
+    "assertion_sites": 654,
+    "bun_cases": 11,
+    "historical_inventory_preserved": true
+  },
+  "raster_command_candidate": {
+    "runtime": "runtime/build/raster-commands-001",
+    "firmware": "captures/firmware/raster-commands-001",
+    "installed": false,
+    "offline_validation": "analysis/raster-commands-001/report.json",
+    "aggregate": "analysis/regression-20261101-07/report.json",
+    "hardware_capture": "captures/swift-mac-raster-flash-20261101-02",
+    "ota_transfer_verified": true,
+    "post_reboot_verified": true,
+    "preflight_verification": "analysis/raster-commands-native-20261101/preflight-verification.json",
+    "hardware_report": "analysis/raster-commands-native-20261101/report.json",
+    "hardware_smoke_verified": true,
+    "visible_output_confirmed": true,
+    "superseded_by": "rect-copy-001 (retains modes6/3)"
+  },
+  "rect_copy_candidate": {
+    "installed": false,
+    "firmware": "captures/firmware/rect-copy-001",
+    "runtime": "runtime/build/rect-copy-001",
+    "hardware_report": "analysis/rect-copy-native-20261102/report.json",
+    "ota_transfer_verified": true,
+    "post_reboot_verified": true,
+    "hardware_smoke_verified": true,
+    "visible_output_confirmed": true,
+    "superseded_by": "bundle-commands-001 (retains mode9)"
+  },
+  "bundle_candidate": {
+    "installed": false,
+    "firmware": "captures/firmware/bundle-commands-001",
+    "runtime": "runtime/build/bundle-commands-001",
+    "hardware_report": "analysis/bundle-native-20261102/report.json",
+    "ota_transfer_verified": true,
+    "post_reboot_verified": true,
+    "hardware_smoke_verified": true,
+    "visible_output_confirmed": true,
+    "mode15_supported": false,
+    "superseded_by": "text-commands-001 (retains mode8)"
+  },
+  "text_candidate": {
+    "installed": true,
+    "firmware": "captures/firmware/text-commands-001",
+    "runtime": "runtime/build/text-commands-001",
+    "hardware_report": "analysis/text-native-20261102/report.json",
+    "ota_transfer_verified": true,
+    "post_reboot_verified": true,
+    "hardware_smoke_verified": true,
+    "visible_output_confirmed": true,
+    "text_max_bytes": 255,
+    "native_font_equivalent_to_g2": false
+  },
+  "required_hardware_features": [
+    "Single-button input",
+    "Compass data",
+    "Raw IMU data",
+    "Ambient-light sensing"
+  ],
+  "hardware_input_scope": {
+    "source": "User clarification 2026-11-02",
+    "hardware": "single button on glasses",
+    "required": "Observed native button input and control ownership; do not infer unsupported gestures",
+    "excluded": [
+      "head-up gesture recognition/control",
+      "swipes",
+      "ring-touch input"
+    ],
+    "sensor_data_retained": [
+      "compass",
+      "raw IMU"
+    ]
+  },
+  "remaining_required_suite_entries": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/sound-test.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "diagnostic_candidate": {
+    "release": "diagnostic-commands-001",
+    "runtime": "runtime/build/diagnostic-commands-001",
+    "runtime_bytes": 65456,
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "ota": "captures/firmware/diagnostic-commands-001/firmware.bin",
+    "ota_bytes": 2230267,
+    "ota_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "focused_offline_passed": true,
+    "aggregate_pending": false,
+    "swift_catalog_admitted": true,
+    "installed": true,
+    "boot_verified": true,
+    "hardware_smoke_verified": true,
+    "visible_output_confirmed": false,
+    "offline_report": "analysis/diagnostic-commands-001/report.json",
+    "review": "analysis/diagnostics-cleanup-review-20261102/final-review.json",
+    "limits": [
+      "Current-screen diagnostic state; explicit-cleanup epoch persistence best effort on allocation failure.",
+      "Failure counters cover executed scene-dispatch/token workspace refusals only.",
+      "Cleanup covers implemented graphics/input; compass/raw IMU/ALS and other future controllers remain required."
+    ],
+    "aggregate_report": "analysis/regression-20261102-05/report.json",
+    "offline_checkpoint": "analysis/diagnostics-native-20261102/offline-checkpoint.json",
+    "currently_installed": false,
+    "ota_transfer_verified": true,
+    "hardware_state": "Installed/boot verified; live diagnostics and cleanup passed; five-minute hold ended and cleared; visual confirmation pending",
+    "transfer_verification": "analysis/diagnostics-native-20261102/trace-verification.json",
+    "boot_verification": "analysis/diagnostics-native-20261102/preflight-verification.json",
+    "hardware_report": "analysis/diagnostics-native-20261102/hardware-awaiting-visual.json",
+    "superseded_by": "dashboard-ram-002; diagnostic runtime unchanged"
+  },
+  "updated_utc": "2026-11-02T21:25:30.518101+00:00",
+  "latest_offline_regression": {
+    "report": "analysis/regression-20261102-05/report.json",
+    "required_suites_passed": true,
+    "stages": 117,
+    "source_drift": false,
+    "python_tests": 224,
+    "python_skips": 0,
+    "swift_tests": 100,
+    "execution_scope": "115 unchanged full-run passes reused; two corrected contract invocations executed; not a second full run",
+    "full_parity_gate_exit": 2,
+    "required_original_host_scenarios": 39,
+    "required_original_host_assertion_sites": 654,
+    "required_bun_cases": 11,
+    "diagnostic_actual_rv32_groups": 4,
+    "diagnostic_actual_rv32_calls": 152
+  },
+  "dashboard_reclaim": {
+    "report": "analysis/dashboard-islands-20261102/report.json",
+    "ledger": "analysis/dashboard-islands-20261102/reclaim-ledger.json",
+    "review": "analysis/dashboard-islands-review-20261102/final-review.json",
+    "candidate": "captures/firmware/dashboard-islands-001",
+    "identified_launcher_code_bytes": 14168,
+    "candidate_fragmented_rx_bytes": 2746,
+    "retained_entry_gate_bytes": 32,
+    "state": "Offline six-renderer retirement candidate; exact entries return unavailable and caller fallback remains",
+    "actual_rv32_cases": 72,
+    "hardware_validated": false,
+    "currently_installed": false,
+    "heap_savings_established": false,
+    "dashboard_fully_removed": false,
+    "next_larger_cut": "Replace launcher lifecycle with a minimal parent after go-home/calibration/object ownership and cleanup are verified"
+  },
+  "extended_rx_profile": {
+    "name": "app-rx-96k-v1",
+    "limit_bytes": 98304,
+    "headroom_over_current_runtime_bytes": 32848,
+    "report": "analysis/rx96-profile-20261102/report.json",
+    "review": "analysis/rx-profile-review-20261102/report.json",
+    "state": "Offline construction/linker profile reviewed; existing65456-byte diagnostic image reproduced exactly",
+    "runtime_over_64k_hardware_verified": false,
+    "live_profile_admitted": false
+  },
+  "sensor_command_progress": {
+    "swift_reference_report": "analysis/sensor-swift-20261102/report.json",
+    "swift_full_suite_log": "analysis/sensor-swift-20261102/full-suite.log",
+    "swift_tests_passed": 105,
+    "upstream_dispatch_checks": 5404,
+    "wire_vectors": 19,
+    "native_evidence": "analysis/ghidra/sensor-adapter-20261102/report.md",
+    "als": "Native common read path located; normalized0..1000, physical lux unproven; I2C mutex/wake delay needs owned worker",
+    "raw_imu": "Native14-byte getter and16-byte SDK output located; fresh capture/units/ownership pending",
+    "compass": "Required; source unresolved, absence not inferred",
+    "installed_modes_10_16_supported": false
+  },
+  "dashboard_ram_candidate": {
+    "state": "Installed and boot verified; display commands and cleanup verified; visual confirmation pending",
+    "candidate": "dashboard-ram-002",
+    "candidate_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+    "requested_base_allocations_avoided_bytes": 1440,
+    "measured_ram_saving_bytes": null,
+    "installed": true,
+    "boot_verified": true,
+    "firmware_bytes_sent": 2230671,
+    "tests": {
+      "actual_native_calls": 230,
+      "swift_tests": 106,
+      "constructor_tests": 2,
+      "permanent_aggregate_stage": "dashboard_ram_native",
+      "aggregate_stage_report": "analysis/dashboard-ram-native-20261102/aggregate-stage/report.json",
+      "full_aggregate_rerun": false
+    },
+    "review": "analysis/dashboard-ram-review-20261102/report.json",
+    "additional_candidate": {
+      "kind": "native-only post-top-level-RESET undo trim",
+      "proposal": "analysis/ram-measurement-plan-20261102/reset-undo-proposal.json",
+      "typical_requested_bytes": 46756,
+      "implemented": true,
+      "requires": "Hardware check complete",
+      "report": "analysis/reset-undo-trim-20261102/hardware-result.json",
+      "policy": "Mandatory undo before native mutation; default upstream fallback/retention unchanged"
+    },
+    "report": "analysis/dashboard-ram-native-20261102/hardware-result.json",
+    "ota_transfer_verified": true,
+    "transfer_verification": "analysis/dashboard-ram-native-20261102/trace-verification.json",
+    "currently_installed": false,
+    "observed_settled_free_delta_bytes": {
+      "range": [
+        19528,
+        19828
+      ],
+      "median_difference": 19718.0,
+      "causally_attributed_to_gates": false
+    },
+    "post_cleanup_settled_free_range": [
+      353636,
+      353808
+    ],
+    "display_protocol_verified": true,
+    "visible_output_confirmed": false,
+    "boot_verification": "analysis/dashboard-ram-native-20261102/after-verification.json",
+    "measured_ram_saving_note": "Observed delta recorded separately; exact gate-only heap saving not isolated from reboot/cache effects.",
+    "superseded_by": "reset-undo-trim-001; dashboard gates retained"
+  },
+  "current_device_image_sha256": "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
+  "current_device_release": "reset-undo-trim-001",
+  "current_device_ota": "captures/firmware/reset-undo-trim-001/firmware.bin",
+  "current_device_build": "runtime/build/reset-undo-trim-003",
+  "current_device_runtime_sha256": "93040b1de94b52b710d7a3e37a3adef2f1e840108fb53ab69b9ecf46e14102f4",
+  "reset_undo_trim_candidate": {
+    "state": "Boot verified; matched RAM RESET/PUT sequence and cleanup verified",
+    "release": "reset-undo-trim-001",
+    "image_sha256": "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
+    "runtime_build": "runtime/build/reset-undo-trim-003",
+    "runtime_bytes": 60256,
+    "installed": true,
+    "currently_installed": true,
+    "boot_verified": true,
+    "ota_transfer_verified": true,
+    "firmware_bytes_sent": 2226404,
+    "report": "analysis/reset-undo-trim-20261102/hardware-result.json",
+    "offline_checkpoint": "analysis/reset-undo-trim-20261102/offline-checkpoint.json",
+    "native_requested_bytes_released": 46756,
+    "hardware_saving_measured": true,
+    "policy": "Standalone successful RESET trims undo only. Subsequent mutating PUT/SHOW requires an undo allocation and otherwise rejects CAPACITY before mutation. Bundles never trim. Default G2 no-undo and RESET retention semantics unchanged.",
+    "tests": {
+      "python": 235,
+      "swift": 107,
+      "original_scene_assertion_sites": 424,
+      "new_native_calls": 85,
+      "retained_native_calls": 3167,
+      "native_gate_cases": 7955,
+      "full_aggregate_rerun": false
+    },
+    "matched_measurements": {
+      "before": {
+        "put": {
+          "samples": [
+            81884,
+            81884,
+            81936,
+            81932,
+            81952,
+            81952,
+            81952,
+            81972,
+            81976,
+            81976
+          ],
+          "minimum": 81884,
+          "maximum": 81976,
+          "median": 81952.0
+        },
+        "reset": {
+          "samples": [
+            81976,
+            81976,
+            81972,
+            81988,
+            82008,
+            82008,
+            82008,
+            82008,
+            82028,
+            82028
+          ],
+          "minimum": 81972,
+          "maximum": 82028,
+          "median": 82008.0
+        },
+        "reacquired": {
+          "samples": [
+            82028,
+            82028,
+            82048,
+            82064,
+            82064,
+            82064,
+            82064,
+            82068,
+            82068,
+            82068
+          ],
+          "minimum": 82028,
+          "maximum": 82068,
+          "median": 82064.0
+        }
+      },
+      "after": {
+        "put": {
+          "samples": [
+            81360,
+            81324,
+            80464,
+            80396,
+            80312,
+            80404,
+            80752,
+            80756,
+            80752,
+            80836
+          ],
+          "minimum": 80312,
+          "maximum": 81360,
+          "median": 80752.0
+        },
+        "reset": {
+          "samples": [
+            127548,
+            127592,
+            127212,
+            127128,
+            127112,
+            127080,
+            127260,
+            127156,
+            127132,
+            127132
+          ],
+          "minimum": 127080,
+          "maximum": 127592,
+          "median": 127144.0
+        },
+        "reacquired": {
+          "samples": [
+            80408,
+            80464,
+            80508,
+            80452,
+            80720,
+            80872,
+            80804,
+            81728,
+            81728,
+            81728
+          ],
+          "minimum": 80408,
+          "maximum": 81728,
+          "median": 80762.0
+        }
+      },
+      "before_reset_minus_put_median_bytes": 56.0,
+      "after_reset_minus_put_median_bytes": 46392.0,
+      "after_reset_minus_reacquired_median_bytes": 46382.0,
+      "difference_of_reset_deltas_bytes": 46336.0
+    }
+  }
+}

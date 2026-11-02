@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "dashboard-ram-002",
+      "expected_pass": true,
+      "returncode": 0
+    },
+    {
+      "name": "reset-undo-trim-001",
+      "expected_pass": true,
+      "returncode": 0
+    },
+    {
+      "name": "summary-lie",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "saved-capability-lie",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "completion-failure",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "missing-completion",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "missing-final-event",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "expired-lease",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "duplicate-reply",
+      "expected_pass": false,
+      "returncode": 1
+    },
+    {
+      "name": "wrong-header-file",
+      "expected_pass": false,
+      "returncode": 1
+    }
+  ],
+  "verifier_sha256": "5ed0f8bc72d0625ac82e5ff51b79966696e112776169dd925f1f34aabec8c471",
+  "device_actions": false
+}

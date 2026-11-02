@@ -1,0 +1,161 @@
+{
+  "mode": "read-only static review; retained parent emulation results inspected, not rerun",
+  "production_or_device_changes": false,
+  "sources": [
+    {
+      "path": "analysis/ghidra/app-tail-store/native-store-callbacks.asm",
+      "sha256": "810ed414b5c8b7d67e912c308be0f99e2dcfa5ac6b4efd1482aa8cc719484450",
+      "bytes": 12887
+    },
+    {
+      "path": "analysis/ghidra/boot-validation/captured-bootmaps.json",
+      "sha256": "beaafc8cf85f2dd65724ee85dcf540b4aed653488681a2e4239a0f8bbe7f8caa",
+      "bytes": 10067
+    },
+    {
+      "path": "analysis/ghidra/boot-validation/report.md",
+      "sha256": "1a7f3c14f5943ba1b9ad5b9270467c1f27ca20b88c426abb5a18d898a812aaf2",
+      "bytes": 10281
+    },
+    {
+      "path": "analysis/ghidra/display-adapter/completion/function-0426223c.c",
+      "sha256": "65b81bfc82ef926f83d71bd799337de351dafeea9997e97fba9e5515148d0780",
+      "bytes": 3631
+    },
+    {
+      "path": "analysis/ghidra/display-adapter/event-api/function-042a90ba.c",
+      "sha256": "9767ed1cb87486a31cd7eb80b1c3b63bb65dd69aa4550465fd834149f645772b",
+      "bytes": 9091
+    },
+    {
+      "path": "analysis/ghidra/external-xip-review/report.md",
+      "sha256": "7dc869aa14869158b2aade407b302769c075786a0a8e20af0154648f10f55cee",
+      "bytes": 12140
+    },
+    {
+      "path": "analysis/ghidra/flash-topology/report.md",
+      "sha256": "0eb465f807f40bbf6fa225a1b4ea402e1ad1e1735603b5db08a63c5ef6e6dff4",
+      "bytes": 11219
+    },
+    {
+      "path": "analysis/ghidra/flash-topology/store-init-callers.txt",
+      "sha256": "2b627249e560986e2165074fd115084ffdd431692019c862533b573e3087f6d3",
+      "bytes": 2476
+    },
+    {
+      "path": "analysis/ghidra/loader/function-042a4598.c",
+      "sha256": "e070b2e33fe2f3e109501bf56938cbb2de46ce240a449e2b619fb7d3ec3c96db",
+      "bytes": 690
+    },
+    {
+      "path": "analysis/ghidra/loader/function-042a4628.c",
+      "sha256": "8170830231ca07a0ccb40059f97e2daf1c0588a495c83fb3e1de117423c8d8bc",
+      "bytes": 559
+    },
+    {
+      "path": "analysis/ghidra/loader/function-042a4994.c",
+      "sha256": "a3c144ef52f6327e421706e712fd50463bee394fb4bc7936cc796b95b93bafc2",
+      "bytes": 375
+    },
+    {
+      "path": "analysis/ghidra/loader/function-042a49e2.c",
+      "sha256": "abe536f90026e1da143fb343d8a5ca88563ebb08c773000dd6ac7310fbe88198",
+      "bytes": 374
+    },
+    {
+      "path": "analysis/ghidra/loader/function-042a4a2c.c",
+      "sha256": "8ef0406a6ae06f12c4bd4e00d2b623c99599152b5c846d6a27885e1dcce4a559",
+      "bytes": 347
+    },
+    {
+      "path": "analysis/ghidra/memory-capacity/flash/function-0420fd64.c",
+      "sha256": "d5df1f3cbd000826aa358cdc1c778e253950158cd60fd78bfbffb0464a51cc03",
+      "bytes": 1178
+    },
+    {
+      "path": "analysis/ghidra/native-store-capacity/lifecycle/function-0423e8b4.c",
+      "sha256": "2819f288ee0a4c2b2a27e54155f6731e3acb7f160eeb3cfed49971f1f1fb69ca",
+      "bytes": 3152
+    },
+    {
+      "path": "analysis/ghidra/native-store-capacity/report.md",
+      "sha256": "57bc01e5e355e0777e40c04b0fcb9201e99f936d517d2aa669adfbee8f0d3e0d",
+      "bytes": 13538
+    },
+    {
+      "path": "analysis/ghidra/tail-reservation-review/owners/function-043413ae.c",
+      "sha256": "a3b8a84630be91f98a93ec56477e2685f19f2eb290b7ee3982746754e98451d1",
+      "bytes": 874
+    },
+    {
+      "path": "analysis/ghidra/tail-reservation-review/owners/function-043414a6.c",
+      "sha256": "2bccd66590022d8c9ac92070a43ee4ce1722b73d5a609d8c2f6fed1de7fc4b59",
+      "bytes": 633
+    },
+    {
+      "path": "analysis/ghidra/tail-reservation-review/report.md",
+      "sha256": "f5f3f3cc7bb137eaa2eb2b42a36e2dd7d5c980d49e2d3b4070fccb287118ff80",
+      "bytes": 11467
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/callers/function-042105d4.c",
+      "sha256": "c5462b3a730fc420d7e4de16eff7da196631f30567313163eb71994ef34b93ab",
+      "bytes": 1818
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/callers/function-0423d4ea.c",
+      "sha256": "e590fba4dba36909f1eadd71284605578b7f759b48afd62982d0955151645435",
+      "bytes": 13252
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/callers/function-0423e1a0.c",
+      "sha256": "1f183df0105dea7378213a48a07a26b0fdcff7433cd02f819d5a6d054a5958ca",
+      "bytes": 6849
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/callers/functions.json",
+      "sha256": "b8931d29faf9578971cc011b87bb5b14c2a1cf8fdc317f32bfd9c097f8d21257",
+      "bytes": 582
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/native/function-0420fe3e.c",
+      "sha256": "bf11d67221a6ab8fd50fec45ccd437dbebb2198f01bc378155065b9e14ea86b4",
+      "bytes": 541
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/native/function-0420ff1a.c",
+      "sha256": "57f4fda395fa5c246e57c05c58a79e8a7caed080ece6dcc28f02bcaf641d1701",
+      "bytes": 2618
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/native/function-04341354.c",
+      "sha256": "be1073aec2dca740199dea57a804bd542bff5d87cb983ed41e3a75811864491a",
+      "bytes": 358
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/record-program-callers.txt",
+      "sha256": "53fe274fcf997837f03cb163bdbe9f20437c05404c2f9fa6e233afde19acc605",
+      "bytes": 962
+    },
+    {
+      "path": "analysis/exclusive-store-review-20261101/record/function-04210120.c",
+      "sha256": "2485cb9bfb32ceff8fa445d7c4bdfe0fe6eba607ca1e4e43fd642932e1c3a92a",
+      "bytes": 2013
+    },
+    {
+      "path": "scripts/build_memomind_exclusive_storage.py",
+      "sha256": "e21d080d9bf5c7e5c7678e404c9a23cb5de679424471ef5f26046da5b7840f1e",
+      "bytes": 6443
+    },
+    {
+      "path": "analysis/exclusive-storage-native-002/report.json",
+      "sha256": "0a90aa759a59976baa19f8f827f21e84e61a8f1890dd35901260f59ea4332e77",
+      "bytes": 25805
+    },
+    {
+      "path": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+      "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+      "bytes": 1773176
+    }
+  ]
+}

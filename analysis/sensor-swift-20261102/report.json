@@ -1,0 +1,606 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source_sha256": {
+    "patches/zlib_glue.c": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+    "patches/als_sensor.c": "64fab150306bde45582e450fb34d1b168689200ceb1b14dbc0093c63511ad4fa",
+    "patches/compass.c": "39106e861b73bd7b230596871f739759f0296c69fc44457d8638ed84a75f5e0f"
+  },
+  "extraction_sha256": {
+    "compass_branch": "84d8d56db9d1c5af8c212328361334352333c14bfb862ff588e181f7642c347b",
+    "als_dispatch_branch": "f313e515b7ef550c127f68042e860e3ba5bb5de325ac39d2f0335e2c22ab8116",
+    "als_control": "48d1f5257f390b39f9c4d79096c6ff6ff61380d0bf73c301bdba6fc68afe6512",
+    "als_start_parameter_prefix": "697244a87f42e0711f6ee2394d9f925e923bdf87155b14ebd0bd2554ad6a03ad"
+  },
+  "checks": 5404,
+  "fixtures": [
+    {
+      "name": "compass-stop",
+      "kind": "compassStop",
+      "values": [],
+      "hex": "0a00",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 1,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-default",
+      "kind": "compassDefault",
+      "values": [],
+      "hex": "0a01",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-0-0",
+      "kind": "compassConfig",
+      "values": [
+        0,
+        0
+      ],
+      "hex": "0a0200000000",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 50,
+          "change_value": 0,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-49-65535",
+      "kind": "compassConfig",
+      "values": [
+        49,
+        65535
+      ],
+      "hex": "0a023100ffff",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 50,
+          "change_value": 65535,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-50-5",
+      "kind": "compassConfig",
+      "values": [
+        50,
+        5
+      ],
+      "hex": "0a0232000500",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 50,
+          "change_value": 5,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-1000-5",
+      "kind": "compassConfig",
+      "values": [
+        1000,
+        5
+      ],
+      "hex": "0a02e8030500",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 1000,
+          "change_value": 5,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-2000-256",
+      "kind": "compassConfig",
+      "values": [
+        2000,
+        256
+      ],
+      "hex": "0a02d0070001",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 2000,
+          "change_value": 256,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-2001-360",
+      "kind": "compassConfig",
+      "values": [
+        2001,
+        360
+      ],
+      "hex": "0a02d1076801",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 2000,
+          "change_value": 360,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "compass-65535-65535",
+      "kind": "compassConfig",
+      "values": [
+        65535,
+        65535
+      ],
+      "hex": "0a02ffffffff",
+      "reference": {
+        "result": 0,
+        "context": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 1,
+          "stops": 0,
+          "configs": 1,
+          "interval_value": 2000,
+          "change_value": 65535,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-query",
+      "kind": "alsQuery",
+      "values": [],
+      "hex": "1000",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 0,
+          "queries": 1,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-stop",
+      "kind": "alsStop",
+      "values": [],
+      "hex": "1002",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 0,
+          "queries": 0,
+          "als_stops": 1
+        }
+      }
+    },
+    {
+      "name": "als-500-1-5000-0",
+      "kind": "alsStart",
+      "values": [
+        500,
+        1,
+        5000,
+        0
+      ],
+      "hex": "100100f40101008813",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          500,
+          1,
+          5000
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-500-1-5000-1",
+      "kind": "alsStart",
+      "values": [
+        500,
+        1,
+        5000,
+        1
+      ],
+      "hex": "100101f40101008813",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          1,
+          500,
+          1,
+          5000
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-0-0-0-0",
+      "kind": "alsStart",
+      "values": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "hex": "100100000000000000",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          100,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-99-65535-65535-1",
+      "kind": "alsStart",
+      "values": [
+        99,
+        65535,
+        65535,
+        1
+      ],
+      "hex": "1001016300ffffffff",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          1,
+          100,
+          65535,
+          65535
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-100-1-1-0",
+      "kind": "alsStart",
+      "values": [
+        100,
+        1,
+        1,
+        0
+      ],
+      "hex": "100100640001000100",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          100,
+          1,
+          1
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-5000-256-5000-1",
+      "kind": "alsStart",
+      "values": [
+        5000,
+        256,
+        5000,
+        1
+      ],
+      "hex": "100101881300018813",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          1,
+          5000,
+          256,
+          5000
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-5001-0-0-1",
+      "kind": "alsStart",
+      "values": [
+        5001,
+        0,
+        0,
+        1
+      ],
+      "hex": "100101891300000000",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          1,
+          5000,
+          0,
+          0
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    },
+    {
+      "name": "als-65535-65535-65535-0",
+      "kind": "alsStart",
+      "values": [
+        65535,
+        65535,
+        65535,
+        0
+      ],
+      "hex": "100100ffffffffffff",
+      "reference": {
+        "result": 0,
+        "context": [
+          0,
+          0,
+          5000,
+          65535,
+          65535
+        ],
+        "calls": {
+          "starts": 0,
+          "stops": 0,
+          "configs": 0,
+          "interval_value": 0,
+          "change_value": 0,
+          "als_starts": 1,
+          "queries": 0,
+          "als_stops": 0
+        }
+      }
+    }
+  ],
+  "build_command": [
+    "clang",
+    "-dynamiclib",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/sensor-swift-20261102/reference.c",
+    "-o",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/sensor-swift-20261102/reference.dylib"
+  ],
+  "boundary": "Original compass dispatcher and ALS control plus unchanged ALS clamp/store prefix. Native context, sensor callbacks, reports, hook installation/open and lease lifecycle mocked/excluded. No Memo native support inferred.",
+  "status": "passed",
+  "swift_test_methods": 5,
+  "fixture_count": 19,
+  "encoding_only": true,
+  "current_memo_runtime_support": false,
+  "raw_imu_protocol_added": false,
+  "device_actions": false,
+  "existing_source_files_changed": false,
+  "source_hashes": {
+    "swift/MemoMindKit/Sources/MemoMindCore/SensorCommands.swift": "31bd07407813070bdf72af6304ea41d4379106091ad15ac89f78ab1847c29660",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/SensorCommandsTests.swift": "54863e1dd27ab5f7ac7b7ef83ab9e9493f82cc3b543d295783d0ee78c34b4a5b",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/SensorReferenceVectors.swift": "bd2e8e7bc2f766d84db66cbcf3b231564a68b16131a909062fc5a88d0e9f873d"
+  },
+  "artifacts": {
+    "report.md": "16cca0c8346fa075e3061e7075559396f2fa29b73efe1a72f3abf6c0fc44d112",
+    "reference.c": "2a7caec8bfc593f7a8758947e5eb4fdf074bdb9965c32b15c0a75d68c570c118",
+    "generate_reference.py": "9c7df53bafa59fb3beed99e5defe4b89bad504a038efbb2c853957090f457ea5",
+    "swift-tests.log": "928942b3dbef64bada3bc6306391bc1a09dd8ed631e29ebe12110ddf87a56a62",
+    "reference.json": "8c01ab71c45e2a3f47a27b558fc1407b99d382d24327a30ce1a284ea5c52eaff",
+    "reference.dylib": "052256c16341c59e610441d62cee1c6824966d056c4e62e4fe9dccdb3ece72f1"
+  }
+}

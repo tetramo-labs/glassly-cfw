@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "runtime/graphics/flash_read.c": "e1c9f4b5b43a98b40dfbbfb6f773aa26084eda8605e884a94f48226e926dfc2e",
+    "runtime/graphics/tests/test_flash_read.c": "48b82f3dfe5d6f96d12f28c20d4dab707ce19fb364af9c1204f364c3d87c2226",
+    "runtime/graphics/flash_read.h": "0b302e66c7aba1f467f39ac239f352815fa02c82e69378f320dd79ffab87e076",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/tests/run_flash_read_tests.py": "51779fc6bda726221d27cc930ea8ecd8f1d4815352347e51291cc12c7efd2060"
+  },
+  "replies": [
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "profile": "H001Y-1.0.3.127",
+      "maxRead": 256,
+      "alignment": 256,
+      "ranges": [
+        {
+          "device": 0,
+          "start": 0,
+          "end": 65536
+        },
+        {
+          "device": 0,
+          "start": 2011136,
+          "end": 2011392
+        },
+        {
+          "device": 0,
+          "start": 8372224,
+          "end": 8380416
+        },
+        {
+          "device": 1,
+          "start": 5242880,
+          "end": 5308416
+        }
+      ]
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "device": 1,
+      "offset": 5308160,
+      "length": 256,
+      "hex": "1112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f10"
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "read-failed"
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "allocation-failed"
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "invalid"
+    }
+  ],
+  "summary": "PASS flash-reader range/ownership cases=2401 plus failure paths; no write/erase/display APIs provided",
+  "native_flash_mocked": true,
+  "device_actions": false,
+  "source_drift": []
+}

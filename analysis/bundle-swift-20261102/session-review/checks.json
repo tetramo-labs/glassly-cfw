@@ -1,0 +1,18 @@
+{
+  "checks" : [
+    "nil final filter preserves historical last-match behavior",
+    "nil fragment filter preserves historical first-business stop",
+    "final ACK never calls business filter",
+    "all continuation ACK heads preserve fragment sequencing",
+    "wrong fragment ACK after a notification stops before next write",
+    "coalesced early rejection ACK and notification stop remaining writes",
+    "filter throw after candidate reply rejects complete read",
+    "notification alone cannot acknowledge request fragment",
+    "notifications do not hide duplicate accepted replies",
+    "different-event business message is routed without passing response filter",
+    "late duplicated prior reply routes to unsolicited on next event"
+  ],
+  "count" : 11,
+  "device_operations" : false,
+  "passed" : true
+}

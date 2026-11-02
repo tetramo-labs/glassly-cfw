@@ -1,0 +1,2120 @@
+{
+  "kind": "Offline snapshot link-budget experiment; no active source/image/profile/device changes",
+  "compiler": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0",
+  "sources": {
+    "runtime/graphics/entry.S": "b98daa36e3d0bb9035ab6df60a16a364d019b9bbab5501d4f3bc6ecaa65682bc",
+    "runtime/graphics/graphics.c": "4756c3d062f35c08ce5462a75fc986b3e8e22e79858172eb032bca4485e36985",
+    "runtime/graphics/graphics.h": "894bff2eaf6b71f0ba4b6a61d8a7f2c9aba0b8da429867acb77f588c4106abd5",
+    "runtime/graphics/graphics.ld": "1073e111b7817979895781dec2cc4583989fb364a6719c766e55bce7d5c50a00",
+    "runtime/graphics/native.c": "c8ef4626f35cc7a2e8b6b1452cf2d0ba38fc04b80ca1331d10a7decab8eaf7e7",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "runtime/portable/rle.c": "945e57f8ed5996859eccd3598a19a953cd2f37132dcd5acf86ecac93d09f4158",
+    "runtime/portable/rle.h": "b770902f55175ecb1fa156d73f32f1c8b9a541009589dea037de634d1d0d346f",
+    "runtime/portable/scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "runtime/portable/scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
+    "runtime/portable/scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+    "runtime/portable/scene_shapes.inc": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
+    "runtime/portable/vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+    "runtime/portable/vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba"
+  },
+  "builds": [
+    {
+      "optimization": "O2",
+      "flags": [
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mcmodel=medany",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-fno-stack-protector",
+        "-fno-unwind-tables",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-ipa-icf",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fvisibility=hidden",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-nostdlib",
+        "-std=c11",
+        "-O2",
+        "-fcallgraph-info=su",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable"
+      ],
+      "commands": [
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/entry.S",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/entry.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/graphics.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/graphics.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/native.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/native.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/geometry.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/geometry.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/vector.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/vector.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/rle.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/rle.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-O2",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/scene.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/O2/scene.o"
+        ]
+      ],
+      "retained_exports": [
+        "mm_geometry_mode36",
+        "mm_geometry_private_line_q4",
+        "mm_geometry_private_sin_deg",
+        "mm_geometry_validate_message",
+        "mm_raster_clear",
+        "mm_raster_pixel",
+        "mm_raster_span",
+        "mm_raster_validate",
+        "mm_rle_decode",
+        "mm_rle_encode",
+        "mm_rle_surface_validate",
+        "mm_rle_validate",
+        "mm_scene_dispatch",
+        "mm_scene_immediate",
+        "mm_scene_init",
+        "mm_scene_lose",
+        "mm_scene_prepare",
+        "mm_scene_reap",
+        "mm_scene_release",
+        "mm_scene_render_if_due",
+        "mm_scene_takeover",
+        "mm_scene_tick",
+        "mm_vector_compile",
+        "mm_vector_draw_path",
+        "mm_vector_draw_shape",
+        "mm_vector_path_bytes"
+      ],
+      "blob_bytes": 41504,
+      "blob_sha256": "df4d367ed37a156ba5d4deb0543874ff7c3a783aad7f8b295feb56e61b07dbf3",
+      "fits_32k": false,
+      "fits_64k": true,
+      "trial_32k_exit": 1,
+      "max_individual_frame": 336,
+      "stack_usage": [
+        {
+          "function": "rle_emit",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "encode_pass",
+          "bytes": 16,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_validate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_surface_validate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_decode",
+          "bytes": 80,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_encode",
+          "bytes": 32,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "rs_hspan",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_chord_half",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_rrect_row",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_fill_poly_q4.part.0",
+          "bytes": 96,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_line_q4",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_arc_point",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_validate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_pixel",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_span",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_clear",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_validate_message",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_mode36",
+          "bytes": 224,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_private_sin_deg",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_private_line_q4",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "deleted",
+          "bytes": 16,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "tick",
+          "bytes": 32,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_probe",
+          "bytes": 336,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_command",
+          "bytes": 48,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_display",
+          "bytes": 80,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "cv_muldiv",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_sift",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mmv_target",
+          "bytes": 32,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_sin",
+          "bytes": 32,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_fill",
+          "bytes": 80,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_transform",
+          "bytes": 64,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_roundrect",
+          "bytes": 128,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_ellipse",
+          "bytes": 112,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_curve",
+          "bytes": 96,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_path_bytes",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_compile",
+          "bytes": 128,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_draw_path",
+          "bytes": 48,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_draw_shape",
+          "bytes": 160,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "post",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "send",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "screen",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "launcher_active",
+          "bytes": 32,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "on_delete",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "image_source",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "try_alloc",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "timer_userdata",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "request_bytes",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "find_owner",
+          "bytes": 32,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "cfw_texture_image_in",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_add_rect",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_string_valid",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_decode",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_valid",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_scene_stop",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_journal_note",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_save_bytes",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_shadow",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_record_len.part.0",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_put_entry_len",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_op_len.part.0",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_input_valid.part.0",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_free",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_unref.part.0",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_free",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_evict_object",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_evict_asset",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_new_asset",
+          "bytes": 80,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_abort",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_supersede",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_commit",
+          "bytes": 96,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_animate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_render",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_draw_string_region",
+          "bytes": 128,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_ease_progress.part.0",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_advance",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_glide",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_rotation_advance",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_draw_image_region",
+          "bytes": 80,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_shape_draw.isra",
+          "bytes": 96,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_free_storage",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_scene_render",
+          "bytes": 208,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_freeze",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_op_apply_one",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_asset_region",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_resolve",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_prologue.constprop",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_reply_begin",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_reply_simple",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_reply_failure",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_resolve",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_put_object",
+          "bytes": 128,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_prepare",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_tick",
+          "bytes": 208,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_put_asset",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_init",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_prepare",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_dispatch",
+          "bytes": 128,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_immediate",
+          "bytes": 144,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_render_if_due",
+          "bytes": 160,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_takeover",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_lose",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_reap",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_release",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        }
+      ],
+      "static_frames_only": true,
+      "in_memory_container": {
+        "ota_sha256": "ddab028db8ce111da017540737c8c1532925faede52db907b8c8560af3f8ccc6",
+        "ota_bytes": 2216299,
+        "payload_bytes": 2216281,
+        "staging_headroom": 265895,
+        "app_raw_bytes": 1814720,
+        "app_headroom": 282432,
+        "candidate_ota_written": false
+      }
+    },
+    {
+      "optimization": "Os",
+      "flags": [
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mcmodel=medany",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-fno-stack-protector",
+        "-fno-unwind-tables",
+        "-fno-asynchronous-unwind-tables",
+        "-fno-ipa-icf",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fvisibility=hidden",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-nostdlib",
+        "-std=c11",
+        "-Os",
+        "-fcallgraph-info=su",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable"
+      ],
+      "commands": [
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/entry.S",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/entry.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/graphics.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/graphics.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics/native.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/native.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/geometry.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/geometry.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/vector.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/vector.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/rle.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/rle.o"
+        ],
+        [
+          "-march=rv32imafc",
+          "-mabi=ilp32f",
+          "-mcmodel=medany",
+          "-mno-relax",
+          "-msmall-data-limit=0",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-common",
+          "-fno-pic",
+          "-fno-pie",
+          "-fno-stack-protector",
+          "-fno-unwind-tables",
+          "-fno-asynchronous-unwind-tables",
+          "-fno-ipa-icf",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden",
+          "-fstack-usage",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-nostdlib",
+          "-std=c11",
+          "-Os",
+          "-fcallgraph-info=su",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/graphics",
+          "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable",
+          "-Wno-unused-function",
+          "-c",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/snapshot/portable/scene.c",
+          "-o",
+          "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-link-budget/Os/scene.o"
+        ]
+      ],
+      "retained_exports": [
+        "mm_geometry_mode36",
+        "mm_geometry_private_line_q4",
+        "mm_geometry_private_sin_deg",
+        "mm_geometry_validate_message",
+        "mm_raster_clear",
+        "mm_raster_pixel",
+        "mm_raster_span",
+        "mm_raster_validate",
+        "mm_rle_decode",
+        "mm_rle_encode",
+        "mm_rle_surface_validate",
+        "mm_rle_validate",
+        "mm_scene_dispatch",
+        "mm_scene_immediate",
+        "mm_scene_init",
+        "mm_scene_lose",
+        "mm_scene_prepare",
+        "mm_scene_reap",
+        "mm_scene_release",
+        "mm_scene_render_if_due",
+        "mm_scene_takeover",
+        "mm_scene_tick",
+        "mm_vector_compile",
+        "mm_vector_draw_path",
+        "mm_vector_draw_shape",
+        "mm_vector_path_bytes"
+      ],
+      "blob_bytes": 32688,
+      "blob_sha256": "6d4e915a5301b66cd999fb852e520bdd44d59bf1d70e03a30ba6614e901609cd",
+      "fits_32k": true,
+      "fits_64k": true,
+      "trial_32k_exit": 0,
+      "max_individual_frame": 336,
+      "stack_usage": [
+        {
+          "function": "rle_emit",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "overlaps",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "nibble",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "encode_pass",
+          "bytes": 64,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_validate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_surface_validate",
+          "bytes": 16,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_decode",
+          "bytes": 96,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "mm_rle_encode",
+          "bytes": 32,
+          "kind": "static",
+          "object": "rle"
+        },
+        {
+          "function": "cfw_isqrt",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "cfw_div_floor",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_hspan",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_chord_half",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_span_pixels",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_rrect_row",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "cfw_sin_deg",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_arc_point",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_pixel",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_fill_poly_q4.part.0",
+          "bytes": 128,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "rs_line_q4",
+          "bytes": 112,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_validate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_pixel",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_span",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_raster_clear",
+          "bytes": 48,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_validate_message",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_mode36",
+          "bytes": 224,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_private_sin_deg",
+          "bytes": 0,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "mm_geometry_private_line_q4",
+          "bytes": 32,
+          "kind": "static",
+          "object": "geometry"
+        },
+        {
+          "function": "deleted",
+          "bytes": 16,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "tick",
+          "bytes": 16,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "valid_message",
+          "bytes": 16,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "reply",
+          "bytes": 16,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_probe",
+          "bytes": 336,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_command",
+          "bytes": 64,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "glassly_graphics_display",
+          "bytes": 96,
+          "kind": "static",
+          "object": "graphics"
+        },
+        {
+          "function": "cfw_div_floor",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_muldiv",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_edge",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_curve",
+          "bytes": 96,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_sift",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mmv_overlap",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_sin",
+          "bytes": 16,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_ellipse",
+          "bytes": 96,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_roundrect",
+          "bytes": 128,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_fill",
+          "bytes": 96,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mmv_target",
+          "bytes": 32,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "cv_transform",
+          "bytes": 32,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_path_bytes",
+          "bytes": 0,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_compile",
+          "bytes": 144,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_draw_path",
+          "bytes": 64,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "mm_vector_draw_shape",
+          "bytes": 160,
+          "kind": "static",
+          "object": "vector"
+        },
+        {
+          "function": "word",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "post",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "send",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "screen",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "launcher_active",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "find_owner",
+          "bytes": 48,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "on_delete",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "image_source",
+          "bytes": 32,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "timer_userdata",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "try_alloc",
+          "bytes": 0,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "request_bytes",
+          "bytes": 16,
+          "kind": "static",
+          "object": "native"
+        },
+        {
+          "function": "bzero",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "rd32",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "rl_add",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_deallocate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_now",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_lease",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_timer_start",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_image_in",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_make_lut",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_string_valid",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_decode",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_valid",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_ease_axis",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_peek",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_epoch",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_next_epoch",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_store_release",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_scene_stop",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_free_storage",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_journal_note",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_free",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_evict_asset",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_reply_begin",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_reply_simple",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "wr32",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_missing",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_staged_fill",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_reply_failure",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_overlap",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_record_len",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_ease_progress",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_scene_settled",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_reap",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_find",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_resolve",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_asset_region",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_shape_resolve",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_find",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_unref.part.0",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_rotation_advance",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_animate",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_put_entry_len",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_asset_supersede",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_op_len",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_input_valid",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_prologue.constprop",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_path.isra",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_memcpy.isra",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_snapshot.isra",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_shadow",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_save_bytes",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "present_buffer",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_render",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_draw_image_region",
+          "bytes": 80,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_advance",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_freeze",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_glide",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_free",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_evict_object",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_new_asset",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_put_asset",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_put_object",
+          "bytes": 128,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_abort",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_txn_commit",
+          "bytes": 96,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_object_finish",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_op_apply_one",
+          "bytes": 64,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_texture_draw_string_region",
+          "bytes": 128,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_shape_draw",
+          "bytes": 96,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_scene_render",
+          "bytes": 208,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_tick",
+          "bytes": 208,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "cfw_cache_prepare",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_init",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_prepare",
+          "bytes": 32,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_dispatch",
+          "bytes": 144,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_immediate",
+          "bytes": 144,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_render_if_due",
+          "bytes": 176,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_takeover",
+          "bytes": 48,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_lose",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_reap",
+          "bytes": 0,
+          "kind": "static",
+          "object": "scene"
+        },
+        {
+          "function": "mm_scene_release",
+          "bytes": 16,
+          "kind": "static",
+          "object": "scene"
+        }
+      ],
+      "static_frames_only": true,
+      "in_memory_container": {
+        "ota_sha256": "d6842b9f4b2f68d4bce3d7dcc54611b3067c78418e589c533f406fb40c7defa6",
+        "ota_bytes": 2209217,
+        "payload_bytes": 2209199,
+        "staging_headroom": 272977,
+        "app_raw_bytes": 1805904,
+        "app_headroom": 291248,
+        "candidate_ota_written": false
+      }
+    }
+  ]
+}

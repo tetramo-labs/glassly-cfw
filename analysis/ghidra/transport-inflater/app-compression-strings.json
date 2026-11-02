@@ -1,0 +1,62 @@
+[
+  {
+    "address": "0x435d7d4",
+    "offset": "0x1727b4",
+    "text": "font OTA LZMA init failed"
+  },
+  {
+    "address": "0x4383020",
+    "offset": "0x198000",
+    "text": "[T:0x%08X][img_utils.c:107] [img_utils]  E:LZMA unwrap failed res=%d status=%d src_used=%u/%u dst=%u/%u"
+  },
+  {
+    "address": "0x43830d4",
+    "offset": "0x1980b4",
+    "text": "[T:0x%08X][img_utils.c:417] [img_utils]  E:Failed to LZMA decode '%s'"
+  },
+  {
+    "address": "0x438311c",
+    "offset": "0x1980fc",
+    "text": "[T:0x%08X][img_utils.c:434] [img_utils]  E:ERROR: File '%s' is a PNG file, not a compressed binary format!"
+  },
+  {
+    "address": "0x43831e0",
+    "offset": "0x1981c0",
+    "text": "[T:0x%08X][img_utils.c:540] [img_utils]  E:Decompression failed! Expected %u, got %u"
+  },
+  {
+    "address": "0x4383238",
+    "offset": "0x198218",
+    "text": "ILZ4"
+  },
+  {
+    "address": "0x4383298",
+    "offset": "0x198278",
+    "text": "[T:0x%08X][img_utils.c:156] [img_utils]  E:LZ4 unwrap failed: actual=%d expect=%u src=%u"
+  },
+  {
+    "address": "0x4384380",
+    "offset": "0x199360",
+    "text": "[T:0x%08X][jbd013_api.c:1231] [JBD013] E:image lzma/check fail res=%d status=%d src_used=%u/%u"
+  },
+  {
+    "address": "0x43906b4",
+    "offset": "0x1a5694",
+    "text": "{\"schema\":1,\"packageFormat\":%u,\"abi\":%u,\"compression\":\"lz4-block\",\"compressionBlockBytes\":%u,\"maxPackageBytes\":%lu,\"chunkBytes\":%u,\"sequentialChunks\":true,\"streamedInstallChunks\":true,\"flashXip\":true,\"cacheResume\":true,\"singleSppLink\":true,\"cacheCapacityQuery\":true,\"runtimeStateQuery\":true,\"runtimeStateNotifications\":true,\"displayWidth\":%u,\"displayHeight\":%u,\"refreshHz\":%u,\"pixelFormat\":%u,\"logicalDisplays\":%u,\"capabilities\":%lu}"
+  },
+  {
+    "address": "0x4393d20",
+    "offset": "0x1a8d00",
+    "text": "[T:0x%08X][bt_data_report.c:3393] [bt_handler]  E:[SS] band %u LZ4 failed/oversize: raw=%u max_out=%u blen=%d"
+  },
+  {
+    "address": "0x4393d90",
+    "offset": "0x1a8d70",
+    "text": "LZ4 band failed"
+  },
+  {
+    "address": "0x4393da0",
+    "offset": "0x1a8d80",
+    "text": "{\"cmd_id\":%d,\"width\":%u,\"height\":%u,\"visible_width\":%u,\"bpp\":4,\"compression\":\"lz4\",\"format\":\"banded\",\"band_rows\":%u,\"band_count\":%u,\"original_size\":%u,\"data_size\":%u,\"total_chunks\":%u,\"status\":\"start\"}"
+  }
+]

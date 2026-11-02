@@ -1,0 +1,674 @@
+{
+  "format": "memomind-graphics-container-validation-v1",
+  "kind": "synthetic container-only fixtures; not executable graphics runtime",
+  "candidate_images_written": false,
+  "device_actions": false,
+  "tests": {
+    "groups": 8,
+    "passed": true,
+    "log": "analysis/graphics-container-tests.log"
+  },
+  "fixtures": [
+    {
+      "synthetic_blob_size": 80,
+      "fixture_recipe": "c.nop bytes0100 repeated; replace offset64..68 with displacedload032504f9",
+      "manifest": {
+        "format": "memomind-graphics-runtime-v1",
+        "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+        "output_sha256": "00de7a2f4c9341b6e4d3329f2dd34406cdf522bf5f81ab1a59c4315e61dd1509",
+        "blob_sha256": "a41dff949402ec1c22ebc264e72c662df4cfaf08b79e8b70a63ed41cfeb0aa3a",
+        "blob_bytes": 80,
+        "entry_address": 70893216,
+        "display_gate_address": 70893280,
+        "hooks": [
+          {
+            "name": "service15_callback_initializer",
+            "address": 70157024,
+            "body_offset": 1036992,
+            "before": "b7472e0493870768",
+            "after": "b7c73904938707ea",
+            "target": 70893216,
+            "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+            "following_witness": "bcd8"
+          },
+          {
+            "name": "display_worker_dispatch_call",
+            "address": 69582858,
+            "body_offset": 462826,
+            "before": "032504f9eff0cfb7",
+            "after": "97001400e78060ed",
+            "target": 70893280,
+            "return_address": 69582866,
+            "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+            "following_witness": "032504f9"
+          }
+        ],
+        "abi": {
+          "isa": "RV32IMAFC",
+          "calling_convention": "ilp32f",
+          "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+          "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+          "ordinary_display_tail_target": 69579658,
+          "display_return_address": 69582866,
+          "envelope_owner": "stock worker frees after return; gate must not free or retain"
+        }
+      },
+      "verification": {
+        "manifest": {
+          "format": "memomind-graphics-runtime-v1",
+          "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+          "output_sha256": "00de7a2f4c9341b6e4d3329f2dd34406cdf522bf5f81ab1a59c4315e61dd1509",
+          "blob_sha256": "a41dff949402ec1c22ebc264e72c662df4cfaf08b79e8b70a63ed41cfeb0aa3a",
+          "blob_bytes": 80,
+          "entry_address": 70893216,
+          "display_gate_address": 70893280,
+          "hooks": [
+            {
+              "name": "service15_callback_initializer",
+              "address": 70157024,
+              "body_offset": 1036992,
+              "before": "b7472e0493870768",
+              "after": "b7c73904938707ea",
+              "target": 70893216,
+              "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+              "following_witness": "bcd8"
+            },
+            {
+              "name": "display_worker_dispatch_call",
+              "address": 69582858,
+              "body_offset": 462826,
+              "before": "032504f9eff0cfb7",
+              "after": "97001400e78060ed",
+              "target": 70893280,
+              "return_address": 69582866,
+              "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+              "following_witness": "032504f9"
+            }
+          ],
+          "abi": {
+            "isa": "RV32IMAFC",
+            "calling_convention": "ilp32f",
+            "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+            "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+            "ordinary_display_tail_target": 69579658,
+            "display_return_address": 69582866,
+            "envelope_owner": "stock worker frees after return; gate must not free or retain"
+          }
+        },
+        "offline_only": true,
+        "append_audit_before_hooks": {
+          "format": "memomind-app-append-audit-v1",
+          "offline_only": true,
+          "source_profile": "verified-text-1.0.3.127",
+          "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+          "output_sha256": "35d175ff9eb198af18246efada210d3169bdc3cee5adb5a9bf8398150a692073",
+          "source_bytes": 2185415,
+          "output_bytes": 2185429,
+          "byte_identical_noop": false,
+          "component": 3,
+          "original_body_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+          "output_body_sha256": "9531da53ae8db1aac52bf8e304019ede1b3c6ccee2299d35268e4d3def45ffcb",
+          "original_body_size": 1773176,
+          "output_body_size": 1773264,
+          "prefix_unchanged": true,
+          "prefix_length": 1773176,
+          "prefix_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+          "append": {
+            "body_start": 1773176,
+            "body_end_exclusive": 1773264,
+            "sha256_including_padding": "a605947948fc7a8a0a4f3b3f8e56086ddd015c233158d9f50f4911b8cdde80a1",
+            "payload_body_start": 1773184,
+            "payload_body_end_exclusive": 1773264,
+            "payload_bytes": 80,
+            "payload_sha256": "a41dff949402ec1c22ebc264e72c662df4cfaf08b79e8b70a63ed41cfeb0aa3a",
+            "alignment": 16,
+            "padding_bytes": 8,
+            "padding_value": 0
+          },
+          "mapping": {
+            "basis": "component header and partition metadata; no ELF load map inferred",
+            "body_xip_base": 69120032,
+            "flash_partition_start": 2011136,
+            "flash_partition_end_exclusive": 4108288,
+            "body_flash_start": 2011168,
+            "payload_flash_start": 3784352,
+            "payload_flash_end_exclusive": 3784432,
+            "payload_xip_start": 70893216,
+            "payload_xip_end_exclusive": 70893296,
+            "flash_layout_unchanged": true,
+            "elf_load_map_established": false
+          },
+          "bounds": {
+            "app_allocation": 2097152,
+            "app_raw_bytes": 1773296,
+            "app_free_bytes": 323856,
+            "staging_capacity": 2482176,
+            "staged_payload_bytes": 2185411,
+            "staged_payload_rounded_4096": 2187264,
+            "staging_free_bytes": 296765,
+            "staging_capacity_basis": "pinned metadata type4 allocation; native043415b4/e2 bound",
+            "all_bounds_pass": true
+          },
+          "metadata_body_size_field_offset": 76,
+          "metadata_only_matching_body_size_may_change": true,
+          "container_header_changed_offsets": [
+            9,
+            14,
+            15,
+            16,
+            17,
+            38,
+            82,
+            86,
+            146,
+            147,
+            148,
+            149
+          ],
+          "app_header_only_length_and_crc_may_change": true,
+          "unchanged_streams": [
+            {
+              "index": 1,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+              "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+            },
+            {
+              "index": 2,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+              "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+            },
+            {
+              "index": 4,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+              "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+            },
+            {
+              "index": 5,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+              "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+            },
+            {
+              "index": 6,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+              "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+            }
+          ],
+          "stream_sizes": [
+            {
+              "index": 0,
+              "old_raw": 344,
+              "new_raw": 344,
+              "old_packed": 166,
+              "new_packed": 171
+            },
+            {
+              "index": 1,
+              "old_raw": 909676,
+              "new_raw": 909676,
+              "old_packed": 481265,
+              "new_packed": 481265
+            },
+            {
+              "index": 2,
+              "old_raw": 695512,
+              "new_raw": 695512,
+              "old_packed": 437783,
+              "new_packed": 437783
+            },
+            {
+              "index": 3,
+              "old_raw": 1773208,
+              "new_raw": 1773296,
+              "old_packed": 914318,
+              "new_packed": 914327
+            },
+            {
+              "index": 4,
+              "old_raw": 284300,
+              "new_raw": 284300,
+              "old_packed": 283737,
+              "new_packed": 283737
+            },
+            {
+              "index": 5,
+              "old_raw": 3616,
+              "new_raw": 3616,
+              "old_packed": 986,
+              "new_packed": 986
+            },
+            {
+              "index": 6,
+              "old_raw": 81594,
+              "new_raw": 81594,
+              "old_packed": 67006,
+              "new_packed": 67006
+            }
+          ],
+          "checksums": {
+            "outer_payload_crc32": "verified",
+            "compression_table_crc32": "verified",
+            "packed_streams_crc32": "verified",
+            "component_body_crc32": "verified-all-six"
+          },
+          "limitations": [
+            "Appending does not redirect execution or establish code correctness.",
+            "No ELF link addresses, RAM allocation or startup copy changes are inferred.",
+            "Existing text patch boot success does not prove acceptance of a grown image.",
+            "Bootloader decompression/activation behavior and recovery remain unverified."
+          ]
+        },
+        "output_bytes": 2185460,
+        "output_body_sha256": "8eaa76d73bd63fc90315760495f43536860f7557cf2ef6cd53eb7ebda6ad8b41",
+        "original_prefix_changed_byte_offsets": [
+          462826,
+          462827,
+          462828,
+          462829,
+          462830,
+          462831,
+          462832,
+          462833,
+          1036993,
+          1036994,
+          1036999
+        ],
+        "only_two_pinned_prefix_hook_ranges_changed": true,
+        "initializer_store_and_display_continuation_preserved": true,
+        "unchanged_streams": [
+          {
+            "index": 1,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+          },
+          {
+            "index": 2,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+          },
+          {
+            "index": 4,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+          },
+          {
+            "index": 5,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+          },
+          {
+            "index": 6,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+          }
+        ],
+        "metadata_identical_to_append_stage": true,
+        "final_bounds": {
+          "staging_capacity": 2482176,
+          "payload_bytes": 2185442,
+          "rounded_payload_bytes": 2187264,
+          "staging_headroom": 296734,
+          "app_allocation": 2097152,
+          "app_raw_bytes": 1773296,
+          "app_headroom": 323856
+        },
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "limitations": [
+          "Construction does not establish executable correctness or hardware readiness.",
+          "Blob hash and first displaced load do not prove all runtime ABI obligations.",
+          "Display queue ownership, lifecycle, rendering and execution require separate tests."
+        ]
+      }
+    },
+    {
+      "synthetic_blob_size": 32768,
+      "fixture_recipe": "c.nop bytes0100 repeated; replace offset64..68 with displacedload032504f9",
+      "manifest": {
+        "format": "memomind-graphics-runtime-v1",
+        "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+        "output_sha256": "da0a6ca2a42edc29dbcddab055302ac3e9d6eeda29ad8500ca740134ca4d4f9c",
+        "blob_sha256": "7aa6093e44f045c280ebbeabf334aff61c973b8e390b9296474efe5d9bc3c37a",
+        "blob_bytes": 32768,
+        "entry_address": 70893216,
+        "display_gate_address": 70893280,
+        "hooks": [
+          {
+            "name": "service15_callback_initializer",
+            "address": 70157024,
+            "body_offset": 1036992,
+            "before": "b7472e0493870768",
+            "after": "b7c73904938707ea",
+            "target": 70893216,
+            "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+            "following_witness": "bcd8"
+          },
+          {
+            "name": "display_worker_dispatch_call",
+            "address": 69582858,
+            "body_offset": 462826,
+            "before": "032504f9eff0cfb7",
+            "after": "97001400e78060ed",
+            "target": 70893280,
+            "return_address": 69582866,
+            "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+            "following_witness": "032504f9"
+          }
+        ],
+        "abi": {
+          "isa": "RV32IMAFC",
+          "calling_convention": "ilp32f",
+          "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+          "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+          "ordinary_display_tail_target": 69579658,
+          "display_return_address": 69582866,
+          "envelope_owner": "stock worker frees after return; gate must not free or retain"
+        }
+      },
+      "verification": {
+        "manifest": {
+          "format": "memomind-graphics-runtime-v1",
+          "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+          "output_sha256": "da0a6ca2a42edc29dbcddab055302ac3e9d6eeda29ad8500ca740134ca4d4f9c",
+          "blob_sha256": "7aa6093e44f045c280ebbeabf334aff61c973b8e390b9296474efe5d9bc3c37a",
+          "blob_bytes": 32768,
+          "entry_address": 70893216,
+          "display_gate_address": 70893280,
+          "hooks": [
+            {
+              "name": "service15_callback_initializer",
+              "address": 70157024,
+              "body_offset": 1036992,
+              "before": "b7472e0493870768",
+              "after": "b7c73904938707ea",
+              "target": 70893216,
+              "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+              "following_witness": "bcd8"
+            },
+            {
+              "name": "display_worker_dispatch_call",
+              "address": 69582858,
+              "body_offset": 462826,
+              "before": "032504f9eff0cfb7",
+              "after": "97001400e78060ed",
+              "target": 70893280,
+              "return_address": 69582866,
+              "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+              "following_witness": "032504f9"
+            }
+          ],
+          "abi": {
+            "isa": "RV32IMAFC",
+            "calling_convention": "ilp32f",
+            "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+            "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+            "ordinary_display_tail_target": 69579658,
+            "display_return_address": 69582866,
+            "envelope_owner": "stock worker frees after return; gate must not free or retain"
+          }
+        },
+        "offline_only": true,
+        "append_audit_before_hooks": {
+          "format": "memomind-app-append-audit-v1",
+          "offline_only": true,
+          "source_profile": "verified-text-1.0.3.127",
+          "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+          "output_sha256": "79f277fe57cdc064b20a18af826758b9c87bd6c9ea78646a28745085e4ca88c1",
+          "source_bytes": 2185415,
+          "output_bytes": 2185488,
+          "byte_identical_noop": false,
+          "component": 3,
+          "original_body_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+          "output_body_sha256": "20d72d7374b2dff1a30bc73f370e67915105189aaae4e7fba2f97202d672fdb6",
+          "original_body_size": 1773176,
+          "output_body_size": 1805952,
+          "prefix_unchanged": true,
+          "prefix_length": 1773176,
+          "prefix_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+          "append": {
+            "body_start": 1773176,
+            "body_end_exclusive": 1805952,
+            "sha256_including_padding": "4a0944f9121351cc5e5418b9653e69e9bdf8b491bc5353e6daddc1bd8f6b51b3",
+            "payload_body_start": 1773184,
+            "payload_body_end_exclusive": 1805952,
+            "payload_bytes": 32768,
+            "payload_sha256": "7aa6093e44f045c280ebbeabf334aff61c973b8e390b9296474efe5d9bc3c37a",
+            "alignment": 16,
+            "padding_bytes": 8,
+            "padding_value": 0
+          },
+          "mapping": {
+            "basis": "component header and partition metadata; no ELF load map inferred",
+            "body_xip_base": 69120032,
+            "flash_partition_start": 2011136,
+            "flash_partition_end_exclusive": 4108288,
+            "body_flash_start": 2011168,
+            "payload_flash_start": 3784352,
+            "payload_flash_end_exclusive": 3817120,
+            "payload_xip_start": 70893216,
+            "payload_xip_end_exclusive": 70925984,
+            "flash_layout_unchanged": true,
+            "elf_load_map_established": false
+          },
+          "bounds": {
+            "app_allocation": 2097152,
+            "app_raw_bytes": 1805984,
+            "app_free_bytes": 291168,
+            "staging_capacity": 2482176,
+            "staged_payload_bytes": 2185470,
+            "staged_payload_rounded_4096": 2187264,
+            "staging_free_bytes": 296706,
+            "staging_capacity_basis": "pinned metadata type4 allocation; native043415b4/e2 bound",
+            "all_bounds_pass": true
+          },
+          "metadata_body_size_field_offset": 76,
+          "metadata_only_matching_body_size_may_change": true,
+          "container_header_changed_offsets": [
+            9,
+            14,
+            15,
+            16,
+            17,
+            38,
+            82,
+            83,
+            86,
+            146,
+            147,
+            148,
+            149
+          ],
+          "app_header_only_length_and_crc_may_change": true,
+          "unchanged_streams": [
+            {
+              "index": 1,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+              "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+            },
+            {
+              "index": 2,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+              "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+            },
+            {
+              "index": 4,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+              "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+            },
+            {
+              "index": 5,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+              "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+            },
+            {
+              "index": 6,
+              "raw_byte_identical": true,
+              "packed_byte_identical": true,
+              "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+              "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+            }
+          ],
+          "stream_sizes": [
+            {
+              "index": 0,
+              "old_raw": 344,
+              "new_raw": 344,
+              "old_packed": 166,
+              "new_packed": 171
+            },
+            {
+              "index": 1,
+              "old_raw": 909676,
+              "new_raw": 909676,
+              "old_packed": 481265,
+              "new_packed": 481265
+            },
+            {
+              "index": 2,
+              "old_raw": 695512,
+              "new_raw": 695512,
+              "old_packed": 437783,
+              "new_packed": 437783
+            },
+            {
+              "index": 3,
+              "old_raw": 1773208,
+              "new_raw": 1805984,
+              "old_packed": 914318,
+              "new_packed": 914386
+            },
+            {
+              "index": 4,
+              "old_raw": 284300,
+              "new_raw": 284300,
+              "old_packed": 283737,
+              "new_packed": 283737
+            },
+            {
+              "index": 5,
+              "old_raw": 3616,
+              "new_raw": 3616,
+              "old_packed": 986,
+              "new_packed": 986
+            },
+            {
+              "index": 6,
+              "old_raw": 81594,
+              "new_raw": 81594,
+              "old_packed": 67006,
+              "new_packed": 67006
+            }
+          ],
+          "checksums": {
+            "outer_payload_crc32": "verified",
+            "compression_table_crc32": "verified",
+            "packed_streams_crc32": "verified",
+            "component_body_crc32": "verified-all-six"
+          },
+          "limitations": [
+            "Appending does not redirect execution or establish code correctness.",
+            "No ELF link addresses, RAM allocation or startup copy changes are inferred.",
+            "Existing text patch boot success does not prove acceptance of a grown image.",
+            "Bootloader decompression/activation behavior and recovery remain unverified."
+          ]
+        },
+        "output_bytes": 2185168,
+        "output_body_sha256": "9bd35d32f894264f116e7e11e3f56ef57d55c8d7188b4e1400554c9eafdf5430",
+        "original_prefix_changed_byte_offsets": [
+          462826,
+          462827,
+          462828,
+          462829,
+          462830,
+          462831,
+          462832,
+          462833,
+          1036993,
+          1036994,
+          1036999
+        ],
+        "only_two_pinned_prefix_hook_ranges_changed": true,
+        "initializer_store_and_display_continuation_preserved": true,
+        "unchanged_streams": [
+          {
+            "index": 1,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+          },
+          {
+            "index": 2,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+          },
+          {
+            "index": 4,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+          },
+          {
+            "index": 5,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+          },
+          {
+            "index": 6,
+            "raw_and_packed_identical": true,
+            "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+          }
+        ],
+        "metadata_identical_to_append_stage": true,
+        "final_bounds": {
+          "staging_capacity": 2482176,
+          "payload_bytes": 2185150,
+          "rounded_payload_bytes": 2187264,
+          "staging_headroom": 297026,
+          "app_allocation": 2097152,
+          "app_raw_bytes": 1805984,
+          "app_headroom": 291168
+        },
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "limitations": [
+          "Construction does not establish executable correctness or hardware readiness.",
+          "Blob hash and first displaced load do not prove all runtime ABI obligations.",
+          "Display queue ownership, lifecycle, rendering and execution require separate tests."
+        ]
+      }
+    }
+  ]
+}

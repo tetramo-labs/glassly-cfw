@@ -1,0 +1,47 @@
+/*
+ * Single translation unit for all injected CFW patch code.
+ *
+ * Historically the patch sources below were each compiled and PLACED as a
+ * separate relocatable blob, which meant they could not call one another and
+ * patch_compress.py had to lay out several blobs at several base addresses. Compiling
+ * them as ONE translation unit instead yields a SINGLE blob: build.py's mini-linker
+ * resolves any cross-file call/relocation, and every injected entry point is simply
+ * base + its offset in the one blob.
+ *
+ * The sources deliberately share no typedef / macro / function names, so a plain
+ * #include chain compiles cleanly. Each keeps its own `#include <stdint.h>` (idempotent
+ * via the standard header guard). Order is not significant — build.py looks functions
+ * up by name.
+ *
+ * Being one translation unit is also what lets the injected code take the address of
+ * its own functions (z_stream zalloc/zfree, the seq_tick osTimer callback) with plain
+ * `&fn`: -fropi makes an intra-CU function address PC-relative and relocation-free, so
+ * no load address is needed at build time. Splitting these back into separate CUs would
+ * turn those into absolute relocations that build.py rejects.
+ */
+
+#include "memory.c"
+#include "utils.c"
+#include "protobuf.c"
+#include "malloc.c"
+#include "draw.c"
+#include "cfw_context.c"
+#include "rle.c"
+#include "texture_cache.c"
+#include "image_buffers.c"
+#include "zlib_glue.c"
+#include "message_transport.c"
+#include "shapes.c"
+#include "scene.c"
+#include "compass.c"
+#include "ring_battery.c"
+#include "ble_link.c"
+#include "settings_ext.c"
+#include "keyboard.c"
+#include "mic_control.c"
+#include "volume_gate.c"
+#include "ancs_relay.c"
+#include "als_sensor.c"
+#include "gesture_fwd.c"
+#include "debug.c"
+

@@ -1,0 +1,182 @@
+[
+  {
+    "path": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+    "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "bytes": 1773176
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/followup/function-0200a23a.c",
+    "sha256": "d7347b439a50120c0382c7fb811098aca6bfe7fff565984cd8df5d807d3cb51e",
+    "bytes": 249
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/followup/function-0200ef7a.c",
+    "sha256": "4bb7e47c89e814fbf2e60dbd7edc6c7737d1abc5e8f96ad3f3495a07c08509af",
+    "bytes": 619
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/emulate.py",
+    "sha256": "27d87f09fa1ab47de040abbd35c738509d9ed2d3f950c2ba3995106b14b24c37",
+    "bytes": 9577
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/execution-summary.json",
+    "sha256": "ca8842ac2e859f3b14a5e974b6a9ed1b062c05120c3b38387fc2574921e67f30",
+    "bytes": 1017
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/function-0433cb62.c",
+    "sha256": "3e8628427f9a8d38893fd34ad8b6e371b632de1d3e06e63165febe364a8303cb",
+    "bytes": 213
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/literal-search.json",
+    "sha256": "95fcc9a9147303493aa531958d46eb59ec3d08f14a569320823251ac0e02815d",
+    "bytes": 303
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/proposed-edits.json",
+    "sha256": "1896cfaecd4216f471778cf26f6a9930c00cd3a314c7639cfd94f5c388afa400",
+    "bytes": 505
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/proposed-region-refs.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve/upper-base-sites.txt",
+    "sha256": "5e4918a067edc6277e6ba8cc72ee90d6c5c380abc1f3372ec540e0065d62ada9",
+    "bytes": 52306
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/heap-carve-review.md",
+    "sha256": "addfb4365d15cc7fa14ec98f7fbc9fa1427e7a725e333bf27dbd03473b5f3d74",
+    "bytes": 9910
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-020088a6.c",
+    "sha256": "b338cd5ba032bdd5c27203ccfd1195467ff4e699c7b73f2c877e5b30718c0084",
+    "bytes": 114
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-02008a52.c",
+    "sha256": "789714021519842de98b6764d0e96a31362c83bcd345457c62d2f2c77aff6950",
+    "bytes": 1391
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-02009060.asm",
+    "sha256": "6f20fa0e8ee3286108871bb8802a223ada8d655c2841f4e69c40498c3afe51f7",
+    "bytes": 573
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-0200c1b4.c",
+    "sha256": "491646e48a375e9ac54799a3c006fc814e755a00894e2df5bd36fafd1b6b6615",
+    "bytes": 170
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-0200c7d2.c",
+    "sha256": "95f9a3ea1ff607a5615eb2fb4ffbab9c02dc96e0403b6faaedb715b96da96cae",
+    "bytes": 1144
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/native/function-0200d8ce.c",
+    "sha256": "9564ec66873039fbeb81a9f5785db34a14e6bb9112763ca1027132367cb0011b",
+    "bytes": 116
+  },
+  {
+    "path": "analysis/flash-worker-lifecycle-20261101/reaper/function-0200cb12.c",
+    "sha256": "c109611cddb186a302e922e80a403a7653febdccffc87d1db7f381309e0b47c5",
+    "bytes": 974
+  },
+  {
+    "path": "analysis/ghidra/display-adapter/report.md",
+    "sha256": "7a3c29ac3754e0356f6b64d9faa7005dd59cce8a396a0a9d5e2973a2d2f45254",
+    "bytes": 30972
+  },
+  {
+    "path": "analysis/ghidra/display-adapter/timer/function-0200c4f2.c",
+    "sha256": "9ba070ed599cf2b7c26c739a96a049d38e3b59c7106538bc86cfa1a57972295e",
+    "bytes": 3386
+  },
+  {
+    "path": "analysis/ghidra/external-xip-review/native/function-0200f142.asm",
+    "sha256": "ff791ff91fb28d4b13724fb65d72d377739ab4c8673969781c7009855233fbf6",
+    "bytes": 506
+  },
+  {
+    "path": "analysis/ghidra/external-xip-review/report.md",
+    "sha256": "7dc869aa14869158b2aade407b302769c075786a0a8e20af0154648f10f55cee",
+    "bytes": 12140
+  },
+  {
+    "path": "analysis/ghidra/input-adapter/fpu-context.md",
+    "sha256": "64b323e1eea267961a9d66587dfa5909999aeb4a5ef4745f87d0b6fc881fb47b",
+    "bytes": 3108
+  },
+  {
+    "path": "analysis/ghidra/input-adapter/function-0200f168.c",
+    "sha256": "01c43453ed43614f114b36112f8765de0dc710a1acd52a81bdfd42d92a953c05",
+    "bytes": 1127
+  },
+  {
+    "path": "analysis/ghidra/input-adapter/task-context.asm",
+    "sha256": "410c6533ef192278e7dde3f1dcc831ec639e41e9a34f1a7473167cb7c1ba10c3",
+    "bytes": 17931
+  },
+  {
+    "path": "analysis/ghidra/memory-capacity/pool-init/function-0433c1ce.c",
+    "sha256": "9437154989e2b5ca658180c55a814218e26174bfb707a1d9d8429062071c0605",
+    "bytes": 708
+  },
+  {
+    "path": "analysis/ghidra/memory-capacity/pool-references.txt",
+    "sha256": "838739dec7d361c44114dcce414480dcd3228c900014c45a93031f76c029b551",
+    "bytes": 3604
+  },
+  {
+    "path": "analysis/ghidra/memory-capacity/pool-registration.asm",
+    "sha256": "98aba8b7fc1b4b3666811dc641ecee0d49378b18f147d3b81085f4737847b573",
+    "bytes": 5758
+  },
+  {
+    "path": "analysis/ghidra/memory-capacity/report.md",
+    "sha256": "867884e29c94e3d905b684a6899a696b750df68dbab20577a11fe7ee5d051b59",
+    "bytes": 11422
+  },
+  {
+    "path": "analysis/ghidra/memory-capacity/startup/function-041fb1ec.asm",
+    "sha256": "66a5ccfece799fc5749fd5b9bb879fdcf9f7c4cea3841b1fa59303b576963f72",
+    "bytes": 1199
+  },
+  {
+    "path": "analysis/heap-carve-native-001/report.json",
+    "sha256": "ad3550ec762dff04eecc19cd9857a6019936ddc61782edf58ea12d5eaab8e518",
+    "bytes": 21040
+  },
+  {
+    "path": "runtime/graphics/graphics.c",
+    "sha256": "33af3b506187274b0d9f11b1f882a966072784711a5540f4864dbd69ade286df",
+    "bytes": 13321
+  },
+  {
+    "path": "runtime/graphics/graphics.h",
+    "sha256": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "bytes": 2563
+  },
+  {
+    "path": "runtime/graphics/input.c",
+    "sha256": "d606bfdf8d3401735b56ffc4ecc008f9318d0d6ab49ef735b4e584e0bf4d372c",
+    "bytes": 9012
+  },
+  {
+    "path": "runtime/graphics/native.c",
+    "sha256": "29cc3ec56a6f8bdd03b61d5ae55cbce55a8cddcc4c8844b835bee4890163c899",
+    "bytes": 5096
+  },
+  {
+    "path": "runtime/graphics/scene_session.c",
+    "sha256": "f9181e0b8226725d9c3c86b32171c6b238e59acdcef2892c15be55fc2718c4e1",
+    "bytes": 5954
+  }
+]

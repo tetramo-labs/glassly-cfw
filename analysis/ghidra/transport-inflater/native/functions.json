@@ -1,0 +1,132 @@
+[
+  {
+    "requested": "042a4c2a",
+    "address": "ram:042a4c2a",
+    "incoming_references": [
+      "ram:042a500a UNCONDITIONAL_CALL",
+      "ram:042a545e UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a4f0e",
+    "address": "ram:042a4f0e",
+    "incoming_references": [
+      "ram:042a591c UNCONDITIONAL_CALL",
+      "ram:04263db2 UNCONDITIONAL_CALL",
+      "ram:04263e2c UNCONDITIONAL_CALL",
+      "ram:04265566 UNCONDITIONAL_CALL",
+      "ram:04265c42 UNCONDITIONAL_CALL",
+      "ram:04266150 UNCONDITIONAL_CALL",
+      "ram:0426637a UNCONDITIONAL_CALL",
+      "ram:04266500 UNCONDITIONAL_CALL",
+      "ram:04266518 UNCONDITIONAL_CALL",
+      "ram:042666f4 UNCONDITIONAL_CALL",
+      "ram:0426670a UNCONDITIONAL_CALL",
+      "ram:042690a8 UNCONDITIONAL_CALL",
+      "ram:04269154 UNCONDITIONAL_CALL",
+      "ram:042694d6 UNCONDITIONAL_CALL",
+      "ram:0426ab74 UNCONDITIONAL_CALL",
+      "ram:0426d088 UNCONDITIONAL_CALL",
+      "ram:0426d13a UNCONDITIONAL_CALL",
+      "ram:0426d322 UNCONDITIONAL_CALL",
+      "ram:0426d35e UNCONDITIONAL_CALL",
+      "ram:0426a2ee UNCONDITIONAL_CALL",
+      "ram:0426a38c UNCONDITIONAL_CALL",
+      "ram:0426a66c UNCONDITIONAL_CALL",
+      "ram:0426a67e UNCONDITIONAL_CALL",
+      "ram:0426a68c UNCONDITIONAL_CALL",
+      "ram:0426a69e UNCONDITIONAL_CALL",
+      "ram:0426a6b0 UNCONDITIONAL_CALL",
+      "ram:0426a6c2 UNCONDITIONAL_CALL",
+      "ram:0426a6d4 UNCONDITIONAL_CALL",
+      "ram:0426d892 UNCONDITIONAL_CALL",
+      "ram:0426d834 UNCONDITIONAL_CALL",
+      "ram:0426f856 UNCONDITIONAL_CALL",
+      "ram:042658ba UNCONDITIONAL_CALL",
+      "ram:042658d2 UNCONDITIONAL_CALL",
+      "ram:042669d8 UNCONDITIONAL_CALL",
+      "ram:042680e6 UNCONDITIONAL_CALL",
+      "ram:0427a4ee UNCONDITIONAL_CALL",
+      "ram:0427a56a UNCONDITIONAL_CALL",
+      "ram:0427a57e UNCONDITIONAL_CALL",
+      "ram:0427a592 UNCONDITIONAL_CALL",
+      "ram:0426c3fc UNCONDITIONAL_CALL",
+      "ram:04281a04 UNCONDITIONAL_CALL",
+      "ram:042aa04a UNCONDITIONAL_CALL",
+      "ram:042aa072 UNCONDITIONAL_CALL",
+      "ram:042aa088 UNCONDITIONAL_CALL",
+      "ram:042aa09e UNCONDITIONAL_CALL",
+      "ram:042aa0b4 UNCONDITIONAL_CALL",
+      "ram:042aa0ca UNCONDITIONAL_CALL",
+      "ram:042aa0e0 UNCONDITIONAL_CALL",
+      "ram:042aa0f6 UNCONDITIONAL_CALL",
+      "ram:0428ffb2 UNCONDITIONAL_CALL",
+      "ram:0428ffc2 UNCONDITIONAL_CALL",
+      "ram:04290298 UNCONDITIONAL_CALL",
+      "ram:04290b14 UNCONDITIONAL_CALL",
+      "ram:0429110c UNCONDITIONAL_CALL",
+      "ram:042972c6 UNCONDITIONAL_CALL",
+      "ram:042973be UNCONDITIONAL_CALL",
+      "ram:042963dc UNCONDITIONAL_CALL",
+      "ram:04267d7e UNCONDITIONAL_CALL",
+      "ram:0426a6f4 UNCONDITIONAL_CALL",
+      "ram:042683b0 UNCONDITIONAL_CALL",
+      "ram:0426aeda UNCONDITIONAL_CALL",
+      "ram:0427f1f8 UNCONDITIONAL_CALL",
+      "ram:0427f20a UNCONDITIONAL_CALL",
+      "ram:0427f5e4 UNCONDITIONAL_CALL",
+      "ram:0427fba8 UNCONDITIONAL_CALL",
+      "ram:04289080 UNCONDITIONAL_CALL",
+      "ram:04292ad4 UNCONDITIONAL_CALL",
+      "ram:04292ef6 UNCONDITIONAL_CALL",
+      "ram:042938a2 UNCONDITIONAL_CALL",
+      "ram:04293ac4 UNCONDITIONAL_CALL",
+      "ram:0426aef8 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a5300",
+    "address": "ram:042a5300",
+    "incoming_references": [
+      "ram:042888e6 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042ae264",
+    "address": "ram:042ae264",
+    "incoming_references": [
+      "ram:042606a8 UNCONDITIONAL_CALL",
+      "ram:042606b6 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04299c40",
+    "address": "ram:04299c40",
+    "incoming_references": [
+      "ram:043661fc DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0429a402",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "04299c1e",
+    "address": "ram:04299c1e",
+    "incoming_references": [
+      "ram:04366204 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

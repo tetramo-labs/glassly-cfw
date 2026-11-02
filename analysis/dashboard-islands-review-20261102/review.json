@@ -1,0 +1,21 @@
+{
+  "result": "no concrete offline constructor blocker",
+  "live_admitted": false,
+  "actual_dispatcher_emulation_reviewed": false,
+  "check_count": 42,
+  "constructor_sha256": "93d7c4536b1817eea9e5633964f18191ee5a204a1856b76cec08a2058b4073e8",
+  "in_memory_output_sha256": "0317abeac1d8b545216152b2d14220bdb91b99a14f5293c8444696769fa1af39",
+  "source_hashes": {
+    "analysis/dashboard-islands-review-20261102/check-constructor.py": "3c9ef9a3bbe207590bd72eba1c8d0eadad4b1b0c982dfd53b28f5d8ddcc00afe",
+    "analysis/dashboard-islands-review-20261102/checks.json": "52c8a51e0fdea5b46d3cb3b7830722699dde61f6ced7510c46d7212c95aff3cf",
+    "analysis/dashboard-islands-review-20261102/report.md": "54a2e0e7323ed7ae907570b071b2ca4878646dab29f9b3832af322dd055db4f1",
+    "scripts/memomind_ota.py": "cdf0dc7a772473c90b203fe4998060abc320ee116bc417a793b9768ed72969b3",
+    "scripts/build_memomind_graphics.py": "5ff749072839c900bf9a479bb82dfea6563e85737547facb1bbec19bdb558ddc"
+  },
+  "remaining": [
+    "actual RV32 dispatcher regression",
+    "separate payload link/ABI/lifetime review",
+    "bounded static interior-entry uncertainty",
+    "live catalog/hardware admission absent"
+  ]
+}

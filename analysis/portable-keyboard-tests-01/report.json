@@ -1,0 +1,74 @@
+{
+  "format": "memomind-portable-keyboard-tests-v1",
+  "result": "failed",
+  "commands": [
+    {
+      "label": "build-original",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/keyboard/keyboard_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-01/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-01/original"
+      ],
+      "returncode": 0
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "pending": [
+    "MemoMind HOGP discovery/ATT/DM and security adapters",
+    "Native lifecycle, timer and worker queue adapter",
+    "MemoMind outbound channel mapping",
+    "G2 ARM hook/machine scenarios remain platform-specific"
+  ],
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/keyboard.c": "d8ad35c09b178ee5a38dec50d5bb7dc2a6fc757091e530ab6b6a234a40912c2f",
+    "upstream/patches/keyboard_core.h": "a706fabf96ea9db37db0b07de5015c1458f0774549efd1b1d1ced1d5da2a4a49",
+    "upstream/patches/host/keyboard_host_test.c": "defe6b2fe82ddb3b510cfa8be16cfbb820917f337cc0238c8409c3d66a5972e3",
+    "keyboard.c": "e3d927becaf032ef7153d83dc928a76dc51c84982f113b5ee043ae810fa6d0cd",
+    "keyboard.h": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947",
+    "tests/run_keyboard_tests.py": "5f8d4b1b38446362eace0bd76d673653443ee56f73c790d47b71f37efb421606",
+    "tests/keyboard/keyboard_host_test.c": "443e4c1ba26ab628d036a10ad195756fce41d387e1d504a98a0e19f6a96adfdf",
+    "tests/keyboard/layout.c": "552651f9bc3ed7e090eb0e688225530e000306e1a7682d059c973e0ad64897a2",
+    "tests/keyboard/public_api_test.c": "77575a108e8e30e0f37c3434dddfd8ca84b5a212d3140dd0e1e23222d66aa38f"
+  },
+  "scenario_main_calls": {
+    "isolation": 1,
+    "commands": 1,
+    "reports": 1,
+    "prompts": 1,
+    "malformed": 1,
+    "timers": 1
+  },
+  "original_assert_sites": 86,
+  "original_scenarios": [
+    "isolation",
+    "commands",
+    "reports",
+    "prompts",
+    "malformed",
+    "timers"
+  ],
+  "original_result": "portable keyboard original assert evaluations: 966\nPASS keyboard: isolation, commands, timeout ownership, encrypted reports, queue overflow/wrap, pairing prompts, malformed controls, timer drain/parking/retry",
+  "original_assert_evaluations": 966,
+  "file_status": "mixed-portable-core-tested-native-adapter-pending",
+  "error": "Original scenario evaluation count changed"
+}

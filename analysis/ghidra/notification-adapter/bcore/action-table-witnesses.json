@@ -1,0 +1,36 @@
+{
+  "bcore_sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+  "rpc_table_ram": "10230ec4",
+  "rpc_handler0": "0x140e3610",
+  "rpc_table_initial_bytes": "10360e14ce360e148c360e141ad1031468010e14fa410414e8360e148a010e14ac010e14343004145a42041474420414ce010e14e8010e14664b0614",
+  "command_table": "140e6790",
+  "command_records": [
+    {
+      "index": 217,
+      "address": "0x140e71bc",
+      "command": "0x2be",
+      "handler": "0x14063e6e",
+      "third_word": "0x0",
+      "bytes_hex": "be0200006e3e061400000000"
+    },
+    {
+      "index": 218,
+      "address": "0x140e71c8",
+      "command": "0x2bf",
+      "handler": "0x14061646",
+      "third_word": "0x0",
+      "bytes_hex": "bf0200004616061400000000"
+    },
+    {
+      "index": 219,
+      "address": "0x140e71d4",
+      "command": "0x2c0",
+      "handler": "0x14061760",
+      "third_word": "0x0",
+      "bytes_hex": "c00200006017061400000000"
+    }
+  ],
+  "ancs_module_state_descriptor_ram": "1022ea80",
+  "descriptor_initial_bytes": "0500000048620e1400000000",
+  "state3_handler": "0x1405869c"
+}

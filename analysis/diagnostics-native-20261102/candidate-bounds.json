@@ -1,0 +1,16 @@
+{
+  "candidate_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "runtime_bytes": 65456,
+  "runtime_limit": 65536,
+  "physical_app_start": "0x1eb000",
+  "physical_app_end": "0x3abe50",
+  "rounded_app_erase_end": "0x3ac000",
+  "physical_app_allocation_end": "0x3eb000",
+  "staging_payload_bytes": 2230267,
+  "rounded_staging_bytes": 2232320,
+  "staging_allocation_bytes": 2482176,
+  "remaining_after_app_erase": 258048,
+  "remaining_after_staging_erase": 249856,
+  "layout_changes": false,
+  "device_actions": false
+}

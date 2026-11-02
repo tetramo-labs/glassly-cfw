@@ -1,0 +1,284 @@
+{
+  "scope": "All byte offsets of exact little-endian entry addresses in pinned stock body; computed pointers and interior targets not excluded",
+  "functions": [
+    {
+      "entry": "0x4270738",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4270758",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427077c",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42707ac",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42707c2",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42707d2",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42707fa",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4270822",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4270854",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427089a",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42708e2",
+      "literal_pointer_occurrences": [
+        "0x4363168",
+        "0x4363170"
+      ]
+    },
+    {
+      "entry": "0x4270ace",
+      "literal_pointer_occurrences": [
+        "0x4363160"
+      ]
+    },
+    {
+      "entry": "0x4270c82",
+      "literal_pointer_occurrences": [
+        "0x4363150",
+        "0x4363158"
+      ]
+    },
+    {
+      "entry": "0x4270dd2",
+      "literal_pointer_occurrences": [
+        "0x4363140",
+        "0x4363148"
+      ]
+    },
+    {
+      "entry": "0x4270f98",
+      "literal_pointer_occurrences": [
+        "0x4363138"
+      ]
+    },
+    {
+      "entry": "0x42711a4",
+      "literal_pointer_occurrences": [
+        "0x4363130"
+      ]
+    },
+    {
+      "entry": "0x42713bc",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42713d4",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271424",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271444",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271510",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271562",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42715d2",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271640",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427169c",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42716d8",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427176e",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271788",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42717da",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271856",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271974",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42719da",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271a10",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271a72",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271b02",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271cda",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271d1a",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271d6a",
+      "literal_pointer_occurrences": [
+        "0x439a39c"
+      ]
+    },
+    {
+      "entry": "0x4271f34",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4271fb2",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42722fa",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272474",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427253a",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427259e",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272664",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427267a",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272698",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42726ba",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x427290e",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272920",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272960",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272972",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x42729e2",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4272a36",
+      "literal_pointer_occurrences": [
+        "0x439a3b4"
+      ]
+    },
+    {
+      "entry": "0x4273266",
+      "literal_pointer_occurrences": [
+        "0x439a3ac"
+      ]
+    },
+    {
+      "entry": "0x4273454",
+      "literal_pointer_occurrences": [
+        "0x439a394"
+      ]
+    },
+    {
+      "entry": "0x4273734",
+      "literal_pointer_occurrences": [
+        "0x439a3b8"
+      ]
+    },
+    {
+      "entry": "0x4273e90",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4273ee6",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4273f3a",
+      "literal_pointer_occurrences": [
+        "0x439a3e8"
+      ]
+    },
+    {
+      "entry": "0x4273f5a",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4273ff8",
+      "literal_pointer_occurrences": []
+    },
+    {
+      "entry": "0x4274044",
+      "literal_pointer_occurrences": []
+    }
+  ]
+}

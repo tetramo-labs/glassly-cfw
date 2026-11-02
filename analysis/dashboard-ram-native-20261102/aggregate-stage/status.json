@@ -1,0 +1,2707 @@
+{
+  "passed": true,
+  "native_calls": 140,
+  "stock_body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "device_actions": false,
+  "firmware_file_writes": false,
+  "patches": [
+    {
+      "address": "0x426f2c2",
+      "before": "411122c4",
+      "after": "01458280"
+    },
+    {
+      "address": "0x4268336",
+      "before": "011106ce",
+      "after": "01458280"
+    },
+    {
+      "address": "0x42683f0",
+      "before": "411122c6",
+      "after": "01458280"
+    },
+    {
+      "address": "0x4264f26",
+      "before": "011122cc",
+      "after": "01458280"
+    },
+    {
+      "address": "0x4265060",
+      "before": "011122cc",
+      "after": "01458280"
+    },
+    {
+      "address": "0x42652e8",
+      "before": "83a7416a",
+      "after": "01458280"
+    }
+  ],
+  "startup_assumption": "Normal boot BSS zero [02011878,0205e128); initialized data copied from pinned image",
+  "mocked_native_calls": {
+    "02003d5e": "logging predicate returns0"
+  },
+  "no_allocations_or_resources_or_LVGL_calls": true,
+  "removed_globals_remain_zero": [
+    "0x2011d84",
+    "0x2011d50",
+    "0x2011d74",
+    "0x2011d58",
+    "0x2011d24",
+    "0x2015890",
+    "0x2015894",
+    "0x2011d44",
+    "0x2011d48",
+    "0x2011d4c",
+    "0x2015750",
+    "0x2011d2c"
+  ],
+  "results": [
+    {
+      "entry": "0x426f2c2",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4268336",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x42683f0",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4264f26",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4265060",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x42652e8",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 0,
+      "instructions": 3,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          0
+        ],
+        [
+          "0x2011d78",
+          1,
+          0
+        ],
+        [
+          "0x2011d5c",
+          1,
+          0
+        ],
+        [
+          "0x2011d28",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          0
+        ],
+        [
+          "0x2011d79",
+          1,
+          0
+        ],
+        [
+          "0x2011d5d",
+          1,
+          0
+        ],
+        [
+          "0x2011d29",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          1
+        ],
+        [
+          "0x2011d78",
+          1,
+          1
+        ],
+        [
+          "0x2011d5c",
+          1,
+          1
+        ],
+        [
+          "0x2011d28",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          1
+        ],
+        [
+          "0x2011d79",
+          1,
+          1
+        ],
+        [
+          "0x2011d5d",
+          1,
+          1
+        ],
+        [
+          "0x2011d29",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        1
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          2
+        ],
+        [
+          "0x2011d78",
+          1,
+          2
+        ],
+        [
+          "0x2011d5c",
+          1,
+          2
+        ],
+        [
+          "0x2011d28",
+          1,
+          2
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          2
+        ],
+        [
+          "0x2011d79",
+          1,
+          2
+        ],
+        [
+          "0x2011d5d",
+          1,
+          2
+        ],
+        [
+          "0x2011d29",
+          1,
+          2
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        2
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          3
+        ],
+        [
+          "0x2011d78",
+          1,
+          3
+        ],
+        [
+          "0x2011d5c",
+          1,
+          3
+        ],
+        [
+          "0x2011d28",
+          1,
+          3
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          3
+        ],
+        [
+          "0x2011d79",
+          1,
+          3
+        ],
+        [
+          "0x2011d5d",
+          1,
+          3
+        ],
+        [
+          "0x2011d29",
+          1,
+          3
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        3
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          4
+        ],
+        [
+          "0x2011d78",
+          1,
+          4
+        ],
+        [
+          "0x2011d5c",
+          1,
+          4
+        ],
+        [
+          "0x2011d28",
+          1,
+          4
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          4
+        ],
+        [
+          "0x2011d79",
+          1,
+          4
+        ],
+        [
+          "0x2011d5d",
+          1,
+          4
+        ],
+        [
+          "0x2011d29",
+          1,
+          4
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        4
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          5
+        ],
+        [
+          "0x2011d78",
+          1,
+          5
+        ],
+        [
+          "0x2011d5c",
+          1,
+          5
+        ],
+        [
+          "0x2011d28",
+          1,
+          5
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          5
+        ],
+        [
+          "0x2011d79",
+          1,
+          5
+        ],
+        [
+          "0x2011d5d",
+          1,
+          5
+        ],
+        [
+          "0x2011d29",
+          1,
+          5
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        5
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          255
+        ],
+        [
+          "0x2011d78",
+          1,
+          255
+        ],
+        [
+          "0x2011d5c",
+          1,
+          255
+        ],
+        [
+          "0x2011d28",
+          1,
+          255
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          255
+        ],
+        [
+          "0x2011d79",
+          1,
+          255
+        ],
+        [
+          "0x2011d5d",
+          1,
+          255
+        ],
+        [
+          "0x2011d29",
+          1,
+          255
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        255
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d78",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d5c",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d28",
+          1,
+          4294967295
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 46,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d79",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d5d",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d29",
+          1,
+          4294967295
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 36,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 24,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 23,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 0,
+      "instructions": 17,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f492",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 13,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f4c8",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 21,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f5bc",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 16,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f60c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 30,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f73c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 16,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f78c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 45,
+      "min_sp": 50339792,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 48
+    },
+    {
+      "entry": "0x426fa20",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 33,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f8ee",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 33,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f96e",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 14,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426fc40",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 7,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426fc4c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 94,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fc4c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 0,
+      "instructions": 94,
+      "min_sp": 50339808,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f998",
+      "args": [],
+      "sp_mod16": 0,
+      "instructions": 11,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d88",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f96e",
+      "args": [],
+      "sp_mod16": 0,
+      "instructions": 6,
+      "min_sp": 50339840,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d89",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x426f9b2",
+      "args": [],
+      "sp_mod16": 0,
+      "instructions": 26,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d88",
+          1,
+          0
+        ],
+        [
+          "0x2011d89",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f9b2",
+      "args": [],
+      "sp_mod16": 0,
+      "instructions": 18,
+      "min_sp": 50339824,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f2c2",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4268336",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x42683f0",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4264f26",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x4265060",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x42652e8",
+      "args": [
+        3735928559,
+        305419896,
+        2882400001,
+        1985229328
+      ],
+      "sp_mod16": 8,
+      "instructions": 3,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          0
+        ],
+        [
+          "0x2011d78",
+          1,
+          0
+        ],
+        [
+          "0x2011d5c",
+          1,
+          0
+        ],
+        [
+          "0x2011d28",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          0
+        ],
+        [
+          "0x2011d79",
+          1,
+          0
+        ],
+        [
+          "0x2011d5d",
+          1,
+          0
+        ],
+        [
+          "0x2011d29",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          1
+        ],
+        [
+          "0x2011d78",
+          1,
+          1
+        ],
+        [
+          "0x2011d5c",
+          1,
+          1
+        ],
+        [
+          "0x2011d28",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          1
+        ],
+        [
+          "0x2011d79",
+          1,
+          1
+        ],
+        [
+          "0x2011d5d",
+          1,
+          1
+        ],
+        [
+          "0x2011d29",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        1
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          2
+        ],
+        [
+          "0x2011d78",
+          1,
+          2
+        ],
+        [
+          "0x2011d5c",
+          1,
+          2
+        ],
+        [
+          "0x2011d28",
+          1,
+          2
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          2
+        ],
+        [
+          "0x2011d79",
+          1,
+          2
+        ],
+        [
+          "0x2011d5d",
+          1,
+          2
+        ],
+        [
+          "0x2011d29",
+          1,
+          2
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        2
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          3
+        ],
+        [
+          "0x2011d78",
+          1,
+          3
+        ],
+        [
+          "0x2011d5c",
+          1,
+          3
+        ],
+        [
+          "0x2011d28",
+          1,
+          3
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          3
+        ],
+        [
+          "0x2011d79",
+          1,
+          3
+        ],
+        [
+          "0x2011d5d",
+          1,
+          3
+        ],
+        [
+          "0x2011d29",
+          1,
+          3
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        3
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          4
+        ],
+        [
+          "0x2011d78",
+          1,
+          4
+        ],
+        [
+          "0x2011d5c",
+          1,
+          4
+        ],
+        [
+          "0x2011d28",
+          1,
+          4
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          4
+        ],
+        [
+          "0x2011d79",
+          1,
+          4
+        ],
+        [
+          "0x2011d5d",
+          1,
+          4
+        ],
+        [
+          "0x2011d29",
+          1,
+          4
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        4
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          5
+        ],
+        [
+          "0x2011d78",
+          1,
+          5
+        ],
+        [
+          "0x2011d5c",
+          1,
+          5
+        ],
+        [
+          "0x2011d28",
+          1,
+          5
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          5
+        ],
+        [
+          "0x2011d79",
+          1,
+          5
+        ],
+        [
+          "0x2011d5d",
+          1,
+          5
+        ],
+        [
+          "0x2011d29",
+          1,
+          5
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        5
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          255
+        ],
+        [
+          "0x2011d78",
+          1,
+          255
+        ],
+        [
+          "0x2011d5c",
+          1,
+          255
+        ],
+        [
+          "0x2011d28",
+          1,
+          255
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          255
+        ],
+        [
+          "0x2011d79",
+          1,
+          255
+        ],
+        [
+          "0x2011d5d",
+          1,
+          255
+        ],
+        [
+          "0x2011d29",
+          1,
+          255
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        255
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f3c0",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d54",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d78",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d5c",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d28",
+          1,
+          4294967295
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f3ea",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 46,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d55",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d79",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d5d",
+          1,
+          4294967295
+        ],
+        [
+          "0x2011d29",
+          1,
+          4294967295
+        ]
+      ],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f320",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 36,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fb4a",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 24,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f414",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 23,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f56e",
+      "args": [
+        4294967295
+      ],
+      "sp_mod16": 8,
+      "instructions": 17,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f492",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 13,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f4c8",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 21,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f5bc",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 16,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f60c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 30,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f73c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 16,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f78c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 45,
+      "min_sp": 50339784,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 48
+    },
+    {
+      "entry": "0x426fa20",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 33,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f8ee",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 33,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f96e",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 14,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426fc40",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 7,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426fc4c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 94,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426fc4c",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sp_mod16": 8,
+      "instructions": 94,
+      "min_sp": 50339800,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 32
+    },
+    {
+      "entry": "0x426f998",
+      "args": [],
+      "sp_mod16": 8,
+      "instructions": 11,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d88",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f96e",
+      "args": [],
+      "sp_mod16": 8,
+      "instructions": 6,
+      "min_sp": 50339832,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d89",
+          1,
+          1
+        ]
+      ],
+      "max_stack": 0
+    },
+    {
+      "entry": "0x426f9b2",
+      "args": [],
+      "sp_mod16": 8,
+      "instructions": 26,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 0,
+      "global_writes": [
+        [
+          "0x2011d88",
+          1,
+          0
+        ],
+        [
+          "0x2011d89",
+          1,
+          0
+        ]
+      ],
+      "max_stack": 16
+    },
+    {
+      "entry": "0x426f9b2",
+      "args": [],
+      "sp_mod16": 8,
+      "instructions": 18,
+      "min_sp": 50339816,
+      "returned": true,
+      "log_predicates": 1,
+      "global_writes": [],
+      "max_stack": 16
+    }
+  ],
+  "permitted_scalar_writes": [
+    "0x2011d28",
+    "0x2011d29",
+    "0x2011d54",
+    "0x2011d55",
+    "0x2011d5c",
+    "0x2011d5d",
+    "0x2011d78",
+    "0x2011d79",
+    "0x2011d88",
+    "0x2011d89"
+  ],
+  "limitations": [
+    "No full app-manager/task/scheduler/hardware emulation.",
+    "Known entry closure only; not proof against unknown arithmetic/indirect references.",
+    "Native card helpers execute with zero cardowner; status removal does not itself retirecard."
+  ]
+}

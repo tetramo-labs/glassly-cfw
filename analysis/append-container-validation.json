@@ -1,0 +1,371 @@
+{
+  "purpose": "Offline container/range proof only; synthetic payload is not a linked executable or runtime probe",
+  "payload_fixture_hex": "01000100010001000100010001000100474c4153534c592d4f46464c494e452d415050454e442d415544495400",
+  "images_written": false,
+  "device_actions": false,
+  "validation": {
+    "append_tests": 7,
+    "existing_same_length_patch_tests": 5,
+    "existing_container_tests": 5,
+    "all_passed": true,
+    "cases": [
+      "both pinned actual OTA fixtures",
+      "16/4096 alignment coordinate proof",
+      "empty append byte identity",
+      "exact application end",
+      "one-byte and alignment-padding allocation overflow",
+      "incompressible tail fits application but exceeds staging",
+      "source/output hash rejection",
+      "existing same-length repack composes after append",
+      "native-equivalent table count/CRC/stream lengths"
+    ]
+  },
+  "audits": [
+    {
+      "format": "memomind-app-append-audit-v1",
+      "offline_only": true,
+      "source_profile": "stock-1.0.3.127",
+      "source_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+      "output_sha256": "ef538b019ad7df765c50427140756e706598fc6ceefc1e8554c1176a1e2717f8",
+      "source_bytes": 2185697,
+      "output_bytes": 2185487,
+      "byte_identical_noop": false,
+      "component": 3,
+      "original_body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+      "output_body_sha256": "5bfd3136bfd4aa9f7d5da6b67cfe3e698ba27404f038156603a0c46d8581afa4",
+      "original_body_size": 1773176,
+      "output_body_size": 1773229,
+      "prefix_unchanged": true,
+      "prefix_length": 1773176,
+      "prefix_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+      "append": {
+        "body_start": 1773176,
+        "body_end_exclusive": 1773229,
+        "sha256_including_padding": "16359500f4cbb6afb8d9cc5b0064e8c9bcf2b1d6adb1e3770ea2e583fe114d22",
+        "payload_body_start": 1773184,
+        "payload_body_end_exclusive": 1773229,
+        "payload_bytes": 45,
+        "payload_sha256": "b333fff86294b8f77e1b649d24af083e9c66451cee02d3128ca04ab39c94d29a",
+        "alignment": 16,
+        "padding_bytes": 8,
+        "padding_value": 0
+      },
+      "mapping": {
+        "basis": "component header and partition metadata; no ELF load map inferred",
+        "body_xip_base": 69120032,
+        "flash_partition_start": 2011136,
+        "flash_partition_end_exclusive": 4108288,
+        "body_flash_start": 2011168,
+        "payload_flash_start": 3784352,
+        "payload_flash_end_exclusive": 3784397,
+        "payload_xip_start": 70893216,
+        "payload_xip_end_exclusive": 70893261,
+        "flash_layout_unchanged": true,
+        "elf_load_map_established": false
+      },
+      "bounds": {
+        "app_allocation": 2097152,
+        "app_raw_bytes": 1773261,
+        "app_free_bytes": 323891,
+        "staging_capacity": 2482176,
+        "staged_payload_bytes": 2185469,
+        "staged_payload_rounded_4096": 2187264,
+        "staging_free_bytes": 296707,
+        "staging_capacity_basis": "pinned metadata type4 allocation; native043415b4/e2 bound",
+        "all_bounds_pass": true
+      },
+      "metadata_body_size_field_offset": 76,
+      "metadata_only_matching_body_size_may_change": true,
+      "container_header_changed_offsets": [
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        38,
+        82,
+        86,
+        87,
+        146,
+        147,
+        148,
+        149
+      ],
+      "app_header_only_length_and_crc_may_change": true,
+      "unchanged_streams": [
+        {
+          "index": 1,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+          "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+        },
+        {
+          "index": 2,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+          "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+        },
+        {
+          "index": 4,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+          "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+        },
+        {
+          "index": 5,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+          "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+        },
+        {
+          "index": 6,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+          "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+        }
+      ],
+      "stream_sizes": [
+        {
+          "index": 0,
+          "old_raw": 344,
+          "new_raw": 344,
+          "old_packed": 166,
+          "new_packed": 171
+        },
+        {
+          "index": 1,
+          "old_raw": 909676,
+          "new_raw": 909676,
+          "old_packed": 481265,
+          "new_packed": 481265
+        },
+        {
+          "index": 2,
+          "old_raw": 695512,
+          "new_raw": 695512,
+          "old_packed": 437783,
+          "new_packed": 437783
+        },
+        {
+          "index": 3,
+          "old_raw": 1773208,
+          "new_raw": 1773261,
+          "old_packed": 914600,
+          "new_packed": 914385
+        },
+        {
+          "index": 4,
+          "old_raw": 284300,
+          "new_raw": 284300,
+          "old_packed": 283737,
+          "new_packed": 283737
+        },
+        {
+          "index": 5,
+          "old_raw": 3616,
+          "new_raw": 3616,
+          "old_packed": 986,
+          "new_packed": 986
+        },
+        {
+          "index": 6,
+          "old_raw": 81594,
+          "new_raw": 81594,
+          "old_packed": 67006,
+          "new_packed": 67006
+        }
+      ],
+      "checksums": {
+        "outer_payload_crc32": "verified",
+        "compression_table_crc32": "verified",
+        "packed_streams_crc32": "verified",
+        "component_body_crc32": "verified-all-six"
+      },
+      "limitations": [
+        "Appending does not redirect execution or establish code correctness.",
+        "No ELF link addresses, RAM allocation or startup copy changes are inferred.",
+        "Existing text patch boot success does not prove acceptance of a grown image.",
+        "Bootloader decompression/activation behavior and recovery remain unverified."
+      ]
+    },
+    {
+      "format": "memomind-app-append-audit-v1",
+      "offline_only": true,
+      "source_profile": "verified-text-1.0.3.127",
+      "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+      "output_sha256": "2c2f0e5182eac153f7bc4e6d81f61b2c7f3855daa38ef0c6b15685949da6a2b8",
+      "source_bytes": 2185415,
+      "output_bytes": 2185101,
+      "byte_identical_noop": false,
+      "component": 3,
+      "original_body_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+      "output_body_sha256": "cf2a473e0a34559263957a6d67a51541f8f98ea6902c05eab4637ad65f9ff9f6",
+      "original_body_size": 1773176,
+      "output_body_size": 1773229,
+      "prefix_unchanged": true,
+      "prefix_length": 1773176,
+      "prefix_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+      "append": {
+        "body_start": 1773176,
+        "body_end_exclusive": 1773229,
+        "sha256_including_padding": "16359500f4cbb6afb8d9cc5b0064e8c9bcf2b1d6adb1e3770ea2e583fe114d22",
+        "payload_body_start": 1773184,
+        "payload_body_end_exclusive": 1773229,
+        "payload_bytes": 45,
+        "payload_sha256": "b333fff86294b8f77e1b649d24af083e9c66451cee02d3128ca04ab39c94d29a",
+        "alignment": 16,
+        "padding_bytes": 8,
+        "padding_value": 0
+      },
+      "mapping": {
+        "basis": "component header and partition metadata; no ELF load map inferred",
+        "body_xip_base": 69120032,
+        "flash_partition_start": 2011136,
+        "flash_partition_end_exclusive": 4108288,
+        "body_flash_start": 2011168,
+        "payload_flash_start": 3784352,
+        "payload_flash_end_exclusive": 3784397,
+        "payload_xip_start": 70893216,
+        "payload_xip_end_exclusive": 70893261,
+        "flash_layout_unchanged": true,
+        "elf_load_map_established": false
+      },
+      "bounds": {
+        "app_allocation": 2097152,
+        "app_raw_bytes": 1773261,
+        "app_free_bytes": 323891,
+        "staging_capacity": 2482176,
+        "staged_payload_bytes": 2185083,
+        "staged_payload_rounded_4096": 2187264,
+        "staging_free_bytes": 297093,
+        "staging_capacity_basis": "pinned metadata type4 allocation; native043415b4/e2 bound",
+        "all_bounds_pass": true
+      },
+      "metadata_body_size_field_offset": 76,
+      "metadata_only_matching_body_size_may_change": true,
+      "container_header_changed_offsets": [
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        38,
+        82,
+        86,
+        87,
+        146,
+        147,
+        148,
+        149
+      ],
+      "app_header_only_length_and_crc_may_change": true,
+      "unchanged_streams": [
+        {
+          "index": 1,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+          "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+        },
+        {
+          "index": 2,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+          "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+        },
+        {
+          "index": 4,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+          "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+        },
+        {
+          "index": 5,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+          "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+        },
+        {
+          "index": 6,
+          "raw_byte_identical": true,
+          "packed_byte_identical": true,
+          "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+          "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+        }
+      ],
+      "stream_sizes": [
+        {
+          "index": 0,
+          "old_raw": 344,
+          "new_raw": 344,
+          "old_packed": 166,
+          "new_packed": 171
+        },
+        {
+          "index": 1,
+          "old_raw": 909676,
+          "new_raw": 909676,
+          "old_packed": 481265,
+          "new_packed": 481265
+        },
+        {
+          "index": 2,
+          "old_raw": 695512,
+          "new_raw": 695512,
+          "old_packed": 437783,
+          "new_packed": 437783
+        },
+        {
+          "index": 3,
+          "old_raw": 1773208,
+          "new_raw": 1773261,
+          "old_packed": 914318,
+          "new_packed": 913999
+        },
+        {
+          "index": 4,
+          "old_raw": 284300,
+          "new_raw": 284300,
+          "old_packed": 283737,
+          "new_packed": 283737
+        },
+        {
+          "index": 5,
+          "old_raw": 3616,
+          "new_raw": 3616,
+          "old_packed": 986,
+          "new_packed": 986
+        },
+        {
+          "index": 6,
+          "old_raw": 81594,
+          "new_raw": 81594,
+          "old_packed": 67006,
+          "new_packed": 67006
+        }
+      ],
+      "checksums": {
+        "outer_payload_crc32": "verified",
+        "compression_table_crc32": "verified",
+        "packed_streams_crc32": "verified",
+        "component_body_crc32": "verified-all-six"
+      },
+      "limitations": [
+        "Appending does not redirect execution or establish code correctness.",
+        "No ELF link addresses, RAM allocation or startup copy changes are inferred.",
+        "Existing text patch boot success does not prove acceptance of a grown image.",
+        "Bootloader decompression/activation behavior and recovery remain unverified."
+      ]
+    }
+  ]
+}

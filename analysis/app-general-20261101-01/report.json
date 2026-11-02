@@ -1,0 +1,55 @@
+{
+  "format": "memomind-general-capture-verification-v1",
+  "verified_utc": "2026-11-01T22:21:25.256815+00:00",
+  "sessions": [
+    {
+      "path": "captures/app-general-20261031-02",
+      "files_hash_verified": 7,
+      "terminal_event": {
+        "utc": "2026-10-31T22:47:27.720188+00:00",
+        "kind": "error",
+        "message": "Logcat collector exited"
+      },
+      "capture_complete_without_collector_error": false,
+      "rotation_events": []
+    },
+    {
+      "path": "captures/app-general-20261101-01",
+      "files_hash_verified": 7,
+      "terminal_event": {
+        "utc": "2026-11-01T22:21:25.203768+00:00",
+        "kind": "finished"
+      },
+      "capture_complete_without_collector_error": true,
+      "rotation_events": []
+    }
+  ],
+  "pairing_sequence_complete": false,
+  "capture_losslessness_established": false,
+  "limitations": [
+    "These sessions do not establish initial bond/pairing coverage or all app features.",
+    "HCI zero-drop fields do not prove losslessness.",
+    "App navigation was observed; no new firmware was installed during this session."
+  ],
+  "hci_prefix_continuation": {
+    "new_extends_previous_exactly": true,
+    "previous_bytes": 151458,
+    "new_bytes": 982055,
+    "additional_bytes": 830597,
+    "interpretation": "Persisted Android HCI log extends the prior sealed capture across host collector downtime; this is byte-prefix evidence, not proof of controller losslessness."
+  },
+  "hci_checks": {
+    "previous": "analysis/app-general-20261101-01/hci-previous.json",
+    "new": "analysis/app-general-20261101-01/hci-new.json",
+    "new_record_count": 25529,
+    "truncated_records": 0,
+    "timestamp_reversals": [
+      {
+        "offset": 130325,
+        "delta_microseconds": -224
+      }
+    ],
+    "validator_exit": 1,
+    "record_integrity_ok": false
+  }
+}

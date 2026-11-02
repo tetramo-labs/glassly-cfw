@@ -1,0 +1,302 @@
+[
+  {
+    "upstream_line": 35,
+    "ported_line": 40,
+    "expression": "sid == CFW_MESSAGE_SID && g_bridge_n < 32 && len <= 300",
+    "sha256": "a8b2dd6ce704551cbc27566d0a807b264e198658647109750f472c8ff221cc11"
+  },
+  {
+    "upstream_line": 47,
+    "ported_line": 52,
+    "expression": "type == 1 && sid == CFW_MESSAGE_SID && g_here == CFW_MESSAGE_LEFT && g_ble_n < 32 && len <= 300",
+    "sha256": "833d2234715f7110a3b44c7a11e97e8d11eed16dcfc6583bd3d612e57af5148f"
+  },
+  {
+    "upstream_line": 82,
+    "ported_line": 87,
+    "expression": "g_handled_n[lens] < 16 && size <= 64",
+    "sha256": "6a31b2bbdbaee608610cd7cc5f877b0e2d9aad2a20eec6169b6bad0f5811c6e9"
+  },
+  {
+    "upstream_line": 109,
+    "ported_line": 114,
+    "expression": "deflateInit(&g_deflate, Z_DEFAULT_COMPRESSION) == Z_OK",
+    "sha256": "23d24b0faeb2e4aa74cf8317429ba943a2b408850c933376f2afc534e3fcd176"
+  },
+  {
+    "upstream_line": 116,
+    "ported_line": 121,
+    "expression": "deflate(&g_deflate, Z_SYNC_FLUSH) == Z_OK && g_deflate.avail_in == 0",
+    "sha256": "221b5c90b3cb09166b4b90b87371e11864eafefc06bf6a4b6b286068a23dbd5f"
+  },
+  {
+    "upstream_line": 139,
+    "ported_line": 144,
+    "expression": "status == 0",
+    "sha256": "ad015a6569f13f703986fdc814e474258c2c28781d89a6e8d6ea9ce13ea031f3"
+  },
+  {
+    "upstream_line": 229,
+    "ported_line": 230,
+    "expression": "g_last_status == 0 && clean()",
+    "sha256": "db0b2c84ac3fb2022d0f1048972431c3a7ddddbe264249355480f91231304563"
+  },
+  {
+    "upstream_line": 230,
+    "ported_line": 231,
+    "expression": "g_handled_n[0] == 1 && saw(CFW_MESSAGE_LEFT, 0, LEFT_MSG, sizeof LEFT_MSG)",
+    "sha256": "ddd707042f85fe035af3aeafc55e5e9eff340ed4cbc3289110f5e64961d8955f"
+  },
+  {
+    "upstream_line": 231,
+    "ported_line": 232,
+    "expression": "g_handled_n[1] == 1 && saw(CFW_MESSAGE_RIGHT, 0, RIGHT_MSG, sizeof RIGHT_MSG)",
+    "sha256": "32d46a857584fcd204d3b3c9d1518cefcb0497ac5bf8b6114348f32cab03bb40"
+  },
+  {
+    "upstream_line": 232,
+    "ported_line": 233,
+    "expression": "g_ble_n == 2",
+    "sha256": "1cbd88ed7b68021b1c39a59ffe5859e15fa65b00e1d6954279561489f583126b"
+  },
+  {
+    "upstream_line": 233,
+    "ported_line": 234,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x10, 0, CFW_MESSAGE_LEFT) >= 0",
+    "sha256": "c417487e0da47faafafc5da3d25aa9c043f1f8b12217b4f69d0330270436f1ba"
+  },
+  {
+    "upstream_line": 234,
+    "ported_line": 235,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x10, 1, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "13b86f974352013df8ecb70f3f173319ac9b20997ef470f93ca39ff3007bb4f8"
+  },
+  {
+    "upstream_line": 235,
+    "ported_line": 236,
+    "expression": "g_ctx[0].nack_count == 0 && g_ctx[1].nack_count == 0",
+    "sha256": "3c130b8a2dfa34c51fe29942ba3b6f91432613cffce86dfb55b650d3cdb0184b"
+  },
+  {
+    "upstream_line": 244,
+    "ported_line": 245,
+    "expression": "g_last_status == 0 && clean()",
+    "sha256": "db0b2c84ac3fb2022d0f1048972431c3a7ddddbe264249355480f91231304563"
+  },
+  {
+    "upstream_line": 245,
+    "ported_line": 246,
+    "expression": "g_ble_n == 4",
+    "sha256": "404388757f8a248441d63b4775cef098a87be2da2746eda9450b94a9b60940a6"
+  },
+  {
+    "upstream_line": 246,
+    "ported_line": 247,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x20, 1, CFW_MESSAGE_LEFT) >= 0",
+    "sha256": "72c8f215e9dfef37b35652307d01030f60247683e6ac6dda39812c796f36c4cb"
+  },
+  {
+    "upstream_line": 247,
+    "ported_line": 248,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x20, 0, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "991d52ee6234f8b4966609fc9b0dce6d900fd52692d2ea3626c346d940f7bd99"
+  },
+  {
+    "upstream_line": 248,
+    "ported_line": 249,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x20, 2, CFW_MESSAGE_LEFT) >= 0",
+    "sha256": "1bff74a205a530aff0adf6217c0dda5d29c752d79ad3153032579057e9643abc"
+  },
+  {
+    "upstream_line": 249,
+    "ported_line": 250,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x20, 2, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "c5172464733af82d2d776d6f9e9f8dafcc0d0e089f29eaeb16d6034d76d05b5c"
+  },
+  {
+    "upstream_line": 250,
+    "ported_line": 251,
+    "expression": "g_handled_n[0] == 3 && g_handled_n[1] == 3",
+    "sha256": "fe8b6b2c93c4eed38f103909e6b9011f1d945451dd93f608d028b81c874abc10"
+  },
+  {
+    "upstream_line": 251,
+    "ported_line": 252,
+    "expression": "saw(CFW_MESSAGE_LEFT, 1, LEFT_MSG, sizeof LEFT_MSG) && saw(CFW_MESSAGE_RIGHT, 1, RIGHT_MSG, sizeof RIGHT_MSG)",
+    "sha256": "1f38217a3b6c820d390dde8ef38f7acda316bfb8a6075b07835c4330468656cd"
+  },
+  {
+    "upstream_line": 252,
+    "ported_line": 253,
+    "expression": "saw(CFW_MESSAGE_LEFT, 2, BOTH_MSG, sizeof BOTH_MSG) && saw(CFW_MESSAGE_RIGHT, 2, BOTH_MSG, sizeof BOTH_MSG)",
+    "sha256": "295f12bddb29b7d78ea06d4791d45b72031b8cad1a57fd6f428af8cc5111b5d3"
+  },
+  {
+    "upstream_line": 258,
+    "ported_line": 259,
+    "expression": "!(b[e] == 0x20 && rd16(b + e + 1) == skipped)",
+    "sha256": "825bd85378451c7bd6d8bdd347daaf5e822e8cf6fb9726d4367fc502a2b5fe5f"
+  },
+  {
+    "upstream_line": 267,
+    "ported_line": 268,
+    "expression": "clean() && g_handled_n[0] == 0 && g_handled_n[1] == 0",
+    "sha256": "947f634a6cf1a05d933f5a026934ddcf5fcf46ac6f7ddc941db63755486ffac6"
+  },
+  {
+    "upstream_line": 268,
+    "ported_line": 269,
+    "expression": "g_ble_n == 1 && ack(CFW_MESSAGE_NACK, 0x30, 0, CFW_MESSAGE_LEFT) >= 0",
+    "sha256": "b64b91f53167c3cc5c5f1e304a94469766a432e6dc25566ea91df163a8de0780"
+  },
+  {
+    "upstream_line": 269,
+    "ported_line": 270,
+    "expression": "g_ctx[0].nack_count == 1 && g_ctx[0].nack_reason == CFW_NACK_FLAGS",
+    "sha256": "05f2d11b60ceff5da14cd24819a4f6dc07a3c9ef8246b1ed5599435390eba327"
+  },
+  {
+    "upstream_line": 274,
+    "ported_line": 275,
+    "expression": "clean() && g_handled_n[0] == 0 && g_handled_n[1] == 0",
+    "sha256": "947f634a6cf1a05d933f5a026934ddcf5fcf46ac6f7ddc941db63755486ffac6"
+  },
+  {
+    "upstream_line": 275,
+    "ported_line": 276,
+    "expression": "g_ble_n == 2",
+    "sha256": "1cbd88ed7b68021b1c39a59ffe5859e15fa65b00e1d6954279561489f583126b"
+  },
+  {
+    "upstream_line": 276,
+    "ported_line": 277,
+    "expression": "ack(CFW_MESSAGE_NACK, 0x31, 0, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_NACK, 0x31, 0, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "e29bd4ba5d03be9eef33bb29eb52214a01f38ad12a0c64ef9541a81a876a876f"
+  },
+  {
+    "upstream_line": 277,
+    "ported_line": 278,
+    "expression": "g_ctx[0].nack_reason == CFW_NACK_FLAGS && g_ctx[1].nack_reason == CFW_NACK_FLAGS",
+    "sha256": "0237347f7acf1650d7380647fee2efff74745104ace79fe3cec0f01e7914e152"
+  },
+  {
+    "upstream_line": 283,
+    "ported_line": 284,
+    "expression": "g_ble_n == 1 && ack(CFW_MESSAGE_ACK, 0x32, 0, CFW_MESSAGE_LEFT) >= 0 && g_handled_n[0] == 1 && g_handled_n[1] == 0",
+    "sha256": "29e4204a597899643a5db5c8d5d3b9685ca903f570de7902ecbfccc2ff9c11b2"
+  },
+  {
+    "upstream_line": 294,
+    "ported_line": 295,
+    "expression": "g_last_status == 0 && clean() && g_ble_n == 4",
+    "sha256": "57244b9a9b118c46f27c9ce1517be0d345098c0c8ef1bf00f5473f0f37f069cb"
+  },
+  {
+    "upstream_line": 295,
+    "ported_line": 296,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x40, 0, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_ACK, 0x40, 1, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "b6433dea7b50ee2f67ea6035f44a7af3df7ff35ce9fcbd3c517df02a8b6cfd30"
+  },
+  {
+    "upstream_line": 296,
+    "ported_line": 297,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x40, 2, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_ACK, 0x40, 2, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "06d715f13ed2f5cb2e6e309dc16dd503c12cd7393fcda55eec8a2bcf50733e88"
+  },
+  {
+    "upstream_line": 297,
+    "ported_line": 298,
+    "expression": "saw(CFW_MESSAGE_LEFT, 0, LEFT_MSG, sizeof LEFT_MSG) && saw(CFW_MESSAGE_LEFT, 1, BOTH_MSG, sizeof BOTH_MSG)",
+    "sha256": "54d5546e8fe574feb0129b4c52c7b3c71b583d0ec4ca9c06826ac6c1334ac9bd"
+  },
+  {
+    "upstream_line": 298,
+    "ported_line": 299,
+    "expression": "saw(CFW_MESSAGE_RIGHT, 0, RIGHT_MSG, sizeof RIGHT_MSG) && saw(CFW_MESSAGE_RIGHT, 1, BOTH_MSG, sizeof BOTH_MSG)",
+    "sha256": "5fb336caf02c89e251782621157593e9e5549eb97e15fe74a31785c678857a48"
+  },
+  {
+    "upstream_line": 307,
+    "ported_line": 308,
+    "expression": "g_last_status == 0 && clean() && g_ble_n == 5",
+    "sha256": "674a44cd73ea832290d6cc454eef6a2775310d6a320d9e9346db7315447ef157"
+  },
+  {
+    "upstream_line": 308,
+    "ported_line": 309,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x50, 0, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_ACK, 0x50, 0, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "8a2c89b65c621fce62247ae24309e708f8991bdf42b31f27c153f91f2563e553"
+  },
+  {
+    "upstream_line": 309,
+    "ported_line": 310,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x50, 1, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "5905654df6f5742b6f0f9ad90060b89c0ea58fccb843d18bd4e70d5b0b41fb66"
+  },
+  {
+    "upstream_line": 310,
+    "ported_line": 311,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x50, 2, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_ACK, 0x50, 2, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "6771de9b1c350d5c928c274f1d6dbce99d4aaa95a90ae530230bafedd3b12c27"
+  },
+  {
+    "upstream_line": 311,
+    "ported_line": 312,
+    "expression": "g_handled_n[0] == 4 && g_handled_n[1] == 5",
+    "sha256": "5f5a7775d9832a56e4b9794eb9317779895e91bbbc70ba466d8313f88b447c0e"
+  },
+  {
+    "upstream_line": 312,
+    "ported_line": 313,
+    "expression": "saw(CFW_MESSAGE_LEFT, 3, BOTH_MSG, sizeof BOTH_MSG) && saw(CFW_MESSAGE_RIGHT, 4, BOTH_MSG, sizeof BOTH_MSG)",
+    "sha256": "160e3c5a711beffe07666bfaef8be0ce168685bab7d31d13c732001c4506deef"
+  },
+  {
+    "upstream_line": 313,
+    "ported_line": 314,
+    "expression": "g_ctx[0].nack_count == 0 && g_ctx[1].nack_count == 0",
+    "sha256": "3c130b8a2dfa34c51fe29942ba3b6f91432613cffce86dfb55b650d3cdb0184b"
+  },
+  {
+    "upstream_line": 324,
+    "ported_line": 325,
+    "expression": "clean() && g_ble_n == 2 && g_handled_n[0] == 1 && g_handled_n[1] == 0",
+    "sha256": "8116cc7b47afa685193a1bad8beb700627540b2be4d88bc6b687a4715a7dc8d1"
+  },
+  {
+    "upstream_line": 325,
+    "ported_line": 326,
+    "expression": "ack(CFW_MESSAGE_ACK, 0x70, 0, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_NACK, 0x70, 1, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "f641091d522a7e0e634eca36831462e4563ccaa1f45a1420a58ea7d4b223569e"
+  },
+  {
+    "upstream_line": 326,
+    "ported_line": 327,
+    "expression": "g_ctx[0].nack_count == 0 && g_ctx[1].nack_reason == CFW_NACK_CONTEXT",
+    "sha256": "fa7c241ae9857d0bd3aaaa3d5df2eb5f5cb695b423cc63665df9ca5a0dfd2eda"
+  },
+  {
+    "upstream_line": 336,
+    "ported_line": 337,
+    "expression": "clean() && g_ble_n == 2",
+    "sha256": "6bef645f9e4ab630cbd990ad65a657d8ed70050b10936247421509b270d911fc"
+  },
+  {
+    "upstream_line": 337,
+    "ported_line": 338,
+    "expression": "ack(CFW_MESSAGE_NACK, 0x60, 0, CFW_MESSAGE_LEFT) >= 0 && ack(CFW_MESSAGE_NACK, 0x60, 1, CFW_MESSAGE_RIGHT) >= 0",
+    "sha256": "fdfa7bdd63bdb7c7250a3fd3af164692eb7c01228f196e49564ef09ec8f6762d"
+  },
+  {
+    "upstream_line": 338,
+    "ported_line": 339,
+    "expression": "g_ctx[0].nack_reason == CFW_NACK_HANDLER && g_ctx[1].nack_reason == CFW_NACK_HANDLER",
+    "sha256": "bbe06bdc0eaae71bbf75e121a51c8e4647e536568f246cb8366e4493fb091d3b"
+  },
+  {
+    "upstream_line": 352,
+    "ported_line": 353,
+    "expression": "g_live == 0",
+    "sha256": "6ffd73b927df9dc2e77c6aade92ffb3a5eb3cdcd7ccd98f17a8dadc458ca6037"
+  }
+]

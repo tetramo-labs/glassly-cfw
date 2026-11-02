@@ -1,0 +1,10 @@
+{
+  "default_feature": "MM_SCENE_EXTERNAL_STORE not defined",
+  "source": "runtime/build/flash-read-001/graphics.bin",
+  "rebuilt": "analysis/flash-store/default-byte-check-002/graphics.bin",
+  "sha256": "d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b",
+  "bytes": 50880,
+  "identity": true,
+  "original_scene_tests": "analysis/flash-store/default-scene-regression-001/report.json",
+  "external_tests": "analysis/flash-store/scene-integration-003/report.json"
+}

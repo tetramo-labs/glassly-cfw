@@ -1,0 +1,7 @@
+{
+  "format": "memomind-input-schema-crosscheck-v1",
+  "native_host_output": "analysis/input-gate/host-003/test.stdout",
+  "success_json_validated_by_python_client": 36,
+  "native_error_json_recognized": 17,
+  "hardware_tested": false
+}

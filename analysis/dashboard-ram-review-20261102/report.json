@@ -1,0 +1,186 @@
+{
+  "passed": true,
+  "blocking_findings": [],
+  "device_actions": false,
+  "production_edits": false,
+  "candidate": {
+    "passed": true,
+    "device_actions": false,
+    "candidate": "captures/firmware/dashboard-ram-002",
+    "image_bytes": 2230671,
+    "image_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+    "source_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "outer_header150_sha256": "3e0ed487f355806dafd975fb2849c2e146ab8d7b8fc0e5431420c332434bc13c",
+    "app_header256_sha256": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "runtime_bytes": 65456,
+    "gate_span_bytes": 24,
+    "actual_changed_body_bytes": 21,
+    "changed_body_offsets": [
+      499463,
+      499464,
+      499465,
+      499777,
+      499778,
+      499779,
+      500424,
+      500425,
+      500426,
+      500427,
+      512791,
+      512792,
+      512793,
+      512976,
+      512977,
+      512978,
+      512979,
+      541346,
+      541347,
+      541348,
+      541349
+    ],
+    "entire_body_outside_six_spans_identical": true,
+    "unchanged_streams": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6
+    ],
+    "unchanged_runtime": true,
+    "exact_constructor_and_independent_repack": true,
+    "checksums": {
+      "outer_payload_crc32": "verified",
+      "compression_table_crc32": "verified",
+      "packed_streams_crc32": "verified",
+      "component_body_crc32": "verified-all-six"
+    },
+    "bounds": {
+      "app_raw_bytes": 1838672,
+      "app_allocation": 2097152,
+      "payload_bytes": 2230653,
+      "rounded_payload_bytes": 2232320,
+      "staging_capacity": 2482176
+    },
+    "stream_pins": [
+      {
+        "index": 0,
+        "packed_bytes": 171,
+        "raw_bytes": 344,
+        "packed_sha256": "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a"
+      },
+      {
+        "index": 1,
+        "packed_bytes": 481265,
+        "raw_bytes": 909676,
+        "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+      },
+      {
+        "index": 2,
+        "packed_bytes": 437783,
+        "raw_bytes": 695512,
+        "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+      },
+      {
+        "index": 3,
+        "packed_bytes": 959569,
+        "raw_bytes": 1838672,
+        "packed_sha256": "4ad7607ca742be20220eb1baae1c79ea2e01a94f2381ec190da14f698b9653d7"
+      },
+      {
+        "index": 4,
+        "packed_bytes": 283737,
+        "raw_bytes": 284300,
+        "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+      },
+      {
+        "index": 5,
+        "packed_bytes": 986,
+        "raw_bytes": 3616,
+        "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+      },
+      {
+        "index": 6,
+        "packed_bytes": 67006,
+        "raw_bytes": 81594,
+        "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+      }
+    ],
+    "rejected001_sha256": "c6adcbfbba6ea0f340670daa495f4d8db354fcf3362036af90402897e9eb6c08"
+  },
+  "constructor_tests": 2,
+  "independent_native_cases": {
+    "card": 90,
+    "status": 140,
+    "total": 230,
+    "unicorn": "2.1.4",
+    "logging_predicate_only_mock": true
+  },
+  "static_callers": {
+    "status_constructor": [
+      "04273454",
+      "0426b686",
+      "042814b8"
+    ],
+    "card_constructor": [
+      "04273454",
+      "0426b686",
+      "042814b8"
+    ],
+    "header_constructor": [
+      "04273454"
+    ],
+    "header_update": [
+      "04273266",
+      "04272a36"
+    ],
+    "observed_return_values_ignored": true,
+    "shared_screen_and_header_container_continue": true
+  },
+  "allocations": {
+    "class_instance_sizes": {
+      "0x4385e10": 44,
+      "0x4385bd0": 116,
+      "0x4385b38": 80
+    },
+    "status_context_bytes": [
+      232,
+      232,
+      320,
+      200
+    ],
+    "status_header_requested_lower_bound": 1224,
+    "card_requested_lower_bound": 216,
+    "total_requested_lower_bound": 1440,
+    "measured_saving": null
+  },
+  "admission_readiness": {
+    "bounded_offline_review_complete": true,
+    "status_pending": false,
+    "exact_swift_catalog_and_fixture_tests_required": true,
+    "eligible_candidate_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+    "rejected_candidate_sha256": "c6adcbfbba6ea0f340670daa495f4d8db354fcf3362036af90402897e9eb6c08",
+    "hardware_validated": false,
+    "cold_boot_required": true
+  },
+  "source_sha256": {
+    "scripts/build_memomind_dashboard_ram.py": "5ae9dce5969324b634db39757edabb5c60752736d30dfa1feb8cb77305b24155",
+    "scripts/test_build_memomind_dashboard_ram.py": "5d26cd2bb786d97f15cf4841ea8191268a508fdecb2a3be3049aeaa074a725d6",
+    "analysis/dashboard-ram-card-20261102/report.md": "039dd5855e79644bd1397677c378f64f4383ffe03dc464d8209225f27f40dc3e",
+    "analysis/dashboard-ram-card-20261102/proof.json": "bc14dce924839beef61c94754b1db670f917a385d52485d8599e3f809cb32aca",
+    "analysis/dashboard-ram-card-20261102/emulate-null-state.py": "975166c7887ddef3722b6d11093e9fd49193ed379125bb857cfed2828371f3d9",
+    "analysis/dashboard-ram-status-20261102/report.md": "0f0b0636f2e4b9b6cace24d97550bac0cb3e96769c847dd433b17042300dae87",
+    "analysis/dashboard-ram-status-20261102/proof.json": "3ab8d54585a63e10ef7afe9600b938291e6d7ddeed9777744e1c572d68cf7bab",
+    "analysis/dashboard-ram-status-20261102/emulate_retirement.py": "4eb8491d99c3620f54ff2ea12f7fc40618320a5b48169560e825d1e97f001406",
+    "analysis/dashboard-ram-status-20261102/retirement-rv32-v2.json": "0dc203e94d9965fff89bd8c60f85c997054d7518182e818a6b9dca7ed372712a",
+    "analysis/dashboard-ram-native-20261102/rejected-candidate-001.json": "6e94a55131afadf15b19e49b0565693e06a2bb0544be2fdb057ba11b4234350e"
+  },
+  "limitations": [
+    "Cold-zero ownership and enumerated native function/caller closure only; no full boot, LVGL task concurrency or universal indirect-alias proof.",
+    "Static1440 requested bytes is not a measured heap delta; decoded resources/styles may add savings but require measurement.",
+    "The UI subsystem is shared across several stock screens; those card/status/header views are intentionally retired.",
+    "No hot teardown or global-address reuse; no dashboard cache allocator gate, CFW scratch trim, driver or descriptor change.",
+    "Card harness first local invocation omitted required --output; its usage failure is retained, corrected retry90cases passed."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "format": "memomind-keyboard-scope-review-v1",
+  "passed": true,
+  "scope_tests": 8,
+  "scope_test_subprocesses": "mocked, including failure injection; not runtime execution",
+  "real_compat_runner_exit_code": 0,
+  "real_compat_passed_steps": 16,
+  "real_compat_hardware_tested": false,
+  "source_sha256": {
+    "tests/g2_compat/inventory.py": "a4fbd7f156e5edac7b295f261cff897db13a5518ba8aee5ca50b959384eb0b40",
+    "tests/g2_compat/inventory.json": "dcc15d1d9e09341567e25b51d327612f4dc06c8a0d809545d462fe42f0d4cd29",
+    "tests/g2_compat/run_tests.py": "9777e0d7acdb7480c452917c06d8a92e33d1e41d0bacb680fe17bba7c97e512d",
+    "tests/g2_compat/test_scope.py": "44a8e03bc774dd0ad5d6c63dc85e505a168b7e02b90ef3eec719a0cc4cdcee62",
+    "tests/g2_compat/README.md": "489a5bae2e5398ab99ec413263f18ca9ef3aabf092de110c31da7e200a94b901",
+    "tests/g2_compat/COMMAND_PARITY.md": "5c0e48da6d7ffc7a7f4285f372e3379fe195e5b3b3fa9d89434dbdb4a00d2620",
+    "tests/run_tests.py": "159999593c721f7864254c79f4dd16ca11781997baae14d5e8083078157105cd"
+  },
+  "commands": [
+    [
+      "python3",
+      "tests/g2_compat/inventory.py",
+      "--check"
+    ],
+    [
+      "python3",
+      "tests/g2_compat/test_scope.py"
+    ],
+    [
+      "python3",
+      "tests/g2_compat/run_tests.py",
+      "--output",
+      "analysis/g2-compat-keyboard-scope-20261101"
+    ]
+  ],
+  "historical_source_hashes_checked": 96,
+  "required_host_scenarios": 40,
+  "required_host_assertion_sites": 660,
+  "required_bun_cases": 11,
+  "full_parity_complete": false,
+  "aggregate_entire_suite_rerun": false
+}

@@ -1,0 +1,67 @@
+{
+  "format": "memomind-flash-reader-hardware-v1",
+  "updated_utc": "2026-10-31T20:48:36.745904+00:00",
+  "installed": true,
+  "runtime_build": "runtime/build/flash-read-001",
+  "runtime_sha256": "d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b",
+  "runtime_bytes": 50880,
+  "ota_sha256": "1ab2c2a2c847c4605f2410f2d987f9c15d56dd02d019ba480db317685e4c5d47",
+  "ota_bytes": 2222088,
+  "ota_proof": "analysis/protocol/flash-read-runtime/whole-image-proof.json",
+  "offline_regression": "analysis/regression-20261031-09/report.json",
+  "native_review": "analysis/flash-read/native-review.md",
+  "acquisitions": {
+    "header-check": {
+      "successful_reads": 1,
+      "bytes": 256
+    },
+    "metadata": {
+      "successful_reads": 545,
+      "bytes": 139520
+    },
+    "metadata-repeat": {
+      "successful_reads": 289,
+      "bytes": 73984
+    }
+  },
+  "successful_native_reads": 835,
+  "app_header_full256_matches_candidate": true,
+  "metadata_repeat_identical": true,
+  "boot_image_body_crc32_verified": true,
+  "boot_image_body_bytes": 60856,
+  "boot_image_summary": "analysis/boot-acquisition/summary.json",
+  "post_checks": "captures/flash-read-runtime-20261031/post-checks.json",
+  "free_bytes_before_reads": 333904,
+  "free_bytes_after_reads": 333940,
+  "free_snapshots_prove_no_leaks": false,
+  "input_observer_inactive": true,
+  "hogp_connected": 0,
+  "hogp_bonded": 0,
+  "heartbeat": 0,
+  "initial_reconnect_failure": {
+    "attempt": "passive-01",
+    "before_business_frame_write": true,
+    "automatic_retry": false,
+    "fresh_attempt": "passive-02",
+    "fresh_attempt_succeeded": true
+  },
+  "capture_rotation": {
+    "join_evidence": "captures/flash-read-runtime-20261031/rotation-join.json",
+    "recovered_missing_collector_tail_bytes": 685,
+    "ota_transfer_verified_across_join": true,
+    "joined_integrity_caveat": "Prior one-microsecond timestamp reversal atoffset5440302 precedes this OTA; no truncated records",
+    "final_segment_caveat": "A separate one-microsecond reversal atoffset2208050 occurs after frozen OTA capture, during metadata acquisition; no truncated records",
+    "general_losslessness_proven": false
+  },
+  "phone_restored": true,
+  "bridge_stopped": true,
+  "collector_stopped": true,
+  "flash_mutations_by_reader": 0,
+  "mutable_flash_reserved": false,
+  "physical_graphics_or_input_confirmation": false,
+  "limitations": [
+    "Successful bounded reads do not prove native busy-loop timeouts or worst-case stack/OOM safety.",
+    "Repeated identical metadata snapshots do not establish atomic capture.",
+    "Read-only metadata acquisition does not reserve flash or prove all boot/repair paths."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "image_sha256": "0f54b4569ef2960e2916abfcff4a434c0f1164f05d059a8418100f3da3f8fce5",
+  "image_bytes": 2229182,
+  "runtime_sha256": "deeddff1533fc36c5468394a1fbbd612d3a2ec096dc864d963fa3cc30148f450",
+  "runtime_bytes": 63200,
+  "header_sha256": "aa42bd320c3aa574c9c4b04592698e699a57ee036f04ca49a356d01002917ffc",
+  "app_header_sha256": "5a930be718c3937d6c2221fd8953a53edd7bf916a1a0dd588258fcf4161a1d3f",
+  "metadata_packed_bytes": 171,
+  "metadata_sha256": "59a2cd5d0a5f69fb19b385c1199a1d128ea9b1414e77e38efe82a94fbca0fe57",
+  "app_packed_bytes": 958080,
+  "app_raw_bytes": 1836416,
+  "app_sha256": "91ae2d698b408ea3cdd1ab0b04b5b39949dc68119a964161fcb2c27140aca4c8"
+}

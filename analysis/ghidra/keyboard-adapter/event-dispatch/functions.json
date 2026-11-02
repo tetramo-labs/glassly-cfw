@@ -1,0 +1,11 @@
+[
+  {
+    "requested": "04319792",
+    "address": "ram:04319792",
+    "incoming_references": [
+      "ram:0421756c COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

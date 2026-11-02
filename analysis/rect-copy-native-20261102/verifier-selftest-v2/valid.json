@@ -1,0 +1,22 @@
+{
+  "format": "memomind-native-rect-copy-smoke-verification-v1",
+  "capture": "analysis/rect-copy-native-20261102/verifier-selftest-v2/synthetic-capture",
+  "complete": true,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "keyframe_acknowledged": true,
+  "delta_acknowledged": true,
+  "overlap_copy_acknowledged": true,
+  "rectangle_copy_acknowledged": true,
+  "invalid_commands_rejected": 3,
+  "lease_renewals_acknowledged": 1,
+  "cleared": true,
+  "encoded_and_expected_pixels_independently_verified": true,
+  "hardware_pixel_readback": false,
+  "background_gray4": 0,
+  "hold_seconds_before_clear": 90.03999999999999,
+  "maximum_renewal_or_clear_submission_gap_seconds": 90.03,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "5f68e2b36582c11b17d108ebbd4a8e4833cd2699f2c8b389bc913e90a0c9f615"
+}

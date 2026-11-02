@@ -1,0 +1,22 @@
+{
+  "source_sha256": "643fd6b82cf02ac58295cfe68656fce52671de74e67d208d4172da000d24315f",
+  "header_words": [
+    "0xa4e49a17",
+    "0x1bd540",
+    "0x803007f",
+    "0x41eb020",
+    "0x544a1ab4",
+    "0x0",
+    "0x20fee00",
+    "0x0"
+  ],
+  "body_length": 1824064,
+  "signature_record_count_byte": 0,
+  "physical_header": "0x001eb000",
+  "body_end": "0x3a8560",
+  "normal_ota_erase_end": "0x3a9000",
+  "candidate_tail_start": "0x003ab000",
+  "candidate_tail_end": "0x003eb000",
+  "gap_from_body_end": 10912,
+  "gap_from_erase_end": 8192
+}

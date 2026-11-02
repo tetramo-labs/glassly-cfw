@@ -1,0 +1,231 @@
+{
+  "format": "memomind-portable-flash-store-tests-v1",
+  "result": "passed",
+  "hardware_tested": false,
+  "source_sha256": {
+    "flash_store.c": "d565de6f9b9f197e1711803739f23bc1500e590a3f4311e2b5906be33233c03f",
+    "flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "tests/run_flash_store_tests.py": "42add6de73f2e0e5048947238122c0bd9b02112f8985d1c2c71a802c7d717798",
+    "tests/flash_store/layout.c": "afd9d3a995b02ee16bdeb4c180826d12629d9e41b3f8e4d8a76284b8153b0303",
+    "tests/flash_store/test_flash_store.c": "45e6935b31c13a6015d66186b756d746865a769dc544d6f7759fe31c1558c967"
+  },
+  "commands": [
+    {
+      "label": "host-build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/flash_store/test_flash_store.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/test_flash_store"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "host-run",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/test_flash_store"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-elf",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-readelf",
+        "-h",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-symbols",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "--defined-only",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-disassembly",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objdump",
+        "-dr",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/flash_store.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/flash_store/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_flash_store_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/validation-001/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "cc-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rvcc-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "limits": [
+    "Ephemeral in-RAM maps: no reboot/power-loss persistence",
+    "No native reservation, bad-map acquisition or flash driver binding",
+    "Callbacks mocked on host; target code compiled, not executed on hardware",
+    "Per-function stack audit excludes callback and native task call chains"
+  ],
+  "host_result": "fault_boundaries=2112 fault_runs=4224 read_faults=2048 erase_faults=128 program_faults=2048\nPASS checks=908114119 context_bytes=344 workspace_bytes=4096",
+  "fault_injection": {
+    "boundaries": 2112,
+    "runs": 4224,
+    "read": 2048,
+    "erase": 128,
+    "program": 2048
+  },
+  "host": {
+    "assertion_evaluations": 908114119,
+    "context_bytes": 344,
+    "workspace_bytes": 4096
+  },
+  "rv32": {
+    "architecture": "RV32IMAFC / ilp32f / little endian",
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "text_bytes": 1990,
+    "rodata_bytes": 0,
+    "layout": {
+      "context_bytes": 320,
+      "callbacks_bytes": 16,
+      "workspace_bytes": 4096,
+      "minimum_usable_sectors": 129
+    },
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:12:12:buffer.part.0\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:43:12:read_map\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:22:5:mm_flash_store_init\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:38:5:mm_flash_store_begin\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:58:5:mm_flash_store_read\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:76:5:mm_flash_store_write\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:100:5:mm_flash_store_commit\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:105:5:mm_flash_store_abort\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c:109:5:mm_flash_store_view\t48\tstatic"
+    ],
+    "max_individual_stack_bytes": 48
+  },
+  "tools": {
+    "cc": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "rvcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "source_drift": false,
+  "artifact_sha256": {
+    "flash_store.su": "065f7830d4c9b40928a97e9c68bd985e591a1913ec09ecc0dbecb88b22bd94a8",
+    "flash_store.o": "c661bf611663ca4d54f031efc9f8054a3f3dd44bb041fb9266663a017cc7ee0d",
+    "layout.o": "bd951f9a549dd4cca1ef86418e2a8948939ccdc9d9928a041a448772eff1cd8b",
+    "layout.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layout.bin": "39d93b09a42c7cfe889fbb8f6b2de0ed184806ec762aa02d5e2099a52e95b8d7",
+    "test_flash_store": "389baa5712e838490f12c26356c5b1a020361696a02fe01dd14ab840bd6b7a5c"
+  }
+}

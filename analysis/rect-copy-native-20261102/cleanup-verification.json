@@ -1,0 +1,11 @@
+{
+  "format": "memomind-native-rect-copy-cleanup-verification-v1",
+  "capture": "captures/swift-mac-rect-copy-cleanup-20261102-01",
+  "complete": true,
+  "exact_header_verified": true,
+  "clear_acknowledged": true,
+  "raw_application_frames_independently_parsed_and_correlated": true,
+  "native_submissions_completed": true,
+  "hardware_pixel_readback": false,
+  "trace_sha256": "848f0083b62773bf5613ab9c0d3703b902723d58a882ce8a03926af2cb260990"
+}

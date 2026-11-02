@@ -1,0 +1,74 @@
+{
+  "format": "memomind-native-bundle-smoke-verification-v1",
+  "capture": "captures/swift-mac-bundle-smoke-20261102-04",
+  "complete": true,
+  "startup_notifications_captured": [
+    [
+      12,
+      1,
+      48
+    ],
+    [
+      13,
+      14,
+      12
+    ]
+  ],
+  "native_service_notifications_logged": 18,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "bundle_acknowledged": true,
+  "final_cache_reply_verified": true,
+  "ordered_settled_notifications": [
+    [
+      52,
+      11
+    ],
+    [
+      52,
+      12
+    ],
+    [
+      52,
+      11
+    ],
+    [
+      52,
+      12
+    ],
+    [
+      52,
+      13
+    ],
+    [
+      52,
+      14
+    ],
+    [
+      52,
+      15
+    ],
+    [
+      52,
+      16
+    ],
+    [
+      54,
+      17
+    ]
+  ],
+  "invalid_commands_rejected": 5,
+  "late_failure_settled_verified": true,
+  "lease_renewals_acknowledged": 955,
+  "cleared": true,
+  "encoded_and_expected_pixels_independently_verified": true,
+  "hardware_pixel_readback": false,
+  "physical_single_presentation_proven": false,
+  "background_gray4": 0,
+  "hold_seconds_before_clear": 300.1730317082256,
+  "finish_requested": false,
+  "maximum_hold_submission_gap_seconds": 0.4755627082195133,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "3dcc444d813c456263a795f969c0db9b7c7ca78b0021c275e9deeacb03a16ec0"
+}

@@ -1,0 +1,35 @@
+{
+  "script_sha256": "b0ac0eeb10640a7f17585fdf2bf20d06937486d7f91e04bb67bb056b04eea137",
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "bf03e118518fd0e1b3b7eafda36534166d9fb1fc4478b59500bbb5fd91c180ea",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "584d9002a244a62d687987e5912bbb75dda2218eb22465f69f61857efeb6c7dd"
+  },
+  "synthetic_only": true,
+  "actual_admission_executed": false,
+  "checks": {
+    "all_old_catalog_entries_unchanged": true,
+    "all_old_test_names_present": true,
+    "old_test_functions_preserved": true,
+    "text_catalog_entry_once": true,
+    "text_variant_once": true,
+    "text_enum_once": true,
+    "text_digest_once": true,
+    "new_text_test_methods_once": true
+  },
+  "old_releases": [
+    "stock-1.0.3.127-jhv3-release",
+    "exclusive-store-reader-001",
+    "flash-canary-001",
+    "raster-commands-001",
+    "rect-copy-001",
+    "bundle-commands-001"
+  ],
+  "old_test_method_count": 18,
+  "new_test_method_count": 20,
+  "duplicates": {},
+  "added_names": [
+    "testRequiredActualReviewedOfflineTextFixture",
+    "testTextEligibilityRejectsRepairedCRCsAndRawRuntime"
+  ],
+  "pass": true
+}

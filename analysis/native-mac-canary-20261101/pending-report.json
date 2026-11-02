@@ -1,0 +1,31 @@
+{
+  "format": "memomind-native-mac-canary-hardware-v1",
+  "utc": "2026-11-02T03:07:40.127947+00:00",
+  "state": "full OTA and reboot ACK verified; first post-reboot RFCOMM open timed out; awaiting awake device",
+  "firmware_sha256": "79a4158c5d82b97c248d0dd2b7e366df03206393c1c2a7275677b8985d81398a",
+  "firmware_bytes": 2226788,
+  "transfer_verified": true,
+  "transfer_verification": "analysis/native-mac-canary-20261101/trace-verification.json",
+  "boot_verified": false,
+  "canary_started": false,
+  "canary_passed": false,
+  "full_g2_parity": false,
+  "current_backup": "analysis/native-mac-backup-20261101/verification.json",
+  "backup_bytes": 3145728,
+  "backup_matches_pre_reset": true,
+  "regression": "analysis/regression-20261101-06/report.json",
+  "offline_stages_passed": 66,
+  "python_tests_passed": 219,
+  "swift_tests_passed": 46,
+  "regression_source_drift": [],
+  "failed_boot_attempt": "captures/swift-mac-canary-preflight-20261101-01",
+  "failed_before_application_frames": true,
+  "automatic_retries": 0,
+  "next_action": "Wake glasses; read-only exact header/profile/topology/badmap/target+neighbor validation before one fixed op2 request",
+  "source_snapshot": "analysis/native-mac-canary-20261101/source-snapshot/manifest.json",
+  "limitations": [
+    "Reboot ACK does not establish successful boot.",
+    "No canary write/erase request has been sent.",
+    "Native scene/flash ownership, full message ingress and complete G2 parity remain unfinished."
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "build_command": [
+    "clang",
+    "-std=c11",
+    "-O1",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+    "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/graphics.c",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_graphics.c",
+    "-o",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/graphics-host-tests-02/test_graphics"
+  ],
+  "passed": true,
+  "result": "PASS: strict requests/max255 geometry, correlated execution, queue drop, allocation failures, 100 lifecycle cycles, expiry/wrap, stock UI yield, copied TLV lifetime; 192 requests freed, 140 completions",
+  "source_hashes": {
+    "runtime/graphics/graphics.c": "311d5b656f2784f3746d0845b0aef2981bfa8763524e6a6437f55339959f881b",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/graphics/tests/test_graphics.c": "2ddf0b80ef802e51ff27bd8f7e1107834e02ceaf1ffd3c6bef7479a84ce625f4"
+  },
+  "hardware_tested": false,
+  "native_oom_behavior": "mocked failure returns; actual LVGL may assert",
+  "ownership_model": "display task serializes object and timer operations"
+}

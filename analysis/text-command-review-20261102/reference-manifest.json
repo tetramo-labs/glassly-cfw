@@ -1,0 +1,104 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "functions": [
+    {
+      "function": "bzero",
+      "upstream_file": "patches/utils.c",
+      "source_sha256": "84c6c52bcf149a9db032420e8bd25eac2a2085fedc7947e131c4e5dc252f1983",
+      "first_line": 3,
+      "end_line": 5,
+      "function_sha256": "566c6ec8220797080cdcd23da45341f346b6d9a90f4149a2018d19656a586ed6"
+    },
+    {
+      "function": "rd16",
+      "upstream_file": "patches/utils.c",
+      "source_sha256": "84c6c52bcf149a9db032420e8bd25eac2a2085fedc7947e131c4e5dc252f1983",
+      "first_line": 41,
+      "end_line": 43,
+      "function_sha256": "bf1ebb716a3a41923d911eb65e3a4166f8c88a8df0f8c112d700e7e983025b92"
+    },
+    {
+      "function": "cfw_texture_make_lut",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 122,
+      "end_line": 128,
+      "function_sha256": "a23c9c2bee37255f40eb4f89ef2a370aeb67375900263c3db959d63752c0e2fa"
+    },
+    {
+      "function": "cfw_texture_render_a4",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 166,
+      "end_line": 194,
+      "function_sha256": "c26701d3e6981d4cb7d8f53316fbfe16e7919495da89460b4618f02861b4ab8f"
+    },
+    {
+      "function": "cfw_texture_add_rect",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 196,
+      "end_line": 208,
+      "function_sha256": "55b7a91a60abc9ca688b26ab97ceb5d6b47984b94a7035a8838ff39432eebc8d"
+    },
+    {
+      "function": "cfw_texture_utf8",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 287,
+      "end_line": 326,
+      "function_sha256": "35b82323cb16dccce8fa4f52fdc59a27eb24f3b44eb36f8f7876ef2264304981"
+    },
+    {
+      "function": "cfw_texture_next_glyph",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 343,
+      "end_line": 348,
+      "function_sha256": "fa3fbefaad52a7e406c5c6634e7a0720941f03dbb5d357a662b366fce344a97b"
+    },
+    {
+      "function": "cfw_texture_s16",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 350,
+      "end_line": 352,
+      "function_sha256": "df13de6e1896ad256c768168bb887596b3e068ab2d31d0a1498a04a3f7da6706"
+    },
+    {
+      "function": "cfw_texture_s32",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 354,
+      "end_line": 358,
+      "function_sha256": "dca2d55f994ae5b73406adaf30a64d99a8c28cd36b1cb1fe077f189ada709c8f"
+    },
+    {
+      "function": "cfw_builtin_glyph",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 364,
+      "end_line": 387,
+      "function_sha256": "46d97f4b49a4412ceb35ea581ae493dfa8b2d1dffdb5ae71b3e4ea6a757cd5ca"
+    },
+    {
+      "function": "cfw_builtin_draw_string_buf",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 393,
+      "end_line": 471,
+      "function_sha256": "7fee02a37961f96fc021af4aac53c0aec319c3a8b636152df5d0852e28fdd14e"
+    },
+    {
+      "function": "cfw_builtin_draw_string",
+      "upstream_file": "patches/texture_cache.c",
+      "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+      "first_line": 474,
+      "end_line": 481,
+      "function_sha256": "e1a1fa8e506832891d15433e84911a4d3c523452619efbb0422e06f43fe8a1cb"
+    }
+  ],
+  "output_sha256": "86428026bbbae35cdbd87010cf3d43d5ad6c76b321e49444df74856b5a1568bf",
+  "executed": false,
+  "font_api_and_dirty_list_shims_required": true
+}

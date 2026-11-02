@@ -1,0 +1,4310 @@
+{
+  "hardware_tested": false,
+  "scope": "portable compiler/raster; no scene/cache/timer/lease port",
+  "commands": [
+    {
+      "label": "build-tests",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-DMM_VECTOR_TESTING",
+        "-DG2_REFERENCE_SOURCE=\"/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/shapes_host_test.c\"",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/g2_vector_reference.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/test_vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/test_vector"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "vector-tests",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/test_vector"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-portable-path-check",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/vector_path_check.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-original-path-check",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/vector_path_check.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-000-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-000-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-001-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-001-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-002-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-002-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-003-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-003-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-004-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-004-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-005-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-005-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-006-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-006-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-007-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-007-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-008-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-008-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-009-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-009-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-010-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-010-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-011-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-011-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-012-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-012-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-013-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-013-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-014-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-014-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-015-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-015-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-016-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-016-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-017-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-017-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-018-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-018-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-019-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-019-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-020-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-020-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-021-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-021-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-022-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-022-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-023-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-023-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-024-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-024-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-025-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-025-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-026-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-026-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-027-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-027-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-028-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-028-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-029-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-029-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-030-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-030-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-031-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-031-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "path-032-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-032-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-033-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-033-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-034-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-034-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-035-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-035-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-036-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-036-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-037-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-037-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-038-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-038-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-039-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-039-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-040-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-040-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-041-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-041-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-042-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-042-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-043-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-043-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-044-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-044-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-045-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-045-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-046-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-046-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-047-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-047-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-048-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-048-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-049-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-049-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-050-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-050-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-051-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-051-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-052-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-052-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-053-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-053-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-054-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-054-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-055-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-055-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-056-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-056-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-057-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-057-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-058-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-058-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-059-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-059-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-060-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-060-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-061-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-061-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-062-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-062-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-063-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-063-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-064-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-064-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-065-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-065-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-066-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-066-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-067-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-067-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-068-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-068-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-069-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-069-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-070-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-070-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-071-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-071-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-072-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-072-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-073-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-073-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-074-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-074-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-075-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-075-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-076-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-076-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-077-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-077-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-078-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-078-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-079-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-079-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-080-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-080-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-081-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-081-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-082-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-082-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-083-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-083-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-084-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-084-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-085-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-085-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-086-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-086-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-087-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-087-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-088-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-088-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-089-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-089-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-090-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-090-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-091-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-091-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-092-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-092-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-093-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-093-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-094-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-094-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-095-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-095-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-096-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-096-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-097-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-097-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-098-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-098-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-099-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-099-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-100-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-100-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-101-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-101-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-102-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-102-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-103-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-103-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-104-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-104-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-105-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-105-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-106-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-106-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-107-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-107-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-108-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-108-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-109-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-109-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-110-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-110-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-111-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-111-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-112-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-112-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-113-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-113-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-114-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-114-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-115-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-115-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-116-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-116-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-117-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-117-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-118-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-118-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-119-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-119-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-120-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-120-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-121-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-121-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-122-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-122-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-123-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-123-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-124-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-124-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-125-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-125-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-126-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-126-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-127-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-127-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-128-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-128-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-129-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-129-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-130-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-130-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-131-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-131-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-132-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-132-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-133-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-133-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-134-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-134-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-135-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-135-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-136-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-136-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-137-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-137-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-138-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-138-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-139-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-139-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-140-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-140-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-141-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-141-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-142-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-142-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-143-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-143-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-144-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-144-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-145-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-145-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-146-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-146-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-147-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-147-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-148-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-148-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-149-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-149-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-150-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-150-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-151-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-151-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-152-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-152-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-153-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-153-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-154-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-154-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-155-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-155-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-156-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-156-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-157-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-157-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-158-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-158-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-159-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-159-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-160-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-160-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-161-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-161-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-162-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-162-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-163-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-163-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-164-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-164-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-165-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-165-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-166-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-166-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-167-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-167-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-168-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-168-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-169-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-169-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-170-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-170-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-171-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-171-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-172-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-172-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-173-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-173-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-174-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-174-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-175-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-175-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-176-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-176-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-177-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-177-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-178-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-178-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-179-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-179-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-180-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-180-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-181-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-181-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-182-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-182-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-183-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-183-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-184-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-184-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-185-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-185-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-186-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-186-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-187-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-187-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-188-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-188-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-189-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-189-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-190-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-190-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-191-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-191-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-192-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-192-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-193-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-193-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-194-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-194-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-195-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-195-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-196-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-196-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-197-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-197-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-198-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-198-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-199-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-199-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-200-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-200-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-201-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-201-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-202-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-202-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-203-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-203-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-204-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-204-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-205-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-205-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-206-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-206-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-207-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-207-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-208-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-208-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-209-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-209-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-210-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-210-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-211-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-211-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-212-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-212-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-213-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-213-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-214-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-214-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-215-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-215-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-216-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-216-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-217-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-217-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-218-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-218-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-219-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-219-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-220-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-220-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-221-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-221-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-222-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-222-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-223-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-223-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-224-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-224-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-225-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-225-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-226-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-226-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-227-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-227-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-228-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-228-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-229-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-229-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-230-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-230-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-231-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-231-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-232-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-232-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-233-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-233-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-234-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-234-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-235-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-235-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-236-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-236-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-237-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-237-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-238-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-238-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-239-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-239-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-240-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-240-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-241-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-241-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-242-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-242-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-243-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-243-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-244-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-244-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-245-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-245-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-246-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-246-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-247-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-247-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-248-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-248-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-249-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-249-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-250-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-250-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-251-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-251-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-252-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-252-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-253-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-253-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-254-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-254-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-255-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-255-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-256-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-256-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-257-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-257-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-258-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-258-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-259-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-259-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-260-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-260-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-261-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-261-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-262-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-262-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-263-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-263-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-264-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-264-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-265-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-265-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-266-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-266-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-267-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-267-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-268-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-268-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-269-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-269-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-270-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-270-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-271-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-271-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-272-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-272-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-273-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-273-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-274-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-274-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-275-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-275-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-276-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-276-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-277-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-277-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-278-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-278-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-279-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-279-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-280-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-280-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-281-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-281-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-282-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-282-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-283-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-283-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-284-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-284-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-285-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-285-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-286-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-286-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-287-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-287-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-288-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-288-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-289-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-289-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-290-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/original_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "path-290-portable",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/portable_path_check"
+      ],
+      "returncode": 1
+    },
+    {
+      "label": "rv32-geometry",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/geometry.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-vector",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-link",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-ld",
+        "-r",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/geometry.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector.o",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector-linked.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector-linked.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector-linked.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-vector-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-with-scene-headers-01/vector/vector.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "clang-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "riscv-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "result": "passed",
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source_hashes_verified": 45,
+  "portable_input_sha256": {
+    "UPSTREAM.json": "7d733017d3b0f7984c6d04a1efdc95905abae16f03c3a28007dc70ee834981db",
+    "geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "rle.c": "945e57f8ed5996859eccd3598a19a953cd2f37132dcd5acf86ecac93d09f4158",
+    "rle.h": "b770902f55175ecb1fa156d73f32f1c8b9a541009589dea037de634d1d0d346f",
+    "scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+    "scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+    "tests/g2_reference.c": "eff56aacf4f54bde470e063fa242dfb39747c9155457026c8e3bcb728ae8dea6",
+    "tests/g2_rle_reference.c": "aaf1780151b58b3e4b3b5cdce447096fef39e230021c22f8bbd9f8c71d3497f4",
+    "tests/g2_vector_reference.c": "3c1020027425c9f623c19a5167cf8c5f48d379fd167c7b59b66e7b8786efb00f",
+    "tests/prepare_scene_port.py": "377752bb0cc565b471e762a94b421d56fb0b48be4003f07fa9b02c7d1d9491cb",
+    "tests/run_scene_tests.py": "8a72d3b2afcb2315cc138f2e2388220270ea0b7288af7ed19a8d9ed876208f12",
+    "tests/run_tests.py": "867ff687182f127230d4180a5aa31b53362a1585ff5b19f9250c03e5a395653f",
+    "tests/run_vector_tests.py": "f4d8a533420f07fe30d37a47df7a35b501d674511c9e1a6b9d68534e9868b39c",
+    "tests/scene/layout.c": "d7a480e758d4fb6743b00088939542c82e9ec3dcc5f2081a410b570bf8149beb",
+    "tests/scene/public_api_test.c": "ff89098d0eb9af63e1799375b495dae155b352bc72f02a4e0a83cad6caea6304",
+    "tests/scene/shapes_host_test.c": "f6a1d4424c7bb595c84bc37557679a7fabdd6acbbc3e77ff1fc123bf61af984f",
+    "tests/scene/vector_host_test.c": "34c35b4c888ef5865c6733d1564c24e386c62958b9f8bf3fdf58ec1982f8aaa7",
+    "tests/test_geometry.c": "a25807fa8f067291a4710239708c5085d532ba94b060caa4ad1140c59f35ea0c",
+    "tests/test_rle.c": "2d01c4e1f679697b72960e5ba1db735970075ef8b91763b6b115105f2033b288",
+    "tests/test_vector.c": "cb92ad02925efc58d57a9cee46bc8bcd0920732d45b3c2d5233e752806b0ea48",
+    "tests/vector_path_check.c": "682144227926b6781fa6cb6d308eb8d14bda9b2a1c3a4b10ddac198448f7ac87",
+    "vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+    "vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba"
+  },
+  "tests": "PASS: 20026 original vector predicate evaluations; 10063 original compiler comparisons; 483 original raster comparisons; validation/alias/padding guards",
+  "original_path_harness_comparisons": 291,
+  "rv32_undefined_symbols": [],
+  "workspace_bytes": 10752,
+  "maximum_path_bytes": 8196,
+  "tools": {
+    "clang": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "riscv_gcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "artifact_sha256": {
+    "geometry.o": "41d17055aa4ccca9b1d691cabe7dd74b197df0ea7b0463645732795f8fa9c071",
+    "geometry.su": "c124e6d92534e44f09b872022c48a23c579be03f76e74ce2a25da07305a91c36",
+    "original_path_check": "caf53ecf2974cb43a24d8fa961aa97139714a2032ce6702a5b6017cabb24f09d",
+    "portable_path_check": "9b29c2dd46a2d4a90ca280e4c7bb44eeaac8dbbd55cb49cdc3acd7f4da4249ed",
+    "test_vector": "432c64547b4de5d5e3a7b13307e1c9e2bc6784e46bddfe5db9a2a6b8a3ad1766",
+    "vector-linked.o": "991ee2bafa2b3c8c3a61be5e1e23d39f0790ee1dde0252aeb49613c87d0f2acd",
+    "vector.o": "9abb76bdce3876305196d01950231dfd7d7b6ea4be78de456fe06722303167a7",
+    "vector.su": "9ce59426213646bff424aeb1c5a5f493d08616041ec01367ce729c5cabdad9a6"
+  }
+}

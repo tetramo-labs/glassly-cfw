@@ -1,0 +1,240 @@
+{
+  "format": "memomind-portable-notification-tests-v1",
+  "result": "passed",
+  "commands": [
+    {
+      "label": "build-original",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/notifications/ancs_relay_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-public",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/notifications/public_api_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-public",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/notifications.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/notifications.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/notifications.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/notifications/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_notifications_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-notification-tests-02/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "cc-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rvcc-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "pending": [
+    "MemoMind notification source/ANCS discovery and attribute adapter",
+    "MemoMind action adapter",
+    "Outbound transport envelope/channel",
+    "Native queue/timer/allocator adapter and scheduler testing"
+  ],
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/ancs_relay.c": "23ef712b8095c9ca79759f2d4ba1cbaad2e06112ef3eba0df7cf3188f0bdc4ac",
+    "upstream/patches/cfw_context.h": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231",
+    "upstream/patches/host/ancs_relay_host_test.c": "8a0a8fcb276ce308ad907150ed83f43ab151466b47cda2f26b6a5acf64e91b5c",
+    "notifications.c": "dbdd866498433eef934b9900d1ddd45debea1d2af989666ab795985270a11aef",
+    "notifications.h": "54f8a2e9fc99df67b14193fcf6427f6f4f39b07582c9e509da1d434a5e3974bc",
+    "tests/run_notification_tests.py": "2ec05f54c82b882ac47b3024eb176563499a0d77259eb8856cad47f6ee3b49de",
+    "tests/notifications/ancs_relay_host_test.c": "fceed3cd7cdd8d8979da69b4c279f3b574844f705289adb7d460ade72a441a88",
+    "tests/notifications/layout.c": "e41cb607aabd786df29b53d72f21540ee288bb18d5d219ecc5035dc64dbe6dd4",
+    "tests/notifications/public_api_test.c": "50b5955901fbf92ff9886f3ec3caf16d50715e7c680103f547caad921d5e8f6d"
+  },
+  "original_check_sites": 76,
+  "original_scenarios": [
+    "test_left_lens_and_disabled",
+    "test_enable_status_and_source",
+    "test_attr_chunking",
+    "test_app_attr",
+    "test_ring_full_and_pacing",
+    "test_lease_expiry_and_epoch",
+    "test_send_failure",
+    "test_action",
+    "test_cleanup"
+  ],
+  "original_result": "portable notification original CHECK evaluations: 266\nancs_relay host test: all checks passed",
+  "public_api_result": "notification public API: bounds, two contexts, 6000 wrap records, failures and lifecycle passed",
+  "rv32": {
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "text_bytes": 2472,
+    "rodata_bytes": 0,
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:43:12:ancs_lease_live\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:50:12:ancs_relay_armed\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:54:13:ancs_kick\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:63:12:ancs_push\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:251:13:cleanup_session\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:260:12:valid\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:261:13:enter\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:262:13:leave\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:282:12:input_ok\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:308:6:mm_notifications_tick\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:194:13:ancs_send_status\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:263:5:mm_notifications_init\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:290:6:mm_notifications_control\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:294:6:mm_notifications_source\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:298:6:mm_notifications_attribute\t80\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:304:6:mm_notifications_app_response\t128\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:312:6:mm_notifications_cleanup\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/notifications.c:316:5:mm_notifications_destroy\t16\tstatic"
+    ],
+    "max_individual_stack_bytes": 128,
+    "layout": {
+      "context_bytes": 272,
+      "platform_bytes": 52,
+      "ring_bytes": 4096
+    }
+  },
+  "tools": {
+    "cc": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "rvcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "artifact_sha256": {
+    "notifications.o": "94f8832d14cab88377cefc6c9c38d04dc0ae2b3f60b3d415b83ee0eaad678dd5",
+    "notifications.su": "1d00b23178289b820e23640843d32b88d2511ea55889db4b82a4d8f6bfce7193",
+    "original": "fbd9e04546a1502cd02e45fe423d9499cda9f223808d9c957486978acbab1dc1",
+    "public_api": "bd35a0d34da1747b582db5cc32fc808a27c7a185983f6ce212df4b9d3eedecd6",
+    "layout.o": "8f9082b93db1100452a71a2eda1c194b24715ff4253a01e8359a5bbe7a36f176",
+    "layout.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layout.bin": "ef7cad1ad06f21f655944a9506b75d425a479d5e96e84a64fd5abdaaabe75d0a"
+  }
+}

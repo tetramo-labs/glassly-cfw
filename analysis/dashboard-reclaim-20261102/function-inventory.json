@@ -1,0 +1,2448 @@
+{
+  "program": "segment-3.body.bin",
+  "input_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "entry_search_start": "ram:04270700",
+  "entry_search_end_inclusive": "ram:04274100",
+  "functions": [
+    {
+      "entry": "ram:04270738",
+      "defined_body_bytes": 32,
+      "body_ranges_inclusive": [
+        "ram:04270738..ram:04270757"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271f42",
+          "to": "ram:04270738",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271f34"
+        },
+        {
+          "from": "ram:04271a1e",
+          "to": "ram:04270738",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271a10"
+        },
+        {
+          "from": "ram:042725c0",
+          "to": "ram:04270738",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427259e"
+        },
+        {
+          "from": "ram:042729fe",
+          "to": "ram:04270738",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042729e2"
+        },
+        {
+          "from": "ram:04272abc",
+          "to": "ram:04270738",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0422b05a"
+      ]
+    },
+    {
+      "entry": "ram:04270758",
+      "defined_body_bytes": 36,
+      "body_ranges_inclusive": [
+        "ram:04270758..ram:0427077b"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042722ba",
+          "to": "ram:04270758",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:042732de",
+          "to": "ram:04270758",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:04273834",
+          "to": "ram:04270758",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0422b05a"
+      ]
+    },
+    {
+      "entry": "ram:0427077c",
+      "defined_body_bytes": 48,
+      "body_ranges_inclusive": [
+        "ram:0427077c..ram:042707ab"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273440",
+          "to": "ram:0427077c",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:0427232c",
+          "to": "ram:0427077c",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:04272f9c",
+          "to": "ram:0427077c",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:042707ac",
+      "defined_body_bytes": 22,
+      "body_ranges_inclusive": [
+        "ram:042707ac..ram:042707c1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042727c2",
+          "to": "ram:042707ac",
+          "type": "PARAM",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:042728c8",
+          "to": "ram:042707ac",
+          "type": "PARAM",
+          "containing_function": "ram:042726ba"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425add2"
+      ]
+    },
+    {
+      "entry": "ram:042707c2",
+      "defined_body_bytes": 16,
+      "body_ranges_inclusive": [
+        "ram:042707c2..ram:042707d1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271d7e",
+          "to": "ram:042707c2",
+          "type": "PARAM",
+          "containing_function": "ram:04271d6a"
+        },
+        {
+          "from": "ram:04271454",
+          "to": "ram:042707c2",
+          "type": "PARAM",
+          "containing_function": "ram:04271444"
+        },
+        {
+          "from": "ram:042714da",
+          "to": "ram:042707c2",
+          "type": "DATA",
+          "containing_function": "ram:04271444"
+        },
+        {
+          "from": "ram:042715fc",
+          "to": "ram:042707c2",
+          "type": "PARAM",
+          "containing_function": "ram:042715d2"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0426f414"
+      ]
+    },
+    {
+      "entry": "ram:042707d2",
+      "defined_body_bytes": 40,
+      "body_ranges_inclusive": [
+        "ram:042707d2..ram:042707f9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042715e0",
+          "to": "ram:042707d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042715d2"
+        },
+        {
+          "from": "ram:04271f8a",
+          "to": "ram:042707d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271f34"
+        },
+        {
+          "from": "ram:04271a1a",
+          "to": "ram:042707d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271a10"
+        },
+        {
+          "from": "ram:04271d94",
+          "to": "ram:042707d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271d6a"
+        },
+        {
+          "from": "ram:04272f22",
+          "to": "ram:042707d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042b285a"
+      ]
+    },
+    {
+      "entry": "ram:042707fa",
+      "defined_body_bytes": 40,
+      "body_ranges_inclusive": [
+        "ram:042707fa..ram:04270821"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427160e",
+          "to": "ram:042707fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042715d2"
+        },
+        {
+          "from": "ram:04271f3e",
+          "to": "ram:042707fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271f34"
+        },
+        {
+          "from": "ram:04271d9c",
+          "to": "ram:042707fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271d6a"
+        },
+        {
+          "from": "ram:042725bc",
+          "to": "ram:042707fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427259e"
+        },
+        {
+          "from": "ram:04272f26",
+          "to": "ram:042707fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042b285a"
+      ]
+    },
+    {
+      "entry": "ram:04270822",
+      "defined_body_bytes": 50,
+      "body_ranges_inclusive": [
+        "ram:04270822..ram:04270853"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427282c",
+          "to": "ram:04270822",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:0427279c",
+          "to": "ram:04270822",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0d6",
+        "ram:0425b0e8",
+        "ram:042604ea"
+      ]
+    },
+    {
+      "entry": "ram:04270854",
+      "defined_body_bytes": 70,
+      "body_ranges_inclusive": [
+        "ram:04270854..ram:04270899"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427235a",
+          "to": "ram:04270854",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:04271c60",
+          "to": "ram:04270854",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0434e6ee"
+      ]
+    },
+    {
+      "entry": "ram:0427089a",
+      "defined_body_bytes": 72,
+      "body_ranges_inclusive": [
+        "ram:0427089a..ram:042708e1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271c70",
+          "to": "ram:0427089a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        },
+        {
+          "from": "ram:04271c7a",
+          "to": "ram:0427089a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02000000",
+        "ram:02000182",
+        "ram:0434e6da"
+      ]
+    },
+    {
+      "entry": "ram:042708e2",
+      "defined_body_bytes": 492,
+      "body_ranges_inclusive": [
+        "ram:042708e2..ram:04270acd"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:04266452",
+        "ram:0426663e",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04270ace",
+      "defined_body_bytes": 436,
+      "body_ranges_inclusive": [
+        "ram:04270ace..ram:04270c81"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:04265800",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04270c82",
+      "defined_body_bytes": 336,
+      "body_ranges_inclusive": [
+        "ram:04270c82..ram:04270dd1"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:04265b8c",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04270dd2",
+      "defined_body_bytes": 454,
+      "body_ranges_inclusive": [
+        "ram:04270dd2..ram:04270f97"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:0426609e",
+        "ram:042662d8",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04270f98",
+      "defined_body_bytes": 524,
+      "body_ranges_inclusive": [
+        "ram:04270f98..ram:042711a3"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427219a",
+          "to": "ram:04270f98",
+          "type": "COMPUTED_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:04363138",
+          "to": "ram:04270f98",
+          "type": "DATA"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:04265e4e",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:042711a4",
+      "defined_body_bytes": 536,
+      "body_ranges_inclusive": [
+        "ram:042711a4..ram:042713bb"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427219a",
+          "to": "ram:042711a4",
+          "type": "COMPUTED_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:04363130",
+          "to": "ram:042711a4",
+          "type": "DATA"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:042653c2",
+        "ram:042a7a8e",
+        "ram:042a8240",
+        "ram:042a829c",
+        "ram:0434f16a"
+      ]
+    },
+    {
+      "entry": "ram:042713bc",
+      "defined_body_bytes": 24,
+      "body_ranges_inclusive": [
+        "ram:042713bc..ram:042713d3"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042726ec",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:04272022",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:0427211e",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:04272158",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:042721b8",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:042721e6",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:04272226",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:0427229c",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:042713f6",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042713d4"
+        },
+        {
+          "from": "ram:0427379e",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273904",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273936",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273af4",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273bd0",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273c38",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273d30",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273e08",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273e40",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04271ad2",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271a72"
+        },
+        {
+          "from": "ram:04271c28",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        },
+        {
+          "from": "ram:04271cb0",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        },
+        {
+          "from": "ram:042725f0",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427259e"
+        },
+        {
+          "from": "ram:04272d8a",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:0427300e",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042730ae",
+          "to": "ram:042713bc",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0200c202"
+      ]
+    },
+    {
+      "entry": "ram:042713d4",
+      "defined_body_bytes": 80,
+      "body_ranges_inclusive": [
+        "ram:042713d4..ram:04271423"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271438",
+          "to": "ram:042713d4",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271424"
+        },
+        {
+          "from": "ram:04272a96",
+          "to": "ram:042713d4",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02003d5e",
+        "ram:02003fc2",
+        "ram:042713bc",
+        "ram:042a7abe"
+      ]
+    },
+    {
+      "entry": "ram:04271424",
+      "defined_body_bytes": 32,
+      "body_ranges_inclusive": [
+        "ram:04271424..ram:04271443"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042722d2",
+          "to": "ram:04271424",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:042732fe",
+          "to": "ram:04271424",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:04273868",
+          "to": "ram:04271424",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273e6e",
+          "to": "ram:04271424",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425f99e",
+        "ram:042713d4"
+      ]
+    },
+    {
+      "entry": "ram:04271444",
+      "defined_body_bytes": 204,
+      "body_ranges_inclusive": [
+        "ram:04271444..ram:0427150f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042717d6",
+          "to": "ram:04271444",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271788"
+        },
+        {
+          "from": "ram:04273436",
+          "to": "ram:04271444",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0e8",
+        "ram:042604ea",
+        "ram:04265184",
+        "ram:0426522c",
+        "ram:0426746c",
+        "ram:0426f492",
+        "ram:042af326",
+        "ram:042af370",
+        "ram:042af3f2"
+      ]
+    },
+    {
+      "entry": "ram:04271510",
+      "defined_body_bytes": 82,
+      "body_ranges_inclusive": [
+        "ram:04271510..ram:04271561"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272fc2",
+          "to": "ram:04271510",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042734de",
+          "to": "ram:04271510",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:042dda58"
+      ]
+    },
+    {
+      "entry": "ram:04271562",
+      "defined_body_bytes": 112,
+      "body_ranges_inclusive": [
+        "ram:04271562..ram:042715d1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272b9a",
+          "to": "ram:04271562",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0422b05a",
+        "ram:042d02c6"
+      ]
+    },
+    {
+      "entry": "ram:042715d2",
+      "defined_body_bytes": 110,
+      "body_ranges_inclusive": [
+        "ram:042715d2..ram:0427163f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042729c2",
+          "to": "ram:042715d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272972"
+        },
+        {
+          "from": "ram:04273b12",
+          "to": "ram:042715d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:0427168e",
+          "to": "ram:042715d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271640"
+        },
+        {
+          "from": "ram:04272b18",
+          "to": "ram:042715d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272fa2",
+          "to": "ram:042715d2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0e8",
+        "ram:0426522c",
+        "ram:0426f4c8",
+        "ram:042707d2",
+        "ram:042707fa",
+        "ram:042af370"
+      ]
+    },
+    {
+      "entry": "ram:04271640",
+      "defined_body_bytes": 92,
+      "body_ranges_inclusive": [
+        "ram:04271640..ram:0427169b"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272782",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:042727b0",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:04271cfe",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271cda"
+        },
+        {
+          "from": "ram:04272aae",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042736ec",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        },
+        {
+          "from": "ram:04273724",
+          "to": "ram:04271640",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042652e8",
+        "ram:0426f56e",
+        "ram:042715d2",
+        "ram:042a65fc",
+        "ram:042a6c48"
+      ]
+    },
+    {
+      "entry": "ram:0427169c",
+      "defined_body_bytes": 60,
+      "body_ranges_inclusive": [
+        "ram:0427169c..ram:042716d7"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042714de",
+          "to": "ram:0427169c",
+          "type": "DATA",
+          "containing_function": "ram:04271444"
+        },
+        {
+          "from": "ram:042714ce",
+          "to": "ram:0427169c",
+          "type": "PARAM",
+          "containing_function": "ram:04271444"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0d6",
+        "ram:0426f4c8"
+      ]
+    },
+    {
+      "entry": "ram:042716d8",
+      "defined_body_bytes": 150,
+      "body_ranges_inclusive": [
+        "ram:042716d8..ram:0427176d"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042717ca",
+          "to": "ram:042716d8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271788"
+        },
+        {
+          "from": "ram:0427177a",
+          "to": "ram:042716d8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427176e"
+        },
+        {
+          "from": "ram:0427285a",
+          "to": "ram:042716d8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:04273166",
+          "to": "ram:042716d8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0422b05a",
+        "ram:04266c2a",
+        "ram:042d02c6"
+      ]
+    },
+    {
+      "entry": "ram:0427176e",
+      "defined_body_bytes": 26,
+      "body_ranges_inclusive": [
+        "ram:0427176e..ram:04271787"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427240e",
+          "to": "ram:0427176e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:04272074",
+          "to": "ram:0427176e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271fb2"
+        },
+        {
+          "from": "ram:0427325e",
+          "to": "ram:0427176e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04266d54",
+        "ram:042716d8",
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:04271788",
+      "defined_body_bytes": 82,
+      "body_ranges_inclusive": [
+        "ram:04271788..ram:042717d9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427299a",
+          "to": "ram:04271788",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272972"
+        },
+        {
+          "from": "ram:04272ba8",
+          "to": "ram:04271788",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425daf8",
+        "ram:0425e4d0",
+        "ram:04271444",
+        "ram:042716d8",
+        "ram:04282838",
+        "ram:0429c290",
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:042717da",
+      "defined_body_bytes": 124,
+      "body_ranges_inclusive": [
+        "ram:042717da..ram:04271855"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427241c",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:042738de",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273bac",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273254",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272654",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427259e"
+        },
+        {
+          "from": "ram:04272530",
+          "to": "ram:042717da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272474"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04265060",
+        "ram:0426f998",
+        "ram:0426f9b2",
+        "ram:0426fa20"
+      ]
+    },
+    {
+      "entry": "ram:04271856",
+      "defined_body_bytes": 286,
+      "body_ranges_inclusive": [
+        "ram:04271856..ram:04271973"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273a28",
+          "to": "ram:04271856",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273a7e",
+          "to": "ram:04271856",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02000000",
+        "ram:020000da",
+        "ram:02000182",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04271974",
+      "defined_body_bytes": 102,
+      "body_ranges_inclusive": [
+        "ram:04271974..ram:042719d9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273dd2",
+          "to": "ram:04271974",
+          "type": "PARAM",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04272e2e",
+          "to": "ram:04271974",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272c6c",
+          "to": "ram:04271974",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042a88f0",
+        "ram:042d02c6"
+      ]
+    },
+    {
+      "entry": "ram:042719da",
+      "defined_body_bytes": 54,
+      "body_ranges_inclusive": [
+        "ram:042719da..ram:04271a0f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272c60",
+          "to": "ram:042719da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272e26",
+          "to": "ram:042719da",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042edc4c"
+      ]
+    },
+    {
+      "entry": "ram:04271a10",
+      "defined_body_bytes": 98,
+      "body_ranges_inclusive": [
+        "ram:04271a10..ram:04271a71"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427310c",
+          "to": "ram:04271a10",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04273156",
+          "to": "ram:04271a10",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04270738",
+        "ram:042707d2",
+        "ram:042b27ca",
+        "ram:042b2b00",
+        "ram:042b2b0e"
+      ]
+    },
+    {
+      "entry": "ram:04271a72",
+      "defined_body_bytes": 144,
+      "body_ranges_inclusive": [
+        "ram:04271a72..ram:04271b01"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042737dc",
+          "to": "ram:04271a72",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273878",
+          "to": "ram:04271a72",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04271b1a",
+          "to": "ram:04271a72",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271b02"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02003d5e",
+        "ram:02003fc2",
+        "ram:042713bc"
+      ]
+    },
+    {
+      "entry": "ram:04271b02",
+      "defined_body_bytes": 472,
+      "body_ranges_inclusive": [
+        "ram:04271b02..ram:04271cd9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042738ee",
+          "to": "ram:04271b02",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:02003d5e",
+        "ram:02003d9c",
+        "ram:0426f73c",
+        "ram:04270854",
+        "ram:0427089a",
+        "ram:042713bc",
+        "ram:04271a72",
+        "ram:0429d034",
+        "ram:042a8240",
+        "ram:042a829c"
+      ]
+    },
+    {
+      "entry": "ram:04271cda",
+      "defined_body_bytes": 64,
+      "body_ranges_inclusive": [
+        "ram:04271cda..ram:04271d19"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042728cc",
+          "to": "ram:04271cda",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:042733d8",
+          "to": "ram:04271cda",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:042727c8",
+          "to": "ram:04271cda",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:04271d5c",
+          "to": "ram:04271cda",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271d1a"
+        },
+        {
+          "from": "ram:04272572",
+          "to": "ram:04271cda",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427253a"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0e8",
+        "ram:0425daf8",
+        "ram:04271640",
+        "ram:042a88fe"
+      ]
+    },
+    {
+      "entry": "ram:04271d1a",
+      "defined_body_bytes": 80,
+      "body_ranges_inclusive": [
+        "ram:04271d1a..ram:04271d69"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271db6",
+          "to": "ram:04271d1a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04271d6a"
+        },
+        {
+          "from": "ram:04272ca8",
+          "to": "ram:04271d1a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:0427307a",
+          "to": "ram:04271d1a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425db22",
+        "ram:04271cda",
+        "ram:0429cad6"
+      ]
+    },
+    {
+      "entry": "ram:04271d6a",
+      "defined_body_bytes": 458,
+      "body_ranges_inclusive": [
+        "ram:04271d6a..ram:04271f33"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:0422ab6c",
+        "ram:0425b0e8",
+        "ram:04267550",
+        "ram:0426fc4c",
+        "ram:042707d2",
+        "ram:042707fa",
+        "ram:04271d1a",
+        "ram:042a6ca2",
+        "ram:042a8930",
+        "ram:042af370"
+      ]
+    },
+    {
+      "entry": "ram:04271f34",
+      "defined_body_bytes": 126,
+      "body_ranges_inclusive": [
+        "ram:04271f34..ram:04271fb1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042723bc",
+          "to": "ram:04271f34",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:04273d12",
+          "to": "ram:04271f34",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04272f1c",
+          "to": "ram:04271f34",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042730ca",
+          "to": "ram:04271f34",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04270738",
+        "ram:042707d2",
+        "ram:042707fa",
+        "ram:042b27ca",
+        "ram:042b2b00"
+      ]
+    },
+    {
+      "entry": "ram:04271fb2",
+      "defined_body_bytes": 840,
+      "body_ranges_inclusive": [
+        "ram:04271fb2..ram:042722f9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042732fa",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:042733b0",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:04272458",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042722fa"
+        },
+        {
+          "from": "ram:04273862",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04273bba",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04272b46",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272f6a",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272c3a",
+          "to": "ram:04271fb2",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:02003d5e",
+        "ram:02003d9c",
+        "ram:02003fc2",
+        "ram:0422b05a",
+        "ram:04266b06",
+        "ram:04266bd8",
+        "ram:04270758",
+        "ram:04270f98",
+        "ram:042711a4",
+        "ram:042713bc",
+        "ram:04271424",
+        "ram:0427176e",
+        "ram:042a792e",
+        "ram:042a7aa2",
+        "ram:042a7b26",
+        "ram:042a7b3a",
+        "ram:042d02c6",
+        "ram:0434f16a"
+      ]
+    },
+    {
+      "entry": "ram:042722fa",
+      "defined_body_bytes": 378,
+      "body_ranges_inclusive": [
+        "ram:042722fa..ram:04272473"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273348",
+          "to": "ram:042722fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:04272fc6",
+          "to": "ram:042722fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04273570",
+          "to": "ram:042722fa",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        }
+      ],
+      "resolved_callees": [
+        "ram:020000da",
+        "ram:042669a8",
+        "ram:04266a8e",
+        "ram:0426f320",
+        "ram:0426f73c",
+        "ram:0426f78c",
+        "ram:0426fc40",
+        "ram:0427077c",
+        "ram:04270854",
+        "ram:0427176e",
+        "ram:042717da",
+        "ram:04271f34",
+        "ram:04271fb2",
+        "ram:0429cf18",
+        "ram:0429d074",
+        "ram:0429d22c",
+        "ram:042a2da2",
+        "ram:042a793c",
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:04272474",
+      "defined_body_bytes": 198,
+      "body_ranges_inclusive": [
+        "ram:04272474..ram:04272539"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272f3e",
+          "to": "ram:04272474",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272a28",
+          "to": "ram:04272474",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042729e2"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0200b3ac",
+        "ram:042717da"
+      ]
+    },
+    {
+      "entry": "ram:0427253a",
+      "defined_body_bytes": 100,
+      "body_ranges_inclusive": [
+        "ram:0427253a..ram:0427259d"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04285ca2",
+          "to": "ram:0427253a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04285c82"
+        },
+        {
+          "from": "ram:0428622a",
+          "to": "ram:0427253a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04286196"
+        },
+        {
+          "from": "ram:0428c22c",
+          "to": "ram:0427253a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0428c152"
+        },
+        {
+          "from": "ram:04273f18",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04273ee6"
+        },
+        {
+          "from": "ram:0428f7c0",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:0428f84c",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:0428fc74",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:0428fc1e",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:0428f890",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:0428fccc",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428f5c8"
+        },
+        {
+          "from": "ram:04273e7e",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:0425b808",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:0425ba16",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:0425bd26",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:0425bd94",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:0425bd64",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:0425b8e2",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:04276fd4",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04276fc0"
+        },
+        {
+          "from": "ram:04272c4c",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272cf8",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042731c2",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:0427306a",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042980ea",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04296b0c"
+        },
+        {
+          "from": "ram:04296e8c",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04296b0c"
+        },
+        {
+          "from": "ram:04298176",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04296b0c"
+        },
+        {
+          "from": "ram:042974a8",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04296b0c"
+        },
+        {
+          "from": "ram:04262a22",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:042624cc"
+        },
+        {
+          "from": "ram:042817b4",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:042815e2"
+        },
+        {
+          "from": "ram:042616bc",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04261672"
+        },
+        {
+          "from": "ram:0428097a",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:042809f6",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:04280c88",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:04280a4e",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:04280d14",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:04280a9e",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04280742"
+        },
+        {
+          "from": "ram:04287618",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:0428734c"
+        },
+        {
+          "from": "ram:04290f8e",
+          "to": "ram:0427253a",
+          "type": "PARAM",
+          "containing_function": "ram:04290e9c"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425db22",
+        "ram:04271cda",
+        "ram:04274b12"
+      ]
+    },
+    {
+      "entry": "ram:0427259e",
+      "defined_body_bytes": 198,
+      "body_ranges_inclusive": [
+        "ram:0427259e..ram:04272663"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271f9a",
+          "to": "ram:0427259e",
+          "type": "PARAM",
+          "containing_function": "ram:04271f34"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02003d5e",
+        "ram:02003fc2",
+        "ram:04270738",
+        "ram:042707fa",
+        "ram:042713bc",
+        "ram:042717da",
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:04272664",
+      "defined_body_bytes": 22,
+      "body_ranges_inclusive": [
+        "ram:04272664..ram:04272679"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0425ba08",
+          "to": "ram:04272664",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0425b38a"
+        },
+        {
+          "from": "ram:04298764",
+          "to": "ram:04272664",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042986a8"
+        },
+        {
+          "from": "ram:04267302",
+          "to": "ram:04272664",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042671a6"
+        }
+      ],
+      "resolved_callees": []
+    },
+    {
+      "entry": "ram:0427267a",
+      "defined_body_bytes": 30,
+      "body_ranges_inclusive": [
+        "ram:0427267a..ram:04272697"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04298558",
+          "to": "ram:0427267a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04298522"
+        }
+      ],
+      "resolved_callees": []
+    },
+    {
+      "entry": "ram:04272698",
+      "defined_body_bytes": 34,
+      "body_ranges_inclusive": [
+        "ram:04272698..ram:042726b9"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272830",
+          "to": "ram:04272698",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042726ba"
+        },
+        {
+          "from": "ram:0427295c",
+          "to": "ram:04272698",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272920"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042986a8"
+      ]
+    },
+    {
+      "entry": "ram:042726ba",
+      "defined_body_bytes": 596,
+      "body_ranges_inclusive": [
+        "ram:042726ba..ram:0427290d"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04272932",
+          "to": "ram:042726ba",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272920"
+        },
+        {
+          "from": "ram:0427291c",
+          "to": "ram:042726ba",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:0427290e"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02003d5e",
+        "ram:02003d9c",
+        "ram:0422b05a",
+        "ram:0425cacc",
+        "ram:0425f8dc",
+        "ram:042652e8",
+        "ram:0426f56e",
+        "ram:04270822",
+        "ram:042713bc",
+        "ram:04271640",
+        "ram:042716d8",
+        "ram:04271cda",
+        "ram:04272698",
+        "ram:0428ad74",
+        "ram:042a65fc",
+        "ram:042a6c2a",
+        "ram:042a6c48",
+        "ram:042a7b48",
+        "ram:042de0f0",
+        "ram:042edd56"
+      ]
+    },
+    {
+      "entry": "ram:0427290e",
+      "defined_body_bytes": 18,
+      "body_ranges_inclusive": [
+        "ram:0427290e..ram:0427291f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273370",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:042729d2",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272972"
+        },
+        {
+          "from": "ram:04272d60",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272dea",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272e22",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:042731a8",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:0427372e",
+          "to": "ram:0427290e",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042726ba"
+      ]
+    },
+    {
+      "entry": "ram:04272920",
+      "defined_body_bytes": 64,
+      "body_ranges_inclusive": [
+        "ram:04272920..ram:0427295f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273b0e",
+          "to": "ram:04272920",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:0427296e",
+          "to": "ram:04272920",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272960"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04272698",
+        "ram:042726ba",
+        "ram:042d02c6"
+      ]
+    },
+    {
+      "entry": "ram:04272960",
+      "defined_body_bytes": 18,
+      "body_ranges_inclusive": [
+        "ram:04272960..ram:04272971"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04273f04",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273ee6"
+        },
+        {
+          "from": "ram:042729aa",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272972"
+        },
+        {
+          "from": "ram:04273354",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273266"
+        },
+        {
+          "from": "ram:04273760",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273734"
+        },
+        {
+          "from": "ram:04272b88",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272bac",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272bc6",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272c64",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272ef4",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272f0a",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:0427356c",
+          "to": "ram:04272960",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04273454"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04272920"
+      ]
+    },
+    {
+      "entry": "ram:04272972",
+      "defined_body_bytes": 112,
+      "body_ranges_inclusive": [
+        "ram:04272972..ram:042729e1"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0427315e",
+          "to": "ram:04272972",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04272a36"
+        },
+        {
+          "from": "ram:04272a1c",
+          "to": "ram:04272972",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042729e2"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425b0e8",
+        "ram:042715d2",
+        "ram:04271788",
+        "ram:0427290e",
+        "ram:04272960",
+        "ram:042a87c8"
+      ]
+    },
+    {
+      "entry": "ram:042729e2",
+      "defined_body_bytes": 84,
+      "body_ranges_inclusive": [
+        "ram:042729e2..ram:04272a35"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04271a50",
+          "to": "ram:042729e2",
+          "type": "PARAM",
+          "containing_function": "ram:04271a10"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04270738",
+        "ram:04272474",
+        "ram:04272972",
+        "ram:042de0f0"
+      ]
+    },
+    {
+      "entry": "ram:04272a36",
+      "defined_body_bytes": 2096,
+      "body_ranges_inclusive": [
+        "ram:04272a36..ram:04273265"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:02003d5e",
+        "ram:02003d9c",
+        "ram:041fc9cc",
+        "ram:0422b05a",
+        "ram:0424417a",
+        "ram:0425b0e8",
+        "ram:0425e07c",
+        "ram:0425f1e6",
+        "ram:0425f8dc",
+        "ram:042604ea",
+        "ram:04266c5a",
+        "ram:04267144",
+        "ram:042671a6",
+        "ram:04267394",
+        "ram:042683f0",
+        "ram:0426f3c0",
+        "ram:0426f3ea",
+        "ram:0426f5bc",
+        "ram:04270738",
+        "ram:0427077c",
+        "ram:042707d2",
+        "ram:042707fa",
+        "ram:042713bc",
+        "ram:042713d4",
+        "ram:04271510",
+        "ram:04271562",
+        "ram:042715d2",
+        "ram:04271640",
+        "ram:042716d8",
+        "ram:0427176e",
+        "ram:04271788",
+        "ram:042717da",
+        "ram:042719da",
+        "ram:04271a10",
+        "ram:04271d1a",
+        "ram:04271f34",
+        "ram:04271fb2",
+        "ram:042722fa",
+        "ram:04272474",
+        "ram:0427290e",
+        "ram:04272960",
+        "ram:04272972",
+        "ram:04282764",
+        "ram:042827ca",
+        "ram:0428ad74",
+        "ram:042987f0",
+        "ram:0429c290",
+        "ram:0429ca80",
+        "ram:0429cb06",
+        "ram:042a2da2",
+        "ram:042a79e2",
+        "ram:042a87c8",
+        "ram:042a88f0",
+        "ram:042a8930",
+        "ram:042de0f0",
+        "ram:042e87b8",
+        "ram:042edd56",
+        "ram:042ede58"
+      ]
+    },
+    {
+      "entry": "ram:04273266",
+      "defined_body_bytes": 494,
+      "body_ranges_inclusive": [
+        "ram:04273266..ram:04273453"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:0425db22",
+        "ram:04265338",
+        "ram:042683f0",
+        "ram:0426f5bc",
+        "ram:0426f60c",
+        "ram:04270758",
+        "ram:0427077c",
+        "ram:04271424",
+        "ram:04271444",
+        "ram:04271cda",
+        "ram:04271fb2",
+        "ram:042722fa",
+        "ram:0427290e",
+        "ram:04272960",
+        "ram:042987f0",
+        "ram:0429cb2e",
+        "ram:042a7aa2",
+        "ram:042cd9cc",
+        "ram:042d02c6",
+        "ram:042e87aa",
+        "ram:0434f16a",
+        "ram:0434f3a8"
+      ]
+    },
+    {
+      "entry": "ram:04273454",
+      "defined_body_bytes": 736,
+      "body_ranges_inclusive": [
+        "ram:04273454..ram:04273733"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0439a394",
+          "to": "ram:04273454",
+          "type": "DATA"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0422aa3c",
+        "ram:0422b05a",
+        "ram:0425daf8",
+        "ram:0425f8dc",
+        "ram:04264f26",
+        "ram:04268336",
+        "ram:0426f2c2",
+        "ram:0426f3c0",
+        "ram:0426f3ea",
+        "ram:04271510",
+        "ram:04271640",
+        "ram:042722fa",
+        "ram:0427290e",
+        "ram:04272960",
+        "ram:042986a8",
+        "ram:042a5f24",
+        "ram:042a88d0",
+        "ram:042c8f6a",
+        "ram:042c8f7e",
+        "ram:042c8f92",
+        "ram:042c8fa6",
+        "ram:042c8fe2",
+        "ram:042c90a2",
+        "ram:042c96ec",
+        "ram:042cd8ba",
+        "ram:042cd8e4",
+        "ram:042cde58",
+        "ram:042e87aa"
+      ]
+    },
+    {
+      "entry": "ram:04273734",
+      "defined_body_bytes": 1884,
+      "body_ranges_inclusive": [
+        "ram:04273734..ram:04273e8f"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04262dfe",
+          "to": "ram:04273734",
+          "type": "COMPUTED_CALL",
+          "containing_function": "ram:04262c8e"
+        },
+        {
+          "from": "ram:04262ed8",
+          "to": "ram:04273734",
+          "type": "COMPUTED_CALL",
+          "containing_function": "ram:04262c8e"
+        },
+        {
+          "from": "ram:04262ec8",
+          "to": "ram:04273734",
+          "type": "PARAM",
+          "containing_function": "ram:04262c8e"
+        },
+        {
+          "from": "ram:0200fca8",
+          "to": "ram:04273734",
+          "type": "DATA"
+        }
+      ],
+      "resolved_callees": [
+        "ram:02000000",
+        "ram:020000da",
+        "ram:02000182",
+        "ram:02003d5e",
+        "ram:02003d9c",
+        "ram:02003fc2",
+        "ram:0425db22",
+        "ram:0425e07c",
+        "ram:042604ea",
+        "ram:04266b06",
+        "ram:0426f73c",
+        "ram:0426fb4a",
+        "ram:042706cc",
+        "ram:04270758",
+        "ram:042713bc",
+        "ram:04271424",
+        "ram:042715d2",
+        "ram:042717da",
+        "ram:04271856",
+        "ram:04271a72",
+        "ram:04271b02",
+        "ram:04271f34",
+        "ram:04271fb2",
+        "ram:04272920",
+        "ram:04272960",
+        "ram:042827ca",
+        "ram:0429c290",
+        "ram:0429c5d4",
+        "ram:0429c644",
+        "ram:0429c932",
+        "ram:0429c9a0",
+        "ram:0429c9c8",
+        "ram:0429ce76",
+        "ram:0429d1ec",
+        "ram:042a7640",
+        "ram:042a793c",
+        "ram:042a7a70",
+        "ram:042a7aa2",
+        "ram:042a8240",
+        "ram:042a829c",
+        "ram:042de0f0",
+        "ram:0434f16a"
+      ]
+    },
+    {
+      "entry": "ram:04273e90",
+      "defined_body_bytes": 86,
+      "body_ranges_inclusive": [
+        "ram:04273e90..ram:04273ee5"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042ac1aa",
+          "to": "ram:04273e90",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042ac0e0"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425daf8",
+        "ram:0425db22"
+      ]
+    },
+    {
+      "entry": "ram:04273ee6",
+      "defined_body_bytes": 84,
+      "body_ranges_inclusive": [
+        "ram:04273ee6..ram:04273f39"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:0426272e",
+          "to": "ram:04273ee6",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042624cc"
+        },
+        {
+          "from": "ram:04262828",
+          "to": "ram:04273ee6",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:042624cc"
+        }
+      ],
+      "resolved_callees": [
+        "ram:0425e07c",
+        "ram:04272960",
+        "ram:04282764"
+      ]
+    },
+    {
+      "entry": "ram:04273f3a",
+      "defined_body_bytes": 32,
+      "body_ranges_inclusive": [
+        "ram:04273f3a..ram:04273f59"
+      ],
+      "known_incoming_references": [],
+      "resolved_callees": [
+        "ram:0425f99e",
+        "ram:042a88a8"
+      ]
+    },
+    {
+      "entry": "ram:04273f5a",
+      "defined_body_bytes": 158,
+      "body_ranges_inclusive": [
+        "ram:04273f5a..ram:04273ff7"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:042740b0",
+          "to": "ram:04273f5a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:042740c2",
+          "to": "ram:04273f5a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:042740d4",
+          "to": "ram:04273f5a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:042740e6",
+          "to": "ram:04273f5a",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042a606a",
+        "ram:042a6096",
+        "ram:042a60a6",
+        "ram:042a60b4",
+        "ram:042c9254"
+      ]
+    },
+    {
+      "entry": "ram:04273ff8",
+      "defined_body_bytes": 76,
+      "body_ranges_inclusive": [
+        "ram:04273ff8..ram:04274043"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04274076",
+          "to": "ram:04273ff8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:04274092",
+          "to": "ram:04273ff8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:042740f6",
+          "to": "ram:04273ff8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        },
+        {
+          "from": "ram:04274130",
+          "to": "ram:04273ff8",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274044"
+        }
+      ],
+      "resolved_callees": [
+        "ram:042a6008",
+        "ram:042a6522",
+        "ram:042c8fe2",
+        "ram:042c900c"
+      ]
+    },
+    {
+      "entry": "ram:04274044",
+      "defined_body_bytes": 272,
+      "body_ranges_inclusive": [
+        "ram:04274044..ram:04274153"
+      ],
+      "known_incoming_references": [
+        {
+          "from": "ram:04274186",
+          "to": "ram:04274044",
+          "type": "UNCONDITIONAL_CALL",
+          "containing_function": "ram:04274174"
+        },
+        {
+          "from": "ram:04274166",
+          "to": "ram:04274044",
+          "type": "UNCONDITIONAL_CALL"
+        }
+      ],
+      "resolved_callees": [
+        "ram:04273f5a",
+        "ram:04273ff8",
+        "ram:042a5f24",
+        "ram:042a65bc",
+        "ram:042a6bcc",
+        "ram:042c8fe2",
+        "ram:042c9062",
+        "ram:042c90a2"
+      ]
+    }
+  ],
+  "limitations": [
+    "Defined function and resolved-reference coverage only; computed/unknown indirect references remain unresolved.",
+    "A function range is not a reclaimable region until live entry paths are replaced or removed.",
+    "No firmware or database mutation; no device execution."
+  ]
+}

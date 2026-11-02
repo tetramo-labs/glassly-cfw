@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "boot_verified": true,
+  "release": "reset-undo-trim-001",
+  "app_header_sha256": "76d7bfc287aad7294d4d855a86d4d2cfbe8043a3b555eca41a891e17b1f7a4e6",
+  "capture": "captures/swift-mac-reset-undo-after-20261102-03",
+  "ram_measurement_completed": false,
+  "reason": "Native display ownership gate returned stock-ui-active; failure cleanup verified",
+  "flash_mutations": 0,
+  "ota_commands": 0,
+  "source_sha256": "d970ee9f7658a9857c4f4216a1d02242a4eaf6780bd1f82c516a2179102b8fc6",
+  "capture_sha256": {
+    "header-reply.json": "ddb32022161b333ba5b672ae6379ed0ffcc912e432b7218c2f01034c1f38c05b",
+    "device.json": "5b8af0168c186679bd5ba7644c9d783058e8ce1ba801a1359c36d7449c8068bf",
+    "trace.jsonl": "d63612af6f6b5814f9cf771dbe8a5dde149cc7d9a0468a1bd0b53cd1b94a6634"
+  }
+}

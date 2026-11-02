@@ -1,0 +1,80 @@
+{
+  "format": "rect-copy-swift-smoke-readonly-review-v1",
+  "root_files_edited": false,
+  "device_operations": false,
+  "snapshot_sha256": {
+    "analysis/rect-copy-native-20261102/smoke.swift.in": "da7e16bd25e3b949a654f53dcd32f707020d73af49fea68ed43f5c98af52d1b1",
+    "analysis/rect-copy-native-20261102/verify-smoke.py": "7783f74027252195e670496fa0bf4138c6f4399dc4f69b6dc2c9f59935a63878",
+    "analysis/rect-copy-native-20261102/admit-candidate.py": "c96ca5686d7f35fa4593e6cb206a32b0cfb544332f18492fdbbc02da86cf8f72",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "5bb12d3c66d8fdba9ded7c21e9abbd92c9991964151388bfaf69d1d6536651d3",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "5e9eb5993b93cbdc4cac5a6a7e0cae6f6d3623d54807608df8d576dca39133fd"
+  },
+  "correct": [
+    "Mode9 headers, source/destination sizes, odd overlap and explicit invalid mutations are correct.",
+    "Immutable Swift source snapshot and independent Python unpack/snapshot/repack produce correct memmove expectations.",
+    "Glyph and checkerboard expected geometry now independently checked by verifier.",
+    "Generated catalog and two cloned eligibility tests contain exact candidate image/header/stream pins and runtime length; runtime artifact equals compiled blob.",
+    "Current admission assembles both catalog/test texts before final writes; optimized execution is explicitly refused."
+  ],
+  "findings": [
+    {
+      "issue": "Unmatched/duplicate reserved business replies silently ignored by independent verifier",
+      "status": "fixed by root; inspected explicit rejection of unmatched/duplicate service15 commands7b/7e/7d"
+    },
+    {
+      "issue": "Verification did not require90s interval or any lease renewals",
+      "status": "fixed by root; verifier requires exactlyone pattern-visible,>=90s beforeclear,>=1renewal, monotonic hold times and reports maximumgap; continuous_pixel_retention_proven is explicitlyfalse"
+    },
+    {
+      "issue": "assert-based trust admission could be bypassed under optimized Python",
+      "status": "fixed by root; independently tested refusal before file access/mutation"
+    },
+    {
+      "issue": "Catalog written before later test marker checks could leave partial edits",
+      "status": "root now assembles both texts before final writes; two writes still not an atomic transaction"
+    }
+  ],
+  "limits": [
+    "Generic GMSession itself still accepts last coalesced matched business reply; independent post-run verification is the selected mitigation in this slice.",
+    "Empty geometry returns ok even without an owner.1000ms native lease can expire during a long command/transport stall; ACKs do not prove continuous visible pixels.",
+    "Error path closes without mode11. Failure is not evidence of cleared state; native timed lease is fallback, subject to its worker running.",
+    "No pixel readback or physical visibility inferred. User confirmation remains separate."
+  ],
+  "optimized_guards": [
+    {
+      "script": "analysis/rect-copy-native-20261102/verify-smoke.py",
+      "optimized_execution_refused": true,
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/analysis/rect-copy-native-20261102/verify-smoke.py\", line 2, in <module>\n    raise RuntimeError('Verification requires Python assertions; optimized execution is refused')\nRuntimeError: Verification requires Python assertions; optimized execution is refused\n"
+    },
+    {
+      "script": "analysis/rect-copy-native-20261102/admit-candidate.py",
+      "optimized_execution_refused": true,
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/analysis/rect-copy-native-20261102/admit-candidate.py\", line 3, in <module>\n    raise RuntimeError('Verification requires Python assertions; optimized execution is refused')\nRuntimeError: Verification requires Python assertions; optimized execution is refused\n"
+    }
+  ],
+  "candidate": {
+    "image_sha256": "680163e3789831cd3eda89a60b208cb0e85eaa61c46067dbd6d59ff26cee1885",
+    "image_bytes": 2228668,
+    "runtime_sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+    "runtime_bytes": 62240,
+    "header_sha256": "873f44726e712b0b3a2f234397db184b12073a55e23c3bc01a33aca488f8b55f",
+    "app_header_sha256": "1f476db3d3a95b95bdaad72ad91dde9978c4ac411b39c32b28c438bd549597a0",
+    "metadata_packed_bytes": 171,
+    "metadata_sha256": "9eb32419f61f803cea53df4fa4e2f24c830c83d77d6a16dd79a741f0a6ad013f",
+    "app_packed_bytes": 957566,
+    "app_raw_bytes": 1835456,
+    "app_sha256": "4d8a3c422831394a7dd0729d72f2233b260f34b0984d2448cab1f6828c47932d"
+  },
+  "root_verifier_selftest": {
+    "hardware_tested": false,
+    "synthetic_cases": 4,
+    "passed": true,
+    "checks": [
+      "valid fragmented request and correlated ACKs",
+      "duplicate reserved reply rejected",
+      "missing native completion rejected",
+      "incorrect expected pixels rejected"
+    ]
+  },
+  "final_assessment": "No remaining blocking defect found in inspected templates/admission after root corrections. Runtime/hardware execution and user visibility remain separate evidence."
+}

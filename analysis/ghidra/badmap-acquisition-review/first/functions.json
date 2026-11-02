@@ -1,0 +1,42 @@
+[
+  {
+    "requested": "04235032",
+    "address": "ram:04235032",
+    "incoming_references": [
+      "ram:0423e828 UNCONDITIONAL_CALL",
+      "ram:042a9d48 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a9d0a",
+    "address": "ram:042a9d0a",
+    "incoming_references": [
+      "ram:0423e95e UNCONDITIONAL_CALL",
+      "ram:04383004 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a9c84",
+    "address": "ram:042a9c84",
+    "incoming_references": [
+      "ram:042a9dae UNCONDITIONAL_CALL",
+      "ram:042a9e24 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a9cca",
+    "address": "ram:042a9cca",
+    "incoming_references": [
+      "ram:042a9dba UNCONDITIONAL_CALL",
+      "ram:042a9df0 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

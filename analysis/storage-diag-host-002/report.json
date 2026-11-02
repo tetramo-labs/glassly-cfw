@@ -1,0 +1,110 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "runtime/graphics/storage_diag.c": "dbe664efc1c3538a6de40f8eb6433db9ea881fdb5b3fa1d9bbe419703443c91d",
+    "runtime/graphics/tests/test_storage_diag.c": "653e89b6c2158ce48b4d8a063c17cadfa119fa55389cb3e4f5894fb4e97d7970",
+    "runtime/graphics/storage_diag.h": "35948161d536f2598d580467f4553505ad1a1ca5a5c223985a41dc54e6ae629d",
+    "runtime/graphics/tests/run_storage_diag_tests.py": "66c89df2d1e2512f23a969f94b0062fa8717b4abba7f250ffa746b30f21e8d3b"
+  },
+  "replies": [
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "topology",
+      "consistent": 1,
+      "xip0Initialized": 0,
+      "xip1Initialized": 0,
+      "xip0Driver": 0,
+      "xip1Driver": 0,
+      "xip0QuadConfigured": 0,
+      "xip1QuadConfigured": 0,
+      "xip1ProbeValid": 0,
+      "xip1LegacyId": 0,
+      "sharedC8ProbeValid": 0,
+      "generalSpiBackendKnown": 0,
+      "generalSpiReady": 0,
+      "generalSpiMutexPresent": 0,
+      "generalSpiSemaphorePresent": 0,
+      "generalSpi0Configured": 0,
+      "generalSpiPinsMatch": 0,
+      "cus8ContextPresent": 0,
+      "cus8ValidatedPackageState": 0
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "topology",
+      "consistent": 1,
+      "xip0Initialized": 1,
+      "xip1Initialized": 1,
+      "xip0Driver": 2,
+      "xip1Driver": 1,
+      "xip0QuadConfigured": 1,
+      "xip1QuadConfigured": 1,
+      "xip1ProbeValid": 1,
+      "xip1LegacyId": 34071,
+      "sharedC8ProbeValid": 1,
+      "generalSpiBackendKnown": 1,
+      "generalSpiReady": 1,
+      "generalSpiMutexPresent": 1,
+      "generalSpiSemaphorePresent": 1,
+      "generalSpi0Configured": 3,
+      "generalSpiPinsMatch": 1,
+      "cus8ContextPresent": 1,
+      "cus8ValidatedPackageState": 255
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "badmap",
+      "kvStatus": 0,
+      "actualLength": 116,
+      "recordState": "present",
+      "mapHex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000080",
+      "recordHex": "31424d4701000000000050010000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000008056dca02c"
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "badmap",
+      "kvStatus": 7,
+      "actualLength": 0,
+      "recordState": "absent",
+      "mapHex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "recordHex": ""
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "badmap",
+      "kvStatus": 13,
+      "actualLength": 0,
+      "recordState": "unavailable",
+      "mapHex": "",
+      "recordHex": ""
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "badmap",
+      "kvStatus": 0,
+      "actualLength": 116,
+      "recordState": "invalid",
+      "mapHex": "",
+      "recordHex": ""
+    }
+  ],
+  "summary": [
+    "PASS topology:65536 UID exclusions,22 changed-snapshot fields,768 capacity boundaries,normalized pointers and invalid probes",
+    "PASS badmap:116 record corruptions,768 sector bits,119 wrong lengths,absence/errors,768 capacity boundaries; one read per query"
+  ],
+  "native_RAM_and_KV_mocked": true,
+  "device_actions": false,
+  "source_drift": []
+}

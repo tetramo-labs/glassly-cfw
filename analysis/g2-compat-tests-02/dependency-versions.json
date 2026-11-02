@@ -1,0 +1,522 @@
+{
+  "is-docker/package.json": {
+    "name": "is-docker",
+    "version": "2.2.1",
+    "package_json_sha256": "3c3ab0ac757c5ea751b47f0ee860b311860ae1e6921fecb3c62d07640a52441a"
+  },
+  "node-gyp-build/package.json": {
+    "name": "node-gyp-build",
+    "version": "4.8.4",
+    "package_json_sha256": "9e8def3fbf123e28aa1ca4b6aa557fba4e66eecf6e86d170b61ec1c7ed51305d"
+  },
+  "define-data-property/package.json": {
+    "name": "define-data-property",
+    "version": "1.1.4",
+    "package_json_sha256": "bde7f1465b344a24da2b10d2ee99f87edf8e0ecd177c28370b60ad9595de730e"
+  },
+  "shebang-regex/package.json": {
+    "name": "shebang-regex",
+    "version": "3.0.0",
+    "package_json_sha256": "b8018c6b8cc9900dfd1ac18a54956ba34c453fdc2da5e5fe555ee8f04133a1c5"
+  },
+  "is-wsl/package.json": {
+    "name": "is-wsl",
+    "version": "2.2.0",
+    "package_json_sha256": "b23cae273d6cf809eaaca3c3197ff7ebddf3374e0f5db1bce75c93cdf1ce989f"
+  },
+  "has-property-descriptors/package.json": {
+    "name": "has-property-descriptors",
+    "version": "1.0.2",
+    "package_json_sha256": "59a91e2cf32e4303d248708999a9ec3afd8e3649a87ba7abcf2177dc1984e3d5"
+  },
+  "es-errors/package.json": {
+    "name": "es-errors",
+    "version": "1.3.0",
+    "package_json_sha256": "1a0a0bcccc76b915cb64073317312840cf6363e9144b96f406d0059774dd5278"
+  },
+  "node-addon-api/package.json": {
+    "name": "node-addon-api",
+    "version": "8.9.0",
+    "package_json_sha256": "a0add1135f0e56bcd09f9c113e0eaa0a47e11596a468712552620ac5c5a5f5c8"
+  },
+  "ms/package.json": {
+    "name": "ms",
+    "version": "2.1.3",
+    "package_json_sha256": "1a6b4d9739790c0b94ab96c8cc0507e281c164c311ff4fbf5e57fb8d26290b40"
+  },
+  "call-bind/package.json": {
+    "name": "call-bind",
+    "version": "1.0.9",
+    "package_json_sha256": "c11be8b7f9bbe367c27d42fba734b8226c0b15e1e5e1c2d842822d9791f053c7"
+  },
+  "math-intrinsics/package.json": {
+    "name": "math-intrinsics",
+    "version": "1.1.0",
+    "package_json_sha256": "39d74aa5a354153130706286dd60a2d8409ce0c8f66546eff2edcac0afff17e1"
+  },
+  "ci-info/package.json": {
+    "name": "ci-info",
+    "version": "3.9.0",
+    "package_json_sha256": "9628944add57307e56929181423e29814b52dabb36fd5a693784f8aa0a00add9"
+  },
+  "call-bind-apply-helpers/package.json": {
+    "name": "call-bind-apply-helpers",
+    "version": "1.0.2",
+    "package_json_sha256": "59639b628c6846f674857c6a613fd47e2e4d2a24036cdf0f7a62ac634f4c8a5f"
+  },
+  "omggif/package.json": {
+    "name": "omggif",
+    "version": "1.0.10",
+    "package_json_sha256": "983217c91f356a00dd70c89760776ae53414649472596cd3cac101d0908ef2de"
+  },
+  "picomatch/package.json": {
+    "name": "picomatch",
+    "version": "2.3.2",
+    "package_json_sha256": "63264d817e856a4bff57d4304f2b38d2964a4f6df520eb169e7bcdb619f13e9a"
+  },
+  "function-bind/package.json": {
+    "name": "function-bind",
+    "version": "1.1.2",
+    "package_json_sha256": "edb1c4faf4148e6e3d74ed8dbac1a1dc359a647ff4207aad4851396dc7a3559a"
+  },
+  "typescript/package.json": {
+    "name": "typescript",
+    "version": "6.0.3",
+    "package_json_sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+  },
+  "jsonfile/package.json": {
+    "name": "jsonfile",
+    "version": "6.2.1",
+    "package_json_sha256": "df710d3401289ba32728b5459ac334bf99b18259900ca22b2401f48d92892613"
+  },
+  "color-name/package.json": {
+    "name": "color-name",
+    "version": "1.1.4",
+    "package_json_sha256": "4a557ea373907e4643badb89ff21b3f4b969d20631086d78eab2e03d05c2efa4"
+  },
+  "es-define-property/package.json": {
+    "name": "es-define-property",
+    "version": "1.0.1",
+    "package_json_sha256": "3a2cb30dae30a96705dcd9aa2d5fb190cf8200f27badccfa5a81a4374e5708b4"
+  },
+  "async/package.json": {
+    "name": "async",
+    "version": "3.2.6",
+    "package_json_sha256": "e010fe63aa861e8a60fb8b9d3e7fb5205e3b8d6001ebe3ff95985996abe581a9"
+  },
+  "get-intrinsic/package.json": {
+    "name": "get-intrinsic",
+    "version": "1.3.0",
+    "package_json_sha256": "45b14763baacc59b0fd7b39e3ad983d5d2aaf7f5ed682f2fce9edb469826c999"
+  },
+  "jsonify/package.json": {
+    "name": "jsonify",
+    "version": "0.0.1",
+    "package_json_sha256": "041cdeeed354af419dafdd6dbece369df4118f6f2cdd4db8d46a3e20a6b912be"
+  },
+  "json-stable-stringify/package.json": {
+    "name": "json-stable-stringify",
+    "version": "1.3.0",
+    "package_json_sha256": "44acadcddab94e5e5937a655a58d2d952c9aca658aeadf489e3c9000d136e26f"
+  },
+  "bun-types/package.json": {
+    "name": "bun-types",
+    "version": "1.3.14",
+    "package_json_sha256": "01e8dc24f53869ebf700a038510de8061a8325d10a85406711184e4b9fc76f43"
+  },
+  "call-bound/package.json": {
+    "name": "call-bound",
+    "version": "1.0.4",
+    "package_json_sha256": "dcc8abb3c4ad3774234272149020cb36d7b1a3d377a419454d1e7adb368dd9c3"
+  },
+  "dunder-proto/package.json": {
+    "name": "dunder-proto",
+    "version": "1.0.1",
+    "package_json_sha256": "24df71008e4225c858f389dd2728b76cf66b752256d42a38ed7930aacae7fe2b"
+  },
+  "hasown/package.json": {
+    "name": "hasown",
+    "version": "2.0.4",
+    "package_json_sha256": "40b750c55a8bacf2c5ac316f5299dd44d48acc101c189a00cd59d39376b5eb89"
+  },
+  "undici-types/package.json": {
+    "name": "undici-types",
+    "version": "8.3.0",
+    "package_json_sha256": "fe5de6d50b3e426af5bbe08b9d83b6b3c5106d639ec28e5b90c79bfb1d7cddab"
+  },
+  "minimist/package.json": {
+    "name": "minimist",
+    "version": "1.2.8",
+    "package_json_sha256": "252881f6a068a3e70386706d88a694b5e8e9e053b6d9f309fd9a329e651bbf81"
+  },
+  "universalify/package.json": {
+    "name": "universalify",
+    "version": "2.0.1",
+    "package_json_sha256": "10e53f10939bb8a4a73af6e06829b670bbf9da66a36edcc644441852806b87ee"
+  },
+  "chalk/package.json": {
+    "name": "chalk",
+    "version": "4.1.2",
+    "package_json_sha256": "9cd907d34a45cb73b5c8a459d5602a36ccd456794665c529a3a5b0f02e196f26"
+  },
+  "has-flag/package.json": {
+    "name": "has-flag",
+    "version": "4.0.0",
+    "package_json_sha256": "3fef4b52efbeabeadfffd5994e90b1025eb24263286e34170675956637d368b1"
+  },
+  "supports-color/package.json": {
+    "name": "supports-color",
+    "version": "7.2.0",
+    "package_json_sha256": "d410a772f9f64b224482ec13815a4bbf1837c533e1be04b3687755c48b2efa1f"
+  },
+  "fs-extra/package.json": {
+    "name": "fs-extra",
+    "version": "10.1.0",
+    "package_json_sha256": "bf7cf7b87f05cd0718b28fdda520a34b1a1c47f8b5939c2f520accc38787f864"
+  },
+  "color-convert/package.json": {
+    "name": "color-convert",
+    "version": "2.0.1",
+    "package_json_sha256": "9471d21744ca3137410448da6b3bd7b30ee91d42edce3b82ebcbf84faef74fb4"
+  },
+  "path-key/package.json": {
+    "name": "path-key",
+    "version": "3.1.1",
+    "package_json_sha256": "25594dab72681c910d9cc919263a4daf27d77a75e0d2c26a4d958d6d6b798f86"
+  },
+  "fill-range/package.json": {
+    "name": "fill-range",
+    "version": "7.1.1",
+    "package_json_sha256": "87f5c78f9b47d21f9ca62b60cff1d250a3b468eab320dd13c3f3ab2464a02735"
+  },
+  "usb/package.json": {
+    "name": "usb",
+    "version": "2.18.0",
+    "package_json_sha256": "98520de6a398b59350e5c4da3dd84ae309c51f6be670a3f8b2a50c820bb50ed3"
+  },
+  "patch-package/package.json": {
+    "name": "patch-package",
+    "version": "8.0.1",
+    "package_json_sha256": "b1c88c4fb72372373d98dde1fd0220a9f3dbf930321aeaf3d0dc9e4b4d7cadb9"
+  },
+  "has-symbols/package.json": {
+    "name": "has-symbols",
+    "version": "1.1.0",
+    "package_json_sha256": "5190268c0e3308d7446d1f7c036238f329f786938453e6017cb90980b3612e7a"
+  },
+  "slash/package.json": {
+    "name": "slash",
+    "version": "2.0.0",
+    "package_json_sha256": "c72a4140c8c14a740fd002a48daf883e761aa355dc6a9d2b36e5955d0231efaa"
+  },
+  "semver/package.json": {
+    "name": "semver",
+    "version": "7.8.5",
+    "package_json_sha256": "7c94cb7f2a53c27b20d76386ec144c062894dbcc909cfabd0f728c37874b1776"
+  },
+  "ansi-styles/package.json": {
+    "name": "ansi-styles",
+    "version": "4.3.0",
+    "package_json_sha256": "d405f010681d53f77691015e98461f8484b2afe6a9edfdd2ddb27b1e8a8e883d"
+  },
+  "is-number/package.json": {
+    "name": "is-number",
+    "version": "7.0.0",
+    "package_json_sha256": "51c133f4e41df982aef69027249ff9d7262645029f437d079adc7c83328fb620"
+  },
+  "set-function-length/package.json": {
+    "name": "set-function-length",
+    "version": "1.2.2",
+    "package_json_sha256": "2c81bab7f7a60d625164bd840d863548e3f9d4d1aa976b9d2966e5e1e36132a7"
+  },
+  "g2-kit/package.json": {
+    "name": "g2-kit",
+    "version": "0.1.0",
+    "package_json_sha256": "8b70b51b3bda723c5251e74b8a1d1b0868ca5cda48036178ef4d291bd571ea09"
+  },
+  "get-proto/package.json": {
+    "name": "get-proto",
+    "version": "1.0.1",
+    "package_json_sha256": "73839e012ac7134a632c9d9fc6bdb700ac9ab5553cce39eb789ba2b65663e734"
+  },
+  "yaml/package.json": {
+    "name": "yaml",
+    "version": "2.9.0",
+    "package_json_sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+  },
+  "cross-spawn/package.json": {
+    "name": "cross-spawn",
+    "version": "7.0.6",
+    "package_json_sha256": "2e106cd9b4ae4e34ead35218371a0d4e172da72515a4f8f97d69a2e1fe3dee82"
+  },
+  "to-regex-range/package.json": {
+    "name": "to-regex-range",
+    "version": "5.0.1",
+    "package_json_sha256": "766fc1bb34fffcd503c89f4194188ce059795c52fd0dc6753cd4b7dcfc3fe1ec"
+  },
+  "serialport/package.json": {
+    "name": "serialport",
+    "version": "12.0.0",
+    "package_json_sha256": "2b4653e23957dbecbbdbe378f78de0c86ca2df1bd1f97fa6f7433b5c4be4a143"
+  },
+  "object-keys/package.json": {
+    "name": "object-keys",
+    "version": "1.1.1",
+    "package_json_sha256": "60128330481888bf0e83a713699bee6668c5948821ef06106d8c9613b6081b45"
+  },
+  "gopd/package.json": {
+    "name": "gopd",
+    "version": "1.2.0",
+    "package_json_sha256": "33ace32dc861f6da9d1fd9d0a44c66e8c6ff3b13358d070683c1c2978ff5f19f"
+  },
+  "isarray/package.json": {
+    "name": "isarray",
+    "version": "2.0.5",
+    "package_json_sha256": "b0802c09bce6bf067d3e5f52390ea26972e11c88bb6ae38991316ac83ca14127"
+  },
+  "micromatch/package.json": {
+    "name": "micromatch",
+    "version": "4.0.8",
+    "package_json_sha256": "94dbc881c0329813f2481f35fcfa725a2285d45926d33e9b9b8b80b28487752b"
+  },
+  "tmp/package.json": {
+    "name": "tmp",
+    "version": "0.2.7",
+    "package_json_sha256": "58dddc0fa17fbd6f4329189ffcd66d7c4a6c0487896accaf4e9853ba7462df2c"
+  },
+  "find-yarn-workspace-root/package.json": {
+    "name": "find-yarn-workspace-root",
+    "version": "2.0.0",
+    "package_json_sha256": "3d15902c47dae2b9dc2c07e77ac289a7fb610e4af698177624babe6c1fdffb0c"
+  },
+  "braces/package.json": {
+    "name": "braces",
+    "version": "3.0.3",
+    "package_json_sha256": "56f08b888a4f30dc7cf8a7dbb36ffe92b737912ba36abe9d069d32167c957ac7"
+  },
+  "klaw-sync/package.json": {
+    "name": "klaw-sync",
+    "version": "6.0.0",
+    "package_json_sha256": "70fc5607e1838bc641f274e3f7d79bcdfc8d0f277c34481c0877e3cc58893e21"
+  },
+  "which/package.json": {
+    "name": "which",
+    "version": "2.0.2",
+    "package_json_sha256": "43010039ed5e89f7186960be682b3cb5cda5ab6cdfb06cbfd4f081cf0e7b4260"
+  },
+  "open/package.json": {
+    "name": "open",
+    "version": "7.4.2",
+    "package_json_sha256": "a46cba93500e74f252e97a0a94a0d09a0767be2fcd0787f6ddd44a235dc71c56"
+  },
+  "graceful-fs/package.json": {
+    "name": "graceful-fs",
+    "version": "4.2.11",
+    "package_json_sha256": "5747d4ba6b17165c6ecac30ab3a331715f41c7ad546e1f1574dab1bdcb116181"
+  },
+  "ws/package.json": {
+    "name": "ws",
+    "version": "8.21.0",
+    "package_json_sha256": "584ce6e7516587ba249dc910b0c04e2753f6b3f451fc3a5bc324f7735bdacc71"
+  },
+  "shebang-command/package.json": {
+    "name": "shebang-command",
+    "version": "2.0.0",
+    "package_json_sha256": "44de390ae5ed6c5f9758b8b9c90b93fa53977d5361731600429f1de08f4b3f30"
+  },
+  "debug/package.json": {
+    "name": "debug",
+    "version": "4.4.3",
+    "package_json_sha256": "ea8e33d63fe5f3a4c36609b6c3df8e2ef1f8b8ba2fc3a2e1e53cb27291f384af"
+  },
+  "isexe/package.json": {
+    "name": "isexe",
+    "version": "2.0.0",
+    "package_json_sha256": "395c2af9abeeaafe7391974c1eacfb2a2bdeef187f21c3f5582c49e0368e59bf"
+  },
+  "es-object-atoms/package.json": {
+    "name": "es-object-atoms",
+    "version": "1.1.2",
+    "package_json_sha256": "e4b7882975d10c68457945c883e1060d0b058af5b1216215c872263f42e12fc9"
+  },
+  "@stoprocent/noble/package.json": {
+    "name": "@stoprocent/noble",
+    "version": "2.5.5",
+    "package_json_sha256": "ce39ad5359c665a7d27a0e2039bc861e980b1a0bd0b2057bda349e5ae4d5ba8d"
+  },
+  "@stoprocent/bluetooth-hci-socket/package.json": {
+    "name": "@stoprocent/bluetooth-hci-socket",
+    "version": "2.2.6",
+    "package_json_sha256": "d6265c98caa4dddb8d7e2a88e34d65d2cd2a0bf8ab158a8fcb98b2649de31f27"
+  },
+  "serialport/node_modules/debug/package.json": {
+    "name": "debug",
+    "version": "4.3.4",
+    "package_json_sha256": "754ba4f352a9b983fbbf93cfffe015d29bc789a08eb05815270abf50902697fb"
+  },
+  "serialport/node_modules/debug/node_modules/ms/package.json": {
+    "name": "ms",
+    "version": "2.1.2",
+    "package_json_sha256": "3708fd273bf5b1e91c72d88143f48ad962adcc10b99250a4a203d13804f37757"
+  },
+  "yaml/browser/package.json": {
+    "name": null,
+    "version": null,
+    "package_json_sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+  },
+  "@serialport/parser-spacepacket/package.json": {
+    "name": "@serialport/parser-spacepacket",
+    "version": "12.0.0",
+    "package_json_sha256": "875fc8b85c7475e2cd5a29ef6864a4243e0b9db43c75cea9b6ee07c0bf4dee7a"
+  },
+  "@serialport/bindings-cpp/package.json": {
+    "name": "@serialport/bindings-cpp",
+    "version": "12.0.1",
+    "package_json_sha256": "9bbae26a6fd2127ac6da1bdff9597dbf00b14d60d4a2a6f8e63bee4b820d8b37"
+  },
+  "@serialport/parser-packet-length/package.json": {
+    "name": "@serialport/parser-packet-length",
+    "version": "12.0.0",
+    "package_json_sha256": "bf30b8e967dd6efa50d347b0f8d708e66593407c7fbb168e5ba448bcdfbd74bc"
+  },
+  "@serialport/parser-readline/package.json": {
+    "name": "@serialport/parser-readline",
+    "version": "12.0.0",
+    "package_json_sha256": "3dc6c4be5a39d31bce02511a856b06f15986b9abc3d87cd78dda928567dc157a"
+  },
+  "@serialport/parser-byte-length/package.json": {
+    "name": "@serialport/parser-byte-length",
+    "version": "12.0.0",
+    "package_json_sha256": "53f84dcdf3a3adf3579e4b52857e4dcf1b68d77e6a0623ce114b1af351793a91"
+  },
+  "@serialport/bindings-interface/package.json": {
+    "name": "@serialport/bindings-interface",
+    "version": "1.2.2",
+    "package_json_sha256": "d5b62c3289b8984fa74f1ebd412302d497c18933dd006671ae9f9ae51b6ea904"
+  },
+  "@serialport/stream/package.json": {
+    "name": "@serialport/stream",
+    "version": "12.0.0",
+    "package_json_sha256": "0c424554715dbd32eb29f8dbd1ccc0e54ec2084fbe2a8d99791da97349c21cf9"
+  },
+  "@serialport/parser-inter-byte-timeout/package.json": {
+    "name": "@serialport/parser-inter-byte-timeout",
+    "version": "12.0.0",
+    "package_json_sha256": "1d543be167f7c7c3c7e79e90a037577807bdc80b3c75583f4ac993028295ab5e"
+  },
+  "@serialport/parser-delimiter/package.json": {
+    "name": "@serialport/parser-delimiter",
+    "version": "12.0.0",
+    "package_json_sha256": "5d7d6dffecf21b8e6eb4b55bf685fe1e7c98da12598c9e61fa00f6abff6efce7"
+  },
+  "@serialport/parser-slip-encoder/package.json": {
+    "name": "@serialport/parser-slip-encoder",
+    "version": "12.0.0",
+    "package_json_sha256": "950f9917a822b8a40a3a819d89833d1f8111a63ac66106fee6edf84d13187a7f"
+  },
+  "@serialport/parser-ready/package.json": {
+    "name": "@serialport/parser-ready",
+    "version": "12.0.0",
+    "package_json_sha256": "304e4f1551b182bc1032dfef9a1eb02d2828dbdee36a3e1203ef027b9caea4bd"
+  },
+  "@serialport/parser-cctalk/package.json": {
+    "name": "@serialport/parser-cctalk",
+    "version": "12.0.0",
+    "package_json_sha256": "4eef9fffc4852af2896f77e8853250c7b200446ca466d2ca8beba9024559e161"
+  },
+  "@serialport/parser-regex/package.json": {
+    "name": "@serialport/parser-regex",
+    "version": "12.0.0",
+    "package_json_sha256": "e30ef496fcdf4a3fa020882d7720fc35bd5f7d491eb00df52c7971b878c32493"
+  },
+  "@serialport/binding-mock/package.json": {
+    "name": "@serialport/binding-mock",
+    "version": "10.2.2",
+    "package_json_sha256": "181e146bf908c4d5c5209b9c72530b4f25c8fee370507df9ddc60ca913f07e2d"
+  },
+  "@serialport/stream/node_modules/debug/package.json": {
+    "name": "debug",
+    "version": "4.3.4",
+    "package_json_sha256": "754ba4f352a9b983fbbf93cfffe015d29bc789a08eb05815270abf50902697fb"
+  },
+  "@serialport/stream/node_modules/debug/node_modules/ms/package.json": {
+    "name": "ms",
+    "version": "2.1.2",
+    "package_json_sha256": "3708fd273bf5b1e91c72d88143f48ad962adcc10b99250a4a203d13804f37757"
+  },
+  "@serialport/bindings-cpp/node_modules/node-gyp-build/package.json": {
+    "name": "node-gyp-build",
+    "version": "4.6.0",
+    "package_json_sha256": "ca10d81e798232c728115b06d083b3e153a0f823758467cf1fd0c7bcf0b5a5f9"
+  },
+  "@serialport/bindings-cpp/node_modules/node-addon-api/package.json": {
+    "name": "node-addon-api",
+    "version": "7.0.0",
+    "package_json_sha256": "d0d7136442dec26de3005c6a265075f04e0ecebf97c00a592bef269aa75c4bc1"
+  },
+  "@serialport/bindings-cpp/node_modules/debug/package.json": {
+    "name": "debug",
+    "version": "4.3.4",
+    "package_json_sha256": "754ba4f352a9b983fbbf93cfffe015d29bc789a08eb05815270abf50902697fb"
+  },
+  "@serialport/bindings-cpp/node_modules/debug/node_modules/ms/package.json": {
+    "name": "ms",
+    "version": "2.1.2",
+    "package_json_sha256": "3708fd273bf5b1e91c72d88143f48ad962adcc10b99250a4a203d13804f37757"
+  },
+  "@serialport/bindings-cpp/node_modules/@serialport/parser-readline/package.json": {
+    "name": "@serialport/parser-readline",
+    "version": "11.0.0",
+    "package_json_sha256": "5cb11f1b69ad1922be4394d6372eb1713d7a98948e5a51007533b40445136040"
+  },
+  "@serialport/bindings-cpp/node_modules/@serialport/parser-readline/node_modules/@serialport/parser-delimiter/package.json": {
+    "name": "@serialport/parser-delimiter",
+    "version": "11.0.0",
+    "package_json_sha256": "d30882f373113b098906a24fa2e668f5325ea9dd196d970166e7779cfd8953a2"
+  },
+  "usb/libusb/tests/webusb-test-shim/package.json": {
+    "name": "webusb-test-runner",
+    "version": null,
+    "package_json_sha256": "243e066024c607ee6262daeef636bc051390953eaf7d986b2b36a7461ada96ad"
+  },
+  "@yarnpkg/lockfile/package.json": {
+    "name": "@yarnpkg/lockfile",
+    "version": "1.1.0",
+    "package_json_sha256": "40b02d6bd906ceb10acd716721e0fbf1d7ae51db4962621c348abc5229aa7d48"
+  },
+  "@bufbuild/protobuf/package.json": {
+    "name": "@bufbuild/protobuf",
+    "version": "2.12.1",
+    "package_json_sha256": "024e07b1c0a7ca15af5cac2c3ace449adc29c390a87fc115f6d639eecec37e05"
+  },
+  "@bufbuild/protobuf/dist/esm/package.json": {
+    "name": null,
+    "version": null,
+    "package_json_sha256": "6b91de8cd0baca43d2c3a0a29ccf86cb582eaa8a20bdf61e1ead35b0c447a351"
+  },
+  "@bufbuild/protobuf/dist/commonjs/package.json": {
+    "name": null,
+    "version": null,
+    "package_json_sha256": "25588feb7615be3f20bca56f518d16c7c1d77521c4e4ad7d87edca9656ee44df"
+  },
+  "@types/bun/package.json": {
+    "name": "@types/bun",
+    "version": "1.3.14",
+    "package_json_sha256": "51950bf538917baef310990f9fcf247c88c4f2f631ae5de34f853b318fee0eb1"
+  },
+  "@types/w3c-web-usb/package.json": {
+    "name": "@types/w3c-web-usb",
+    "version": "1.0.14",
+    "package_json_sha256": "a2e98ea80c011695575e2e5547a21cbb071fe8a91551bc89fa73c41464506478"
+  },
+  "@types/node/package.json": {
+    "name": "@types/node",
+    "version": "26.0.1",
+    "package_json_sha256": "6e26a9c7853b2b150b76d99706a081f83c1ff518171d5d456fdda1cbe80aeb66"
+  },
+  "@types/ws/package.json": {
+    "name": "@types/ws",
+    "version": "8.18.1",
+    "package_json_sha256": "92f0a87117b71231a0864f7bb7c6a84b7fc91dbdd7d33379fc23d655980ad083"
+  }
+}

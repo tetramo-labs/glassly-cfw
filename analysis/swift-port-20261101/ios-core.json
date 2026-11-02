@@ -1,0 +1,18 @@
+{
+  "command": [
+    "xcrun",
+    "--sdk",
+    "iphoneos",
+    "swiftc",
+    "-target",
+    "arm64-apple-ios15.0",
+    "-typecheck",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift"
+  ],
+  "returncode": 0,
+  "target": "arm64-apple-ios15.0",
+  "scope": "typecheck platform-neutral core; no iOS transport or device operation"
+}

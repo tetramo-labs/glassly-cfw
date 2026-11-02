@@ -1,0 +1,19 @@
+{
+  "format": "memomind-portable-notification-tests-v1",
+  "result": "failed",
+  "commands": [],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "pending": [
+    "MemoMind notification source/ANCS discovery and attribute adapter",
+    "MemoMind action adapter",
+    "Outbound transport envelope/channel",
+    "Native queue/timer/allocator adapter and scheduler testing"
+  ],
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/ancs_relay.c": "23ef712b8095c9ca79759f2d4ba1cbaad2e06112ef3eba0df7cf3188f0bdc4ac",
+    "upstream/patches/cfw_context.h": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231"
+  },
+  "error": "'patches/host/ancs_relay_host_test.c'"
+}

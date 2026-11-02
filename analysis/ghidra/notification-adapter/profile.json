@@ -1,0 +1,86 @@
+{
+  "target": "H001Y 1.0.3.127 segment3",
+  "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "base": "0x41eb020",
+  "static_only": true,
+  "native_adapter_implemented": false,
+  "ancs": {
+    "topic": 0,
+    "callback": "0x04217546",
+    "source": {
+      "event": 602,
+      "handler": "0x04211af4",
+      "minimum_length": 14,
+      "peer_offset": 0,
+      "record_offset": 6,
+      "record_length": 8
+    },
+    "attributes": {
+      "event": 603,
+      "handler": "0x04211c34",
+      "minimum_descriptor_length": 16,
+      "command_offset": 6,
+      "body_pointer_offset": 8,
+      "body_length_u16_offset": 12,
+      "body_freed_by_stock": true,
+      "ingress_deep_copy": "0x04319058",
+      "temporary_cleanup": "0x043196e0"
+    },
+    "action": {
+      "wrapper": "0x04318ee6",
+      "lower_command": 704,
+      "arguments": [
+        "peer6 pointer",
+        "UID4 pointer",
+        "action u8"
+      ],
+      "admitted": false,
+      "callable_contract_proven": true,
+      "argument_copy_before_successful_return_proven": true,
+      "outgoing_rpc": "0434b3a4 -> 0434b160 -> Bcore rpc_task",
+      "bcore_handler": "14061760",
+      "bcore_service_consumer": "1405869c -> 14075998",
+      "returns": {
+        "0": "owned message queued, remote action unproven",
+        "11": "lower rejection/unavailable; detailed result collapsed"
+      },
+      "blocking_and_asserting": true
+    }
+  },
+  "gm": {
+    "service": 5,
+    "handler": "0x042e522c",
+    "delivery_command": 1,
+    "display_class": 0,
+    "display_event": 92,
+    "payload": "owned TLV request pointer; consumer reads next node for JSON",
+    "admitted_wire_schema": false
+  },
+  "gaps": [
+    "compiled pre-stock hook forwarding and lifetime tests",
+    "bounded copied-record queue/drop accounting and memory admission",
+    "action peer/UID generation validation and stock ordering integration",
+    "native timers/output channel",
+    "actual ANCS hardware exercise",
+    "Dart GM serialization"
+  ],
+  "prestock_hook": {
+    "target_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "candidate_only": true,
+    "installed": false,
+    "site": "04217568",
+    "body_offset": 181576,
+    "length": 8,
+    "original_hex": "97201000e780a022",
+    "original_callee": "04319792",
+    "continuation": "04217570",
+    "argument_registers": {
+      "a0": "event",
+      "a1": "payload",
+      "a2": "length"
+    },
+    "new_flow": "copy bounded admitted ANCS payload before tail-forwarding original callee; preserve original return address and callee-saved state",
+    "middle_entry_references": "none in existing project; pre-entry conditional branch lands at04217568",
+    "display_gate_sufficient_for_raw_ancs": false
+  }
+}

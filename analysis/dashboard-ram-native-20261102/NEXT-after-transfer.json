@@ -1,0 +1,13 @@
+{
+  "requires": "User confirms another wake after completed update",
+  "flash_completed": true,
+  "do_not_repeat_flash": true,
+  "measure_command": "analysis/dashboard-ram-native-20261102/measure captures/swift-mac-ram-after-20261102-02",
+  "verify_command": "python3 analysis/dashboard-ram-native-20261102/verify-after.py captures/swift-mac-ram-after-20261102-02 analysis/dashboard-ram-native-20261102/after-verification.json",
+  "display_command": "analysis/dashboard-ram-native-20261102/display-smoke captures/swift-mac-ram-display-20261102-01",
+  "display_verify_command": "python3 analysis/dashboard-ram-native-20261102/verify-display.py",
+  "display_hold_seconds": 90,
+  "ask_visual_only_after": "pattern-visible event in display trace",
+  "current_header_pin": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+  "note": "The default dashboard may lookempty because card/status/header content init removed. CFWruntime unchanged. Larger RESET undo trim remains unimplemented."
+}

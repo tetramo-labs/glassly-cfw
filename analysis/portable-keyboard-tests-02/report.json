@@ -1,0 +1,246 @@
+{
+  "format": "memomind-portable-keyboard-tests-v1",
+  "result": "passed",
+  "commands": [
+    {
+      "label": "build-original",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/keyboard/keyboard_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-public",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/keyboard/public_api_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-public",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/keyboard.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/keyboard.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/keyboard.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/keyboard/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_keyboard_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-keyboard-tests-02/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "cc-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rvcc-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "pending": [
+    "MemoMind HOGP discovery/ATT/DM and security adapters",
+    "Native lifecycle, timer and worker queue adapter",
+    "MemoMind outbound channel mapping",
+    "G2 ARM hook/machine scenarios remain platform-specific"
+  ],
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/keyboard.c": "d8ad35c09b178ee5a38dec50d5bb7dc2a6fc757091e530ab6b6a234a40912c2f",
+    "upstream/patches/keyboard_core.h": "a706fabf96ea9db37db0b07de5015c1458f0774549efd1b1d1ced1d5da2a4a49",
+    "upstream/patches/host/keyboard_host_test.c": "defe6b2fe82ddb3b510cfa8be16cfbb820917f337cc0238c8409c3d66a5972e3",
+    "keyboard.c": "e3d927becaf032ef7153d83dc928a76dc51c84982f113b5ee043ae810fa6d0cd",
+    "keyboard.h": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947",
+    "tests/run_keyboard_tests.py": "3d0c65901665f0ef73c3e76e0960ab896f19a1a6fe100b567061cd5b0d27937e",
+    "tests/keyboard/keyboard_host_test.c": "443e4c1ba26ab628d036a10ad195756fce41d387e1d504a98a0e19f6a96adfdf",
+    "tests/keyboard/layout.c": "552651f9bc3ed7e090eb0e688225530e000306e1a7682d059c973e0ad64897a2",
+    "tests/keyboard/public_api_test.c": "77575a108e8e30e0f37c3434dddfd8ca84b5a212d3140dd0e1e23222d66aa38f"
+  },
+  "scenario_main_calls": {
+    "isolation": 1,
+    "commands": 1,
+    "reports": 1,
+    "prompts": 1,
+    "malformed": 1,
+    "timers": 1
+  },
+  "original_assert_sites": 86,
+  "original_scenarios": [
+    "isolation",
+    "commands",
+    "reports",
+    "prompts",
+    "malformed",
+    "timers"
+  ],
+  "original_result": "portable keyboard original assert evaluations: 966\nPASS keyboard: isolation, commands, timeout ownership, encrypted reports, queue overflow/wrap, pairing prompts, malformed controls, timer drain/parking/retry",
+  "original_assert_evaluations": 966,
+  "file_status": "mixed-portable-core-tested-native-adapter-pending",
+  "public_api_result": "keyboard public API: two contexts, normalized prompts/advertisements, bounds/alias, failures and no replay passed",
+  "rv32": {
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "text_bytes": 3916,
+    "rodata_bytes": 0,
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:13:13:mmk_copy\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:64:13:mmk_disconnect\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:86:12:mmk_valid_control\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:240:12:ready\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:241:12:disjoint\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:17:13:mmk_kick\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:22:13:mmk_schedule\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:30:13:mmk_emit\t112\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:52:13:mmk_status\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:247:5:mm_keyboard_init\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:265:5:mm_keyboard_validate_control\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:268:6:mm_keyboard_control\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:272:5:mm_keyboard_handle_event\t80\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:288:6:mm_keyboard_poll\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:289:6:mm_keyboard_tick\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/keyboard.c:290:6:mm_keyboard_lost\t16\tstatic"
+    ],
+    "max_individual_stack_bytes": 112,
+    "layout": {
+      "context_bytes": 4168,
+      "platform_bytes": 68,
+      "event_bytes": 24,
+      "record_bytes": 121
+    }
+  },
+  "tools": {
+    "cc": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "rvcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "artifact_sha256": {
+    "original": "63adda778d13f9c6de299f8fd5f76a7e83ff3064544b10c2dc3dab3ae398106a",
+    "public_api": "eed4b6f362d452f3063b802b251e7fe4c5ac394cbb1f92cbd04807d0d5655087",
+    "keyboard.su": "926a83844656f7ffc7fafbc3eb0fd5342e15733b4fe032c8e95a4449c8b072a3",
+    "layout.o": "e0934dd0006aa958a505131be993c6303cf3274adb1c20005f601c174581722e",
+    "keyboard.o": "ed1fa53a70de58922bc9f0546992f8d4ec24ffe0ee5979bfe999c00d4f699dfa",
+    "layout.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layout.bin": "9def7c63efbdf029103851b78c181160bd80508fb70fb852dffc4dfd9a6353d6"
+  }
+}

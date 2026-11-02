@@ -1,0 +1,902 @@
+{
+  "format": "memomind-exclusive-owner-gates-emulation-v1",
+  "all_passed": true,
+  "hardware_tested": false,
+  "device_actions": 0,
+  "cases": [
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 0,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 1,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 2,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 3,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 4,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 5,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 6,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 7,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 8,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 9,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 10,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 11,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 12,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 13,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 14,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a43c8",
+      "purpose": "CUS8 mount/repair/format unavailable",
+      "argument_case": 15,
+      "return_code": -5,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 0,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 1,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 2,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 3,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 4,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 5,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 6,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 7,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 8,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 9,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 10,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 11,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 12,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 13,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 14,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a3e20",
+      "purpose": "CUS8 read callback unavailable",
+      "argument_case": 15,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 0,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 1,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 2,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 3,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 4,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 5,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 6,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 7,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 8,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 9,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 10,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 11,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 12,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 13,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 14,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a40c4",
+      "purpose": "CUS8 program callback unavailable",
+      "argument_case": 15,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 0,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 1,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 2,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 3,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 4,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 5,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 6,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 7,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 8,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 9,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 10,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 11,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 12,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 13,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 14,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a411e",
+      "purpose": "CUS8 erase callback unavailable",
+      "argument_case": 15,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 0,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 1,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 2,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 3,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 4,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 5,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 6,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 7,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 8,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 9,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 10,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 11,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 12,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 13,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 14,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x423e8b4",
+      "purpose": "CUS8 whole-store reset unavailable",
+      "argument_case": 15,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 0,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 1,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 2,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 3,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 4,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 5,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 6,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 7,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 8,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 9,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 10,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 11,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 12,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 13,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 14,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    },
+    {
+      "entry": "0x42a9dd4",
+      "purpose": "CUS8 badmap saver unavailable",
+      "argument_case": 15,
+      "return_code": -1,
+      "data_accesses": 0,
+      "registers_preserved_except_a0": true
+    }
+  ],
+  "provenance": {
+    "tests/rv32/exclusive_storage_emulator_test.py": "ad76d5bf76b3773a8dcd6a0f83ab47e0c759d5be994858b88ef80a8c9ad9900f",
+    "scripts/build_memomind_exclusive_storage.py": "e21d080d9bf5c7e5c7678e404c9a23cb5de679424471ef5f26046da5b7840f1e",
+    "analysis/extracted/validated-1.0.3.127/segment-3.body.bin": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "captures/firmware/ota-1.0.3.127-glassly-text.bin": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+    "runtime/build/storage-diag-001/graphics.bin": "265f8837b2b939930434253f7be63a1155190fef701c57d8c123d482a66725eb"
+  },
+  "limitations": [
+    "Only the six identified native entry points are gated.",
+    "No whole-boot, concurrent caller, raw/factory/OTA owner or physical ownership proof.",
+    "Candidate has no CFW native writer and is not eligible for the live flasher."
+  ],
+  "unicorn": "2.1.4",
+  "candidate_sha256": "52ce0fe4afbe29fa1d0b5c8067c6581cdecc0fa719158ca9acecea20d95270a7",
+  "candidate_manifest": {
+    "format": "memomind-exclusive-store-owner-gates-v1",
+    "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+    "output_sha256": "52ce0fe4afbe29fa1d0b5c8067c6581cdecc0fa719158ca9acecea20d95270a7",
+    "blob_sha256": "265f8837b2b939930434253f7be63a1155190fef701c57d8c123d482a66725eb",
+    "blob_bytes": 54064,
+    "graphics_base_sha256": "97b93ea4c56a8d628149a6ed57af04fad3976ec46c2a37ee770e9183bc928a76",
+    "graphics_base_manifest": {
+      "format": "memomind-graphics-runtime-v1",
+      "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+      "output_sha256": "97b93ea4c56a8d628149a6ed57af04fad3976ec46c2a37ee770e9183bc928a76",
+      "blob_sha256": "265f8837b2b939930434253f7be63a1155190fef701c57d8c123d482a66725eb",
+      "blob_bytes": 54064,
+      "entry_address": 70893216,
+      "display_gate_address": 70893280,
+      "hooks": [
+        {
+          "name": "service15_callback_initializer",
+          "address": 70157024,
+          "body_offset": 1036992,
+          "before": "b7472e0493870768",
+          "after": "b7c73904938707ea",
+          "target": 70893216,
+          "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+          "following_witness": "bcd8"
+        },
+        {
+          "name": "display_worker_dispatch_call",
+          "address": 69582858,
+          "body_offset": 462826,
+          "before": "032504f9eff0cfb7",
+          "after": "97001400e78060ed",
+          "target": 70893280,
+          "return_address": 69582866,
+          "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+          "following_witness": "032504f9"
+        }
+      ],
+      "abi": {
+        "isa": "RV32IMAFC",
+        "calling_convention": "ilp32f",
+        "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+        "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+        "ordinary_display_tail_target": 69579658,
+        "display_return_address": 69582866,
+        "envelope_owner": "stock worker frees after return; gate must not free or retain"
+      }
+    },
+    "edits": [
+      {
+        "address": 69878728,
+        "body_offset": 758696,
+        "before": "1971a2dc",
+        "after": "6d558280",
+        "return_code": -5,
+        "purpose": "CUS8 mount/repair/format unavailable"
+      },
+      {
+        "address": 69877280,
+        "body_offset": 757248,
+        "before": "b7073000",
+        "after": "7d558280",
+        "return_code": -1,
+        "purpose": "CUS8 read callback unavailable"
+      },
+      {
+        "address": 69877956,
+        "body_offset": 757924,
+        "before": "b7073000",
+        "after": "7d558280",
+        "return_code": -1,
+        "purpose": "CUS8 program callback unavailable"
+      },
+      {
+        "address": 69878046,
+        "body_offset": 758014,
+        "before": "b7073000",
+        "after": "7d558280",
+        "return_code": -1,
+        "purpose": "CUS8 erase callback unavailable"
+      },
+      {
+        "address": 69462196,
+        "body_offset": 342164,
+        "before": "61712324811a",
+        "after": "7d5582800100",
+        "return_code": -1,
+        "purpose": "CUS8 whole-store reset unavailable"
+      },
+      {
+        "address": 69901780,
+        "body_offset": 781748,
+        "before": "757122c5",
+        "after": "7d558280",
+        "return_code": -1,
+        "purpose": "CUS8 badmap saver unavailable"
+      }
+    ],
+    "proposed_storage": {
+      "device": 1,
+      "physical_start": 5242880,
+      "physical_end": 8388608,
+      "bytes": 3145728,
+      "xip_start": 89128960,
+      "physical_badmap_bytes": 96
+    },
+    "stock_plugin_compatibility": false,
+    "native_writer_enabled": false,
+    "exclusive_ownership_proven": false,
+    "live_flashing_enabled": false
+  },
+  "case_count": 96
+}

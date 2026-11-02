@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "swift/MemoMindKit",
+    "--filter",
+    "FirmwareImageTests"
+  ],
+  "tests": 10,
+  "failures": 0,
+  "required_actual_fixtures": [
+    "captures/firmware/ota-1.0.3.127-jhv3_release.bin",
+    "captures/firmware/exclusive-store-reader-001/firmware.bin"
+  ],
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "497c2246fd92a1263a1481a4a02f2aef470b194daea19498910feb808c71bd7a",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "cc3ee4571e12b6a9a55a623407b0c9a8b76ca03ee76d169a26134f69d1488e82",
+    "swift/MemoMindKit/Documentation/FirmwareCatalog.md": "5b4838cb4b03eae6fff0f998fd8ee26df7d2c44b70372efeb4c4415bada253f9",
+    "swift/MemoMindKit/Documentation/FirmwareCatalogProvenance.json": "2e107842dfa457364146e56cd40ed3b5149b46be948816cfcec74c72d0efe8d2"
+  },
+  "runtime_python_or_subprocess": false,
+  "swift_decompression_or_constructor_port": false,
+  "hardware_operations": false,
+  "test_log": "analysis/swift-firmware-20261101/tests.log"
+}

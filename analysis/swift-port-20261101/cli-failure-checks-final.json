@@ -1,0 +1,115 @@
+{
+  "format": "memomind-swift-cli-failure-checks-v1",
+  "all_passed": true,
+  "binary_sha256": "5c084be74f7e8a449fa5f7a19c2444450abfe1d000101eff3c29c95852e71ea8",
+  "cases": [
+    {
+      "case": "flash-without-write-flag",
+      "arguments": [
+        "flash",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--firmware",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/captures/firmware/exclusive-store-reader-001/firmware.bin",
+        "--expected-sha256",
+        "270dfe85438e6ff0f904a09215e15419292e16b8c7bbc36aafec50543c780c55",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Only flash requires --confirm-write\")"
+    },
+    {
+      "case": "check-with-write-flag",
+      "arguments": [
+        "check",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--firmware",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/captures/firmware/exclusive-store-reader-001/firmware.bin",
+        "--expected-sha256",
+        "270dfe85438e6ff0f904a09215e15419292e16b8c7bbc36aafec50543c780c55",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist",
+        "--confirm-write"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Only flash requires --confirm-write\")"
+    },
+    {
+      "case": "duplicate-option",
+      "arguments": [
+        "probe",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Unknown, duplicate or missing-value option: --address\")"
+    },
+    {
+      "case": "unknown-option",
+      "arguments": [
+        "probe",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist",
+        "--retry",
+        "1"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Unknown, duplicate or missing-value option: --retry\")"
+    },
+    {
+      "case": "bad-address",
+      "arguments": [
+        "probe",
+        "--address",
+        "bad",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Address must have six colon-separated hexadecimal bytes\")"
+    },
+    {
+      "case": "unknown-image",
+      "arguments": [
+        "check",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--firmware",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/captures/firmware/exclusive-store-reader-001/firmware.bin",
+        "--expected-sha256",
+        "0000000000000000000000000000000000000000000000000000000000000000",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist"
+      ],
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: Firmware SHA-256 is not in the internal trusted release catalog"
+    },
+    {
+      "case": "existing-output-rejected-before-connect",
+      "arguments": [
+        "probe",
+        "--address",
+        "4C:3C:8F:90:CC:C3",
+        "--output",
+        "/var/folders/kx/kxjhlx3174ng2xrtf87fn7rr0000gn/T/mm-swift-cli-4p5fhywe/must-not-exist"
+      ],
+      "returncode": 1,
+      "existing_files_unchanged": true,
+      "error": "memomind: CLIError(message: \"Cannot create new capture directory: File exists\")"
+    }
+  ]
+}

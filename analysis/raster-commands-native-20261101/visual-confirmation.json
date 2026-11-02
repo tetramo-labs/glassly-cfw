@@ -1,0 +1,14 @@
+{
+  "format": "memomind-user-visual-confirmation-v1",
+  "recorded_utc": "2026-11-02T03:58:23.781315+00:00",
+  "capture": "captures/swift-mac-raster-smoke-20261101-02",
+  "question": "The glasses have accepted the display test and will hold it for about 90 seconds. Can you see \u201cRLE\u201d with a checkerboard below it?",
+  "answer": "Yes, both are visible",
+  "source": "user reply in this conversation",
+  "full_frame_and_bbox_delta_visible": true,
+  "hardware_pixel_readback": false,
+  "pixel_perfect_comparison": false,
+  "additional_user_observation": "the rest of the display (outside the RLE text and checkerboard) was also lit",
+  "expected_background_gray4": 2,
+  "interpretation": "Consistent with the intentional full-frame dim gray background; no measured luminance or exact pixel comparison."
+}

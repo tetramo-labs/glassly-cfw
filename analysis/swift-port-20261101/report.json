@@ -1,0 +1,97 @@
+{
+  "format": "memomind-native-swift-port-v1",
+  "package": "swift/MemoMindKit",
+  "binary": "swift/MemoMindKit/.build/release/memomind",
+  "binary_bytes": 460104,
+  "binary_sha256": "5c084be74f7e8a449fa5f7a19c2444450abfe1d000101eff3c29c95852e71ea8",
+  "swift_version": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "macos_deployment_target": "13.0",
+  "native_runtime_python_or_adb_dependency": false,
+  "shared_core_ios15_typecheck_passed": true,
+  "swift_tests": 32,
+  "swift_tests_failed": 0,
+  "transport_injected_state_checks": 23,
+  "cli_rejection_checks": 7,
+  "release_replay": {
+    "attachFields": {
+      "0": "0097000002",
+      "1": "4d450201",
+      "2": "6464",
+      "3": "00",
+      "4": "01",
+      "5": "01"
+    },
+    "blocks": 494,
+    "checkOnly": false,
+    "chunks": 3457,
+    "device": {
+      "fver": "1.3",
+      "hver": "2.1.2",
+      "mac": "4C:3C:8F:90:CC:C3",
+      "model": "H001Y",
+      "ver": "1.0.2.151"
+    },
+    "imageSHA256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+    "incomingPacketsConsumed": 501,
+    "mode": "offline captured replay",
+    "modifiedImage": false,
+    "outgoingPacketsIdentical": 3464,
+    "outgoingWireSHA256": "f4acaa5ca1a8a02001328eebc88c52be4ab65216cf8f42c70e09e77dda294004",
+    "postRebootVersionVerified": false,
+    "recordsConsumed": 3965,
+    "recordsTotal": 3965,
+    "state": "reboot acknowledged",
+    "transcriptSHA256": "385e9feab4d41d55b84d3cae6cd06882e1cbaacfbd2b467eb66dc70975f05d99",
+    "transferredRange": [
+      162757,
+      2185697
+    ]
+  },
+  "native_probe": {
+    "capture": "captures/swift-mac-probe-20261101-01",
+    "result": "SDP timeout before application data",
+    "connected": false,
+    "application_writes": 0,
+    "firmware_writes": 0,
+    "retry_sent": false,
+    "mac_host_powered_on": true,
+    "glasses_in_mac_paired_cache": false,
+    "awaiting": "User has been asked to make glasses discoverable for the Mac"
+  },
+  "mac_hardware_ota_verified": false,
+  "glassly_source_modified": false,
+  "source_sha256": {
+    "swift/MemoMindKit/Package.swift": "4ef43a4f0a5ec6060fd9ebd10bf06aed604509eaaf2c1ba30793f86a7753549e",
+    "swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift": "f8936e33b772239ca2a59071f2b95b5e58f4996f0c2a96f8bea5f53101f1d2d5",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "2bfb4d8df504e635ec7d37fccbab426dd6c8c6bb0d03130fad2f192d53297a93",
+    "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift": "6d1ab58c45cc102658754bca69a991aee3f1b967ee1d8168a6d812b7b8cc72a7",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift": "29738b42c2ec76b996f883a78c40e43f426c2de5775de09ef3014a0fbbc782ca",
+    "swift/MemoMindKit/Sources/memomind/Arguments.swift": "dbbfc7b7da1dedab80078edeb53958185c18203a0a8a52f3d3192c6601abe979",
+    "swift/MemoMindKit/Sources/memomind/Capture.swift": "6a1ab7eefa7d5a13aa0e79c800ae0fe8769efb7c6c007833e4176c319ded37a6",
+    "swift/MemoMindKit/Sources/memomind/Info.plist": "f5fbb6de54299635ecf9ac107a3a8f18da618b28f65c1b422262dceea26967ed",
+    "swift/MemoMindKit/Sources/memomind/Replay.swift": "5fde0abc0a1f0fc131e601fb85d500d9480ef3c92546edcdeeb00db451b4afbe",
+    "swift/MemoMindKit/Sources/memomind/main.swift": "3a18268a44b8acff0c38f9d7d9ce6973840aa322bcf45bcd75c62b70608bdc53",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "202320f68d4a7f9941af29e8e4aba822f1529924fd7151fdd89512eff6854311",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/OTABoundaryTests.swift": "7f45ed67dfceb0695dbbc5ccbb347dd3f365bcdf91a38ab971c3d0868e1f9cde",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/OTATransactionTests.swift": "0dd3d5d27e55b46bef1e2b6045fd998158464fa78d48648d7585c3501b253ff2",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/ProtocolTests.swift": "a0541c6599382e392af1f0f292388dfb23e6bdb7e3a623d76e2b6a61b51100a2",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/PythonProtocolVectors.swift": "54a220e571f6c089e53e3c259cb1f8df9b893dd6608e27e8c3125a3fd51d28c0"
+  },
+  "limitations": [
+    "Native image validation pins exact known releases; Python offline firmware construction/decompression was not ported.",
+    "No direct Mac pairing or OTA hardware success is claimed.",
+    "iOS core typechecking does not establish an iOS transport for these RFCOMM services.",
+    "Full G2 firmware parity and native scene flash binding remain incomplete."
+  ],
+  "catalog": [
+    "stock-1.0.3.127-jhv3-release",
+    "exclusive-store-reader-001"
+  ],
+  "current_device_backup": "analysis/exclusive-store-backup-verification.json",
+  "aggregate_report": "analysis/regression-20261101-05/report.json",
+  "aggregate_stages_passed": 66,
+  "aggregate_sources_changed": [],
+  "aggregate_python_tests": 219,
+  "cli_rejection_report": "analysis/swift-port-20261101/cli-failure-checks-final.json"
+}

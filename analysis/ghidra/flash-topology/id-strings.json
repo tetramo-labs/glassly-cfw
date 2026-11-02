@@ -1,0 +1,86 @@
+[
+  {
+    "address": "0x4358c48",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:268] [recordsv_ring_buf]  E:write failed: invalid params (data=%p len=%u)"
+  },
+  {
+    "address": "0x4358d30",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:353] [recordsv_ring_buf]  E:read failed: invalid params (buf=%p len=%u)"
+  },
+  {
+    "address": "0x4358e0c",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:483] [recordsv_ring_buf]  E:freeze failed: skip=%u exceeds free=%u (data=%u invalid=%u total=%u)"
+  },
+  {
+    "address": "0x438f010",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:407] [FontManager] E:Font ID 0x%04x data access out of bounds: offset=%u, size=%u, font_size=%u"
+  },
+  {
+    "address": "0x438f094",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:416] [FontManager] E:Font ID 0x%04x data out of bounds: entry_offset=%u, offset=%u, size=%u, data_size=%u"
+  },
+  {
+    "address": "0x438f124",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:327] [FontManager] E:Font flash mapping failed: base=%p, size=%u"
+  },
+  {
+    "address": "0x438f188",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:230] [FontManager] E:Invalid font base=%p or size=%u"
+  },
+  {
+    "address": "0x438f1e0",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:94] [FontManager] E:Invalid font package magic: 0x%08x, expected: 0x%08x"
+  },
+  {
+    "address": "0x438f2cc",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:111] [FontManager] E:Invalid header size: %u, expected: %d"
+  },
+  {
+    "address": "0x438f32c",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:118] [FontManager] E:Invalid font count: %u (max: %d)"
+  },
+  {
+    "address": "0x438f388",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:125] [FontManager] E:Invalid directory size: %u, expected: %u"
+  },
+  {
+    "address": "0x438f3ec",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:132] [FontManager] E:Invalid data size: %u"
+  },
+  {
+    "address": "0x438f4a4",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:168] [FontManager] E:Invalid font ID at index %u: 0x%04x"
+  },
+  {
+    "address": "0x438f500",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:174] [FontManager] E:Invalid font size at index %u: original=%u, padded=%u"
+  },
+  {
+    "address": "0x438f65c",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:197] [FontManager] E:Duplicate font ID 0x%04x at indices %u and %u"
+  },
+  {
+    "address": "0x438f6c4",
+    "text": "[T:0x%08X][lv_font_flash_manager.c:384] [FontManager] E:Font ID 0x%04x not found in %u fonts"
+  },
+  {
+    "address": "0x43906b4",
+    "text": "{\"schema\":1,\"packageFormat\":%u,\"abi\":%u,\"compression\":\"lz4-block\",\"compressionBlockBytes\":%u,\"maxPackageBytes\":%lu,\"chunkBytes\":%u,\"sequentialChunks\":true,\"streamedInstallChunks\":true,\"flashXip\":true,\"cacheResume\":true,\"singleSppLink\":true,\"cacheCapacityQuery\":true,\"runtimeStateQuery\":true,\"runtimeStateNotifications\":true,\"displayWidth\":%u,\"displayHeight\":%u,\"refreshHz\":%u,\"pixelFormat\":%u,\"logicalDisplays\":%u,\"capabilities\":%lu}"
+  },
+  {
+    "address": "0x4396a6c",
+    "text": "[T:0x%08X][gm_flash_py25q256lc.c:261] gm_flash_hw E:BY25 Manufacturer ID:%x%x"
+  },
+  {
+    "address": "0x4396abc",
+    "text": "[T:0x%08X][gm_flash_py25q256lc.c:262] gm_flash_hw E:BY25 Device ID:%x%x"
+  },
+  {
+    "address": "0x4396b08",
+    "text": "BY25Q256FS"
+  },
+  {
+    "address": "0x4396c38",
+    "text": "PY25Q256LC"
+  }
+]

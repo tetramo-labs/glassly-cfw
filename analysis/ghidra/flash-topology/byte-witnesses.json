@@ -1,0 +1,38 @@
+[
+  {
+    "address": "0x4329870",
+    "source_offset": 1304656,
+    "bytes": "9377f50f130750081309c9326383e7021307800c638fe700",
+    "meaning": "85/c8 initial ID compare"
+  },
+  {
+    "address": "0x43298a6",
+    "source_offset": 1304710,
+    "bytes": "1375f50f130750089387073313962400630ce5041307800c631ee50005479316370037f700021307877b36975843b385c70098c1b297",
+    "meaning": "ID-selected table assignment"
+  },
+  {
+    "address": "0x4345f82",
+    "source_offset": 1421154,
+    "bytes": "829737290102aa841309494d19e985472300f900",
+    "meaning": "general initializer success setsready"
+  },
+  {
+    "address": "0x41eb03e",
+    "source_offset": 30,
+    "bytes": "9761e2fd9381a1641751f1fd1301a1dbef00e119",
+    "meaning": "nativegp and mandatory startupcall"
+  },
+  {
+    "address": "0x41fb234",
+    "source_offset": 66068,
+    "bytes": "b7e70502938787121386011f3386c74081451385011f9750e0fde78000e9",
+    "meaning": "BSS zero"
+  },
+  {
+    "address": "0x42a4654",
+    "source_offset": 759348,
+    "bytes": "83270900f5548deb85450545eff09fd6aa841de10327c4fd0325090081460146ce85efd00fb0eff0aff0aa8403250900efa0aa0623200900",
+    "meaning": "transient query (1,1) and free/clear"
+  }
+]

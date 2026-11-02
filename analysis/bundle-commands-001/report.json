@@ -1,0 +1,94 @@
+{
+  "format": "memomind-command-bundles-offline-v1",
+  "frozen": true,
+  "hardware_tested": false,
+  "runtime": "runtime/build/bundle-commands-001/graphics.bin",
+  "build_manifest": "runtime/build/bundle-commands-001/build.json",
+  "blob_bytes": 63200,
+  "blob_sha256": "deeddff1533fc36c5468394a1fbbd612d3a2ec096dc864d963fa3cc30148f450",
+  "elf_sha256": "8b6ae0eb1992630759cdae904bf04fc8e85ab818acc6908a10299937826cdf9f",
+  "changed_source_sha256": {
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/portable/scene.h": "8ef3f42bd0fc9128b4d9183760220cafa6b7ff0627607d5f8029d3f981a0ddce",
+    "runtime/graphics/scene_session.c": "c3bcd105514b1112bf0ba2391f7ff47ac1cff14c0cb8faa7b8ee8ef1affa8f6f",
+    "runtime/graphics/graphics.c": "7c8b2184cdcd99728b66f121302e193834dd21517d0236d01d1e251e785ac44f",
+    "scripts/compile_memomind_graphics.py": "d633d82bff272027cde9bc7997021666a248e4c8f90a54df1efdb85ac5f9ee2c",
+    "scripts/test_compile_memomind_bundles.py": "532fbaea11fee7263481fe909bb0c050856da743104b4d034e76a4bdbfc2944f",
+    "runtime/graphics/tests/test_command_bundles.c": "88dfb04d66f9f6eff3e1708a493e1f798c6f4b3be86da5ce37a71f2b2ad69992",
+    "runtime/graphics/tests/run_command_bundle_tests.py": "475382ce2158bb68c1f360c48e95504e1a77b6ab46b00440be647b89a6c1fd50",
+    "tests/rv32/command_bundle_runtime_emulator_test.py": "47a708c891b6a8d6ded9ee1fa04ebb82cebf3582f3fef1b22d5a872f1b3c4a43",
+    "tests/rv32/command_bundle_existing_runtime_emulator_test.py": "c09ad757a2fe40ee657432b6288bae1a2e741f2b4fb8398976a0aab4a7f475b0"
+  },
+  "source_drift_from_build": [],
+  "legacy_rect_byte_identical": {
+    "verified": true,
+    "bytes": 62240,
+    "sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+    "manifest": "legacy-rect-build.json"
+  },
+  "host_envelope_reference_rejection_cases": 266,
+  "host_report": "host/report.json",
+  "actual_rv32_groups": 7,
+  "actual_rv32_calls": 124,
+  "observed_stack_bytes": {
+    "BT": 64,
+    "display": 1136
+  },
+  "native_firmware_mocked": true,
+  "gate_cases": 7955,
+  "retained_suite_groups": {
+    "canary": 10,
+    "reader": 12,
+    "input": 6,
+    "scene": 8
+  },
+  "strict_contract_reports": [
+    "canary-contract.json",
+    "reader-contract.json"
+  ],
+  "compiler_dependency_tests": {
+    "tests": 1,
+    "subcases": 4
+  },
+  "independent_review": "analysis/bundle-review-20261102/report.md",
+  "semantics": {
+    "modes": [
+      8,
+      136
+    ],
+    "submodes": [
+      3,
+      6,
+      9,
+      19,
+      20,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "maximum_segments": 255,
+    "maximum_collector_bytes": 1020,
+    "collector_free_reserve": 32768,
+    "reply": "final cache scratch only on complete success",
+    "settled": "ordered duplicates retained, correlated result first on success or failure",
+    "late_failure": "earlier effects retained; no final present call; shared buffer visibility remains possible",
+    "count_zero": "one final present, no collection allocation, no pending-settle consumption",
+    "trailing": "ignored",
+    "prepare": "whole batch once before sequential execution"
+  },
+  "not_changed": [
+    "prior immutable binaries/evidence",
+    "Swift/catalog",
+    "aggregate runner/inventory/status",
+    "device state"
+  ],
+  "limitations": [
+    "Mode15 unsupported; native8192 ingress/64KiB scene store unchanged",
+    "All external native APIs mocked; hardware timing, flash, radio delivery and panel behavior untested here",
+    "Synthetic stack bounds exclude native callees, scheduler and interrupt frames",
+    "Count255 does not imply a real-time bound or full command/capacity parity"
+  ]
+}

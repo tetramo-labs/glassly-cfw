@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "device_actions": false,
+  "candidate": "captures/firmware/dashboard-ram-002",
+  "image_bytes": 2230671,
+  "image_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+  "source_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "outer_header150_sha256": "3e0ed487f355806dafd975fb2849c2e146ab8d7b8fc0e5431420c332434bc13c",
+  "app_header256_sha256": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+  "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+  "runtime_bytes": 65456,
+  "gate_span_bytes": 24,
+  "actual_changed_body_bytes": 21,
+  "changed_body_offsets": [
+    499463,
+    499464,
+    499465,
+    499777,
+    499778,
+    499779,
+    500424,
+    500425,
+    500426,
+    500427,
+    512791,
+    512792,
+    512793,
+    512976,
+    512977,
+    512978,
+    512979,
+    541346,
+    541347,
+    541348,
+    541349
+  ],
+  "entire_body_outside_six_spans_identical": true,
+  "unchanged_streams": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "unchanged_runtime": true,
+  "exact_constructor_and_independent_repack": true,
+  "checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "bounds": {
+    "app_raw_bytes": 1838672,
+    "app_allocation": 2097152,
+    "payload_bytes": 2230653,
+    "rounded_payload_bytes": 2232320,
+    "staging_capacity": 2482176
+  },
+  "stream_pins": [
+    {
+      "index": 0,
+      "packed_bytes": 171,
+      "raw_bytes": 344,
+      "packed_sha256": "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a"
+    },
+    {
+      "index": 1,
+      "packed_bytes": 481265,
+      "raw_bytes": 909676,
+      "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+    },
+    {
+      "index": 2,
+      "packed_bytes": 437783,
+      "raw_bytes": 695512,
+      "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+    },
+    {
+      "index": 3,
+      "packed_bytes": 959569,
+      "raw_bytes": 1838672,
+      "packed_sha256": "4ad7607ca742be20220eb1baae1c79ea2e01a94f2381ec190da14f698b9653d7"
+    },
+    {
+      "index": 4,
+      "packed_bytes": 283737,
+      "raw_bytes": 284300,
+      "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+    },
+    {
+      "index": 5,
+      "packed_bytes": 986,
+      "raw_bytes": 3616,
+      "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+    },
+    {
+      "index": 6,
+      "packed_bytes": 67006,
+      "raw_bytes": 81594,
+      "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+    }
+  ],
+  "rejected001_sha256": "c6adcbfbba6ea0f340670daa495f4d8db354fcf3362036af90402897e9eb6c08"
+}

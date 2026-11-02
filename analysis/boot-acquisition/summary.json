@@ -1,0 +1,22 @@
+{
+  "source": "captures/flash-read-runtime-20261031/metadata/boot-prefix.bin",
+  "source_sha256": "beec5e075521feaafb8049fa56d887823cddd1ff60b1e68a2f46197631c25970",
+  "header_words": [
+    "0xa4e49a17",
+    "0xedb8",
+    "0x0",
+    "0x2068000",
+    "0x820b4708",
+    "0x0",
+    "0x207f000",
+    "0x6a5ec27a"
+  ],
+  "body_bytes": 60856,
+  "body_crc32_verified": true,
+  "body_sha256": "3ec87a7b0426bfca6ccb8f1c422b3ad075309f5ab053f8d25aef9dbf53e859bc",
+  "load_address_from_header": "0x2068000",
+  "trailing_bytes": 4648,
+  "isa": "not yet independently classified",
+  "boot_validation_semantics": "not yet reverse engineered",
+  "read_only_acquisition": true
+}

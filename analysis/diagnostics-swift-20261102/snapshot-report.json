@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "test_methods": 9,
+  "snapshot_test_methods": 6,
+  "encoder_test_methods": 3,
+  "layout": "native-v1 20-byte little-endian",
+  "golden": {
+    "pack_format": "<4BHHIIBBH",
+    "hex": "070100013412cdab78563412ffffffffa500efbe"
+  },
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/DiagnosticCommands.swift": "ee49d7abc2d5a4dfa247c97be0a9e4e84b821c4521c9fcad3dca04618168d372",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/DiagnosticCommandsTests.swift": "0e0eab10b2f411e676d8cc30864af907cdb0a372a75c4fc7608785ec4a194099",
+    "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift": "e6e7aedac7f9da34323f126ce6d19dbf905d5e88136ec4307777939a819ebbcb"
+  },
+  "log_sha256": "1b11464f44c55e240d59bc370b54e4e9f6f39ef231d81c6e26abbb832514ed5c",
+  "body_validation": "Single JSON kind5 TLV, <=256 bytes, message.body exactly equals encoded TLV",
+  "json_validation": "Exact five keys, duplicate rejection, integer ABI1, exact identity/result/presentation,40 lowercase ASCII hex; optional one trailing NUL",
+  "state_validation": "flags only0..7; hidden/seen/resync0..1; reserved byte17 zero; no cross-field inference",
+  "correlation": "service15/cmd7d always; expectedEvent checked when supplied",
+  "hardware_actions": false,
+  "limitations": [
+    "Native-v1 differs from G2 overlay fonts/layout/lifetime.",
+    "Capability advertisement and user-visible output remain separate checks.",
+    "Codable supports saved snapshots; only static decode validates the native GM wire schema."
+  ]
+}

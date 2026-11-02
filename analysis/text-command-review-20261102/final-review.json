@@ -1,0 +1,45 @@
+{
+  "format": "memomind-text-command-final-readonly-review-v1",
+  "production_or_test_edits": false,
+  "device_actions": false,
+  "hardware_tested_by_review": false,
+  "blockers": [],
+  "source_drift_from_frozen_build": [],
+  "runtime_bytes": 63648,
+  "runtime_sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7",
+  "unchanged_maximum_bytes": 65536,
+  "sha256": {
+    "analysis/text-native-20261102/smoke.swift": "d4597869a1f70f6965fadfc6409a741916ee9770ddb6ba2e753f8039e4d66b69",
+    "analysis/text-native-20261102/verify-smoke.py": "7ebfe14aae46280abcbf8d41de382fb0217a0eac4bda3af9e63719dc8e9b9bc7",
+    "analysis/text-native-20261102/test-verifier.py": "d91538cd5d0d94326a3a17f1249d5b89abcef34c92175712e8a6e9b6fa3c1fdb",
+    "analysis/text-native-20261102/candidate-pins.json": "54fd679ce9932f0c2b338bb68b595241a021c96c58e09dab0dbcaf53f2efdbaf",
+    "analysis/text-native-20261102/verifier-tests-02/report.json": "063f27ef4e1023d13856e57fa90c6159085c4f36fb10f2c348b016ac7b561846",
+    "analysis/text-commands-001/report.json": "a787a202d02ff1ed6fdd925f074370ad05e1b59cae78c0dd7375702bff1f2f69",
+    "analysis/text-commands-001/rv32.json": "b656ab73171ebc7741135deccb4ca55bb9cff3c665cf481379addf961788fb5a",
+    "analysis/text-commands-001/host/report.json": "85c9e200a4f18e4f48f1a1d0adf9df5157e141d0c780dd13be45e9f9da077e68",
+    "runtime/build/text-commands-001/build.json": "4a3a6c0ce20f29f43266a51f009f181316fd97926e94eee3968a1ba6d9803916",
+    "runtime/build/text-commands-001/graphics.bin": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7"
+  },
+  "reviewed_existing_evidence": {
+    "host_original_function_differential_cases": 2598,
+    "actual_rv32_groups": 5,
+    "actual_rv32_calls": 644,
+    "verifier_synthetic_cases": 20,
+    "verifier_passed": true,
+    "tests_rerun_by_review": false
+  },
+  "closed_review_suggestions": [
+    "Smoke asserts native-resource font and reject missing-glyph policy",
+    "Verifier requires exact first four probe/header/capability service+command sequence and no extra business commands",
+    "Verifier independently hashes candidate256-byte app header and requires exact header reply",
+    "Verifier checks typed capability values and exact modes/bundle modes"
+  ],
+  "remaining_limits": [
+    "Read-only source/evidence review, no device execution or visual result",
+    "256-byte header match is candidate identity evidence, not full application readback",
+    "Mapped native font repertoire/pixels/kerning differ from G2; missing glyph rejection explicit",
+    "Native firmware helpers mocked in offline runtime tests; measured stacks exclude native/scheduler/interrupt frames",
+    "Successful scheduled response is not scanout acknowledgment or continuous-pixel-retention proof",
+    "Synthetic wire traces validate verifier logic, not native rendering/transport performance"
+  ]
+}

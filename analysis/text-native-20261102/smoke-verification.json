@@ -1,0 +1,45 @@
+{
+  "format": "memomind-native-text-smoke-verification-v1",
+  "capture": "captures/swift-mac-text-smoke-20261102-02",
+  "complete": true,
+  "probe_header_capabilities_verified": true,
+  "startup_notifications_captured": [
+    {
+      "event": 0,
+      "service": 1,
+      "command": 48,
+      "bodyHex": "0800000102"
+    },
+    {
+      "event": 1,
+      "service": 14,
+      "command": 12,
+      "bodyHex": "0800000100"
+    },
+    {
+      "event": 2,
+      "service": 1,
+      "command": 33,
+      "bodyHex": "0800000101040000040000eb03"
+    }
+  ],
+  "native_service_notifications_logged": 9,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "maximum_255_byte_text_acknowledged": true,
+  "highbit_text_acknowledged": true,
+  "bundled_text_acknowledged": true,
+  "empty_extreme_coordinates_acknowledged": true,
+  "invalid_commands_rejected": 6,
+  "lease_renewals_acknowledged": 118,
+  "cleared": true,
+  "black_frame_decoded_independently": true,
+  "hardware_pixel_readback": false,
+  "font_pixel_equivalence_to_g2": false,
+  "hold_seconds_before_clear": 36.7473473334685,
+  "finish_requested": true,
+  "maximum_hold_submission_gap_seconds": 0.559810291742906,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "f9a8e932ca6449cfc9cfdce4cb2c599f81a60353ac196db06b76f0b74af039c0"
+}

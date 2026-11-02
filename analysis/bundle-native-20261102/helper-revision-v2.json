@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-02T05:52:57.213360+00:00",
+  "production_firmware_changes": false,
+  "production_swift_library_changes": false,
+  "original_helper_preserved": true,
+  "first_attempt": "RESET refused with stock-ui-active before bundle execution",
+  "second_attempt": "All bundle and nine notification checks passed; helper stopped on unrelated service1 command0x3a TLV8 value0 after first hold renewal",
+  "revision": "Accept and log only that exact device status notice; preserve strict handling of every other unsolicited message. Independent verifier recognizes exact captured startup notices only before custom requests.",
+  "helper": "analysis/bundle-native-20261102/smoke-v2.swift",
+  "verifier": "analysis/bundle-native-20261102/verify-smoke-v2.py",
+  "swift_predicate_tests": 74,
+  "synthetic_verifier_cases": 30,
+  "synthetic_verifier_report": "analysis/bundle-swift-20261102/verifier-review/run-005/report.json",
+  "source_files": [
+    {
+      "path": "analysis/bundle-native-20261102/smoke-v2.swift",
+      "bytes": 12557,
+      "sha256": "d00dffb7110727deb336f3da6de8b2f4b6a7ed7e6e6442326dd3d88e1ea9f571"
+    },
+    {
+      "path": "analysis/bundle-native-20261102/verify-smoke-v2.py",
+      "bytes": 10974,
+      "sha256": "b80af450bcff246c824f2feabc08aa07cc660fcc9e9c841600659293c0e02c28"
+    },
+    {
+      "path": "analysis/bundle-native-20261102/status-predicate-test.swift",
+      "bytes": 1012,
+      "sha256": "2533ec1b8441bfe1837fb675b48cba9eae294cdd276a27fe48d51fb4bba2bb01"
+    }
+  ],
+  "limits": [
+    "Predicate tests and synthetic traces are offline evidence. Live result recorded separately.",
+    "Device status notification meaning is not inferred; exact observed wire shape is preserved."
+  ]
+}

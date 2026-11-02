@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "hardware_tested": false,
+  "source_sha256": {
+    "runtime/graphics/tests/test_diagnostic_commands.c": "9f3b532253cecd4147318758f3239c821f917a14c3712aa294f58efbbdb3fe4f",
+    "runtime/graphics/diagnostics.c": "b947c5f31dedb48416ff365e416b0c8e1407c4665a8fb7a1fa356c71ca3714c4",
+    "runtime/graphics/diagnostics.h": "d5e9f8f8e4e0694c82ae5b69b4ef6e6bfee6eab550dc085f554508a6b71da7f5",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/tests/run_diagnostic_command_tests.py": "0b8d300c209e8a5385728efc72863b4659c5c8a669e62bf561e91cc52da3717a"
+  },
+  "original_frame_sha256": "6918d5a23aea237cac0359bd00efdba76ebc56c6025b226ff2c5d8a644817015",
+  "original_control_branch_sha256": "64aac92a425d36f78db59131ba4c399c03dd79639d8ede6999f6fc78875898e5",
+  "scope": "standalone diagnostic owner and actual G2 state machine; full graphics/input command integration not yet covered",
+  "source_drift": []
+}

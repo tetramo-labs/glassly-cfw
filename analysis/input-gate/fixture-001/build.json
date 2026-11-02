@@ -1,0 +1,37 @@
+{
+  "gate_fixture_only": true,
+  "scene_session": true,
+  "input_observer": true,
+  "retained_input_entries": [
+    "glassly_input_command",
+    "glassly_input_observe"
+  ],
+  "symbols": {
+    "service_entry": 70893216,
+    "display_gate": 70893280,
+    "glassly_graphics_probe": 70893574,
+    "glassly_graphics_command": 70893576,
+    "glassly_graphics_display": 70893578,
+    "glassly_input_command": 70893580,
+    "glassly_input_observe": 70893582
+  },
+  "blob_sha256": "3c94acf1645a3c824f042c2469f22c2cd7132b22eeda1c855e36fdf274696595",
+  "elf_sha256": "8cec054169cc68ae47c6a97112ddd62d73a785590fcd6487058b995ea83e9e9d",
+  "elf_load_segments": [
+    {
+      "virtual_address": 70893216,
+      "physical_address": 70893216,
+      "file_offset": 3744,
+      "file_bytes": 384,
+      "memory_bytes": 384,
+      "flags": "R E",
+      "alignment": 4096
+    }
+  ],
+  "source_sha256": {
+    "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/entry.S": "5b52acaa19aa5cef580edb22f88b1b595322a5e527486d4e3858917c8abe222b",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/graphics.ld": "4ef8aeefd2d412c1a436e994d7a59ad463e33ce64b404a5ec03479a3c6333732",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/input-gate/fixture-001/stubs.c": "33b33887fabe449a95354684fda53b46020f2a3af0f78baa523d9b208745f2b9"
+  },
+  "scope": "Synthetic C link bodies; no scene code; tests gate only"
+}

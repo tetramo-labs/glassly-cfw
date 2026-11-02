@@ -1,0 +1,11 @@
+[
+  {
+    "requested": "04210120",
+    "address": "ram:04210120",
+    "incoming_references": [
+      "ram:0420f0ce UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

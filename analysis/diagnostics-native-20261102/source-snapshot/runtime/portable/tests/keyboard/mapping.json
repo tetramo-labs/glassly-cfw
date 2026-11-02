@@ -1,0 +1,57 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "upstream_files": {
+    "LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "patches/keyboard.c": "d8ad35c09b178ee5a38dec50d5bb7dc2a6fc757091e530ab6b6a234a40912c2f",
+    "patches/keyboard_core.h": "a706fabf96ea9db37db0b07de5015c1458f0774549efd1b1d1ced1d5da2a4a49",
+    "patches/host/keyboard_host_test.c": "defe6b2fe82ddb3b510cfa8be16cfbb820917f337cc0238c8409c3d66a5972e3"
+  },
+  "counterpart": "runtime/portable/tests/keyboard/keyboard_host_test.c",
+  "production": [
+    "runtime/portable/keyboard.c",
+    "runtime/portable/keyboard.h"
+  ],
+  "status": "mixed-portable-core-tested-native-adapter-pending",
+  "scenario_functions": [
+    "isolation",
+    "commands",
+    "reports",
+    "prompts",
+    "malformed",
+    "timers"
+  ],
+  "scenario_main_calls": {
+    "isolation": 1,
+    "commands": 1,
+    "reports": 1,
+    "prompts": 1,
+    "malformed": 1,
+    "timers": 1
+  },
+  "unchanged_assert_sites": 86,
+  "assert_evaluations": 966,
+  "assertion_map": "analysis/portable-keyboard-tests-02/assertion-map.json",
+  "runner": "runtime/portable/tests/run_keyboard_tests.py",
+  "pending": [
+    "MemoMind HOGP discovery/ATT/DM and security adapters",
+    "Native lifecycle, timer and worker queue adapter",
+    "MemoMind outbound channel mapping",
+    "G2 ARM hook/machine scenarios remain platform-specific"
+  ],
+  "native_shim_boundary": [
+    "Cordio ATT/advertisement/DM structure conversion",
+    "numeric comparison endian extraction and modulo",
+    "G2 type1/sid9 sender ABI assertions",
+    "fake stock scan/connect/ATT/security callbacks"
+  ],
+  "arm_machine_scenarios_pending": [
+    "dormant",
+    "pairing_and_routing",
+    "io_capability",
+    "att_requests",
+    "fragments_overflow_and_oom",
+    "timeout_and_disable",
+    "scan_and_capacity",
+    "allocation_failure"
+  ]
+}

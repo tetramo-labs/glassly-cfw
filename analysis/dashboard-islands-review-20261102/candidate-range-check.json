@@ -1,0 +1,9 @@
+{
+  "candidate_sha256": "0317abeac1d8b545216152b2d14220bdb91b99a14f5293c8444696769fa1af39",
+  "matches_independent_constructor": true,
+  "exact_stock_harness_ranges_match_candidate": {
+    "dispatcher": true,
+    "table": true,
+    "startup_copy_including_memset": true
+  }
+}

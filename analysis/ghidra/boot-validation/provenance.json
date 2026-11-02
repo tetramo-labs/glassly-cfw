@@ -1,0 +1,42 @@
+{
+  "inputs": [
+    {
+      "path": "analysis/boot-acquisition/boot-body.bin",
+      "bytes": 60856,
+      "sha256": "3ec87a7b0426bfca6ccb8f1c422b3ad075309f5ab053f8d25aef9dbf53e859bc"
+    },
+    {
+      "path": "analysis/boot-acquisition/boot-image.bin",
+      "bytes": 60888,
+      "sha256": "44d32ea406fc89faeccc778a82bc37e1eb1d8069997911ee4ae2efe3225a5048"
+    },
+    {
+      "path": "analysis/boot-acquisition/summary.json",
+      "bytes": 662,
+      "sha256": "a81e0e3540237ae43fd088c5a97e163058055e4d9d63936f8da54d41c53e7e09"
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/boot-prefix.bin",
+      "bytes": 65536,
+      "sha256": "beec5e075521feaafb8049fa56d887823cddd1ff60b1e68a2f46197631c25970"
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/boot-maps.bin",
+      "bytes": 8192,
+      "sha256": "dc4cc0ff081b21ad25ef042086e8399971d1706a9a0b5dcbc35aacb4b304a35b"
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/app-header.bin",
+      "bytes": 256,
+      "sha256": "643fd6b82cf02ac58295cfe68656fce52671de74e67d208d4172da000d24315f"
+    }
+  ],
+  "database": "projects/memomind-boot-live-20261031",
+  "loader": "Raw Binary",
+  "language": "RISCV:LE:32:default:gcc",
+  "base": "02068000",
+  "bss": "02076db8..0207ac8c (uninitialized, startup-derived)",
+  "gp": "02077498",
+  "source_mutations": false,
+  "device_actions": false
+}

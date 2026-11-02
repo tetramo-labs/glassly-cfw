@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-02T16:49:22.040126+00:00",
+  "state": "Text firmware transferred and boot verified; display test holding for user confirmation",
+  "installed_release": "text-commands-001",
+  "transfer_verified": true,
+  "boot_verified": true,
+  "flash_capture": "captures/swift-mac-text-flash-20261102-02",
+  "preflight_capture": "captures/swift-mac-text-preflight-20261102-01",
+  "smoke_capture": "captures/swift-mac-text-smoke-20261102-01",
+  "smoke_session": 42532,
+  "visual_confirmation_pending": true,
+  "clear_pending": true,
+  "next": "Record exact user reply in visual-confirmation.json with text_pattern_visible:true; request graceful finish only if helper still holding; verify-smoke.py then finalize-v2.py"
+}

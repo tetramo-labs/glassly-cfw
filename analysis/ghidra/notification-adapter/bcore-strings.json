@@ -1,0 +1,52 @@
+[
+  {
+    "address": "0x140e5858",
+    "offset": "0xd5838",
+    "text": "rpc_task"
+  },
+  {
+    "address": "0x140e77b8",
+    "offset": "0xd7798",
+    "text": "T_ancs_botm.c"
+  },
+  {
+    "address": "0x140eaf38",
+    "offset": "0xdaf18",
+    "text": "rpc_service.c"
+  },
+  {
+    "address": "0x140eaf64",
+    "offset": "0xdaf44",
+    "text": "ACORE_RPC"
+  },
+  {
+    "address": "0x140eaf70",
+    "offset": "0xdaf50",
+    "text": "BCORE_RPC"
+  },
+  {
+    "address": "0x140eaf7c",
+    "offset": "0xdaf5c",
+    "text": "DCORE_RPC"
+  },
+  {
+    "address": "0x140eaf88",
+    "offset": "0xdaf68",
+    "text": "ACORE_RPC_ACK"
+  },
+  {
+    "address": "0x140eaf98",
+    "offset": "0xdaf78",
+    "text": "BCORE_RPC_ACK"
+  },
+  {
+    "address": "0x140eafa8",
+    "offset": "0xdaf88",
+    "text": "DCORE_RPC_ACK"
+  },
+  {
+    "address": "0x140ece31",
+    "offset": "0xdce11",
+    "text": "MAP Notification Service"
+  }
+]

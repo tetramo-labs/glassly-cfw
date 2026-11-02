@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "artifacts": [
+    {
+      "path": "app-header.bin",
+      "device": 0,
+      "start": 2011136,
+      "end": 2011392,
+      "bytes": 256,
+      "sha256": "27062d49cc200c767c8804904ebab3ff905d23a1575c6a634102e095be918ce5",
+      "all_ff": false
+    },
+    {
+      "path": "plugin-directory.bin",
+      "device": 1,
+      "start": 5242880,
+      "end": 5308416,
+      "bytes": 65536,
+      "sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "all_ff": true
+    },
+    {
+      "path": "external-tail.bin",
+      "device": 1,
+      "start": 7340032,
+      "end": 8388608,
+      "bytes": 1048576,
+      "sha256": "f5fb04aa5b882706b9309e885f19477261336ef76a150c3b4d3489dfac3953ec",
+      "all_ff": true
+    }
+  ],
+  "full_256_byte_app_header_matches": true,
+  "plugin_directory_unchanged": true,
+  "flash_mutations": 0,
+  "reservation_proven": false
+}

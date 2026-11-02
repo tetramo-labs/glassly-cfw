@@ -1,0 +1,38 @@
+[
+  {
+    "address": "0x4329b2e",
+    "source_offset": 1305358,
+    "bytes": "aa842e89232ec4fcb689eff0bfdd0326c4fdce86ca852685eff03fb8",
+    "meaning": "program argument preservation and page helper"
+  },
+  {
+    "address": "0x4329b56",
+    "source_offset": 1305398,
+    "bytes": "b72701021397240093874734ba979c4391c382972685eff0ffddb70500044e86ca950145efb00f87",
+    "meaning": "program callback/unlock/cache order"
+  },
+  {
+    "address": "0x4329a2c",
+    "source_offset": 1305100,
+    "bytes": "b3e7c500d2078544a9ebae89b28a416b2a894e8aeff03fedd684",
+    "meaning": "erase alignment check and lock"
+  },
+  {
+    "address": "0x4329aa0",
+    "source_offset": 1305216,
+    "bytes": "b3778a0199ef63ee640193550a014a85eff03fcc5a9ab3876441aa8449f9be8471b79355ca00c205c1814a85eff03fc95e9ab387",
+    "meaning": "64KiB or4KiB erase selection"
+  },
+  {
+    "address": "0x432971c",
+    "source_offset": 1304316,
+    "bytes": "93f4f90fb3049b4063739900ca8483270a009c4b89eb9305001b13058c6f9740edffe780c0a583270a00a6865e869c4bce85568582974df9",
+    "meaning": "page size and four argument table dispatch"
+  },
+  {
+    "address": "0x4355f10",
+    "source_offset": 1486576,
+    "bytes": "00000004000000140000001400000008000020262000000030000000310000002100000070000000",
+    "meaning": "crosscore alias/type table"
+  }
+]

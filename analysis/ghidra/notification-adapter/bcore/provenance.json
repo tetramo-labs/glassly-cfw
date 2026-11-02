@@ -1,0 +1,30 @@
+{
+  "target": "analysis/extracted/validated-1.0.3.127/segment-1.body.bin",
+  "size": 909644,
+  "sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+  "loader": "Ghidra BinaryLoader, real raw binary",
+  "language": "RISCV:LE:32:default",
+  "compiler_spec": "gcc",
+  "base": "14010020",
+  "base_source": "OTA partition metadata and segment header agree",
+  "isa_evidence": "entry startup CSR/compressed RISC-V LE bytes in startup-entry.asm; register-width RV32 from original firmware profile and startup pointer conventions; no synthetic ELF",
+  "gp": "10231864",
+  "gp_source": "1401003e AUIPC gp + 14010042 ADDI gp",
+  "code_copy": {
+    "source": "14010084",
+    "destination": "10205fd0",
+    "end_exclusive": "1022e540"
+  },
+  "data_copy": {
+    "source": "140eb280",
+    "destination": "1022e540",
+    "end_exclusive": "102313d4"
+  },
+  "bss": {
+    "start": "10231508",
+    "end_exclusive": "10237fe4",
+    "model": "uninitialized, not fabricated runtime bytes"
+  },
+  "mapping_evidence": "startup-mapping.asm",
+  "scope": "isolated analysis DB only; shared app project and binaries unchanged"
+}

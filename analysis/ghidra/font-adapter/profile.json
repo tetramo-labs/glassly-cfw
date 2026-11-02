@@ -1,0 +1,189 @@
+{
+  "scope": "Static native font ABI for stock MemoMind 1.0.3.127, not a live validation or patch",
+  "body": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+  "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "base": "0x41eb020",
+  "sdk_commit": "171098bff25934a534a49f95b88df58fbed404c7",
+  "abi": "RV32IMAF C ilp32f; pointer/int32 arguments in a0..a3",
+  "functions": {
+    "glyph_dsc": "0x042d153c: int(const font*, glyph16*, uint32 codepoint, uint32 next_codepoint)",
+    "glyph_bitmap": "0x042d14be: const uint8*(const resolved_font*, uint32 codepoint)",
+    "font_line_height": "0x042996d6: int32(const font*)",
+    "resource_read": "0x042d13a4: const uint8*(uint32 resource_id,uint32 offset,uint32 length)"
+  },
+  "glyph_dsc": {
+    "size": 16,
+    "align": 4,
+    "resolved_font": 0,
+    "advance_u16": 4,
+    "box_w_u16": 6,
+    "box_h_u16": 8,
+    "ofs_x_s16": 10,
+    "ofs_y_s16": 12,
+    "bpp_low4_placeholder_bit4": 14,
+    "reserved": 15
+  },
+  "fonts": [
+    {
+      "address": "0x0438f77c",
+      "body_offset": "0x1a475c",
+      "bytes": "c61e2d045e1d2d04220000000700000000000000000000007c5e380400000000",
+      "words_u32le": [
+        "0x042d1ec6",
+        "0x042d1d5e",
+        "0x00000022",
+        "0x00000007",
+        "0x00000000",
+        "0x00000000",
+        "0x04385e7c",
+        "0x00000000"
+      ]
+    },
+    {
+      "address": "0x0438f75c",
+      "body_offset": "0x1a473c",
+      "bytes": "0c1a2d04a4182d04290000000900000000000000000000007c5e380400000000",
+      "words_u32le": [
+        "0x042d1a0c",
+        "0x042d18a4",
+        "0x00000029",
+        "0x00000009",
+        "0x00000000",
+        "0x00000000",
+        "0x04385e7c",
+        "0x00000000"
+      ]
+    },
+    {
+      "address": "0x04385e7c",
+      "body_offset": "0x19ae5c",
+      "bytes": "cc052d0472042d041b00000009000000000000000000000044fb000200000000",
+      "words_u32le": [
+        "0x042d05cc",
+        "0x042d0472",
+        "0x0000001b",
+        "0x00000009",
+        "0x00000000",
+        "0x00000000",
+        "0x0200fb44",
+        "0x00000000"
+      ]
+    },
+    {
+      "address": "0x0200fb44",
+      "body_offset": "0x1af234",
+      "bytes": "92c4250488c225041e0000000100000000000000000000000000000000000000",
+      "words_u32le": [
+        "0x0425c492",
+        "0x0425c288",
+        "0x0000001e",
+        "0x00000001",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  ],
+  "api_table_witness": {
+    "address": "0x043661c0",
+    "body_offset": "0x17b1a0",
+    "bytes": "7cf738045cf73804d696290412382b0448342b04"
+  },
+  "coverage_witnesses": [
+    {
+      "address": "0x02011460",
+      "body_offset": "0x1b0b50",
+      "bytes": "00ff00000055aaff"
+    },
+    {
+      "address": "0x043859c0",
+      "body_offset": "0x19a9a0",
+      "bytes": "00112233445566778899aabbccddeeff"
+    }
+  ],
+  "code_witnesses": [
+    {
+      "address": "0x042d153c",
+      "body_offset": "0xe651c",
+      "bytes": "797122d406d626d24ad04ece52cc0018"
+    },
+    {
+      "address": "0x042d1662",
+      "body_offset": "0xe6642",
+      "bytes": "83a70900a6854e85232cd4fc232ec4fc82970326c4fd832684fd"
+    },
+    {
+      "address": "0x042d14be",
+      "body_offset": "0xe649e",
+      "bytes": "05ed411122c406c6"
+    },
+    {
+      "address": "0x042d1520",
+      "body_offset": "0xe6500",
+      "bytes": "0577130757c0b387e5006374f8005c418287"
+    },
+    {
+      "address": "0x042d1ed6",
+      "body_offset": "0xe6eb6",
+      "bytes": "011122cc26ca4ac856c206ce4ec652c4"
+    },
+    {
+      "address": "0x042d1d6e",
+      "body_offset": "0xe6d4e",
+      "bytes": "797122d452cc5ac806d626d24ad04ece"
+    },
+    {
+      "address": "0x042d13a4",
+      "body_offset": "0xe6384",
+      "bytes": "011122cc06ce00102324b4fe2326c4feeff0dfee0326c4fe832584fe6244f24005616ff0cfe8"
+    },
+    {
+      "address": "0x0425c03c",
+      "body_offset": "0x7101c",
+      "bytes": "411122c6000837070102aa87032587b301e53244410182801841e30cf7fe4849c5bf"
+    },
+    {
+      "address": "0x0425c4a2",
+      "body_offset": "0x71482",
+      "bytes": "3285ae84eff07fb92a8981471dcdeff01fda834769002392f400834749002393f400834759002394f400830779002395f400830789002396f40083c7e400c19b93e717002387f4008547b2402244"
+    }
+  ],
+  "native_coverage_u8": {
+    "1bpp": [
+      0,
+      255
+    ],
+    "2bpp": [
+      0,
+      85,
+      170,
+      255
+    ],
+    "4bpp": [
+      0,
+      17,
+      34,
+      51,
+      68,
+      85,
+      102,
+      119,
+      136,
+      153,
+      170,
+      187,
+      204,
+      221,
+      238,
+      255
+    ]
+  },
+  "packed_bit_index": "bpp * (row*box_w + col); MSB first; no row alignment",
+  "bitmap_owned_by": "host; never free mapped resources or runtime glyph-cache pointers",
+  "unresolved": [
+    "c6 font resource bytes absent in captured OTA; exact repertoire/glyph dimensions unavailable offline",
+    "cross-task mutation of final runtime glyph-cache not proven serialized",
+    "complete worst-case logging/cold-resource-init stack and heap not bounded"
+  ]
+}

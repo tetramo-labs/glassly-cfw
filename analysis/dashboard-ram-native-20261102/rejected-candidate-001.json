@@ -1,0 +1,7 @@
+{
+  "candidate": "captures/firmware/dashboard-ram-001/firmware.bin",
+  "sha256": "c6adcbfbba6ea0f340670daa495f4d8db354fcf3362036af90402897e9eb6c08",
+  "rejected": true,
+  "device_actions": false,
+  "reason": "Pre-admission instruction review found byte-transposed ret/nop encoding in three status/header gates. Superseded by dashboard-ram-002 with tested c.li a0,0;c.jr ra at all six gates."
+}

@@ -1,0 +1,20 @@
+{
+  "format": "memomind-raster-swift-catalog-validation-v1",
+  "passed": true,
+  "tests": 14,
+  "skipped": 0,
+  "required_actual_fixtures": 4,
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "4cc33e2ee713e12ea75f02bff0bb22318b6eb30a345f7a82a49c04bad8d82dcc",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "b68e9618f74429443f38031eb1768cfd07c8b1251bcbb81acf95a564e5bf4778",
+    "swift/MemoMindKit/Documentation/FirmwareCatalog.md": "aee2a2d8765c3de37bc56462218c8f728ae3ef984cc1a4f1deff1f9b8ac52565",
+    "swift/MemoMindKit/Documentation/FirmwareCatalogProvenance.json": "dace793b515d7c785abaf563770bec4d80053bcbf9a1f01fcf3bb817c12ffa94"
+  },
+  "release_name": "raster-commands-001",
+  "firmware_bytes": 2227971,
+  "firmware_sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261",
+  "construction_replay": "swift-catalog-reconstruction.json",
+  "log": "swift-catalog-tests.log",
+  "hardware_tested": false,
+  "scope": "Exact literal catalog admission and nativeSwift container/hash/CRC validation, not a Swift constructor/decompressor"
+}

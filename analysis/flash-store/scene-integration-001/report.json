@@ -1,0 +1,122 @@
+{
+  "format": "memomind-scene-store-tests-v1",
+  "result": "failed",
+  "hardware_tested": false,
+  "commands": [
+    {
+      "label": "generated-check",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/prepare_scene_port.py",
+        "--check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "host-build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_SCENE_EXTERNAL_STORE=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/scene_store/test_scene_store.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene_store.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene_flash_store.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/flash_store.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/test_scene_store"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "host-run",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/test_scene_store",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/vector-fixture.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/gif-300.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/svg-300.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build-scene",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-DMM_SCENE_EXTERNAL_STORE=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/scene.o"
+      ],
+      "returncode": 1
+    }
+  ],
+  "source_sha256": {
+    "scene.c": "1ac2716aa807158a3711efa4da23508e282176e34146c9c7cbddb76142ac7391",
+    "scene.h": "f2fef59ea1c4311d9a0449455df276149896de9d99e83f2a891950a81e0f6945",
+    "scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "scene_assets_external.inc": "b97c4db25b57bd034be51201249e2cbeaecd44887e1ca39eb410fd4ba87895d3",
+    "scene_cache.inc": "a84a9b1285270178f643f018f8f8cc352f23f5148f3d753b70042699382abf92",
+    "scene_flash_store.c": "114def30372a7d195bdde390c61a1cd9ed4d39b73e84ff8824dba175bc7d9a77",
+    "scene_flash_store.h": "d80698ce3dd79cac2e3ebc724272227e3054eeceee62b48e598cfa06ff58c999",
+    "scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "scene_shapes.inc": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c",
+    "scene_store.c": "b2bb8c5fd1d4bbacdfa135c610e4dba393373cfe202f2fcd9118bdf5fc5e4a41",
+    "scene_store.h": "c110f67bc75958a6dac7323da78f5ef905890619d4d1fb1018b28adb49a78474",
+    "vector.c": "95874dacc491b5447ddd5a7a72ff250a78c58a609dcab4f58e6ba6d55bc80605",
+    "vector.h": "37a0dbfb85519b676bffe2baf1861ec0a8dbad45ba0770d55091d09f154d6007",
+    "geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "flash_store.c": "d565de6f9b9f197e1711803739f23bc1500e590a3f4311e2b5906be33233c03f",
+    "flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "tests/run_scene_store_tests.py": "97b69e61efa5ba6f62eb41f0531c60f2b5dccbd351c04aa72e02b71b801bf008",
+    "tests/prepare_scene_port.py": "225fa42b0e4b90b99a1c78e48f039bafe7f764fb2d1bef4d4d60f8f4eef000c6",
+    "tests/scene_store/generated-overlay.json": "fb750e0104fd5a4dc6f889a6c78980809d2873fd52d2d3d78af2daec50381fa7",
+    "tests/scene_store/test_scene_store.c": "a6543e4ed9f525e8daca8e9e34ab1781395d03f517c4155736c059adb6e84cdb",
+    "tests/scene_store/update_overlay.py": "af6d8783b1b6478b0658cca70a01fa819cb95cc231d365e433809b03ca4389db"
+  },
+  "scope": "MM_SCENE_EXTERNAL_STORE optional portable backend; actual production core, mocked physical callbacks",
+  "limits": [
+    "No native reservation or hardware binding",
+    "No full65535 native ingress/inflater integration",
+    "Shared framebuffer may be partially modified on render I/O failure; shadow_invalid forbids presentation until redraw",
+    "Measured individual stack frames exclude full native call chains"
+  ],
+  "fixtures_sha256": {
+    "vector-fixture.bin": "dbeab3248f1259a06faec40e9c83f0fedc12c674cce7d864f577ca8e1c84d269",
+    "gif-300.bin": "d8706a134a268e8ada75a4edd81356eea8d932f48f271c5f2c368f3aef744687",
+    "svg-300.bin": "7dc551a4ee22e4cdc1182bb49586889980a6fa1e24f24c905d8cd2d19a6cee1b"
+  },
+  "host_result": "differential /Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/vector-fixture.bin messages=24 probes=21 reads=442 erases=12 programs=192\ndifferential /Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/gif-300.bin messages=302 probes=7200 reads=65888 erases=710 programs=11360\ndifferential /Users/fosse/dev/glassly-memomind-one-cfw/analysis/flash-store/scene-integration-001/svg-300.bin messages=302 probes=7200 reads=158471 erases=1320 programs=21120\nfullcapacity=262144 fullmessage=65535 callback_faults=528 mandatory_snapshot=yes\ncached-font-cross-sector=yes mixed-rle=yes immediate-retained=yes asset_faults=35 render_faults=20 render_failure=explicit\npaths=512edges/8196bytes scene_edges=4096 overbudget_rejected=yes show_header_failure_rollback=yes\nPASS scene-store differential and transaction failures",
+  "error": "rv32-build-scene failed; inspect captured stdout/stderr"
+}

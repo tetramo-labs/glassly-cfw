@@ -1,0 +1,274 @@
+{
+  "format": "memomind-native-flash-binding-tests-v1",
+  "passed": true,
+  "device_actions": false,
+  "source_sha256": {
+    "runtime/graphics/flash_store_native.c": "5a65c55a135037fdf446fd8b013132a5ba6d1fbe1a883376f6d118a3df7c2fa1",
+    "runtime/graphics/flash_store_native.h": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/graphics/tests/flash_store_native/test_flash_store_native.c": "71a1bbb0e0a37a082ff2b56978fb7ec356559c303cb1b728224e706cff66d26a",
+    "runtime/graphics/tests/flash_store_native/layout.c": "5006129f827d24c387fd26b702e621ea437e348d65c6b691efddf60d91478fcd",
+    "runtime/graphics/tests/run_flash_store_native_tests.py": "27f182c3cf922d58f87e9fd209ed3418ad36a58bf6e0cc1ccb5b9b425891ca6e",
+    "tests/rv32/flash_store_native_emulator_test.py": "d34d6e99039eeea70dad4993be13aa65e3d5616252a48b1da83dbdd61f05cc4f"
+  },
+  "commands": [
+    {
+      "label": "host-build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_FLASH_NATIVE_HOST_TEST",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/flash_store_native/test_flash_store_native.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/host-test"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "host-run",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/host-test"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-mcmodel=medany",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-symbols",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "--defined-only",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-header",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-readelf",
+        "-h",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-size",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-mcmodel=medany",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/flash_store_native/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_flash_native_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-link",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-msmall-data-limit=0",
+        "-mcmodel=medany",
+        "-std=c11",
+        "-O2",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-common",
+        "-fno-pic",
+        "-fno-pie",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-nostdlib",
+        "-Wl,-Ttext=0x043b0000,--no-relax,-e,mm_flash_native_init",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.o",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-binary",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.elf",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-linked-symbols",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "--defined-only",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-disassembly",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objdump",
+        "-dr",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/adapter.elf"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-execute",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/flash_store_native_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/native-flash-adapter-001/emulation"
+      ],
+      "returncode": 0
+    }
+  ],
+  "limitations": [
+    "Four native APIs mocked; no actual flash/cache hardware, waits or concurrent ownership proof.",
+    "Host test seam bypasses numeric SRAM-range check; actual RV32 execution tests that production check.",
+    "No task/queue creation, integration, native badmap acquisition or physical reservation established."
+  ],
+  "native_abi_source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "native_abi_evidence_sha256": {
+    "analysis/ghidra/external-xip-review/report.md": "7dc869aa14869158b2aade407b302769c075786a0a8e20af0154648f10f55cee",
+    "analysis/ghidra/external-xip-review/byte-witnesses.json": "6a1bf77943bb59e6db620cb8a312e79350d078ffaf94fd53434d1dd4c57ef86f"
+  },
+  "host_result": "PASS checks=78655 sectors=256 pages=4096 badbits=256 erase_readback_faults=16 context_bytes=300",
+  "rv32": {
+    "layout": {
+      "context_bytes": 300,
+      "status_offset": 4,
+      "verification_offset": 40,
+      "busy_offset": 296,
+      "phase_offset": 297
+    },
+    "max_individual_stack_bytes": 48,
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:46:12:admit\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:88:5:mm_flash_native_program\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:100:5:mm_flash_native_erase\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:82:5:mm_flash_native_read\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:66:5:mm_flash_native_init\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/flash_store_native.c:74:5:mm_flash_native_callbacks\t0\tstatic"
+    ],
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "binary_sha256": "a2c79a2e62f4d997d69687488a51963ca94b29e53e3719bd79d3b55824042a4a",
+    "binary_bytes": 1298,
+    "checks": 1877
+  },
+  "source_drift": []
+}

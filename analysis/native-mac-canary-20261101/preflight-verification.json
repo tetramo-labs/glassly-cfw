@@ -1,0 +1,14 @@
+{
+  "format": "memomind-native-mac-canary-preflight-v1",
+  "capture": "captures/swift-mac-canary-preflight-20261101-02",
+  "complete": true,
+  "app_header_full256_matches": true,
+  "target_and_neighbor_all_ff": true,
+  "topology_and_badmap_match_backup": true,
+  "raw_application_frames_independently_parsed_and_correlated": true,
+  "native_submissions_completed": true,
+  "current_full_backup_verification": "analysis/native-mac-backup-20261101/verification.json",
+  "flash_mutations": 0,
+  "automatic_retries": 0,
+  "trace_sha256": "ab501af4db41758646b5a9f28b0e089c0c5955b975e2dfddbd5d90ebb8d8498a"
+}

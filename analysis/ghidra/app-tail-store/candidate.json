@@ -1,0 +1,23 @@
+{
+  "basis": "Stock partition record plus input-observer-001 final_bounds; no flash read or reservation performed",
+  "partition": {
+    "index": 2,
+    "type": 32,
+    "flash_start": 2011136,
+    "load_address": 69120032,
+    "body_size": 1773176,
+    "allocation_size": 2097152
+  },
+  "candidate_physical_start": "0x3ab000",
+  "candidate_physical_end_exclusive": "0x3eb000",
+  "candidate_xip_start": "0x43ab000",
+  "candidate_xip_end_exclusive": "0x43eb000",
+  "candidate_bytes": 262144,
+  "sector_count": 64,
+  "current_final_body_physical_end_exclusive": "0x3a7f00",
+  "gap_between_body_end_and_candidate": 12544,
+  "maximum_raw_app_bytes_before_overlap": 1835008,
+  "maximum_body_bytes_before_overlap": 1834976,
+  "candidate_currently_outside_declared_body": true,
+  "stock_ownership": "still within type0x20 application allocation; no new partition"
+}

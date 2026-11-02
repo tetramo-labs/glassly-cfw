@@ -1,0 +1,12 @@
+{
+  "original_preflight_prefix_unchanged": true,
+  "prefix_bytes": 9597802,
+  "backwards": [
+    {
+      "offset": 5440302,
+      "backwards_microseconds": 1
+    }
+  ],
+  "all_backwards_offsets_precede_this_transfer": true,
+  "general_traffic_losslessness_established": false
+}

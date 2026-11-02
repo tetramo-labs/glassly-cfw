@@ -1,0 +1,17 @@
+{
+  "utc": "2026-11-02T06:36:58.979340+00:00",
+  "state": "Initial RFCOMM connection timed out before any application frame; awaiting wake",
+  "candidate_release": "text-commands-001",
+  "candidate_installed": false,
+  "ota_started": false,
+  "last_boot_verified_release": "bundle-commands-001",
+  "aggregate": "analysis/regression-20261102-03/report.json",
+  "required_stages_passed": 105,
+  "python_tests_passed": 223,
+  "swift_tests_passed": 89,
+  "sources_rechecked": 277,
+  "source_drift": false,
+  "candidate_matches_aggregate_runtime": true,
+  "failed_attempt": "captures/swift-mac-text-flash-20261102-01",
+  "next": "Retry exact text candidate in capture02 after wake, then independent OTA proof, postbootpreflight, visible text and clear"
+}

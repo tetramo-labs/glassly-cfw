@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "status": "compiled-not-executed",
+  "verifier_cases": 42,
+  "verifier_evidence": "analysis/diagnostics-native-20261102/verifier-v2-tests-003/report.json",
+  "source_evidence": {
+    "fresh_seed": "scene_cache.inc221-227: uint16(t ^ (t >>16)); seed0 becomes1",
+    "reset": "scene_cache.inc1935-1936: supplied epoch if nonzero, otherwise next epoch with zero skipped",
+    "cleanup": "scene_cache.inc333-336 + graphics.c385-386: release advances; diagnostics saves released epoch",
+    "clock": "scene.c19 -> graphics.c141 -> platform now"
+  },
+  "initial_rule": "Valid nonzero APPLIED RESET epoch anchorsE when savedSceneEpoch0; retained nonzero saved epoch still requires next(saved)",
+  "remaining_rule": "cleanup savesnext(E), repeatedcleanup unchanged, nextzeroRESET returnsnext(next(E)), finalcleanup savesnext(next(next(E)))",
+  "failed_attempt": {
+    "capture": "captures/swift-mac-diagnostics-smoke-20261102-01",
+    "observed_first_reset_epoch": 33149,
+    "observed_saved_scene_epoch": 0,
+    "failure": "Helper initial epoch assumption, not a native protocol rejection",
+    "limitations": [
+      "Stopped after first RESET and diagnostic clear; no frame-order/resync/overlay/full cleanup smoke success established.",
+      "Template catch closed transport without claiming display cleanup.",
+      "Firmware/header/OTA evidence is separate root-owned evidence, not inferred here."
+    ]
+  },
+  "prior_files_modified": false,
+  "device_actions": false,
+  "files_sha256": {
+    "analysis/diagnostics-native-20261102/smoke-v2.swift.in": "c00ea73fded58338ca6ea73ceb315f5252288d9bdc9ed17f73624a423e0db66f",
+    "analysis/diagnostics-native-20261102/smoke-v2.swift": "7098f80a57f370d16a07a84d2d6fd0b869e8ec85fefbf094c670b56105e7a691",
+    "analysis/diagnostics-native-20261102/smoke-v2": "bc1b9410211016adefd32911a7c63d5e359bfb95a5618397e661712f26cbdb02",
+    "analysis/diagnostics-native-20261102/verify-smoke-v2.py": "120743caa379b9f5822393eafbf8a92141b6a1bd96f1fe2b2a6e561cadefcd68",
+    "analysis/diagnostics-native-20261102/test-verifier-v2.py": "6125fc297226d305b32895ad0801f3af2bda26b134b710f50caa56ee5192f837",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/graphics/graphics.c": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+    "runtime/graphics/scene_session.c": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+    "captures/swift-mac-diagnostics-smoke-20261102-01/trace.jsonl": "b480c2c0f5104cbf2138ac0cfe815fcb988c3066ddccaa35ddbf3c2718bdb4e2",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o": "0e6987b432d1883712bf510e1854398ddeddd6c6e3baa3a3d21cab8d8a6ec9da",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o": "1f3cf000f1e72256b8baed98c071b9a5c7f613576cc39edc84a61ee5b1bff7c8"
+  }
+}

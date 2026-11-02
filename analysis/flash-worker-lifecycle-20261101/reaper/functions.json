@@ -1,0 +1,12 @@
+[
+  {
+    "requested": "0200cb12",
+    "address": "ram:0200cb12",
+    "incoming_references": [
+      "ram:0200c750 PARAM",
+      "ram:041f77d4 PARAM"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

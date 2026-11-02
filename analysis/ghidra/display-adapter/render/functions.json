@@ -1,0 +1,18 @@
+[
+  {
+    "requested": "042abd06",
+    "address": "ram:042abd06",
+    "incoming_references": [
+      "ram:042601a0 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042cda18",
+    "address": "ram:042cda18",
+    "incoming_references": [],
+    "completed": true,
+    "error": ""
+  }
+]

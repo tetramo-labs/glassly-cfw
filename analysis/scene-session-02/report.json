@@ -1,0 +1,141 @@
+{
+  "format": "memomind-scene-session-tests-v1",
+  "passed": true,
+  "source_hashes": {
+    "runtime/graphics/graphics.c": "56e967f5154ad22792b863452577bdc322d8fb7487804d9fb439058982f12f6d",
+    "runtime/graphics/graphics.h": "0e8c37abff8b106e853353940928d4f9aafafb0585df0ddc94c7985f98f24bf0",
+    "runtime/graphics/native.c": "c8ef4626f35cc7a2e8b6b1452cf2d0ba38fc04b80ca1331d10a7decab8eaf7e7",
+    "runtime/graphics/scene_session.c": "38d6f878851836dee38f6f0f7cff23637dc950070fda15f9026167e0c24edb57",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62",
+    "runtime/graphics/tests/run_scene_session_tests.py": "ad61feeb75adcc0033099784f14f0a232e385d1a07c692568c0cafe00e8dd2f8",
+    "runtime/graphics/tests/run_tests.py": "2723f9a3ecd94e67c19d65b56fc229083b681fc8257a5574576455674d9551db",
+    "runtime/graphics/tests/test_graphics.c": "2ddf0b80ef802e51ff27bd8f7e1107834e02ceaf1ffd3c6bef7479a84ce625f4",
+    "runtime/graphics/tests/test_scene_graphics.c": "146744a9cf8ac76ee0924686481c35a554a631728e46f1d520a89b1250338564",
+    "runtime/graphics/tests/test_scene_session.c": "f97ffb6fbd61aedec63e76035db50c4f72782263e46fcdbe986dce43a44d9e2c",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "runtime/portable/rle.c": "945e57f8ed5996859eccd3598a19a953cd2f37132dcd5acf86ecac93d09f4158",
+    "runtime/portable/rle.h": "b770902f55175ecb1fa156d73f32f1c8b9a541009589dea037de634d1d0d346f",
+    "runtime/portable/scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "runtime/portable/scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
+    "runtime/portable/scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+    "runtime/portable/scene_shapes.inc": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
+    "runtime/portable/tests/g2_reference.c": "eff56aacf4f54bde470e063fa242dfb39747c9155457026c8e3bcb728ae8dea6",
+    "runtime/portable/tests/g2_rle_reference.c": "aaf1780151b58b3e4b3b5cdce447096fef39e230021c22f8bbd9f8c71d3497f4",
+    "runtime/portable/tests/g2_vector_reference.c": "3c1020027425c9f623c19a5167cf8c5f48d379fd167c7b59b66e7b8786efb00f",
+    "runtime/portable/tests/prepare_scene_port.py": "377752bb0cc565b471e762a94b421d56fb0b48be4003f07fa9b02c7d1d9491cb",
+    "runtime/portable/tests/run_scene_tests.py": "8a72d3b2afcb2315cc138f2e2388220270ea0b7288af7ed19a8d9ed876208f12",
+    "runtime/portable/tests/run_tests.py": "867ff687182f127230d4180a5aa31b53362a1585ff5b19f9250c03e5a395653f",
+    "runtime/portable/tests/run_vector_tests.py": "f4d8a533420f07fe30d37a47df7a35b501d674511c9e1a6b9d68534e9868b39c",
+    "runtime/portable/tests/scene/layout.c": "d7a480e758d4fb6743b00088939542c82e9ec3dcc5f2081a410b570bf8149beb",
+    "runtime/portable/tests/scene/platform.inc": "853c80ac36a9c0c047584b0c0f262d10be75ad1ff43d71b85b68b4281b53aa4c",
+    "runtime/portable/tests/scene/public_api_test.c": "ff89098d0eb9af63e1799375b495dae155b352bc72f02a4e0a83cad6caea6304",
+    "runtime/portable/tests/scene/shapes_host_test.c": "f6a1d4424c7bb595c84bc37557679a7fabdd6acbbc3e77ff1fc123bf61af984f",
+    "runtime/portable/tests/scene/vector_host_test.c": "34c35b4c888ef5865c6733d1564c24e386c62958b9f8bf3fdf58ec1982f8aaa7",
+    "runtime/portable/tests/test_geometry.c": "a25807fa8f067291a4710239708c5085d532ba94b060caa4ad1140c59f35ea0c",
+    "runtime/portable/tests/test_rle.c": "2d01c4e1f679697b72960e5ba1db735970075ef8b91763b6b115105f2033b288",
+    "runtime/portable/tests/test_vector.c": "cb92ad02925efc58d57a9cee46bc8bcd0920732d45b3c2d5233e752806b0ea48",
+    "runtime/portable/tests/vector_path_check.c": "682144227926b6781fa6cb6d308eb8d14bda9b2a1c3a4b10ddac198448f7ac87",
+    "runtime/portable/vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+    "runtime/portable/vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba"
+  },
+  "commands": [
+    {
+      "name": "build-session",
+      "command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/test_scene_session"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "session",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/test_scene_session",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/vector-fixture.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/gif-300.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/svg-300.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "build-native-adapter",
+      "command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-DMM_GRAPHICS_SCENE=1",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_scene_graphics.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/graphics.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/test_scene_graphics"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "native-adapter",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/scene-session-02/test_scene_graphics"
+      ],
+      "returncode": 0
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "vector-fixture.bin",
+      "bytes": 2480,
+      "sha256": "dbeab3248f1259a06faec40e9c83f0fedc12c674cce7d864f577ca8e1c84d269"
+    },
+    {
+      "name": "gif-300.bin",
+      "bytes": 320295,
+      "sha256": "d8706a134a268e8ada75a4edd81356eea8d932f48f271c5f2c368f3aef744687"
+    },
+    {
+      "name": "svg-300.bin",
+      "bytes": 500442,
+      "sha256": "7dc551a4ee22e4cdc1182bb49586889980a6fa1e24f24c905d8cd2d19a6cee1b"
+    }
+  ],
+  "hardware_tested": false,
+  "scope": [
+    "Actual production scene session, native queue adapter and scene/vector core",
+    "600x350 native-policy lifecycle/heap tests use a 170KiB scene budget and 48KiB reserved headroom",
+    "Original 640x480 replay corpus uses a larger synthetic heap/store for exact upstream pixel expectations",
+    "Allocator, native LVGL and external firmware APIs are mocked; no native OOM guarantee"
+  ],
+  "source_drift": []
+}

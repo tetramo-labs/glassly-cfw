@@ -1,0 +1,256 @@
+{
+  "format": "memomind-portable-transport-tests-v1",
+  "result": "passed",
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "commands": [
+    {
+      "label": "check-original-binding",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/transport/prepare_original.py",
+        "--check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-original",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/transport/transport_host_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c",
+        "-lz",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-public",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/transport/public_api_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c",
+        "-lz",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/public"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-public",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/public"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/transport.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/transport.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/transport.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/transport/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_transport_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-transport-tests-02/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "cc-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rvcc-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "hardware_tested": false,
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/message_transport.c": "386ec85a05fbfd21ac370d85f5765d8dd570690a27aa530b6f4f66c8611c86b3",
+    "upstream/patches/message_transport.h": "342cddacf7744ae9b511486c1d45a309f0309cd42886c38d4d203caf96e9baff",
+    "upstream/patches/transport_compression.c": "3e8b5eae5db82fa7d88c01ce688e28f0c570e819d5275b61316ad749e9ff7ecb",
+    "upstream/patches/cfw_context.h": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231",
+    "upstream/patches/host/transport_host_test.c": "18dc2e2f9cafcbfe8b1696a62505e6121a51ab74d5e49c275e984bb5e15f60f8",
+    "transport.c": "eb81a88613f69514c5fd0b534a67a3ba71a52b188bd5408cec65a82814e3eda2",
+    "transport.h": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01",
+    "TRANSPORT.md": "c9384f7e1c657a76e4c0439fb088393c794c604bb7a017081bc82393f4e28592",
+    "tests/run_transport_tests.py": "5c20c06ba4c3c6c121533e039f7777bff9a923ee794632c358fd1ba2f7486581",
+    "tests/transport/compat_constants.h": "f4d05171ed4a14b6dc7dc547a38f4aaf384db41e64a06c0c88de9a046c658184",
+    "tests/transport/host_zlib.h": "7eecdee7e5bae077c2beca97dd599e1a6349fc5bf8556d823ca49d84a9eb45d4",
+    "tests/transport/layout.c": "43f67c9a1410d0e32107f4e8450ca952d912375399c12875503238d6885be623",
+    "tests/transport/original_adapter.h": "66fc9807dce2b4ef2a1a681f3a2fa3f8ebc8b6477905f353bcb4f292597a9e99",
+    "tests/transport/prepare_original.py": "3a4c8ef6bd3cd449afed3fb1a0919e95312a04f1c2950219b307fb7e5c283784",
+    "tests/transport/public_api_test.c": "8772f99f7e04975b8a69580e52aca60b3a7cb71b00725189464d19e73417ce0d",
+    "tests/transport/transport_host_test.c": "bee5ea2bb5fcd5a4354ad9c424e053ab6294140b6aa88eba127c1df30484bd50"
+  },
+  "pending": [
+    "Native GM transport adapter, ordering, backpressure, link limits and teardown",
+    "Native allocator/budget and handler execution context",
+    "Native RFC1950 inflater availability/ABI and integration",
+    "Logical destination mapping; MemoMind dual-lens topology is not assumed"
+  ],
+  "original_assert_sites": 50,
+  "original_scenarios": [
+    "subset_records",
+    "outside_records",
+    "compressed_records",
+    "skipped_reset_is_not_borrowed",
+    "handler_failure"
+  ],
+  "boundaries": {
+    "production": "transport.c record parser/state/CRC/ACK/reply algorithms",
+    "test_only": [
+      "G2 BLE/TPL outer-frame validation",
+      "Two simulated endpoints and private bridge envelopes",
+      "Stock hook passthrough stubs",
+      "Host zlib compression/decompression"
+    ]
+  },
+  "original_result": "PASS: subset-lens records ACK once per lens at their ordinals; outside-lens records NACK",
+  "public_result": "PASS: portable framing/CRC/bounds/reset/replies/OOM/inflater/teardown/isolation",
+  "rv32": {
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "text_bytes": 2202,
+    "rodata_bytes": 0,
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:4:13:copy\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:8:13:inflate_reset\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:30:13:message_discard\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:93:13:message_abort\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:20:10:mm_transport_crc\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:67:6:mm_transport_reply_capacity_hint\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:171:5:mm_transport_init\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:183:6:mm_transport_dispose\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:191:6:mm_transport_abort\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/transport.c:195:10:mm_transport_receive\t144\tstatic"
+    ],
+    "max_individual_stack_bytes": 144,
+    "layout": {
+      "context_bytes": 648,
+      "stream_bytes": 304,
+      "platform_bytes": 28
+    }
+  },
+  "tools": {
+    "cc": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "rvcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "artifact_sha256": {
+    "original": "6e8dbdbfa54a5d348cb174677eab1fa9acb1bf1db249f97a34e61f138596e310",
+    "layout.o": "01f4d22066b4c02d9ebde60d9f1602f6478f73d8e9b6e543ba804f3b973c375f",
+    "public": "aabe26ce606b6c641ea2c95d6fc1c84f698f72ddd4f7c7121cf38ec3c3318f35",
+    "transport.su": "fb624bea12f10e69c2bbeee660b8a23d3585aef8963062acf410a22ba40a68d8",
+    "transport.o": "02cf08f15ba37a2afb52851df639e13f16a31e74b1f4d332a69f3a120407e465",
+    "layout.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layout.bin": "3536485024bab2de59d2b93c78fb9b6410bfc67ec8604d317e2742d1a8fe6d7b"
+  }
+}

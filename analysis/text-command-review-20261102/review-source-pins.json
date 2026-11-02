@@ -1,0 +1,15 @@
+{
+  "scope": "Read-only contract and smoke-template snapshot; concurrent implementation, not final candidate admission",
+  "sha256": {
+    "runtime/graphics/native_text.c": "3e3a2c07b8c35db4456badab224044b4f2a7a04d016f7377b03179674125aaa6",
+    "runtime/graphics/native_text.h": "b076d1e8f3b3a22dcda0b7aedc3db437b0c880478257d11b1a67b7410758c079",
+    "runtime/graphics/scene_session.c": "f638e0b70f7e53eccac0d4f9d5140ad8dd14003dcddbc2f5c6c99f5f087a09a9",
+    "runtime/graphics/graphics.c": "32bb88a767557471e7fd292d500001519d2f7eed13eb56690d8f769702363d9f",
+    "swift/MemoMindKit/Sources/MemoMindCore/TextCommand.swift": "2ab8214d4ba2543966301e946a093653572a56e15f0703337bfdf5df2a4aed1a",
+    "analysis/text-native-20261102/smoke.swift.in": "b820eb45ada0dff3c5beb06ece9d164d5dcf4e14c84202ee7208ec5853b3bb83",
+    "analysis/text-native-20261102/verify-smoke.py": "afa5689739d3cf886899aba7930f1d31803266d1234bc264cac204de40f36226",
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62"
+  }
+}

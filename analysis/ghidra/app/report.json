@@ -1,0 +1,1185 @@
+{
+  "program": "segment-3.body.bin",
+  "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "language": "RISCV:LE:32:default",
+  "mapping_basis": "Segment3 header and partition metadata; startup address inferred, not executed",
+  "limitations": [
+    "Raw RV32 decode and compiler convention are analyst-selected",
+    "No RAM or peripheral mappings established",
+    "Static references and decompilation do not prove runtime enforcement",
+    "String and function coverage depends on Ghidra auto-analysis"
+  ],
+  "memory": [
+    {
+      "name": "ram",
+      "start": "ram:041eb020",
+      "end_inclusive": "ram:0439be97",
+      "size": 1773176
+    },
+    {
+      "name": "csr",
+      "start": "csreg:0000",
+      "end_inclusive": "csreg:0fff.3",
+      "size": 16384
+    }
+  ],
+  "matching_defined_strings": [
+    {
+      "address": "ram:04357463",
+      "text": " Total pages %u too small for header pool (%u)",
+      "references": []
+    },
+    {
+      "address": "ram:043574cf",
+      "text": " Invalid global page: %u (total pages: %u)",
+      "references": []
+    },
+    {
+      "address": "ram:043575ab",
+      "text": " External SPI flash erase verification failed: offset\u003d0x%X, len\u003d%u",
+      "references": []
+    },
+    {
+      "address": "ram:0435824c",
+      "text": "[T:0x%08X][app_recordsv_local.c:2445] [local_rec_mgr]  E:Header checksum mismatch: calculated\u003d0x%08X, expected\u003d0x%08X",
+      "references": [
+        {
+          "from": "ram:0420dbd0",
+          "type": "PARAM",
+          "function": "ram:0420d9fe"
+        }
+      ]
+    },
+    {
+      "address": "ram:04358e0c",
+      "text": "[T:0x%08X][recordsv_flash_ring_buf.c:483] [recordsv_ring_buf]  E:freeze failed: skip\u003d%u exceeds free\u003d%u (data\u003d%u invalid\u003d%u total\u003d%u)",
+      "references": [
+        {
+          "from": "ram:04210560",
+          "type": "PARAM",
+          "function": "ram:042104cc"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435ad84",
+      "text": "[T:0x%08X][cw221x.c:827] [cw221x] E:Unknown firmware version: 0x%02X",
+      "references": [
+        {
+          "from": "ram:0422c548",
+          "type": "PARAM",
+          "function": "ram:0422c3f2"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435c29c",
+      "text": "[T:0x%08X][bt_factory_test.c:887] factory_test E:CRC8 check failed: 0x%02X !\u003d 0x%02X",
+      "references": [
+        {
+          "from": "ram:04231372",
+          "type": "PARAM",
+          "function": "ram:042312d4"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435cf2c",
+      "text": "[T:0x%08X][xgimi_key_value.c:259] xgimi E:[XGIMI_KV]Key head crc error in %p\n",
+      "references": [
+        {
+          "from": "ram:04233cd0",
+          "type": "PARAM",
+          "function": "ram:04233c10"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d0ec",
+      "text": "[T:0x%08X][xgimi_key_value.c:640] xgimi E:[XGIMI_KV]Key data crc error in %p, length:0x%08x\n",
+      "references": [
+        {
+          "from": "ram:04234056",
+          "type": "PARAM",
+          "function": "ram:04233fe4"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d7bc",
+      "text": "font OTA begin failed",
+      "references": [
+        {
+          "from": "ram:0423a4e4",
+          "type": "PARAM",
+          "function": "ram:0423a474"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d7d4",
+      "text": "font OTA LZMA init failed",
+      "references": [
+        {
+          "from": "ram:0423a546",
+          "type": "PARAM",
+          "function": "ram:0423a474"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d7f0",
+      "text": "font OTA external Flash write failed",
+      "references": [
+        {
+          "from": "ram:0423a5e8",
+          "type": "PARAM",
+          "function": "ram:0423a474"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d838",
+      "text": "font OTA staging verification failed",
+      "references": [
+        {
+          "from": "ram:0423a720",
+          "type": "PARAM",
+          "function": "ram:0423a474"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d884",
+      "text": "font OTA task start failed",
+      "references": [
+        {
+          "from": "ram:0423bf8c",
+          "type": "PARAM",
+          "function": "ram:0423a90e"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d8a0",
+      "text": "short firmware block",
+      "references": [
+        {
+          "from": "ram:0423b000",
+          "type": "PARAM",
+          "function": "ram:0423a90e"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d8b8",
+      "text": "firmware block CRC",
+      "references": [
+        {
+          "from": "ram:0423c1e0",
+          "type": "PARAM",
+          "function": "ram:0423a90e"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d8cc",
+      "text": "firmware block bounds",
+      "references": [
+        {
+          "from": "ram:0423c262",
+          "type": "PARAM",
+          "function": "ram:0423a90e"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d8e4",
+      "text": "OTA task queue full",
+      "references": [
+        {
+          "from": "ram:0423c460",
+          "type": "PARAM",
+          "function": "ram:0423a90e"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435d928",
+      "text": "GMPLUGIN-WIPE-v1ota_transfer_flash_data.c",
+      "references": [
+        {
+          "from": "ram:0423e7a8",
+          "type": "PARAM",
+          "function": "ram:0423e796"
+        },
+        {
+          "from": "ram:0423e7c4",
+          "type": "READ",
+          "function": "ram:0423e796"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435e040",
+      "text": "[app_vad] [wake_audio] dump start frames:%u raw:%u adpcm:%u chunks:%u checksum:%08x score:%u valid:%u trigger_saved:%u connected:%u\n",
+      "references": [
+        {
+          "from": "ram:0424a8a2",
+          "type": "PARAM",
+          "function": "ram:042499e2"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435e0c8",
+      "text": "{\"event\":\"GlassWakewordAudio\",\"codec\":\"ima_adpcm\",\"sample_rate\":%u,\"channels\":%u,\"frame_ms\":%u,\"frames\":%u,\"raw_bytes\":%u,\"adpcm_bytes\":%u,\"chunk_index\":%u,\"total_chunks\":%u,\"checksum\":%u,\"capture_version\":%u,\"trigger_frame_index\":%u,\"trigger_subframe\":%u,\"trigger_score_bits\":%u,\"threshold_bits\":%u}",
+      "references": [
+        {
+          "from": "ram:0424a962",
+          "type": "PARAM",
+          "function": "ram:042499e2"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435e624",
+      "text": "verify Report Map",
+      "references": [
+        {
+          "from": "ram:0424e292",
+          "type": "PARAM",
+          "function": "ram:0424e24a"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435edf0",
+      "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"items\":[",
+      "references": [
+        {
+          "from": "ram:04256308",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        },
+        {
+          "from": "ram:042565e8",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435eee0",
+      "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"attr_total\":%u,\"attrs\":[",
+      "references": [
+        {
+          "from": "ram:0425617e",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        },
+        {
+          "from": "ram:04256738",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435efe0",
+      "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"fields\":[",
+      "references": [
+        {
+          "from": "ram:04255d1e",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        },
+        {
+          "from": "ram:04256b3a",
+          "type": "PARAM",
+          "function": "ram:04255b76"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435f6a8",
+      "text": "total_len",
+      "references": [
+        {
+          "from": "ram:04257d06",
+          "type": "PARAM",
+          "function": "ram:04256ef4"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435f6b4",
+      "text": "crc32",
+      "references": [
+        {
+          "from": "ram:04257d20",
+          "type": "PARAM",
+          "function": "ram:04256ef4"
+        }
+      ]
+    },
+    {
+      "address": "ram:0435f6cc",
+      "text": "ERR_FRAG_CRC",
+      "references": []
+    },
+    {
+      "address": "ram:043629dc",
+      "text": "icon_firmware_version",
+      "references": [
+        {
+          "from": "ram:0426e400",
+          "type": "PARAM",
+          "function": "ram:0426e29a"
+        }
+      ]
+    },
+    {
+      "address": "ram:04366064",
+      "text": "gm_plugin_host_app.c",
+      "references": [
+        {
+          "from": "ram:0429a0de",
+          "type": "PARAM"
+        }
+      ]
+    },
+    {
+      "address": "ram:0436607c",
+      "text": "gm_plugin",
+      "references": [
+        {
+          "from": "ram:0439a9c8",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04366088",
+      "text": "gm_plugin_host_app",
+      "references": [
+        {
+          "from": "ram:0439a9cc",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04368298",
+      "text": "Upgrade in progress. Do not disconnect.",
+      "references": [
+        {
+          "from": "ram:0437f824",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:043682c0",
+      "text": "Upgrade cancelled.",
+      "references": [
+        {
+          "from": "ram:0437f828",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:043682d4",
+      "text": "Firmware is downloaded. Device will restart to install",
+      "references": [
+        {
+          "from": "ram:0437f82c",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04368a0c",
+      "text": "Please upgrade to memo+ membership",
+      "references": [
+        {
+          "from": "ram:0437f978",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:043690e0",
+      "text": "The device is upgrading, please wait for completion",
+      "references": [
+        {
+          "from": "ram:0437fa5c",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04369354",
+      "text": "Instructions:\nHead Left: Move Left\nHead Right: Move Right\nClick: Rotate\nLong Press: Fast Drop\nLook Up: Exit",
+      "references": [
+        {
+          "from": "ram:0437fab0",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:0436f008",
+      "text": "Upgrade wurde abgebrochen.",
+      "references": [
+        {
+          "from": "ram:04380434",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:0436f90c",
+      "text": "Bitte auf memo+ Mitgliedschaft upgraden",
+      "references": [
+        {
+          "from": "ram:04380584",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04374ca0",
+      "text": "Error de red, por favor verifique la red e intente de nuevo.",
+      "references": [
+        {
+          "from": "ram:04380e58",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04376b38",
+      "text": "Ruota leggermente la testa per selezionare una funzione, quindi fai clic sul pulsante.",
+      "references": [
+        {
+          "from": "ram:043811d4",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:043773dc",
+      "text": "Istruzioni:\nTesta a sinistra: Sposta a sinistra\nTesta a destra: Sposta a destra\nClicca: Ruota\nPressione prolungata: Caduta rapida\nGuarda in alto: Esci",
+      "references": [
+        {
+          "from": "ram:043812c8",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:0437bf50",
+      "text": "Bateria totalmente carregada: %d%%",
+      "references": [
+        {
+          "from": "ram:04381828",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:0437d0bc",
+      "text": "Deixe-me verificar isso",
+      "references": [
+        {
+          "from": "ram:04381a3c",
+          "type": "DATA"
+        }
+      ]
+    },
+    {
+      "address": "ram:04382114",
+      "text": "[T:0x%08X][dashboard_cache.c:383] [dashboard_cache]  E:Index table checksum mismatch or version mismatch: expected %u, calculated %u, version %u",
+      "references": [
+        {
+          "from": "ram:0429da74",
+          "type": "PARAM",
+          "function": "ram:0429d946"
+        }
+      ]
+    },
+    {
+      "address": "ram:04382308",
+      "text": "[T:0x%08X][dashboard_cache.c:1211] [dashboard_cache]  E:Flash data checksum mismatch: stored %u, calculated %u",
+      "references": [
+        {
+          "from": "ram:0429de04",
+          "type": "PARAM",
+          "function": "ram:0429dd08"
+        }
+      ]
+    },
+    {
+      "address": "ram:04383f8c",
+      "text": "plugin_flash",
+      "references": [
+        {
+          "from": "ram:042a994e",
+          "type": "PARAM",
+          "function": "ram:042a97d4"
+        }
+      ]
+    },
+    {
+      "address": "ram:0438fc10",
+      "text": "[T:0x%08X][app_econn_demo.c:6286] [app_econn]  E:ota iap2 guard timer start failed ret:%d",
+      "references": [
+        {
+          "from": "ram:042e2194",
+          "type": "PARAM",
+          "function": "ram:042dfc8c"
+        }
+      ]
+    },
+    {
+      "address": "ram:0439069c",
+      "text": "plugin caps unavailable",
+      "references": [
+        {
+          "from": "ram:042e478e",
+          "type": "PARAM",
+          "function": "ram:042e4680"
+        }
+      ]
+    },
+    {
+      "address": "ram:043906b4",
+      "text": "{\"schema\":1,\"packageFormat\":%u,\"abi\":%u,\"compression\":\"lz4-block\",\"compressionBlockBytes\":%u,\"maxPackageBytes\":%lu,\"chunkBytes\":%u,\"sequentialChunks\":true,\"streamedInstallChunks\":true,\"flashXip\":true,\"cacheResume\":true,\"singleSppLink\":true,\"cacheCapacityQuery\":true,\"runtimeStateQuery\":true,\"runtimeStateNotifications\":true,\"displayWidth\":%u,\"displayHeight\":%u,\"refreshHz\":%u,\"pixelFormat\":%u,\"logicalDisplays\":%u,\"capabilities\":%lu}",
+      "references": [
+        {
+          "from": "ram:042e47f8",
+          "type": "PARAM",
+          "function": "ram:042e4680"
+        }
+      ]
+    },
+    {
+      "address": "ram:04390868",
+      "text": "plugin caps encode failed",
+      "references": [
+        {
+          "from": "ram:042e4844",
+          "type": "PARAM",
+          "function": "ram:042e4680"
+        }
+      ]
+    },
+    {
+      "address": "ram:043912fc",
+      "text": "[T:0x%08X][bt_data_handler.c:1114] [bt_handler]  E:CLI tunnel tx reserve failed, event\u003d0x%02X service\u003d0x%02X command\u003d0x%02X total\u003d%u ret\u003d%d",
+      "references": [
+        {
+          "from": "ram:042e6290",
+          "type": "PARAM",
+          "function": "ram:042e61cc"
+        }
+      ]
+    },
+    {
+      "address": "ram:04393bbc",
+      "text": "{\"cmd_id\":%d,\"status\":\"complete\",\"total_size\":%u,\"total_chunks\":%u}",
+      "references": [
+        {
+          "from": "ram:042eedae",
+          "type": "PARAM",
+          "function": "ram:042eec5a"
+        }
+      ]
+    },
+    {
+      "address": "ram:04393c1c",
+      "text": "[T:0x%08X][bt_data_report.c:3276] [bt_handler]  E:[SS] preflight: working_set\u003d%u + margin\u003d%u but free_total\u003d%u, abort",
+      "references": [
+        {
+          "from": "ram:042ef0ca",
+          "type": "PARAM",
+          "function": "ram:042eeea6"
+        }
+      ]
+    },
+    {
+      "address": "ram:04393da0",
+      "text": "{\"cmd_id\":%d,\"width\":%u,\"height\":%u,\"visible_width\":%u,\"bpp\":4,\"compression\":\"lz4\",\"format\":\"banded\",\"band_rows\":%u,\"band_count\":%u,\"original_size\":%u,\"data_size\":%u,\"total_chunks\":%u,\"status\":\"start\"}",
+      "references": [
+        {
+          "from": "ram:042ef520",
+          "type": "PARAM",
+          "function": "ram:042eeea6"
+        }
+      ]
+    },
+    {
+      "address": "ram:04393fa0",
+      "text": "{\"cmd_id\":%d,\"status\":\"complete\",\"total_size\":%u,\"total_chunks\":%u,\"is_resend\":true,\"resent_count\":%u}",
+      "references": [
+        {
+          "from": "ram:042ef8c8",
+          "type": "PARAM",
+          "function": "ram:042ef5d6"
+        }
+      ]
+    },
+    {
+      "address": "ram:043941b8",
+      "text": "[T:0x%08X][gm_package.c:452] [gmpkg]  E:gmMallocAppendTlv: CRC mismatch,len\u003d%u, expected\u003d0x%04x, got\u003d0x%04x",
+      "references": [
+        {
+          "from": "ram:042f0398",
+          "type": "PARAM",
+          "function": "ram:042f0306"
+        }
+      ]
+    },
+    {
+      "address": "ram:04394844",
+      "text": "anc_ota_v1.c",
+      "references": [
+        {
+          "from": "ram:042f449e",
+          "type": "PARAM",
+          "function": "ram:042f423a"
+        },
+        {
+          "from": "ram:042f44c0",
+          "type": "PARAM",
+          "function": "ram:042f423a"
+        }
+      ]
+    },
+    {
+      "address": "ram:04396478",
+      "text": "ota.c",
+      "references": [
+        {
+          "from": "ram:04341bbe",
+          "type": "PARAM",
+          "function": "ram:04341ae6"
+        },
+        {
+          "from": "ram:04341590",
+          "type": "PARAM",
+          "function": "ram:04341560"
+        },
+        {
+          "from": "ram:043415e4",
+          "type": "PARAM",
+          "function": "ram:043415b4"
+        },
+        {
+          "from": "ram:0434176a",
+          "type": "PARAM",
+          "function": "ram:04341602"
+        },
+        {
+          "from": "ram:0434131e",
+          "type": "PARAM",
+          "function": "ram:043412ec"
+        },
+        {
+          "from": "ram:04341386",
+          "type": "PARAM",
+          "function": "ram:04341354"
+        },
+        {
+          "from": "ram:043413dc",
+          "type": "PARAM",
+          "function": "ram:043413ae"
+        },
+        {
+          "from": "ram:043419ba",
+          "type": "PARAM",
+          "function": "ram:04341926"
+        },
+        {
+          "from": "ram:04341eec",
+          "type": "PARAM",
+          "function": "ram:04341c08"
+        },
+        {
+          "from": "ram:04341e18",
+          "type": "PARAM",
+          "function": "ram:04341c08"
+        }
+      ]
+    }
+  ],
+  "total_function_count": 8088,
+  "selected_function_count": 35,
+  "exported_functions": [
+    {
+      "address": "ram:041eb020",
+      "name": "candidate_startup",
+      "body_address_count": 100,
+      "incoming_references": [
+        "Entry Point EXTERNAL",
+        "ram:041fb83c PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:041eb020.c",
+      "assembly_file": "function-ram:041eb020.asm"
+    },
+    {
+      "address": "ram:0420d9fe",
+      "name": "FUN_ram_0420d9fe",
+      "body_address_count": 2346,
+      "incoming_references": [
+        "ram:0420b78a PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0420d9fe.c",
+      "assembly_file": "function-ram:0420d9fe.asm"
+    },
+    {
+      "address": "ram:042104cc",
+      "name": "FUN_ram_042104cc",
+      "body_address_count": 244,
+      "incoming_references": [
+        "ram:0420f32a UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042104cc.c",
+      "assembly_file": "function-ram:042104cc.asm"
+    },
+    {
+      "address": "ram:0422c3f2",
+      "name": "FUN_ram_0422c3f2",
+      "body_address_count": 378,
+      "incoming_references": [
+        "ram:0422e670 UNCONDITIONAL_CALL",
+        "ram:0422d442 UNCONDITIONAL_CALL",
+        "ram:0422f168 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0422c3f2.c",
+      "assembly_file": "function-ram:0422c3f2.asm"
+    },
+    {
+      "address": "ram:042312d4",
+      "name": "FUN_ram_042312d4",
+      "body_address_count": 248,
+      "incoming_references": [
+        "ram:042dac80 UNCONDITIONAL_CALL",
+        "ram:042e1560 UNCONDITIONAL_CALL",
+        "ram:042e840c UNCONDITIONAL_CALL",
+        "ram:0434442c COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042312d4.c",
+      "assembly_file": "function-ram:042312d4.asm"
+    },
+    {
+      "address": "ram:04233c10",
+      "name": "FUN_ram_04233c10",
+      "body_address_count": 324,
+      "incoming_references": [
+        "ram:04233d98 UNCONDITIONAL_CALL",
+        "ram:042342d6 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04233c10.c",
+      "assembly_file": "function-ram:04233c10.asm"
+    },
+    {
+      "address": "ram:04233fe4",
+      "name": "FUN_ram_04233fe4",
+      "body_address_count": 176,
+      "incoming_references": [
+        "ram:042343f8 PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04233fe4.c",
+      "assembly_file": "function-ram:04233fe4.asm"
+    },
+    {
+      "address": "ram:0423a474",
+      "name": "FUN_ram_0423a474",
+      "body_address_count": 1178,
+      "incoming_references": [
+        "ram:0423be18 PARAM",
+        "ram:0423beba PARAM",
+        "ram:0423bf3e PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0423a474.c",
+      "assembly_file": "function-ram:0423a474.asm"
+    },
+    {
+      "address": "ram:0423a90e",
+      "name": "FUN_ram_0423a90e",
+      "body_address_count": 8684,
+      "incoming_references": [
+        "ram:0423cc0e UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0423a90e.c",
+      "assembly_file": "function-ram:0423a90e.asm"
+    },
+    {
+      "address": "ram:0423e796",
+      "name": "FUN_ram_0423e796",
+      "body_address_count": 94,
+      "incoming_references": [
+        "ram:0423e892 UNCONDITIONAL_CALL",
+        "ram:0423e8a0 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0423e796.c",
+      "assembly_file": "function-ram:0423e796.asm"
+    },
+    {
+      "address": "ram:042499e2",
+      "name": "FUN_ram_042499e2",
+      "body_address_count": 5266,
+      "incoming_references": [
+        "ram:0424694e PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042499e2.c",
+      "assembly_file": "function-ram:042499e2.asm"
+    },
+    {
+      "address": "ram:0424e24a",
+      "name": "FUN_ram_0424e24a",
+      "body_address_count": 150,
+      "incoming_references": [
+        "ram:0424e324 UNCONDITIONAL_CALL",
+        "ram:04253504 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0424e24a.c",
+      "assembly_file": "function-ram:0424e24a.asm"
+    },
+    {
+      "address": "ram:04255b76",
+      "name": "FUN_ram_04255b76",
+      "body_address_count": 4126,
+      "incoming_references": [],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04255b76.c",
+      "assembly_file": "function-ram:04255b76.asm"
+    },
+    {
+      "address": "ram:04256ef4",
+      "name": "FUN_ram_04256ef4",
+      "body_address_count": 4044,
+      "incoming_references": [
+        "ram:042e82f2 DATA",
+        "ram:042e82ee PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04256ef4.c",
+      "assembly_file": "function-ram:04256ef4.asm"
+    },
+    {
+      "address": "ram:0426e29a",
+      "name": "FUN_ram_0426e29a",
+      "body_address_count": 384,
+      "incoming_references": [
+        "ram:042824f4 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0426e29a.c",
+      "assembly_file": "function-ram:0426e29a.asm"
+    },
+    {
+      "address": "ram:0429d946",
+      "name": "FUN_ram_0429d946",
+      "body_address_count": 348,
+      "incoming_references": [
+        "ram:0429e256 UNCONDITIONAL_CALL",
+        "ram:0429f79a UNCONDITIONAL_CALL",
+        "ram:0429f97c UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0429d946.c",
+      "assembly_file": "function-ram:0429d946.asm"
+    },
+    {
+      "address": "ram:0429dd08",
+      "name": "FUN_ram_0429dd08",
+      "body_address_count": 448,
+      "incoming_references": [
+        "ram:0429fbae UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:0429dd08.c",
+      "assembly_file": "function-ram:0429dd08.asm"
+    },
+    {
+      "address": "ram:042a97d4",
+      "name": "FUN_ram_042a97d4",
+      "body_address_count": 564,
+      "incoming_references": [
+        "ram:042a9ae0 UNCONDITIONAL_CALL",
+        "ram:042a9b06 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042a97d4.c",
+      "assembly_file": "function-ram:042a97d4.asm"
+    },
+    {
+      "address": "ram:042dfc8c",
+      "name": "FUN_ram_042dfc8c",
+      "body_address_count": 9752,
+      "incoming_references": [
+        "ram:042db4d8 PARAM"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042dfc8c.c",
+      "assembly_file": "function-ram:042dfc8c.asm"
+    },
+    {
+      "address": "ram:042e4680",
+      "name": "FUN_ram_042e4680",
+      "body_address_count": 534,
+      "incoming_references": [
+        "ram:042e82e8 DATA"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042e4680.c",
+      "assembly_file": "function-ram:042e4680.asm"
+    },
+    {
+      "address": "ram:042e61cc",
+      "name": "FUN_ram_042e61cc",
+      "body_address_count": 468,
+      "incoming_references": [
+        "ram:042e729e UNCONDITIONAL_CALL",
+        "ram:042e735a UNCONDITIONAL_CALL",
+        "ram:042e7428 UNCONDITIONAL_CALL",
+        "ram:042e74ba UNCONDITIONAL_CALL",
+        "ram:042e8698 UNCONDITIONAL_CALL",
+        "ram:042e8662 UNCONDITIONAL_CALL",
+        "ram:042e7a6e UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042e61cc.c",
+      "assembly_file": "function-ram:042e61cc.asm"
+    },
+    {
+      "address": "ram:042eec5a",
+      "name": "FUN_ram_042eec5a",
+      "body_address_count": 458,
+      "incoming_references": [
+        "ram:042e180a UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042eec5a.c",
+      "assembly_file": "function-ram:042eec5a.asm"
+    },
+    {
+      "address": "ram:042eeea6",
+      "name": "FUN_ram_042eeea6",
+      "body_address_count": 1840,
+      "incoming_references": [
+        "ram:042df008 UNCONDITIONAL_CALL",
+        "ram:042e05be UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042eeea6.c",
+      "assembly_file": "function-ram:042eeea6.asm"
+    },
+    {
+      "address": "ram:042ef5d6",
+      "name": "FUN_ram_042ef5d6",
+      "body_address_count": 846,
+      "incoming_references": [
+        "ram:042eb29a UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042ef5d6.c",
+      "assembly_file": "function-ram:042ef5d6.asm"
+    },
+    {
+      "address": "ram:042f0306",
+      "name": "FUN_ram_042f0306",
+      "body_address_count": 1470,
+      "incoming_references": [
+        "ram:042e7230 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042f0306.c",
+      "assembly_file": "function-ram:042f0306.asm"
+    },
+    {
+      "address": "ram:042f423a",
+      "name": "FUN_ram_042f423a",
+      "body_address_count": 1668,
+      "incoming_references": [
+        "ram:04202a4c UNCONDITIONAL_CALL",
+        "ram:04202ff8 UNCONDITIONAL_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:042f423a.c",
+      "assembly_file": "function-ram:042f423a.asm"
+    },
+    {
+      "address": "ram:04341ae6",
+      "name": "FUN_ram_04341ae6",
+      "body_address_count": 290,
+      "incoming_references": [
+        "ram:0423fece COMPUTED_CALL",
+        "ram:0423fca6 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341ae6.c",
+      "assembly_file": "function-ram:04341ae6.asm"
+    },
+    {
+      "address": "ram:04341560",
+      "name": "FUN_ram_04341560",
+      "body_address_count": 84,
+      "incoming_references": [
+        "ram:0434187e UNCONDITIONAL_CALL",
+        "ram:04341e9e UNCONDITIONAL_CALL",
+        "ram:043416b0 UNCONDITIONAL_CALL",
+        "ram:042400f4 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341560.c",
+      "assembly_file": "function-ram:04341560.asm"
+    },
+    {
+      "address": "ram:043415b4",
+      "name": "FUN_ram_043415b4",
+      "body_address_count": 78,
+      "incoming_references": [
+        "ram:0434188a UNCONDITIONAL_CALL",
+        "ram:04341890 UNCONDITIONAL_CALL",
+        "ram:0434189c UNCONDITIONAL_CALL",
+        "ram:04341a94 UNCONDITIONAL_CALL",
+        "ram:04341bae UNCONDITIONAL_CALL",
+        "ram:04341e08 UNCONDITIONAL_CALL",
+        "ram:043416bc UNCONDITIONAL_CALL",
+        "ram:043416c2 UNCONDITIONAL_CALL",
+        "ram:043416ce UNCONDITIONAL_CALL",
+        "ram:0434175a UNCONDITIONAL_CALL",
+        "ram:0423fe4c COMPUTED_CALL",
+        "ram:0423fe8a COMPUTED_CALL",
+        "ram:0423b97c COMPUTED_CALL",
+        "ram:042395fa COMPUTED_CALL",
+        "ram:042402ca COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:043415b4.c",
+      "assembly_file": "function-ram:043415b4.asm"
+    },
+    {
+      "address": "ram:04341602",
+      "name": "FUN_ram_04341602",
+      "body_address_count": 464,
+      "incoming_references": [
+        "ram:0423f6f8 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341602.c",
+      "assembly_file": "function-ram:04341602.asm"
+    },
+    {
+      "address": "ram:043412ec",
+      "name": "FUN_ram_043412ec",
+      "body_address_count": 104,
+      "incoming_references": [
+        "ram:043414be UNCONDITIONAL_CALL",
+        "ram:043413cc UNCONDITIONAL_CALL",
+        "ram:0423e522 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:043412ec.c",
+      "assembly_file": "function-ram:043412ec.asm"
+    },
+    {
+      "address": "ram:04341354",
+      "name": "FUN_ram_04341354",
+      "body_address_count": 90,
+      "incoming_references": [
+        "ram:0423e2a4 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341354.c",
+      "assembly_file": "function-ram:04341354.asm"
+    },
+    {
+      "address": "ram:043413ae",
+      "name": "FUN_ram_043413ae",
+      "body_address_count": 248,
+      "incoming_references": [
+        "ram:0423e54c COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:043413ae.c",
+      "assembly_file": "function-ram:043413ae.asm"
+    },
+    {
+      "address": "ram:04341926",
+      "name": "FUN_ram_04341926",
+      "body_address_count": 448,
+      "incoming_references": [
+        "ram:0423fb80 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341926.c",
+      "assembly_file": "function-ram:04341926.asm"
+    },
+    {
+      "address": "ram:04341c08",
+      "name": "FUN_ram_04341c08",
+      "body_address_count": 876,
+      "incoming_references": [
+        "ram:0423fcf6 COMPUTED_CALL",
+        "ram:0423ff42 COMPUTED_CALL",
+        "ram:0423f778 COMPUTED_CALL"
+      ],
+      "decompile_completed": true,
+      "error": "",
+      "decompiled_file": "function-ram:04341c08.c",
+      "assembly_file": "function-ram:04341c08.asm"
+    }
+  ]
+}

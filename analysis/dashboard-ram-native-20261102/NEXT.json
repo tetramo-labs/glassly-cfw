@@ -1,0 +1,11 @@
+{
+  "requires": "User wake reply, then bounded fresh connection attempt; elapsed time is not a wake confirmation",
+  "do_not_flash": "dashboard-ram-001 rejected invalid instruction prototype; never admitted",
+  "flash_command": "swift/MemoMindKit/.build/debug/memomind flash --address 4C:3C:8F:90:CC:C3 --firmware captures/firmware/dashboard-ram-002/firmware.bin --expected-sha256 f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a --output captures/swift-mac-dashboard-ram-flash-20261102-02 --confirm-write",
+  "verify_command": "python3 analysis/dashboard-ram-review-20261102/verify-ota.py captures/swift-mac-dashboard-ram-flash-20261102-02 --output analysis/dashboard-ram-native-20261102/trace-verification.json",
+  "post_boot_measure": "analysis/dashboard-ram-native-20261102/measure captures/swift-mac-ram-after-20261102-01",
+  "display_smoke": "analysis/dashboard-ram-native-20261102/display-smoke captures/swift-mac-ram-display-20261102-01",
+  "display_note": "The latter measures then holds RAM on black90sec withlease renewals, clears, savesdisplay-smoke-result.json. Observe pattern-visible before asking visualconfirmation. No need repeatflash/canary.",
+  "verify_before_actions": "Pins in offline-checkpoint.json; updatedsource/runnerpins inready-evidence.json. Actualfirmware/runtime unchanged duringwrapperaddition.",
+  "on_boot_success": "Compare10freeheap samples againstbaseline333980..334108 under matchedconditions, reportrangeinsteadofexactownerattribution. Save measuredpostbootreport andthenupdatecurrent_device_image metadata."
+}

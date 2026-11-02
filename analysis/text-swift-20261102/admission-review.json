@@ -1,0 +1,54 @@
+{
+  "script_sha256": "b0ac0eeb10640a7f17585fdf2bf20d06937486d7f91e04bb67bb056b04eea137",
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "bf03e118518fd0e1b3b7eafda36534166d9fb1fc4478b59500bbb5fd91c180ea",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "584d9002a244a62d687987e5912bbb75dda2218eb22465f69f61857efeb6c7dd"
+  },
+  "synthetic_only": true,
+  "actual_admission_executed": false,
+  "checks": {
+    "all_old_catalog_entries_unchanged": true,
+    "all_old_test_names_present": true,
+    "old_test_functions_preserved": true,
+    "text_catalog_entry_once": true,
+    "text_variant_once": true,
+    "text_enum_once": true,
+    "text_digest_once": true,
+    "new_text_test_methods_once": true,
+    "entire_prior_catalog_code_and_pins_preserved": true,
+    "new_text_tests_have_no_stale_raster_or_bundle_pins": true,
+    "entire_prior_test_source_preserved": true
+  },
+  "old_releases": [
+    "stock-1.0.3.127-jhv3-release",
+    "exclusive-store-reader-001",
+    "flash-canary-001",
+    "raster-commands-001",
+    "rect-copy-001",
+    "bundle-commands-001"
+  ],
+  "old_test_method_count": 18,
+  "new_test_method_count": 20,
+  "duplicates": {},
+  "added_names": [
+    "testRequiredActualReviewedOfflineTextFixture",
+    "testTextEligibilityRejectsRepairedCRCsAndRawRuntime"
+  ],
+  "pass": true,
+  "review": "read-only-source-transform",
+  "optimized_execution_refused": true,
+  "initial_issue": "Clone boundary included existing Bundle tests; parent corrected end marker to first Bundle method before both saved dry runs.",
+  "blocking_issues_remaining": [],
+  "candidate_actual_pins_validated": false,
+  "normal_admission_executed": false,
+  "notes": [
+    "Synthetic transform proof only; final candidate reconstruction and Swift fixture tests remain required.",
+    "Catalog/test writes are sequential, not atomic.",
+    "Future textual source rearrangement requires repeating review."
+  ],
+  "review_files_sha256": {
+    "admission-review.md": "ed0758cb1a09e796aae923d9a9da48dfb093fdc479fec89dc45e00c4f26f7544",
+    "admission-review/check_transform.py": "438a2f6d573ac997a2e9a2c9f0287b28f335d60d7a5b6a5b765c4bafa0edb923",
+    "admission-review/optimized.stderr": "95d5966798d24a032e13a23a5bebec2e55d98a133b6fc80996b8624af28f9946"
+  }
+}

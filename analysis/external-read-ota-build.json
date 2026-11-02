@@ -1,0 +1,41 @@
+{
+  "format": "memomind-graphics-runtime-v1",
+  "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+  "output_sha256": "b93845f3eeaddfe1651d12077b0d89b9c2af79c42355869935d320dfc028ffad",
+  "blob_sha256": "6c317933ca7edef1375843375dceb18f94ef0efca93246076c92c023a56432bd",
+  "blob_bytes": 50944,
+  "entry_address": 70893216,
+  "display_gate_address": 70893280,
+  "hooks": [
+    {
+      "name": "service15_callback_initializer",
+      "address": 70157024,
+      "body_offset": 1036992,
+      "before": "b7472e0493870768",
+      "after": "b7c73904938707ea",
+      "target": 70893216,
+      "instruction_abi": "LUI a5; ADDI a5,a5; following c.sw a5,0x70(s1) preserved",
+      "following_witness": "bcd8"
+    },
+    {
+      "name": "display_worker_dispatch_call",
+      "address": 69582858,
+      "body_offset": 462826,
+      "before": "032504f9eff0cfb7",
+      "after": "97001400e78060ed",
+      "target": 70893280,
+      "return_address": 69582866,
+      "instruction_abi": "AUIPC ra; JALR ra,ra; gate first replays lw a0,-0x70(s0)",
+      "following_witness": "032504f9"
+    }
+  ],
+  "abi": {
+    "isa": "RV32IMAFC",
+    "calling_convention": "ilp32f",
+    "service_handler": "void(uint32_t command,void *request,const uint8_t *sequence,void **response)",
+    "display_gate": "worker s0 frame; replay load first; borrowed envelope in a0; preserve stack/callee-saved",
+    "ordinary_display_tail_target": 69579658,
+    "display_return_address": 69582866,
+    "envelope_owner": "stock worker frees after return; gate must not free or retain"
+  }
+}

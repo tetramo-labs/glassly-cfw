@@ -1,0 +1,109 @@
+{
+  "schema": 2,
+  "kind": "offline-only Android HID foreground-service fixture",
+  "device_actions": false,
+  "installed": false,
+  "advertised": false,
+  "paired": false,
+  "android_bridge_edits": false,
+  "apk": {
+    "path": "android_hid_fixture/build/memomind-hid-fixture.apk",
+    "bytes": 29099,
+    "sha256": "8806aced271069a683f36dbadd050397c3632a1085febcb8358b5fc9233fb742",
+    "package": "org.memomind.research.hid",
+    "version": 2,
+    "min_sdk": 33,
+    "target_sdk": 36,
+    "v3_signature_verified": true
+  },
+  "model_test": {
+    "kind": "offline-JVM-model-and-independent-HID-parser",
+    "java_checks": 1089,
+    "lifecycle_checks": 1827,
+    "report_map_bytes": 69,
+    "report_map_sha256": "6d224712a614fa0883a6e38e2426de8aa36fcb583fd2bc5146b84a99bd1e9a60",
+    "report_id": 1,
+    "input_bytes_without_id": 8,
+    "output_bytes_without_id": 1,
+    "app_usage_page": 1,
+    "app_usage": 6,
+    "android_callbacks_emulated": false,
+    "device_actions": false
+  },
+  "controller_loopback_tests": {
+    "passed": 3,
+    "command": "python3 -m unittest discover -s android_hid_fixture/tests -p test_*.py -v"
+  },
+  "foreground_lifetime": {
+    "type": "connectedDevice",
+    "exported": false,
+    "stop_with_task": false,
+    "activity_stop_destroy_teardown": false,
+    "authentication_timeout_ms": 120000,
+    "idle_timeout_ms": 120000,
+    "hard_session_ms": 600000,
+    "renewable_hard_lease": false,
+    "notification_stop": true,
+    "sticky_restart": false,
+    "android_runtime_tested": false
+  },
+  "unverified": [
+    "Android GATT callback runtime",
+    "actual foreground-service/notification behavior and pairing UI",
+    "radio advertisements",
+    "SMP/pairing",
+    "bonded CCCD persistence",
+    "same-phone BR/EDR + LE identity and CTKD coexistence",
+    "real glasses HOGP parsing and key actions"
+  ],
+  "inputs": [
+    {
+      "path": "android_hid_fixture/AndroidManifest.xml",
+      "sha256": "ce877969c3ce1cc94432c3b1c9d0d19e3cec9bde4c44b03dc4d3a1bcd8fec0f4"
+    },
+    {
+      "path": "android_hid_fixture/build.sh",
+      "sha256": "e87700de5c395f1f98a9017d12441a1a27dc82945360c686f11fc111f0e45b10"
+    },
+    {
+      "path": "android_hid_fixture/control.py",
+      "sha256": "1404e88182bf3b3ab22aac555f4fb2ce5b9b613524d14ec5ce073f62d3adb22b"
+    },
+    {
+      "path": "android_hid_fixture/src/org/memomind/research/hid/ControllerLease.java",
+      "sha256": "3f6d07a91883077c98ae068525125d8bb6a0a8c31f331f49b6ecb8f338a9672c"
+    },
+    {
+      "path": "android_hid_fixture/src/org/memomind/research/hid/HidActivity.java",
+      "sha256": "6883d075fd73b5ade5d40cd921a473dbba3b2e141063926e3e524ffb769b9b17"
+    },
+    {
+      "path": "android_hid_fixture/src/org/memomind/research/hid/HidModel.java",
+      "sha256": "709163c75a4cc7a41a3cd57635bde2e82ae8ef28d9b0f7ea934ed50cb3223d2b"
+    },
+    {
+      "path": "android_hid_fixture/src/org/memomind/research/hid/HidService.java",
+      "sha256": "72476700a19a51a03ab1cf96bcd4f5c01c5ff9c68bb367ee1d2601afa991afe8"
+    },
+    {
+      "path": "android_hid_fixture/tests/ControllerLeaseTest.java",
+      "sha256": "448ce93f53687cae3e625035140ba2bc004c52b55e8548aa8e9f3b0a7aa61107"
+    },
+    {
+      "path": "android_hid_fixture/tests/HidModelTest.java",
+      "sha256": "d660b1449a93e8b567f5b03b094e76ffc67021d0f81a2133ff9520ed77a7b95f"
+    },
+    {
+      "path": "android_hid_fixture/tests/run_tests.py",
+      "sha256": "a6f01a794d03f687c45d98bb05f931f1affa4f192a5a32b3a4edd2520f716b6e"
+    },
+    {
+      "path": "android_hid_fixture/tests/test_control.py",
+      "sha256": "7b0617adb10e3ae27c61f5938aa2457ba1dfadef2a723103135326421574ba8e"
+    },
+    {
+      "path": "android_hid_fixture/tests/verify_apk.py",
+      "sha256": "6c08eecdc6a4a8b284f5ac63a476cd19d3807e77bf7adc287d246bc21fec480c"
+    }
+  ]
+}

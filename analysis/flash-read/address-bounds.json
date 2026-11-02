@@ -1,0 +1,14 @@
+{
+  "kind": "offline-address-arithmetic-not-container-construction",
+  "append_physical_start": "0x39bea0",
+  "append_bytes": 50880,
+  "app_body_end_exclusive": "0x3a8560",
+  "app_allocation_end_exclusive": "0x3eb000",
+  "remaining_app_allocation_bytes": 273056,
+  "hypothetical_cache_start_from_native_report": "0x3ab000",
+  "gap_before_hypothetical_cache_bytes": 10912,
+  "cache_reserved": false,
+  "cache_ownership_or_reset_crc_proven": false,
+  "staging_bound": "Requires final repack; not inferred from uncompressed blob size",
+  "device_actions": false
+}

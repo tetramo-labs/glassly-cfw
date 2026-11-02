@@ -1,0 +1,21 @@
+{
+  "verdict": "No concrete source/ABI/ownership blocker found for offline candidate construction; native timing/OOM and hardware acquisition remain unverified",
+  "blob_sha256": "d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b",
+  "blob_bytes": 50880,
+  "sources": {
+    "runtime/graphics/flash_read.c": "e1c9f4b5b43a98b40dfbbfb6f773aa26084eda8605e884a94f48226e926dfc2e",
+    "runtime/graphics/flash_read.h": "0b302e66c7aba1f467f39ac239f352815fa02c82e69378f320dd79ffab87e076",
+    "runtime/graphics/native.c": "29cc3ec56a6f8bdd03b61d5ae55cbce55a8cddcc4c8844b835bee4890163c899",
+    "runtime/graphics/entry.S": "37b3a8cb685d079c36cc02ecda732c72ed0e3e4a1bc8cf9c42965136d729a124",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a"
+  },
+  "build_source_drift": [],
+  "tests_read": [
+    "analysis/flash-read/host-002/report.json",
+    "analysis/flash-read/runtime-001.json",
+    "analysis/flash-read/gates-001.json"
+  ],
+  "tests_rerun_by_reviewer": false,
+  "device_actions": false,
+  "runtime_edits": false
+}

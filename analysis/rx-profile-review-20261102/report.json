@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "blocking_findings": [],
+  "reviewer": "rfcomm_protocol",
+  "read_only_source_review": true,
+  "device_actions": false,
+  "source_sha256": {
+    "scripts/memomind_rx_profile.py": "28cd5f7dd3b5ff560270d575396e5b8f3a046e1d7825076150e3859d13d5086d",
+    "runtime/graphics/graphics_rx96.ld": "60680ea263e787d21522d552bd69eeb5d9f8c8dcf06b76db69ea132ac2ca7c1e",
+    "scripts/compile_memomind_graphics.py": "34e8947e995a1dfa29d98154317721a02c7143c584fc7e1ffe65ba96fa300aa8",
+    "scripts/build_memomind_graphics.py": "5ff749072839c900bf9a479bb82dfea6563e85737547facb1bbec19bdb558ddc",
+    "scripts/build_memomind_exclusive_storage.py": "2d81823d9a33bc27eb1a1d1e05dec5ca2199793ec17af5600a41b076b2c180cc",
+    "scripts/build_memomind_flash_canary.py": "6b09563f7b9738f8f7eaeb5068e4e9b815fe06f84b5039f0394b3e2aab9fc9ed",
+    "scripts/test_memomind_rx_profile.py": "ae0dabe912ec6d44a6cd3861e3b654a7765b7a8b0fcbae8ea0da00eb3e054991"
+  },
+  "checks": [
+    {
+      "name": "fixed_selection",
+      "passed": true,
+      "evidence": "Only app-rx-64k-v1 and app-rx-96k-v1 select 65536/98304; no numeric caller bound. Invalid types/names rejected before compiler output creation."
+    },
+    {
+      "name": "manifest_authority",
+      "passed": true,
+      "evidence": "Constructors receive explicit keyword profile; verifiers reconstruct and compare full typed JSON, never derive profile from manifest. Wrong/missing selection, changed limit and live flag are rejected."
+    },
+    {
+      "name": "default_compatibility",
+      "passed": true,
+      "evidence": "Default canary output and full manifest reproduce frozen diagnostic-commands-001 exactly. RX64 reproduction and RX96 build binaries equal historical 65456-byte binary. Default linker and live admission sources match regression-20261102-04 hashes."
+    },
+    {
+      "name": "live_admission",
+      "passed": true,
+      "evidence": "RX96 manifests have distinct -rx96 format and live_flashing_enabled false. Python live dispatcher exposes no RX96 verifier selection; three actual suffixed/tampered manifest attempts reject. Swift exact-byte catalog source is unchanged."
+    },
+    {
+      "name": "bounds",
+      "passed": true,
+      "evidence": "Both profiles preserve app allocation 0x200000 and raw plus 4096-rounded staging payload limit 0x25e000. Maximum RX96 ends XIP 0x043b3ea0 / physical 0x003b3ea0; erase-rounded end 0x003b4000 remains below allocation end 0x003eb000."
+    },
+    {
+      "name": "real_boundaries",
+      "passed": true,
+      "evidence": "Scoped tests actually invoke RV32 assembler/linker for 65536,65552,98304,98320 bytes under both profiles and inspect successful ELF memory size. Captured-source constructors exercise same sizes."
+    },
+    {
+      "name": "executable_guards",
+      "passed": true,
+      "evidence": "Linker differs only MEMORY LENGTH. Single file-backed RX segment, pinned entries, no allocated writable/NOBITS, relocations, GOT, TLS, constructors; nm undefined rejection remains. Actual ELF negative mutations cover writable PH/section, NOBITS and REL/RELA."
+    },
+    {
+      "name": "stack_guard",
+      "passed": true,
+      "evidence": "512-byte static per-function maximum unchanged and 513 rejected. This is not cumulative stack safety."
+    },
+    {
+      "name": "scope",
+      "passed": true,
+      "evidence": "No runtime C/assembly, catalog, hardware, RAM sizing or external flash ownership changes supplied by this profile. Legacy 1MiB storage constructor continues its implicit default graphics bound."
+    }
+  ],
+  "independent_tests": {
+    "command": "python3 -m unittest discover -s scripts -p test_memomind_rx_profile.py -v",
+    "groups": 5,
+    "elapsed_seconds": 36.841,
+    "passed": true,
+    "logs": [
+      "tests.stdout",
+      "tests.stderr"
+    ],
+    "extra_check": "python3 analysis/rx-profile-review-20261102/check_admission.py",
+    "extra_report": "admission-check.json"
+  },
+  "reviewed_author_evidence": {
+    "path": "analysis/rx96-profile-20261102/report.json",
+    "python_groups_reported": 37,
+    "rv32_gate_cases_reported": 7955,
+    "independently_rerun_in_this_review": false
+  },
+  "caveats": [
+    "The RX96 demonstration remains exactly the existing 65456-byte executable and OTA. Only synthetic fixtures cross 64KiB; no larger executable hardware readiness has been shown.",
+    "Already-catalogued identical bytes retain old eligibility; live-disabled refers to the new manifest/profile, not a ban on that preexisting image.",
+    "Constructors check exact source/container/hooks/size, not complete runtime machine-code semantics. Future larger binaries require their own compiler/native/OTA/lifecycle review.",
+    "The new test asserts section/PH guards but does not independently inject an unresolved symbol; compiler nm-u check was inspected and unchanged guard remains present.",
+    "No mutable app-tail reservation or dashboard/RAM reclamation is established."
+  ],
+  "artifacts": {
+    "tests.stderr": "7bb9f2d81c046f920e39b4bd2111f2bc3a6fdec8bc096380a6f43b94a8fc2d9c",
+    "tests.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "admission-check.json": "ce040b10c043cd9ef4397ad6cbc86ffd17958765db8cd08c7f15c558e5b3b754",
+    "check_admission.py": "450f329f036dd617ce45b95487a02e67dea08d0897fda872e71bc9d7eb11f77d"
+  }
+}

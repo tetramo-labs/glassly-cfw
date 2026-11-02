@@ -1,0 +1,20 @@
+{
+  "basis": "captures/firmware/input-observer-001/manifest.json and verification.json; offline image, not current flash read",
+  "firmware_sha256": "bbc777895ef3c56af8ff3b5cbac85c8e7acb429eadfdc194cd407f5255c12f85",
+  "body_size": 1822432,
+  "body_end_xip": "0x43a7f00",
+  "partition_end_xip": "0x43eb000",
+  "unfilled_tail_bytes": 274688,
+  "sector_aligned_tail_start_xip_candidate": "0x43a8000",
+  "sector_aligned_tail_bytes_candidate": 274432,
+  "tail_physical_start": "0x3a7f00",
+  "partition_physical_end": "0x3eb000",
+  "warning": "Native sector/page conventions established; tail ownership, erase persistence, power-loss behavior and safe task invocation remain unproved.",
+  "final_staged_payload_bytes": 2221149,
+  "final_rounded_payload_bytes": 2224128,
+  "staging_capacity": 2482176,
+  "final_exact_headroom_bytes": 261027,
+  "final_rounded_headroom_bytes": 258048,
+  "sector_size_native_convention": 4096,
+  "program_page_boundary_bytes": 256
+}

@@ -1,0 +1,129 @@
+{
+  "hardware_tested": false,
+  "fixture_origin": "Synthetic independent text bytes and wire events; no renderer or device execution",
+  "verifier_sha256": "7ebfe14aae46280abcbf8d41de382fb0217a0eac4bda3af9e63719dc8e9b9bc7",
+  "cases": [
+    {
+      "name": "valid-native-capture",
+      "expected_success": true,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "wrong-header",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-font-policy",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-capacity",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-device",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "optimized-refused",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-abi-rejected",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "malformed-accepted-rejected",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-native-log",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-native-body",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "duplicate-main",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-completion",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "checksum-rejected",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-clear-reply",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-maximum",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-bundle",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-black",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "short-timeout-hold",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "confirmed-early-finish",
+      "expected_success": true,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "unconfirmed-early-finish",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    }
+  ],
+  "count": 20,
+  "passed": true
+}

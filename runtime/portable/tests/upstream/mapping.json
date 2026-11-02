@@ -1,0 +1,60 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "upstream_files": {
+    "LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "patches/protobuf.c": "39a30ce2570a3a7fc71c1668a4cb4fbf5cddc0318fd1106c9d4c4eb39d4d59a8",
+    "patches/settings_ext.c": "bbf61304a2895a55ed68cc0650b0e2b44af4e3afc3846341804cfbc95764ff74",
+    "patches/zlib_glue.c": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+    "patches/ring_battery.c": "51976b33dea397f32b789e3752ee55a0c9a77fb9596298512ce7f9f8838adbd0",
+    "patches/compass.c": "39106e861b73bd7b230596871f739759f0296c69fc44457d8638ed84a75f5e0f",
+    "patches/ble_link.c": "e7e955eb917b2f1c783fb28b0b56b268dc01052ea95f5314da6545b56001ce51",
+    "patches/host/upstream_host_test.c": "425f96415e9a7c78647ebceb7dda4b33622beb563d0599f2307f4bc2f626e489"
+  },
+  "counterpart": "runtime/portable/tests/upstream/upstream_host_test.c",
+  "production": [
+    "runtime/portable/upstream.c",
+    "runtime/portable/upstream.h"
+  ],
+  "status": "mixed-portable-core-tested-native-adapter-pending",
+  "scenario_functions": [
+    "routing",
+    "batteries",
+    "settings",
+    "headings",
+    "ble_link"
+  ],
+  "scenario_main_calls": {
+    "routing": 1,
+    "batteries": 1,
+    "settings": 1,
+    "headings": 1,
+    "ble_link": 1
+  },
+  "unchanged_assert_sites": 78,
+  "assert_evaluations": 25620,
+  "assertion_map": "analysis/portable-upstream-tests-01/assertion-map.json",
+  "runner": "runtime/portable/tests/run_upstream_tests.py",
+  "pending": [
+    "MemoMind native settings write/readback and user-facing semantics",
+    "Accessory battery source and lifecycle",
+    "Native heading source/diagnostics and stock-hook adapter",
+    "Native BLE scheduling/profile ownership; classic RFCOMM unaffected",
+    "Native extension routing/capability publication"
+  ],
+  "native_shim_boundary": [
+    "G2 GAF/ring and connection/profile layout conversion",
+    "G2 stock callback chaining and callback-address assertions",
+    "Logical side/channel mapping; fixture-only capability string",
+    "Mock microphone/diagnostics/volume status blocks"
+  ],
+  "production_scope": [
+    "bounded extension codec/scanner",
+    "raw-mode classifier",
+    "settings extension composition and send ordering",
+    "battery state codec",
+    "timestamp-matched heading diagnostics",
+    "typed BLE profile policy and deferred request generation"
+  ],
+  "memomind_native_settings_evidence": "analysis/ghidra/input-settings/report.md",
+  "full_port_complete": false
+}

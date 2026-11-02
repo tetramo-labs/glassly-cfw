@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "source_sha256": {
+    "tests/g2_compat/inventory.py": "bd87e9bb675a1fce8d404aa811c64182e5ad6a3c0f2c2e073f71794648b3cf66",
+    "tests/g2_compat/inventory.json": "e1607b23da9ab43bd5fffa133c43f1343d65e2c7d5e95804b2325851bdbd41d7",
+    "tests/g2_compat/test_scope.py": "bc54d8d1282b410ad1c8db80d053d143489519d40a78afc188e9d3aa45e5728f",
+    "tests/g2_compat/UPSTREAM.json": "37f81a1aae225235d22e58e8ac13d96c324544c4cc16c5a4670944c347b18901",
+    "runtime/portable/tests/run_upstream_tests.py": "d141def1188f465dbe1314c2f851452eb658b8f89030140a1368003cf373e593",
+    "README.md": "68a2f6e7125a105357b7843536ed880db60eaead0f4ff238a9a8c88a8a74e118",
+    "tests/g2_compat/COMMAND_PARITY.md": "532573ea579123ff5862231a0930eb77a4d568e8b71f486d435f7b4cc1c70eba",
+    "analysis/parity-status.json": "d760d024139b580a065a400a63704a0b2b53f9d5c4eb24c2804dbb4244fa0b5d",
+    "analysis/storage-integration-plan.json": "66c9537db39f74275c5ccaa6f4d9d1ec93665a0329a4b0ee7faef94437ae887d"
+  },
+  "upstream_files_verified": 96,
+  "scope_tests": 8,
+  "inventory_check": "passed",
+  "historical_counts": {
+    "scenarios": 46,
+    "assertion_sites": 746,
+    "bun_cases": 21
+  },
+  "required_counts": {
+    "scenarios": 39,
+    "assertion_sites": 654,
+    "bun_cases": 11
+  },
+  "excluded_scenarios": {
+    "keyboard": 6,
+    "battery": 1
+  },
+  "excluded_assertion_sites": {
+    "keyboard": 86,
+    "battery": 6
+  },
+  "required_features": [
+    "Single-button input",
+    "Compass data",
+    "Raw IMU data",
+    "Ambient-light sensing"
+  ],
+  "remaining_required_files": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/sound-test.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "mixed_upstream_status": "platform-specific",
+  "mixed_required_scenarios": [
+    "routing",
+    "settings",
+    "headings",
+    "ble_link"
+  ],
+  "full_parity_claimed": false,
+  "device_actions": false,
+  "production_or_test_source_edits": false,
+  "corrected_finding": "Removed stale native accessory battery pending requirement; now explicitly timestamped compass/raw IMU sensor adapters.",
+  "limitations": [
+    "Scope/inventory checks are metadata and mocked runner tests, not native sensor or button acceptance.",
+    "Unchanged mixed reference binaries still execute battery/keyboard structural assertions; those do not restore excluded native hardware obligations.",
+    "Historical aggregate numeric counts remain historical; current required_reference_coverage and inventory reflect the new scope."
+  ]
+}

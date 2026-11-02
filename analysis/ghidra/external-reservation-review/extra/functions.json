@@ -1,0 +1,15 @@
+[
+  {
+    "requested": "04345f4c",
+    "address": "ram:04345f4c",
+    "incoming_references": [
+      "ram:0424bd20 UNCONDITIONAL_CALL",
+      "ram:0420ae8c COMPUTED_CALL",
+      "ram:04231c2c COMPUTED_CALL",
+      "ram:042326ec COMPUTED_CALL",
+      "ram:042397a4 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "xcrun",
+    "--sdk",
+    "iphoneos",
+    "swiftc",
+    "-target",
+    "arm64-apple-ios15.0",
+    "-typecheck",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/RectangleCopyCommand.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift"
+  ],
+  "returncode": 0,
+  "scope": "Platform-neutral core typecheck only; no iOS transport, Glassly integration or device operation"
+}

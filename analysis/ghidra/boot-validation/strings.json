@@ -1,0 +1,142 @@
+[
+  {
+    "address": "0x2075548",
+    "offset": "0xd548",
+    "text": "[E] No image %d!"
+  },
+  {
+    "address": "0x207555c",
+    "offset": "0xd55c",
+    "text": "Boot from 0x%08x"
+  },
+  {
+    "address": "0x2075570",
+    "offset": "0xd570",
+    "text": "- WuQi - Second Bootloader"
+  },
+  {
+    "address": "0x20755cc",
+    "offset": "0xd5cc",
+    "text": "Boot reason:%s"
+  },
+  {
+    "address": "0x2075650",
+    "offset": "0xd650",
+    "text": "[E] No bootmap!"
+  },
+  {
+    "address": "0x2075664",
+    "offset": "0xd664",
+    "text": "[E] Ota Image bad!"
+  },
+  {
+    "address": "0x2075678",
+    "offset": "0xd678",
+    "text": "[E] Get_image %d failed"
+  },
+  {
+    "address": "0x20756c6",
+    "offset": "0xd6c6",
+    "text": "Recieving RAM-IMAGE in xmodem : "
+  },
+  {
+    "address": "0x20756ea",
+    "offset": "0xd6ea",
+    "text": "Data error, reboot..."
+  },
+  {
+    "address": "0x2075710",
+    "offset": "0xd710",
+    "text": "[W] KV id %d crc error %08x != %08x"
+  },
+  {
+    "address": "0x2075738",
+    "offset": "0xd738",
+    "text": "OTA offset invalid"
+  },
+  {
+    "address": "0x207574c",
+    "offset": "0xd74c",
+    "text": "It's secure OTA image"
+  },
+  {
+    "address": "0x2075764",
+    "offset": "0xd764",
+    "text": "OTA image has invalid magic byte saw 0x%08x"
+  },
+  {
+    "address": "0x2075790",
+    "offset": "0xd790",
+    "text": "OTA image num %d invalid"
+  },
+  {
+    "address": "0x20757ac",
+    "offset": "0xd7ac",
+    "text": "OTA image header crc check failed 0x%08x != 0x%08x"
+  },
+  {
+    "address": "0x20757e0",
+    "offset": "0xd7e0",
+    "text": "OTA comprssed length error %d > %d"
+  },
+  {
+    "address": "0x2075804",
+    "offset": "0xd804",
+    "text": "OTA compressed data check failed 0x%08x != 0x%08x"
+  },
+  {
+    "address": "0x2075838",
+    "offset": "0xd838",
+    "text": "OTA offset invalid!"
+  },
+  {
+    "address": "0x20758a4",
+    "offset": "0xd8a4",
+    "text": "[W] boot map dstlen[%08x] != [%d][%08x]"
+  },
+  {
+    "address": "0x2075934",
+    "offset": "0xd934",
+    "text": "[E] boot map not compressed !!!"
+  },
+  {
+    "address": "0x2075958",
+    "offset": "0xd958",
+    "text": "bootmap set entering..."
+  },
+  {
+    "address": "0x2075974",
+    "offset": "0xd974",
+    "text": "ota map length invalid %d"
+  },
+  {
+    "address": "0x2075990",
+    "offset": "0xd990",
+    "text": "bootmap invalid...reset device"
+  },
+  {
+    "address": "0x20759b0",
+    "offset": "0xd9b0",
+    "text": "image %x t:%08x lm:%08x v:%08x le:%08x s:%08x"
+  },
+  {
+    "address": "0x20768d4",
+    "offset": "0xe8d4",
+    "text": "[KV]Key head crc error in %p"
+  },
+  {
+    "address": "0x2076920",
+    "offset": "0xe920",
+    "text": "[KV]Key data crc error in %p, length:0x%08x"
+  },
+  {
+    "address": "0x2076b8c",
+    "offset": "0xeb8c",
+    "text": "[KV]Erase page 0x%08x error."
+  },
+  {
+    "address": "0x2076bac",
+    "offset": "0xebac",
+    "text": "[KV]Erase error %p:0x%08x"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "rv32_z_stream": 56,
+  "rv32_inflate_state": 7120,
+  "window": 32768,
+  "per_origin_persistent": 39944,
+  "two_origin_persistent": 79888,
+  "one_origin_record8192_peak_before_core_adapter": 56329,
+  "one_origin_record65535_peak_before_core_adapter": 171015,
+  "both_origin_record8192_peak_one_decode_before_core_adapter": 104465,
+  "both_origin_record65535_peak_one_decode_before_core_adapter": 276494,
+  "notes": [
+    "Current portable transport retains full wire record and allocates max_record+1 decoded bytes.",
+    "Concurrent partial buffers in both origins plus a single synchronous decode are counted; no two simultaneous decoder calls assumed.",
+    "Excludes transport context, native receive/queue buffers, allocator metadata, graphics canvas, retained scene/assets, timers and task stack.",
+    "A smaller message limit does not shrink a 32KiB zlib dictionary."
+  ]
+}

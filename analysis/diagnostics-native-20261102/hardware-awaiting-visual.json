@@ -1,0 +1,71 @@
+{
+  "format": "memomind-diagnostics-hardware-awaiting-visual-v1",
+  "utc": "2026-11-02T18:18:06.286591+00:00",
+  "release": "diagnostic-commands-001",
+  "candidate": {
+    "image_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "image_bytes": 2230267,
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "runtime_bytes": 65456,
+    "header_sha256": "7787494fdb8d50c1a0d578c2494cd0127a1cbcb954dc8aa2541faaa766baf016",
+    "app_header_sha256": "a42392b3f2afe8eb1b432f77770bcaab86d3e488c921cc9ae8dffd490f17b65e",
+    "metadata_packed_bytes": 171,
+    "metadata_sha256": "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a",
+    "app_packed_bytes": 959165,
+    "app_raw_bytes": 1838672,
+    "app_sha256": "054f97d9e687ba2baf008f5dc118bff7dbc5c49ad462bb9f7188b1f6d9352ff9"
+  },
+  "installed": true,
+  "boot_verified": true,
+  "ota_verified_byte_for_byte": true,
+  "hardware_command_smoke_verified": true,
+  "display_cleared": true,
+  "input_observer_inactive": true,
+  "visual_confirmed": false,
+  "visual_state": "No user reply received; five-minute hold completed and cleared",
+  "visual_question": "Can you see DIAG on a black background, with small letters/numbers at the upper left?",
+  "transfer_verification": "analysis/diagnostics-native-20261102/trace-verification.json",
+  "preflight_verification": "analysis/diagnostics-native-20261102/preflight-verification.json",
+  "smoke_verification": "analysis/diagnostics-native-20261102/smoke-verification.json",
+  "offline_checkpoint": "analysis/diagnostics-native-20261102/offline-checkpoint.json",
+  "requests_verified": 1008,
+  "diagnostic_snapshots": 19,
+  "epochs": [
+    40687,
+    40688,
+    40689,
+    40690
+  ],
+  "hold_seconds": 300.1503975833766,
+  "required_stages_covered": 117,
+  "python_tests": 224,
+  "swift_tests": 100,
+  "trace_verifier_cases": 42,
+  "regression_execution_scope": "115 unchanged full-run passes reused; two corrected runner contract invocations rerun with unchanged test/production sources",
+  "failed_first_smoke": "Preserved: wrong helper assumption about clock-seeded first epoch. Corrected helper v2 passed; firmware unchanged.",
+  "initial_epoch_evidence": "analysis/diagnostics-initial-epoch-20261102/report.json",
+  "canary_repeated": false,
+  "hardware_pixel_readback": false,
+  "full_parity": false,
+  "remaining_required_suite_entries": 19,
+  "required_sensor_features": [
+    "Compass data",
+    "Raw IMU data",
+    "Ambient-light sensing"
+  ],
+  "required_input": "single button",
+  "excluded": [
+    "Bluetooth keyboard/HOGP",
+    "ring battery",
+    "gesture recognition/control"
+  ],
+  "limitations": [
+    "Metadata/history/epoch lifetime is current screenobject, notG2boot singleton",
+    "Epoch persistence best-effort ifnewmetadata allocationfails; cleanup stillreleases graphics/input",
+    "Failure counters collectedonlywhenmetadataexists and fromexecuted scene-dispatch/token-workspace failures; noBTadmission/nativeJSON/owner-create/allocationcoverage",
+    "NoNACK/gate/DWT/calibration/latestRX metricsfabricated; tiny3x5hex overlay isnotG2Terminus/fontlayout parity",
+    "Mode11 doesnotimplement/cancel futurecompass/rawIMU/ALS/audio/notificationcontrollers oractivecanaryworker",
+    "NativeAPIs/childeventtree/scheduler mocked; nohardware/panel/timing/radiodelivery orwhole-taskstack guarantee",
+    "Native8192 ingress/64KiBscene assetcapacity unchanged"
+  ]
+}

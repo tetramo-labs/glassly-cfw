@@ -1,0 +1,202 @@
+{
+  "passed": true,
+  "cases": 32,
+  "results": [
+    {
+      "name": "valid-timeout-wraparound",
+      "expected_acceptance": true,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "name": "boolean-abi",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "wrong-presentation",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError(('scheduled', 'unchanged'))"
+    },
+    {
+      "name": "extra-key",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "short-hex",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "uppercase-hex",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "bad-flag",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "bad-bool",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "bad-reserved",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "duplicate-key",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Duplicate JSON key')"
+    },
+    {
+      "name": "counter-producer-wrong",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((2, 1))"
+    },
+    {
+      "name": "ring-cleared-by-key",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((0, 7))"
+    },
+    {
+      "name": "cleanup-wrong-epoch",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((2, 1))"
+    },
+    {
+      "name": "logged-snapshot-false",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((0, 1))"
+    },
+    {
+      "name": "missing-completion",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "completion-bool",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "duplicate-reply",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Uncorrelated/duplicate reply')"
+    },
+    {
+      "name": "wrong-response-event",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Uncorrelated/duplicate reply')"
+    },
+    {
+      "name": "overlapping-request",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Overlapping business requests')"
+    },
+    {
+      "name": "short-hold",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "finish-without-sentinel",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "name": "valid-finish-sentinel",
+      "expected_acceptance": true,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "name": "input-mask3",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((3, 1))"
+    },
+    {
+      "name": "cleanup-observer-active",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((True, False))"
+    },
+    {
+      "name": "input-bool-capacity",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError((True, 32))"
+    },
+    {
+      "name": "snapshot-bool-hex",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "unexpected-settled",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "valid-optional-final-ack",
+      "expected_acceptance": true,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "name": "wrong-ack-head",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Unexpected/duplicate ACK')"
+    },
+    {
+      "name": "duplicate-ack",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError('Unexpected/duplicate ACK')"
+    },
+    {
+      "name": "truncated-final-rx",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "AssertionError()"
+    },
+    {
+      "name": "optimized-refused",
+      "expected_acceptance": false,
+      "accepted": false,
+      "error": "Traceback (most recent call last):\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/analysis/diagnostics-native-20261102/verify-smoke.py\", line 2, in <module>\n    if not __debug__: raise RuntimeError('Verification requires assertions; optimized execution is refused')\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Verification requires assertions; optimized execution is refused"
+    }
+  ],
+  "source_sha256": {
+    "verify-smoke.py": "51b8f8edaa31d8f358b65c8c391d5673b974901c31c4649f71e65dcc946c8dcf",
+    "test-verifier.py": "fd7d6947af54cb469776b21de14b3e0764c89df9d125452fe8e2992ba7bd87e6"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-02T06:03:10.468334+00:00",
+  "source": "user conversation",
+  "answer": "I see it",
+  "question": "The test is showing again for up to five minutes. Can you see both B8/checkerboard groups on a black background?",
+  "capture": "captures/swift-mac-bundle-smoke-20261102-05",
+  "bundle_pattern_visible": true,
+  "hardware_pixel_readback": false,
+  "separate_black_level_measurement": false
+}

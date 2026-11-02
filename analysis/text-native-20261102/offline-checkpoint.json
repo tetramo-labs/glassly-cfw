@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-02T06:28:00.368431+00:00",
+  "state": "Mode15 candidate exactly reconstructed and admitted; aggregate running; no text OTA attempted",
+  "candidate": "captures/firmware/text-commands-001/firmware.bin",
+  "runtime": "runtime/build/text-commands-001/graphics.bin",
+  "pins": {
+    "image_sha256": "e5409e0d42da0009b759852289915e92517a185c1255ad8de28a56c49c070d31",
+    "image_bytes": 2229380,
+    "runtime_sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7",
+    "runtime_bytes": 63648,
+    "header_sha256": "f70265e4218854cd2abb66e3be39f6c128a47625f939388659a957afb8718feb",
+    "app_header_sha256": "b7e85bb1ca5658d743190e4589da2d7454d41ecad0ca459695a43b36264e6fc0",
+    "metadata_packed_bytes": 170,
+    "metadata_sha256": "7d0800d151af9fb197e39454c6bbbadb5da363aa76c189886e9f14a65a93f792",
+    "app_packed_bytes": 958279,
+    "app_raw_bytes": 1836864,
+    "app_sha256": "8a605b929d838cff05b709ebd37d1720b70c0706c0a0030bf844775bcfeb52c1"
+  },
+  "aggregate": "analysis/regression-20261102-03/report.json",
+  "aggregate_session": 77817,
+  "required_stages_expected": 105,
+  "live_helper": "analysis/text-native-20261102/smoke",
+  "preflight": "analysis/text-native-20261102/preflight",
+  "helper_review": "analysis/text-command-review-20261102/final-review.json",
+  "synthetic_verifier_tests": 20,
+  "source_files_archived": 277,
+  "last_boot_verified_release": "bundle-commands-001",
+  "device_actions": 0,
+  "scope_notes": [
+    "Full G2 test suite port remains incomplete; keyboard/HOGP excluded.",
+    "Native resource fonts differ from G2; unsupported glyphs rejected.",
+    "Runtime64KiB limit unchanged; current size63648.",
+    "Next device action only after aggregate and reviews pass: exact nativeSwift OTA, independent reconstruction, postbootpreflight, textdisplayhold and visual confirmation."
+  ]
+}

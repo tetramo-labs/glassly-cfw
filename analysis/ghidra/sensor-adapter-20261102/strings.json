@@ -1,0 +1,235 @@
+{
+  "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "matches": [
+    {
+      "address": "0x435923c",
+      "offset": 1499676,
+      "text": "[T:0x%08X][gm_cli.c:507] gm_cli E:set recording led brightness failed, brightness=%d, ret=%d"
+    },
+    {
+      "address": "0x4359990",
+      "offset": 1501552,
+      "text": "[T:0x%08X][gm_led.c:221] gm_led E:recording brightness listener register failed, ret=%d"
+    },
+    {
+      "address": "0x4359aa8",
+      "offset": 1501832,
+      "text": "[T:0x%08X][app_gmimu.c:1098] gmimu E:gm_imu_direction_enable(%d) skipped, state cleared: imu not initialized"
+    },
+    {
+      "address": "0x435e790",
+      "offset": 1521520,
+      "text": "[app_hogp_host] LE connect(%s) submit state:%d active:%d report:%d bond:%d addr_type:%d connect_type:%d"
+    },
+    {
+      "address": "0x435e7fc",
+      "offset": 1521628,
+      "text": "[app_hogp_host] LE connect(%s) submit failed ret:%d state:%d active:%d report:%d bond:%d"
+    },
+    {
+      "address": "0x4361004",
+      "offset": 1531876,
+      "text": "[T:0x%08X][display_brightness.c:68] [display_brightness]  E:Failed to send brightness message to display task, ret=%d"
+    },
+    {
+      "address": "0x436107c",
+      "offset": 1531996,
+      "text": "display_brightness"
+    },
+    {
+      "address": "0x4361090",
+      "offset": 1532016,
+      "text": "[T:0x%08X][display_brightness.c:223] [display_brightness]  E:Failed to set auto-brightness mode, ret=%d"
+    },
+    {
+      "address": "0x43628ec",
+      "offset": 1538252,
+      "text": "icon_brightness"
+    },
+    {
+      "address": "0x43628fc",
+      "offset": 1538268,
+      "text": "icon_auto_brightness"
+    },
+    {
+      "address": "0x43637a8",
+      "offset": 1542024,
+      "text": "approval_submitted"
+    },
+    {
+      "address": "0x436383c",
+      "offset": 1542172,
+      "text": "submitted"
+    },
+    {
+      "address": "0x4363a44",
+      "offset": 1542692,
+      "text": "im_sc_brightness_up"
+    },
+    {
+      "address": "0x4363a58",
+      "offset": 1542712,
+      "text": "im_sc_brightness_down"
+    },
+    {
+      "address": "0x4365014",
+      "offset": 1548276,
+      "text": "[T:0x%08X][phone_call_app.c:2328] [phone_call_app]  E:phone_call_on_event: phone_internals is %s, event_data is %s"
+    },
+    {
+      "address": "0x4365df8",
+      "offset": 1551832,
+      "text": "auto brightness"
+    },
+    {
+      "address": "0x4365e08",
+      "offset": 1551848,
+      "text": "display brightness"
+    },
+    {
+      "address": "0x436847c",
+      "offset": 1561692,
+      "text": "Brightness %d"
+    },
+    {
+      "address": "0x436848c",
+      "offset": 1561708,
+      "text": "Auto-Brightness On"
+    },
+    {
+      "address": "0x43684a0",
+      "offset": 1561728,
+      "text": "Auto-Brightness Off"
+    },
+    {
+      "address": "0x4368ebc",
+      "offset": 1564316,
+      "text": "Brightness+"
+    },
+    {
+      "address": "0x4368ec8",
+      "offset": 1564328,
+      "text": "Brightness-"
+    },
+    {
+      "address": "0x436981c",
+      "offset": 1566716,
+      "text": "Approval submitted. Waiting for Codex"
+    },
+    {
+      "address": "0x4374ec0",
+      "offset": 1613472,
+      "text": "n ambiental est"
+    },
+    {
+      "address": "0x4375735",
+      "offset": 1615637,
+      "text": " passata a un'altra schermata"
+    },
+    {
+      "address": "0x4376dbc",
+      "offset": 1621404,
+      "text": "Altre impostazioni"
+    },
+    {
+      "address": "0x437722c",
+      "offset": 1622540,
+      "text": "Registrazione con occhiali, acquisizione ambientale attivata"
+    },
+    {
+      "address": "0x4377906",
+      "offset": 1624294,
+      "text": " in uso su un altro terminale"
+    },
+    {
+      "address": "0x437d41a",
+      "offset": 1647610,
+      "text": "o ambiente ativada"
+    },
+    {
+      "address": "0x43858d4",
+      "offset": 1681588,
+      "text": "false"
+    },
+    {
+      "address": "0x4391630",
+      "offset": 1730064,
+      "text": "forward prompt auto brightness failed"
+    },
+    {
+      "address": "0x4391658",
+      "offset": 1730104,
+      "text": "invalid prompt auto brightness"
+    },
+    {
+      "address": "0x4391678",
+      "offset": 1730136,
+      "text": "forward prompt display brightness failed"
+    },
+    {
+      "address": "0x43916a4",
+      "offset": 1730180,
+      "text": "invalid prompt display brightness"
+    },
+    {
+      "address": "0x4392764",
+      "offset": 1734468,
+      "text": "[T:0x%08X][bt_data_handler.c:1897] [bt_handler]  E:Invalid brightness level: %d (0-%d allowed)"
+    },
+    {
+      "address": "0x43927c4",
+      "offset": 1734564,
+      "text": "[T:0x%08X][bt_data_handler.c:1903] [bt_handler]  E:Failed to set brightness level: %d"
+    },
+    {
+      "address": "0x4396c44",
+      "offset": 1752100,
+      "text": "ICM42670"
+    },
+    {
+      "address": "0x4396c50",
+      "offset": 1752112,
+      "text": "[T:0x%08X][gm_imu_icm42670.c:224] icm42670 E:Expected: 0x69, Read: 0x%02X"
+    },
+    {
+      "address": "0x4396c9c",
+      "offset": 1752188,
+      "text": "[T:0x%08X][gm_imu_icm42670.c:369] icm42670 E:IMU suspend failed: err=%d recovery=%d"
+    },
+    {
+      "address": "0x4396dc0",
+      "offset": 1752480,
+      "text": "[T:0x%08X][gm_light_stk31860.c:68] stk31860 E:Read reg 0x%02X failed: %d"
+    },
+    {
+      "address": "0x4396e0c",
+      "offset": 1752556,
+      "text": "[T:0x%08X][gm_light_stk31860.c:86] stk31860 E:Chip ID mismatch: expected=0x%02X, got=0x%02X"
+    },
+    {
+      "address": "0x4396e6c",
+      "offset": 1752652,
+      "text": "[T:0x%08X][gm_light_stk31860.c:89] stk31860 E:Read chip ID failed, retry %d/3"
+    },
+    {
+      "address": "0x4396ebc",
+      "offset": 1752732,
+      "text": "gm_light_stk31860.c"
+    },
+    {
+      "address": "0x4396ed0",
+      "offset": 1752752,
+      "text": "[T:0x%08X][gm_light_stk31860.c:53] stk31860 E:Write reg 0x%02X failed: %d"
+    },
+    {
+      "address": "0x4396f1c",
+      "offset": 1752828,
+      "text": "[T:0x%08X][gm_light_stk31860.c:122] stk31860 E:Init failed at step %zu"
+    },
+    {
+      "address": "0x4396f64",
+      "offset": 1752900,
+      "text": "STK31860"
+    }
+  ]
+}

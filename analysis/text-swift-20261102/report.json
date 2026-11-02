@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "upstream_sha256": {
+    "patches/texture_cache.c": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+    "patches/zlib_glue.c": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6"
+  },
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/TextCommand.swift": "2ab8214d4ba2543966301e946a093653572a56e15f0703337bfdf5df2a4aed1a",
+    "swift/MemoMindKit/Sources/MemoMindCore/BundleCommand.swift": "b543e7f1a45e700fe5dc2ab68cef0e49234636033ae9b33eae6c89d836f48602",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/TextCommandTests.swift": "f22257fa5fd718a585f92e4359f30e3b1a12a7ccc1731e37185d859dfdf3f2df",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/TextReferenceVectors.swift": "5175fce91d1470c54f27d0b1aebdd96eed3ed1d21cb621c2646e0d59329dc991",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/BundleCommandTests.swift": "79493f9a6343ce8ac3f7deac1cb67a8166343fc5f23991f9b2bdfc6dd7235ba3"
+  },
+  "artifact_sha256": {
+    "report.md": "5a85c685e3513dac14b96202926d7a33d964c10cb56d0630a360318801114c92",
+    "reference.c": "89d821cbed98737361280c681f241aa8f299f9e213332049ccd46642141c00a7",
+    "generate_reference.py": "9012a78b8c65be7fc5edc3166030e47e75e7bf61324f9a7209f9f0dc468906d2",
+    "swift-tests.log": "dbede689f6e08ec7b56f5176bba48114b55a17ce2a1932d739708f87af03fd19",
+    "reference.json": "eb8b48096e311b8b82f7c598f8ac73f6986470f447029d5e6019c68dd53af367",
+    "swift-tests-final.log": "c7ca0829a3356eae9de2a3acf52dc5fcca7c96958d9660f2d73a13c9675051e3",
+    "reference.dylib": "7749008a894633707bc3a0cd944d5f36b51b83d078130bd6a16fece6f912833f"
+  },
+  "swift_test_methods": 16,
+  "text_test_methods": 7,
+  "bundle_test_methods": 9,
+  "pinned_original_parser_checks": 963,
+  "hardware_actions": false,
+  "limitations": [
+    "Native font and pixel callbacks mocked in original parser oracle; no glyph/output claim.",
+    "Bundle validation remains exact-envelope only, not text syntax or font semantics.",
+    "Native mode15 capability is required separately."
+  ],
+  "commands": [
+    "python3 analysis/text-swift-20261102/generate_reference.py",
+    "swift test --package-path swift/MemoMindKit --scratch-path /tmp/mm-swift-text-tests --filter 'TextCommandTests|BundleCommandTests'"
+  ]
+}

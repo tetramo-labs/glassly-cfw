@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": 23,
+  "execution": "actual compiled Swift arm64 executable; injected delegate state; no Bluetooth device/controller construction",
+  "run": "run-001",
+  "current_transport_sha256": "f8936e33b772239ca2a59071f2b95b5e58f4996f0c2a96f8bea5f53101f1d2d5",
+  "original_checked_transport_sha256": "96a07d7ef3a096e7826ed47ecc1b79ea24890df6ea3dff5419299b57015afb1a",
+  "harness_sha256": "a945f17ee9890c4b26bb4740f1877122695b29070caaddf599eaa4d7bc90bb34",
+  "core_protocol_sha256": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e",
+  "production_snapshot_matches_current": true,
+  "compiler_commands": "run-001/compiler.stderr",
+  "stdout": "run-001/stdout.txt",
+  "limitations": [
+    "Uses current Protocol.swift only to build MemoMindCore for protocol conformance; not full OTA/firmware test.",
+    "Private delegate methods injected with nil channel identity; no framework scheduling, hardware channel, SDP, writes, or remote acknowledgements executed.",
+    "Timeout checks validate invalid arguments, not real elapsed SDP/open/write/read deadline expiration.",
+    "mustThrow checks require some error; they do not assert exact error enumeration.",
+    "No reentrancy, background-thread callbacks, late SDP/open callback, real close-status or MTU splitting tests.",
+    "No pairing/TCC/host power/connection/OTA success evidence.",
+    "Source snapshot differs from earlier checked source; current snapshot rerun passed independently."
+  ]
+}

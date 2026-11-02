@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "runtime": "runtime/build/full-store-read-001/graphics.bin",
+  "blob_sha256": "83290f4c3d300b3f479bcd60865ffb5cc29b55e5887e635fac6f0d0d208d352b",
+  "blob_bytes": 54016,
+  "profile": "H001Y-1.0.3.127-full-store-read-v1",
+  "store_range": [
+    1,
+    5242880,
+    8388608
+  ],
+  "region_name": "managed-store",
+  "read_bytes_max": 256,
+  "alignment": 256,
+  "runtime_source_drift": [],
+  "legacy_profiles": [
+    {
+      "profile": "flash-read-001",
+      "sha256": "d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b",
+      "bytes": 50880,
+      "byte_identical": true
+    },
+    {
+      "profile": "external-read-001",
+      "sha256": "6c317933ca7edef1375843375dceb18f94ef0efca93246076c92c023a56432bd",
+      "bytes": 50944,
+      "byte_identical": true
+    },
+    {
+      "profile": "storage-diag-001",
+      "sha256": "265f8837b2b939930434253f7be63a1155190fef701c57d8c123d482a66725eb",
+      "bytes": 54064,
+      "byte_identical": true
+    }
+  ],
+  "changed_files_sha256": {
+    "runtime/graphics/flash_read.c": "b4ea86988301bd8507bb1eb41298c6a5a9f1c335d5f29d78b30316a9ffb1daba",
+    "runtime/graphics/flash_read.h": "1338d546773eb2b114f53805a9f5e28ecb36d2628203571739ced72386c68c31",
+    "scripts/compile_memomind_graphics.py": "5d9d20f44672f3ad6a7a8e915871e34c901733fe021f0a1a0ff97b70f0ddbcad",
+    "scripts/memomind_flash_read.py": "76d515e8f5f210498eae4e7f17dff36e2829e98ec01eeb9eea8a0c5f5115874b",
+    "scripts/memomind_storage_diag.py": "f960bf8600617d1d385145ce0c1e4a5be4ad05469c788375b8e7dc0ecc233c37",
+    "scripts/capture_memomind_storage_diag.py": "e1018e8a8bd0b36007e29d7a485b56807d3c80e9c82a8e79b863f245c765bbdb",
+    "runtime/graphics/tests/test_flash_read.c": "a000829809a9903c97c128d6f5dfb2bb34200ac9c37c130697c3207ff7b46af8",
+    "runtime/graphics/tests/run_flash_read_tests.py": "e67c8f6bd29272c49279795c83d01a7c8fbda850f14bb26197d9ced308fb5534",
+    "scripts/test_full_store_reader.py": "76914104aac591d5f22b08efff7fdc8da3df1c2ed216131d824ff0c027f5098e",
+    "tests/rv32/full_store_read_gate_emulator_test.py": "417cdfbdf8493f1f8be0b370cab51c7fbaf5cbb52c03908994c6c3d3800415a1",
+    "tests/rv32/full_store_read_runtime_emulator_test.py": "cbb9b704704ac492d67b5a14cb910e528f0fc7d75edfbd6a42869e6bb6597914",
+    "tests/check_full_store_read_contract.py": "ad2af1a90fa06d56bc73c16e0892573b8a061cbe5f9086275a4f467d16490762"
+  },
+  "hardware_tested": false,
+  "device_actions": false,
+  "frames": {
+    "reader": 96,
+    "native_read_veneer": 0,
+    "maximum_runtime_function": 512
+  },
+  "validation": {
+    "host": "host-001/report.json",
+    "actual_rv32": "runtime-001.json",
+    "gates": "gates-001.json",
+    "wire_contract": "full-contract-001.json",
+    "new_python": "python-002.stdout",
+    "legacy_clients": [
+      "legacy-client.stdout",
+      "legacy-diagnostics.stdout"
+    ]
+  }
+}

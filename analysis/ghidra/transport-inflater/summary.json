@@ -1,0 +1,25 @@
+{
+  "finding": "No native persistent RFC1950 inflater/reset/end ABI established; bounded negative search",
+  "native_zlib_usable": false,
+  "absence_proved": false,
+  "stock_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+  "sdk_commit": "171098bff25934a534a49f95b88df58fbed404c7",
+  "native_formats_identified": [
+    "raw LZ4",
+    "LZMA",
+    "custom image byte run length"
+  ],
+  "public_lz4_decode": "0x04299c1e -> 0x0424593a",
+  "local_option": "preexisting Ghidra zlib1.3.1 inflate-only subset",
+  "local_option_downloaded": false,
+  "local_option_rv32_imports": [],
+  "local_option_rv32_writable_globals": 0,
+  "local_option_rv32_text": 7530,
+  "local_option_rv32_rodata": 3309,
+  "local_option_rv32_per_origin_ram": 39944,
+  "host_smoke_sanitizers": "ASan/UBSan passed; see zlib-smoke-command.json",
+  "native_device_actions": false,
+  "runtime_modified": false,
+  "ghidra_project_modified": false,
+  "next": "Review/pin source and full transport tests; budget persistent dictionary plus complete-record buffers; no guessed native address."
+}

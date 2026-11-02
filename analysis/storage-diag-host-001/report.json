@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "runtime/graphics/storage_diag.c": "44031da4fce97495a2769b088f6b4eda5d0c794d438dda6474092b7ba0fd68ef",
+    "runtime/graphics/tests/test_storage_diag.c": "9d562d30f74e0faf03036aa50041cf8fef5e7a25dc748bbf6fe7b757f5d322e4",
+    "runtime/graphics/storage_diag.h": "74e7ea20032ec96dc63d3b7f0a6c6d0853114f3c170439c17ccc425d0ea88f45",
+    "runtime/graphics/tests/run_storage_diag_tests.py": "6d4edfc2a235e9e5ef27af61ac7617b3b513cc37b6988b39da11a0d60b896a33"
+  },
+  "replies": [
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "topology",
+      "consistent": 1,
+      "xip0Initialized": 0,
+      "xip1Initialized": 0,
+      "xip0Driver": 0,
+      "xip1Driver": 0,
+      "xip0QuadConfigured": 0,
+      "xip1QuadConfigured": 0,
+      "xip1ProbeValid": 0,
+      "xip1LegacyId": 0,
+      "sharedC8ProbeValid": 0,
+      "generalSpiBackendKnown": 0,
+      "generalSpiReady": 0,
+      "generalSpiMutexPresent": 0,
+      "generalSpiSemaphorePresent": 0,
+      "generalSpi0Configured": 0,
+      "generalSpiPinsMatch": 0,
+      "cus8ContextPresent": 0,
+      "cus8ValidatedPackageState": 0
+    },
+    {
+      "glassly": "flash-read",
+      "abi": 1,
+      "result": "ok",
+      "diagnostic": "topology",
+      "consistent": 1,
+      "xip0Initialized": 1,
+      "xip1Initialized": 1,
+      "xip0Driver": 2,
+      "xip1Driver": 1,
+      "xip0QuadConfigured": 1,
+      "xip1QuadConfigured": 1,
+      "xip1ProbeValid": 1,
+      "xip1LegacyId": 34071,
+      "sharedC8ProbeValid": 1,
+      "generalSpiBackendKnown": 1,
+      "generalSpiReady": 1,
+      "generalSpiMutexPresent": 1,
+      "generalSpiSemaphorePresent": 1,
+      "generalSpi0Configured": 3,
+      "generalSpiPinsMatch": 1,
+      "cus8ContextPresent": 1,
+      "cus8ValidatedPackageState": 255
+    }
+  ],
+  "summary": "PASS topology:65536 UID exclusions,22 changed-snapshot fields,768 capacity boundaries,normalized pointers and invalid probes",
+  "native_RAM_mocked": true,
+  "device_actions": false,
+  "source_drift": []
+}

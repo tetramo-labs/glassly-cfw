@@ -1,0 +1,70 @@
+{
+  "format": "memomind-dashboard-reclaim-checkpoint-v1",
+  "completed_utc": "2026-11-02T19:55:21.760852+00:00",
+  "offline_checks_passed": true,
+  "device_actions": false,
+  "installed_build_unchanged": "diagnostic-commands-001",
+  "candidate": "captures/firmware/dashboard-islands-001",
+  "candidate_sha256": "0317abeac1d8b545216152b2d14220bdb91b99a14f5293c8444696769fa1af39",
+  "candidate_bytes": 2229111,
+  "candidate_rx_bytes": 2746,
+  "candidate_regions": 6,
+  "identified_launcher_bytes": 14168,
+  "heap_saving_established": false,
+  "dashboard_fully_removed": false,
+  "live_admitted": false,
+  "hardware_validated": false,
+  "tests": {
+    "python": 231,
+    "swift": 105,
+    "rv32_direct_gates": 18,
+    "rv32_actual_dispatcher": 54,
+    "independent_constructor_checks": 42,
+    "g2_inventory_check_passed": true,
+    "full_aggregate_rerun": false,
+    "runner_new_stage": "dashboard_islands_native"
+  },
+  "review": "analysis/dashboard-islands-review-20261102/final-review.json",
+  "independent_emulator_attempt": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .tools/rv32-tests-venv/bin/python3 tests/rv32/dashboard_islands_emulator_test.py --output analysis/dashboard-islands-review-20261102/rv32-independent.json",
+    "exit_code": 132,
+    "output_file_created": false,
+    "successful_independent_rerun_claimed": false
+  },
+  "ledger": "analysis/dashboard-islands-20261102/reclaim-ledger.json",
+  "candidate_static_and_admission_checks": "analysis/dashboard-islands-20261102/candidate-checks.json",
+  "source_changes_since_previous_regression": [
+    "runtime/graphics/graphics_rx96.ld",
+    "scripts/build_memomind_dashboard_reclaim.py",
+    "scripts/build_memomind_exclusive_storage.py",
+    "scripts/build_memomind_flash_canary.py",
+    "scripts/build_memomind_graphics.py",
+    "scripts/compile_memomind_graphics.py",
+    "scripts/memomind_rx_profile.py",
+    "scripts/test_build_memomind_dashboard_reclaim.py",
+    "scripts/test_memomind_rx_profile.py",
+    "swift/MemoMindKit/Sources/MemoMindCore/SensorCommands.swift",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/SensorCommandsTests.swift",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/SensorReferenceVectors.swift",
+    "tests/run_tests.py",
+    "tests/rv32/dashboard_islands_emulator_test.py"
+  ],
+  "previous_aggregate": "analysis/regression-20261102-05/report.json",
+  "extended_rx_profile": "analysis/rx96-profile-20261102/report.json",
+  "sensor_swift_reference": "analysis/sensor-swift-20261102/report.json",
+  "sensor_native_evidence": "analysis/ghidra/sensor-adapter-20261102/report.md",
+  "full_cfw_parity": false,
+  "remaining_required_suite_entries": 19,
+  "next": [
+    "Link a useful, separately validated CFW function into one or more retired renderer tails before hardware rollout.",
+    "Larger dashboard retirement needs a minimal-parent lifecycle and reviewed go-home/calibration behavior.",
+    "Continue native ALS/raw IMU ownership and data adapters; locate compass source."
+  ],
+  "limits": [
+    "Six RX fragments are not writable storage or RAM.",
+    "Payload ABI and linking remain per-payload obligations; empty tails are zero-filled.",
+    "Nine literal entries and bounded reference/caller coverage do not exclude all computed interior entries.",
+    "Actual caller executes in Unicorn; UI fallback, iterator, clock, settings and logging are mocks.",
+    "Independent review rerun of Unicorn exited132; root72-case successful execution and source review are the emulator evidence."
+  ]
+}

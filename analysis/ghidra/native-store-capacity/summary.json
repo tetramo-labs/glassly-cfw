@@ -1,0 +1,44 @@
+{
+  "format": "memomind-native-store-capacity-v1",
+  "read_only": true,
+  "native_owner": "managed plugin package cache CUS8",
+  "device": 1,
+  "device_offset_range": [
+    5242880,
+    8388608
+  ],
+  "unified_range": [
+    22020096,
+    25165824
+  ],
+  "xip_range": [
+    89128960,
+    92274688
+  ],
+  "directory_bytes": 65536,
+  "entries": 28,
+  "entry_bytes": 144,
+  "context_allocation_bytes": 4624,
+  "general_mutable_allocator_found": false,
+  "current_directory_acquired": false,
+  "current_free_extent_proven": false,
+  "safe_reservation_established": false,
+  "whole_store_reset": "0x0423e8b4",
+  "badmap_key": 24585,
+  "wipe_intent_key": 24584,
+  "candidate_relative": [
+    2883584,
+    3145728
+  ],
+  "candidate_bytes": 262144,
+  "candidate_sector_indices": [
+    704,
+    767
+  ],
+  "required_proofs": [
+    "Nondestructive current directory/badmap inventory",
+    "Explicit reservation respected by allocator/compactor/full-reset and all mutation paths",
+    "No overwritten running/protected/other plugin entries",
+    "Separate mutable backend and recovery semantics"
+  ]
+}

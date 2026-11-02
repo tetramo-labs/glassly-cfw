@@ -1,0 +1,7 @@
+{
+  "format": "memomind-user-boot-confirmation-v1",
+  "recorded_utc": "2026-11-02T02:44:51.730803+00:00",
+  "user_statement": "I woke them and they said glassly firmware ready",
+  "observation": "User confirms visible patched firmware text after native Mac OTA and reboot",
+  "independent_machine_witness": "captures/swift-mac-boot-20261101-02/result.json"
+}

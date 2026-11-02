@@ -1,0 +1,27 @@
+{
+  "seeds": [
+    "0x427253a",
+    "0x4272664",
+    "0x427267a",
+    "0x4272960"
+  ],
+  "resolved_direct_closure": [
+    "0x42707d2",
+    "0x42707fa",
+    "0x4270822",
+    "0x42713bc",
+    "0x42715d2",
+    "0x4271640",
+    "0x42716d8",
+    "0x4271cda",
+    "0x427253a",
+    "0x4272664",
+    "0x427267a",
+    "0x4272698",
+    "0x42726ba",
+    "0x4272920",
+    "0x4272960"
+  ],
+  "defined_body_bytes": 1434,
+  "scope": "Known resolved direct in-band callees only; indirect callback closure not included, not proof unlisted code dead"
+}

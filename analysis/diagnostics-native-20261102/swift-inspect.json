@@ -1,0 +1,9 @@
+{
+  "bluetoothAccessed" : false,
+  "bytes" : 2230267,
+  "eligible" : true,
+  "modified" : true,
+  "profile" : "H001Y-1.0.3.127-flash-canary-v1",
+  "releaseName" : "diagnostic-commands-001",
+  "sha256" : "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917"
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "frame": 342,
+    "timestamp": "1793416272.024385000",
+    "direction": 0,
+    "handle": "0x000b",
+    "channel": 5,
+    "sequence": 3,
+    "service": 5,
+    "command": 3,
+    "declared_length": 14,
+    "observed_length": 14,
+    "checksum_ok": true,
+    "payload_hex": "0800000100",
+    "fragmented": false
+  },
+  {
+    "frame": 348,
+    "timestamp": "1793416272.149089000",
+    "direction": 1,
+    "handle": "0x000b",
+    "channel": 5,
+    "sequence": 3,
+    "service": 5,
+    "command": 3,
+    "declared_length": 14,
+    "observed_length": 14,
+    "checksum_ok": true,
+    "payload_hex": "0600000100",
+    "fragmented": false
+  },
+  {
+    "frame": 10212,
+    "timestamp": "1793416964.595294000",
+    "direction": 0,
+    "handle": "0x000b",
+    "channel": 5,
+    "sequence": 3,
+    "service": 5,
+    "command": 3,
+    "declared_length": 14,
+    "observed_length": 14,
+    "checksum_ok": true,
+    "payload_hex": "0800000100",
+    "fragmented": false
+  },
+  {
+    "frame": 10221,
+    "timestamp": "1793416964.606080000",
+    "direction": 1,
+    "handle": "0x000b",
+    "channel": 5,
+    "sequence": 3,
+    "service": 5,
+    "command": 3,
+    "declared_length": 14,
+    "observed_length": 14,
+    "checksum_ok": true,
+    "payload_hex": "0600000100",
+    "fragmented": false
+  }
+]

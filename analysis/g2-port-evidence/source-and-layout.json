@@ -1,0 +1,141 @@
+{
+  "source_root": "/Users/fosse/dev/g2flash",
+  "commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "git_status": "",
+  "files": {
+    "AGENTS.md": {
+      "bytes": 1033,
+      "sha256": "52e03274dc3e267167f848e88127e62cbb5aa6829175469559108cf747cffe4e"
+    },
+    "patches/patches_main.c": {
+      "bytes": 1761,
+      "sha256": "f4bf5fa65957a554431cee6601df6a2ef075497bddfc3c58da6b6b881460edc7"
+    },
+    "patches/draw.c": {
+      "bytes": 13576,
+      "sha256": "3837f975ccfac23481ba2be3811a94c7e091361672b53ad2108f7794e9ea1e07"
+    },
+    "patches/draw.h": {
+      "bytes": 452,
+      "sha256": "2ee0429058ebaa26716c6104c780066ff0c0a66bae3ddc05b2ac1f9b6d504668"
+    },
+    "patches/shapes.c": {
+      "bytes": 27805,
+      "sha256": "b7ee0da7fe266e27691e4391c90757dc9bcedeaf63219239cdd59b1f0f2775e4"
+    },
+    "patches/shapes.h": {
+      "bytes": 5651,
+      "sha256": "7ffdaceedac6d879386fd6cb9e6eb1540f4e0b79c40779d592d89e86a5ef610b"
+    },
+    "patches/vector.c": {
+      "bytes": 12485,
+      "sha256": "9792ed18abc739efc4dacbe57dcd65cb6dda45a52210844230a0d5c5c4f00207"
+    },
+    "patches/vector.h": {
+      "bytes": 990,
+      "sha256": "669d22c8ca54fa0f22528653201937b564557d9dfd287315084d8a553228c4aa"
+    },
+    "patches/scene.c": {
+      "bytes": 88388,
+      "sha256": "3792ddb1b2b42814d9e77aeabc60cf6ed4b53e05a17cef54d46075cf733d1b5f"
+    },
+    "patches/scene.h": {
+      "bytes": 8996,
+      "sha256": "7271cfed24f4cc0f281ed16194ae936dc24e5e43a187fb499c47fd33834755c0"
+    },
+    "patches/message_transport.c": {
+      "bytes": 17326,
+      "sha256": "386ec85a05fbfd21ac370d85f5765d8dd570690a27aa530b6f4f66c8611c86b3"
+    },
+    "patches/message_transport.h": {
+      "bytes": 2464,
+      "sha256": "342cddacf7744ae9b511486c1d45a309f0309cd42886c38d4d203caf96e9baff"
+    },
+    "patches/cfw_context.c": {
+      "bytes": 2430,
+      "sha256": "c05bcce8fbac66b84010fbe756a4efe60239570d1aa8824a7869cf2aeca0e4da"
+    },
+    "patches/cfw_context.h": {
+      "bytes": 25935,
+      "sha256": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231"
+    },
+    "patches/malloc.c": {
+      "bytes": 4582,
+      "sha256": "2e44a1176b97545ff334e91712147da90415af3b2d245231a4abfa938001532d"
+    },
+    "patches/malloc.h": {
+      "bytes": 2234,
+      "sha256": "0169acc48a698e2b22a417d5accb51b96549f5e0b40262a6d610d76050006f3c"
+    },
+    "patches/image_buffers.c": {
+      "bytes": 836,
+      "sha256": "27fb2a0d22ac3845beafaef5919170e5acb3080d7c245bf9156826be48869239"
+    },
+    "patches/texture_cache.c": {
+      "bytes": 21008,
+      "sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0"
+    },
+    "patches/texture_cache.h": {
+      "bytes": 2661,
+      "sha256": "26ac81c1710929426e257c15488ffacbc8821387058799ee8ed1d82ac08e9428"
+    },
+    "patches/transport_compression.c": {
+      "bytes": 3118,
+      "sha256": "3e8b5eae5db82fa7d88c01ce688e28f0c570e819d5275b61316ad749e9ff7ecb"
+    },
+    "patches/zlib_glue.c": {
+      "bytes": 54016,
+      "sha256": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6"
+    },
+    "patches/memory.c": {
+      "bytes": 3846,
+      "sha256": "79f8c30c34058f69d5d2c5048e69ceb475d2e8f16d1a3d92bbb98aae25ad746f"
+    },
+    "patches/utils.c": {
+      "bytes": 1590,
+      "sha256": "84c6c52bcf149a9db032420e8bd25eac2a2085fedc7947e131c4e5dc252f1983"
+    },
+    "patches/build.py": {
+      "bytes": 15026,
+      "sha256": "77641c27cedf10df2be23e08623ff54c4aaf0f85e1e0727ce5d507b29c6a6abd"
+    },
+    "patches/debug.c": {
+      "bytes": 11739,
+      "sha256": "bfe42e4d5c85d6a305a14cbcf4319a46dcd332d0449ddd4ffce632084aed373f"
+    },
+    "patches/host/shapes_host_test.c": {
+      "bytes": 92073,
+      "sha256": "5cbf860519d82b810ef8da4e829788c4804e7df2539f6e3a9fe24d33e6849c10"
+    },
+    "patches/host/vector_host_test.c": {
+      "bytes": 18119,
+      "sha256": "38fdf6b21da448871c045b4b2f767aee0f208818482a5c5a551cc16dad8565d1"
+    },
+    "patches/host/transport_host_test.c": {
+      "bytes": 16718,
+      "sha256": "18dc2e2f9cafcbfe8b1696a62505e6121a51ab74d5e49c275e984bb5e15f60f8"
+    },
+    "demos/vector-protocol.ts": {
+      "bytes": 8269,
+      "sha256": "2cf45a21d56afb3c11008dd6b27834f58094950417a4db78ebc42f33a0f638a0"
+    }
+  },
+  "layout_compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "layout_command": "clang --target=riscv32-unknown-elf -march=rv32imafc -mabi=ilp32f -ffreestanding -I /Users/fosse/dev/g2flash/patches -S -emit-llvm analysis/g2-port-evidence/measure_layout.c -o analysis/g2-port-evidence/layout-rv32.ll",
+  "sizes_bytes_rv32": {
+    "cfw_message_stream": 304,
+    "customCfwContext": 2772,
+    "cfw_raster": 16,
+    "cfw_shape": 48,
+    "cfw_vector_work": 10752,
+    "cfw_path": 4,
+    "cfw_rotation": 28,
+    "cfw_asset": 32,
+    "cfw_object": 116,
+    "cfw_txn": 1636,
+    "cfw_cache": 43416,
+    "cfw_rectlist": 136,
+    "measured_undo": 45464
+  },
+  "limitations": "Header-layout measurement only; not executable/runtime code size or measured free heap."
+}

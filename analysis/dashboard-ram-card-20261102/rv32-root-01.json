@@ -1,0 +1,1139 @@
+{
+  "passed": true,
+  "cases": 90,
+  "recognized_state_apis": 30,
+  "gate_cases": 9,
+  "unicorn": "2.1.4",
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "edited_body_sha256": "bb7a99a8b0ec906b1bc9f4e2da1e35343b944c45b91c6ac677d6891b17f586a9",
+  "harness_sha256": "975166c7887ddef3722b6d11093e9fd49193ed379125bb857cfed2828371f3d9",
+  "max_stack_bytes": 192,
+  "results": [
+    {
+      "entry": "0x42642ca",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 24,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42642ca",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 24,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42642ca",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 24,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42644c4",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 15,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42644c4"
+      ]
+    },
+    {
+      "entry": "0x42644c4",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 15,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42644c4"
+      ]
+    },
+    {
+      "entry": "0x42644c4",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 15,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42644c4"
+      ]
+    },
+    {
+      "entry": "0x4264616",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 96,
+      "done": true,
+      "steps": 34,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264616"
+      ]
+    },
+    {
+      "entry": "0x4264616",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 96,
+      "done": true,
+      "steps": 34,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264616"
+      ]
+    },
+    {
+      "entry": "0x4264616",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 96,
+      "done": true,
+      "steps": 34,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264616"
+      ]
+    },
+    {
+      "entry": "0x4264f26",
+      "pattern": "zero",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264f26"
+      ]
+    },
+    {
+      "entry": "0x4264f26",
+      "pattern": "poison",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264f26"
+      ]
+    },
+    {
+      "entry": "0x4264f26",
+      "pattern": "borrowed",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4264f26"
+      ]
+    },
+    {
+      "entry": "0x426502a",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426502a"
+      ]
+    },
+    {
+      "entry": "0x426502a",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426502a"
+      ]
+    },
+    {
+      "entry": "0x426502a",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426502a"
+      ]
+    },
+    {
+      "entry": "0x4265042",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265042"
+      ]
+    },
+    {
+      "entry": "0x4265042",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265042"
+      ]
+    },
+    {
+      "entry": "0x4265042",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 9,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265042"
+      ]
+    },
+    {
+      "entry": "0x4265060",
+      "pattern": "zero",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265060"
+      ]
+    },
+    {
+      "entry": "0x4265060",
+      "pattern": "poison",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265060"
+      ]
+    },
+    {
+      "entry": "0x4265060",
+      "pattern": "borrowed",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265060"
+      ]
+    },
+    {
+      "entry": "0x4265184",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265184"
+      ]
+    },
+    {
+      "entry": "0x4265184",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265184"
+      ]
+    },
+    {
+      "entry": "0x4265184",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265184"
+      ]
+    },
+    {
+      "entry": "0x426522c",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 21,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426522c"
+      ]
+    },
+    {
+      "entry": "0x426522c",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 21,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426522c"
+      ]
+    },
+    {
+      "entry": "0x426522c",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 21,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426522c"
+      ]
+    },
+    {
+      "entry": "0x42652e8",
+      "pattern": "zero",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42652e8"
+      ]
+    },
+    {
+      "entry": "0x42652e8",
+      "pattern": "poison",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42652e8"
+      ]
+    },
+    {
+      "entry": "0x42652e8",
+      "pattern": "borrowed",
+      "gate": true,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42652e8"
+      ]
+    },
+    {
+      "entry": "0x4265338",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265338"
+      ]
+    },
+    {
+      "entry": "0x4265338",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265338"
+      ]
+    },
+    {
+      "entry": "0x4265338",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4265338"
+      ]
+    },
+    {
+      "entry": "0x42653c2",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 192,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42653c2",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42653c2",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 192,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42653c2",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42653c2",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 192,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42653c2",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265800",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265800",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265800",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265800",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265800",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265800",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265b8c",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265b8c",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265b8c",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265b8c",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265b8c",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 128,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265b8c",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265e4e",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 112,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265e4e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265e4e",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 112,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265e4e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4265e4e",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 112,
+      "done": true,
+      "steps": 58,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4265e4e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426609e",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426609e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426609e",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426609e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426609e",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426609e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42662d8",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 48,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42662d8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42662d8",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 48,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42662d8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42662d8",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 48,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42662d8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266452",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 52,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266452",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266452",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 52,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266452",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266452",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 52,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266452",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426663e",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426663e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426663e",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426663e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x426663e",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 80,
+      "done": true,
+      "steps": 56,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x426663e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42669a8",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 42,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42669a8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42669a8",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 42,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42669a8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x42669a8",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 42,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x42669a8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266a8e",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266a8e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266a8e",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266a8e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266a8e",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266a8e",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266b06",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 41,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266b06",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266b06",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 41,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266b06",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266b06",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 41,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266b06",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266bd8",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266bd8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266bd8",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266bd8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266bd8",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 48,
+      "done": true,
+      "steps": 36,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266bd8",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266c5a",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4266c5a"
+      ]
+    },
+    {
+      "entry": "0x4266c5a",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4266c5a"
+      ]
+    },
+    {
+      "entry": "0x4266c5a",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4266c5a"
+      ]
+    },
+    {
+      "entry": "0x4266d54",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 40,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266d54",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266d54",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 40,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266d54",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4266d54",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 64,
+      "done": true,
+      "steps": 40,
+      "log_predicates": 1,
+      "visited_entries": [
+        "0x4266d54",
+        "0x42642ca"
+      ]
+    },
+    {
+      "entry": "0x4267144",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267144"
+      ]
+    },
+    {
+      "entry": "0x4267144",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267144"
+      ]
+    },
+    {
+      "entry": "0x4267144",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267144"
+      ]
+    },
+    {
+      "entry": "0x42671a6",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 3,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42671a6"
+      ]
+    },
+    {
+      "entry": "0x42671a6",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 160,
+      "done": true,
+      "steps": 35,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42671a6"
+      ]
+    },
+    {
+      "entry": "0x42671a6",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 160,
+      "done": true,
+      "steps": 35,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x42671a6"
+      ]
+    },
+    {
+      "entry": "0x4267394",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267394"
+      ]
+    },
+    {
+      "entry": "0x4267394",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267394"
+      ]
+    },
+    {
+      "entry": "0x4267394",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 32,
+      "done": true,
+      "steps": 22,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267394"
+      ]
+    },
+    {
+      "entry": "0x426746c",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426746c"
+      ]
+    },
+    {
+      "entry": "0x426746c",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426746c"
+      ]
+    },
+    {
+      "entry": "0x426746c",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 0,
+      "done": true,
+      "steps": 4,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x426746c"
+      ]
+    },
+    {
+      "entry": "0x4267550",
+      "pattern": "zero",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 13,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267550"
+      ]
+    },
+    {
+      "entry": "0x4267550",
+      "pattern": "poison",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 13,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267550"
+      ]
+    },
+    {
+      "entry": "0x4267550",
+      "pattern": "borrowed",
+      "gate": false,
+      "stack_used": 16,
+      "done": true,
+      "steps": 13,
+      "log_predicates": 0,
+      "visited_entries": [
+        "0x4267550"
+      ]
+    }
+  ],
+  "limitations": [
+    "Cold-zero state only; this is not live object teardown.",
+    "Only native logging predicate mocked disabled; logging-enabled formatting is not exercised.",
+    "No full launcher/other-app constructor, real LVGL, asynchronous queue concurrency or hardware execution.",
+    "Enumerated direct state-reader set from saved Ghidra; no universal indirect-alias proof.",
+    "No RAM saving measured; static base requested payload lower bound is216B."
+  ]
+}

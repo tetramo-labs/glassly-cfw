@@ -1,0 +1,38 @@
+{
+  "format": "memomind-native-diagnostics-smoke-verification-v2",
+  "complete": true,
+  "capture": "captures/swift-mac-diagnostics-smoke-20261102-02",
+  "requests": 1008,
+  "snapshots": 19,
+  "all_native_writes_completed": true,
+  "probe_header_caps_verified": true,
+  "frame_ring_resync_verified": true,
+  "worker_dispatch_failure_counter_verified": true,
+  "allocation_failure_injection_performed": false,
+  "cleanup_observer_inactive": true,
+  "initial_saved_epoch": 0,
+  "initial_epoch_origin": "fresh-clock-seed",
+  "epochs": [
+    40687,
+    40688,
+    40689,
+    40690
+  ],
+  "lease_renewals": 961,
+  "hold_seconds": 300.1503975833766,
+  "max_hold_submission_gap": 0.4765516249462962,
+  "finish_requested": false,
+  "hardware_pixel_readback": false,
+  "continuous_pixel_retention_proven": false,
+  "overlay_font_equivalent_to_g2": false,
+  "epoch_persistence_scope": "successful allocation/current-screen only",
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "938b659890e4d0324010c589229919a02955490dc8b3c3258fc78d08b85ec506",
+  "candidate_local_files_verified": {
+    "image_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "image_bytes": 2230267,
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "runtime_bytes": 65456,
+    "app_header_sha256": "a42392b3f2afe8eb1b432f77770bcaab86d3e488c921cc9ae8dffd490f17b65e"
+  }
+}

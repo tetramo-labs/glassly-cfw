@@ -1,0 +1,59 @@
+{
+  "format": "memomind-external-reader-hardware-v1",
+  "updated_utc": "2026-10-31T21:20:56.981724+00:00",
+  "installed": true,
+  "runtime_build": "runtime/build/external-read-001",
+  "runtime_sha256": "6c317933ca7edef1375843375dceb18f94ef0efca93246076c92c023a56432bd",
+  "runtime_bytes": 50944,
+  "ota_sha256": "b93845f3eeaddfe1651d12077b0d89b9c2af79c42355869935d320dfc028ffad",
+  "ota_bytes": 2222168,
+  "ota_proof": "analysis/protocol/external-read-runtime/whole-image-proof.json",
+  "offline_regression": "analysis/regression-20261031-10/report.json",
+  "backup_verification": "analysis/external-read-backup-verification.json",
+  "successful_native_reads": 4354,
+  "successful_native_bytes": 1114624,
+  "acquisitions": {
+    "header-check-02": {
+      "reads": 1,
+      "bytes": 256
+    },
+    "backup": {
+      "reads": 4353,
+      "bytes": 1114368
+    }
+  },
+  "app_header_full256_matches_candidate": true,
+  "external_tail_all_ff": true,
+  "plugin_directory_all_ff_unchanged": true,
+  "post_checks": "captures/external-read-runtime-20261031/post-checks-02.json",
+  "free_bytes_after_reads": 334048,
+  "input_observer_inactive": true,
+  "hogp_connected": 0,
+  "heartbeat": 0,
+  "capture_manifest_files_verified": 19,
+  "capture_rotation_observed": false,
+  "hci_timestamp_reversals": [
+    {
+      "offset": 2208050,
+      "backwards_microseconds": 1
+    },
+    {
+      "offset": 5489084,
+      "backwards_microseconds": 1
+    }
+  ],
+  "hci_truncated_records": 0,
+  "general_losslessness_proven": false,
+  "phone_restored": true,
+  "bridge_stopped": true,
+  "collector_stopped": true,
+  "flash_mutations_by_reader": 0,
+  "mutable_flash_reserved": false,
+  "physical_graphics_or_input_confirmation": false,
+  "limitations": [
+    "Erased contents do not establish ownership, bad-sector availability, or a reservation.",
+    "Full 256 KiB portable storage remains offline; installed scene store is64 KiB with8192-byte messages.",
+    "Capture contains timestamp reversals; full OTA byte equality is proven independently, general app/pairing completeness is not.",
+    "First reconnect failed before business writes; first post-check attempt had a local parser-setup failure before its final heartbeat send. Both traces retained."
+  ]
+}

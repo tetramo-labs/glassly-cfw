@@ -1,0 +1,92 @@
+[
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift",
+    "sha256": "9449aa7a5033f0fca96883393eb0a7bd5c06a1d58b3f98b7f5c54b2a7a90c701"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "sha256": "25881dd46d57c01116c5ee4c372088d09dd748e9abc68e3e050a9b1071505d6d"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "sha256": "c49eccecb0f7929e78548d4a81a19c8365929c4289845332b55c4cd6827ff719"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "sha256": "6d1ab58c45cc102658754bca69a991aee3f1b967ee1d8168a6d812b7b8cc72a7"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "sha256": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "sha256": "29738b42c2ec76b996f883a78c40e43f426c2de5775de09ef3014a0fbbc782ca"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift",
+    "sha256": "e6e7aedac7f9da34323f126ce6d19dbf905d5e88136ec4307777939a819ebbcb"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Arguments.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Arguments.swift",
+    "sha256": "dbbfc7b7da1dedab80078edeb53958185c18203a0a8a52f3d3192c6601abe979"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Capture.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Capture.swift",
+    "sha256": "6a1ab7eefa7d5a13aa0e79c800ae0fe8769efb7c6c007833e4176c319ded37a6"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Replay.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Replay.swift",
+    "sha256": "5fde0abc0a1f0fc131e601fb85d500d9480ef3c92546edcdeeb00db451b4afbe"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/main.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/main.swift",
+    "sha256": "4608e302f0b3c995f2a2089fe080ff50cc1c6e2d3ff0f5cc974b4b681faeeb6d"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift",
+    "sha256": "6ca981fa09a6a96ee364118f0c0888e62873f548b770f76691abe3795fee5c31"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/FixedCanaryClientTests.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/FixedCanaryClientTests.swift",
+    "sha256": "a3d9ab11b756185402f9fdc4b687aff022d2128a97b912388dd2490024d76d7c"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/OTABoundaryTests.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/OTABoundaryTests.swift",
+    "sha256": "7f45ed67dfceb0695dbbc5ccbb347dd3f365bcdf91a38ab971c3d0868e1f9cde"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/OTATransactionTests.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/OTATransactionTests.swift",
+    "sha256": "0dd3d5d27e55b46bef1e2b6045fd998158464fa78d48648d7585c3501b253ff2"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/ProtocolTests.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/ProtocolTests.swift",
+    "sha256": "a0541c6599382e392af1f0f292388dfb23e6bdb7e3a623d76e2b6a61b51100a2"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/PythonProtocolVectors.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/PythonProtocolVectors.swift",
+    "sha256": "54a220e571f6c089e53e3c259cb1f8df9b893dd6608e27e8c3125a3fd51d28c0"
+  },
+  {
+    "path": "swift/MemoMindKit/Package.swift",
+    "snapshot": "analysis/native-mac-canary-20261101/source-snapshot/swift/MemoMindKit/Package.swift",
+    "sha256": "4ef43a4f0a5ec6060fd9ebd10bf06aed604509eaaf2c1ba30793f86a7753549e"
+  }
+]

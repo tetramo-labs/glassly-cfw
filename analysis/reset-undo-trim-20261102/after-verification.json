@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "capture": "captures/swift-mac-reset-undo-after-20261102-04",
+  "release": "reset-undo-trim-001",
+  "wire_requests": 70,
+  "boot_header_verified": true,
+  "app_header_sha256": "76d7bfc287aad7294d4d855a86d4d2cfbe8043a3b555eca41a891e17b1f7a4e6",
+  "phases": {
+    "put": {
+      "samples": [
+        81360,
+        81324,
+        80464,
+        80396,
+        80312,
+        80404,
+        80752,
+        80756,
+        80752,
+        80836
+      ],
+      "minimum": 80312,
+      "maximum": 81360,
+      "median": 80752.0
+    },
+    "reset": {
+      "samples": [
+        127548,
+        127592,
+        127212,
+        127128,
+        127112,
+        127080,
+        127260,
+        127156,
+        127132,
+        127132
+      ],
+      "minimum": 127080,
+      "maximum": 127592,
+      "median": 127144.0
+    },
+    "reacquired": {
+      "samples": [
+        80408,
+        80464,
+        80508,
+        80452,
+        80720,
+        80872,
+        80804,
+        81728,
+        81728,
+        81728
+      ],
+      "minimum": 80408,
+      "maximum": 81728,
+      "median": 80762.0
+    }
+  },
+  "reset_minus_put_median_bytes": 46392.0,
+  "reset_minus_reacquired_median_bytes": 46382.0,
+  "cleanup_verified": true,
+  "after_cleanup_free_bytes": 353656,
+  "maximum_lease_gap": 0.47340612509287894,
+  "no_ota_or_flash_mutation_commands": true,
+  "hardware_visual_confirmed": false,
+  "source_sha256": {
+    "analysis/reset-undo-trim-20261102/verify-scratch.py": "5ed0f8bc72d0625ac82e5ff51b79966696e112776169dd925f1f34aabec8c471",
+    "analysis/diagnostics-native-20261102/verify-smoke-v2.py": "120743caa379b9f5822393eafbf8a92141b6a1bd96f1fe2b2a6e561cadefcd68",
+    "scripts/memomind_transport.py": "3e0bcf1108a582359717216e6eea049bedd5dfa87277d20b9bb47bc4ba2859d0"
+  },
+  "capture_sha256": {
+    "capabilities-after-cleanup.json": "e42e602d4e958d5469ac6dc452df9c858cc003cb1c47d4efd057d395e9925690",
+    "device.json": "6f30a0fcfce2ce9a3015bbf341fadc5bc6bae2e46f4e4b0fbfbfc51f9eda426b",
+    "header-reply.json": "ddb32022161b333ba5b672ae6379ed0ffcc912e432b7218c2f01034c1f38c05b",
+    "put-0.json": "22c7f78dd486ae30204c20094bf3ec4ffb1cbee771d95466e44ddc79e237fe0b",
+    "put-1.json": "e303d73c920d385c693265f3780ae428a268a3623df9c8231b5e5e71deed8cae",
+    "put-2.json": "5920a941c0b33497e51b917433937e4f2dd834318044984a8b955e112b293b37",
+    "put-3.json": "b088c0042a401ac40def33ffd21fbb1ab56f9483abf3d2efbf6f29eb2af0c5d1",
+    "put-4.json": "34832406d5881198002135d32d326c066ea1b90d425bf090c875362b2c068034",
+    "put-5.json": "d5887aacde022c02e48562699d79b019ce088d30f5b2a23b2ccd708a129eafd7",
+    "put-6.json": "f05edb271d19b006b1a69869d23aab631e59e39173fa784d1b12f34e062c71ad",
+    "put-7.json": "571f9e063381d770e5f1440562da7a92509599b8de571a308e86eeb76169f567",
+    "put-8.json": "f05edb271d19b006b1a69869d23aab631e59e39173fa784d1b12f34e062c71ad",
+    "put-9.json": "fa50fef2c28ebce620b1e9e2858219b2ccdb9b1c158e7c24e9b58b63a3f6f4fa",
+    "reacquired-0.json": "ca03f71ac8404a344a8ec21381020a2cdca49671dc877c1e7880fd3a054298d1",
+    "reacquired-1.json": "51181622e6dacbd4402418f5f6e82e117f5d59efddc3e7cb8ef8bd7c0e5ac06b",
+    "reacquired-2.json": "a6e39899535dff4391b6488a9a9fd72365f580fdd26b9902aa7ae4a066b5760d",
+    "reacquired-3.json": "90e9c1c6878c5c3a3cd55139e366e3741893b3f5bf5f12a4a268f6681800a4c9",
+    "reacquired-4.json": "84d1f8d69e582f2586f871aedcfafe421bb2e41b703269f0add6e7e93f3e9bba",
+    "reacquired-5.json": "4f12a4000c2759392dc3ff73e201b71ce269332f7d48416fa452389e223ad011",
+    "reacquired-6.json": "d802c2562e5df1cf26e08c09d277c9c5eaa448681cc540b815cbd0c8714e7477",
+    "reacquired-7.json": "528ad41a20d88122d49e2df3c2c86f63f3d377889daafbeb371b2d77a37bf440",
+    "reacquired-8.json": "528ad41a20d88122d49e2df3c2c86f63f3d377889daafbeb371b2d77a37bf440",
+    "reacquired-9.json": "528ad41a20d88122d49e2df3c2c86f63f3d377889daafbeb371b2d77a37bf440",
+    "reset-0.json": "bd8d3deba56f5a3e7cb1c1bbc5dd35ad73bc41776855e5fe931e4b8645b5ced3",
+    "reset-1.json": "ba3326517ab015240523f8341cb2a64fbd3d3215ed4e49fb03fb690d56f368c2",
+    "reset-2.json": "43c4deb4e0aafbf84bd8ec40802ab6243aed823f24a09e15e00f1a90c5851c5d",
+    "reset-3.json": "be839cee956b0464c232ed64eec7f6df1cfbe9d9cbb3bd902649255de81b44bb",
+    "reset-4.json": "01fc37d10f88970955cf4949582b8bcc5f64a6103ee5926baaec36111866f4eb",
+    "reset-5.json": "f77c9aabd41e47c557f1ebbe34af9b9a1a5dde2ed8c3c4eb8bc5e3f51bf6ad7f",
+    "reset-6.json": "04e44cf26f11a477d89a1b990c5758fadea17f3ce365dd7222e91d91d54bbe0d",
+    "reset-7.json": "949441d55b20f91900f25dbc428a7a578201ba92ebdc97e11bf703bca1e4104c",
+    "reset-8.json": "3262277bd9f9a9643f8b48fe9e334311e6373b0a337e4491a36f5d9caffb1573",
+    "reset-9.json": "3262277bd9f9a9643f8b48fe9e334311e6373b0a337e4491a36f5d9caffb1573",
+    "result.json": "f943107079262d1fba79bfdb9045c631cdfdd0538ef799d211030ee9fab8db82",
+    "scene-1.json": "b61241d745627839d5793df0ce253e76fa54f43b1d3f0c6ab250a6a0348bc305",
+    "scene-2.json": "002ae7488dbc6e23811db6173e288462030cfffafd755f1160e4f005219f79e8",
+    "scene-3.json": "b6758a2c7b8b70fda23d2365130ed1fa8d971919f360a87e8dc58fdc647ea427",
+    "scene-4.json": "0c8396884e653c02b6078c3aa2ef77877d47ba2ee98f4261419e1fee59c335fb",
+    "trace.jsonl": "412cccc12ce824b8df9cfb55e4e16b7bd8615b980952468084f3dc96458eb403"
+  },
+  "limitations": [
+    "Native free-byte accounting includes query allocation and asynchronous activity; no largest-block or allocator-owner telemetry.",
+    "Raw application TX/RX, not independent HCI capture."
+  ]
+}

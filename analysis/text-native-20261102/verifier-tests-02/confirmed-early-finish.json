@@ -1,0 +1,33 @@
+{
+  "format": "memomind-native-text-smoke-verification-v1",
+  "capture": "analysis/text-native-20261102/verifier-tests-02/synthetic-capture",
+  "complete": true,
+  "probe_header_capabilities_verified": true,
+  "startup_notifications_captured": [
+    {
+      "event": 34,
+      "service": 1,
+      "command": 33,
+      "bodyHex": "08000001010400000400004eb6"
+    }
+  ],
+  "native_service_notifications_logged": 1,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "maximum_255_byte_text_acknowledged": true,
+  "highbit_text_acknowledged": true,
+  "bundled_text_acknowledged": true,
+  "empty_extreme_coordinates_acknowledged": true,
+  "invalid_commands_rejected": 6,
+  "lease_renewals_acknowledged": 1,
+  "cleared": true,
+  "black_frame_decoded_independently": true,
+  "hardware_pixel_readback": false,
+  "font_pixel_equivalence_to_g2": false,
+  "hold_seconds_before_clear": 0.06999999999997475,
+  "finish_requested": true,
+  "maximum_hold_submission_gap_seconds": 0.05999999999997474,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "3e6df8fd5df9d47ce3938178608d2ae488d11ea617bae7499f18998a908e033f"
+}

@@ -1,0 +1,25 @@
+{
+  "format": "memomind-memory-capacity-analysis-v1",
+  "read_only": true,
+  "additional_ram_identified": false,
+  "boot_pool_count": 1,
+  "pool_base": "0x0205e128",
+  "pool_end_exclusive": "0x020fedc0",
+  "pool_raw_bytes": 658584,
+  "initial_accounted_free_bytes": 656568,
+  "pool_flags": 2,
+  "mask_zero_includes_all_registered_pools": true,
+  "mask_one_matches_boot_pool": false,
+  "sdk_and_lvgl_share_heap": true,
+  "immutable_app_tail_bytes": 274688,
+  "whole_sector_tail_bytes": 274432,
+  "native_mutable_asset_store_established": false,
+  "final_exact_staging_headroom": 261027,
+  "final_rounded_staging_headroom": 258048,
+  "full_g2_capacity_complete": false,
+  "limitations": [
+    "No live pool enumeration or largest-block measurement",
+    "Other processor/ROM heaps and physical memory not exhaustively mapped",
+    "App-tail runtime erase ownership and recovery unproved"
+  ]
+}

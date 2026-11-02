@@ -1,0 +1,252 @@
+{
+  "format": "memomind-graphics-hardware-verification-v1",
+  "image_sha256": "72801c476329d650ec3847752344d12eb29154adca744f14ff8b0c464467630b",
+  "runtime_sha256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+  "ota_proof": "analysis/protocol/graphics-runtime/whole-image-proof.json",
+  "runs": {
+    "passive-01": {
+      "source": "captures/graphics-runtime-20261031/passive-01.json",
+      "heartbeat": 0,
+      "stock_capabilities_unchanged": true,
+      "cycles": 0,
+      "lease_renewals": 0
+    },
+    "draw-01": {
+      "source": "captures/graphics-runtime-20261031/draw-01.json",
+      "heartbeat": 0,
+      "stock_capabilities_unchanged": true,
+      "cycles": 3,
+      "lease_renewals": 0,
+      "before_free_bytes_range": [
+        333076,
+        333956
+      ],
+      "active_free_bytes_range": [
+        226004,
+        228328
+      ],
+      "after_free_bytes_range": [
+        333688,
+        333956
+      ]
+    },
+    "visual-01": {
+      "source": "captures/graphics-runtime-20261031/visual-01.json",
+      "heartbeat": 0,
+      "stock_capabilities_unchanged": true,
+      "cycles": 1,
+      "lease_renewals": 62,
+      "before_free_bytes_range": [
+        333872,
+        333872
+      ],
+      "active_free_bytes_range": [
+        228160,
+        228160
+      ],
+      "after_free_bytes_range": [
+        333868,
+        333868
+      ]
+    },
+    "stress-01": {
+      "source": "captures/graphics-runtime-20261031/stress-01.json",
+      "heartbeat": 0,
+      "stock_capabilities_unchanged": true,
+      "cycles": 16,
+      "lease_renewals": 0,
+      "before_free_bytes_range": [
+        329784,
+        333988
+      ],
+      "active_free_bytes_range": [
+        225936,
+        228312
+      ],
+      "after_free_bytes_range": [
+        333516,
+        333988
+      ]
+    },
+    "boundaries-03": {
+      "source": "captures/graphics-runtime-20261031/boundaries-03.json",
+      "heartbeat": 0,
+      "cases": [
+        {
+          "name": "identity_before",
+          "frames": 1,
+          "bytes": 0,
+          "result": {
+            "glassly": "graphics-runtime",
+            "abi": 1,
+            "profile": "H001Y-1.0.3.127",
+            "width": 600,
+            "height": 350,
+            "modes": [
+              11,
+              36
+            ],
+            "shapeTypes": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "maxGeometryRecords": 255,
+            "leaseTicks": 1000,
+            "tickMs": 1,
+            "writableStaticBytes": 0,
+            "freeBytesHex": "00051874",
+            "lowWaterBytesHex": "00036f0c"
+          },
+          "elapsed_ms": 13.19
+        },
+        {
+          "name": "empty_geometry",
+          "frames": 1,
+          "bytes": 6,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "ok",
+            "presentation": "scheduled"
+          },
+          "elapsed_ms": 12.1
+        },
+        {
+          "name": "truncated_count",
+          "frames": 1,
+          "bytes": 5,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "invalid"
+          },
+          "elapsed_ms": 11.1
+        },
+        {
+          "name": "unsupported_shape",
+          "frames": 1,
+          "bytes": 26,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "invalid"
+          },
+          "elapsed_ms": 15.03
+        },
+        {
+          "name": "trailing_byte",
+          "frames": 1,
+          "bytes": 27,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "invalid"
+          },
+          "elapsed_ms": 16.46
+        },
+        {
+          "name": "extra_nonempty_tlv",
+          "frames": 1,
+          "bytes": 31,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "invalid"
+          },
+          "elapsed_ms": 11.95
+        },
+        {
+          "name": "maximum_255_records",
+          "frames": 8,
+          "bytes": 5106,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "ok",
+            "presentation": "scheduled"
+          },
+          "elapsed_ms": 249.33
+        },
+        {
+          "name": "explicit_clear",
+          "frames": 1,
+          "bytes": 5,
+          "result": {
+            "glassly": "graphics",
+            "abi": 1,
+            "result": "cleared"
+          },
+          "elapsed_ms": 144.63
+        },
+        {
+          "name": "identity_after",
+          "frames": 1,
+          "bytes": 0,
+          "result": {
+            "glassly": "graphics-runtime",
+            "abi": 1,
+            "profile": "H001Y-1.0.3.127",
+            "width": 600,
+            "height": 350,
+            "modes": [
+              11,
+              36
+            ],
+            "shapeTypes": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "maxGeometryRecords": 255,
+            "leaseTicks": 1000,
+            "tickMs": 1,
+            "writableStaticBytes": 0,
+            "freeBytesHex": "00051768",
+            "lowWaterBytesHex": "00036774"
+          },
+          "elapsed_ms": 16.34
+        }
+      ]
+    }
+  },
+  "physical_graphics_visibility": "not confirmed by user",
+  "visible_text_patch": "previously confirmed by user",
+  "failed_attempts": [
+    {
+      "source": "captures/graphics-runtime-20261031/boundaries-01.jsonl",
+      "reason": "503-byte ingress fragmentation rejected by native receiver; corrected to642 bytes plus correlated fragment ACKs"
+    },
+    {
+      "source": "captures/graphics-runtime-20261031/boundaries-02.jsonl",
+      "reason": "Bridge greeting timeout before device command; brought bridge activity to foreground"
+    }
+  ],
+  "cleanup": "Bridge stopped, ADB forward removed, MemoMind app reopened; collector finalized",
+  "limitations": [
+    "Native free-byte snapshots are not leak or largest-contiguous-block proofs.",
+    "Retained scenes, cache, assets and vectors have host coverage but are not in this installed runtime.",
+    "Native LVGL allocations may assert on exhaustion.",
+    "Initial bonding and all app interactions have not been captured."
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "stock_body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "not_applied_to_any_firmware": true,
+  "profiles": [
+    {
+      "logical_native_capacity": 2621440,
+      "reserved_bytes": 524288,
+      "patch_sites": [
+        {
+          "address": "0x42a44d8",
+          "before": "37063000",
+          "after": "37062800",
+          "purpose": "primary mount capacity"
+        },
+        {
+          "address": "0x42a4516",
+          "before": "37063000",
+          "after": "37062800",
+          "purpose": "repair mount capacity"
+        },
+        {
+          "address": "0x42a452a",
+          "before": "37063000",
+          "after": "37062800",
+          "purpose": "format capacity"
+        },
+        {
+          "address": "0x42a4572",
+          "before": "37073000",
+          "after": "37072800",
+          "purpose": "advisory empty-context capacity"
+        },
+        {
+          "address": "0x42a3e20",
+          "before": "b7073000",
+          "after": "b7072800",
+          "purpose": "read callback bound"
+        },
+        {
+          "address": "0x42a40c4",
+          "before": "b7073000",
+          "after": "b7072800",
+          "purpose": "program callback bound"
+        },
+        {
+          "address": "0x42a411e",
+          "before": "b7073000",
+          "after": "b7072800",
+          "purpose": "erase callback bound"
+        },
+        {
+          "address": "0x42a41ae",
+          "before": "b7073000",
+          "after": "b7072800",
+          "purpose": "package verifier bound"
+        },
+        {
+          "address": "0x423e9be",
+          "before": "b7073000",
+          "after": "b7072800",
+          "purpose": "whole-store wipe end"
+        },
+        {
+          "address": "0x423ea4a",
+          "before": "b7063000",
+          "after": "b7062800",
+          "purpose": "whole-store wipe block remainder"
+        },
+        {
+          "address": "0x42a0998",
+          "before": "63ee2701",
+          "after": "6f00c001",
+          "purpose": "physical badmap validity independent of reduced logical capacity; JAL zero,+28"
+        }
+      ],
+      "in_memory_patched_body_sha256": "a57f22ab18cbc1fa5050f756086aa4212ea99c8098ea72b14d07522fcaa1bd7c"
+    },
+    {
+      "logical_native_capacity": 2097152,
+      "reserved_bytes": 1048576,
+      "patch_sites": [
+        {
+          "address": "0x42a44d8",
+          "before": "37063000",
+          "after": "37062000",
+          "purpose": "primary mount capacity"
+        },
+        {
+          "address": "0x42a4516",
+          "before": "37063000",
+          "after": "37062000",
+          "purpose": "repair mount capacity"
+        },
+        {
+          "address": "0x42a452a",
+          "before": "37063000",
+          "after": "37062000",
+          "purpose": "format capacity"
+        },
+        {
+          "address": "0x42a4572",
+          "before": "37073000",
+          "after": "37072000",
+          "purpose": "advisory empty-context capacity"
+        },
+        {
+          "address": "0x42a3e20",
+          "before": "b7073000",
+          "after": "b7072000",
+          "purpose": "read callback bound"
+        },
+        {
+          "address": "0x42a40c4",
+          "before": "b7073000",
+          "after": "b7072000",
+          "purpose": "program callback bound"
+        },
+        {
+          "address": "0x42a411e",
+          "before": "b7073000",
+          "after": "b7072000",
+          "purpose": "erase callback bound"
+        },
+        {
+          "address": "0x42a41ae",
+          "before": "b7073000",
+          "after": "b7072000",
+          "purpose": "package verifier bound"
+        },
+        {
+          "address": "0x423e9be",
+          "before": "b7073000",
+          "after": "b7072000",
+          "purpose": "whole-store wipe end"
+        },
+        {
+          "address": "0x423ea4a",
+          "before": "b7063000",
+          "after": "b7062000",
+          "purpose": "whole-store wipe block remainder"
+        },
+        {
+          "address": "0x42a0998",
+          "before": "63ee2701",
+          "after": "6f00c001",
+          "purpose": "physical badmap validity independent of reduced logical capacity; JAL zero,+28"
+        }
+      ],
+      "in_memory_patched_body_sha256": "9d6123bcdb89938370afa0269ad5131474aade9ccddea7622756cf1380ec0ec8"
+    }
+  ]
+}

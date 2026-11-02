@@ -1,0 +1,20 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "read_only": true,
+  "sha256": {
+    "tests/g2_compat/upstream/patches/zlib_glue.c": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+    "tests/g2_compat/upstream/patches/debug.c": "bfe42e4d5c85d6a305a14cbcf4319a46dcd332d0449ddd4ffce632084aed373f",
+    "tests/g2_compat/upstream/patches/draw.c": "3837f975ccfac23481ba2be3811a94c7e091361672b53ad2108f7794e9ea1e07",
+    "tests/g2_compat/upstream/patches/cfw_context.c": "c05bcce8fbac66b84010fbe756a4efe60239570d1aa8824a7869cf2aeca0e4da",
+    "tests/g2_compat/upstream/patches/cfw_context.h": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231",
+    "tests/g2_compat/upstream/patches/message_transport.c": "386ec85a05fbfd21ac370d85f5765d8dd570690a27aa530b6f4f66c8611c86b3",
+    "tests/g2_compat/upstream/patches/malloc.c": "2e44a1176b97545ff334e91712147da90415af3b2d245231a4abfa938001532d",
+    "runtime/graphics/graphics.c": "32bb88a767557471e7fd292d500001519d2f7eed13eb56690d8f769702363d9f",
+    "runtime/graphics/native.c": "29cc3ec56a6f8bdd03b61d5ae55cbce55a8cddcc4c8844b835bee4890163c899",
+    "runtime/graphics/input.c": "d606bfdf8d3401735b56ffc4ecc008f9318d0d6ab49ef735b4e584e0bf4d372c",
+    "runtime/graphics/scene_session.c": "f638e0b70f7e53eccac0d4f9d5140ad8dd14003dcddbc2f5c6c99f5f087a09a9",
+    "runtime/graphics/flash_canary.h": "f98abe5d8ec813ae13be53c2c7ffe6f8654f4c661406930ff737317b1e1574df",
+    "runtime/portable/raster_commands.c": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e"
+  }
+}

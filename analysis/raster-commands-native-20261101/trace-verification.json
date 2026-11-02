@@ -1,0 +1,44 @@
+{
+  "image_sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261",
+  "modified_image": true,
+  "control_link_preserved": true,
+  "device": {
+    "fver": "1.3",
+    "hver": "2.1.2",
+    "mac": "4C:3C:8F:90:CC:C3",
+    "model": "H001Y",
+    "ver": "1.0.3.127"
+  },
+  "attach_fields": {
+    "0": "007f000002",
+    "1": "4d450201",
+    "2": "6364",
+    "3": "00",
+    "4": "01",
+    "5": "01"
+  },
+  "check_only": false,
+  "state": "reboot acknowledged",
+  "blocks": 544,
+  "chunks": 3808,
+  "transferred_range": [
+    18,
+    2227971
+  ],
+  "post_reboot_version_verified": false,
+  "format": "memomind-native-mac-independent-python-replay-v1",
+  "trace_sha256": "9a26bfc585b9ad9c4f2eab317f3e033d548ad35f4398a4ecf616dfe68ca1140f",
+  "captured_records_consumed": 4366,
+  "outgoing_frames_byte_identical": 3815,
+  "incoming_frames_consumed": 551,
+  "outgoing_wire_sha256": "eaaf555338a36c984f367e8a2558e0e2ed2deae9a22b53beeb0060b714173bd0",
+  "native_write_submissions_all_completed": true,
+  "entire_ota_reconstructed": true,
+  "reconstructed_bytes": 2227971,
+  "reconstructed_sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261",
+  "replay_control_link_virtual_disconnect_only": true,
+  "limitations": [
+    "Application TX/RX trace; not a separate HCI/radio observation.",
+    "Reboot ACK alone does not prove successful boot."
+  ]
+}

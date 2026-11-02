@@ -1,0 +1,496 @@
+[
+  {
+    "copy": 0,
+    "physical_start": "0x7fc000",
+    "header": "d2ffffff11000000",
+    "count": 17,
+    "crc_valid": true,
+    "entries": [
+      {
+        "type": "0x10",
+        "raw_words": [
+          "0x10",
+          "0x0",
+          "0x2068000",
+          "0x0",
+          "0x10000"
+        ],
+        "physical": "0x0",
+        "load": "0x2068000",
+        "body_length": 0,
+        "allocation": 65536
+      },
+      {
+        "type": "0x30",
+        "raw_words": [
+          "0x530",
+          "0x10000",
+          "0x14010020",
+          "0xde14c",
+          "0x113000"
+        ],
+        "physical": "0x10000",
+        "load": "0x14010020",
+        "body_length": 909644,
+        "allocation": 1126400
+      },
+      {
+        "type": "0x70",
+        "raw_words": [
+          "0x13e70",
+          "0x123000",
+          "0x26000000",
+          "0xa9cb8",
+          "0xc8000"
+        ],
+        "physical": "0x123000",
+        "load": "0x26000000",
+        "body_length": 695480,
+        "allocation": 819200
+      },
+      {
+        "type": "0x20",
+        "raw_words": [
+          "0x207ff20",
+          "0x1eb000",
+          "0x41eb020",
+          "0x1bd540",
+          "0x200000"
+        ],
+        "physical": "0x1eb000",
+        "load": "0x41eb020",
+        "body_length": 1824064,
+        "allocation": 2097152
+      },
+      {
+        "type": "0x90",
+        "raw_words": [
+          "0x10200090",
+          "0x3eb000",
+          "0x0",
+          "0x4566c",
+          "0x96000"
+        ],
+        "physical": "0x3eb000",
+        "load": "0x0",
+        "body_length": 284268,
+        "allocation": 614400
+      },
+      {
+        "type": "0x4",
+        "raw_words": [
+          "0x4",
+          "0x481000",
+          "0x0",
+          "0x0",
+          "0x25e000"
+        ],
+        "physical": "0x481000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 2482176
+      },
+      {
+        "type": "0xc5",
+        "raw_words": [
+          "0x1c5",
+          "0x6df000",
+          "0x0",
+          "0x13e9a",
+          "0x19000"
+        ],
+        "physical": "0x6df000",
+        "load": "0x0",
+        "body_length": 81562,
+        "allocation": 102400
+      },
+      {
+        "type": "0xc4",
+        "raw_words": [
+          "0x20684c4",
+          "0x6f8000",
+          "0x0",
+          "0x0",
+          "0x80000"
+        ],
+        "physical": "0x6f8000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 524288
+      },
+      {
+        "type": "0xc3",
+        "raw_words": [
+          "0x8000c3",
+          "0x778000",
+          "0x0",
+          "0x0",
+          "0x2000"
+        ],
+        "physical": "0x778000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 8192
+      },
+      {
+        "type": "0xc2",
+        "raw_words": [
+          "0xc2",
+          "0x77a000",
+          "0x0",
+          "0xe00",
+          "0x2000"
+        ],
+        "physical": "0x77a000",
+        "load": "0x0",
+        "body_length": 3584,
+        "allocation": 8192
+      },
+      {
+        "type": "0x7",
+        "raw_words": [
+          "0x10200d07",
+          "0x77c000",
+          "0x0",
+          "0x0",
+          "0x80000"
+        ],
+        "physical": "0x77c000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 524288
+      },
+      {
+        "type": "0x8",
+        "raw_words": [
+          "0x13e08",
+          "0x7fc000",
+          "0x0",
+          "0x0",
+          "0x2000"
+        ],
+        "physical": "0x7fc000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 8192
+      },
+      {
+        "type": "0x2",
+        "raw_words": [
+          "0x2078002",
+          "0x7fe000",
+          "0x0",
+          "0x0",
+          "0x1000"
+        ],
+        "physical": "0x7fe000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4096
+      },
+      {
+        "type": "0x9",
+        "raw_words": [
+          "0x9",
+          "0x7ff000",
+          "0x0",
+          "0x0",
+          "0x1000"
+        ],
+        "physical": "0x7ff000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4096
+      },
+      {
+        "type": "0xc6",
+        "raw_words": [
+          "0x207ffc6",
+          "0x1000000",
+          "0x0",
+          "0x0",
+          "0x400000"
+        ],
+        "physical": "0x1000000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4194304
+      },
+      {
+        "type": "0xc7",
+        "raw_words": [
+          "0x207ffc7",
+          "0x1400000",
+          "0x0",
+          "0x0",
+          "0x100000"
+        ],
+        "physical": "0x1400000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 1048576
+      },
+      {
+        "type": "0xc8",
+        "raw_words": [
+          "0xc8",
+          "0x1500000",
+          "0x0",
+          "0x0",
+          "0x300000"
+        ],
+        "physical": "0x1500000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 3145728
+      }
+    ]
+  },
+  {
+    "copy": 1,
+    "physical_start": "0x7fd000",
+    "header": "d3ffffff11010000",
+    "count": 17,
+    "crc_valid": true,
+    "entries": [
+      {
+        "type": "0x10",
+        "raw_words": [
+          "0x10",
+          "0x0",
+          "0x2068000",
+          "0x0",
+          "0x10000"
+        ],
+        "physical": "0x0",
+        "load": "0x2068000",
+        "body_length": 0,
+        "allocation": 65536
+      },
+      {
+        "type": "0x30",
+        "raw_words": [
+          "0x530",
+          "0x10000",
+          "0x14010020",
+          "0xde14c",
+          "0x113000"
+        ],
+        "physical": "0x10000",
+        "load": "0x14010020",
+        "body_length": 909644,
+        "allocation": 1126400
+      },
+      {
+        "type": "0x70",
+        "raw_words": [
+          "0x13e70",
+          "0x123000",
+          "0x26000000",
+          "0xa9cb8",
+          "0xc8000"
+        ],
+        "physical": "0x123000",
+        "load": "0x26000000",
+        "body_length": 695480,
+        "allocation": 819200
+      },
+      {
+        "type": "0x20",
+        "raw_words": [
+          "0x207ff20",
+          "0x1eb000",
+          "0x41eb020",
+          "0x1bd540",
+          "0x200000"
+        ],
+        "physical": "0x1eb000",
+        "load": "0x41eb020",
+        "body_length": 1824064,
+        "allocation": 2097152
+      },
+      {
+        "type": "0x90",
+        "raw_words": [
+          "0x10200090",
+          "0x3eb000",
+          "0x0",
+          "0x4566c",
+          "0x96000"
+        ],
+        "physical": "0x3eb000",
+        "load": "0x0",
+        "body_length": 284268,
+        "allocation": 614400
+      },
+      {
+        "type": "0x4",
+        "raw_words": [
+          "0x4",
+          "0x481000",
+          "0x0",
+          "0x0",
+          "0x25e000"
+        ],
+        "physical": "0x481000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 2482176
+      },
+      {
+        "type": "0xc5",
+        "raw_words": [
+          "0x1c5",
+          "0x6df000",
+          "0x0",
+          "0x13e9a",
+          "0x19000"
+        ],
+        "physical": "0x6df000",
+        "load": "0x0",
+        "body_length": 81562,
+        "allocation": 102400
+      },
+      {
+        "type": "0xc4",
+        "raw_words": [
+          "0x20684c4",
+          "0x6f8000",
+          "0x0",
+          "0x0",
+          "0x80000"
+        ],
+        "physical": "0x6f8000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 524288
+      },
+      {
+        "type": "0xc3",
+        "raw_words": [
+          "0x8000c3",
+          "0x778000",
+          "0x0",
+          "0x0",
+          "0x2000"
+        ],
+        "physical": "0x778000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 8192
+      },
+      {
+        "type": "0xc2",
+        "raw_words": [
+          "0xc2",
+          "0x77a000",
+          "0x0",
+          "0xe00",
+          "0x2000"
+        ],
+        "physical": "0x77a000",
+        "load": "0x0",
+        "body_length": 3584,
+        "allocation": 8192
+      },
+      {
+        "type": "0x7",
+        "raw_words": [
+          "0x10200d07",
+          "0x77c000",
+          "0x0",
+          "0x0",
+          "0x80000"
+        ],
+        "physical": "0x77c000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 524288
+      },
+      {
+        "type": "0x8",
+        "raw_words": [
+          "0x13e08",
+          "0x7fc000",
+          "0x0",
+          "0x0",
+          "0x2000"
+        ],
+        "physical": "0x7fc000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 8192
+      },
+      {
+        "type": "0x2",
+        "raw_words": [
+          "0x2078002",
+          "0x7fe000",
+          "0x0",
+          "0x0",
+          "0x1000"
+        ],
+        "physical": "0x7fe000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4096
+      },
+      {
+        "type": "0x9",
+        "raw_words": [
+          "0x9",
+          "0x7ff000",
+          "0x0",
+          "0x0",
+          "0x1000"
+        ],
+        "physical": "0x7ff000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4096
+      },
+      {
+        "type": "0xc6",
+        "raw_words": [
+          "0x207ffc6",
+          "0x1000000",
+          "0x0",
+          "0x0",
+          "0x400000"
+        ],
+        "physical": "0x1000000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 4194304
+      },
+      {
+        "type": "0xc7",
+        "raw_words": [
+          "0x207ffc7",
+          "0x1400000",
+          "0x0",
+          "0x0",
+          "0x100000"
+        ],
+        "physical": "0x1400000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 1048576
+      },
+      {
+        "type": "0xc8",
+        "raw_words": [
+          "0xc8",
+          "0x1500000",
+          "0x0",
+          "0x0",
+          "0x300000"
+        ],
+        "physical": "0x1500000",
+        "load": "0x0",
+        "body_length": 0,
+        "allocation": 3145728
+      }
+    ]
+  }
+]

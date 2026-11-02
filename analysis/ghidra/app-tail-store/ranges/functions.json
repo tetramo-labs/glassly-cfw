@@ -1,0 +1,126 @@
+[
+  {
+    "requested": "042400b6",
+    "address": "ram:042400b6",
+    "incoming_references": [
+      "ram:0423ca68 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04240060",
+    "address": "ram:04240060",
+    "incoming_references": [
+      "ram:04240104 UNCONDITIONAL_CALL",
+      "ram:042402f4 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "041fb3d2",
+    "address": "ram:041fb3d2",
+    "incoming_references": [
+      "ram:041fb5f4 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "041fb5c8",
+    "address": "ram:041fb5c8",
+    "incoming_references": [
+      "ram:041fb37a UNCONDITIONAL_CALL",
+      "ram:041fb38c UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341926",
+    "address": "ram:04341926",
+    "incoming_references": [
+      "ram:0423fb80 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341ae6",
+    "address": "ram:04341ae6",
+    "incoming_references": [
+      "ram:0423fece COMPUTED_CALL",
+      "ram:0423fca6 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "043413ae",
+    "address": "ram:043413ae",
+    "incoming_references": [
+      "ram:0423e54c COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "043414a6",
+    "address": "ram:043414a6",
+    "incoming_references": [
+      "ram:0423da4e COMPUTED_CALL",
+      "ram:0423dc0a COMPUTED_CALL",
+      "ram:0423df80 COMPUTED_CALL",
+      "ram:0423e128 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341226",
+    "address": "ram:04341226",
+    "incoming_references": [
+      "ram:042393fe COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341266",
+    "address": "ram:04341266",
+    "incoming_references": [
+      "ram:04341b9c UNCONDITIONAL_CALL",
+      "ram:04341cae UNCONDITIONAL_CALL",
+      "ram:04341cee UNCONDITIONAL_CALL",
+      "ram:04341cfe UNCONDITIONAL_CALL",
+      "ram:04341d8c UNCONDITIONAL_CALL",
+      "ram:04341dc0 UNCONDITIONAL_CALL",
+      "ram:0423e372 COMPUTED_CALL",
+      "ram:0423e600 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341296",
+    "address": "ram:04341296",
+    "incoming_references": [
+      "ram:0434173c UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341560",
+    "address": "ram:04341560",
+    "incoming_references": [
+      "ram:0434187e UNCONDITIONAL_CALL",
+      "ram:04341e9e UNCONDITIONAL_CALL",
+      "ram:043416b0 UNCONDITIONAL_CALL",
+      "ram:042400f4 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

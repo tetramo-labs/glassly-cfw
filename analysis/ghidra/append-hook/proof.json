@@ -1,0 +1,41 @@
+{
+  "input": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+  "input_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "app_partition_physical": [
+    "0x1eb000",
+    "0x3eb000"
+  ],
+  "image_header_bytes": 32,
+  "body_length": 1773176,
+  "body_xip_start": "0x41eb020",
+  "body_xip_end_exclusive": "0x439be98",
+  "candidate_xip_entry": "0x439bea0",
+  "append_padding_bytes": 8,
+  "arena_end_exclusive": "0x43eb000",
+  "arena_capacity": 323936,
+  "aux_header_word6": "0x020fee00 (unresolved; preserve)",
+  "gp": "0x02011688",
+  "startup_sp": "0x020ffe00",
+  "startup_ram_data_xip_end": "0x0439be40",
+  "original_trailing_zero_bytes": 88,
+  "hook_address": "0x42e82e0",
+  "hook_body_offset": "0xfd2c0",
+  "hook_original_8_bytes": "b7472e0493870768",
+  "hook_original_next_2_bytes": "bcd8",
+  "illustrative_reencoded_hook_8_bytes": "b7c73904938707ea",
+  "new_target_hi20": "0x439c",
+  "new_target_signed_lo12": -352,
+  "stock_handler": "0x042e4680",
+  "candidate_service": "0x0f",
+  "candidate_command": "0x7e",
+  "response_builder": "0x042ef9f6",
+  "list_destructor": "0x042eff8e",
+  "scope": "Static candidate/proof only; not a modified image or acceptance guarantee",
+  "raw_u32_occurrences_in_body": {
+    "0x1b0e78": [],
+    "0x1b0e98": [],
+    "0x439be98": [],
+    "0x20fee00": [],
+    "0x43eb000": []
+  }
+}

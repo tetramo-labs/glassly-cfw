@@ -1,0 +1,332 @@
+[
+  {
+    "file": "segment-1.body.bin",
+    "offset": "0xd4f30",
+    "text": "boot as coredump double exception"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16b224",
+    "text": "boot as coredump double exception"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16b60c",
+    "text": "[XGIMI] repeated boot crashes detected (>=%u), factory reset"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c443",
+    "text": " Total pages %u too small for header pool (%u)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16c4af",
+    "text": " Invalid global page: %u (total pages: %u)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16db34",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:192] [recordsv_ring_buf]  E:init failed: bootmap_get_image(CUS7) ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x16ddec",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:483] [recordsv_ring_buf]  E:freeze failed: skip=%u exceeds free=%u (data=%u invalid=%u total=%u)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1704c0",
+    "text": "is_reboot:%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17127c",
+    "text": "[T:0x%08X][bt_factory_test.c:887] factory_test E:CRC8 check failed: 0x%02X != 0x%02X"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x171f0c",
+    "text": "[T:0x%08X][xgimi_key_value.c:259] xgimi E:[XGIMI_KV]Key head crc error in %p"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1720cc",
+    "text": "[T:0x%08X][xgimi_key_value.c:640] xgimi E:[XGIMI_KV]Key data crc error in %p, length:0x%08x"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17279c",
+    "text": "font OTA begin failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1727b4",
+    "text": "font OTA LZMA init failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1727d0",
+    "text": "font OTA external Flash write failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x172818",
+    "text": "font OTA staging verification failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x172864",
+    "text": "font OTA task start failed"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x172898",
+    "text": "firmware block CRC"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1728c4",
+    "text": "OTA task queue full"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x172908",
+    "text": "GMPLUGIN-WIPE-v1ota_transfer_flash_data.c"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x172b6c",
+    "text": "[app_pm] shutdown failed, force reboot"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1730a8",
+    "text": "{\"event\":\"GlassWakewordAudio\",\"codec\":\"ima_adpcm\",\"sample_rate\":%u,\"channels\":%u,\"frame_ms\":%u,\"frames\":%u,\"raw_bytes\":%u,\"adpcm_bytes\":%u,\"chunk_index\":%u,\"total_chunks\":%u,\"checksum\":%u,\"capture_version\":%u,\"trigger_frame_index\":%u,\"trigger_subframe\":%u,\"trigger_score_bits\":%u,\"threshold_bits\":%u}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1734f8",
+    "text": "Boot reason:%d, wakeup_source:%d, flag:%d not clear rtc"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x173dd0",
+    "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"items\":["
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x173ec0",
+    "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"attr_total\":%u,\"attrs\":["
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x173fc0",
+    "text": "{\"seq\":0,\"list_id\":%u,\"index\":%u,\"total\":%u,\"fields\":["
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x174688",
+    "text": "total_len"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1746ac",
+    "text": "ERR_FRAG_CRC"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x177df0",
+    "text": "boot_app"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x178364",
+    "text": "image_view"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x178370",
+    "text": "image_generation"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x178a64",
+    "text": "im_sc_reboot"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17b320",
+    "text": "First boot detected...."
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17d278",
+    "text": "Upgrade in progress. Do not disconnect."
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17d2a0",
+    "text": "Upgrade cancelled."
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17d9ec",
+    "text": "Please upgrade to memo+ membership"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17e2c4",
+    "text": "Complete Boot Wizard"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x17e36e",
+    "text": "Click: Rotate"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x183fb8",
+    "text": "Upgrade l"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x183fe8",
+    "text": "Upgrade wurde abgebrochen."
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1848ec",
+    "text": "Bitte auf memo+ Mitgliedschaft upgraden"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x185524",
+    "text": "Boot-Assistent abschlie"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x18a08f",
+    "text": "Clic: Rotar"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x18bb18",
+    "text": "Ruota leggermente la testa per selezionare una funzione, quindi fai clic sul pulsante."
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x18c40c",
+    "text": "Clicca: Ruota"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x190f30",
+    "text": "Bateria totalmente carregada: %d%%"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x198000",
+    "text": "[T:0x%08X][img_utils.c:107] [img_utils]  E:LZMA unwrap failed res=%d status=%d src_used=%u/%u dst=%u/%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1980b4",
+    "text": "[T:0x%08X][img_utils.c:417] [img_utils]  E:Failed to LZMA decode '%s'"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1981c0",
+    "text": "[T:0x%08X][img_utils.c:540] [img_utils]  E:Decompression failed! Expected %u, got %u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1982d4",
+    "text": "[T:0x%08X][img_utils.c:638] [img_utils]  E:buffer image bad dims: %ux%u (max %ux%u)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x198328",
+    "text": "[T:0x%08X][img_utils.c:688] [img_utils]  E:buffer image final alloc failed (%u bytes)"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x199360",
+    "text": "[T:0x%08X][jbd013_api.c:1231] [JBD013] E:image lzma/check fail res=%d status=%d src_used=%u/%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a4bf0",
+    "text": "[T:0x%08X][app_econn_demo.c:6286] [app_econn]  E:ota iap2 guard timer start failed ret:%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a4c98",
+    "text": "{\"event\":\"GlassCoreDump\",\"ts\":%u,\"commit_id\":\"%s\",\"core_id\":%u,\"reason\":%u,\"mcause\":%u,\"mepc\":%u,\"ra\":%u,\"mtval\":%u,\"tick\":%u,\"bt0\":%u,\"bt1\":%u,\"bt2\":%u,\"bt3\":%u,\"assert_file\":\"%s\",\"assert_line\":%u,\"backtrace\":%s,\"boot_reason\":%u,\"boot_source\":%u,\"boot_flag\":%u,\"diag_flags\":%u,\"wdt_id\":%u,\"wdt_feed_cnt\":%u,\"global_wdt_feed_cnt\":%u,\"current_task\":%u,\"current_task_name\":\"%s\",\"scheduler_state\":%u,\"crash_count\":%u}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a4e38",
+    "text": "[T:0x%08X][app_exception_burypoint.c:249] [exception_bp]  E:[EXCEPTION_BP] coredump_boot pending core=%u mcause=0x%x mepc=0x%x ra=0x%x mtval=0x%x assert=%s:%u bt=%s boot_reason=%u source=%u flag=%u diag_flags=0x%x wdt_id=%u wdt_feed_cnt=%u global_wdt_feed_cnt=%u current_task=0x%x current_task_name=%s scheduler_state=%u crash_count=%u"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a594c",
+    "text": "[T:0x%08X][bt_data_handler.c:4991] [bt_handler]  E:Unknown boot command: 0x%02X"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a599c",
+    "text": "unknown boot command"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a59c8",
+    "text": "[T:0x%08X][bt_data_handler.c:4908] [bt_handler]  E:Unknown boot command: 0x%02X"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a62dc",
+    "text": "[T:0x%08X][bt_data_handler.c:1114] [bt_handler]  E:CLI tunnel tx reserve failed, event=0x%02X service=0x%02X command=0x%02X total=%u ret=%d"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a6d00",
+    "text": "invalid lvgl image tlv"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a8b9c",
+    "text": "{\"cmd_id\":%d,\"status\":\"complete\",\"total_size\":%u,\"total_chunks\":%u}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a8bfc",
+    "text": "[T:0x%08X][bt_data_report.c:3276] [bt_handler]  E:[SS] preflight: working_set=%u + margin=%u but free_total=%u, abort"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a8d80",
+    "text": "{\"cmd_id\":%d,\"width\":%u,\"height\":%u,\"visible_width\":%u,\"bpp\":4,\"compression\":\"lz4\",\"format\":\"banded\",\"band_rows\":%u,\"band_count\":%u,\"original_size\":%u,\"data_size\":%u,\"total_chunks\":%u,\"status\":\"start\"}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a8f80",
+    "text": "{\"cmd_id\":%d,\"status\":\"complete\",\"total_size\":%u,\"total_chunks\":%u,\"is_resend\":true,\"resent_count\":%u}"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9198",
+    "text": "[T:0x%08X][gm_package.c:452] [gmpkg]  E:gmMallocAppendTlv: CRC mismatch,len=%u, expected=0x%04x, got=0x%04x"
+  },
+  {
+    "file": "segment-3.body.bin",
+    "offset": "0x1a9824",
+    "text": "anc_ota_v1.c"
+  },
+  {
+    "file": "segment-6.body.bin",
+    "offset": "0x2da0",
+    "text": "im_sc_reboot"
+  }
+]

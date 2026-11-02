@@ -1,0 +1,83 @@
+{
+  "format": "memomind-exclusive-store-native-callers-v1",
+  "all_passed": false,
+  "device_actions": 0,
+  "cases": [],
+  "provenance": {
+    "tests/rv32/exclusive_storage_callers_emulator_test.py": "f192f7b93555d97de7e5e1e228cf21a3cf66d8217fed187ef8cb64219462696e",
+    "scripts/build_memomind_exclusive_storage.py": "669c551e146044fc29f194d7e015e9d64351de96c8d7b7ad143199c87e107c2d",
+    "analysis/extracted/validated-1.0.3.127/segment-3.body.bin": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "analysis/exclusive-store-review-20261101/report.md": "7ec33d8d7746581b15a237533a5a3b487ac5956c5dc7df6364be8d1fa4cd2654"
+  },
+  "limitations": [
+    "Actual pinned callers and production gates, not whole boot or hardware execution.",
+    "Heap frees, queue receive, ticks, completion enqueue and delay are explicit mocks.",
+    "Worker stops on next receive after completion; downstream display/GM reply is not executed.",
+    "Synthetic old-context teardown does not prove safe cancellation of a running plugin.",
+    "No real mutex contention, native allocator, power loss, other raw owners or full boot coverage.",
+    "Read/program/erase/badmap gates are applied but unreachable from refused mounts; direct gates have a separate test.",
+    "Observed native stack is not a worst-case task/interrupt stack budget."
+  ],
+  "unicorn": "2.1.4",
+  "gated_body_sha256": "f1663eec992aeb8ad62debe5dec875e9819555b652427dbb124cb09372a85c93",
+  "production_gate_edits": [
+    {
+      "address": 69878728,
+      "body_offset": 758696,
+      "before": "1971a2dc",
+      "after": "6d558280",
+      "return_code": -5,
+      "purpose": "CUS8 mount/repair/format unavailable"
+    },
+    {
+      "address": 69877280,
+      "body_offset": 757248,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 read callback unavailable"
+    },
+    {
+      "address": 69877956,
+      "body_offset": 757924,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 program callback unavailable"
+    },
+    {
+      "address": 69878046,
+      "body_offset": 758014,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 erase callback unavailable"
+    },
+    {
+      "address": 69462196,
+      "body_offset": 342164,
+      "before": "61712324811a",
+      "after": "7d5582800100",
+      "return_code": -1,
+      "purpose": "CUS8 whole-store reset unavailable"
+    },
+    {
+      "address": 69901780,
+      "body_offset": 781748,
+      "before": "757122c5",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 badmap saver unavailable"
+    }
+  ],
+  "startup_mapping": {
+    "sram_code_source": "041eb084",
+    "sram_code_destination": "02000000",
+    "data_source": "04399fc8",
+    "data_destination": "0200f8b8",
+    "gp": "0x2011688"
+  },
+  "active_case": "install refused after real null-context teardown",
+  "error": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/exclusive_storage_callers_emulator_test.py\", line 292, in main\n    report['cases'].append(execute(u, r, body, **spec))\n                           ~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/exclusive_storage_callers_emulator_test.py\", line 184, in execute\n    m.emu_start(entry, 0, count=20000)\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/lib/python3.14/site-packages/unicorn/unicorn_py3/unicorn.py\", line 766, in emu_start\n    raise UcError(status)\nunicorn.unicorn_py3.unicorn.UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)\n"
+}

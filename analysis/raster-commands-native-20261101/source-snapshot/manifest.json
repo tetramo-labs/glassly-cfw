@@ -1,0 +1,337 @@
+[
+  {
+    "path": "runtime/graphics/entry.S",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/entry.S",
+    "sha256": "72841cc461e7414d880ac262a13d54e480fedf5c467289a06c13aeff65bb67a5"
+  },
+  {
+    "path": "runtime/graphics/flash_canary.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_canary.c",
+    "sha256": "e8481493ee488d480821ea9841efa1d5f67017e28025f908741f9eb77885cf95"
+  },
+  {
+    "path": "runtime/graphics/flash_canary.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_canary.h",
+    "sha256": "f98abe5d8ec813ae13be53c2c7ffe6f8654f4c661406930ff737317b1e1574df"
+  },
+  {
+    "path": "runtime/graphics/flash_canary_entry.S",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_canary_entry.S",
+    "sha256": "14861b6e8cd4d4ad196fd047c142d62bbe30f3d7ea38042ea611f82497eb2148"
+  },
+  {
+    "path": "runtime/graphics/flash_canary_native.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_canary_native.c",
+    "sha256": "0b4335d36f59f512ec717d9cee479ff1cebf6b203797e170cccc2fbf35886b35"
+  },
+  {
+    "path": "runtime/graphics/flash_read.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_read.c",
+    "sha256": "06d6f46c933e065f252227c1573cdda276b40f2d543ab8c16b1de65c12fed986"
+  },
+  {
+    "path": "runtime/graphics/flash_read.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_read.h",
+    "sha256": "1338d546773eb2b114f53805a9f5e28ecb36d2628203571739ced72386c68c31"
+  },
+  {
+    "path": "runtime/graphics/flash_store_native.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_store_native.c",
+    "sha256": "5a65c55a135037fdf446fd8b013132a5ba6d1fbe1a883376f6d118a3df7c2fa1"
+  },
+  {
+    "path": "runtime/graphics/flash_store_native.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/flash_store_native.h",
+    "sha256": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65"
+  },
+  {
+    "path": "runtime/graphics/graphics.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/graphics.c",
+    "sha256": "e7b64e642c7274c7b0aff05720afe4b2ba2e798d6e6129ff3f1ba770f7ff85df"
+  },
+  {
+    "path": "runtime/graphics/graphics.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/graphics.h",
+    "sha256": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a"
+  },
+  {
+    "path": "runtime/graphics/graphics.ld",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/graphics.ld",
+    "sha256": "4ef8aeefd2d412c1a436e994d7a59ad463e33ce64b404a5ec03479a3c6333732"
+  },
+  {
+    "path": "runtime/graphics/input.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/input.c",
+    "sha256": "d606bfdf8d3401735b56ffc4ecc008f9318d0d6ab49ef735b4e584e0bf4d372c"
+  },
+  {
+    "path": "runtime/graphics/input.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/input.h",
+    "sha256": "7cb5e503daee3a0b8fac116ce76d820cd7d32a07a4980861a2aa7c0acd6ca5c3"
+  },
+  {
+    "path": "runtime/graphics/native.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/native.c",
+    "sha256": "29cc3ec56a6f8bdd03b61d5ae55cbce55a8cddcc4c8844b835bee4890163c899"
+  },
+  {
+    "path": "runtime/graphics/native_text.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/native_text.c",
+    "sha256": "7971a929a8ba7b572d5669cd2310402ad341c8943bd44270d273a3ad5209204d"
+  },
+  {
+    "path": "runtime/graphics/native_text.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/native_text.h",
+    "sha256": "dfdf659d613169bd16df7aa64631dd5e6f0602622f2ac33de9c257c464becc99"
+  },
+  {
+    "path": "runtime/graphics/scene_session.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/scene_session.c",
+    "sha256": "9890a32c3a6569230f1c0c50cc33f39dc8141675a000ee562a3715735835b056"
+  },
+  {
+    "path": "runtime/graphics/scene_session.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/scene_session.h",
+    "sha256": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62"
+  },
+  {
+    "path": "runtime/graphics/storage_diag.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/storage_diag.c",
+    "sha256": "dbe664efc1c3538a6de40f8eb6433db9ea881fdb5b3fa1d9bbe419703443c91d"
+  },
+  {
+    "path": "runtime/graphics/storage_diag.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/storage_diag.h",
+    "sha256": "35948161d536f2598d580467f4553505ad1a1ca5a5c223985a41dc54e6ae629d"
+  },
+  {
+    "path": "runtime/graphics/storage_diag_native.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/graphics/storage_diag_native.c",
+    "sha256": "be53e8383926d999495e5f89b113d61a492b91658cd8224736f3bed404d67366"
+  },
+  {
+    "path": "runtime/portable/flash_store.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/flash_store.h",
+    "sha256": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff"
+  },
+  {
+    "path": "runtime/portable/geometry.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/geometry.c",
+    "sha256": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6"
+  },
+  {
+    "path": "runtime/portable/geometry.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/geometry.h",
+    "sha256": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931"
+  },
+  {
+    "path": "runtime/portable/geometry_internal.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/geometry_internal.h",
+    "sha256": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9"
+  },
+  {
+    "path": "runtime/portable/keyboard.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/keyboard.h",
+    "sha256": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947"
+  },
+  {
+    "path": "runtime/portable/notifications.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/notifications.h",
+    "sha256": "54f8a2e9fc99df67b14193fcf6427f6f4f39b07582c9e509da1d434a5e3974bc"
+  },
+  {
+    "path": "runtime/portable/raster_commands.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/raster_commands.c",
+    "sha256": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e"
+  },
+  {
+    "path": "runtime/portable/raster_commands.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/raster_commands.h",
+    "sha256": "953fefe23bea016c9fdb6bed7a73263180b28221d2da31b5a4bc6f6e2abf1179"
+  },
+  {
+    "path": "runtime/portable/rle.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/rle.c",
+    "sha256": "61a5ba6f0285867b426655f3c40b1aaefe50ef414b79f8241b1f18be5576a062"
+  },
+  {
+    "path": "runtime/portable/rle.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/rle.h",
+    "sha256": "12891d1c44b5b532988fd2981ee57eafa4d692478c42cd7031bbf1ad08ae746b"
+  },
+  {
+    "path": "runtime/portable/scene.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene.c",
+    "sha256": "bb9fdb5afe6bd85bb3e701fdb7e47fbeffba12d05a874760641727c989114ec7"
+  },
+  {
+    "path": "runtime/portable/scene.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene.h",
+    "sha256": "cd40251d1a7754cba516a5a5135213f739c6406945a26e0d99a471240542cb91"
+  },
+  {
+    "path": "runtime/portable/scene_assets.inc",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_assets.inc",
+    "sha256": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f"
+  },
+  {
+    "path": "runtime/portable/scene_assets_external.inc",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_assets_external.inc",
+    "sha256": "dfecf54773597742c5a3fe0180f55562642d8787616d1399eb9fe8dbdc01ea48"
+  },
+  {
+    "path": "runtime/portable/scene_cache.inc",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_cache.inc",
+    "sha256": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e"
+  },
+  {
+    "path": "runtime/portable/scene_flash_store.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_flash_store.h",
+    "sha256": "d80698ce3dd79cac2e3ebc724272227e3054eeceee62b48e598cfa06ff58c999"
+  },
+  {
+    "path": "runtime/portable/scene_internal.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_internal.h",
+    "sha256": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8"
+  },
+  {
+    "path": "runtime/portable/scene_shapes.inc",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_shapes.inc",
+    "sha256": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c"
+  },
+  {
+    "path": "runtime/portable/scene_store.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/scene_store.h",
+    "sha256": "216f288fca71bf102d0d4bfb1e85db16dd354cc3969da019ec98db91df151d79"
+  },
+  {
+    "path": "runtime/portable/transport.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/transport.h",
+    "sha256": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01"
+  },
+  {
+    "path": "runtime/portable/upstream.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/upstream.h",
+    "sha256": "12f5966f3b4a9b7cd230c8d42aa35be784f796b82bf799ad6e629c26397b9e68"
+  },
+  {
+    "path": "runtime/portable/vector.c",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/vector.c",
+    "sha256": "52c9b0c2b5ebc7d192493213e3ca89054c82c5bea9805b68a89e2f31095540e3"
+  },
+  {
+    "path": "runtime/portable/vector.h",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/runtime/portable/vector.h",
+    "sha256": "78b9a68ae9544ba57917466ecf06a54c7d1daae02a729d6b69aeb44ba5d1a1dc"
+  },
+  {
+    "path": "scripts/compile_memomind_graphics.py",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/scripts/compile_memomind_graphics.py",
+    "sha256": "d823ed4e5ade58951d6bd9b8346c7d7b363bb9cca7830e38023e0f20ab92a92c"
+  },
+  {
+    "path": "swift/MemoMindKit/Package.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Package.swift",
+    "sha256": "4ef43a4f0a5ec6060fd9ebd10bf06aed604509eaaf2c1ba30793f86a7753549e"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift",
+    "sha256": "9449aa7a5033f0fca96883393eb0a7bd5c06a1d58b3f98b7f5c54b2a7a90c701"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "sha256": "4cc33e2ee713e12ea75f02bff0bb22318b6eb30a345f7a82a49c04bad8d82dcc"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "sha256": "c49eccecb0f7929e78548d4a81a19c8365929c4289845332b55c4cd6827ff719"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "sha256": "6d1ab58c45cc102658754bca69a991aee3f1b967ee1d8168a6d812b7b8cc72a7"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "sha256": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift",
+    "sha256": "581aa89b8953878bb95f450b294b4344cd17f03f92f0d5fb78efc6f61658f774"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "sha256": "29738b42c2ec76b996f883a78c40e43f426c2de5775de09ef3014a0fbbc782ca"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift",
+    "sha256": "e6e7aedac7f9da34323f126ce6d19dbf905d5e88136ec4307777939a819ebbcb"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Arguments.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Arguments.swift",
+    "sha256": "dbbfc7b7da1dedab80078edeb53958185c18203a0a8a52f3d3192c6601abe979"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Capture.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Capture.swift",
+    "sha256": "6a1ab7eefa7d5a13aa0e79c800ae0fe8769efb7c6c007833e4176c319ded37a6"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/Replay.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/Replay.swift",
+    "sha256": "5fde0abc0a1f0fc131e601fb85d500d9480ef3c92546edcdeeb00db451b4afbe"
+  },
+  {
+    "path": "swift/MemoMindKit/Sources/memomind/main.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Sources/memomind/main.swift",
+    "sha256": "4608e302f0b3c995f2a2089fe080ff50cc1c6e2d3ff0f5cc974b4b681faeeb6d"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift",
+    "sha256": "b68e9618f74429443f38031eb1768cfd07c8b1251bcbb81acf95a564e5bf4778"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/FixedCanaryClientTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/FixedCanaryClientTests.swift",
+    "sha256": "a3d9ab11b756185402f9fdc4b687aff022d2128a97b912388dd2490024d76d7c"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/OTABoundaryTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/OTABoundaryTests.swift",
+    "sha256": "7f45ed67dfceb0695dbbc5ccbb347dd3f365bcdf91a38ab971c3d0868e1f9cde"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/OTATransactionTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/OTATransactionTests.swift",
+    "sha256": "0dd3d5d27e55b46bef1e2b6045fd998158464fa78d48648d7585c3501b253ff2"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/ProtocolTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/ProtocolTests.swift",
+    "sha256": "a0541c6599382e392af1f0f292388dfb23e6bdb7e3a623d76e2b6a61b51100a2"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/PythonProtocolVectors.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/PythonProtocolVectors.swift",
+    "sha256": "54a220e571f6c089e53e3c259cb1f8df9b893dd6608e27e8c3125a3fd51d28c0"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/RasterCommandsTests.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/RasterCommandsTests.swift",
+    "sha256": "9ef7cd4c67042aafb8a2d9e37bd7a371a9066de40c21adc5230093590b430943"
+  },
+  {
+    "path": "swift/MemoMindKit/Tests/MemoMindCoreTests/RasterReferenceVectors.swift",
+    "snapshot": "analysis/raster-commands-native-20261101/source-snapshot/swift/MemoMindKit/Tests/MemoMindCoreTests/RasterReferenceVectors.swift",
+    "sha256": "cc340ed971033da423b5791831cc5ca130589078ea6b5e888d8b6f8073495058"
+  }
+]

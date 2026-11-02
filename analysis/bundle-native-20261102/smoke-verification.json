@@ -1,0 +1,82 @@
+{
+  "format": "memomind-native-bundle-smoke-verification-v1",
+  "capture": "captures/swift-mac-bundle-smoke-20261102-05",
+  "complete": true,
+  "startup_notifications_captured": [
+    {
+      "event": 32,
+      "service": 1,
+      "command": 48,
+      "bodyHex": "0800000102"
+    },
+    {
+      "event": 33,
+      "service": 14,
+      "command": 12,
+      "bodyHex": "0800000100"
+    },
+    {
+      "event": 34,
+      "service": 1,
+      "command": 33,
+      "bodyHex": "08000001010400000400004eb6"
+    }
+  ],
+  "native_service_notifications_logged": 5,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "bundle_acknowledged": true,
+  "final_cache_reply_verified": true,
+  "ordered_settled_notifications": [
+    [
+      52,
+      11
+    ],
+    [
+      52,
+      12
+    ],
+    [
+      52,
+      11
+    ],
+    [
+      52,
+      12
+    ],
+    [
+      52,
+      13
+    ],
+    [
+      52,
+      14
+    ],
+    [
+      52,
+      15
+    ],
+    [
+      52,
+      16
+    ],
+    [
+      54,
+      17
+    ]
+  ],
+  "invalid_commands_rejected": 5,
+  "late_failure_settled_verified": true,
+  "lease_renewals_acknowledged": 75,
+  "cleared": true,
+  "encoded_and_expected_pixels_independently_verified": true,
+  "hardware_pixel_readback": false,
+  "physical_single_presentation_proven": false,
+  "background_gray4": 0,
+  "hold_seconds_before_clear": 22.41545783355832,
+  "finish_requested": true,
+  "maximum_hold_submission_gap_seconds": 0.46368824993260205,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "65eeb0bca150517afac2e629792d4ff738a49f22a7301980304bd225dbed23f9"
+}

@@ -1,0 +1,74 @@
+{
+  "source_jsonl": "captures/graphics-runtime-20261031/boundaries-01.jsonl",
+  "snapshot_sha256": "3997cfaaa7f3eb21bf0786c16142aa3691d61f8c71b503a11f2d95fb84d43195",
+  "geometry_data_bytes": 5102,
+  "tlv_stream_bytes": 5106,
+  "declared_length": 5115,
+  "all_host_fragment_checksums_valid": true,
+  "host_fragment_body_bytes": 503,
+  "native_rfcomm_body_bytes": 642,
+  "first_native_frame": {
+    "bytes": 651,
+    "expected_checksum_hex": "24af",
+    "received_checksum_hex": "001f",
+    "host_source": "all512B of fragmentFA plus first139B of continuation01"
+  },
+  "corrected_offline_fragment_plan_not_sent": [
+    {
+      "fragment": 0,
+      "head": 250,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "1961457508a6acfddc18075ed35fa505e67d1fd63fac0f52248ab7d2ab3500b2"
+    },
+    {
+      "fragment": 1,
+      "head": 1,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "31678b99d7cb0405fadad6e62fee54cc9fb52e4228d80941c221b0affe5f0440"
+    },
+    {
+      "fragment": 2,
+      "head": 2,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "dad761ac5ccff2e9787849abfac56ef66e3e3ee31f5f4539d173a3e853d5ed00"
+    },
+    {
+      "fragment": 3,
+      "head": 3,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "e235f39b15086a447b9d5b926b093892a62f1cccfacc087efa522a02b62f1a77"
+    },
+    {
+      "fragment": 4,
+      "head": 4,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "5938205c99865d49c1356735489862115b284c08a4abac57df1ba1535f76e6cc"
+    },
+    {
+      "fragment": 5,
+      "head": 5,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "751323e64c5f69db5e54982a911b66778e046b57d4cde2dc1a65f70752ebe728"
+    },
+    {
+      "fragment": 6,
+      "head": 6,
+      "frame_length": 651,
+      "body_length": 642,
+      "sha256": "71768807aa1cee5df9ff39d64aeb4304e193daf2ab058ff351b7ee5b664a49f2"
+    },
+    {
+      "fragment": 7,
+      "head": 7,
+      "frame_length": 621,
+      "body_length": 612,
+      "sha256": "2bccdfeb304f4b2fea43c8fcb7ec8877836b2d286d2e3edd3fb019c9c071916c"
+    }
+  ]
+}

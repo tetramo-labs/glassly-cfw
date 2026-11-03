@@ -95,8 +95,8 @@ static int valid_message(const uint8_t *data, size_t length) {
     if ((data[0]&127u)==7 || (data[0]&127u)==11) return 1;
 #endif
     if (data[0]==11) return length==1;
-    if (data[0]>=37 && data[0]<=41) return length>=5;
-    return length>=2 && (data[0]==19 || data[0]==20 || data[0]==36);
+    if ((data[0]&127u)>=37 && (data[0]&127u)<=41) return length>=5;
+    return length>=2 && ((data[0]&127u)==19 || (data[0]&127u)==20 || (data[0]&127u)==36);
 #else
     return data && ((length==1 && data[0]==11) ||
                     mm_geometry_validate_message(data,length)==MM_GEOMETRY_OK);
@@ -404,6 +404,7 @@ void glassly_graphics_probe(uint32_t command, void *request,
 #endif
 #ifdef MM_FLASH_SCENE
 #ifdef MM_RECORD_TRANSPORT
+                   "\"modeHighBit\":true,"
                    "\"recordTransport\":{\"mode\":126,\"version\":1,\"maxPacketBytes\":128,\"maxRecordBytes\":65535,\"replyCapacity\":64,\"endpoint\":1,\"leaseTicks\":30000},"
 #endif
                    "\"maxMessageBytes\":65535,\"maxWireMessageBytes\":8192,\"largeMessage\":{\"mode\":127,\"chunkBytes\":1024,\"crc\":\"crc32-ieee\"},"
@@ -551,7 +552,7 @@ void glassly_graphics_display(void *envelope) {
             if (o) P.image_delete(o->image);
             result=busy;
 #ifdef MM_GRAPHICS_SCENE
-        } else if (data[0]==36 && length==2 && data[1]==0) {
+        } else if ((data[0]&127u)==36 && length==2 && data[1]==0) {
 #else
         } else if (data[1]==0) {
 #endif
@@ -607,7 +608,7 @@ void glassly_graphics_display(void *envelope) {
 #endif
                     if (!status) {
                         result=ok;
-                        if (data[0]>=37 && data[0]<=41) scene_response=cache_response(o);
+                        if ((data[0]&127u)>=37 && (data[0]&127u)<=41) scene_response=cache_response(o);
 #ifdef MM_COMMAND_BUNDLES
                         else if((data[0]&127u)==8 && o->scene.core.cache_reply_len)scene_response=cache_response(o);
 #endif

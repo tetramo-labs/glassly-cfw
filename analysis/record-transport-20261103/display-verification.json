@@ -1,0 +1,11 @@
+{
+  "appHeaderSHA256": "83d511382090aadecc31a5af785d6bf283363223617fd4204da7c614f6867cc3",
+  "bootHeaderVerified": true,
+  "cleanupVerified": true,
+  "complete": true,
+  "displayHoldSeconds": 180,
+  "flashAssetWritesStarted": false,
+  "physicalOutputConfirmed": false,
+  "release": "record-transport-001",
+  "stage": "after"
+}

@@ -83,7 +83,7 @@ def main():
           '--storage-diagnostics', '--full-store-reader', '--flash-canary', '--raster-commands',
           '--rect-copy', '--command-bundles', '--text-commands', '--diagnostic-commands',
           '--reset-undo-trim', '--minimal-launcher', '--flash-scene', '--wake-control',
-          '--notification-relay', '--record-transport', '--cfw-revision', '4', '--rx-profile', 'app-rx-96k-v1']),
+          '--notification-relay', '--record-transport', '--cfw-revision', '5', '--rx-profile', 'app-rx-96k-v1']),
         ('record_gates', 'Actual full record-profile notification/wake service gates preserve register and stack contracts',
          [str(args.rv32_python.absolute()), 'tests/rv32/notification_gate_emulator_test.py',
           '--build', str(out / 'record-build'), '--report', str(out / 'record-gates.json')]),

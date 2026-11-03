@@ -7,9 +7,9 @@
   "imageBytes": 2248652,
   "transferVerified": true,
   "rebootAcknowledged": true,
-  "bootVerified": false,
-  "hardwareCommandsVerified": false,
-  "physicalOutputConfirmed": false,
+  "bootVerified": true,
+  "hardwareCommandsVerified": true,
+  "physicalOutputConfirmed": true,
   "automaticRetries": 0,
   "flashCapture": "captures/record-transport-20261103-flash-01",
   "preflight": {
@@ -24,13 +24,14 @@
     "topologyAndBadmapVerified": true
   },
   "pending": [
-    "Post-reboot header/capabilities",
-    "Compressed commands and cleanup",
-    "Physical display confirmation"
+    "Explicit background-color confirmation"
   ],
   "postRebootConnectionAttempt": {
     "capture": "captures/record-transport-20261103-after-01",
     "error": "RFCOMM open timed out",
-    "awaitingUserWake": true
-  }
+    "awaitingUserWake": true,
+    "resolvedBy": "captures/record-transport-20261103-after-02"
+  },
+  "hardwareCapture": "captures/record-transport-20261103-after-02",
+  "visualConfirmation": "User: I see it (revision4 display repeat); background color not separately confirmed"
 }

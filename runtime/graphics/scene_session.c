@@ -190,7 +190,7 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
 #endif
     s->core.cache_reply_len=0;
     if (!active(s)) return -2;
-    uint8_t mode=data[0];
+    uint8_t mode=data[0]&127u;
 #ifdef MM_TEXT_COMMANDS
     if((mode&127u)==15){
         int rc=text_command(s,data,size);

@@ -48,7 +48,8 @@ Detailed byte contracts, native discrepancies and regression requirements are in
 [the display review](../../analysis/command-parity-review/display-scene.md).
 G2 masks the mode high bit. The optional mode3/6 implementation supports it for
 those modes and advertises `rasterLens:"first-left"`: mode3 uses the first box,
-while mode6 ignores the flag. Other modes still admit exact bytes. This is a
+while mode6 ignores the flag. Revision5 also normalizes the high bit for cached images/fonts, shapes and cache
+commands, matching the existing bundle path. This is a
 single-display mapping, not dual-lens support.
 The minimal-owner profile implements a 256 KiB logical flash asset store and
 65,535-byte raw commands through mode127 bounded chunks, with a 30-second lease.
@@ -109,8 +110,8 @@ The required record transport now has a native mode126 GM carrier, pinned
 zlib inflater, persistent dictionaries, CRC/ACK/NACK handling, a 180 KiB heap
 budget and a 30-second context lease. The Swift sender performs capability and
 ACK checks without automatic retries. Original G2 scenarios, sanitizer tests
-and actual linked RV32 display-queue tests pass. Revision4 hardware verification
-is tracked separately in `analysis/record-transport-20261103`; offline results
+and actual linked RV32 display-queue tests pass. Revision4 compressed commands, dictionary reuse, maximum record and cleanup
+passed on hardware; revision5 adds command high-bit parity. Evidence is tracked separately in `analysis/record-transport-20261103`; offline results
 do not establish boot or hardware timing. Mode127 remains the raw carrier.
 See [native record protocol](../../runtime/graphics/RECORD_TRANSPORT.md).
 

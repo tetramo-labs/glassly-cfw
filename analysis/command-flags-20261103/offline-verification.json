@@ -1,0 +1,40 @@
+{
+  "reports": {
+    "native-record-02.json": {
+      "sha256": "789c55b2d35cbd94ab8f02b7fd1397350bec7d313c66039dd030f0f216e22cd2",
+      "passed": true,
+      "groups": 5,
+      "runtimeSHA256": "61d7c855f63101789f0adbcb1b7fc035ee5b1ae366c69d48cf64ff50dfe9248e",
+      "maxObservedStackBytes": 1552
+    },
+    "wake.json": {
+      "sha256": "1d9c466a2173f05253024bafeb3fd5954c3328a3c6fd17d58d1358398234e94a",
+      "passed": true,
+      "groups": 5,
+      "runtimeSHA256": "61d7c855f63101789f0adbcb1b7fc035ee5b1ae366c69d48cf64ff50dfe9248e"
+    },
+    "gates.json": {
+      "sha256": "34481b0fc57bd1537eea592dac627296b41e2131e6d0dd68269b682807e06fa5",
+      "passed": true,
+      "serviceCases": 512,
+      "prestockCases": 14,
+      "runtimeSHA256": "61d7c855f63101789f0adbcb1b7fc035ee5b1ae366c69d48cf64ff50dfe9248e"
+    },
+    "text-host/report.json": {
+      "sha256": "a83f4b2b50c0dfcab77cae0736f7e52e8cba70724cd85c2b0cd6efdd88fdff2e",
+      "passed": true
+    },
+    "diagnostic-host/report.json": {
+      "sha256": "84b4a365af3b2adc018262458aa5c52c87da4c21b9fc3d2c7c03ed389f598362",
+      "passed": true
+    },
+    "image-verification.json": {
+      "sha256": "af121a01f83a1fb98c9d738c3738e965081b4f9520d974c9cb714674dee8b31d",
+      "passed": true,
+      "runtimeSHA256": "61d7c855f63101789f0adbcb1b7fc035ee5b1ae366c69d48cf64ff50dfe9248e"
+    }
+  },
+  "swiftTestsPassed": 136,
+  "swiftNote": "135 unchanged tests passed in full run; corrected new fixture test passed separately",
+  "hardwareTested": false
+}

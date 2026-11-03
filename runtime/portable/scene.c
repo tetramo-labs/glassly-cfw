@@ -232,7 +232,7 @@ int mm_scene_immediate_mode(mm_scene_context *ctx,const mm_raster *target,const 
 }
 int mm_scene_immediate(mm_scene_context *ctx,const mm_raster *target,const uint8_t *src,size_t len,mm_scene_dirty *dirty) {
     if(!src || !len)return -1;
-    return mm_scene_immediate_mode(ctx,target,src,len,src[0],dirty);
+    return mm_scene_immediate_mode(ctx,target,src,len,src[0]&127u,dirty);
 }
 #else
 int mm_scene_immediate(mm_scene_context *ctx,const mm_raster *target,const uint8_t *src,size_t len,mm_scene_dirty *dirty) {
@@ -243,14 +243,14 @@ int mm_scene_immediate(mm_scene_context *ctx,const mm_raster *target,const uint8
     if(ctx->external_ready){
         if(ctx->shadow_invalid)return MM_SCENE_STORAGE_IO;
         ctx->storage_io=0;
-        int rc=src[0]==36?mm_scene_shapes_immediate(ctx,target,src+1,(uint32_t)len-1,dirty):
-            cfw_cache_immediate(ctx,src[0],target->pixels,target->stride,target->width,target->height,src+1,(uint32_t)len-1,dirty);
+        int rc=(src[0]&127u)==36?mm_scene_shapes_immediate(ctx,target,src+1,(uint32_t)len-1,dirty):
+            cfw_cache_immediate(ctx,src[0]&127u,target->pixels,target->stride,target->width,target->height,src+1,(uint32_t)len-1,dirty);
         if(ctx->storage_io){ctx->shadow_invalid=1;return MM_SCENE_STORAGE_IO;}
         return ctx->shadow_invalid?-1:rc;
     }
 #endif
-    if(src[0]==36)return mm_scene_shapes_immediate(ctx,target,src+1,(uint32_t)len-1,dirty);
-    return cfw_cache_immediate(ctx,src[0],target->pixels,target->stride,target->width,target->height,src+1,(uint32_t)len-1,dirty);
+    if((src[0]&127u)==36)return mm_scene_shapes_immediate(ctx,target,src+1,(uint32_t)len-1,dirty);
+    return cfw_cache_immediate(ctx,src[0]&127u,target->pixels,target->stride,target->width,target->height,src+1,(uint32_t)len-1,dirty);
 }
 #endif
 void mm_scene_tick(void *ctx) {scene_tick(ctx);}

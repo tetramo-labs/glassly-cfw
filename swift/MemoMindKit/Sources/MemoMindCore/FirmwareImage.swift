@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "command-flags-001",
+                        sha256: "b461c399c1361f5ac53f226a9d70896e1b2f039c0e70722a287737da3fab7851", byteCount: 2_248_692, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "fe56c3212e5c0597f8483adbf5b8e8f86662ba7162f37d0d858f41e618949c38",
+                        streams: streamPins(.commandFlags5)),
         FirmwareRelease(name: "record-transport-001",
                         sha256: "424c0fe8574340199119cc5751bc6182d17e574adcd72a4a4e2d60f7a63675b8",
                         byteCount: 2_248_652, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
@@ -264,12 +268,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .commandFlags5:
+            metadata = 171; appPacked = 977_590; appRaw = 1_869_344
+            metadataHash = "5f643e689fcf0eb233c1f1468fb089b0b05bc0513d9080f2966b4c7732454dcf"
+            appHash = "301a6eb94583c755fbd94d089620f5f1ef3e33f2278baf27aebbed3181519bd0"
         case .recordTransport4:
             metadata = 171; appPacked = 977_550; appRaw = 1_869_248
             metadataHash = "6b41306edf554583354f9a8027c56b04f8a713a6fcdc212c2aeae4f1409d0413"

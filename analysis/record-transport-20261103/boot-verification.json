@@ -1,0 +1,25 @@
+{
+  "appHeaderSHA256": "83d511382090aadecc31a5af785d6bf283363223617fd4204da7c614f6867cc3",
+  "binaryReplyBytes": 20,
+  "bootHeaderVerified": true,
+  "complete": true,
+  "compressedCommandsAccepted": true,
+  "dictionaryReuseAccepted": true,
+  "flashAssetWritesStarted": false,
+  "freeAfterCleanupHex": "00052f9c",
+  "freeBeforeHex": "00056e80",
+  "maximumDecodedRecordAccepted": 65535,
+  "originalPosition": {
+    "dist": 3,
+    "pos": 2
+  },
+  "physicalOutputConfirmed": false,
+  "positionChangeReadbackVerified": true,
+  "positionRestoreVerified": true,
+  "recordCleanupAccepted": true,
+  "relayEnablePollDisableVerified": true,
+  "release": "record-transport-001",
+  "stage": "after",
+  "topologyAndBadmapVerified": true,
+  "visualLeasePendingExpiry": true
+}

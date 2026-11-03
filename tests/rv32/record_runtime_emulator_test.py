@@ -50,6 +50,27 @@ class RecordMachine(WakeMachine):
 
 
 class Tests(unittest.TestCase):
+    def test_high_bit_cache_and_shape_aliases(self):
+        plain, alias = RecordMachine(), RecordMachine()
+        commands = [S.reset_packet(), S.put_packet(), S.show_packet(),
+                    bytes([40]) + bytes(8), bytes([39]) + bytes(6),
+                    G.point_message(),
+                    bytes([36, 0]), S.reset_packet()]
+        epoch = 0
+        for index, command in enumerate(commands):
+            if command[0] in (37, 38, 39):
+                command = command[:1] + struct.pack("<H", epoch) + command[3:]
+            high = bytes([command[0] | 128]) + command[1:]
+            a = plain.records(record(command), index * 10)
+            b = alias.records(record(high), index * 10)
+            self.assertEqual(a[-1][0], 1, command.hex())
+            self.assertEqual(b[-1][0], 1, high.hex())
+            self.assertEqual(a[:-1], b[:-1])
+            if command[0] == 41:
+                epoch = int.from_bytes(a[0][9:11], "little")
+            self.assertEqual(plain.pixels(), alias.pixels())
+        plain.clear(); alias.clear()
+
     def test_compressed_drawing_dictionary_and_maximum(self):
         m = RecordMachine()
         m.send_scene(S.reset_packet())

@@ -28,16 +28,17 @@ and [ownership/wire contracts](runtime/graphics/MINIMAL_OWNER.md).
 
 The wake/display ownership update is transferred and boot verified. Hardware
 checks confirm frame retention beyond30 seconds,90-second lease expiry and
-cleanup; double-press CLAIM/READY and physical visibility remain pending.
+cleanup. Five double-press CLAIM/READY handshakes passed, and the user confirmed
+the text and redraw behavior.
 Single/long/release button capture and native microphone streaming are verified,
 including the user's listening confirmation. See the
 [wake checkpoint](analysis/wake-display-20261102/wake-flash-checkpoint.json),
-[lease checks](analysis/wake-display-20261102/ownership-verification.json) and
+[lease and wake checks](analysis/wake-background-20261102/ownership-verification.json) and
 [audio confirmation](analysis/wake-display-20261102/microphone-confirmation.json).
 The reported lit background on wake is unintended. A follow-up restores the
 stock shared-screen background initialization and is
 [boot verified](analysis/wake-background-20261102/boot-verification.json);
-physical text/background confirmation remains pending.
+text is visibly confirmed, while explicit background-color confirmation remains pending.
 Mode5 sound/tone commands and volume gating are excluded.
 
 ## Established results

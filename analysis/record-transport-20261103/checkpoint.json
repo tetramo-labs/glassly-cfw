@@ -27,5 +27,10 @@
     "Post-reboot header/capabilities",
     "Compressed commands and cleanup",
     "Physical display confirmation"
-  ]
+  ],
+  "postRebootConnectionAttempt": {
+    "capture": "captures/record-transport-20261103-after-01",
+    "error": "RFCOMM open timed out",
+    "awaitingUserWake": true
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "appHeaderSHA256": "6c4d37b94b7190aa902ed55163f514a373e1fe59a84ce03fd741bc1dd6bec7e0",
+  "bootHeaderVerified": true,
+  "complete": true,
+  "flashAssetWritesStarted": false,
+  "freeBeforeHex": "000568cc",
+  "physicalOutputConfirmed": false,
+  "release": "wake-background-001",
+  "stage": "after",
+  "topologyAndBadmapVerified": true,
+  "capture": "captures/swift-mac-background-boot-20261102-03",
+  "priorAttempts": [
+    "captures/swift-mac-background-boot-20261102-01",
+    "captures/swift-mac-background-boot-20261102-02"
+  ],
+  "connectionRecovery": "Target-only blueutil disconnect, then fresh connection; no firmware reflash.",
+  "userBlankPanelReport": "the panel is blank",
+  "physicalBackgroundConfirmed": false,
+  "physicalTextConfirmed": false
+}

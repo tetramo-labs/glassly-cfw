@@ -8,14 +8,25 @@
   "runtimeBytes": 96128,
   "transferVerified": true,
   "rebootAcknowledged": true,
-  "bootVerified": false,
+  "bootVerified": true,
   "hardwareCommandsVerified": false,
   "physicalOutputConfirmed": false,
   "automaticRetries": 0,
   "flashCapture": "captures/command-flags-20261103-flash-01",
   "pending": [
-    "Post-reboot header/capabilities",
-    "High-bit command hardware checks"
+    "Display ownership busy; high-bit hardware/visual checks pending"
   ],
-  "appBundleDoesNotWaitForHardware": true
+  "appBundleDoesNotWaitForHardware": true,
+  "bootCapture": "captures/command-flags-20261103-after-02",
+  "hardwareControlVerified": [
+    "notification enable/poll/disable",
+    "display position/depth readback and restore"
+  ],
+  "glasslyCommit": "2244f63be8",
+  "glasslyTests": {
+    "macSwift": 104,
+    "ios": 10,
+    "android": 14,
+    "engine": 2
+  }
 }

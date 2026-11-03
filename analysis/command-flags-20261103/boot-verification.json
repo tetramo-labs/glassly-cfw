@@ -1,0 +1,19 @@
+{
+  "appHeaderSHA256": "824bf7c3642d4c4f8418f1e12ce017bad61eeba9bbc2da13cd27288d1b1e974a",
+  "bootHeaderVerified": true,
+  "complete": false,
+  "error": "Ownership request refused or invalid response",
+  "flashAssetWritesStarted": false,
+  "freeBeforeHex": "00056644",
+  "originalPosition": {
+    "dist": 3,
+    "pos": 2
+  },
+  "physicalOutputConfirmed": false,
+  "positionChangeReadbackVerified": true,
+  "positionRestoreVerified": true,
+  "relayEnablePollDisableVerified": true,
+  "release": "command-flags-001",
+  "stage": "after",
+  "topologyAndBadmapVerified": true
+}

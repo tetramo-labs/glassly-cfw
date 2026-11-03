@@ -1,0 +1,9 @@
+{
+  "operation": "identify",
+  "usb_location": "0x100000",
+  "complete": true,
+  "flash_modified": false,
+  "inquiry": "0080020220000000425232332020202055424f4f54312e303020202020202020312e3030",
+  "vendor": "BR23",
+  "product": "UBOOT1.00"
+}

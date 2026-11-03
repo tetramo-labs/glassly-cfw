@@ -1,0 +1,110 @@
+{
+  "reference_repo": {
+    "path": "../glassly-mini-gamepad",
+    "commit": "9d51cdf93e5bc4be71bbc7e05fe8984130838033"
+  },
+  "jl_uboot_tool": {
+    "url": "https://github.com/kagaimiq/jl-uboot-tool.git",
+    "commit": "adb3f18889e88ac512ce0a3c4d8cc3d3cb30696a"
+  },
+  "bd19_loader": {
+    "path": "research/deps/bd19loader.bin",
+    "bytes": 23040,
+    "sha256": "faa1b519a3ff1b082f11ccafac8c73d31150161ac972ef9f1934002bcbb8df4f",
+    "status": "Only usable after SCSI identity confirms BD19 / UBOOT1.00; not yet identified on Ananke."
+  },
+  "reference_files": [
+    {
+      "path": "research/native-usb.m",
+      "sha256": "8e89f912ca4c73dc558849a3f5fda1a5c1a019426a4dcb6a61ade4b534ab0a4a"
+    },
+    {
+      "path": "research/usb_transport.py",
+      "sha256": "bddcc0dc02537b9840a6c708f26e1aee8a1a6e7e0f112c3f917929ec7809640f"
+    },
+    {
+      "path": "research/query-stock.py",
+      "sha256": "342c40308906aba228e45c242a6f65014b48cefef68f408ac7138d109083fbd5"
+    },
+    {
+      "path": "research/stock_protocol.py",
+      "sha256": "ec4b28cf9ccc3d7ba41dc4eac6cdf1d6ef210a16fa0cb13a30f25e9f151c9fdc"
+    }
+  ],
+  "public_downloads": [
+    {
+      "local_ignored_path": "research/iine-firmware-directory.html",
+      "url": "https://u5tqxzj1yb.jiandaoyun.com/dash/645b138d99c8b800089e8fc5",
+      "sha256": "8d65b220a6e048b855df4042bb02dc27d8d2b1c96f30466f0a51a7daef85bf42"
+    }
+  ],
+  "user_supplied_manual": {
+    "source": "User downloaded to ~/Downloads/iine-plus.pdf after the manuals.plus URL was supplied",
+    "local_path": "research/manual-l1254-l1255.pdf",
+    "bytes": 8570849,
+    "sha256": "bf4160920fc1158a50d20485eb70a327402e02ca8f169099778bc743f4040987",
+    "pdf_pages": 1,
+    "printed_panels_per_language": 18,
+    "languages": [
+      "Chinese",
+      "English"
+    ],
+    "models": [
+      "L1254",
+      "L1255"
+    ],
+    "inspection": "All panels visually inspected using macOS PDFKit rendering; image-only PDF, no text layer",
+    "firmware_update_entry_documented": false
+  },
+  "oem_artifacts": [
+    {
+      "path": "research/Ananke_Gen_2_Firmware_PC_Update_Manual.pdf",
+      "bytes": 239047,
+      "sha256": "ca36af1adb5290902b23ff031a440ff00761a6f46d76256760b10bf0a4eedf9f",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/Firmware_Upgrade_Utility_1.4.40.exe",
+      "bytes": 6078288,
+      "sha256": "1d4ad683c7229e954a993491f4c11777021a1d40fe26e742f489e067c1cd11b5",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/IG05_V0900.ufw",
+      "bytes": 613472,
+      "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/IG05_V0901.ufw",
+      "bytes": 613472,
+      "sha256": "32ddddfb2bc436cdba3597d74f6c409cf697656d8c9c1b02bb6946bcebd9d7d9",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    }
+  ],
+  "jl_misctools": {
+    "url": "https://github.com/kagaimiq/jl-misctools.git",
+    "commit": "0a5b12db0ef38f3042acffbe2452730a37fd2405"
+  },
+  "br23_loader_review": {
+    "path": "research/deps/br23loader.bin",
+    "bytes": 11264,
+    "sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+    "address": "0x12000",
+    "chunk_size": 512,
+    "argument": 1,
+    "status": "Enabled after exact live SCSI BR23 / UBOOT1.00 inquiry and 12 offline tests; first hardware backup pending",
+    "source": "jl-uboot-tool data/usb-loaders.yaml and data/chips.yaml at pinned revision"
+  },
+  "selected_cfw_base": {
+    "file": "research/IG05_V0900.ufw",
+    "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+    "variants": [
+      "L1254",
+      "L1255",
+      "L1277"
+    ],
+    "user_confirmation": "Purple/Gray/Cream Yellow group; exact SKU/color not specified",
+    "policy": "Use latest official release for this variant as CFW base; V0900 is the supplied matching release. Preserve factory backup first and verify installed layout independently."
+  }
+}

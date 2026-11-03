@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-11-01",
+  "usb": {
+    "vid": "4353",
+    "pid": "800c",
+    "product": "Xbox 360 Controller",
+    "bcdDevice": "0100",
+    "location_id": "00100000",
+    "vendor_hid_interface": 2,
+    "usage_page": "ff80",
+    "usages": [
+      1,
+      2
+    ]
+  },
+  "vendor": {
+    "framing": "B4 response / B5 request",
+    "protocol_version": 1,
+    "model": "ig05",
+    "firmware_version_hex": "0601",
+    "get_info": {
+      "cmd": "ret_info",
+      "mode_name": "ig05",
+      "version": 1537
+    }
+  },
+  "bootloader_identity": null,
+  "flash_capacity": null,
+  "backup_complete": false
+}

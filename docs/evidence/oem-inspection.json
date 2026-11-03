@@ -1,0 +1,222 @@
+[
+  {
+    "name": "IG05_V0900.ufw",
+    "bytes": 613472,
+    "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+    "decoded_header_hex": "16020a43605c09000700040000020000414336393558000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "entries": [
+      {
+        "type": 0,
+        "index": 0,
+        "name": "flash.bin",
+        "offset": 1024,
+        "size": 356352,
+        "stored_size": 356352,
+        "crc16": "41cc",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "0d8ad3d84c330387ff4c0ef6af30dd3d72fb1ef2a01415c09d071a5745cdd970"
+      },
+      {
+        "type": 2,
+        "index": 1,
+        "name": "info.log",
+        "offset": 357376,
+        "size": 0,
+        "stored_size": 0,
+        "crc16": "0000",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": true,
+        "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "type": 52,
+        "index": 2,
+        "name": "isd_config.ini",
+        "offset": 357376,
+        "size": 746,
+        "stored_size": 768,
+        "crc16": "3df4",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "5753d725886c6b613f79e347a5342971a8d3d4c9bba61f96f21cc6b24919b162"
+      },
+      {
+        "type": 100,
+        "index": 3,
+        "name": "ota.bin",
+        "offset": 358144,
+        "size": 255045,
+        "stored_size": 255072,
+        "crc16": "df2c",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "94ee6e2d7b02a626e78f96e52e89bf9c098b3e64400a9296c3424ff6c08771e9"
+      },
+      {
+        "type": 251,
+        "index": 4,
+        "name": "script.ver",
+        "offset": 613216,
+        "size": 27,
+        "stored_size": 32,
+        "crc16": "1880",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "83b0c9c126bf862e44216ab01892cf454ef28457fc5c53d61545b8b97ca7dc75"
+      },
+      {
+        "type": 161,
+        "index": 5,
+        "name": "blimit.bin",
+        "offset": 613248,
+        "size": 144,
+        "stored_size": 160,
+        "crc16": "268f",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "aba9f459045c8fd030e32ba454dac44ad6700911c7f7bf1a1f77a86f934c6149"
+      },
+      {
+        "type": 255,
+        "index": 6,
+        "name": "tail.bin",
+        "offset": 613408,
+        "size": 64,
+        "stored_size": 64,
+        "crc16": "6583",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "e5b26fb6b3ffafe678f2d6fdbc4a81d6c7003442980cb3bc6068e89c4d8a6a3d"
+      }
+    ],
+    "metadata_crc_note": "Some metadata payloads use encoding not validated by this simple inspection; false raw/decoded CRC fields are not a declaration of package corruption. Flash payload CRCs were validated; no package is approved for installation.",
+    "extracted_files": [
+      {
+        "path": "files/app.bin",
+        "bytes": 338712,
+        "sha256": "3f4a6bea1e7901188e7c8a202cbe4916d141ec624db66218139d9f98c01762eb"
+      },
+      {
+        "path": "files/cfg_tool.bin",
+        "bytes": 916,
+        "sha256": "21334ccee5588a3e72bd871ce0cc3eb2ad3c333f79927842279855fed87f1ec8"
+      },
+      {
+        "path": "top/uboot.boot",
+        "bytes": 8168,
+        "sha256": "b319dbb4e8ad85c39a68e4aea6f078bcdc25bfde21af6fdc3a49e47073fb6d30"
+      }
+    ]
+  },
+  {
+    "name": "IG05_V0901.ufw",
+    "bytes": 613472,
+    "sha256": "32ddddfb2bc436cdba3597d74f6c409cf697656d8c9c1b02bb6946bcebd9d7d9",
+    "decoded_header_hex": "2d665796605c09000700040000020000414336393558000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "entries": [
+      {
+        "type": 0,
+        "index": 0,
+        "name": "flash.bin",
+        "offset": 1024,
+        "size": 356352,
+        "stored_size": 356352,
+        "crc16": "2544",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "b3a4a02f796f4843cbd232a543aecad264ab88d4f41dd9bdf9e4c171eb15b0c3"
+      },
+      {
+        "type": 2,
+        "index": 1,
+        "name": "info.log",
+        "offset": 357376,
+        "size": 0,
+        "stored_size": 0,
+        "crc16": "0000",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": true,
+        "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "type": 52,
+        "index": 2,
+        "name": "isd_config.ini",
+        "offset": 357376,
+        "size": 746,
+        "stored_size": 768,
+        "crc16": "3df4",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "22514f657a910a502fccbfa4f8b70066d984a387ecab31f6e5b9d1f00d7af5a1"
+      },
+      {
+        "type": 100,
+        "index": 3,
+        "name": "ota.bin",
+        "offset": 358144,
+        "size": 255045,
+        "stored_size": 255072,
+        "crc16": "df2c",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "94ee6e2d7b02a626e78f96e52e89bf9c098b3e64400a9296c3424ff6c08771e9"
+      },
+      {
+        "type": 251,
+        "index": 4,
+        "name": "script.ver",
+        "offset": 613216,
+        "size": 27,
+        "stored_size": 32,
+        "crc16": "1880",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "83af6f8d57fd07162a3b701e68447d206a533584e81a21e61ed47cce5edbeb12"
+      },
+      {
+        "type": 161,
+        "index": 5,
+        "name": "blimit.bin",
+        "offset": 613248,
+        "size": 144,
+        "stored_size": 160,
+        "crc16": "f931",
+        "raw_crc_valid": false,
+        "decoded_crc_valid": false,
+        "stored_sha256": "0178df6aff61de589f9aeca34f606e4cd117af11b3df3d9422d6415522536a73"
+      },
+      {
+        "type": 255,
+        "index": 6,
+        "name": "tail.bin",
+        "offset": 613408,
+        "size": 64,
+        "stored_size": 64,
+        "crc16": "df27",
+        "raw_crc_valid": true,
+        "decoded_crc_valid": false,
+        "stored_sha256": "1494cf5795c2e11841dbe5900517d24c2437209b9935b0926c0b611d3cf069b7"
+      }
+    ],
+    "metadata_crc_note": "Some metadata payloads use encoding not validated by this simple inspection; false raw/decoded CRC fields are not a declaration of package corruption. Flash payload CRCs were validated; no package is approved for installation.",
+    "extracted_files": [
+      {
+        "path": "files/app.bin",
+        "bytes": 342552,
+        "sha256": "43ea1a2f4bd6e3e561bf747d99fd4e987d1ba68c1f97a1bf02e62e1cdd05451f"
+      },
+      {
+        "path": "files/cfg_tool.bin",
+        "bytes": 916,
+        "sha256": "21334ccee5588a3e72bd871ce0cc3eb2ad3c333f79927842279855fed87f1ec8"
+      },
+      {
+        "path": "top/uboot.boot",
+        "bytes": 8168,
+        "sha256": "b319dbb4e8ad85c39a68e4aea6f078bcdc25bfde21af6fdc3a49e47073fb6d30"
+      }
+    ]
+  }
+]

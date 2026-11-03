@@ -1,0 +1,26 @@
+[
+  {
+    "path": "research/Ananke_Gen_2_Firmware_PC_Update_Manual.pdf",
+    "bytes": 239047,
+    "sha256": "ca36af1adb5290902b23ff031a440ff00761a6f46d76256760b10bf0a4eedf9f",
+    "source": "User-supplied official Ananke firmware package in ~/Downloads"
+  },
+  {
+    "path": "research/Firmware_Upgrade_Utility_1.4.40.exe",
+    "bytes": 6078288,
+    "sha256": "1d4ad683c7229e954a993491f4c11777021a1d40fe26e742f489e067c1cd11b5",
+    "source": "User-supplied official Ananke firmware package in ~/Downloads"
+  },
+  {
+    "path": "research/IG05_V0900.ufw",
+    "bytes": 613472,
+    "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+    "source": "User-supplied official Ananke firmware package in ~/Downloads"
+  },
+  {
+    "path": "research/IG05_V0901.ufw",
+    "bytes": 613472,
+    "sha256": "32ddddfb2bc436cdba3597d74f6c409cf697656d8c9c1b02bb6946bcebd9d7d9",
+    "source": "User-supplied official Ananke firmware package in ~/Downloads"
+  }
+]

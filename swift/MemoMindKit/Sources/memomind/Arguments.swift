@@ -21,6 +21,7 @@ struct Arguments {
       memomind probe --address MAC --output NEW_DIRECTORY
       memomind buttons --address MAC --seconds 180 --output NEW_DIRECTORY
       memomind microphone --address MAC --seconds 10 --output NEW_DIRECTORY
+      memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
       memomind check --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY
       memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write
 
@@ -35,7 +36,7 @@ struct Arguments {
 
     init(_ arguments: [String]) throws {
         guard let command = arguments.first else { throw CLIError(Self.usage) }
-        guard ["devices", "inspect", "replay", "probe", "buttons", "microphone", "check", "flash", "help", "--help", "-h"].contains(command) else {
+        guard ["devices", "inspect", "replay", "probe", "buttons", "microphone", "ownership", "check", "flash", "help", "--help", "-h"].contains(command) else {
             throw CLIError("Unknown command: \(command)\n\(Self.usage)")
         }
         self.command = command
@@ -61,7 +62,7 @@ struct Arguments {
         }
         let allowed: Set<String> = switch command {
         case "probe": ["--address", "--output"]
-        case "buttons", "microphone": ["--address", "--output", "--seconds"]
+        case "buttons", "microphone", "ownership": ["--address", "--output", "--seconds"]
         case "check", "flash": ["--address", "--output", "--firmware", "--expected-sha256"]
         case "inspect": ["--firmware", "--expected-sha256"]
         case "replay": ["--firmware", "--expected-sha256", "--transcript"]

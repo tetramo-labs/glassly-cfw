@@ -1,5 +1,13 @@
 # Source provenance and license
 
+`wake.c`/`wake.h` adapt the pinned G2 `settings_ext.c` wake/frame leases and
+claim/ready policy into explicit state. Native routing is separate. Durations
+remain90000/400/5000ms; elapsed-time flags avoid the original zero-deadline
+sentinel at tick rollover. Query0 is a Memo extension; wear query7 is not
+advertised. Single-button double-press replaces the G2 double-tap source, and
+the native adapter uses the minimal owner for fallback. The unchanged G2
+framebuffer lease payload fixture is checked by Swift `OwnershipTests`.
+
 The geometry primitive implementation derives from the user's local
 `/Users/fosse/dev/g2flash/patches/shapes.c` and geometric constants/layout in
 `patches/shapes.h`, at commit

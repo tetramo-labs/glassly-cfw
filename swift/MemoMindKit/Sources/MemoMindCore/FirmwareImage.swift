@@ -232,6 +232,11 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "wake-control-002",
+                        sha256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2",
+                        byteCount: 2236085, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        headerSHA256: "e2a9582ab34372725d2293efafe9ac0448256f24ed1bf3498f38578158acf1e1",
+                        streams: streamPins(.wakeControl)),
         FirmwareRelease(name: "minimal-owner-flash-004",
                         sha256: "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
                         byteCount: 2234179, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
@@ -239,7 +244,7 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash }
+    private enum StreamVariant { case stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
@@ -281,6 +286,10 @@ private struct FirmwareRelease {
             metadata = 171; appPacked = 955302; appRaw = 1833472
             metadataHash = "fdeac5450e48ffc548b110450dc4b6117a8702bcf5bcd5bf197fb794c2d746e2"
             appHash = "1cf2a3d6a315d67764f4f43863f2d8ec802a5ef45eb82e1bc20a4b3b4fd833b6"
+        case .wakeControl:
+            metadata = 171; appPacked = 964983; appRaw = 1848112
+            metadataHash = "59085caced14283f4b6cd4c3f553b9211904c883c11120f54ba398743c79892e"
+            appHash = "e985d21d52ce088fd0ec7bb58cf7d9726b6f31243fb718e857f29d7bffb4f9ee"
         case .minimalOwnerFlash:
             metadata = 171; appPacked = 963077; appRaw = 1844800
             metadataHash = "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6"

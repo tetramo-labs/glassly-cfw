@@ -72,6 +72,9 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
             result = try captureMicrophone(session: session, recording: transport("recording"),
                                            address: address, capture: capture,
                                            seconds: Int(args.value("--seconds"))!)
+        } else if args.command == "ownership" {
+            result = try captureOwnership(session: session, capture: capture,
+                                          seconds: Int(args.value("--seconds"))!)
         } else {
             result = try ["device": dictionary(identity), "heartbeatStatus": 0,
                           "operationsSent": ["heartbeat", "device_information"], "flashMutations": 0]
@@ -116,7 +119,7 @@ do {
                        "bluetoothAccessed": false])
     case "replay":
         try printJSON(replay(firmware: loadFirmware(args), path: args.value("--transcript")))
-    case "probe", "buttons", "microphone": try runLive(args, firmware: nil)
+    case "probe", "buttons", "microphone", "ownership": try runLive(args, firmware: nil)
     case "check", "flash": try runLive(args, firmware: loadFirmware(args))
     default: throw CLIError(Arguments.usage)
     }

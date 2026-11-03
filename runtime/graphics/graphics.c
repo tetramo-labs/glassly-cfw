@@ -1,3 +1,6 @@
+#ifdef MM_WAKE_CONTROL
+#include "wake_control.h"
+#endif
 /* MemoMind display-worker adapter. Native APIs are isolated in native.c.
  * No writable globals; separate owned context and palette/pixel allocations.
  * Native allocator OOM/assert behavior is a separate admission requirement; the
@@ -98,6 +101,12 @@ static void deleted(void *event) {
     if (o->descriptor.data) P.free((void *)o->descriptor.data);
     P.free(o);
 }
+#ifdef MM_WAKE_CONTROL
+void glassly_graphics_drop_frame(void *parent) {
+    owner *o=parent?P.find_owner(parent,deleted):0;
+    if(o && o->magic==OWNER_MAGIC)P.image_delete(o->image);
+}
+#endif
 #ifdef MM_MINIMAL_LAUNCHER
 /* Display-task lifecycle only. Never deletes the shared active screen. */
 void glassly_graphics_cleanup(void) {
@@ -111,6 +120,9 @@ void glassly_graphics_cleanup(void) {
 #ifdef MM_DIAGNOSTIC_COMMANDS
     mm_diagnostics_dispose(parent);
     glassly_input_cleanup(parent);
+#ifdef MM_WAKE_CONTROL
+    glassly_wake_cleanup(parent);
+#endif
 #endif
 }
 #endif
@@ -123,8 +135,16 @@ static void scene_present(void *,const mm_raster *);
 static void tick(void *timer) {
     owner *o=P.timer_userdata(timer);
     if (!o || o->magic!=OWNER_MAGIC) return;
+#ifdef MM_WAKE_CONTROL
+    if(o->assembly.data && (uint32_t)(P.now()-o->started)>=MM_GRAPHICS_LEASE_TICKS)
+        mm_large_clear(&o->assembly,P.free);
+#endif
     if (!P.launcher_active() || P.screen()!=o->parent ||
-        (uint32_t)(P.now()-o->started)>=MM_GRAPHICS_LEASE_TICKS) {
+        ((uint32_t)(P.now()-o->started)>=MM_GRAPHICS_LEASE_TICKS
+#ifdef MM_WAKE_CONTROL
+         && !glassly_wake_frame_active(o->parent)
+#endif
+        )) {
         P.image_delete(o->image);
         /* DELETE callback frees both owner and current timer. */
         return;
@@ -182,7 +202,11 @@ static uint32_t scene_now(void *user) {(void)user;return P.now();}
 static int scene_active(void *user) {
     owner *o=user;
     return o->magic==OWNER_MAGIC && P.launcher_active() && P.screen()==o->parent &&
-        (uint32_t)(P.now()-o->started)<MM_GRAPHICS_LEASE_TICKS;
+        ((uint32_t)(P.now()-o->started)<MM_GRAPHICS_LEASE_TICKS
+#ifdef MM_WAKE_CONTROL
+         || glassly_wake_frame_active(o->parent)
+#endif
+        );
 }
 static void scene_present(void *user,const mm_raster *raster) {
     owner *o=user;(void)raster;
@@ -193,6 +217,9 @@ static void scene_present(void *user,const mm_raster *raster) {
     if(o->bundle_active && o->bundle_overflow)return;
 #endif
     P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
+#ifdef MM_WAKE_CONTROL
+    glassly_wake_presented(o->parent);
+#endif
 #ifdef MM_FLASH_SCENE
     glassly_diagnostics_hidden(o->image,0);
 #endif
@@ -311,6 +338,9 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"width\":600,\"height\":350,"
 #ifdef MM_MINIMAL_LAUNCHER
                    "\"version\":\"GLASSLYCFW/1\",\"displayOwner\":\"minimal\","
+#endif
+#ifdef MM_WAKE_CONTROL
+                   "\"ownership\":{\"command\":121,\"leaseTicks\":90000,\"fallbackTicks\":400,\"claimedTicks\":5000},"
 #endif
 #ifdef MM_GRAPHICS_FLASH_READ
                    "\"flashRead\":123,"
@@ -432,6 +462,9 @@ void glassly_graphics_display(void *envelope) {
     const uint8_t *job=e+8, *data=job+MM_GRAPHICS_JOB_HEADER;
 #ifdef MM_GRAPHICS_INPUT
     if (job[0]==2) {glassly_input_display(envelope);return;}
+#ifdef MM_WAKE_CONTROL
+    if (job[0]==3) {glassly_wake_display(envelope);return;}
+#endif
 #endif
     size_t length=(size_t)job[2]|((size_t)job[3]<<8);
 #endif
@@ -458,6 +491,9 @@ void glassly_graphics_display(void *envelope) {
             mm_diagnostics_cleanup(parent,epoch);
 #ifdef MM_GRAPHICS_INPUT
             glassly_input_cleanup(parent);
+#ifdef MM_WAKE_CONTROL
+    glassly_wake_cleanup(parent);
+#endif
 #endif
             if(o)P.image_delete(o->image);
             result=cleared;
@@ -570,6 +606,9 @@ void glassly_graphics_display(void *envelope) {
     const uint8_t *job=e+8, *data=job+MM_GRAPHICS_JOB_HEADER;
 #ifdef MM_GRAPHICS_INPUT
     if (job[0]==2) {glassly_input_display(envelope);return;}
+#ifdef MM_WAKE_CONTROL
+    if (job[0]==3) {glassly_wake_display(envelope);return;}
+#endif
 #endif
     size_t length=(size_t)job[2]|((size_t)job[3]<<8);
 

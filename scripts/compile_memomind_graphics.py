@@ -87,7 +87,7 @@ def check_stack_usage(rows):
             raise ValueError("Nonstatic or oversized function stack frame: "+row)
 
 
-def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, rx_profile=DEFAULT_RX_PROFILE):
+def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, rx_profile=DEFAULT_RX_PROFILE):
     limit = rx_limit(rx_profile)
     if reset_undo_trim and not scene_session:
         raise ValueError("RESET undo trimming requires scene-session")
@@ -115,6 +115,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         raise ValueError("Input observer requires the scene-session profile")
     if gate_fixture and scene_session:
         raise ValueError("Gate fixture and scene session are separate build profiles")
+    if wake_control and not (flash_scene and input_observer):
+        raise ValueError("Wake control requires flash scene and input observer")
     if flash_scene and not (minimal_launcher and flash_canary):
         raise ValueError("Flash scene requires minimal launcher and reserved flash-canary profile")
     if minimal_launcher and not diagnostic_commands:
@@ -129,6 +131,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if flash_scene:
         sources += [ROOT/"runtime/graphics/freestanding.c", ROOT/"runtime/graphics/flash_broker.c", ROOT/"runtime/graphics/large_message.c",
                     ROOT/"runtime/portable/flash_store.c", ROOT/"runtime/portable/scene_store.c", ROOT/"runtime/portable/scene_flash_store.c"]
+    if wake_control:
+        sources += [ROOT/"runtime/graphics/wake_control.c", ROOT/"runtime/portable/wake.c"]
     if minimal_launcher:
         sources += [ROOT/"runtime/graphics/minimal_launcher.c", ROOT/"runtime/graphics/minimal_launcher_entry.S"]
     if diagnostic_commands:
@@ -162,6 +166,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         flags += ["-DMM_GRAPHICS_SCENE=1", "-DMM_NATIVE_TEXT_FIRMWARE=1"]
     if flash_scene:
         flags += ["-DMM_FLASH_SCENE=1", "-DMM_SCENE_EXTERNAL_STORE=1"]
+    if wake_control:
+        flags += ["-DMM_WAKE_CONTROL=1"]
     if minimal_launcher:
         flags += ["-DMM_MINIMAL_LAUNCHER=1"]
     if reset_undo_trim:
@@ -257,7 +263,7 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "diagnostic_commands": diagnostic_commands,
               "reset_undo_trim": reset_undo_trim,
               "minimal_launcher": minimal_launcher,
-              "flash_scene": flash_scene,
+              "flash_scene": flash_scene, "wake_control": wake_control,
               "scene_extra_flags": ["-Os"] if reset_undo_trim else [],
               "diagnostics_extra_flags": ["-Oz"] if diagnostic_commands else [],
               "graphics_extra_flags": ["-Os"] if diagnostic_commands else [],
@@ -301,11 +307,12 @@ def main():
     parser.add_argument("--reset-undo-trim", action="store_true", help="Native standalone RESET scratch release and mandatory mutation rollback; requires scene-session")
     parser.add_argument("--minimal-launcher", action="store_true", help="Cold-boot dashboard lifecycle replacement; requires separately constructed callback and external-entry gates")
     parser.add_argument("--flash-scene", action="store_true", help="Flash COW assets via native worker and bounded large-message assembly; requires minimal launcher")
+    parser.add_argument("--wake-control", action="store_true", help="Independent wake/frame leases and single-button events; requires flash scene")
     add_rx_argument(parser)
     args = parser.parse_args()
     try:
         print(json.dumps(compile_graphics(args.output, gate_fixture=args.gate_fixture,
-                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, rx_profile=args.rx_profile), indent=2))
+                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, rx_profile=args.rx_profile), indent=2))
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         if isinstance(exc, subprocess.CalledProcessError):
             parser.exit(2, exc.stderr.decode()+str(exc)+"\n")

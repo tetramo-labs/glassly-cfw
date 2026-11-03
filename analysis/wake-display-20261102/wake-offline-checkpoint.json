@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "pins": {
+    "release": "wake-control-002",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2",
+    "image_bytes": 2236085,
+    "header150_sha256": "e2a9582ab34372725d2293efafe9ac0448256f24ed1bf3498f38578158acf1e1",
+    "app_header256_sha256": "a4fa75d1038957f3925539dcbf87c8aee069fa25110630477a3d9837d3b6f8d1",
+    "metadata_bytes": 171,
+    "metadata_sha256": "59085caced14283f4b6cd4c3f553b9211904c883c11120f54ba398743c79892e",
+    "app_packed_bytes": 964983,
+    "app_raw_bytes": 1848112,
+    "app_sha256": "e985d21d52ce088fd0ec7bb58cf7d9726b6f31243fb718e857f29d7bffb4f9ee",
+    "runtime_sha256": "18e0e3a4e371fea5f967b70deb4bb94560486a41faa02de5933c16c5cc00ea43",
+    "runtime_bytes": 74896
+  },
+  "combinedChecks": 22,
+  "focusedChecks": {
+    "wake-runtime": {
+      "passed": true,
+      "groups": 5,
+      "hardwareTested": false
+    },
+    "wake-gates": {
+      "passed": true,
+      "cases": 7955,
+      "hardwareTested": false
+    },
+    "wake-native": {
+      "passed": true,
+      "cases": 12,
+      "hardwareTested": false
+    },
+    "retained-commands": {
+      "passed": true,
+      "groups": 2,
+      "hardware_tested": false
+    },
+    "native-callers": {
+      "passed": true,
+      "hardware_tested": false
+    },
+    "asset-display": {
+      "passed": true,
+      "pixels_checked": 4096,
+      "hardware_tested": false
+    },
+    "queue-abi": {
+      "passed": true,
+      "hardware_tested": false
+    },
+    "rv32": {
+      "passed": true,
+      "groups": 5,
+      "hardware_tested": false
+    }
+  },
+  "swiftFullTests": 124,
+  "swiftFinalCatalogAndOwnershipTests": 30,
+  "defaultRuntimeUnchanged": true,
+  "sourceDrift": [],
+  "hardwareFlashed": false,
+  "cliSHA256": "3f4b49543f11aaae8f0e3c45466aa8e9fe8f6c77eba9b1b86871707417dc9442",
+  "bootVerifierSHA256": "282005de0f817736f24ebfc338b4dc44a07fdef8ed921a414150589b660df71f"
+}

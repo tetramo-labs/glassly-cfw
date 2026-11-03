@@ -25,8 +25,12 @@ service_entry:
     li t0, 0x7b
     beq a0, t0, .Lflash_read
 #endif
+#ifdef MM_WAKE_CONTROL
+    j wake_service_gate
+#else
     li t0, 0x042e4680
     jr t0
+#endif
 .Lprobe:
     j glassly_graphics_probe
 .Lcommand:
@@ -173,3 +177,17 @@ display_gate:
     j .Lstock_display
 #endif
 .size display_gate, .-display_gate
+
+#ifdef MM_WAKE_CONTROL
+.section .text.wake_service_gate,"ax",@progbits
+.align 1
+.type wake_service_gate, @function
+wake_service_gate:
+    li t0, 0x79
+    beq a0, t0, .Lwake_command
+    li t0, 0x042e4680
+    jr t0
+.Lwake_command:
+    j glassly_wake_command
+.size wake_service_gate, .-wake_service_gate
+#endif

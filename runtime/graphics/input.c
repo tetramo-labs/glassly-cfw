@@ -1,3 +1,6 @@
+#ifdef MM_WAKE_CONTROL
+#include "wake_control.h"
+#endif
 /* Opt-in cooked input, serialized exclusively by the stock display worker.
  * A hidden source-less image child tags ownership without allocating a canvas.
  * Polling retains records until a later ACK; there are no unsolicited sends.
@@ -83,6 +86,9 @@ void glassly_input_observe(const void *envelope) {
     if (cls==2 && ((id>=0x1f7b && id<=0x1f7f) || (id>=0x1fb0 && id<=0x1fb9))) mask=1;
     else if (cls==3 && id>=1 && id<=8) mask=2;
     else return;
+#ifdef MM_WAKE_CONTROL
+    if(cls==2)glassly_wake_observe((uint16_t)id);
+#endif
     input_owner *o=input_find(IP.screen());
     if (!o || !(o->mask&mask)) return;
     uint32_t now=IP.now();

@@ -133,3 +133,14 @@ void glassly_graphics_detach(void *image) {
     FN(0x042bd7fau,source_fn)(image,0);
 }
 #endif
+
+#ifdef MM_WAKE_CONTROL
+#include "wake_control.h"
+void glassly_wake_native_on(void) { FN(0x042a88a8u,void (*)(void))(); }
+int glassly_wake_native_on_state(void) { return FN(0x0425f99eu,int (*)(void))()!=0; }
+int glassly_wake_native_blocked(void) { return FN(0x0425f9f8u,int (*)(void))()!=0; }
+void glassly_wake_send(uint8_t event,void *response) {
+    typedef uint32_t (*send_fn)(uint8_t,uint8_t,uint8_t,void *,uint32_t);
+    (void)FN(0x042e866eu,send_fn)(event,15,0x79,response,1);
+}
+#endif

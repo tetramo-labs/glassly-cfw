@@ -85,6 +85,34 @@ default remains8192 so the retained tests and old admitted profiles remain exact
 
 ## Validation
 
+The optional `--wake-control` profile adds GM service15/command`0x79`. Its
+BYTES payload is `FC,1,op,nonce:LE16`: query0, wake acquire1/release2,
+claim3/ready4, frame acquire5/release6. Wake and frame leases each last90 seconds;
+frame renewal preserves the scene, while fresh acquisition, release and expiry
+discard it. Incomplete message assembly still expires after30 seconds without
+graphics traffic. Mode11 and launcher destruction release both owners.
+
+Cooked double-press requests a wake with a400ms fallback. CLAIM extends it to5s;
+matching READY completes it. A repeated double-press or timeout clears the
+custom frame and returns to the blank minimal owner. Single press, long press
+and release emit events2/3/4 while the wake lease is active. Native power-button
+routing remains intact. The existing passive observer remains available.
+
+Replies use JSON `glassly:"ownership",abi:1,result:"ok",stateHex`. The nine
+snapshot bytes are wake lease, frame lease, pending, nonceLE16, screen on,
+native power block, frame presented since acquisition, and event. Boolean
+fields are0/1. Unsolicited messages have GM event0, result`event`, and event1–4;
+event1 carries the pending nonce. Ordinary replies have event byte0. Query and
+notifications do not renew leases. The frame-presented bit records presentation
+through the raster path, not physical visibility.
+
+Frame acquisition and a pending button wake call the reviewed native SDK wake
+path at`042a88a8`; screen-state and power-block getters are`0425f99e` and
+`0425f9f8`. They retain native guards and driver scheduling. The adapter does
+not modify native power globals or promise to override a hardware power block.
+All owner operations run on the display task using the existing queue and
+hidden-child lifetime conventions.
+
 `runtime/graphics/tests/run_minimal_owner_flash_tests.py` rebuilds the runtime and
 candidate, runs sanitizer tests for the carrier and threaded broker, and executes
 actual RV32 scene/COW/lifecycle code plus patched stock manager/calibration
@@ -97,3 +125,5 @@ The separate retained-command suite checks raster/copy/text/bundle/animation and
 diagnostic teardown on the same runtime. The original portable fixture and
 transaction-failure suites remain required. Full applicable G2 parity is not
 claimed by this profile.
+Pass `--wake-control` to include the ownership state tests, actual RV32 lifecycle
+and all retained gate cases, native wake ABI checks, and retained command tests.

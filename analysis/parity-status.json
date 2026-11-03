@@ -1,8 +1,8 @@
 {
   "goal": "full cfw parity with ~/dev/g2flash",
-  "updated_utc": "2026-11-02T23:20:26.162561+00:00",
+  "updated_utc": "2026-11-03T07:33:25.452091+00:00",
   "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
-  "current_device_image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+  "current_device_image_sha256": "771eb8242b3eea9b61d313cd061e3d007edee9a6a04614eaaeb55793ad450f66",
   "verified": [
     "Stock OTA capture and byte-accurate independent sender",
     "Visible same-length text patch confirmed by user",
@@ -44,15 +44,14 @@
     "Mode15 boot verified and visually confirmed: 255-byte text, highbit and bundle dispatch, malformed rejection and acknowledged clear. Native font differences remain explicit."
   ],
   "in_progress": [
-    "Validate physical input events and bind native notification/transport/policy interfaces",
-    "Investigate memory and flash storage for full message/asset capacities; boot allocator selector0 already spans registered pools",
-    "Complete remaining drawing modes, performance and broader native font coverage"
+    "Verify native iOS notification delivery/actions with Glassly",
+    "Complete remaining compressed transport, performance and broader native font coverage"
   ],
   "pending": [
-    "Remaining G2 drawing modes, fullmessage/asset capacity parity and performanceverification",
-    "Broader nativeglyph/fallback coverage and textfailure propagation",
-    "Single-button input, compass/raw IMU/ALS, notification and other in-scope G2 features",
-    "End-to-end hardware regression suite and remaining app/pairing capture coverage"
+    "Remaining G2 drawing/message/asset semantics and performance verification",
+    "Broader native glyph/fallback coverage and text failure propagation",
+    "Compass/raw IMU/ALS and notification end-to-end hardware coverage",
+    "Full hardware regression suite and remaining app/pairing capture coverage"
   ],
   "not_established": [
     "ROM/general recovery and all boot/repair paths; captured bootloader is under analysis",
@@ -88,8 +87,8 @@
   },
   "graphics_hardware_evidence": "analysis/graphics-hardware-verification.json",
   "capture_caveat": "Diagnostic OTA independently reconstructs byte-for-byte before rotation. Later rotation tail5479bytes recovered by exact archived-last prefix match; combined and final segments inspected. Historical1us timestamp reversals remain; general app/pairing losslessness is unproven.",
-  "current_device_runtime_sha256": "fa13f976561eab11ab1c478b38e9d24e3ace10393bf720420321065cc364456f",
-  "current_device_build": "runtime/build/minimal-owner-flash-002",
+  "current_device_runtime_sha256": "62d3b5243b39c55635009fa80551c471a0467f89b6939b18fd21bd54d0ebf561",
+  "current_device_build": "analysis/ota-pacing-20261103/build-03",
   "scene_hardware_evidence": "analysis/scene-hardware-verification.json",
   "input_native_evidence": "analysis/ghidra/input-adapter/report.md",
   "input_candidate": {
@@ -309,7 +308,7 @@
     "independent_readback_verified": true,
     "superseded_by": "raster-commands-001 (retains fixed canary feature)"
   },
-  "current_priority": "Wake/display ownership, single-button events, then microphone control/streaming",
+  "current_priority": "iOS ANCS notification delivery/actions, display settings, and native regression",
   "excluded_features": [
     "Bluetooth keyboard/HOGP accessory support",
     "Ring battery",
@@ -552,8 +551,8 @@
     "measured_ram_saving_note": "Observed delta recorded separately; exact gate-only heap saving not isolated from reboot/cache effects.",
     "superseded_by": "reset-undo-trim-001; dashboard gates retained"
   },
-  "current_device_release": "minimal-owner-flash-004",
-  "current_device_ota": "captures/firmware/minimal-owner-flash-004/firmware.bin",
+  "current_device_release": "notifications-settings-002",
+  "current_device_ota": "captures/firmware/notifications-settings-002/firmware.bin",
   "reset_undo_trim_candidate": {
     "state": "Boot verified; matched RAM RESET/PUT sequence and cleanup verified",
     "release": "reset-undo-trim-001",
@@ -749,9 +748,11 @@
     "visual_confirmation": "analysis/minimal-owner-display-repeat-20261102/visual-confirmation.json"
   },
   "next_priority": [
-    "Wake/display ownership",
-    "Single-button events",
-    "Microphone control and streaming"
+    "iOS ANCS delivery and actions",
+    "Physical display position/depth checks",
+    "Remaining transport/font/performance parity"
   ],
-  "current_device_verification": "Boot, full capacity, flash-backed rendering and physical display confirmed"
+  "current_device_verification": "Exact full OTA, boot header and revision verified; ANCS relay control and display position/depth readback/restoration passed. iOS notification delivery/actions and physical settings still pending.",
+  "current_device_version": "GLASSLYCFW/3",
+  "notification_settings_hardware_evidence": "analysis/ota-pacing-20261103/boot-verification.json"
 }

@@ -2,8 +2,8 @@
   "candidate": "notifications-settings-002",
   "version": "GLASSLYCFW/3",
   "flashed": true,
-  "bootVerified": false,
-  "lastBootVerifiedRelease": "wake-background-001",
+  "bootVerified": true,
+  "lastBootVerifiedRelease": "notifications-settings-002",
   "image": {
     "passed": true,
     "version": "GLASSLYCFW/3",
@@ -119,10 +119,9 @@
     "retries": 0
   },
   "pending": [
-    "Post-reboot header and revision",
-    "Hardware relay and position/depth readback",
     "iOS notification delivery and actions",
-    "App bundle update after hardware validation"
+    "App bundle update",
+    "Physical display/background confirmation"
   ],
   "transferComplete": true,
   "rebootAcknowledged": true,
@@ -142,5 +141,8 @@
       "physicalOutputConfirmed": false,
       "stage": "after"
     }
-  }
+  },
+  "bootVerification": "analysis/ota-pacing-20261103/boot-verification.json",
+  "hardwareRelayEnablePollDisable": true,
+  "hardwareDisplayPositionDepthReadbackAndRestore": true
 }

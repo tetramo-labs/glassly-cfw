@@ -41,6 +41,12 @@ stock shared-screen background initialization and is
 text is visibly confirmed, while explicit background-color confirmation remains pending.
 Mode5 sound/tone commands and volume gating are excluded.
 
+The current `GLASSLYCFW/3` image adds the native ANCS relay and display position/depth
+settings. Its entire OTA and post-reboot app header are verified; hardware relay
+enable/poll/disable and settings change/readback/restoration passed. Actual iOS
+notification delivery/actions and physical position/depth confirmation remain
+pending. See the [revision 3 checkpoint](analysis/ota-pacing-20261103/checkpoint.json).
+
 ## Established results
 
 - The observed updater uses **Bluetooth Classic RFCOMM**, control UUID

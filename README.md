@@ -16,7 +16,7 @@ Bundled reference names are normalized to Glassly with original hashes retained.
 Revision5 was boot verified before the revision6 update. It completes high-bit
 dispatch for cached graphics, shapes and cache operations.
 
-Revision6 is flashed, boot verified, and bundled in Glassly. It releases the
+Revision6 is flashed and boot verified. It releases the
 6,144-byte record reply scratch buffer between commands and makes empty shape
 commands stop animation while preserving pixels. The full 2,248,759-byte transfer
 was independently verified with no retries. Compressed records up to 65,535 bytes,
@@ -25,6 +25,13 @@ position/depth readback passed after reboot. Physical display confirmation and a
 matched record-session RAM measurement remain pending.
 See the [revision5 checkpoint](analysis/command-flags-20261103/checkpoint.json)
 and [revision6 checkpoint](analysis/record-memory-20261103/checkpoint.json).
+
+Revision7 adds leased native Opus microphone control, verified shutdown status,
+disconnect/expiry gating and whole-session cleanup. The Swift tool and Glassly
+iOS/Android use the new control path; display clear preserves microphone capture.
+The candidate is bundled for Glassly, but has not yet been flashed.
+See the [microphone contract](runtime/graphics/MICROPHONE.md) and
+[revision7 checkpoint](analysis/microphone-owner-20261103/checkpoint.json).
 
 ## Compressed record transport
 
@@ -128,13 +135,13 @@ and maps original assertions to current MemoMind coverage. All46 unique C host
 scenarios now have portable core coverage, with746 original assertion sites
 preserved across all seven host suites. This includes scene/cache/assets,
 notification relay, keyboard, record transport and upstream protocol policies.
-The latest clean regression passes138 required offline stages, including235
-Python tests and137 Swift tests, with no source drift or missing mapped stages.
-See the [regression summary](analysis/record-memory-20261103/regression-verification.json).
+The latest clean regression passes141 required offline stages, including235
+Python tests and141 Swift tests, with no source drift or missing mapped stages.
+See the [regression summary](analysis/microphone-owner-20261103/regression-verification.json).
 Unchanged G2 reference checks and native-layout mocks remain separately labeled;
 18 required suite/integration entries remain incomplete. Bluetooth keyboard/HOGP,
 ring battery, gestures, mode5 sound/tone commands and volume gating are out of
-scope. Remaining work includes native sensor and microphone ownership, BLE/wear
+scope. Remaining work includes native sensors, broader microphone profiles and hardware ownership acceptance, BLE/wear
 policies, physical notification acceptance, performance, broader font coverage
 and complete app/pairing capture.
 

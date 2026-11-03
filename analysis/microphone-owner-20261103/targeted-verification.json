@@ -1,0 +1,85 @@
+{
+  "host-04/report.json": {
+    "passed": true,
+    "sourceSHA256": {
+      "runtime/graphics/tests/test_microphone.c": "ce60875df7cd487b755832630b12630a159ce3590bbae813d7d567cc4ef519f8",
+      "runtime/graphics/microphone_native.c": "624180fa52024f19ec5166610922e5e805ab1f9183df6649b504cdcceba92473",
+      "runtime/graphics/microphone_native.h": "1e6edffe00ac95b2c35b683a284905febb9089daf44eeff3a71e74295142c999"
+    },
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "hardwareTested": false
+  },
+  "rv32-05.json": {
+    "passed": true,
+    "groups": 5,
+    "veneerCases": 13,
+    "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+    "nativeAudioAPIsMocked": true,
+    "hardwareTested": false
+  },
+  "native-abi-01.json": {
+    "passed": true,
+    "cases": 13,
+    "stockBodySHA256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "actualCodeRanges": [
+      [
+        69247766,
+        69248970
+      ],
+      [
+        69246988,
+        69247168
+      ],
+      [
+        69247538,
+        69247766
+      ],
+      [
+        69245336,
+        69245440
+      ],
+      [
+        69244782,
+        69244814
+      ],
+      [
+        69246440,
+        69246464
+      ]
+    ],
+    "hardwareTested": false
+  },
+  "gates-03.json": {
+    "passed": true,
+    "serviceCases": 512,
+    "prestockCases": 14,
+    "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+    "hardwareTested": false
+  },
+  "records-03.json": {
+    "passed": true,
+    "groups": 6,
+    "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+    "hardwareTested": false
+  },
+  "image-verification-03.json": {
+    "passed": true,
+    "version": "GLASSLYCFW/7",
+    "imageSHA256": "e43e0f1b2745774104f84d6d406092e49d97276d37eb94831a8c0c346aaa54cb",
+    "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+    "imageBytes": 2248764,
+    "runtimeBytes": 98304,
+    "unchangedComponents": [
+      1,
+      2,
+      4,
+      5,
+      6
+    ],
+    "flashed": false,
+    "bootVerified": false
+  }
+}

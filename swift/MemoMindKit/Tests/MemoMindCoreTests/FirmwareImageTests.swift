@@ -45,6 +45,22 @@ final class FirmwareImageTests: XCTestCase {
         XCTAssertThrowsError(try EligibleFirmware.load(data: bytes, expectedSHA256: FirmwareIntegrity.sha256(bytes)))
     }
 
+    func testMicrophoneRevision7ExactFixtureAndMutationRejection() throws {
+        let bytes = try fixture("captures/firmware/microphone-owner-001/firmware.bin")
+        let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "e43e0f1b2745774104f84d6d406092e49d97276d37eb94831a8c0c346aaa54cb")
+        XCTAssertEqual(image.releaseName, "microphone-owner-001"); XCTAssertEqual(bytes.count, 2_248_764)
+        let parsed = try FirmwareContainer.inspect(Array(bytes))
+        XCTAssertEqual(parsed.headerSHA256, "ecc31323c1200c9c5081563b8b8d0d10d1322eef3b6767a58840adc1481e87e7")
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_871_520)
+        let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
+        var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "e43e0f1b2745774104f84d6d406092e49d97276d37eb94831a8c0c346aaa54cb"))
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
+    }
+
     func testRecordMemoryRevision6ExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/record-memory-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "5a6f8984773318a651f2703838672e9220615051fa36709ea591ed47e3b2e019")

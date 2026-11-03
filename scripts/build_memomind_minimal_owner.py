@@ -66,6 +66,25 @@ def construct(source,blob,build):
         after=struct.pack('<II',((hi&0xfffff)<<12)|(1<<7)|0x17,((lo&4095)<<20)|(1<<15)|(1<<7)|0x67)
         body[off:off+8]=after
         edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose='ancs-prestock'))
+    if build.get('microphone_control'):
+        require(revision>=7 and build.get('record_transport') and build.get('wake_control'),'Invalid microphone profile')
+        target=build['symbols']['glassly_microphone_task_entry']
+        require(ENTRY<=target<ENTRY+len(blob) and target%2==0,'Microphone callback outside runtime')
+        hi=(target+0x800)>>12;lo=target-(hi<<12)
+        callback=((0x0420980c,'b7a52004',struct.pack('<I',(hi<<12)|(11<<7)|0x37)),
+                  (0x04209814,'93856531',struct.pack('<I',((lo&4095)<<20)|(11<<15)|(11<<7)|0x13)))
+        for address,before,after in callback:
+            off=address-BODY_BASE
+            require(body[off:off+4]==bytes.fromhex(before),'Microphone registration witness differs')
+            body[off:off+4]=after
+            edits.append(dict(address=address,before=before,after=after.hex(),purpose='microphone-task-registration'))
+        hooks=((0x0431ca9e,'1d7186cea2cca6ca','spp'),(0x0431b88c,'797106d622d426d2','iap2'),
+               (0x04245cf4,'011126cab7440102','link'))
+        for address,before,name in hooks:
+            off=address-BODY_BASE;target=build['symbols']['glassly_microphone_'+name+'_entry']
+            require(body[off:off+8]==bytes.fromhex(before),'Microphone hook witness differs')
+            after=jump(target);body[off:off+8]=after
+            edits.append(dict(address=address,before=before,after=after.hex(),purpose='microphone-'+name))
     allowed={i for row in gates+edits for i in range(row['address']-BODY_BASE,row['address']-BODY_BASE+len(bytes.fromhex(row['after'])))}
     changed=[i for i,(a,b) in enumerate(zip(original,body)) if a!=b]
     require(set(changed)<=allowed and len(body)==len(original),'Change outside fixed lifecycle gates')

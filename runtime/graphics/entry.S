@@ -183,6 +183,10 @@ display_gate:
 .align 1
 .type wake_service_gate, @function
 wake_service_gate:
+#ifdef MM_MICROPHONE_CONTROL
+    li t0, 0x77
+    beq a0,t0,glassly_microphone_command
+#endif
     li t0, 0x79
     beq a0, t0, .Lwake_command
 #ifdef MM_NOTIFICATION_RELAY

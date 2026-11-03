@@ -15,6 +15,9 @@
  * NULL paths tested here do not establish that the firmware can safely exhaust.
  */
 #include "graphics.h"
+#ifdef MM_MICROPHONE_CONTROL
+#include "microphone_native.h"
+#endif
 #ifdef MM_DIAGNOSTIC_COMMANDS
 #include "diagnostics.h"
 #endif
@@ -131,6 +134,9 @@ void glassly_graphics_drop_frame(void *parent) {
 #ifdef MM_MINIMAL_LAUNCHER
 /* Display-task lifecycle only. Never deletes the shared active screen. */
 void glassly_graphics_cleanup(void) {
+#ifdef MM_MICROPHONE_CONTROL
+    glassly_microphone_cleanup();
+#endif
 #ifdef MM_NOTIFICATION_RELAY
     glassly_notification_cleanup();
 #endif
@@ -372,6 +378,9 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"displaySettings\":{\"position\":10,\"depth\":11,\"min\":0,\"max\":8},"
                    "\"notifications\":{\"command\":120,\"transport\":\"poll\",\"leaseTicks\":90000},"
 #endif
+#ifdef MM_MICROPHONE_CONTROL
+                   "\"microphone\":{\"command\":119,\"version\":1,\"codec\":\"opus\",\"sampleRate\":16000,\"channels\":1,\"bitrate\":16000,\"leaseTicks\":90000},"
+#endif
 #ifdef MM_WAKE_CONTROL
                    "\"ownership\":{\"command\":121,\"leaseTicks\":90000,\"fallbackTicks\":400,\"claimedTicks\":5000},"
 #endif
@@ -529,6 +538,9 @@ void glassly_graphics_display(void *envelope) {
             scene_response=mm_diagnostics_control(parent,length>=2?data[1]:255u);
             result=scene_response?ok:no_memory;
         }else if((data[0]&127u)==11){
+#ifdef MM_MICROPHONE_CONTROL
+            glassly_microphone_cleanup();
+#endif
 #ifdef MM_NOTIFICATION_RELAY
             glassly_notification_cleanup();
 #endif

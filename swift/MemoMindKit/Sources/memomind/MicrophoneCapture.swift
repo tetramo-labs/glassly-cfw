@@ -6,13 +6,14 @@ func captureMicrophone(session: GMSession, recording: MacRFCOMMTransport,
                        address: String, capture: Capture, seconds: Int) throws -> [String: Any]
 {
     let parser = RecordingStream()
+    var event: UInt8 = 0x70
     var startSent = false
     var stopSubmitted = false
     defer {
         if startSent, !stopSubmitted {
             do {
-                try recording.write(Data([0x52, 0, 0]))
-                try capture.record(["event": "microphone-error-stop-submitted", "acknowledged": false])
+                _ = try session.microphone(.stop, event: &event)
+                try capture.record(["event": "microphone-error-stop-submitted", "acknowledged": true])
             } catch { fputs("Microphone cleanup failed: \(error)\n", stderr) }
         }
         recording.close()
@@ -26,20 +27,9 @@ func captureMicrophone(session: GMSession, recording: MacRFCOMMTransport,
     try recording.connect(address: address, service: .recording)
     try capture.record(["event": "recording-connected", "service": MemoMindBluetoothService.recording.rawValue,
                         "channel": recording.resolvedChannelID as Any? ?? NSNull()])
-    try recording.write(Data([0x52, 0x12, 0]))
-    var negotiated = false
-    do {
-        for event in try parser.feed(recording.read(timeout: 0.8)) {
-            guard case .format(.legacy) = event else { throw CLIError("Recording already active or unexpected format") }
-            negotiated = true
-        }
-    } catch RFCOMMError.timeout("read") {
-        guard parser.pendingBytes == 0 else { throw CLIError("Incomplete recording negotiation") }
-    }
-    guard parser.pendingBytes == 0 else { throw CLIError("Incomplete recording negotiation") }
-    try capture.record(["event": "recording-format", "format": "legacy", "acknowledged": negotiated])
     startSent = true
-    try recording.write(Data([0x52, 1, 0]))
+    _ = try session.microphone(.start, event: &event)
+    try capture.record(["event": "microphone-lease-started", "codec": "opus", "sampleRate": 16000, "bitrate": 16000])
     fputs("MICROPHONE CAPTURE STARTED: \(seconds) seconds\n", stderr)
     let began = ProcessInfo.processInfo.systemUptime
     var started = false
@@ -73,23 +63,28 @@ func captureMicrophone(session: GMSession, recording: MacRFCOMMTransport,
             }
         }
     }
+    var renewal = began
     let deadline = began + Double(seconds)
     while ProcessInfo.processInfo.systemUptime < deadline {
+        if ProcessInfo.processInfo.systemUptime - renewal >= 30 {
+            _ = try session.microphone(.renew, event: &event)
+            renewal = ProcessInfo.processInfo.systemUptime
+        }
         try receive(max(0.001, min(0.5, deadline - ProcessInfo.processInfo.systemUptime)), tail: false)
         if !started, ProcessInfo.processInfo.systemUptime - began >= 5 {
             throw CLIError("Microphone start notification timed out")
         }
     }
-    try recording.write(Data([0x52, 0, 0]))
+    _ = try session.microphone(.stop, event: &event)
     stopSubmitted = true
-    try capture.record(["event": "microphone-stop-submitted", "acknowledged": false])
+    try capture.record(["event": "microphone-stop-submitted", "acknowledged": true])
     let drainDeadline = ProcessInfo.processInfo.systemUptime + 1
     while ProcessInfo.processInfo.systemUptime < drainDeadline {
         try receive(max(0.001, min(0.25, drainDeadline - ProcessInfo.processInfo.systemUptime)), tail: true)
     }
     guard started, frames > 0 else { throw CLIError("No confirmed microphone stream") }
     return ["complete": true, "startNotificationReceived": started, "framesSaved": frames,
-            "formatNegotiated": negotiated, "recordBytes": 49, "opusBytesPerFrame": 40,
-            "stopSubmitted": stopSubmitted, "stopAcknowledged": false, "stopTailFrames": tailFrames,
+            "formatConfiguredByFirmware": true, "recordBytes": 49, "opusBytesPerFrame": 40,
+            "stopSubmitted": stopSubmitted, "stopAcknowledged": true, "stopTailFrames": tailFrames,
             "trailingBytes": parser.pendingBytes, "audioDecoded": false, "flashMutations": 0]
 }

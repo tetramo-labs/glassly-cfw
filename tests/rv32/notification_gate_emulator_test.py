@@ -8,9 +8,13 @@ class NotificationGate(W.WakeGate):
     def __init__(self,**kw):
         super().__init__(**kw)
         if self.command==0x78:self.expected_target=self.symbols['glassly_notification_command']
+        if self.command==0x77 and 'glassly_microphone_command' in self.symbols:self.expected_target=self.symbols['glassly_microphone_command']
     def instruction(self,uc,address,size,userdata):
         if not self.csr_fixture_active and address==self.symbols['glassly_notification_command']:
             assert self.command==0x78 and not self.display
+            self.assert_boundary_registers();self.boundary_seen=True;uc.emu_stop();return
+        if not self.csr_fixture_active and address==self.symbols.get('glassly_microphone_command'):
+            assert self.command==0x77 and not self.display
             self.assert_boundary_registers();self.boundary_seen=True;uc.emu_stop();return
         super().instruction(uc,address,size,userdata)
 def prestock(build,alignment,event):

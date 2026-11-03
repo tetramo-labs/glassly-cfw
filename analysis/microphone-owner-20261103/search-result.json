@@ -1,0 +1,106 @@
+{
+  "found": false,
+  "elapsedSeconds": 688.8040895420127,
+  "attempts": [
+    {
+      "capture": "captures/microphone-owner-20261103-before-02",
+      "exitCode": 1,
+      "elapsedSeconds": 20.188862167065963
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-03",
+      "exitCode": 1,
+      "elapsedSeconds": 55.38060520798899
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-04",
+      "exitCode": 1,
+      "elapsedSeconds": 90.56809870805591
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-05",
+      "exitCode": 1,
+      "elapsedSeconds": 125.7595467499923
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-06",
+      "exitCode": 1,
+      "elapsedSeconds": 160.95716762496158
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-07",
+      "exitCode": 1,
+      "elapsedSeconds": 196.15551970805973
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-08",
+      "exitCode": 1,
+      "elapsedSeconds": 231.34425220801495
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-09",
+      "exitCode": 1,
+      "elapsedSeconds": 266.534419124946
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-10",
+      "exitCode": 1,
+      "elapsedSeconds": 301.7150604999624
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-11",
+      "exitCode": 1,
+      "elapsedSeconds": 336.9047520828899
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-12",
+      "exitCode": 1,
+      "elapsedSeconds": 372.0983329580631
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-13",
+      "exitCode": 1,
+      "elapsedSeconds": 407.2920167921111
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-14",
+      "exitCode": 1,
+      "elapsedSeconds": 442.47526341699995
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-15",
+      "exitCode": 1,
+      "elapsedSeconds": 477.65810404205695
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-16",
+      "exitCode": 1,
+      "elapsedSeconds": 512.8467038751114
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-17",
+      "exitCode": 1,
+      "elapsedSeconds": 548.0290792919695
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-18",
+      "exitCode": 1,
+      "elapsedSeconds": 583.2374407919124
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-19",
+      "exitCode": 1,
+      "elapsedSeconds": 618.4236724579241
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-20",
+      "exitCode": 1,
+      "elapsedSeconds": 653.6160472079646
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-21",
+      "exitCode": 1,
+      "elapsedSeconds": 688.8040542500094
+    }
+  ]
+}

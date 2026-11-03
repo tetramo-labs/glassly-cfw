@@ -1,0 +1,502 @@
+{
+  "version": "GLASSLYCFW/7",
+  "allRequiredOfflineSuitesPassed": true,
+  "stages": 141,
+  "pythonTests": 235,
+  "swiftTests": 141,
+  "startedUTC": "2026-11-03T18:08:33.028975+00:00",
+  "finishedUTC": "2026-11-03T18:27:06.665277+00:00",
+  "sourceDrift": [],
+  "missingUpstreamMappedStages": [],
+  "fullMemoSuitePortComplete": false,
+  "remainingUpstreamSuiteFiles": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "upstreamCommit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardwareTested": false,
+  "deviceActions": 0,
+  "fullReport": "analysis/regression-20261103-v7-final/report.json",
+  "fullReportSHA256": "f69c7e6dcd79d5b60848bdc5688bbfc858e5fa495bae4cf1d1df78f5abb92a99",
+  "sourceSnapshotSHA256": "986e2510f8fb98d74dee06384553388184d69591be10e76666dc819c60928b5a",
+  "freshRuntimeBindings": [
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-canary.bindings.json",
+      "SHA256": "be0e4421e34b7dde1019e7864235c947c6098745b1a8889faa106655231dce07",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-gates.bindings.json",
+      "SHA256": "22fae5255c8f01412ffbacdba66d0657ba3fda5782f8aadc73c18f38f54b4278",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-input.bindings.json",
+      "SHA256": "9191b6f6989d95a7c33b784b7a27c4d7d640377537af327a96c723457e646359",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-reader.bindings.json",
+      "SHA256": "b7a467f09d79f53be2c25b99e63d4e4b2069d3d414b33e7434ebb327b6818bd1",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-runtime.bindings.json",
+      "SHA256": "1021dc11774a6eccd31a60eaa87fe5f665decbdb1b1b39e0baec652b7fc796d7",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/command-bundle-scene.bindings.json",
+      "SHA256": "1021dc11774a6eccd31a60eaa87fe5f665decbdb1b1b39e0baec652b7fc796d7",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-bundle.bindings.json",
+      "SHA256": "29dd91b30c0735c24044074d00380dc9f38218fd53543621187a5f9216c099f3",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-canary.bindings.json",
+      "SHA256": "e3a15272b641365ba7dab9a6a9a25fc2498d4baf9b5a3cc4a4f517144d8372a0",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-gates.bindings.json",
+      "SHA256": "ab56d250bd79c2b944c82e554086295245b16a76935b311885bc7fccc595af1a",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-input.bindings.json",
+      "SHA256": "29dd91b30c0735c24044074d00380dc9f38218fd53543621187a5f9216c099f3",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-reader.bindings.json",
+      "SHA256": "1aae7811d5e78ee4ab235ffebc58b3a657a1496e797ff79c1b126dcde906ad14",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 11
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-runtime.bindings.json",
+      "SHA256": "29dd91b30c0735c24044074d00380dc9f38218fd53543621187a5f9216c099f3",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-scene.bindings.json",
+      "SHA256": "29dd91b30c0735c24044074d00380dc9f38218fd53543621187a5f9216c099f3",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/diagnostic-command-text.bindings.json",
+      "SHA256": "29dd91b30c0735c24044074d00380dc9f38218fd53543621187a5f9216c099f3",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/external-read-gates.bindings.json",
+      "SHA256": "dc2ee1a503e98cd2255fab63733a03e05ae0eb00f0fad4e78c2b96bc02ddd911",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/external-read-runtime.bindings.json",
+      "SHA256": "6c9175a220a8649da48fa57039e2d814985e4e842b7aa31a884e56d2216323c8",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-canary-gates.bindings.json",
+      "SHA256": "345e80acdb9520ee85119124ac9f8094d50f30fea160ac4cb3385e86dcac6ff9",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-canary-input.bindings.json",
+      "SHA256": "cf04d3d15c8f5b7084969cc2efb268383a0c53797870dcc35f046523267d8d59",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-canary-reader.bindings.json",
+      "SHA256": "3bb06fff126d2ca54f38c1e264098a16ad96bcb6cefaa5bac9b0073176e34edd",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-canary-runtime.bindings.json",
+      "SHA256": "e3182266f38fbedfe9875b66648861403e36a01a009e63692ea4171d2867a197",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-canary-scene.bindings.json",
+      "SHA256": "cab512388e94c3c65e74bf09b49dcf78569be0215d292216847a56f184bae34c",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-read-gates.bindings.json",
+      "SHA256": "0b13d9abe75a6c3f5e41c476e60843c6aa674da871f0033faa417c22c020b44f",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/flash-read-runtime.bindings.json",
+      "SHA256": "35c332ff51df124ecd808b7ebf72e939387ae59e0bb0f44de7e710bb9cfa82bd",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/full-store-gates.bindings.json",
+      "SHA256": "bf0e8fc555a8db32678440cf2f66508a5f7dbf40b3e1b5a62397cfb1ce52455a",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/full-store-input.bindings.json",
+      "SHA256": "0f29706d69e96628870426cdcf6ae5566cd51bad8e8853601c867b6ebd8ebb4c",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/full-store-runtime.bindings.json",
+      "SHA256": "f9859b0a8c0d36da87fe90d3d12448c2871a1021baf2e408d4ccde604dad110a",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/full-store-scene.bindings.json",
+      "SHA256": "a62509a31b472011bff96463d2320e46402708ad64aaf9fbc402732aa08474cb",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/graphics-gates.bindings.json",
+      "SHA256": "821d769acbdc0316c3012695a82ce02ba61d7b31f610ad68f3fc88b6eb6b5b85",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/graphics-runtime.bindings.json",
+      "SHA256": "ce2bba6e25db183b0840a0abf24bfdc02709b7f72c2344d6de410bd733fca0bc",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/input-gates.bindings.json",
+      "SHA256": "e1899a7c4ac2228a471a0f24efeafcdf69aec0ff6c72ba67bd13a588907864ca",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/input-runtime.bindings.json",
+      "SHA256": "e9d92a4baacba8873321f37e76637746c10bc493ad65d590ffb5ed8f6398f302",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/microphone-runtime.bindings.json",
+      "SHA256": "c989093a95d2d8f259c89eceb14867c73a967f946dd0048ea6a23ae1a84c90a2",
+      "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/raster-commands-canary.bindings.json",
+      "SHA256": "663488e533815e8172ec708681fb85f270ea367bad6307794b32d8fad17b9f1c",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/raster-commands-gates.bindings.json",
+      "SHA256": "e771853864cfe4811b995fadf73828da4f11121d612d1d0174cef8fdbe8860aa",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/raster-commands-input.bindings.json",
+      "SHA256": "9934291dbff8cef96ad2a9cf7dccd16ce1432a1d16e84042c69813b0dca16786",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/raster-commands-reader.bindings.json",
+      "SHA256": "02d5fcf965b44f7dc517292cdad92ad7042579792ff666f4983a4c4c8c89cc94",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/raster-commands-runtime.bindings.json",
+      "SHA256": "64b1021976f1f7611f976d7c6ddc413cc595ef7ef7839efee035fd3bb27d2fa1",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/record-gates.bindings.json",
+      "SHA256": "37763b0559f530edb9e17120dcd13b72d4cef416a2c78e0a128cec953a80e15d",
+      "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/record-runtime.bindings.json",
+      "SHA256": "b23509aa18d190ad05b8f375d6e712e561c4f3071bdd96fc21e37d9d9eb180e8",
+      "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/rect-copy-canary.bindings.json",
+      "SHA256": "8134ad0f99c0368b2edd0332ebb113f6becc65eefb2071d05adc095126381b00",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/rect-copy-gates.bindings.json",
+      "SHA256": "fc92bf18f5e00eafc62b56ea6b4d6aacbd970f1335eb0f41361ba3a5af0c1ffb",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/rect-copy-input.bindings.json",
+      "SHA256": "03cd72b954c263303a69d6703083b7db4687e42cf236662423694871ec1b3cd5",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/rect-copy-reader.bindings.json",
+      "SHA256": "0e1f7acd80e29379316beb8a34d86e479c9717891f4010d08636284442cced15",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/rect-copy-runtime.bindings.json",
+      "SHA256": "cf83aa726df30c9bdc93e308ad8d40da366d733acfb6b78c471c6afa06e378be",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-bundle.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-canary.bindings.json",
+      "SHA256": "565fae7c4a4293074520a0677a62825ab13369099574f6ebea0ef6bdcb6815d6",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-diagnostics.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-gates.bindings.json",
+      "SHA256": "256afe63774e5b566f3f6f193e675e7234dba1296d9776ca55a483638d3708a0",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 10
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-input.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-reader.bindings.json",
+      "SHA256": "3c7282d1364ffb3f3d87b93e0232ca0b7b8059d10c2b8480aaae39a934ad60c1",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 12
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-runtime.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-scene.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/reset-undo-trim-text.bindings.json",
+      "SHA256": "be25a955ea4b60ae3dbf0e1b02eea5b792a5162a2725bbad5735dc171836ce9f",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/scene-gates.bindings.json",
+      "SHA256": "bfe745676c733793011f95343a4cce6a1573043263d172ebf7276e21562f84ed",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/scene-runtime.bindings.json",
+      "SHA256": "538e467a0d35e11f06d56b7644675de2753b94f7ee3f3d0131dff3427416585c",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/storage-diag-gates.bindings.json",
+      "SHA256": "bdb74beb1260af7120c5614a7775db020e95c844d182ac9c04a97bdb795afb74",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/storage-diag-input.bindings.json",
+      "SHA256": "171d32542d672743082087e3f26a3c9db42e9729ef4b95c6266d4f651203f491",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/storage-diag-runtime.bindings.json",
+      "SHA256": "5e7b46bebc7545dd788c83f02aacccf18f67f28a25b267633dd24066d842fa62",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/storage-diag-scene.bindings.json",
+      "SHA256": "227c2acea2ac9bf81f039d06685442804404d8531b261f3c7464f7da4b053fcb",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-bundle.bindings.json",
+      "SHA256": "824a0e2c8bd3171bfdf99979544a8dfb3bad3d559d588f93cdf0b93e7285fdd0",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-canary.bindings.json",
+      "SHA256": "e913616577f28409cb079771a74544bb877a2a87a92f3e98621bf82f7fd7dd30",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-gates.bindings.json",
+      "SHA256": "c5af574eecaa23eaa6431333517b26653c9b60966827826f225c892e8a1e61f9",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-input.bindings.json",
+      "SHA256": "71b552c010cf4f73ade16a9981060af8fc5bdffd94dd9b722e6dd27e40482491",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-reader.bindings.json",
+      "SHA256": "a35f57ed43e0abe0e19472b46c3f6f885daaab2d21e6b1248741170ba524c2ab",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-runtime.bindings.json",
+      "SHA256": "824a0e2c8bd3171bfdf99979544a8dfb3bad3d559d588f93cdf0b93e7285fdd0",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v7-final/text-command-scene.bindings.json",
+      "SHA256": "824a0e2c8bd3171bfdf99979544a8dfb3bad3d559d588f93cdf0b93e7285fdd0",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    }
+  ]
+}

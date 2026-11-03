@@ -49,3 +49,12 @@ zero retries, reboot acknowledged. `ota-verification-01.json` independently
 reconstructs all2,248,759 bytes and verifies the pinned image SHA256. The first
 post-reboot attempt timed out opening RFCOMM; boot and command acceptance are
 still pending. A reboot acknowledgment is not boot verification.
+
+The second post-reboot attempt (`captures/record-memory-20261103-after-02`)
+verified the exact installed app header and running `GLASSLYCFW/6` capability.
+Notification enable/poll/disable, position/depth change/readback/restoration,
+compressed dictionary reuse, a 65,535-byte decoded command, a 20-byte diagnostic
+reply, high-bit shapes/STATE and deferred mode11 cleanup all passed. Independent
+record reconstruction is in `record-verification-01.json`. The display accepted
+the revision6 text frame; physical output has not been confirmed. The boot and
+cleanup heap readings are not a matched record-session RAM comparison.

@@ -7,13 +7,13 @@
   "imageBytes": 2248759,
   "runtimeBytes": 96128,
   "flashed": true,
-  "bootVerified": false,
-  "hardwareCommandsVerified": false,
+  "bootVerified": true,
+  "hardwareCommandsVerified": true,
   "physicalOutputConfirmed": false,
   "appBundleDoesNotWaitForHardware": true,
   "pending": [
-    "Post-reboot connection and boot verification",
-    "Physical display and matched RAM measurement"
+    "Physical display confirmation",
+    "Matched record-session RAM measurement"
   ],
   "connectionSearch": {
     "attempts": 22,
@@ -41,6 +41,12 @@
       "capture": "captures/record-memory-20261103-after-01",
       "result": "RFCOMM open timed out",
       "bootVerified": false
+    },
+    {
+      "capture": "captures/record-memory-20261103-after-02",
+      "result": "complete",
+      "bootVerified": true
     }
-  ]
+  ],
+  "bootCapture": "captures/record-memory-20261103-after-02"
 }

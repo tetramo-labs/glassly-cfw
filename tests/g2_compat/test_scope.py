@@ -86,6 +86,13 @@ class ScopeTests(unittest.TestCase):
     def test_mixed_settings_failure_blocks(self):
         self.assertEqual(self.aggregate(fail='run_upstream_tests.py')[0], 1)
 
+    def test_native_sensor_failure_blocks(self):
+        code, report = self.aggregate(fail='sensor_native_abi_test.py')
+        self.assertEqual(code, 1)
+        stage = next(r for r in report['results'] if r['name'] == 'sensor_native_abi')
+        self.assertTrue(stage['parity_required'])
+        self.assertEqual(stage['result'], 'failed')
+
     def test_required_parity_still_incomplete(self):
         self.assertEqual(self.aggregate(require=True)[0], 2)
 

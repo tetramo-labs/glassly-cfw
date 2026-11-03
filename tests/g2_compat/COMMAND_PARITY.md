@@ -84,8 +84,16 @@ composes responses; it is not registered as a native GM command adapter.
 metadata, ownership, start/stop and cleanup tests are still needed. The existing
 shared native enable flag is not yet a safe independently leased sensor API.
 No gesture recognition is required to expose the sensor data.
-The reviewed native raw-sample record contains accelerometer, gyroscope,
-temperature and calibrated pitch fields. Compass work still needs a verified
+The SDK record contains accelerometer, gyroscope, temperature and a separately
+read calibrated pitch field. Actual-code tests now establish that the normal
+14-byte acquisition record shifts all six motion axes right by four and negates
+gyro X. It is not an unmodified full-resolution register sample. The driver's
+alternate path preserves the six 16-bit axes but does not write temperature.
+The new required `sensor_native_abi` stage covers ALS read/power/settings, IMU
+read/start/stop, shutdown overlap and the real driver decoder; its bus, driver
+and RTOS boundaries are mocked. See [sensor evidence](../../analysis/sensor-abi-20261103/NOTES.md).
+This does not install sensor commands or establish independent ownership.
+Compass work still needs a verified
 heading source and validity/accuracy metadata; pitch or gyro samples alone do
 not establish compass heading. Both adapters need timestamped acquisition,
 start/stop ownership, lease expiry and cleanup coverage before hardware parity

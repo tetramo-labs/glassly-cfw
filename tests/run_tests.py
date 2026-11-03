@@ -98,6 +98,8 @@ def main():
          [python, 'runtime/graphics/tests/run_microphone_tests.py', '--output', str(out / 'microphone-host')]),
         ('microphone_native_abi', 'Actual stock recording task, open, stop, reset, cooldown and format ABI; hardware mocked',
          [str(args.rv32_python.absolute()), 'tests/rv32/microphone_native_abi_test.py', '--report', str(out / 'microphone-native-abi.json')]),
+        ('sensor_native_abi', 'Actual ALS read/power/settings and IMU acquisition/decoding/ownership; bus, driver and RTOS mocks',
+         [str(args.rv32_python.absolute()), 'tests/rv32/sensor_native_abi_test.py', '--report', str(out / 'sensor-native-abi.json')]),
         ('microphone_runtime', 'Linked microphone control and native SPP/iAP2 veneers; native audio APIs mocked',
          [str(args.rv32_python.absolute()), 'tests/rv32/microphone_runtime_emulator_test.py',
           '--build', str(out / 'record-build'), '--report', str(out / 'microphone-runtime.json')]),

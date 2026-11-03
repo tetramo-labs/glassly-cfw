@@ -138,6 +138,11 @@ notification relay, keyboard, record transport and upstream protocol policies.
 The latest clean regression passes141 required offline stages, including235
 Python tests and141 Swift tests, with no source drift or missing mapped stages.
 See the [regression summary](analysis/microphone-owner-20261103/regression-verification.json).
+The subsequent required sensor ABI stage passes604 actual-code cases with
+mocked hardware/RTOS boundaries. It establishes ALS normalization and shared
+power behavior, plus IMU acquisition, axis reduction and shutdown boundaries;
+it does not add a native sensor command or change the installed firmware.
+See [sensor evidence](analysis/sensor-abi-20261103/NOTES.md).
 Unchanged G2 reference checks and native-layout mocks remain separately labeled;
 18 required suite/integration entries remain incomplete. Bluetooth keyboard/HOGP,
 ring battery, gestures, mode5 sound/tone commands and volume gating are out of

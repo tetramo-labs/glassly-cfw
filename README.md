@@ -13,15 +13,15 @@ Bundled reference names are normalized to Glassly with original hashes retained.
 
 ## Latest firmware
 
-Revision5 is installed and boot verified. It completes high-bit dispatch for
-cached graphics, shapes and cache operations. The post-boot native screen owner
-was busy, so its new drawing checks remain pending.
+Revision5 was boot verified before the revision6 update. It completes high-bit
+dispatch for cached graphics, shapes and cache operations.
 
-Revision6 is bundled in Glassly and pushed without waiting for hardware. It
-releases the 6,144-byte record reply scratch buffer between commands and makes
-empty shape commands stop animation while preserving pixels. The glasses did
-not answer 22 connection attempts over more than ten minutes; no revision6
-transfer started. Actual heap savings and display behavior await hardware checks.
+Revision6 is now flashed and bundled in Glassly. It releases the 6,144-byte
+record reply scratch buffer between commands and makes empty shape commands
+stop animation while preserving pixels. The full2,248,759-byte transfer was
+independently verified with no retries, and reboot was acknowledged. The first
+post-reboot Bluetooth connection timed out; boot and command checks remain
+pending. Actual heap savings and physical display behavior also await checks.
 See the [revision5 checkpoint](analysis/command-flags-20261103/checkpoint.json)
 and [revision6 checkpoint](analysis/record-memory-20261103/checkpoint.json).
 

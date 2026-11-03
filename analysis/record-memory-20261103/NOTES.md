@@ -39,3 +39,13 @@ The 660-second search made22 unsuccessful preflight attempts; the last ended
 after651.57 seconds. A later23rd attempt also timed out. No revision6 transfer
 started. Glassly commit `09fb43a97a` bundles the exact candidate and both mobile
 clients renew ownership through control leases, without empty-shape keepalives.
+
+## Revision6 flash
+
+The later requested update passed a fresh revision5 header/topology/badmap
+preflight in `captures/record-memory-20261103-before-24`. The native Mac transfer
+completed in `captures/record-memory-20261103-flash-01`: 550 blocks, 3,844 chunks,
+zero retries, reboot acknowledged. `ota-verification-01.json` independently
+reconstructs all2,248,759 bytes and verifies the pinned image SHA256. The first
+post-reboot attempt timed out opening RFCOMM; boot and command acceptance are
+still pending. A reboot acknowledgment is not boot verification.

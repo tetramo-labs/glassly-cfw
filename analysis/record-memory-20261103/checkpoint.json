@@ -6,13 +6,13 @@
   "appHeaderSHA256": "d65d7e3e761e4ee754e359a5921034d775267e1d0374c006e70de30cdba48f68",
   "imageBytes": 2248759,
   "runtimeBytes": 96128,
-  "flashed": false,
+  "flashed": true,
   "bootVerified": false,
   "hardwareCommandsVerified": false,
   "physicalOutputConfirmed": false,
   "appBundleDoesNotWaitForHardware": true,
   "pending": [
-    "Flash and boot verification when the glasses reconnect",
+    "Post-reboot connection and boot verification",
     "Physical display and matched RAM measurement"
   ],
   "connectionSearch": {
@@ -28,5 +28,19 @@
     "exitCode": 1,
     "result": "RFCOMM open timed out",
     "transferStarted": false
-  }
+  },
+  "transferVerified": true,
+  "rebootAcknowledged": true,
+  "flashCapture": "captures/record-memory-20261103-flash-01",
+  "blocks": 550,
+  "chunks": 3844,
+  "automaticRetries": 0,
+  "preflightCapture": "captures/record-memory-20261103-before-24",
+  "postRebootAttempts": [
+    {
+      "capture": "captures/record-memory-20261103-after-01",
+      "result": "RFCOMM open timed out",
+      "bootVerified": false
+    }
+  ]
 }

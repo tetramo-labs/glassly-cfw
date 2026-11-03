@@ -108,7 +108,8 @@ class DiagnosticTests(unittest.TestCase):
         for reverse in (False,True):
             m=DiagnosticMachine();m.send_scene(R.keyframe());original=m.pixels();n=len(m.image_sources)
             s=m.diagnostic(2,high=True,trailing=b'ignored');self.assertEqual(s['hidden'],0);self.assertFalse(m.overlay());self.assertEqual(len(m.image_sources),n)
-            m.send_scene(bytes([36,0]));self.assertFalse(m.overlay(),'lease-only geometry is not a presentation')
+            m.send_scene(bytes([36,0]));self.assertEqual(len(m.overlay()),1,'empty shapes take over and present the frame')
+            self.assertEqual(m.pixels(),original);self.assertEqual(len(m.image_sources),n+1)
             m.send_scene(R.packet(99,99,301,99,129,115));expected=R.snapshot_copy(original,99,99,301,99,129,115)
             self.assertEqual(m.pixels(),expected);overlay=m.overlay()[0];self.assertNotIn(overlay,m.hidden);self.assertEqual(m.parents[overlay],m.graphics()[0])
             self.assertNotEqual(m.read(m.overlay_sources[-1][4]+64,720),bytes(720))

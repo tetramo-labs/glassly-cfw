@@ -263,3 +263,14 @@ counted as native text coverage. See [text evidence](../../analysis/text-native-
 All 21 incomplete suite/integration entries remain explicit completion blockers;
 The exclusions at that checkpoint have since expanded as listed above. Native font appearance and
 missing-glyph handling differ from G2.
+
+## Fresh native regression builds
+
+The aggregate runner verifies each rebuilt graphics blob against its manifest
+and current source hashes before binding historical fixture runtime pins to it.
+`tests/rv32/run_rebuilt.py` changes only digest assignments in module setup,
+including conditional wrapper assignments. It leaves stock-image pins, test
+bodies and assertions intact and records each binding in a sidecar report.
+Direct fixture invocation retains its historical pins. Revision6 separately
+updates the native diagnostic expectation for empty shapes: they present the
+existing frame, while preserving its pixels and overlay cleanup checks.

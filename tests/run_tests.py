@@ -34,6 +34,14 @@ def source_snapshot():
             for p in sorted(paths)}
 
 
+def rebuilt_command(command):
+    if len(command) > 1 and command[1].startswith('tests/rv32/') and '--build' in command:
+        build = Path(command[command.index('--build') + 1])
+        if (build / 'graphics.bin').is_file():
+            return [command[0], 'tests/rv32/run_rebuilt.py', *command[1:]]
+    return command
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True, help='New evidence directory')
@@ -51,6 +59,8 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     python = sys.executable
     commands = [
+        ('rebuilt_fixtures', 'Fresh-build fixture binding preserves historical pins and rejects source/blob drift',
+         [python, 'tests/rv32/test_rebuilt.py']),
         ('inventory', 'Exact original assertion mappings and coverage inventory are current; read-only check',
          [python, 'tests/g2_compat/inventory.py', '--check']),
         ('inventory_scope', 'Hardware exclusions preserve compass/raw IMU/button/ALS requirements; mixed settings and optional-failure isolation',
@@ -438,6 +448,7 @@ def main():
     (out / 'source-sha256.json').write_text(json.dumps(source_hashes, indent=2) + '\n')
     results = []
     for name, scope, command in commands:
+        command = rebuilt_command(command)
         print(f'Running {name}: {scope}', flush=True)
         begin = time.monotonic()
         row = {'name': name, 'scope': scope, 'command': command, 'parity_required': name != 'keyboard'}

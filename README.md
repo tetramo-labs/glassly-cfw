@@ -11,6 +11,20 @@ behavior is explicitly not required. The proven hardware drivers and OTA path
 remain development dependencies while useful. The pinned G2 assertion corpus and its feature semantics remain requirements.
 Bundled reference names are normalized to Glassly with original hashes retained.
 
+## Latest firmware
+
+Revision5 is installed and boot verified. It completes high-bit dispatch for
+cached graphics, shapes and cache operations. The post-boot native screen owner
+was busy, so its new drawing checks remain pending.
+
+Revision6 is bundled in Glassly and pushed without waiting for hardware. It
+releases the 6,144-byte record reply scratch buffer between commands and makes
+empty shape commands stop animation while preserving pixels. The glasses did
+not answer 22 connection attempts over more than ten minutes; no revision6
+transfer started. Actual heap savings and display behavior await hardware checks.
+See the [revision5 checkpoint](analysis/command-flags-20261103/checkpoint.json)
+and [revision6 checkpoint](analysis/record-memory-20261103/checkpoint.json).
+
 ## Compressed record transport
 
 Revision4 adds a native GM record carrier with persistent zlib dictionaries,
@@ -52,7 +66,7 @@ stock shared-screen background initialization and is
 text and the black background are now [visually confirmed on revision 3](analysis/ota-pacing-20261103/visual-confirmation.json).
 Mode5 sound/tone commands and volume gating are excluded.
 
-The current `GLASSLYCFW/3` image adds the native ANCS relay and display position/depth
+The `GLASSLYCFW/3` image added the native ANCS relay and display position/depth
 settings. Its entire OTA and post-reboot app header are verified; hardware relay
 enable/poll/disable and settings change/readback/restoration passed. Actual iOS
 notification delivery/actions and physical position/depth confirmation remain
@@ -113,16 +127,15 @@ and maps original assertions to current MemoMind coverage. All46 unique C host
 scenarios now have portable core coverage, with746 original assertion sites
 preserved across all seven host suites. This includes scene/cache/assets,
 notification relay, keyboard, record transport and upstream protocol policies.
-The latest regression covers117 passing required offline stages, including
-224 Python tests and 100 Swift tests, with native RV32 mocks. Two runner
-argument errors were corrected and those checks rerun; the115 unchanged passes
-were retained with source and command verification. See the
-[regression report](analysis/regression-20261102-05/report.json). Unchanged G2
-reference checks and native-layout test shims remain separately labeled.
-Bluetooth keyboard/HOGP accessory support and mode5 sound/tone commands are out of scope. Command parity is the
-current priority. Full in-scope CFW parity still requires native notification/transport/policy
-adapters, remaining drawing/message capacities, performance work, broader font
-coverage and complete app/pairing capture.
+The latest clean regression passes138 required offline stages, including235
+Python tests and137 Swift tests, with no source drift or missing mapped stages.
+See the [regression summary](analysis/record-memory-20261103/regression-verification.json).
+Unchanged G2 reference checks and native-layout mocks remain separately labeled;
+18 required suite/integration entries remain incomplete. Bluetooth keyboard/HOGP,
+ring battery, gestures, mode5 sound/tone commands and volume gating are out of
+scope. Remaining work includes native sensor and microphone ownership, BLE/wear
+policies, physical notification acceptance, performance, broader font coverage
+and complete app/pairing capture.
 
 Stock dashboard reclamation now has a concrete offline candidate. Six card-renderer
 entries return their existing unavailable result, leaving **2,746 bytes in six RX

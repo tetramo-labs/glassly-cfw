@@ -91,6 +91,11 @@ not establish compass heading. Both adapters need timestamped acquisition,
 start/stop ownership, lease expiry and cleanup coverage before hardware parity
 can be claimed.
 
+The stock recording callback/parser now has 38 actual-code offline cases for
+negotiation, start/stop queue payloads, routing and malformed input. Native task
+completion and audio are mocked; this does not implement the missing lease.
+See [microphone boundary evidence](../../analysis/microphone-lease-20261103/NOTES.md).
+
 Microphone control magic is defined by `mic_control.c`; payload/configuration
 fields must be validated from that implementation before a native adapter.
 The Swift CLI now captures cooked single-button events and the existing native

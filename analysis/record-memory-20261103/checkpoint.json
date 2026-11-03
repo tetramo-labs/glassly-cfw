@@ -12,8 +12,21 @@
   "physicalOutputConfirmed": false,
   "appBundleDoesNotWaitForHardware": true,
   "pending": [
-    "Connection search/preflight",
-    "Flash and boot verification",
+    "Flash and boot verification when the glasses reconnect",
     "Physical display and matched RAM measurement"
-  ]
+  ],
+  "connectionSearch": {
+    "attempts": 22,
+    "elapsedSecondsAtLastAttempt": 651.5701022080611,
+    "successfulPreflights": 0,
+    "completed": true,
+    "transferStarted": false
+  },
+  "glasslyCommit": "09fb43a97a",
+  "finalPreflight": {
+    "capture": "captures/record-memory-20261103-before-23",
+    "exitCode": 1,
+    "result": "RFCOMM open timed out",
+    "transferStarted": false
+  }
 }

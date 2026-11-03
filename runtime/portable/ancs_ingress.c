@@ -5,7 +5,8 @@ static uint32_t u32(const uint8_t *p){return u16(p)|(u16(p+2)<<16);}
 static int same(const uint8_t *a,const uint8_t *b){for(unsigned i=0;i<6;i++)if(a[i]!=b[i])return 0;return 1;}
 static int reject(mm_ancs_ingress *s){if(s->rejected!=UINT32_MAX)s->rejected++;return 0;}
 void mm_ancs_ingress_reset(mm_ancs_ingress *s){
-    s->connected=0;s->next=0;s->generation++;
+    s->connected=0;s->next=0;s->generation++;s->session++;
+    s->relay->ancs_tail=s->relay->ancs_head;
     for(unsigned i=0;i<MM_ANCS_UIDS;i++)s->uids[i].valid=0;
 }
 void mm_ancs_ingress_init(mm_ancs_ingress *s,mm_notifications *relay){
@@ -82,7 +83,7 @@ int mm_ancs_ingress_event(mm_ancs_ingress *s,uint16_t event,const uint8_t *p,siz
 int mm_ancs_ingress_action(const mm_ancs_ingress *s,uint32_t uid,uint8_t action,uint8_t out[6],uint32_t *generation){
     if(!s || !out || !generation || !s->connected || action>1)return 0;
     for(unsigned i=0;i<MM_ANCS_UIDS;i++)if(s->uids[i].valid && s->uids[i].uid==uid &&
-            (s->uids[i].flags&(16u<<action))){
+            (s->uids[i].flags&(8u<<action))){
         for(unsigned j=0;j<6;j++)out[j]=s->peer[j];
         *generation=s->generation;return 1;
     }

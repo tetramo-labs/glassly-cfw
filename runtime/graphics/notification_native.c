@@ -104,6 +104,7 @@ void glassly_notification_command(uint32_t command,void *request,const uint8_t *
     mm_notifications_tick(&o->relay);
     if(!was_pending && o->action_pending)serial=o->action_serial;
     text(o,"],\"generation\":");number(o,o->ingress.generation);
+    text(o,",\"session\":");number(o,o->ingress.session);
     text(o,",\"rejected\":");number(o,o->ingress.rejected);
     text(o,",\"drops\":");number(o,o->relay.ancs_drops);
     text(o,",\"active\":");number(o,o->relay.ancs_lease_deadline && (int32_t)(o->relay.ancs_lease_deadline-P.now())>0);

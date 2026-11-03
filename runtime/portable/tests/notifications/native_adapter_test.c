@@ -43,17 +43,25 @@ static char *command(uint8_t op){
     glassly_notification_command(0x78,(void *)1,0,&response);assert(response);return response;
 }
 static void expect(uint8_t op,const char *expected){char *r=command(op);assert(strstr(r,expected));free(r);}
-static void source(uint8_t event){uint8_t p[14]={1,2,3,4,5,6,event,0x30,1,1,42};glassly_notification_observe(0x25a,p,14);}
+static void source(uint8_t event){uint8_t p[14]={1,2,3,4,5,6,event,0x18,1,1,42};glassly_notification_observe(0x25a,p,14);}
 int main(void){
     expect(3,"unavailable");expect(1,"\"active\":1");
     unsigned before=allocations;source(0);assert(allocations==before);
-    expect(0,"414e0101003001012a000000");
+    expect(0,"414e0101001801012a000000");
     owner *o=registry_memory.context;
     uint8_t descriptor[16]={1,2,3,4,5,6,0};
     uint8_t body[]={42,0,0,0,1,3,0,'a','b','c',3,2,0,'h','i'};
     descriptor[12]=sizeof(body);
     lock();assert(mm_ancs_ingress_event(&o->ingress,0x25b,descriptor,16,body,sizeof(body)));unlock();
     memset(body,0,sizeof(body));expect(0,"616263");
+    uint8_t action_peer[6];uint32_t generation;
+    mm_ancs_uid *item=&o->ingress.uids[0];
+    item->flags=8;assert(mm_ancs_ingress_action(&o->ingress,42,0,action_peer,&generation));
+    assert(!mm_ancs_ingress_action(&o->ingress,42,1,action_peer,&generation));
+    item->flags=16;assert(!mm_ancs_ingress_action(&o->ingress,42,0,action_peer,&generation));
+    assert(mm_ancs_ingress_action(&o->ingress,42,1,action_peer,&generation));
+    item->flags=32;assert(!mm_ancs_ingress_action(&o->ingress,42,0,action_peer,&generation));
+    assert(!mm_ancs_ingress_action(&o->ingress,42,1,action_peer,&generation));item->flags=24;
     uint16_t head=o->relay.ancs_head;
     uint8_t bad[]={42,0,0,0,1,1,0,'x',3,4,0,'y'};descriptor[12]=sizeof(bad);
     lock();assert(!mm_ancs_ingress_event(&o->ingress,0x25b,descriptor,16,bad,sizeof(bad)));unlock();assert(head==o->relay.ancs_head);
@@ -65,7 +73,13 @@ int main(void){
     expect(4,"\"actionResult\":1");glassly_notification_observe(ACTION_EVENT,posted,8);expect(0,"\"actionResult\":3");assert(action_count==1);
     peer_state[12]=0;expect(4,"\"actionResult\":1");source(2);source(0);
     glassly_notification_observe(ACTION_EVENT,posted,8);assert(action_count==1);expect(0,"\"actionResult\":4");
-    uint8_t disconnected[12]={1,2,3,4,5,6};glassly_notification_observe(0x258,disconnected,12);expect(4,"\"actionResult\":4");
+    source(0);assert(o->relay.ancs_tail!=o->relay.ancs_head);
+    uint32_t session=o->ingress.session;
+    uint8_t disconnected[12]={1,2,3,4,5,6};glassly_notification_observe(0x258,disconnected,12);
+    assert(o->ingress.session==session+1 && o->relay.ancs_tail==o->relay.ancs_head);
+    expect(4,"\"actionResult\":4");
+    source(0);assert(o->ingress.session==session+2);
+    source(1);assert(o->ingress.session==session+2);
     source(0);post_error=11;free(command(4));expect(0,"\"actionResult\":5");post_error=0;
     source(0);for(unsigned i=0;i<400;i++)source(1);assert(o->relay.ancs_drops>0);
     expect(2,"\"active\":0");expect(1,"\"active\":1");assert(o->relay.ancs_tail==o->relay.ancs_head);

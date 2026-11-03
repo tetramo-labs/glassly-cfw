@@ -18,7 +18,10 @@ GM service 15, command `0x78`, accepts one BYTES TLV:
 Replies are JSON with `glassly:"notifications"`, `abi:1`, `result`, and `records`.
 Each record is a hex-encoded original `AN` v1 payload, without the G2 field-125
 protobuf envelope. Other fields report observed connection state, source
-generation, rejected events, queue drops, active lease, action serial and result.
+generation, session, rejected events, queue drops, active lease, action serial and result.
+The session counter changes on peer/reset boundaries and queued records are
+discarded; hosts must reset partial reassembly when it changes. Action availability
+uses ANCS flag bit 3 for positive actions and bit 4 for negative actions.
 Action results: 0 none, 1 pending app dispatch, 2 native transaction accepted,
 3 busy, 4 stale/unknown/unavailable action, 5 native enqueue/request rejected.
 Result 2 does not establish that the phone performed an action. A failed initial

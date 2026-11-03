@@ -23,7 +23,7 @@ typedef struct {
     uint8_t peer[6];uint16_t channel;
     uint8_t pending,active,owned,phase,error,flags,transport,cancelled;
 } owner;
-_Static_assert(sizeof(owner)<=96,"Microphone registry fits reserved tail");
+_Static_assert(sizeof(owner)<=48,"Microphone registry fits slot160..207");
 static owner *get(void){
     if(!glassly_canary_layout_valid())return 0;
     owner *o=(owner *)(void *)MEM(MM_CANARY_REGISTRY+160);

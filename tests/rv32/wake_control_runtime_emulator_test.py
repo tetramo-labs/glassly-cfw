@@ -16,6 +16,9 @@ class WakeMachine(FlashMachine):
             for page in (0x0205d000,0x0205e000):self.uc.mem_map(page,4096)
             self.uc.mem_write(0x0205d5f8,struct.pack('<4I',2,0x0205e228,0x020fedc0,0x0205e228))
     def region(self,address,size,writing=False):
+        if self.build.get("sensor_capture") and 0x0205e1f8<=address and address+size<=0x0205e228:
+            if writing:assert self.critical
+            return "sensor-registry"
         if self.build.get("microphone_control") and 0x0205e1c8<=address and address+size<=0x0205e1f8:
             if writing:assert self.critical
             return "microphone-registry"

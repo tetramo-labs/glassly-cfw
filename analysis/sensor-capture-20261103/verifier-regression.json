@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "scope": "Unchanged trace verification engine against sealed V6 OTA evidence; not V8 transfer verification",
+  "fixtureVersion": "GLASSLYCFW/6",
+  "fixtureCapture": "captures/record-memory-20261103-flash-01",
+  "traceSHA256": "07ac2015c0f8630b5bb0f4d9649adf73e510d9a4ba737e0b7bcf6e0a527c1c1d",
+  "verifierSHA256": "83e81b12c45a00e2e6e8ba0422f1ad188824150e8c0f000c0a168c7236836467",
+  "bytes": 2248759,
+  "blocks": 550,
+  "chunks": 3844,
+  "deviceActions": false,
+  "v8TransferVerified": false
+}

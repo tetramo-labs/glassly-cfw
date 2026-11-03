@@ -1,3 +1,6 @@
+#ifdef MM_SENSOR_CAPTURE
+#include "sensor_capture.h"
+#endif
 #ifndef MM_CFW_REVISION
 #define MM_CFW_REVISION 1
 #endif
@@ -136,6 +139,9 @@ void glassly_graphics_drop_frame(void *parent) {
 void glassly_graphics_cleanup(void) {
 #ifdef MM_MICROPHONE_CONTROL
     glassly_microphone_cleanup();
+#ifdef MM_SENSOR_CAPTURE
+    glassly_sensor_cleanup();
+#endif
 #endif
 #ifdef MM_NOTIFICATION_RELAY
     glassly_notification_cleanup();
@@ -378,6 +384,9 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"displaySettings\":{\"position\":10,\"depth\":11,\"min\":0,\"max\":8},"
                    "\"notifications\":{\"command\":120,\"transport\":\"poll\",\"leaseTicks\":90000},"
 #endif
+#ifdef MM_SENSOR_CAPTURE
+                   "\"sensors\":{\"command\":118,\"version\":1,\"capture\":\"passive-latest\",\"imu\":\"icm42670-registers\",\"als\":\"native-0-1000\",\"leaseTicks\":90000},"
+#endif
 #ifdef MM_MICROPHONE_CONTROL
                    "\"microphone\":{\"command\":119,\"version\":1,\"codec\":\"opus\",\"sampleRate\":16000,\"channels\":1,\"bitrate\":16000,\"leaseTicks\":90000},"
 #endif
@@ -540,6 +549,9 @@ void glassly_graphics_display(void *envelope) {
         }else if((data[0]&127u)==11){
 #ifdef MM_MICROPHONE_CONTROL
             glassly_microphone_cleanup();
+#ifdef MM_SENSOR_CAPTURE
+    glassly_sensor_cleanup();
+#endif
 #endif
 #ifdef MM_NOTIFICATION_RELAY
             glassly_notification_cleanup();

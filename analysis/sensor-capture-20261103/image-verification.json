@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "version": "GLASSLYCFW/8",
+  "imageSHA256": "5658977cd0653d3c8722aa0751024eedf57c227425d9bec031ec00c0f6a0e00f",
+  "imageBytes": 2246211,
+  "runtimeSHA256": "e2f8edfeaa28e7190196e5e4e4003dd97cafdfe345812ece025f3bf06a5b1a3d",
+  "runtimeBytes": 94608,
+  "appHeaderSHA256": "d3cb9b9a0e20d3f37ef291c8daa1b897b0528899187601b7379e61dfb4a66ad7",
+  "checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "unchangedComponents": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "embeddedRuntimeMatches": true,
+  "buildSourcesMatch": true,
+  "patchedNativeHookWitnesses": true,
+  "appBundlesIdentical": true,
+  "flashed": false,
+  "bootVerified": false
+}

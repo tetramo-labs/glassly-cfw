@@ -12,9 +12,9 @@ from unicorn import riscv_const as r
 ROOT = Path(__file__).resolve().parents[2]
 BASE, GP, SP, RET = 0x041eb020, 0x02011688, 0x0301fff0, 0x05000000
 OUT, TABLE = 0x03000010, 0x03000100
-SHA = '81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8'
+STOCK_SHA = '81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8'
 BODY = (ROOT / 'analysis/extracted/validated-1.0.3.127/segment-3.body.bin').read_bytes()
-assert hashlib.sha256(BODY).hexdigest() == SHA
+assert hashlib.sha256(BODY).hexdigest() == STOCK_SHA
 MOCKS = {0x043421d2: 'bus_lock', 0x04342200: 'bus_unlock', 0x0200f758: 'sleep',
          0x0200a23a: 'enter', 0x0200a264: 'leave', 0x0200ec3a: 'mutex_lock',
          0x0200ecb2: 'mutex_unlock', 0x02000000: 'copy', 0x02003d5e: 'log_enabled',
@@ -378,7 +378,7 @@ def main():
         for error in (0, 1, 11):
             rows.append(imu_decode(values, error=error, manager=True))
             rows.append(imu_decode(values, error=error, unscaled=True))
-    report = dict(passed=True, cases=len(rows), stockBodySHA256=SHA, actualCodeRanges=RANGES,
+    report = dict(passed=True, cases=len(rows), stockBodySHA256=STOCK_SHA, actualCodeRanges=RANGES,
                   mockBoundaries={hex(k): v for k, v in MOCKS.items()}, hardwareTested=False,
                   ownershipImplemented=False, results=rows)
     args.report.write_text(json.dumps(report, indent=2) + '\n')

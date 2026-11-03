@@ -85,6 +85,19 @@ def construct(source,blob,build):
             require(body[off:off+8]==bytes.fromhex(before),'Microphone hook witness differs')
             after=jump(target);body[off:off+8]=after
             edits.append(dict(address=address,before=before,after=after.hex(),purpose='microphone-'+name))
+    if build.get('sensor_capture'):
+        require(revision>=8 and build.get('microphone_control'),'Invalid sensor profile')
+        address=0x0422b67a;before='797122d44ad04ece';target=build['symbols']['glassly_sensor_als_entry']
+        off=address-BODY_BASE;require(body[off:off+8]==bytes.fromhex(before),'ALS entry witness differs')
+        after=jump(target);body[off:off+8]=after
+        edits.append(dict(address=address,before=before,after=after.hex(),purpose='sensor-als'))
+        address=0x043475f6;before='eff09fe3';target=build['symbols']['glassly_sensor_imu_entry']
+        require(ENTRY<=target<ENTRY+len(blob) and target%2==0,'IMU observer outside runtime')
+        off=address-BODY_BASE;require(body[off:off+4]==bytes.fromhex(before),'IMU read call witness differs')
+        delta=target-address;require(-(1<<20)<=delta<(1<<20) and delta%2==0,'IMU JAL range')
+        ins=((delta>>20&1)<<31)|((delta>>1&1023)<<21)|((delta>>11&1)<<20)|((delta>>12&255)<<12)|(1<<7)|0x6f
+        after=struct.pack('<I',ins);body[off:off+4]=after
+        edits.append(dict(address=address,before=before,after=after.hex(),purpose='sensor-imu'))
     allowed={i for row in gates+edits for i in range(row['address']-BODY_BASE,row['address']-BODY_BASE+len(bytes.fromhex(row['after'])))}
     changed=[i for i,(a,b) in enumerate(zip(original,body)) if a!=b]
     require(set(changed)<=allowed and len(body)==len(original),'Change outside fixed lifecycle gates')

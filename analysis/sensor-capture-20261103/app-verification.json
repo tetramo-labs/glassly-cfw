@@ -1,0 +1,29 @@
+{
+  "version": "GLASSLYCFW/8",
+  "passed": true,
+  "macTests": 112,
+  "iosSimulatorTests": 12,
+  "androidTests": 20,
+  "engineTests": 2,
+  "androidSuites": {
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorsTest": 2,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindWireTest": 13,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindRecordsTest": 3,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindMicrophoneTest": 2
+  },
+  "logSHA256": {
+    "app-mac-02.log": "5444f67f675b4f302089f7b4bf7b53c39d223288b30c30af97e8a2b6a424ab17",
+    "app-ios-02.log": "760c37b94a27c5b2b0ec6891e223378aee67db68320925f64eb8a67e6d7072e2",
+    "app-android-01.log": "20511a76843904eb7fafbf3330102653a33b9b35f27ae67cc9c6250a08b5514d",
+    "app-engine-01.log": "a272105f434fbf1d2828ec63910e0a2aafd325799ac7b6e773c790d9f3014667"
+  },
+  "appHardwareTested": false,
+  "limitations": [
+    "Native sensor diagnostics are not exposed as calibrated engine light/compass capabilities.",
+    "Firmware transfer, boot and sensor hardware acceptance remain unverified."
+  ],
+  "initialFailuresResolved": [
+    "Mac adapter test referenced clearDisplay instead of existing clear.",
+    "iOS bundle eligibility expected previous release name."
+  ]
+}

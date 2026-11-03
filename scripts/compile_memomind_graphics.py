@@ -87,7 +87,7 @@ def check_stack_usage(rows):
             raise ValueError("Nonstatic or oversized function stack frame: "+row)
 
 
-def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, notification_relay=False, record_transport=False, microphone_control=False, cfw_revision=None, rx_profile=DEFAULT_RX_PROFILE):
+def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, notification_relay=False, record_transport=False, microphone_control=False, sensor_capture=False, cfw_revision=None, rx_profile=DEFAULT_RX_PROFILE):
     limit = rx_limit(rx_profile)
     if cfw_revision is None: cfw_revision = 2 if notification_relay else 1
     if type(cfw_revision) is not int or not 1 <= cfw_revision <= 65535:
@@ -96,6 +96,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         raise ValueError("Record transport requires flash scene and diagnostic commands")
     if microphone_control and (not record_transport or not wake_control or cfw_revision < 7):
         raise ValueError("Microphone control requires record/wake profile and CFW revision >=7")
+    if sensor_capture and (not microphone_control or cfw_revision < 8):
+        raise ValueError("Sensor capture requires microphone profile and CFW revision >=8")
     if notification_relay and cfw_revision < 2:
         raise ValueError("Notification candidate requires CFW revision >=2")
     if notification_relay and not wake_control:
@@ -147,6 +149,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
                     ROOT/"runtime/portable/notifications.c", ROOT/"runtime/portable/ancs_ingress.c"]
     if microphone_control:
         sources += [ROOT/"runtime/graphics/microphone_native.c", ROOT/"runtime/graphics/microphone_entry.S"]
+    if sensor_capture:
+        sources += [ROOT/"runtime/graphics/sensor_capture.c", ROOT/"runtime/graphics/sensor_entry.S"]
     if wake_control:
         sources += [ROOT/"runtime/graphics/wake_control.c", ROOT/"runtime/portable/wake.c"]
     if minimal_launcher:
@@ -198,6 +202,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         flags += ["-DMM_NOTIFICATION_RELAY=1"]
     if microphone_control:
         flags += ["-DMM_MICROPHONE_CONTROL=1"]
+    if sensor_capture:
+        flags += ["-DMM_SENSOR_CAPTURE=1"]
     if wake_control:
         flags += ["-DMM_WAKE_CONTROL=1"]
     if minimal_launcher:
@@ -236,7 +242,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         record_flags = ["-Os"] if record_transport and (source.name in ("record_session.c","transport.c","inflater.c") or source.parent.name=="zlib") else []
         microphone_flags = (["-Oz"] if source.name == "microphone_native.c" else
                             ["-Os"] if microphone_control and source.name in ("geometry.c", "vector.c") else [])
-        run("gcc", *flags, *portable_flags, *diagnostic_flags, *trim_flags, *record_flags, *microphone_flags, "-c", source, "-o", obj)
+        sensor_flags = ["-Os"] if sensor_capture and source.suffix==".c" and source.parent.name=="graphics" else []
+        run("gcc", *flags, *portable_flags, *diagnostic_flags, *trim_flags, *record_flags, *microphone_flags, *sensor_flags, "-c", source, "-o", obj)
         objects.append(obj)
     elf = out/"graphics.elf"
     retain = ["-Wl,--undefined="+name for name in SCENE_ENTRIES] if scene_session else []
@@ -248,6 +255,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         retain += ["-Wl,--undefined=glassly_flash_read_command", "-Wl,--undefined=glassly_flash_read_native"]
     if microphone_control:
         retain += ["-Wl,--undefined=glassly_microphone_"+name+"_entry" for name in ("task","spp","iap2","link")]
+    if sensor_capture:
+        retain += ["-Wl,--undefined=glassly_sensor_"+name+"_entry" for name in ("imu","als")]
     if notification_relay:
         retain += ["-Wl,--undefined=glassly_notification_entry"]
     run("gcc", *flags, "-Wl,--no-relax,--gc-sections,--build-id=none,--fatal-warnings",
@@ -302,7 +311,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "diagnostic_commands": diagnostic_commands,
               "reset_undo_trim": reset_undo_trim,
               "minimal_launcher": minimal_launcher,
-              "flash_scene": flash_scene, "wake_control": wake_control, "notification_relay": notification_relay, "record_transport": record_transport, "microphone_control": microphone_control, "cfw_revision": cfw_revision,
+              "flash_scene": flash_scene, "wake_control": wake_control, "notification_relay": notification_relay, "record_transport": record_transport, "microphone_control": microphone_control, "sensor_capture": sensor_capture, "cfw_revision": cfw_revision,
+              "sensor_size_flags": "graphics C sources -Os" if sensor_capture else None,
               "scene_extra_flags": ["-Os"] if reset_undo_trim else [],
               "microphone_size_flags": {"microphone_native.c": "-Oz", "geometry.c": "-Os", "vector.c": "-Os"} if microphone_control else {},
               "diagnostics_extra_flags": ["-Oz"] if diagnostic_commands else [],
@@ -332,6 +342,7 @@ def main():
     parser.add_argument("--cfw-revision", type=int, help="Numeric GLASSLYCFW revision; increment before every flash")
     parser.add_argument("--notification-relay", action="store_true")
     parser.add_argument("--microphone-control", action="store_true")
+    parser.add_argument("--sensor-capture", action="store_true")
     parser.add_argument("--record-transport", action="store_true")
     parser.add_argument("output", type=Path, help="New build directory")
     profiles = parser.add_mutually_exclusive_group()
@@ -356,7 +367,7 @@ def main():
     args = parser.parse_args()
     try:
         print(json.dumps(compile_graphics(args.output, gate_fixture=args.gate_fixture,
-                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, notification_relay=args.notification_relay, record_transport=args.record_transport, microphone_control=args.microphone_control, cfw_revision=args.cfw_revision, rx_profile=args.rx_profile), indent=2))
+                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, notification_relay=args.notification_relay, record_transport=args.record_transport, microphone_control=args.microphone_control, sensor_capture=args.sensor_capture, cfw_revision=args.cfw_revision, rx_profile=args.rx_profile), indent=2))
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         if isinstance(exc, subprocess.CalledProcessError):
             parser.exit(2, exc.stderr.decode()+str(exc)+"\n")

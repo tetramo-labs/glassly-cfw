@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "sensor-capture-001",
+                        sha256: "5658977cd0653d3c8722aa0751024eedf57c227425d9bec031ec00c0f6a0e00f", byteCount: 2_246_211, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "1f801d0c3a32088091c02e16dfa63119e3a47e450f134e15447370c6c4aa0c39",
+                        streams: streamPins(.sensorCapture8)),
         FirmwareRelease(name: "microphone-owner-001",
                         sha256: "e43e0f1b2745774104f84d6d406092e49d97276d37eb94831a8c0c346aaa54cb", byteCount: 2_248_764, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "ecc31323c1200c9c5081563b8b8d0d10d1322eef3b6767a58840adc1481e87e7",
@@ -276,12 +280,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .sensorCapture8:
+            metadata = 171; appPacked = 975_109; appRaw = 1_867_824
+            metadataHash = "1c66b3b0d03e0b7ad4a542b35a1d62c3768ced14ef6e5336eed7ff9ca976338d"
+            appHash = "8d617160324d390b885b376d8c53039879b0094c6e9293e1e09fb3a2bf7db304"
         case .microphoneOwner7:
             metadata = 171; appPacked = 977_662; appRaw = 1_871_520
             metadataHash = "19d4b1e3ec8ddba05faf346926fd89cfee205296f3a0b2db504bfbf705ea552d"

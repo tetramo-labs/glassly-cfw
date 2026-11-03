@@ -29,9 +29,18 @@ and [revision6 checkpoint](analysis/record-memory-20261103/checkpoint.json).
 Revision7 adds leased native Opus microphone control, verified shutdown status,
 disconnect/expiry gating and whole-session cleanup. The Swift tool and Glassly
 iOS/Android use the new control path; display clear preserves microphone capture.
-The candidate is bundled for Glassly, but has not yet been flashed.
+Revision7 was not flashed; its microphone changes are included in revision8.
 See the [microphone contract](runtime/graphics/MICROPHONE.md) and
 [revision7 checkpoint](analysis/microphone-owner-20261103/checkpoint.json).
+
+Revision8 adds leased passive IMU register and normalized light snapshots,
+with generation tokens, sequence numbers and completion timestamps. The runtime
+uses94,608 bytes of the existing96KiB region and48 reserved registry bytes.
+Swift and Android clients expose the native diagnostic interface; the Glassly
+bundle and engine admission require revision8. It has not been flashed.
+Native sensor power control, physical-unit calibration and compass remain
+unfinished. See the [sensor contract](runtime/graphics/SENSORS.md) and
+[revision8 checkpoint](analysis/sensor-capture-20261103/checkpoint.json).
 
 ## Compressed record transport
 
@@ -135,18 +144,19 @@ and maps original assertions to current MemoMind coverage. All46 unique C host
 scenarios now have portable core coverage, with746 original assertion sites
 preserved across all seven host suites. This includes scene/cache/assets,
 notification relay, keyboard, record transport and upstream protocol policies.
-The latest clean regression passes141 required offline stages, including235
-Python tests and141 Swift tests, with no source drift or missing mapped stages.
-See the [regression summary](analysis/microphone-owner-20261103/regression-verification.json).
-The subsequent required sensor ABI stage passes604 actual-code cases with
+The latest clean regression passes144 required offline stages, including235
+Python tests and145 Swift tests, with no source drift or missing mapped stages.
+See the [regression summary](analysis/sensor-capture-20261103/regression-verification.json).
+The required sensor ABI stage passes604 actual-code cases with
 mocked hardware/RTOS boundaries. It establishes ALS normalization and shared
 power behavior, plus IMU acquisition, axis reduction and shutdown boundaries;
-it does not add a native sensor command or change the installed firmware.
+Revision8 builds on this evidence with passive capture; it does not claim
+active power control or calibrated G2 sensor parity.
 See [sensor evidence](analysis/sensor-abi-20261103/NOTES.md).
 Unchanged G2 reference checks and native-layout mocks remain separately labeled;
 18 required suite/integration entries remain incomplete. Bluetooth keyboard/HOGP,
 ring battery, gestures, mode5 sound/tone commands and volume gating are out of
-scope. Remaining work includes native sensors, broader microphone profiles and hardware ownership acceptance, BLE/wear
+scope. Remaining work includes active/calibrated native sensors, broader microphone profiles and hardware ownership acceptance, BLE/wear
 policies, physical notification acceptance, performance, broader font coverage
 and complete app/pairing capture.
 

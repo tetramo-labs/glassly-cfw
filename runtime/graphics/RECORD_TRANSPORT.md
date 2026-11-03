@@ -17,7 +17,8 @@ unsolicited. Nested record/raw carriers (126/127) are rejected.
 The record session belongs to the display owner but survives until an active
 command returns if that command deletes the owner. Its parser, partial input,
 output and persistent decoder allocations share a 180 KiB budget and preserve
-48 KiB free native heap. Context expires after 30 seconds independently of the
+48 KiB free native heap. Revision6 allocates the 6 KiB JSON reply scratch only
+during process/finish and frees it after the native reply has copied it. Context expires after 30 seconds independently of the
 frame lease. Incomplete raw-message assembly excludes record processing.
 Maximum encoded and decoded records are each 65,535 bytes; capacity does not
 guarantee enough free heap for every combination of scene/cache/record state.

@@ -9,7 +9,7 @@ struct mm_record_session {
     size_t live,used;
     unsigned frames;
     uint8_t event,processing,closing,overflow;
-    char json[JSON_BYTES];
+    char *json;
 };
 typedef struct {size_t bytes;} allocation;
 static void *allocate(void *user,size_t n){
@@ -74,6 +74,7 @@ void mm_record_close(mm_record_session *s){
 const char *mm_record_process(mm_record_session *s,uint8_t event,const uint8_t *p,size_t n){
     if(!s || s->processing || s->closing || !mm_record_valid(p,n))return 0;
     s->processing=1;s->event=event;s->used=0;s->frames=0;s->overflow=0;
+    s->json=allocate(s,JSON_BYTES);if(!s->json)return 0;
     text(s,"{\"glassly\":\"record-transport\",\"abi\":1,\"frames\":[");
     uint32_t rc=mm_transport_receive(&s->transport,1,p[2],p[3],p+4,(uint16_t)(n-4),MM_RECORD_REPLY_CAPACITY);
     text(s,"],\"status\":");number(s,rc);text(s,",\"nackReason\":");number(s,s->transport.nack_reason);
@@ -83,5 +84,6 @@ const char *mm_record_process(mm_record_session *s,uint8_t event,const uint8_t *
 }
 void mm_record_finish(mm_record_session *s){
     if(!s || !s->processing)return;
+    release(s,s->json);s->json=0;
     s->processing=0;if(s->closing)mm_record_close(s);
 }

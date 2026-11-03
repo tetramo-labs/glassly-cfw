@@ -37,7 +37,7 @@ command`0x7d`, one BYTES TLV; G2's original wire/ACK envelope is not installed.
 |17|Ring battery query `[17,0]`; field106 `RB` status with connected/valid/charging bits|**Excluded:** no ring battery hardware. Historical portable encoding/tests remain reference only; no native binding required.|
 |19|Immediate cached image|Implemented in scene core/native scene session, subject to listed limits.|
 |20|Immediate cached-font text|Implemented in scene core/native scene session; requires uploaded font asset.|
-|36|Immediate shapes1–18 in scene build, including images/text/paths|Implemented; geometry-only build supports1–13. Native empty `[36,0]` renews lease rather than original raster takeover.|
+|36|Immediate shapes1–18 in scene build, including images/text/paths|Implemented; geometry-only build supports1–13. Revision6 makes empty `[36,0]` and `[164,0]` take raster ownership and stop animations while preserving the frame, matching the original dispatcher.|
 |37|PUT object/asset chunks, replacements/reassertion, transaction|Implemented in `scene_cache.inc::cfw_cache_put`.|
 |38|SHOW ordering, visibility/movement/glide/tween/freeze/finish/rotation|Implemented in portable scene/native scene session.|
 |39|HIDE/optional present/tag; retains cache|Implemented in portable scene/native scene session.|

@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "record-memory-001",
+                        sha256: "5a6f8984773318a651f2703838672e9220615051fa36709ea591ed47e3b2e019", byteCount: 2_248_759, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "b8c9e9883a737f25676fad40ef9e1f4f61ca091a66fa1370201f90780cdb03e6",
+                        streams: streamPins(.recordMemory6)),
         FirmwareRelease(name: "command-flags-001",
                         sha256: "b461c399c1361f5ac53f226a9d70896e1b2f039c0e70722a287737da3fab7851", byteCount: 2_248_692, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "fe56c3212e5c0597f8483adbf5b8e8f86662ba7162f37d0d858f41e618949c38",
@@ -268,12 +272,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .recordMemory6:
+            metadata = 171; appPacked = 977_657; appRaw = 1_869_344
+            metadataHash = "5f643e689fcf0eb233c1f1468fb089b0b05bc0513d9080f2966b4c7732454dcf"
+            appHash = "ad78e3f5591f86a96f4dccea4668a7011602efb269984da5a57295d9f2417fc6"
         case .commandFlags5:
             metadata = 171; appPacked = 977_590; appRaw = 1_869_344
             metadataHash = "5f643e689fcf0eb233c1f1468fb089b0b05bc0513d9080f2966b4c7732454dcf"

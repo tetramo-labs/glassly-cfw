@@ -50,6 +50,18 @@ class RecordMachine(WakeMachine):
 
 
 class Tests(unittest.TestCase):
+    def test_empty_shapes_take_over_animation(self):
+        for mode in (36, 164):
+            m = RecordMachine(); m.establish()
+            m.send_scene(S.animate_packet()); m.tick_at(120)
+            before = m.pixels()
+            frames = m.records(record(bytes([mode, 0])))
+            self.assertEqual(frames[-1][0], 1)
+            self.assertEqual(m.pixels(), before)
+            m.tick_at(500)
+            self.assertEqual(m.pixels(), before)
+            m.clear()
+
     def test_high_bit_cache_and_shape_aliases(self):
         plain, alias = RecordMachine(), RecordMachine()
         commands = [S.reset_packet(), S.put_packet(), S.show_packet(),

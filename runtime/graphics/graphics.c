@@ -551,13 +551,11 @@ void glassly_graphics_display(void *envelope) {
         } else if (!parent || !P.launcher_active()) {
             if (o) P.image_delete(o->image);
             result=busy;
-#ifdef MM_GRAPHICS_SCENE
-        } else if ((data[0]&127u)==36 && length==2 && data[1]==0) {
-#else
+#ifndef MM_GRAPHICS_SCENE
         } else if (data[1]==0) {
-#endif
             if (o) o->started=P.now();
             result=ok;
+#endif
         } else {
             if (!o) o=create(parent);
             if (!o) result=no_memory;

@@ -1,0 +1,30 @@
+{
+  "reports": {
+    "native-record.json": {
+      "reportSHA256": "a8aa781849bb8bddb9893c3bc3cdc59c4c435bb58309e59057e0aab68ed62c37",
+      "passed": true,
+      "groups": 6,
+      "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868",
+      "maxObservedStackBytes": 1552
+    },
+    "session-host/report.json": {
+      "reportSHA256": "100e6f1c6829eb75cc02df5de53da3506ff914ff124ee33990eb1621b81b4756",
+      "passed": true
+    },
+    "image-verification.json": {
+      "reportSHA256": "69cede011368d3214faa673b1cb065ed409323d616a476b0cbe8388cd0ef426e",
+      "passed": true,
+      "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868"
+    },
+    "gates.json": {
+      "reportSHA256": "ee9f2cc37b0606e2b0e535464d6ce5acc3f79f2380441eff4bb24141dd2182b9",
+      "passed": true,
+      "serviceCases": 512,
+      "prestockCases": 14,
+      "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868"
+    }
+  },
+  "newSwiftCatalogTestPassed": true,
+  "fullSuite": "analysis/regression-20261103-v6 (running)",
+  "hardwareTested": false
+}

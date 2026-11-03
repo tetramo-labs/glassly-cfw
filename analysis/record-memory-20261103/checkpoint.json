@@ -1,0 +1,19 @@
+{
+  "version": "GLASSLYCFW/6",
+  "release": "record-memory-001",
+  "imageSHA256": "5a6f8984773318a651f2703838672e9220615051fa36709ea591ed47e3b2e019",
+  "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868",
+  "appHeaderSHA256": "d65d7e3e761e4ee754e359a5921034d775267e1d0374c006e70de30cdba48f68",
+  "imageBytes": 2248759,
+  "runtimeBytes": 96128,
+  "flashed": false,
+  "bootVerified": false,
+  "hardwareCommandsVerified": false,
+  "physicalOutputConfirmed": false,
+  "appBundleDoesNotWaitForHardware": true,
+  "pending": [
+    "Connection search/preflight",
+    "Flash and boot verification",
+    "Physical display and matched RAM measurement"
+  ]
+}

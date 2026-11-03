@@ -38,7 +38,7 @@ including the user's listening confirmation. See the
 The reported lit background on wake is unintended. A follow-up restores the
 stock shared-screen background initialization and is
 [boot verified](analysis/wake-background-20261102/boot-verification.json);
-text is visibly confirmed, while explicit background-color confirmation remains pending.
+text and the black background are now [visually confirmed on revision 3](analysis/ota-pacing-20261103/visual-confirmation.json).
 Mode5 sound/tone commands and volume gating are excluded.
 
 The current `GLASSLYCFW/3` image adds the native ANCS relay and display position/depth

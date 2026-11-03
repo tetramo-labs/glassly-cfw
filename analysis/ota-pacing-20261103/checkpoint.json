@@ -120,7 +120,8 @@
   },
   "pending": [
     "Actual iOS ANCS delivery and actions",
-    "Physical display/background and position/depth confirmation"
+    "Physical display position/depth confirmation",
+    "Mac RFCOMM reconnect reliability after idle/lease expiry"
   ],
   "transferComplete": true,
   "rebootAcknowledged": true,
@@ -151,5 +152,10 @@
     "focusedIOS": 22,
     "androidMemoMind": 11
   },
-  "displayVerification": "analysis/ota-pacing-20261103/display-verification.json"
+  "displayVerification": "analysis/ota-pacing-20261103/display-verification.json",
+  "physicalTextConfirmed": true,
+  "blackBackgroundConfirmed": true,
+  "visualConfirmation": "analysis/ota-pacing-20261103/visual-confirmation.json",
+  "lastDisplayRepeat": "Physical text/background confirmed; observed both leases expired, then RFCOMM closed before explicit cleanup",
+  "appVisualEvidenceCommit": "d58075fd22"
 }

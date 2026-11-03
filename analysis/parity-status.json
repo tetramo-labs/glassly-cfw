@@ -752,7 +752,8 @@
     "Physical display position/depth checks",
     "Remaining transport/font/performance parity"
   ],
-  "current_device_verification": "Exact full OTA, boot header and revision verified; ANCS relay control and display position/depth readback/restoration passed. iOS notification delivery/actions and physical settings still pending.",
+  "current_device_verification": "Exact full OTA, boot header and revision verified; ANCS relay control and display position/depth readback/restoration passed. User confirmed revision 3 text on black. iOS notification delivery/actions and physical position/depth checks pending.",
   "current_device_version": "GLASSLYCFW/3",
-  "notification_settings_hardware_evidence": "analysis/ota-pacing-20261103/boot-verification.json"
+  "notification_settings_hardware_evidence": "analysis/ota-pacing-20261103/boot-verification.json",
+  "revision3_visual_confirmation": "analysis/ota-pacing-20261103/visual-confirmation.json"
 }

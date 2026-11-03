@@ -10,11 +10,11 @@ from pathlib import Path
 import graphics_runtime_emulator_test as G
 import scene_runtime_emulator_test as S
 from diagnostic_command_runtime_emulator_test import DiagnosticMachine
-G.NATIVES.update({0x05003000:'store_read',0x05003010:'store_erase',0x05003020:'store_program',0x04274b12:'welcome_home'})
+G.NATIVES.update({0x05003000:'store_read',0x05003010:'store_erase',0x05003020:'store_program',0x04274b12:'welcome_home',0x042c8fe2:'screen_background'})
 class FlashMachine(DiagnosticMachine):
  instruction_budget=20000000
  def __init__(self):
-  self.flash=bytearray(b'\xff'*1048576);self.io_calls=0;self.fail_io=0;self.welcome=False;self.welcomes=[];self.bind_calls=0
+  self.flash=bytearray(b'\xff'*1048576);self.io_calls=0;self.fail_io=0;self.welcome=False;self.welcomes=[];self.bind_calls=0;self.background=255;self.background_calls=0
   super().__init__();self.free_bytes=353656;assert self.build['flash_scene'] and self.build['minimal_launcher']
  def instruction(self,uc,address,size,userdata):
   if address==self.symbols['mm_flash_store_init']:self.flash_context=self.reg(10)
@@ -26,6 +26,9 @@ class FlashMachine(DiagnosticMachine):
   if name=='free_bytes':return max(0,self.free_bytes-sum(v['size'] for v in self.allocations.values() if v['live'] and v['tag']=='owned')-9000)
   if name=='base_app' and self.welcome:return 0x0200fcf4
   if name=='welcome_home':self.welcomes.append(a0);return 0
+  if name=='screen_background':
+   assert a0==self.parent and a1==0 and a2==0 and self.screen_present
+   self.background=0;self.background_calls+=1;return 0
   if name=='image_source' and not a1:
    assert a0 in self.images;self.images[a0]['detached']=True;return 0
   if name=='image_source':self.images[a0]['detached']=False
@@ -54,6 +57,21 @@ class FlashMachine(DiagnosticMachine):
    _,values=self.send_scene(p,patch_epoch=False);assert values[0]['result']=='accepted',values
   return self.send_scene(packets[-1],patch_epoch=False,reply_mode=command[0])
 class Tests(unittest.TestCase):
+ def test_shared_background_and_absent_screen(self):
+  m=FlashMachine();initial=set(m.owned_live())
+  m.screen_present=False;m.call('glassly_launcher_init_entry',0xdeadbeef,display=True)
+  self.assertEqual(m.background_calls,0)
+  m.screen_present=True
+  for _ in range(2):
+   m.background=255;m.call('glassly_launcher_init_entry',0xdeadbeef,display=True)
+   self.assertEqual(m.background,0)
+   m.establish();m.send_scene(bytes([11]),patch_epoch=False)
+   self.assertEqual(m.background,0)
+  self.assertEqual(m.background_calls,2)
+  m.call('glassly_launcher_destroy_entry',display=True)
+  self.assertEqual(m.background,0)
+  self.assertEqual(set(m.owned_live()),initial)
+  self.assertFalse(m.images or m.timers)
  def test_minimal_callbacks_and_complete_teardown(self):
   m=FlashMachine();initial=set(m.owned_live())
   for _ in range(2):

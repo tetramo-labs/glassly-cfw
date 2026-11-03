@@ -6,6 +6,11 @@ not installation or hardware proof. The selected candidate and validation are
 recorded in `analysis/minimal-owner-flash-20261102`.
 
 The launcher keeps its descriptor identity and the shared active LVGL screen.
+Initialization restores the stock zero background on that screen through
+`042c8fe2(screen,0,0)`, the call previously made by `042a5f24`. This also covers
+the exposed screen after a frame is released or expires, without allocating a
+replacement dashboard. The setter's actual RV32 wrapper is covered by the
+native-caller test; physical background appearance still requires hardware.
 Its five callbacks replace dashboard construction, listeners, timers and message
 handling. Destroy releases the CFW graphics, input and diagnostic owners without
 deleting the shared screen. Incoming app payloads remain borrowed. The original

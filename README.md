@@ -26,8 +26,16 @@ is recorded separately from protocol evidence. See the
 [current result](analysis/minimal-owner-queue-fix-20261102/hardware-result.json)
 and [ownership/wire contracts](runtime/graphics/MINIMAL_OWNER.md).
 
-Next work is wake/display ownership, single-button events, then microphone
-control and streaming. Mode5 sound/tone commands and volume gating are excluded.
+The wake/display ownership update is transferred and boot verified. Hardware
+checks confirm frame retention beyond30 seconds,90-second lease expiry and
+cleanup; double-press CLAIM/READY and physical visibility remain pending.
+Single/long/release button capture and native microphone streaming are verified,
+including the user's listening confirmation. See the
+[wake checkpoint](analysis/wake-display-20261102/wake-flash-checkpoint.json),
+[lease checks](analysis/wake-display-20261102/ownership-verification.json) and
+[audio confirmation](analysis/wake-display-20261102/microphone-confirmation.json).
+The reported lit background on wake is unintended and under correction.
+Mode5 sound/tone commands and volume gating are excluded.
 
 ## Established results
 
@@ -145,8 +153,10 @@ dispatch. The earlier49,248-byte input build passes7,955 gate cases and1,710 act
 handler calls with mocked firmware APIs. Its2,221,167-byte OTA was independently
 reconstructed from captured bytes. Hardware subscription, nonce/ACK rejection,
 scene coexistence, stop and lease checks passed with stock capabilities intact.
-The180-second capture observed no physical events, so physical single-button
-verification remains open. Gesture recognition is outside the current scope;
+That earlier180-second capture observed no physical events. A later capture
+confirmed single press, long press and release with no reported drops; see
+[button verification](analysis/wake-display-20261102/button-verification.json).
+Gesture recognition is outside the current scope;
 this cooked-event observer does not supply raw IMU or compass samples.
 The logger saves each page before acknowledging it; the phone was
 restored to MemoMind. See [input hardware evidence](analysis/input-hardware-verification.json)
@@ -295,7 +305,7 @@ acceptance of the specific tested custom images. `scripts/rea-local.sh`
 uses verified task-local Node/JADX and `~/dev/rea`. Direct Ghidra raw-image results
 are labeled separately because REA does not support this raw RISC-V import.
 
-Latest installed release: [diagnostics hardware checkpoint](analysis/diagnostics-native-20261102/hardware-awaiting-visual.json). The last visually confirmed text release is recorded in [mode15 hardware evidence](analysis/text-native-20261102/report.json).
+Earlier diagnostics release: [hardware checkpoint](analysis/diagnostics-native-20261102/hardware-awaiting-visual.json). Its text checks are recorded in [mode15 hardware evidence](analysis/text-native-20261102/report.json).
 
 The diagnostics/cleanup candidate adds mode7 frame tracking and a separate
 overlay, plus mode11 cleanup of implemented graphics/input resources. Its

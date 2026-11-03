@@ -7,9 +7,9 @@ from minimal_owner_flash_runtime_emulator_test import FlashMachine
 sys.path.insert(0,str(G.ROOT/'scripts'))
 from memomind_ota import unpack_ota,sha
 from build_memomind_minimal_owner import CALLBACKS,BOUNDARIES,BODY_BASE
-G.NATIVES.update({0x04282764:'calibration',0x0425e07c:'leave_app'})
+G.NATIVES.update({0x04282764:'calibration',0x0425e07c:'leave_app',0x042c8832:'local_style'})
 BODY=b''
-STOCK_RANGES=((0x0425db94,0x0425dcb6),(0x0427253a,0x04272542),(0x04272664,0x04272698),(0x04272960,0x04272968),(0x04273ee6,0x04273f3a))
+STOCK_RANGES=((0x0425db94,0x0425dcb6),(0x0427253a,0x04272542),(0x04272664,0x04272698),(0x04272960,0x04272968),(0x04273ee6,0x04273f3a),(0x042c8fe2,0x042c900c))
 class Machine(FlashMachine):
  def __init__(self):
   self.calibration_result=0;self.calibrations=[];self.leaves=0
@@ -46,6 +46,9 @@ class Machine(FlashMachine):
    assert self.stack_base<=self.reg(2)<=self.stack_top;self.instructions+=1;return
   return super().instruction(uc,address,size,userdata)
  def native(self,name,args):
+  if name=='local_style':
+   assert args[:4]==(self.parent,0x20,0,0),args[:4]
+   self.background=0;self.background_calls+=1;return 0
   if name=='calibration':
    assert args[0] in (0x5000,0x5001) and args[2]==0 and args[3]==0x0427253a
    self.calibrations.append(args[:4]);return self.calibration_result
@@ -58,6 +61,7 @@ class Tests(unittest.TestCase):
   for address,_,name in CALLBACKS:
    target=int.from_bytes(BODY[address-BODY_BASE:address-BODY_BASE+4],'little');self.assertEqual(target,m.symbols['glassly_launcher_'+name+'_entry'])
    m.call(target,0x0200fc7c,0x8877,0xdeaddead,0,display=True)
+  self.assertEqual(m.background_calls,1);self.assertEqual(m.background,0)
   for _ in range(2):
    m.call('manager_tick',display=True)
    for kind in (0,1,2,3,0xffff):

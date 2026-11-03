@@ -2,7 +2,11 @@
  * no stock dashboard objects, listeners, timers or borrowed TLVs are retained. */
 #include "graphics.h"
 #define FN(a,t) ((t)(uintptr_t)(a))
-void glassly_launcher_init(void *app) { (void)app; }
+void glassly_launcher_init(void *app) {
+    (void)app;
+    void *screen=mm_graphics_native.screen();
+    if(screen)FN(0x042c8fe2u,void (*)(void *,uint8_t,uint32_t))(screen,0,0);
+}
 void glassly_launcher_destroy(void) { glassly_graphics_cleanup(); }
 void glassly_launcher_tick(void) {}
 int glassly_launcher_event(void *app,uint32_t kind,const void *payload) {

@@ -232,6 +232,11 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "wake-background-001",
+                        sha256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7",
+                        byteCount: 2235644, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        headerSHA256: "d4cab46f823c0f8897fadfc6672f86d406e3d1a7f347afa17bb26527dd58f93c",
+                        streams: streamPins(.wakeBackground)),
         FirmwareRelease(name: "wake-control-002",
                         sha256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2",
                         byteCount: 2236085, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
@@ -244,7 +249,7 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl }
+    private enum StreamVariant { case stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
@@ -286,6 +291,10 @@ private struct FirmwareRelease {
             metadata = 171; appPacked = 955302; appRaw = 1833472
             metadataHash = "fdeac5450e48ffc548b110450dc4b6117a8702bcf5bcd5bf197fb794c2d746e2"
             appHash = "1cf2a3d6a315d67764f4f43863f2d8ec802a5ef45eb82e1bc20a4b3b4fd833b6"
+        case .wakeBackground:
+            metadata = 171; appPacked = 964542; appRaw = 1848160
+            metadataHash = "9aaf54003c8b29364662268927f224d8e10311a8efe39165b55f1f0cc4be5ff2"
+            appHash = "e29a270fea9b42fc3c596e5ce37f6205421ee5e1f5f29b96b66f4a235341149c"
         case .wakeControl:
             metadata = 171; appPacked = 964983; appRaw = 1848112
             metadataHash = "59085caced14283f4b6cd4c3f553b9211904c883c11120f54ba398743c79892e"

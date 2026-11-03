@@ -45,6 +45,20 @@ final class FirmwareImageTests: XCTestCase {
         XCTAssertThrowsError(try EligibleFirmware.load(data: bytes, expectedSHA256: FirmwareIntegrity.sha256(bytes)))
     }
 
+    func testWakeBackgroundExactFixtureAndMutationRejection() throws {
+        let bytes = try fixture("captures/firmware/wake-background-001/firmware.bin")
+        let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7")
+        XCTAssertEqual(image.releaseName, "wake-background-001"); XCTAssertEqual(bytes.count, 2235644)
+        let parsed = try FirmwareContainer.inspect(Array(bytes))
+        XCTAssertEqual(parsed.headerSHA256, "d4cab46f823c0f8897fadfc6672f86d406e3d1a7f347afa17bb26527dd58f93c")
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1848160)
+        let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
+        for i in [1,2,4,5,6] { XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256) }
+        var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7"))
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
+    }
+
     func testWakeControlExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/wake-control-002/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2")

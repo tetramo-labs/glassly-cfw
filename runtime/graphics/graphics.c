@@ -29,6 +29,9 @@
 #ifdef MM_FLASH_SCENE
 #include "large_message.h"
 #endif
+#ifdef MM_RECORD_TRANSPORT
+#include "record_session.h"
+#endif
 #define P mm_graphics_native
 #define OWNER_MAGIC 0x474c4931u
 typedef struct {
@@ -37,6 +40,10 @@ typedef struct {
     mm_native_image descriptor;
 #ifdef MM_FLASH_SCENE
     mm_large_message assembly;
+#ifdef MM_RECORD_TRANSPORT
+    mm_record_session *records;
+    uint32_t records_started;
+#endif
 #endif
 #ifdef MM_GRAPHICS_SCENE
     mm_scene_session scene;
@@ -65,6 +72,9 @@ static int valid_message(const uint8_t *data, size_t length) {
 #ifdef MM_GRAPHICS_SCENE
 #ifdef MM_FLASH_SCENE
     if (!data || !length || length>MM_SCENE_MAX_MESSAGE) return 0;
+#ifdef MM_RECORD_TRANSPORT
+    if(data[0]==MM_RECORD_MODE)return mm_record_valid(data,length);
+#endif
     if(data[0]==MM_LARGE_WIRE_MODE)return length>=6 && length<=MM_LARGE_CHUNK+8;
 #else
     if (!data || !length || length>MM_GRAPHICS_MAX_MESSAGE) return 0;
@@ -98,6 +108,9 @@ static void deleted(void *event) {
     o->magic=0;
 #ifdef MM_FLASH_SCENE
     mm_large_clear(&o->assembly,P.free);
+#ifdef MM_RECORD_TRANSPORT
+    mm_record_close(o->records);o->records=0;
+#endif
 #endif
     void *timer=o->timer;
     o->timer=0;
@@ -147,6 +160,11 @@ static void tick(void *timer) {
     owner *o=P.timer_userdata(timer);
     if (!o || o->magic!=OWNER_MAGIC) return;
 #ifdef MM_WAKE_CONTROL
+#ifdef MM_RECORD_TRANSPORT
+    if(o->records && (uint32_t)(P.now()-o->records_started)>=MM_GRAPHICS_LEASE_TICKS){
+        mm_record_close(o->records);o->records=0;
+    }
+#endif
     if(o->assembly.data && (uint32_t)(P.now()-o->started)>=MM_GRAPHICS_LEASE_TICKS)
         mm_large_clear(&o->assembly,P.free);
 #endif
@@ -385,6 +403,9 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"modes\":[3,6,11,19,20,36,37,38,39,40,41],\"rasterLens\":\"first-left\","
 #endif
 #ifdef MM_FLASH_SCENE
+#ifdef MM_RECORD_TRANSPORT
+                   "\"recordTransport\":{\"mode\":126,\"version\":1,\"maxPacketBytes\":128,\"maxRecordBytes\":65535,\"replyCapacity\":64,\"endpoint\":1,\"leaseTicks\":30000},"
+#endif
                    "\"maxMessageBytes\":65535,\"maxWireMessageBytes\":8192,\"largeMessage\":{\"mode\":127,\"chunkBytes\":1024,\"crc\":\"crc32-ieee\"},"
 #else
                    "\"maxMessageBytes\":8192,"
@@ -464,7 +485,7 @@ void glassly_graphics_command(uint32_t command, void *request,
 }
 #ifdef MM_FLASH_SCENE
 #define EXEC_EVENT event
-static void execute(uint8_t event,const uint8_t *data,size_t length) {
+static int execute_inner(uint8_t event,const uint8_t *data,size_t length,uint8_t cap,uint8_t *record_reply,uint8_t *record_count) {
 #else
 #define EXEC_EVENT job[1]
 void glassly_graphics_display(void *envelope) {
@@ -498,6 +519,12 @@ void glassly_graphics_display(void *envelope) {
         if (o && o->magic!=OWNER_MAGIC) o=0;
 #ifdef MM_DIAGNOSTIC_COMMANDS
         if((data[0]&127u)==7){
+#ifdef MM_RECORD_TRANSPORT
+            if(record_reply){
+                if(cap<20 || mm_diagnostics_snapshot(parent,length>=2?data[1]:255u,record_reply))return -1;
+                *record_count=20;return 0;
+            }
+#endif
             scene_response=mm_diagnostics_control(parent,length>=2?data[1]:255u);
             result=scene_response?ok:no_memory;
         }else if((data[0]&127u)==11){
@@ -550,7 +577,18 @@ void glassly_graphics_display(void *envelope) {
 #ifdef MM_FLASH_SCENE
                     glassly_graphics_detach(o->image);
 #endif
+#ifdef MM_RECORD_TRANSPORT
+                    if(record_reply)o->scene.core.cache_reply_cap=cap;
+#endif
                     int status=mm_scene_session_dispatch(&o->scene,data,length);
+#ifdef MM_RECORD_TRANSPORT
+                    if(record_reply){
+                        *record_count=o->scene.core.cache_reply_len;
+                        if(*record_count>cap){status=-1;*record_count=0;}
+                        for(unsigned i=0;i<*record_count;i++)record_reply[i]=o->scene.core.cache_reply[i];
+                        o->scene.core.cache_reply_cap=250;
+                    }
+#endif
 #ifdef MM_FLASH_SCENE
                     if(o->scene.core.storage_io || o->scene.core.shadow_invalid){
                         glassly_graphics_detach(o->image);
@@ -603,15 +641,33 @@ void glassly_graphics_display(void *envelope) {
 #else
     void *response=reply(result);
 #endif
-    if (response) { P.send(EXEC_EVENT,response); P.release(&response); }
+    if (response) {
+#ifdef MM_RECORD_TRANSPORT
+        if(!record_reply)
+#endif
+        P.send(EXEC_EVENT,response);
+        P.release(&response);
+    }
 #ifdef MM_GRAPHICS_SCENE
     if (executed) flush_settled(executed);
 #endif
     /* Envelope is still exclusively owned/freed by the stock worker. */
+#ifdef MM_FLASH_SCENE
+#ifndef MM_RECORD_TRANSPORT
+    (void)cap;(void)record_reply;(void)record_count;
+#endif
+    return result==ok || result==cleared ? 0:-1;
+#endif
 }
 
 #undef EXEC_EVENT
 #ifdef MM_FLASH_SCENE
+static void execute(uint8_t event,const uint8_t *data,size_t length){(void)execute_inner(event,data,length,0,0,0);}
+#ifdef MM_RECORD_TRANSPORT
+static int execute_record(uint8_t event,const uint8_t *data,uint16_t length,uint8_t cap,uint8_t *reply,uint8_t *count){
+    *count=0;return execute_inner(event,data,length,cap,reply,count);
+}
+#endif
 static const char large_ok[]="{\"glassly\":\"large-message\",\"abi\":1,\"result\":\"accepted\"}";
 static void *large_allocate(size_t n){return P.free_bytes()>=MM_GRAPHICS_QUEUE_HEADROOM+n?P.alloc(n):0;}
 void glassly_graphics_display(void *envelope) {
@@ -634,6 +690,30 @@ void glassly_graphics_display(void *envelope) {
 #ifdef MM_FLASH_SCENE
     void *parent=P.screen();owner *o=parent?P.find_owner(parent,deleted):0;
     if(o && o->magic!=OWNER_MAGIC)o=0;
+#ifdef MM_RECORD_TRANSPORT
+    if(length && data[0]==MM_RECORD_MODE){
+        const char *result=invalid;mm_record_session *session=0;
+        if(!mm_record_valid(data,length))result=invalid;
+        else if(!parent || !P.launcher_active())result=busy;
+        else if(o && o->assembly.data)result=invalid;
+        else {
+            if(!o)o=create(parent);
+            if(!o)result=no_memory;
+            else {
+                if(!o->records){
+                    mm_record_platform platform={P.alloc,P.free,P.free_bytes,execute_record};
+                    o->records=mm_record_create(&platform);
+                }
+                session=o->records;o->records_started=o->started=P.now();
+                result=session?mm_record_process(session,job[1],data,length):no_memory;
+                if(!result)result=invalid;
+            }
+        }
+        void *response=reply(result);
+        if(response){P.send(job[1],response);P.release(&response);}
+        mm_record_finish(session);return;
+    }
+#endif
     if(length && data[0]==MM_LARGE_WIRE_MODE){
         const char *result=invalid;uint8_t *record=0;size_t record_length=0;
         if(!parent || !P.launcher_active())result=busy;
@@ -644,7 +724,11 @@ void glassly_graphics_display(void *envelope) {
                 o->started=P.now();
                 int rc=mm_large_accept(&o->assembly,data,length,large_allocate,P.free,&record,&record_length);
                 if(rc==MM_LARGE_DONE){
-                    if(record[0]!=MM_LARGE_WIRE_MODE)execute(job[1],record,record_length);
+                    if(record[0]!=MM_LARGE_WIRE_MODE
+#ifdef MM_RECORD_TRANSPORT
+                       && record[0]!=MM_RECORD_MODE
+#endif
+                    )execute(job[1],record,record_length);
                     else {void *r=reply(invalid);if(r){P.send(job[1],r);P.release(&r);}}
                     P.free(record);return;
                 }

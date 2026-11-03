@@ -251,3 +251,13 @@ is unchanged. Assets have an ephemeral logical flash map, not reboot persistence
 Compressed transport and its inflater histories remain separate work. The
 [hardware record](../../analysis/minimal-owner-queue-fix-20261102/hardware-result.json)
 distinguishes advertised limits from completed device checks.
+
+## Compressed graphics records
+
+`GraphicsRecordSession(session:)` sends existing command bytes through the
+mode126 carrier. `send(_:compressed:event:)` returns an optional binary data
+reply after a correlated CRC/length ACK. It probes capabilities first, retains
+the zlib dictionary between records and stops permanently on loss or rejection.
+Do not retry ambiguous commands; create a fresh session only after checking
+device state. The native contract and limits are in
+`runtime/graphics/RECORD_TRANSPORT.md` at the repository root.

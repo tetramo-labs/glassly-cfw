@@ -11,8 +11,8 @@ code, not an inclusion of the upstream firmware module or its hardware stubs.
 The core takes a caller-owned `mm_transport` and platform callbacks. It has no
 firmware addresses, global writable state, Bluetooth operations, native queues,
 clock, display access, hardcoded heap or zlib ABI. It reconstructs ordered
-records and invokes a synchronous handler. No MemoMind device adapter or native
-inflater is supplied, and these host tests do not establish hardware parity.
+records and invokes a synchronous handler. The native adapter is documented in `../graphics/RECORD_TRANSPORT.md`;
+these host tests do not establish hardware parity.
 
 ## Boundary and ownership
 
@@ -107,8 +107,8 @@ Wire reconstruction allocates at most `max_record` per active origin. Compressed
 processing additionally allocates `max_record+1` output bytes, plus
 platform-owned inflater memory. Two origin slots can retain separate partial
 buffers and decoder states. A max-record limit is not a total heap budget;
-allocator callbacks must enforce the actual budget and fail safely. No native
-MemoMind zlib decoder, allocation headroom or scheduling deadline is asserted.
+allocator callbacks must enforce the actual budget and fail safely. The native adapter separately enforces its allocation budget and headroom.
+These portable tests do not establish a hardware scheduling deadline.
 
 The portable parser is synchronous and does not yield. Its work scales with the
 packet bytes, CRC bits and handler/decoder work. A device adapter must separately
@@ -147,7 +147,9 @@ context continuity and final allocation-leak assertion remain intact.
 Only setup/context allocation, disposal and original outer-wire/hardware entry
 points are rebound. `tests/transport/original_adapter.h` explicitly supplies a
 host-only G2 two-lens routing/outer-header simulation; `host_zlib.h` supplies host
-zlib. These are test scaffolding, excluded from production `transport.c`.
+zlib. The same original scenarios and public API tests also run against
+`inflater.c` and pinned zlib 1.3.1 under ASan/UBSan. The G2 routing adapter
+remains test scaffolding, excluded from production `transport.c`.
 `prepare_original.py --check` verifies that the generated test source is current.
 
 Additional public-API tests cover every truncation and split of a representative

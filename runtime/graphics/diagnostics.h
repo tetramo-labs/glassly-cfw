@@ -2,6 +2,7 @@
 #define MM_GRAPHICS_DIAGNOSTICS_H
 #include "graphics.h"
 /* Serialized display-task, current-screen metadata/overlay. Never source pixels. */
+int mm_diagnostics_snapshot(void *parent,unsigned sub,uint8_t state[20]);
 void *mm_diagnostics_control(void *parent,unsigned sub);
 void mm_diagnostics_frame(void *parent,const uint8_t *,size_t);
 void mm_diagnostics_present(void *parent,void *graphics_image);

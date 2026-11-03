@@ -105,11 +105,14 @@ function uses shared boolean ownership, not a per-client refcount; it cannot saf
 be advertised as an independent leased raw-sensor API. Head-up angle equality does
 not establish equal physical detection behavior.
 
-The required outer record transport is separately implemented as portable
-[transport.c](../../runtime/portable/transport.c): bounded records, CRC,
-reset/context, compression callback and reply/failure behavior. The new raw mode127 carrier does not implement the compressed record protocol
-or its two inflater histories. Those adapters and explicit logical-destination
-policy remain missing. Host zlib tests do not prove native inflation.
+The required record transport now has a native mode126 GM carrier, pinned
+zlib inflater, persistent dictionaries, CRC/ACK/NACK handling, a 180 KiB heap
+budget and a 30-second context lease. The Swift sender performs capability and
+ACK checks without automatic retries. Original G2 scenarios, sanitizer tests
+and actual linked RV32 display-queue tests pass. Revision4 hardware verification
+is tracked separately in `analysis/record-transport-20261103`; offline results
+do not establish boot or hardware timing. Mode127 remains the raw carrier.
+See [native record protocol](../../runtime/graphics/RECORD_TRANSPORT.md).
 
 ## Next vertical command slice
 

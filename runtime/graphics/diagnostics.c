@@ -51,13 +51,18 @@ void mm_diagnostics_frame(void *parent,const uint8_t *p,size_t n) {
     }else if(mode!=6)return;
     diagnostic_owner *d=diagnostic_get(parent);if(d)diagnostic_frame(d,mode==3,fid);
 }
-void *mm_diagnostics_control(void *parent,unsigned sub) {
-    diagnostic_owner *d=diagnostic_get(parent);if(!d)return P.json("{\"glassly\":\"diagnostics\",\"abi\":1,\"result\":\"allocation-failed\"}");
+int mm_diagnostics_snapshot(void *parent,unsigned sub,uint8_t state[20]) {
+    diagnostic_owner *d=diagnostic_get(parent);if(!d)return -1;
     if(!sub){d->flags=d->seen=d->resync=d->pos=d->failed_mode=0;d->last=d->high=0;d->worker=d->allocation=0;for(unsigned i=0;i<16;i++)d->recent[i]=65535;}
     else if(sub==1)d->hidden=1;else if(sub==2)d->hidden=0;
-    uint8_t state[20]={d->flags,d->hidden,d->seen,d->resync};
+    state[0]=d->flags;state[1]=d->hidden;state[2]=d->seen;state[3]=d->resync;
     uint32_t words[4]={d->last|((uint32_t)d->high<<16),d->worker,d->allocation,d->failed_mode|((uint32_t)d->epoch<<16)};
     for(unsigned i=0;i<16;i++)state[i+4]=(uint8_t)(words[i/4]>>(8*(i&3)));
+    return 0;
+}
+void *mm_diagnostics_control(void *parent,unsigned sub) {
+    uint8_t state[20];
+    if(mm_diagnostics_snapshot(parent,sub,state))return P.json("{\"glassly\":\"diagnostics\",\"abi\":1,\"result\":\"allocation-failed\"}");
     static const char pattern[]="{\"glassly\":\"diagnostics\",\"abi\":1,\"result\":\"ok\",\"presentation\":\"unchanged\",\"stateHex\":\"0000000000000000000000000000000000000000\"}";
     char text[sizeof(pattern)];for(unsigned i=0;i<sizeof(pattern);i++)text[i]=pattern[i];
     static const char hex[]="0123456789abcdef";

@@ -11,6 +11,17 @@ behavior is explicitly not required. The proven hardware drivers and OTA path
 remain development dependencies while useful. The pinned G2 assertion corpus and its feature semantics remain requirements.
 Bundled reference names are normalized to Glassly with original hashes retained.
 
+## Compressed record transport
+
+Revision4 adds a native GM record carrier with persistent zlib dictionaries,
+CRC16 and correlated ACK/NACK/data replies. It accepts up to65,535 encoded and
+decoded bytes within an explicit heap budget. The runtime fits the existing
+96KiB allocation. The Swift sender and required offline suites include this
+path; hardware acceptance is recorded separately in the
+[revision4 checkpoint](analysis/record-transport-20261103/checkpoint.json).
+See the [wire contract](runtime/graphics/RECORD_TRANSPORT.md) and
+[offline evidence](analysis/record-transport-20261103/offline-verification.json).
+
 ## Minimal owner and flash capacity
 
 The `GLASSLYCFW/1` profile replaces the dashboard launcher with a minimal display

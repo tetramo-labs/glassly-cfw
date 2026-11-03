@@ -1,5 +1,14 @@
 /* Test-only host zlib adapter. test_allocate/release supplied by fixture.
  * No native MemoMind inflater address/ABI is implied. */
+#ifdef MM_PRODUCTION_INFLATER
+#include "inflater.h"
+static void test_end(void *user,void **state){(void)user;mm_inflater_end(state);}
+static int test_decode(void *user,void **state,const uint8_t *input,uint16_t bytes,
+                        uint8_t *output,uint32_t capacity,uint32_t *output_bytes){
+    mm_inflater_allocator a={user,test_allocate,test_release};
+    return mm_inflater_decode(&a,state,input,bytes,output,capacity,output_bytes);
+}
+#else
 static voidpf zalloc_test(voidpf user,uInt n,uInt size) {
     if (size && (size_t)n>SIZE_MAX/size) return NULL;
     return test_allocate(user,(size_t)n*size);
@@ -28,3 +37,4 @@ static int test_decode(void *user,void **state,const uint8_t *input,uint16_t byt
     z->next_in=NULL;z->next_out=NULL;z->avail_in=z->avail_out=0;
     return result;
 }
+#endif

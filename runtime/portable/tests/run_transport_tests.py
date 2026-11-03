@@ -40,6 +40,17 @@ def main():
         flags=['-std=c11','-O1','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(ROOT)]
         for label,file in [('original','transport_host_test.c'),('public','public_api_test.c')]:
             run('build-'+label,[a.cc,*flags,ROOT/'tests/transport'/file,ROOT/'transport.c','-lz','-o',out/label]);report[label+'_result']=run('run-'+label,[out/label]).strip()
+        vendor=ROOT.parent/'vendor/zlib';manifest=json.loads((vendor/'UPSTREAM.json').read_text())
+        for name,digest in manifest['files'].items():
+            if hashlib.sha256((vendor/name).read_bytes()).hexdigest()!=digest:raise RuntimeError('Inflater source drift '+name)
+            report['source_sha256']['vendor/zlib/'+name]=digest
+        inflater=[ROOT/'inflater.c',*[vendor/name for name in ('inflate.c','inffast.c','inftrees.c','adler32.c','zutil.c')]]
+        for file in (ROOT/'inflater.c',ROOT/'inflater.h'):
+            report['source_sha256'][file.name]=hashlib.sha256(file.read_bytes()).hexdigest()
+        for label,file in [('original-source-inflater','transport_host_test.c'),('public-source-inflater','public_api_test.c')]:
+            run('build-'+label,[a.cc,*flags,'-DZ_SOLO','-DNO_GZIP','-DMM_PRODUCTION_INFLATER','-I'+str(vendor),ROOT/'tests/transport'/file,ROOT/'transport.c',*inflater,'-lz','-o',out/label])
+            report[label+'_result']=run('run-'+label,[out/label]).strip()
+        report['production_inflater']={'version':manifest['version'],'original_scenarios':5,'system_zlib':'Compression fixtures only in source-inflater runs; decoder symbols compiled from pinned sources'}
         common=[a.rvcc,'-march=rv32imafc','-mabi=ilp32f','-mstrict-align','-mno-relax','-std=c11','-Os','-ffreestanding','-fno-builtin','-fno-jump-tables','-ffunction-sections','-fdata-sections','-fstack-usage','-Wall','-Wextra','-Werror','-I'+str(ROOT)]
         run('rv32-build',[*common,'-c',ROOT/'transport.c','-o',out/'transport.o']);prefix=str(a.rvcc).removesuffix('gcc')
         undefined=run('rv32-undefined',[prefix+'nm','-u',out/'transport.o'])

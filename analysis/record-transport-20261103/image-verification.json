@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "version": "GLASSLYCFW/4",
+  "imageSHA256": "424c0fe8574340199119cc5751bc6182d17e574adcd72a4a4e2d60f7a63675b8",
+  "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3",
+  "imageBytes": 2248652,
+  "runtimeBytes": 96032,
+  "unchangedComponents": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "vendorLaunchSuppressedOffline": true,
+  "calibrationPresentationSuppressedOffline": true,
+  "flashed": false,
+  "bootVerified": false
+}

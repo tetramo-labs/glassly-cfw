@@ -6,12 +6,26 @@ import graphics_runtime_emulator_test as G
 import scene_runtime_emulator_test as S
 from minimal_owner_flash_runtime_emulator_test import FlashMachine
 G.NATIVES.update({0x042a88a8:'wake_on',0x0425f99e:'wake_on_state',0x0425f9f8:'wake_blocked'})
+G.NATIVES.update({0x0200a23a:'critical_enter',0x0200a264:'critical_leave'})
 class WakeMachine(FlashMachine):
     def __init__(self):
         self.power_on=False;self.power_blocked=False;self.wake_calls=0;self.ownership_replies=[]
         super().__init__()
+        self.critical=0
+        if self.build.get('notification_relay'):
+            for page in (0x0205d000,0x0205e000):self.uc.mem_map(page,4096)
+            self.uc.mem_write(0x0205d5f8,struct.pack('<4I',2,0x0205e228,0x020fedc0,0x0205e228))
+    def region(self,address,size,writing=False):
+        if self.build.get('notification_relay'):
+            if 0x0205d5f8<=address and address+size<=0x0205d608:
+                assert not writing;return 'native-pool-descriptor'
+            if 0x0205e1a8<=address and address+size<=0x0205e1b4:
+                assert self.critical;return 'notification-registry'
+        return super().region(address,size,writing)
     def native(self,name,args):
         a0,a1,a2,a3,a4=args[:5]
+        if name=='critical_enter':assert not self.critical;self.critical=1;return 0
+        if name=='critical_leave':assert self.critical;self.critical=0;return 0
         if name=='wake_on':
             self.wake_calls+=1
             if not self.power_blocked:self.power_on=True

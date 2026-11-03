@@ -2,7 +2,8 @@
 
 `--notification-relay --cfw-revision 2` adds a poll-driven native adapter to the
 minimal-owner profile. It is an offline candidate, not installed firmware.
-Mobile integration and real notification/action acceptance remain pending.
+Mobile polling/configuration and position/depth adapters are implemented. Real
+notification/action acceptance remains pending.
 
 GM service 15, command `0x78`, accepts one BYTES TLV:
 
@@ -60,17 +61,35 @@ The same candidate suppresses the stock vendor-app launch function at `0421d17c`
 with an eight-byte return-zero stub. Static tracing connects its MemoMind app-ID
 argument to `0433da30`; physical suppression remains unverified.
 
+## Display settings
+
+The revision-2 candidate advertises `displaySettings` with commands 10 (position)
+and 11 (depth), both native gears 0–8. Service 1 uses one BYTE TLV and query 6
+returns `pos`/`dist`; the mobile adapters require matching readback after queue
+acceptance. Configuration keys 0x5001/0x5000 feed the original panel drivers at
+042adff6/042ae09e and persist through the original handlers.
+
+Only calibration presentation at 04273ee6 is replaced with a return-zero stub,
+with its original bytes pinned. The hardware setters run before this call;
+removing the stock calibration app prevents it from suspending the minimal
+owner. Physical placement, persistence and display ownership remain unverified.
+
 ## Verification
 
 - Original nine notification scenarios, all 76 CHECK sites / 266 evaluations.
 - Production native adapter under ASan/UBSan with explicit native boundaries.
 - Compiled RV32 service dispatch for all 256 commands and both request shapes.
+- Linked RV32 observer, borrowed nested bodies, actions, busy/stale handling,
+  session reset, allocation failure and lease cleanup (stock APIs mocked).
 - Actual pre-stock call wrapper with both native stack alignments and deliberately
   clobbered caller registers.
 - Reconstructed OTA, unchanged unrelated components, exact metadata length update,
   hook destination, launch stub execution and revision mismatch rejection.
 
-Pending: actual native callback/concurrency and complete task-stack validation,
-mobile polling/reassembly/configuration, native notification/action tests and
-post-flash boot verification. Display position/depth/settings are a separate
-unfinished slice. Increment `--cfw-revision` for every flash.
+The linked runtime tests observed at most 256 added stack bytes for the ANCS
+wrapper/handler and 208 for service dispatch. This excludes stock callees and
+interrupt/task frames. The original app callback adds 144 bytes before the hook.
+
+Pending: native concurrency and full task-stack validation on hardware,
+notification/action and position/depth acceptance, and post-flash boot verification.
+Increment `--cfw-revision` for every flash.

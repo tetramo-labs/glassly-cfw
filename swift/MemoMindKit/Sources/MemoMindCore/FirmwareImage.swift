@@ -196,65 +196,74 @@ private struct FirmwareRelease {
         // Exact reconstructed mode9 release; admission alone is not boot proof.
         FirmwareRelease(name: "rect-copy-001",
                         sha256: "680163e3789831cd3eda89a60b208cb0e85eaa61c46067dbd6d59ff26cee1885",
-                        byteCount: 2228668, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_228_668, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "873f44726e712b0b3a2f234397db184b12073a55e23c3bc01a33aca488f8b55f",
                         streams: streamPins(.rectCopy)),
         // Exact reconstructed mode8 release; admission alone is not boot proof.
         FirmwareRelease(name: "bundle-commands-001",
                         sha256: "0f54b4569ef2960e2916abfcff4a434c0f1164f05d059a8418100f3da3f8fce5",
-                        byteCount: 2229182, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_229_182, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "aa42bd320c3aa574c9c4b04592698e699a57ee036f04ca49a356d01002917ffc",
                         streams: streamPins(.bundle)),
         // Exact reconstructed mode15 release; admission alone is not boot proof.
         FirmwareRelease(name: "text-commands-001",
                         sha256: "e5409e0d42da0009b759852289915e92517a185c1255ad8de28a56c49c070d31",
-                        byteCount: 2229380, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_229_380, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "f70265e4218854cd2abb66e3be39f6c128a47625f939388659a957afb8718feb",
                         streams: streamPins(.text)),
         // Exact reconstructed diagnostics/cleanup release; admission alone is not boot proof.
         FirmwareRelease(name: "diagnostic-commands-001",
                         sha256: "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
-                        byteCount: 2230267, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_230_267, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "7787494fdb8d50c1a0d578c2494cd0127a1cbcb954dc8aa2541faaa766baf016",
                         streams: streamPins(.diagnostic)),
         // Six reviewed cold-boot UI gates; existing diagnostic runtime unchanged.
         // Exact-byte admission is separate from successful hardware boot.
         FirmwareRelease(name: "dashboard-ram-002",
                         sha256: "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
-                        byteCount: 2230671, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_230_671, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "3e0ed487f355806dafd975fb2849c2e146ab8d7b8fc0e5431420c332434bc13c",
                         streams: streamPins(.dashboardRAM)),
         // Standalone RESET scratch trimming; native mutation rollback required.
         FirmwareRelease(name: "reset-undo-trim-001",
                         sha256: "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
-                        byteCount: 2226404, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_226_404, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "ebe404e8435d9a0fb469e43a0784ca4547cccf130fd6921530b43315749d99b8",
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "notifications-settings-001",
+                        sha256: "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719",
+                        byteCount: 2_240_588, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        headerSHA256: "f68ae391716e4742561fbd0195f56ed2fd05b10c71624c7ed7b7f7a6cfbac73e",
+                        streams: streamPins(.notificationsSettings)),
         FirmwareRelease(name: "wake-background-001",
                         sha256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7",
-                        byteCount: 2235644, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_235_644, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "d4cab46f823c0f8897fadfc6672f86d406e3d1a7f347afa17bb26527dd58f93c",
                         streams: streamPins(.wakeBackground)),
         FirmwareRelease(name: "wake-control-002",
                         sha256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2",
-                        byteCount: 2236085, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_236_085, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "e2a9582ab34372725d2293efafe9ac0448256f24ed1bf3498f38578158acf1e1",
                         streams: streamPins(.wakeControl)),
         FirmwareRelease(name: "minimal-owner-flash-004",
                         sha256: "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
-                        byteCount: 2234179, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        byteCount: 2_234_179, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
                         headerSHA256: "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7",
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .notificationsSettings:
+            metadata = 171; appPacked = 969_486; appRaw = 1_855_504
+            metadataHash = "40765600e05cc8bafc590d120ed8c24486617f105f9ca1463e76056148b31827"
+            appHash = "6bd91f1185717eb8b437edfdccef8bc88d0dc2269fca4f0c5ae1b8b93caef22e"
         case .stock:
             metadata = 166; appPacked = 914_600; appRaw = 1_773_208
             metadataHash = "bf19868459ff0a657c781745d1efaa9f0352d296ecaae19ab301f1d1af9fdebe"
@@ -272,39 +281,39 @@ private struct FirmwareRelease {
             metadataHash = "07c6f9bb617f88b29367641c0abdfbd669e62710449a0b8c0c88eba41d4c62c2"
             appHash = "750f7970025f86d4721ce3095139121254ca7969577f0fbbe5020eb22bb18cc3"
         case .rectCopy:
-            metadata = 171; appPacked = 957566; appRaw = 1835456
+            metadata = 171; appPacked = 957_566; appRaw = 1_835_456
             metadataHash = "9eb32419f61f803cea53df4fa4e2f24c830c83d77d6a16dd79a741f0a6ad013f"
             appHash = "4d8a3c422831394a7dd0729d72f2233b260f34b0984d2448cab1f6828c47932d"
         case .bundle:
-            metadata = 171; appPacked = 958080; appRaw = 1836416
+            metadata = 171; appPacked = 958_080; appRaw = 1_836_416
             metadataHash = "59a2cd5d0a5f69fb19b385c1199a1d128ea9b1414e77e38efe82a94fbca0fe57"
             appHash = "91ae2d698b408ea3cdd1ab0b04b5b39949dc68119a964161fcb2c27140aca4c8"
         case .text:
-            metadata = 170; appPacked = 958279; appRaw = 1836864
+            metadata = 170; appPacked = 958_279; appRaw = 1_836_864
             metadataHash = "7d0800d151af9fb197e39454c6bbbadb5da363aa76c189886e9f14a65a93f792"
             appHash = "8a605b929d838cff05b709ebd37d1720b70c0706c0a0030bf844775bcfeb52c1"
         case .diagnostic:
-            metadata = 171; appPacked = 959165; appRaw = 1838672
+            metadata = 171; appPacked = 959_165; appRaw = 1_838_672
             metadataHash = "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a"
             appHash = "054f97d9e687ba2baf008f5dc118bff7dbc5c49ad462bb9f7188b1f6d9352ff9"
         case .resetUndoTrim:
-            metadata = 171; appPacked = 955302; appRaw = 1833472
+            metadata = 171; appPacked = 955_302; appRaw = 1_833_472
             metadataHash = "fdeac5450e48ffc548b110450dc4b6117a8702bcf5bcd5bf197fb794c2d746e2"
             appHash = "1cf2a3d6a315d67764f4f43863f2d8ec802a5ef45eb82e1bc20a4b3b4fd833b6"
         case .wakeBackground:
-            metadata = 171; appPacked = 964542; appRaw = 1848160
+            metadata = 171; appPacked = 964_542; appRaw = 1_848_160
             metadataHash = "9aaf54003c8b29364662268927f224d8e10311a8efe39165b55f1f0cc4be5ff2"
             appHash = "e29a270fea9b42fc3c596e5ce37f6205421ee5e1f5f29b96b66f4a235341149c"
         case .wakeControl:
-            metadata = 171; appPacked = 964983; appRaw = 1848112
+            metadata = 171; appPacked = 964_983; appRaw = 1_848_112
             metadataHash = "59085caced14283f4b6cd4c3f553b9211904c883c11120f54ba398743c79892e"
             appHash = "e985d21d52ce088fd0ec7bb58cf7d9726b6f31243fb718e857f29d7bffb4f9ee"
         case .minimalOwnerFlash:
-            metadata = 171; appPacked = 963077; appRaw = 1844800
+            metadata = 171; appPacked = 963_077; appRaw = 1_844_800
             metadataHash = "1a53d46f600064c708aabb7e8884ef1bb2edd1c57aeac9d1ea6203d251e1b4d6"
             appHash = "d1417475dd2e246fc4012f7d32b01791feba0b26cb6f364f8ab4bf0667f405aa"
         case .dashboardRAM:
-            metadata = 171; appPacked = 959569; appRaw = 1838672
+            metadata = 171; appPacked = 959_569; appRaw = 1_838_672
             metadataHash = "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a"
             appHash = "4ad7607ca742be20220eb1baae1c79ea2e01a94f2381ec190da14f698b9653d7"
         }

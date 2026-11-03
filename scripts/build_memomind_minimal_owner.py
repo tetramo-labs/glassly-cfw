@@ -45,6 +45,12 @@ def construct(source,blob,build):
         after=jump(target);body[off:off+8]=after
         edits.append(dict(address=address,before=before,after=after.hex(),purpose=name))
     if build.get('notification_relay'):
+        address=0x04273ee6;before=bytes.fromhex('ed77aa97c207c183')
+        off=address-BODY_BASE
+        require(body[off:off+8]==before,'Calibration presentation entry witness differs')
+        after=bytes.fromhex('1305000067800000')
+        body[off:off+8]=after
+        edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose='suppress-calibration-presentation'))
         address=0x0421d17c;before=bytes.fromhex('797122d426d206d6')
         off=address-BODY_BASE
         require(body[off:off+8]==before,'Vendor app-launch entry witness differs')

@@ -351,6 +351,7 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"version\":\"GLASSLYCFW/" MM_STRING(MM_CFW_REVISION) "\",\"displayOwner\":\"minimal\","
 #endif
 #ifdef MM_NOTIFICATION_RELAY
+                   "\"displaySettings\":{\"position\":10,\"depth\":11,\"min\":0,\"max\":8},"
                    "\"notifications\":{\"command\":120,\"transport\":\"poll\",\"leaseTicks\":90000},"
 #endif
 #ifdef MM_WAKE_CONTROL

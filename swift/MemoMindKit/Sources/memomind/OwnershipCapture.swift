@@ -9,6 +9,7 @@ func captureOwnership(session: GMSession, capture: Capture, seconds: Int) throws
     var buttonEvents = 0
     var handshakes = 0
     var lastDraw = 0.0
+    var version = ""
     func control(_ command: OwnershipCommand, nonce: UInt16 = 1) throws -> OwnershipSnapshot {
         let state = try session.ownership(command, nonce: nonce, event: &event)
         try capture.record(["event": "ownership-state", "operation": command.rawValue, "state": dictionary(state)])
@@ -27,7 +28,7 @@ func captureOwnership(session: GMSession, capture: Capture, seconds: Int) throws
     }
     func draw() throws {
         try graphics(RasterCommands.fullFrame(pixels: Data(repeating: 0, count: 105_000)))
-        try graphics(RasterCommands.builtinText(bytes: Data("GLASSLYCFW/1".utf8), x: 20, y: 30))
+        try graphics(RasterCommands.builtinText(bytes: Data(version.utf8), x: 20, y: 30))
         try graphics(RasterCommands.builtinText(bytes: Data("WAKE / FRAME LEASE".utf8), x: 20, y: 80))
         lastDraw = ProcessInfo.processInfo.systemUptime
     }
@@ -39,6 +40,7 @@ func captureOwnership(session: GMSession, capture: Capture, seconds: Int) throws
             let claimedTicks: Int
         }
 
+        let version: String
         let ownership: Ownership
     }
     let reply = try session.request(event: event, service: 15, command: 0x7E)
@@ -47,7 +49,12 @@ func captureOwnership(session: GMSession, capture: Capture, seconds: Int) throws
     while json.last == 0 {
         json.removeLast()
     }
-    let capability = try JSONDecoder().decode(Capabilities.self, from: json).ownership
+    let capabilities = try JSONDecoder().decode(Capabilities.self, from: json)
+    guard capabilities.version.range(of: "^GLASSLYCFW/[0-9]+$", options: .regularExpression) != nil else {
+        throw CLIError("Unsupported firmware version")
+    }
+    version = capabilities.version
+    let capability = capabilities.ownership
     guard capability.command == 121, capability.leaseTicks == 90000,
           capability.fallbackTicks == 400, capability.claimedTicks == 5000
     else {
@@ -78,7 +85,7 @@ func captureOwnership(session: GMSession, capture: Capture, seconds: Int) throws
     try draw()
     guard try control(.status).framePresented else { throw CLIError("Frame was not presented") }
     try capture.record(["event": "ownership-display-ready"])
-    fputs("OWNERSHIP DISPLAY READY: GLASSLYCFW/1; WAKE / FRAME LEASE\n", stderr)
+    fputs("OWNERSHIP DISPLAY READY: \(version); WAKE / FRAME LEASE\n", stderr)
     var preserved = false
     var expired = false
     while ProcessInfo.processInfo.systemUptime - began < Double(seconds) {

@@ -45,15 +45,33 @@ final class FirmwareImageTests: XCTestCase {
         XCTAssertThrowsError(try EligibleFirmware.load(data: bytes, expectedSHA256: FirmwareIntegrity.sha256(bytes)))
     }
 
+    func testNotificationsSettingsExactFixtureAndMutationRejection() throws {
+        let bytes = try fixture("captures/firmware/notifications-settings-001/firmware.bin")
+        let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719")
+        XCTAssertEqual(image.releaseName, "notifications-settings-001"); XCTAssertEqual(bytes.count, 2_240_588)
+        let parsed = try FirmwareContainer.inspect(Array(bytes))
+        XCTAssertEqual(parsed.headerSHA256, "f68ae391716e4742561fbd0195f56ed2fd05b10c71624c7ed7b7f7a6cfbac73e")
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_855_504)
+        let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
+        var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719"))
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
+    }
+
     func testWakeBackgroundExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/wake-background-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7")
-        XCTAssertEqual(image.releaseName, "wake-background-001"); XCTAssertEqual(bytes.count, 2235644)
+        XCTAssertEqual(image.releaseName, "wake-background-001"); XCTAssertEqual(bytes.count, 2_235_644)
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "d4cab46f823c0f8897fadfc6672f86d406e3d1a7f347afa17bb26527dd58f93c")
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1848160)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_848_160)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
-        for i in [1,2,4,5,6] { XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256) }
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
         var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7"))
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
@@ -62,12 +80,14 @@ final class FirmwareImageTests: XCTestCase {
     func testWakeControlExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/wake-control-002/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2")
-        XCTAssertEqual(image.releaseName, "wake-control-002"); XCTAssertEqual(bytes.count, 2236085)
+        XCTAssertEqual(image.releaseName, "wake-control-002"); XCTAssertEqual(bytes.count, 2_236_085)
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "e2a9582ab34372725d2293efafe9ac0448256f24ed1bf3498f38578158acf1e1")
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1848112)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_848_112)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
-        for i in [1,2,4,5,6] { XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256) }
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
         var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2"))
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
@@ -76,12 +96,14 @@ final class FirmwareImageTests: XCTestCase {
     func testMinimalOwnerFlashExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/minimal-owner-flash-004/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677")
-        XCTAssertEqual(image.releaseName, "minimal-owner-flash-004"); XCTAssertEqual(bytes.count, 2234179)
+        XCTAssertEqual(image.releaseName, "minimal-owner-flash-004"); XCTAssertEqual(bytes.count, 2_234_179)
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "2fd98880faf869f5f3070ab7ac13b40b815d7c68118f1c2b9412c5c772386ab7")
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1844800)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_844_800)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
-        for i in [1,2,4,5,6] { XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256) }
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
         var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677"))
         XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
@@ -257,15 +279,15 @@ final class FirmwareImageTests: XCTestCase {
     func testRequiredActualReviewedOfflineDiagnosticFixture() throws {
         let bytes = try fixture("captures/firmware/diagnostic-commands-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: diagnosticSHA)
-        XCTAssertEqual(bytes.count, 2230267)
+        XCTAssertEqual(bytes.count, 2_230_267)
         XCTAssertEqual(image.data, bytes); XCTAssertEqual(image.sha256, diagnosticSHA)
         XCTAssertTrue(image.modified); XCTAssertEqual(image.releaseName, "diagnostic-commands-001")
         XCTAssertEqual(image.profile, "H001Y-1.0.3.127-flash-canary-v1")
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "7787494fdb8d50c1a0d578c2494cd0127a1cbcb954dc8aa2541faaa766baf016")
         XCTAssertEqual(parsed.streams[0].packedSHA256, "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a")
-        XCTAssertEqual(parsed.streams[3].packedSize, 959165)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1838672)
+        XCTAssertEqual(parsed.streams[3].packedSize, 959_165)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_838_672)
         XCTAssertEqual(parsed.streams[3].packedSHA256, "054f97d9e687ba2baf008f5dc118bff7dbc5c49ad462bb9f7188b1f6d9352ff9")
         XCTAssertEqual(parsed.streams[6].offset + parsed.streams[6].packedSize, bytes.count - 4)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/flash-canary-001/firmware.bin")))
@@ -279,11 +301,11 @@ final class FirmwareImageTests: XCTestCase {
         let expected = "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9"
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: expected)
         XCTAssertEqual(image.releaseName, "reset-undo-trim-001")
-        XCTAssertEqual(bytes.count, 2226404)
+        XCTAssertEqual(bytes.count, 2_226_404)
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "ebe404e8435d9a0fb469e43a0784ca4547cccf130fd6921530b43315749d99b8")
-        XCTAssertEqual(parsed.streams[3].packedSize, 955302)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1833472)
+        XCTAssertEqual(parsed.streams[3].packedSize, 955_302)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_833_472)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/dashboard-ram-002/firmware.bin")))
         for index in [1, 2, 4, 5, 6] {
             XCTAssertEqual(parsed.streams[index].packedSHA256, previous.streams[index].packedSHA256)
@@ -300,14 +322,14 @@ final class FirmwareImageTests: XCTestCase {
         let bytes = try fixture("captures/firmware/dashboard-ram-002/firmware.bin")
         let expected = "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a"
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: expected)
-        XCTAssertEqual(bytes.count, 2230671)
+        XCTAssertEqual(bytes.count, 2_230_671)
         XCTAssertEqual(image.data, bytes)
         XCTAssertEqual(image.releaseName, "dashboard-ram-002")
         XCTAssertTrue(image.modified)
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "3e0ed487f355806dafd975fb2849c2e146ab8d7b8fc0e5431420c332434bc13c")
-        XCTAssertEqual(parsed.streams[3].packedSize, 959569)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1838672)
+        XCTAssertEqual(parsed.streams[3].packedSize, 959_569)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_838_672)
         XCTAssertEqual(parsed.streams[3].packedSHA256, "4ad7607ca742be20220eb1baae1c79ea2e01a94f2381ec190da14f698b9653d7")
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/diagnostic-commands-001/firmware.bin")))
         for index in [0, 1, 2, 4, 5, 6] {
@@ -334,7 +356,7 @@ final class FirmwareImageTests: XCTestCase {
         }
         let runtime = try fixture("captures/firmware/diagnostic-commands-001/runtime.bin")
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: diagnosticSHA)) {
-            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2230267, actual: 65456))
+            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2_230_267, actual: 65456))
         }
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: FirmwareIntegrity.sha256(runtime))) {
             XCTAssertEqual($0 as? FirmwareImageError, .releaseNotInCatalog)
@@ -344,15 +366,15 @@ final class FirmwareImageTests: XCTestCase {
     func testRequiredActualReviewedOfflineTextFixture() throws {
         let bytes = try fixture("captures/firmware/text-commands-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: textSHA)
-        XCTAssertEqual(bytes.count, 2229380)
+        XCTAssertEqual(bytes.count, 2_229_380)
         XCTAssertEqual(image.data, bytes); XCTAssertEqual(image.sha256, textSHA)
         XCTAssertTrue(image.modified); XCTAssertEqual(image.releaseName, "text-commands-001")
         XCTAssertEqual(image.profile, "H001Y-1.0.3.127-flash-canary-v1")
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "f70265e4218854cd2abb66e3be39f6c128a47625f939388659a957afb8718feb")
         XCTAssertEqual(parsed.streams[0].packedSHA256, "7d0800d151af9fb197e39454c6bbbadb5da363aa76c189886e9f14a65a93f792")
-        XCTAssertEqual(parsed.streams[3].packedSize, 958279)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1836864)
+        XCTAssertEqual(parsed.streams[3].packedSize, 958_279)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_836_864)
         XCTAssertEqual(parsed.streams[3].packedSHA256, "8a605b929d838cff05b709ebd37d1720b70c0706c0a0030bf844775bcfeb52c1")
         XCTAssertEqual(parsed.streams[6].offset + parsed.streams[6].packedSize, bytes.count - 4)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/flash-canary-001/firmware.bin")))
@@ -370,7 +392,7 @@ final class FirmwareImageTests: XCTestCase {
         }
         let runtime = try fixture("captures/firmware/text-commands-001/runtime.bin")
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: textSHA)) {
-            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2229380, actual: 63648))
+            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2_229_380, actual: 63648))
         }
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: FirmwareIntegrity.sha256(runtime))) {
             XCTAssertEqual($0 as? FirmwareImageError, .releaseNotInCatalog)
@@ -380,15 +402,15 @@ final class FirmwareImageTests: XCTestCase {
     func testRequiredActualReviewedOfflineBundleFixture() throws {
         let bytes = try fixture("captures/firmware/bundle-commands-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: bundleSHA)
-        XCTAssertEqual(bytes.count, 2229182)
+        XCTAssertEqual(bytes.count, 2_229_182)
         XCTAssertEqual(image.data, bytes); XCTAssertEqual(image.sha256, bundleSHA)
         XCTAssertTrue(image.modified); XCTAssertEqual(image.releaseName, "bundle-commands-001")
         XCTAssertEqual(image.profile, "H001Y-1.0.3.127-flash-canary-v1")
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "aa42bd320c3aa574c9c4b04592698e699a57ee036f04ca49a356d01002917ffc")
         XCTAssertEqual(parsed.streams[0].packedSHA256, "59a2cd5d0a5f69fb19b385c1199a1d128ea9b1414e77e38efe82a94fbca0fe57")
-        XCTAssertEqual(parsed.streams[3].packedSize, 958080)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1836416)
+        XCTAssertEqual(parsed.streams[3].packedSize, 958_080)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_836_416)
         XCTAssertEqual(parsed.streams[3].packedSHA256, "91ae2d698b408ea3cdd1ab0b04b5b39949dc68119a964161fcb2c27140aca4c8")
         XCTAssertEqual(parsed.streams[6].offset + parsed.streams[6].packedSize, bytes.count - 4)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/flash-canary-001/firmware.bin")))
@@ -406,7 +428,7 @@ final class FirmwareImageTests: XCTestCase {
         }
         let runtime = try fixture("captures/firmware/bundle-commands-001/runtime.bin")
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: bundleSHA)) {
-            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2229182, actual: 63200))
+            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2_229_182, actual: 63200))
         }
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: FirmwareIntegrity.sha256(runtime))) {
             XCTAssertEqual($0 as? FirmwareImageError, .releaseNotInCatalog)
@@ -416,15 +438,15 @@ final class FirmwareImageTests: XCTestCase {
     func testRequiredActualReviewedOfflineRectCopyFixture() throws {
         let bytes = try fixture("captures/firmware/rect-copy-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: rectCopySHA)
-        XCTAssertEqual(bytes.count, 2228668)
+        XCTAssertEqual(bytes.count, 2_228_668)
         XCTAssertEqual(image.data, bytes); XCTAssertEqual(image.sha256, rectCopySHA)
         XCTAssertTrue(image.modified); XCTAssertEqual(image.releaseName, "rect-copy-001")
         XCTAssertEqual(image.profile, "H001Y-1.0.3.127-flash-canary-v1")
         let parsed = try FirmwareContainer.inspect(Array(bytes))
         XCTAssertEqual(parsed.headerSHA256, "873f44726e712b0b3a2f234397db184b12073a55e23c3bc01a33aca488f8b55f")
         XCTAssertEqual(parsed.streams[0].packedSHA256, "9eb32419f61f803cea53df4fa4e2f24c830c83d77d6a16dd79a741f0a6ad013f")
-        XCTAssertEqual(parsed.streams[3].packedSize, 957566)
-        XCTAssertEqual(parsed.streams[3].unpackedSize, 1835456)
+        XCTAssertEqual(parsed.streams[3].packedSize, 957_566)
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_835_456)
         XCTAssertEqual(parsed.streams[3].packedSHA256, "4d8a3c422831394a7dd0729d72f2233b260f34b0984d2448cab1f6828c47932d")
         XCTAssertEqual(parsed.streams[6].offset + parsed.streams[6].packedSize, bytes.count - 4)
         let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/flash-canary-001/firmware.bin")))
@@ -442,7 +464,7 @@ final class FirmwareImageTests: XCTestCase {
         }
         let runtime = try fixture("captures/firmware/rect-copy-001/runtime.bin")
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: rectCopySHA)) {
-            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2228668, actual: 62240))
+            XCTAssertEqual($0 as? FirmwareImageError, .wrongLength(expected: 2_228_668, actual: 62240))
         }
         XCTAssertThrowsError(try EligibleFirmware.load(data: runtime, expectedSHA256: FirmwareIntegrity.sha256(runtime))) {
             XCTAssertEqual($0 as? FirmwareImageError, .releaseNotInCatalog)

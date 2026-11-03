@@ -119,9 +119,8 @@
     "retries": 0
   },
   "pending": [
-    "iOS notification delivery and actions",
-    "App bundle update",
-    "Physical display/background confirmation"
+    "Actual iOS ANCS delivery and actions",
+    "Physical display/background and position/depth confirmation"
   ],
   "transferComplete": true,
   "rebootAcknowledged": true,
@@ -144,5 +143,13 @@
   },
   "bootVerification": "analysis/ota-pacing-20261103/boot-verification.json",
   "hardwareRelayEnablePollDisable": true,
-  "hardwareDisplayPositionDepthReadbackAndRestore": true
+  "hardwareDisplayPositionDepthReadbackAndRestore": true,
+  "appCommit": "34ff564eee",
+  "bundledAppFirmware": "GLASSLYCFW/3",
+  "appTests": {
+    "macSwift": 99,
+    "focusedIOS": 22,
+    "androidMemoMind": 11
+  },
+  "displayVerification": "analysis/ota-pacing-20261103/display-verification.json"
 }

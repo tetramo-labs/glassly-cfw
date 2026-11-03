@@ -26,6 +26,10 @@ def construct(source,blob,build):
     require(build.get('minimal_launcher') and build.get('diagnostic_commands') and build.get('reset_undo_trim'),'Requires minimal launcher diagnostic profile')
     require(sha(blob)==build['blob_sha256'] and len(blob)==build['blob_bytes'],'Runtime pin mismatch')
     for p,h in build['source_sha256'].items():require(sha((ROOT/p).read_bytes())==h,'Build source changed: '+p)
+    revision=build.get('cfw_revision',1)
+    require(type(revision) is int and 1<=revision<=65535,'Invalid CFW revision')
+    version='GLASSLYCFW/'+str(revision)
+    require(('\"version\":\"'+version+'\"').encode() in blob,'Version differs from runtime')
     profile=build.get('rx_profile',DEFAULT_RX_PROFILE)
     base,base_manifest,base_proof=construct_canary(source,blob,rx_profile=profile)
     _,old=unpack_ota(base);original=old[3]['raw'][32:];body,gates=apply_ram_gates(original);body=bytearray(body);edits=[]
@@ -40,13 +44,29 @@ def construct(source,blob,build):
         require(body[off:off+8]==bytes.fromhex(before),'External entry witness differs')
         after=jump(target);body[off:off+8]=after
         edits.append(dict(address=address,before=before,after=after.hex(),purpose=name))
+    if build.get('notification_relay'):
+        address=0x0421d17c;before=bytes.fromhex('797122d426d206d6')
+        off=address-BODY_BASE
+        require(body[off:off+8]==before,'Vendor app-launch entry witness differs')
+        after=bytes.fromhex('1305000067800000')
+        body[off:off+8]=after
+        edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose='suppress-vendor-app-launch'))
+        address=0x04217568;before=bytes.fromhex('97201000e780a022')
+        off=address-BODY_BASE;target=build['symbols']['glassly_notification_entry']
+        require(ENTRY<=target<ENTRY+len(blob) and target%2==0,'ANCS hook outside runtime')
+        require(body[off:off+8]==before,'ANCS pre-stock witness differs')
+        # AUIPC/JALR call: preserve ra=04217570 for the original continuation.
+        delta=target-address;hi=(delta+0x800)>>12;lo=delta-(hi<<12)
+        after=struct.pack('<II',((hi&0xfffff)<<12)|(1<<7)|0x17,((lo&4095)<<20)|(1<<15)|(1<<7)|0x67)
+        body[off:off+8]=after
+        edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose='ancs-prestock'))
     allowed={i for row in gates+edits for i in range(row['address']-BODY_BASE,row['address']-BODY_BASE+len(bytes.fromhex(row['after'])))}
     changed=[i for i,(a,b) in enumerate(zip(original,body)) if a!=b]
     require(set(changed)<=allowed and len(body)==len(original),'Change outside fixed lifecycle gates')
     image=repack(base,{3:bytes(body)});_guard_final_bounds(len(image),len(body)+32)
     decoded,final=unpack_ota(image);require(final[3]['raw'][32:]==body,'Reconstructed body differs')
     for i in (0,1,2,4,5,6):require(final[i]['packed']==old[i]['packed'],'Unrelated component changed')
-    return image,dict(format='memomind-minimal-owner-v1',version='GLASSLYCFW/1',cold_boot_required=True,
+    return image,dict(format='memomind-minimal-owner-v1',version=version,cold_boot_required=True,
         output_sha256=sha(image),output_bytes=len(image),blob_sha256=sha(blob),blob_bytes=len(blob),
         source_sha256=sha(source),rx_profile=profile,flash_scene=build.get('flash_scene',False),
         launcher_edits=edits,dashboard_gates=gates,base_manifest=base_manifest,

@@ -11,6 +11,8 @@
 - Original project code is MIT. Preserve existing MIT licenses/notices on
   upstream and derived code.
 - CFW version strings use `GLASSLYCFW/N`, where N is a numeric revision.
+  Increment N for every firmware flash; record the matching revision, image and
+  runtime hashes in the catalog, transfer evidence and boot verification.
 - Keep raw captures, firmware/APKs, toolchains, secrets and generated binaries
   local. Analysis is ignored by default; explicitly add relevant source helpers,
   recipes, notes and verification summaries.

@@ -1,0 +1,35 @@
+/* Pre-stock call wrapper; native caller may be only eight-byte aligned. */
+.option norelax
+.section .text.glassly_notification_entry,"ax",@progbits
+.align 1
+.global glassly_notification_entry
+.type glassly_notification_entry,@function
+glassly_notification_entry:
+    mv t0,sp
+    andi sp,sp,-16
+    addi sp,sp,-48
+    sw t0,0(sp)
+    sw ra,4(sp)
+    sw a0,8(sp)
+    sw a1,12(sp)
+    sw a2,16(sp)
+    sw a3,20(sp)
+    sw a4,24(sp)
+    sw a5,28(sp)
+    sw a6,32(sp)
+    sw a7,36(sp)
+    call glassly_notification_observe
+    lw a0,8(sp)
+    lw a1,12(sp)
+    lw a2,16(sp)
+    lw a3,20(sp)
+    lw a4,24(sp)
+    lw a5,28(sp)
+    lw a6,32(sp)
+    lw a7,36(sp)
+    lw ra,4(sp)
+    lw t0,0(sp)
+    mv sp,t0
+    li t0,0x04319792
+    jr t0
+.size glassly_notification_entry,.-glassly_notification_entry

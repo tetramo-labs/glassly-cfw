@@ -87,8 +87,15 @@ def check_stack_usage(rows):
             raise ValueError("Nonstatic or oversized function stack frame: "+row)
 
 
-def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, rx_profile=DEFAULT_RX_PROFILE):
+def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, notification_relay=False, cfw_revision=None, rx_profile=DEFAULT_RX_PROFILE):
     limit = rx_limit(rx_profile)
+    if cfw_revision is None: cfw_revision = 2 if notification_relay else 1
+    if type(cfw_revision) is not int or not 1 <= cfw_revision <= 65535:
+        raise ValueError("CFW revision must be an integer in 1..65535")
+    if notification_relay and cfw_revision < 2:
+        raise ValueError("Notification candidate requires CFW revision >=2")
+    if notification_relay and not wake_control:
+        raise ValueError("Notification relay requires wake control")
     if reset_undo_trim and not scene_session:
         raise ValueError("RESET undo trimming requires scene-session")
     if diagnostic_commands and not text_commands:
@@ -131,6 +138,9 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if flash_scene:
         sources += [ROOT/"runtime/graphics/freestanding.c", ROOT/"runtime/graphics/flash_broker.c", ROOT/"runtime/graphics/large_message.c",
                     ROOT/"runtime/portable/flash_store.c", ROOT/"runtime/portable/scene_store.c", ROOT/"runtime/portable/scene_flash_store.c"]
+    if notification_relay:
+        sources += [ROOT/"runtime/graphics/notification_native.c", ROOT/"runtime/graphics/notification_entry.S",
+                    ROOT/"runtime/portable/notifications.c", ROOT/"runtime/portable/ancs_ingress.c"]
     if wake_control:
         sources += [ROOT/"runtime/graphics/wake_control.c", ROOT/"runtime/portable/wake.c"]
     if minimal_launcher:
@@ -161,11 +171,13 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     hashes = {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in inputs}
     out = Path(output).resolve()
     out.mkdir(parents=True, exist_ok=False)
-    flags = [*FLAGS, "-I"+str(ROOT/"runtime/graphics"), "-I"+str(ROOT/"runtime/portable")]
+    flags = [*FLAGS, "-DMM_CFW_REVISION="+str(cfw_revision), "-I"+str(ROOT/"runtime/graphics"), "-I"+str(ROOT/"runtime/portable")]
     if scene_session:
         flags += ["-DMM_GRAPHICS_SCENE=1", "-DMM_NATIVE_TEXT_FIRMWARE=1"]
     if flash_scene:
         flags += ["-DMM_FLASH_SCENE=1", "-DMM_SCENE_EXTERNAL_STORE=1"]
+    if notification_relay:
+        flags += ["-DMM_NOTIFICATION_RELAY=1"]
     if wake_control:
         flags += ["-DMM_WAKE_CONTROL=1"]
     if minimal_launcher:
@@ -211,6 +223,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         retain += ["-Wl,--undefined="+name for name in INPUT_ENTRIES]
     if flash_reader:
         retain += ["-Wl,--undefined=glassly_flash_read_command", "-Wl,--undefined=glassly_flash_read_native"]
+    if notification_relay:
+        retain += ["-Wl,--undefined=glassly_notification_entry"]
     run("gcc", *flags, "-Wl,--no-relax,--gc-sections,--build-id=none,--fatal-warnings",
         *retain, "-Wl,-Map="+str(out/"graphics.map"), "-T", linker, *objects, "-o", elf)
     if run("nm", "-u", elf).strip():
@@ -263,7 +277,7 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "diagnostic_commands": diagnostic_commands,
               "reset_undo_trim": reset_undo_trim,
               "minimal_launcher": minimal_launcher,
-              "flash_scene": flash_scene, "wake_control": wake_control,
+              "flash_scene": flash_scene, "wake_control": wake_control, "notification_relay": notification_relay, "cfw_revision": cfw_revision,
               "scene_extra_flags": ["-Os"] if reset_undo_trim else [],
               "diagnostics_extra_flags": ["-Oz"] if diagnostic_commands else [],
               "graphics_extra_flags": ["-Os"] if diagnostic_commands else [],
@@ -289,6 +303,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cfw-revision", type=int, help="Numeric GLASSLYCFW revision; increment before every flash")
+    parser.add_argument("--notification-relay", action="store_true")
     parser.add_argument("output", type=Path, help="New build directory")
     profiles = parser.add_mutually_exclusive_group()
     profiles.add_argument("--gate-fixture", action="store_true", help="Link only synthetic C entry stubs")
@@ -312,7 +328,7 @@ def main():
     args = parser.parse_args()
     try:
         print(json.dumps(compile_graphics(args.output, gate_fixture=args.gate_fixture,
-                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, rx_profile=args.rx_profile), indent=2))
+                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, notification_relay=args.notification_relay, cfw_revision=args.cfw_revision, rx_profile=args.rx_profile), indent=2))
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         if isinstance(exc, subprocess.CalledProcessError):
             parser.exit(2, exc.stderr.decode()+str(exc)+"\n")

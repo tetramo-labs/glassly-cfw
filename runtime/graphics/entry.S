@@ -185,6 +185,10 @@ display_gate:
 wake_service_gate:
     li t0, 0x79
     beq a0, t0, .Lwake_command
+#ifdef MM_NOTIFICATION_RELAY
+    li t0, 0x78
+    beq a0, t0, glassly_notification_command
+#endif
     li t0, 0x042e4680
     jr t0
 .Lwake_command:

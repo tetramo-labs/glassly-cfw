@@ -20,7 +20,7 @@ def main():
     upstream=REPO/'tests/g2_compat/upstream';pin=json.loads((REPO/'tests/g2_compat/UPSTREAM.json').read_text())
     report={'format':'memomind-portable-notification-tests-v1','result':'failed','commands':[],
             'upstream_commit':pin['commit'],'hardware_tested':False,
-            'pending':['MemoMind notification source/ANCS discovery and attribute adapter','MemoMind action adapter','Outbound transport envelope/channel','Native queue/timer/allocator adapter and scheduler testing'],
+            'pending':['Native hardware notification/action exercise','Mobile notification polling and reassembly integration','Native concurrency and complete call-chain stack acceptance'],
             'source_sha256':{}}
     def run(label,cmd):
         result=subprocess.run(list(map(str,cmd)),capture_output=True)
@@ -46,9 +46,10 @@ def main():
         mapping=[dict(upstream_line=x['line'],ported_line=y['line'],expression=x['expression'],sha256=x['sha256']) for x,y in zip(old,new)]
         (out/'assertion-map.json').write_text(json.dumps(mapping,indent=2)+'\n')
         report['original_check_sites']=len(old);report['original_scenarios']=scenarios
-        files=[ROOT/'notifications.c',ROOT/'notifications.h',Path(__file__),*sorted((ROOT/'tests/notifications').glob('*'))]
+        files=[ROOT/'notifications.c',ROOT/'notifications.h',ROOT/'ancs_ingress.c',ROOT/'ancs_ingress.h',Path(__file__),*sorted((ROOT/'tests/notifications').glob('*'))]
+        files += [REPO/'runtime/graphics'/name for name in ('notification_native.c','notification_native.h','graphics.h','flash_canary.h')]
         for file in files:
-            if file.is_file():report['source_sha256'][str(file.relative_to(ROOT))]=hashlib.sha256(file.read_bytes()).hexdigest()
+            if file.is_file():report['source_sha256'][str(file.relative_to(REPO))]=hashlib.sha256(file.read_bytes()).hexdigest()
         flags=['-std=c11','-O1','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(ROOT)]
         run('build-original',[a.cc,*flags,ROOT/'tests/notifications/ancs_relay_host_test.c','-o',out/'original'])
         report['original_result']=run('run-original',[out/'original']).strip()
@@ -58,6 +59,8 @@ def main():
         report['original_check_evaluations']=int(evaluations[1])
         run('build-public',[a.cc,*flags,ROOT/'tests/notifications/public_api_test.c',ROOT/'notifications.c','-o',out/'public_api'])
         report['public_api_result']=run('run-public',[out/'public_api']).strip()
+        run('build-native-adapter',[a.cc,*flags,'-I'+str(REPO/'runtime/graphics'),ROOT/'tests/notifications/native_adapter_test.c',ROOT/'notifications.c',ROOT/'ancs_ingress.c','-o',out/'native_adapter'])
+        report['native_adapter_result']=run('run-native-adapter',[out/'native_adapter']).strip()
         common=[a.rvcc,'-march=rv32imafc','-mabi=ilp32f','-mstrict-align','-mno-relax','-std=c11','-Os','-ffreestanding','-fno-builtin','-fno-jump-tables','-ffunction-sections','-fdata-sections','-fstack-usage','-Wall','-Wextra','-Werror','-I'+str(ROOT)]
         run('rv32-build',[*common,'-c',ROOT/'notifications.c','-o',out/'notifications.o'])
         prefix=str(a.rvcc).removesuffix('gcc')

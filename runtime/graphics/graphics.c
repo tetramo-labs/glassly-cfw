@@ -1,3 +1,11 @@
+#ifndef MM_CFW_REVISION
+#define MM_CFW_REVISION 1
+#endif
+#define MM_STRING_VALUE(x) #x
+#define MM_STRING(x) MM_STRING_VALUE(x)
+#ifdef MM_NOTIFICATION_RELAY
+#include "notification_native.h"
+#endif
 #ifdef MM_WAKE_CONTROL
 #include "wake_control.h"
 #endif
@@ -110,6 +118,9 @@ void glassly_graphics_drop_frame(void *parent) {
 #ifdef MM_MINIMAL_LAUNCHER
 /* Display-task lifecycle only. Never deletes the shared active screen. */
 void glassly_graphics_cleanup(void) {
+#ifdef MM_NOTIFICATION_RELAY
+    glassly_notification_cleanup();
+#endif
     void *parent=P.screen();
     if(!parent)return;
     owner *o=P.find_owner(parent,deleted);
@@ -337,7 +348,10 @@ void glassly_graphics_probe(uint32_t command, void *request,
     static const char template[]="{\"glassly\":\"graphics-runtime\",\"abi\":1,\"profile\":\"H001Y-1.0.3.127\","
                    "\"width\":600,\"height\":350,"
 #ifdef MM_MINIMAL_LAUNCHER
-                   "\"version\":\"GLASSLYCFW/1\",\"displayOwner\":\"minimal\","
+                   "\"version\":\"GLASSLYCFW/" MM_STRING(MM_CFW_REVISION) "\",\"displayOwner\":\"minimal\","
+#endif
+#ifdef MM_NOTIFICATION_RELAY
+                   "\"notifications\":{\"command\":120,\"transport\":\"poll\",\"leaseTicks\":90000},"
 #endif
 #ifdef MM_WAKE_CONTROL
                    "\"ownership\":{\"command\":121,\"leaseTicks\":90000,\"fallbackTicks\":400,\"claimedTicks\":5000},"
@@ -486,6 +500,9 @@ void glassly_graphics_display(void *envelope) {
             scene_response=mm_diagnostics_control(parent,length>=2?data[1]:255u);
             result=scene_response?ok:no_memory;
         }else if((data[0]&127u)==11){
+#ifdef MM_NOTIFICATION_RELAY
+            glassly_notification_cleanup();
+#endif
             uint16_t epoch=0;
             if(o && o->scene.initialized){mm_scene_session_dispose(&o->scene);epoch=o->scene.core.cache_epoch;}
             mm_diagnostics_cleanup(parent,epoch);

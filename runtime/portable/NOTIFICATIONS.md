@@ -13,7 +13,7 @@ The production module has explicit per-instance state and platform callbacks.
 It contains no G2 memory addresses, G2 context accessor, ANCC struct layout,
 stock-call wrappers, global mutable state or firmware imports. It does not
 subscribe to notifications, bypass an operating-system permission, or connect
-a transport. Native MemoMind notification integration is not yet implemented.
+a transport. An opt-in native polling adapter now exists in `runtime/graphics/notification_native.c`; see `runtime/graphics/NOTIFICATIONS.md`. It is not yet flashed or hardware accepted.
 
 ## API and preserved behavior
 
@@ -114,8 +114,9 @@ native callback/task stack bound.
 
 ## Pending native integration
 
-MemoMind's ANCS discovery/subscription, native notification callbacks and
-attribute lifetime/ordering have not been located or wired by this port. Its
+Static producer/lifetime tracing and the opt-in native adapter are recorded in
+`runtime/graphics/NOTIFICATIONS.md`. The following requirements describe the
+remaining native acceptance boundary rather than missing portable code. Its
 connection/action API, queue/task serialization, allocator/timer adapter and
 outbound app envelope must be established separately. G2's sid 0x09 protobuf
 field 125 is preserved as a compatibility payload; it is not a MemoMind transport

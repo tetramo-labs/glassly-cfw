@@ -1,0 +1,18 @@
+{
+  "automaticRetries": 0,
+  "buttonEvents": 0,
+  "capture": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/swift-mac-ownership-20261102-01",
+  "cleanupVerified": true,
+  "command": "ownership",
+  "complete": true,
+  "flashMutations": 0,
+  "framePreservedPast35Seconds": true,
+  "leasesExpired": true,
+  "mode": "native macOS IOBluetooth RFCOMM",
+  "physicalOutputConfirmed": false,
+  "wakeHandshakes": 0,
+  "limitations": [
+    "No button events received; double-press CLAIM/READY handshake remains unverified on hardware.",
+    "Panel background illumination reported by user remains under investigation; no physical visibility confirmation for this test."
+  ]
+}

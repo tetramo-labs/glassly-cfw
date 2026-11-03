@@ -45,6 +45,22 @@ final class FirmwareImageTests: XCTestCase {
         XCTAssertThrowsError(try EligibleFirmware.load(data: bytes, expectedSHA256: FirmwareIntegrity.sha256(bytes)))
     }
 
+    func testNotificationsSettingsRevision3ExactFixtureAndMutationRejection() throws {
+        let bytes = try fixture("captures/firmware/notifications-settings-002/firmware.bin")
+        let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "771eb8242b3eea9b61d313cd061e3d007edee9a6a04614eaaeb55793ad450f66")
+        XCTAssertEqual(image.releaseName, "notifications-settings-002"); XCTAssertEqual(bytes.count, 2_240_592)
+        let parsed = try FirmwareContainer.inspect(Array(bytes))
+        XCTAssertEqual(parsed.headerSHA256, "f047d289b98a66142aa1f857f547da31ea0e75efef21a5a21c4c37a8e9ce444b")
+        XCTAssertEqual(parsed.streams[3].unpackedSize, 1_855_504)
+        let previous = try FirmwareContainer.inspect(Array(fixture("captures/firmware/reset-undo-trim-001/firmware.bin")))
+        for i in [1, 2, 4, 5, 6] {
+            XCTAssertEqual(parsed.streams[i].packedSHA256, previous.streams[i].packedSHA256)
+        }
+        var changed = Array(bytes); changed[parsed.streams[3].offset + 100] ^= 1; repair(&changed)
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: "771eb8242b3eea9b61d313cd061e3d007edee9a6a04614eaaeb55793ad450f66"))
+        XCTAssertThrowsError(try EligibleFirmware.load(data: Data(changed), expectedSHA256: FirmwareIntegrity.sha256(Data(changed))))
+    }
+
     func testNotificationsSettingsExactFixtureAndMutationRejection() throws {
         let bytes = try fixture("captures/firmware/notifications-settings-001/firmware.bin")
         let image = try EligibleFirmware.load(data: bytes, expectedSHA256: "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719")

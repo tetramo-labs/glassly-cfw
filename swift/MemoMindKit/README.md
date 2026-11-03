@@ -87,6 +87,11 @@ channels are discovered using UUIDs `00007033-0000-1000-8000-00805f9b34fb` and
 `00007034-0000-1000-8000-00805f9b34fb`, using cached SDP records first and a bounded
 fresh query when absent. Captured channel numbers are not hard-coded.
 
+The stock `0x07d0` block pacing response is supported with a two-second wait and
+control-link checks every 100 ms. This is a forward block request, not a retry.
+Unknown pacing values still stop the transaction. See the
+[native pacing evidence](../../analysis/ota-pacing-20261103/NOTES.md).
+
 Every live attempt creates a new private directory containing `trace.jsonl` and
 either `result.json` or `failure.json`. Existing directories are rejected. RX,
 TX submission and native TX completion are recorded separately and fsynced.

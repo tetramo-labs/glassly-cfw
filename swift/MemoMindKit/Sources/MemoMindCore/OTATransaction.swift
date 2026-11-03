@@ -29,6 +29,7 @@ public final class OTATransaction {
     private let identity: DeviceIdentity
     private let pace: TimeInterval
     private let timeout: TimeInterval
+    private let waitForPacing: (TimeInterval) throws -> Void
     private let checkControlLink: (() throws -> Void)?
     private let parser = OTAStream()
     private var pending = [Data]()
@@ -53,13 +54,15 @@ public final class OTATransaction {
     /// Internal raw entry is for independent recorded/synthetic tests, never the CLI.
     init(transport: MemoMindTransport, image: Data, modified: Bool, identity: DeviceIdentity,
          address: String, pace: TimeInterval = 0.045, timeout: TimeInterval = 15,
-         checkControlLink: (() throws -> Void)? = nil) throws
+         checkControlLink: (() throws -> Void)? = nil,
+         waitForPacing: @escaping (TimeInterval) throws -> Void = { Thread.sleep(forTimeInterval: $0) }) throws
     {
         try identity.validate(address: address)
         try requireProtocol(image.count >= 18 && UInt64(image.count) <= UInt64(UInt32.max), "Invalid image length")
         try requireProtocol(pace.isFinite && pace >= 0 && timeout.isFinite && timeout > 0, "Invalid OTA timing")
         self.transport = transport; self.image = image; self.modified = modified; self.identity = identity
         self.pace = pace; self.timeout = timeout; self.checkControlLink = checkControlLink
+        self.waitForPacing = waitForPacing
     }
 
     private func nextSequence() -> UInt8 {
@@ -148,13 +151,28 @@ public final class OTATransaction {
             }
             let reply = try response(command: 0xE5, sequence: seq)
             try requireProtocol(reply.count == 9 && reply[0] == 0, "Unsupported OTA block result")
-            try requireProtocol(Array(reply[7 ..< 9]) == [0, 0], "Nonzero delay/retry field is unsupported")
+            let pacing = Int(readBE(reply[7 ..< 9]))
+            try requireProtocol(pacing == 0 || pacing == 2000, "Unsupported OTA pacing field")
             let block = OTABlock(offset: offset, length: size, baseSequence: base, ackSequence: seq)
             blocks.append(block); progress?(block)
             previousEnd = offset + size
             offset = Int(readBE(reply[1 ..< 5])); size = Int(readBE(reply[5 ..< 7]))
-            if offset == 0, size == 0 {
+            let terminal = offset == 0 && size == 0
+            if terminal {
                 try requireProtocol(previousEnd == image.count, "Premature terminal ACK before image EOF")
+            } else {
+                try requireProtocol(offset == previousEnd && size > 0 && size <= 4096 &&
+                    offset < image.count && size <= image.count - offset, "Invalid next OTA block range")
+            }
+            if pacing != 0 {
+                phase = "device pacing at offset \(offset)"
+                for _ in 0 ..< 20 {
+                    try checkControlLink?()
+                    try waitForPacing(0.1)
+                }
+                try checkControlLink?()
+            }
+            if terminal {
                 break
             }
         }

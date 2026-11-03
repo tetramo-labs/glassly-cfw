@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "groups": 3,
+  "runtimeSHA256": "62d3b5243b39c55635009fa80551c471a0467f89b6939b18fd21bd54d0ebf561",
+  "hardwareTested": false,
+  "stockAPIsMocked": true,
+  "maxObservedStackBytes": 256,
+  "callCount": 36,
+  "fullReportSHA256": "961fbd836c9cb182ddb6b359ca81b98104edeb4d0fb7d6bbad01f227b06cf6a8",
+  "calleeRegistersAndBoundsVerified": true
+}

@@ -232,6 +232,11 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "notifications-settings-002",
+                        sha256: "771eb8242b3eea9b61d313cd061e3d007edee9a6a04614eaaeb55793ad450f66",
+                        byteCount: 2_240_592, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
+                        headerSHA256: "f047d289b98a66142aa1f857f547da31ea0e75efef21a5a21c4c37a8e9ce444b",
+                        streams: streamPins(.notificationsSettings3)),
         FirmwareRelease(name: "notifications-settings-001",
                         sha256: "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719",
                         byteCount: 2_240_588, modified: true, profile: "H001Y-1.0.3.127-flash-canary-v1",
@@ -254,12 +259,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .notificationsSettings3:
+            metadata = 171; appPacked = 969_490; appRaw = 1_855_504
+            metadataHash = "40765600e05cc8bafc590d120ed8c24486617f105f9ca1463e76056148b31827"
+            appHash = "5fd97e0169c669c97eb79322cb36981737c07b2e0d002cf00679a585fde2cca4"
         case .notificationsSettings:
             metadata = 171; appPacked = 969_486; appRaw = 1_855_504
             metadataHash = "40765600e05cc8bafc590d120ed8c24486617f105f9ca1463e76056148b31827"

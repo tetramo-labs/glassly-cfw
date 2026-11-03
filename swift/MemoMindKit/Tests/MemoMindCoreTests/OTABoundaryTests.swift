@@ -34,6 +34,40 @@ final class OTABoundaryTests: XCTestCase {
         XCTAssertEqual(transaction.blocks.map(\.baseSequence), [5, 6])
     }
 
+    func testNativePacingWaitsBeforeNextBlockAndCompletion() throws {
+        let entry: [UInt8] = [0, 0, 0, 0, 18, 2, 139, 1]
+        let io = QueueTransport(initial(entry) + [reply(0xE5, 6, [0, 0, 0, 2, 157, 2, 139, 7, 208]),
+                                                  reply(0xE5, 7, [0, 0, 0, 0, 0, 0, 0, 7, 208]), reply(0xE6, 7, [0]), reply(3, 8, [0])])
+        var waits: [(Int, TimeInterval)] = []
+        let transaction = try OTATransaction(transport: io, image: image, modified: true,
+                                             identity: identity, address: "aa", pace: 0, waitForPacing: { waits.append((io.writes.count, $0)) })
+        let result = try transaction.run()
+        XCTAssertEqual(result.transferredRange, [18, 1320])
+        XCTAssertEqual(waits.count, 40)
+        XCTAssertTrue(waits.prefix(20).allSatisfy { $0.0 == 6 && $0.1 == 0.1 })
+        XCTAssertTrue(waits.suffix(20).allSatisfy { $0.0 == 8 && $0.1 == 0.1 })
+        XCTAssertEqual(result.chunks, 4)
+    }
+
+    func testPacingCannotHideInvalidRangeOrContinueAfterLinkLoss() throws {
+        let entry: [UInt8] = [0, 0, 0, 0, 18, 2, 139, 1]
+        for invalidRange in [true, false] {
+            let io = QueueTransport(initial(entry) + [reply(0xE5, 6, [0, 0, 0, 2, invalidRange ? 156 : 157, 2, 139, 7, 208])])
+            var waits = 0
+            let transaction = try OTATransaction(transport: io, image: image, modified: true,
+                                                 identity: identity, address: "aa", pace: 0,
+                                                 checkControlLink: {
+                                                     if waits == 1 {
+                                                         throw MemoMindProtocolError.timeout("link lost")
+                                                     }
+                                                 },
+                                                 waitForPacing: { _ in waits += 1 })
+            XCTAssertThrowsError(try transaction.run())
+            XCTAssertEqual(waits, invalidRange ? 0 : 1)
+            XCTAssertEqual(io.writes.count, 6)
+        }
+    }
+
     func testModifiedNonFreshOffsetRejectsAllBeforeChunks() throws {
         for offset: UInt8 in [0, 17, 19, 255] {
             let io = QueueTransport(initial([0, 0, 0, 0, offset, 5, 22, 1]))

@@ -17,27 +17,42 @@ func captureSensors(session: GMSession, capture: Capture, seconds: Int) throws -
     try capture.record(["event": "sensor-start", "snapshot": dictionary(start)])
     let deadline = ProcessInfo.processInfo.systemUptime + Double(seconds)
     var renewal = ProcessInfo.processInfo.systemUptime
-    var lastIMU: UInt32 = 0, lastLight: UInt32 = 0
-    var imuSamples = 0, lightSamples = 0
+    var acknowledged: UInt32 = 0, sequence: UInt32 = 0, drops: UInt32 = 0
+    var imuSamples = 0, lightSamples = 0, missed: UInt64 = 0
     while ProcessInfo.processInfo.systemUptime < deadline {
         let now = ProcessInfo.processInfo.systemUptime
-        let state = try session.sensorCapture(now - renewal >= 30 ? .renew : .status, event: &event)
         if now - renewal >= 30 {
+            let state = try session.sensorCapture(.renew, event: &event)
+            guard state.generation == start.generation else { throw CLIError("Sensor capture ownership changed") }
             renewal = now
         }
-        guard state.generation == start.generation, state.activeMask == 3 else { throw CLIError("Sensor capture ownership changed") }
-        try capture.record(["event": "sensor-snapshot", "snapshot": dictionary(state)])
-        if let imu = state.imu, imu.sequence != lastIMU {
-            imuSamples += 1; lastIMU = imu.sequence
+        let batch = try session.sensorBatch(generation: start.generation, acknowledged: acknowledged, event: &event)
+        guard batch.sequence >= sequence, batch.drops >= drops else { throw CLIError("Sensor counters moved backwards") }
+        try capture.record(["event": "sensor-batch", "batch": dictionary(batch)])
+        if let first = batch.samples.first {
+            missed += UInt64(first.sequence - acknowledged - 1)
         }
-        if let light = state.light, light.sequence != lastLight {
-            lightSamples += 1; lastLight = light.sequence
+        for sample in batch.samples {
+            if sample.imu != nil {
+                imuSamples += 1
+            }
+            if sample.light != nil {
+                lightSamples += 1
+            }
         }
-        Thread.sleep(forTimeInterval: 0.1)
+        if let last = batch.samples.last {
+            acknowledged = last.sequence
+        }
+        sequence = batch.sequence; drops = batch.drops
+        if batch.pending <= batch.samples.count {
+            Thread.sleep(forTimeInterval: 0.1)
+        }
     }
     let stopped = try session.sensorCapture(.stop, event: &event)
     started = false
     try capture.record(["event": "sensor-stopped", "snapshot": dictionary(stopped)])
     return ["complete": true, "passiveCapture": true, "imuSnapshotsSaved": imuSamples, "lightSnapshotsSaved": lightSamples,
-            "subscriptionStopped": true, "physicalUnitsVerified": false, "flashMutations": 0]
+            "subscriptionStopped": true, "physicalUnitsVerified": false, "flashMutations": 0,
+            "missingSequences": missed, "reportedOverwrites": drops, "lastSavedSequence": acknowledged,
+            "stopDiscardsUnread": true, "losslessCapture": false]
 }

@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "sensor-buffer-001",
+                        sha256: "fa230c0c893d9b810d0901dcfec2798dc4a78f043069aef865a07c94b883eb86", byteCount: 2_247_245, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "fd93ed4c6da4f0aa3dbcfa1f923cf708c5de55677f8256d2debba6162a3834e8",
+                        streams: streamPins(.sensorBuffer9)),
         FirmwareRelease(name: "sensor-capture-001",
                         sha256: "5658977cd0653d3c8722aa0751024eedf57c227425d9bec031ec00c0f6a0e00f", byteCount: 2_246_211, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "1f801d0c3a32088091c02e16dfa63119e3a47e450f134e15447370c6c4aa0c39",
@@ -280,12 +284,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .sensorBuffer9:
+            metadata = 171; appPacked = 976_143; appRaw = 1_869_424
+            metadataHash = "830f7a2e1580632b10737fc8c505f5f8642be5d4ef6f0e4a0c9e262cc629aa82"
+            appHash = "90d5eb015f684d70bc2d4cf2f4829fa349750272660dcbe27043e492e504e6ec"
         case .sensorCapture8:
             metadata = 171; appPacked = 975_109; appRaw = 1_867_824
             metadataHash = "1c66b3b0d03e0b7ad4a542b35a1d62c3768ced14ef6e5336eed7ff9ca976338d"

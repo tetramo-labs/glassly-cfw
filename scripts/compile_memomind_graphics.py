@@ -96,8 +96,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         raise ValueError("Record transport requires flash scene and diagnostic commands")
     if microphone_control and (not record_transport or not wake_control or cfw_revision < 7):
         raise ValueError("Microphone control requires record/wake profile and CFW revision >=7")
-    if sensor_capture and (not microphone_control or cfw_revision < 8):
-        raise ValueError("Sensor capture requires microphone profile and CFW revision >=8")
+    if sensor_capture and (not microphone_control or cfw_revision < 9):
+        raise ValueError("Sensor capture requires microphone profile and CFW revision >=9")
     if notification_relay and cfw_revision < 2:
         raise ValueError("Notification candidate requires CFW revision >=2")
     if notification_relay and not wake_control:

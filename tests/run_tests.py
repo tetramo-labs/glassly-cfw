@@ -93,7 +93,7 @@ def main():
           '--storage-diagnostics', '--full-store-reader', '--flash-canary', '--raster-commands',
           '--rect-copy', '--command-bundles', '--text-commands', '--diagnostic-commands',
           '--reset-undo-trim', '--minimal-launcher', '--flash-scene', '--wake-control',
-          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--cfw-revision', '8', '--rx-profile', 'app-rx-96k-v1']),
+          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--cfw-revision', '9', '--rx-profile', 'app-rx-96k-v1']),
         ('microphone_host', 'Leased native Opus lifecycle, cancellation and cleanup failures under sanitizers',
          [python, 'runtime/graphics/tests/run_microphone_tests.py', '--output', str(out / 'microphone-host')]),
         ('microphone_native_abi', 'Actual stock recording task, open, stop, reset, cooldown and format ABI; hardware mocked',

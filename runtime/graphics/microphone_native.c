@@ -1,6 +1,9 @@
 /* MIT. Native calls that change recording state run only on the app worker. */
 #include "microphone_native.h"
 #include "flash_canary.h"
+#ifdef MM_SENSOR_CAPTURE
+#include "sensor_capture.h"
+#endif
 #define P mm_graphics_native
 #ifdef MM_MICROPHONE_TEST
 extern void *mm_microphone_function(uintptr_t);
@@ -149,6 +152,9 @@ static void configure(owner *o,const uint8_t *p){
     update(o,now());
 }
 void glassly_microphone_task(uint32_t event,const uint8_t *p,uint32_t n){
+#ifdef MM_SENSOR_CAPTURE
+    if(event==0x292u){glassly_sensor_watch(p,n);return;}
+#endif
     owner *o=get();if(!o)return;
     if(event==WATCH_EVENT){
         if(!p || n!=8 || word(p)!=MAGIC || word(p+4)!=o->generation)return;

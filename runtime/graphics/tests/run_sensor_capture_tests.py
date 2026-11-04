@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Passive sensor capture ownership with injected APIs and sanitizer checking."""
+"""Passive sensor capture ownership and buffered replay with injected APIs and sanitizer checking."""
 import argparse, hashlib, json, subprocess
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]

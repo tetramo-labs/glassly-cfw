@@ -37,10 +37,18 @@ Revision8 adds leased passive IMU register and normalized light snapshots,
 with generation tokens, sequence numbers and completion timestamps. The runtime
 uses94,608 bytes of the existing96KiB region and48 reserved registry bytes.
 Swift and Android clients expose the native diagnostic interface; the Glassly
-bundle and engine admission require revision8. It has not been flashed.
+bundle and engine admission required revision8. It was not flashed.
 Native sensor power control, physical-unit calibration and compass remain
 unfinished. See the [sensor contract](runtime/graphics/SENSORS.md) and
 [revision8 checkpoint](analysis/sensor-capture-20261103/checkpoint.json).
+
+Revision9 adds a32-record acknowledged sensor FIFO, overwrite counters,
+generation-checked batch reads and watchdog buffer reclamation. The runtime is
+96,208 bytes; active capture uses784 heap bytes plus the existing48-byte registry
+slot. Swift/Android clients and the Mac recorder implement the batch protocol.
+Glassly bundles revision9 and requires it for native admission. It has not been
+flashed; revision6 remains the last boot-verified image. See the
+[revision9 checkpoint](analysis/sensor-buffer-20261103/checkpoint.json).
 
 ## Compressed record transport
 
@@ -144,9 +152,9 @@ and maps original assertions to current MemoMind coverage. All46 unique C host
 scenarios now have portable core coverage, with746 original assertion sites
 preserved across all seven host suites. This includes scene/cache/assets,
 notification relay, keyboard, record transport and upstream protocol policies.
-The latest clean regression passes144 required offline stages, including235
-Python tests and145 Swift tests, with no source drift or missing mapped stages.
-See the [regression summary](analysis/sensor-capture-20261103/regression-verification.json).
+The latest clean regression passes 144 required offline stages, including 235
+Python tests and 149 Swift tests, with no source drift or missing mapped stages.
+See the [regression summary](analysis/sensor-buffer-20261103/regression-verification.json).
 The required sensor ABI stage passes604 actual-code cases with
 mocked hardware/RTOS boundaries. It establishes ALS normalization and shared
 power behavior, plus IMU acquisition, axis reduction and shutdown boundaries;

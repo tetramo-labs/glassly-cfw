@@ -55,11 +55,11 @@ final class SensorCaptureTests: XCTestCase {
     }
 
     func testCapabilityAndCorrelatedCommands() throws {
-        let sensors: [String: Any] = ["command": 118, "version": 1, "capture": "passive-latest", "imu": "icm42670-registers",
+        let sensors: [String: Any] = ["command": 118, "version": 1, "capture": "passive-buffered", "capacity": 32, "batch": 4, "imu": "icm42670-registers",
                                       "als": "native-0-1000", "leaseTicks": 90000]
         for version in ["GLASSLYCFW/8", "GLASSLYCFW/9", "GLASSLYCFW/7", "GLASSLYCFW/+8", "GLASSLYCFW/8beta"] {
             let caps = try messageJSON(["glassly": "graphics-runtime", "abi": 1, "version": version, "sensors": sensors], command: 0x7E)
-            if ["GLASSLYCFW/8", "GLASSLYCFW/9"].contains(version) {
+            if ["GLASSLYCFW/9"].contains(version) {
                 XCTAssertNoThrow(try SensorCaptureSnapshot.validateCapability(caps))
             } else {
                 XCTAssertThrowsError(try SensorCaptureSnapshot.validateCapability(caps))

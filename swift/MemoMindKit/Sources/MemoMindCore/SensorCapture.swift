@@ -39,9 +39,9 @@ public struct SensorCaptureSnapshot: Codable, Equatable, Sendable {
               object["glassly"]?.string == "graphics-runtime", object["abi"]?.integer == 1,
               let version = object["version"]?.string, version.hasPrefix("GLASSLYCFW/"),
               version.dropFirst(11).utf8.allSatisfy({ (48 ... 57).contains($0) }),
-              let revision = UInt32(version.dropFirst(11)), (8 ... 65535).contains(revision),
+              let revision = UInt32(version.dropFirst(11)), (9 ... 65535).contains(revision),
               let sensor = object["sensors"]?.object, sensor["command"]?.integer == 118, sensor["version"]?.integer == 1,
-              sensor["capture"]?.string == "passive-latest", sensor["imu"]?.string == "icm42670-registers",
+              sensor["capture"]?.string == "passive-buffered", sensor["capacity"]?.integer == 32, sensor["batch"]?.integer == 4, sensor["imu"]?.string == "icm42670-registers",
               sensor["als"]?.string == "native-0-1000", sensor["leaseTicks"]?.integer == 90000
         else {
             throw MemoMindProtocolError.invalid("Passive sensor capture is unavailable")
@@ -53,7 +53,7 @@ public struct SensorCaptureSnapshot: Codable, Equatable, Sendable {
                             "Expected sensor capture response")
         guard let o = try StrictDeviceJSON.decode(message.tlvs[0].value, maximumBytes: 208).object,
               o["glassly"]?.string == "sensors", o["abi"]?.integer == 1,
-              let result = o["result"]?.string, ["ok", "invalid", "unavailable", "exhausted", "inactive"].contains(result),
+              let result = o["result"]?.string, ["ok", "invalid", "unavailable", "exhausted", "inactive", "allocation-failed", "schedule-failed"].contains(result),
               let hex = o["stateHex"]?.string else { throw MemoMindProtocolError.invalid("Invalid sensor response") }
         let chars = Array(hex.utf8)
         try requireProtocol(chars.count == 104 && chars.allSatisfy { (48 ... 57).contains($0) || (97 ... 102).contains($0) }, "Invalid sensor state")

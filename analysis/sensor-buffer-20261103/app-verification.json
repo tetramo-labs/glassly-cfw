@@ -1,0 +1,27 @@
+{
+  "version": "GLASSLYCFW/9",
+  "passed": true,
+  "macTests": 115,
+  "iosSimulatorTests": 12,
+  "androidTests": 23,
+  "engineTests": 2,
+  "androidSuites": {
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorBatchTest": 3,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorsTest": 2,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindWireTest": 13,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindRecordsTest": 3,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindMicrophoneTest": 2
+  },
+  "logSHA256": {
+    "app-mac-01.log": "2475db53b577113e93306af73a70d9574533927580b8d150301379d5168d378c",
+    "app-ios-01.log": "79aca83af32b7827b16451e3822508c62dfbc7b42b4f104dec432779c8e41e4f",
+    "app-android-01.log": "4918d498074f54aa99b60584e552c2961082de3c985dd55b8cce7df0752ccf6f",
+    "app-engine-01.log": "ada10e21caf6e609a1a81c16b67385e090f157f9f0d9fe83b90751fc9cd0b7f0"
+  },
+  "appHardwareTested": false,
+  "limitations": [
+    "Native sensor buffering remains passive and uses native units.",
+    "Generic engine light/compass capabilities remain unadvertised.",
+    "No V9 OTA, boot or hardware sampling verification."
+  ]
+}

@@ -15,7 +15,27 @@ import sensor_native_abi_test as S
 
 
 class SensorMachine(WakeMachine):
+    def __init__(self):
+        super().__init__()
+        self.sensor_watch = None
+        self.sensor_timer_error = 0
+
+    def tick_sensor(self, payload=None):
+        data = payload or self.sensor_watch
+        p = self.allocate(len(data), 'sensor-watch-job', data, writable=False)
+        self.call('glassly_microphone_task_entry', 0x292, p, len(data))
+        self.discard(p)
+
+    def batch(self, generation, ack=0):
+        data = b'SC\1\4' + struct.pack('<II', generation, ack)
+        result = self.service(0x76, self.request(data))[0]
+        return result, bytes.fromhex(result['stateHex'])
+
     def native(self, name, args):
+        if name == 'mic_timer':
+            assert not self.critical and args[:2] == (0x13, 0x292) and args[3:5] == (8, 1000)
+            if not self.sensor_timer_error:self.sensor_watch = self.read(args[2], 8)
+            return self.sensor_timer_error
         if name == 'mic_clock':
             assert not self.critical
             return self.now
@@ -80,6 +100,35 @@ class Tests(unittest.TestCase):
             assert m.service(0x76, m.request(body))[0]['result'] == 'invalid'
         m.fail_alloc_sizes.add(208)
         assert m.service(0x76, m.request(b'SC\1\0'))[0] == {'status': 4}
+
+    def test_buffer_replay_overflow_and_ack(self):
+        m = SensorMachine(); m.sensor(1); gen = m.begin()
+        for i in range(40):
+            m.now += 1; m.finish(gen, 1 if i % 2 == 0 else 2, bytes(range(14)) if i % 2 == 0 else b'\xe8\3')
+        a, wire = m.batch(gen)
+        assert a['glassly'] == 'sensor-batch' and a['result'] == 'ok'
+        assert len(wire) == 124 and wire[24:28] == bytes([32, 32, 4, 0])
+        assert struct.unpack_from('<III', wire, 12) == (0, 40, 8)
+        assert [struct.unpack_from('<I', wire, 28+i*24)[0] for i in range(4)] == [9, 10, 11, 12]
+        assert m.batch(gen)[1] == wire
+        assert m.batch(gen, 12)[1][24] == 28
+        assert m.batch(gen, 11)[0]['result'] == 'invalid'
+        assert m.batch(gen, 41)[0]['result'] == 'invalid'
+        assert m.batch(gen+1, 40)[0]['result'] == 'stale'
+        assert m.batch(gen, 40)[1][24] == 0
+        m.call('glassly_sensor_cleanup'); assert not m.owned_live()
+
+    def test_arena_failures_and_watch_generation(self):
+        m = SensorMachine();m.fail_alloc_sizes.add(784)
+        assert m.sensor(1)[0]['result'] == 'allocation-failed' and not m.owned_live()
+        m.fail_alloc_sizes.clear();m.sensor(1);old = m.sensor_watch
+        m.sensor(1);m.tick_sensor(old);assert m.sensor()[1][3] == 3
+        m.now += 90000;m.tick_sensor();assert not m.owned_live() and m.sensor()[1][3] == 0
+        m.sensor_timer_error=11
+        assert m.sensor(1)[0]['result'] == 'schedule-failed' and not m.owned_live()
+        m.sensor_timer_error=0;m.sensor(1);m.sensor_timer_error=11;m.tick_sensor()
+        assert m.sensor()[1][3] == 0 and not m.owned_live()
+        m.sensor_timer_error=0;m.sensor(1);m.execute_display(bytes([11]));assert not m.owned_live()
 
     def test_freestanding_memset(self):
         m = SensorMachine()

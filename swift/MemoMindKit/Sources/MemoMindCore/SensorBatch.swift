@@ -6,16 +6,21 @@ public struct SensorBufferedSample: Codable, Equatable, Sendable {
     public let light: AmbientLightSample?
 }
 
+public enum SensorCapturePhase: UInt8, Codable, Sendable {
+    case inactive, capturing, draining
+}
+
 public struct SensorBatch: Codable, Equatable, Sendable {
     public let result: String
     public let activeMask: UInt8
+    public let phase: SensorCapturePhase
     public let generation, now, acknowledged, sequence, drops: UInt32
     public let pending: Int
     public let samples: [SensorBufferedSample]
 
-    public static func command(generation: UInt32, acknowledged: UInt32) throws -> Data {
+    public static func command(generation: UInt32, acknowledged: UInt32, finish: Bool = false) throws -> Data {
         try requireProtocol(generation != 0, "Invalid sensor generation")
-        var b = Data([83, 67, 1, 4])
+        var b = Data([83, 67, 1, finish ? 5 : 4])
         for n in [generation, acknowledged] {
             for i in 0 ..< 4 {
                 b.append(UInt8(truncatingIfNeeded: n >> (i * 8)))
@@ -28,8 +33,8 @@ public struct SensorBatch: Codable, Equatable, Sendable {
         try requireProtocol(message.service == 15 && message.command == 118 && message.tlvs.count == 1 && message.tlvs[0].kind == 5,
                             "Expected sensor batch")
         guard let o = try StrictDeviceJSON.decode(message.tlvs[0].value, maximumBytes: 384).object,
-              o["glassly"]?.string == "sensor-batch", o["abi"]?.integer == 1,
-              let result = o["result"]?.string, ["ok", "invalid", "inactive", "stale"].contains(result),
+              o["glassly"]?.string == "sensor-batch", o["abi"]?.integer == 2,
+              let result = o["result"]?.string, ["ok", "released", "invalid", "inactive", "stale"].contains(result),
               let hex = o["stateHex"]?.string else { throw MemoMindProtocolError.invalid("Invalid sensor batch") }
         let chars = Array(hex.utf8)
         try requireProtocol((56 ... 248).contains(chars.count) && chars.count % 2 == 0 &&
@@ -49,11 +54,14 @@ public struct SensorBatch: Codable, Equatable, Sendable {
         }
         let active = b[3], generation = word(4), now = word(8), ack = word(12), sequence = word(16), drops = word(20)
         let pending = Int(b[24]), count = Int(b[26])
-        try requireProtocol(Array(b[0 ..< 3]) == [83, 66, 1] && active <= 3 && b[25] == 32 && b[27] == 0 &&
+        guard let phase = SensorCapturePhase(rawValue: b[27]) else { throw MemoMindProtocolError.invalid("Invalid sensor phase") }
+        try requireProtocol(Array(b[0 ..< 3]) == [83, 66, 2] && active <= 3 && b[25] == 32 &&
+            (phase == .capturing ? active != 0 : active == 0) && (phase != .inactive || pending == 0) &&
             pending <= 32 && count <= 4 && count <= pending && b.count == 28 + count * 24 &&
             ack <= sequence && drops <= sequence && UInt32(pending) <= sequence - ack, "Contradictory batch state")
-        try requireProtocol(result == "ok" ? active != 0 && generation != 0 && count == min(pending, 4) : count == 0,
+        try requireProtocol(result == "ok" ? phase != .inactive && generation != 0 && count == min(pending, 4) : count == 0,
                             "Contradictory batch result")
+        try requireProtocol(result != "released" || phase == .inactive, "Sensor release is still active")
         var samples: [SensorBufferedSample] = []
         for i in 0 ..< count {
             let offset = 28 + i * 24, serial = word(offset), tick = word(offset + 4), age = now &- tick
@@ -72,18 +80,52 @@ public struct SensorBatch: Codable, Equatable, Sendable {
             }
             samples.append(SensorBufferedSample(sequence: serial, tick: tick, ageTicks: age, imu: imu, light: light))
         }
-        return Self(result: result, activeMask: active, generation: generation, now: now, acknowledged: ack,
+        return Self(result: result, activeMask: active, phase: phase, generation: generation, now: now, acknowledged: ack,
                     sequence: sequence, drops: drops, pending: pending, samples: samples)
     }
 }
 
 public extension GMSession {
-    func sensorBatch(generation: UInt32, acknowledged: UInt32, event: inout UInt8) throws -> SensorBatch {
-        let body = try SensorBatch.command(generation: generation, acknowledged: acknowledged)
+    func sensorBatch(generation: UInt32, acknowledged: UInt32, finish: Bool = false, event: inout UInt8) throws -> SensorBatch {
+        let body = try SensorBatch.command(generation: generation, acknowledged: acknowledged, finish: finish)
         event = event == 255 ? 1 : event + 1
         let batch = try SensorBatch.decode(request(event: event, service: 15, command: 118, body: GMTLV(kind: 1, value: body).encoded()))
-        try requireProtocol(batch.result == "ok" && batch.generation == generation && batch.acknowledged == acknowledged,
-                            "Sensor batch refused or capture changed")
+        try requireProtocol(batch.result == "ok" && batch.generation == generation && batch.acknowledged == acknowledged &&
+            (!finish || batch.phase == .draining),
+            "Sensor batch refused or capture changed")
         return batch
+    }
+
+    func releaseSensorCapture(generation: UInt32, acknowledged: UInt32, event: inout UInt8) throws -> SensorBatch {
+        var body = try SensorBatch.command(generation: generation, acknowledged: acknowledged)
+        body[3] = 6
+        event = event == 255 ? 1 : event + 1
+        let batch = try SensorBatch.decode(request(event: event, service: 15, command: 118, body: GMTLV(kind: 1, value: body).encoded()))
+        try requireProtocol(batch.result == "released" && batch.generation == generation && batch.acknowledged == acknowledged,
+                            "Sensor release refused or capture changed")
+        return batch
+    }
+
+    func drainSensorCapture(generation: UInt32, acknowledged: UInt32, event: inout UInt8,
+                            save: (SensorBatch) throws -> Void) throws -> SensorBatch
+    {
+        var ack = acknowledged
+        var terminal: (sequence: UInt32, drops: UInt32)?
+        for index in 0 ..< 9 {
+            let batch = try sensorBatch(generation: generation, acknowledged: ack, finish: index == 0, event: &event)
+            try requireProtocol(batch.phase == .draining, "Sensor capture did not freeze")
+            if let terminal {
+                try requireProtocol(batch.sequence == terminal.sequence && batch.drops == terminal.drops, "Frozen sensor counters changed")
+            } else {
+                terminal = (batch.sequence, batch.drops)
+            }
+            try save(batch)
+            if batch.pending == 0 {
+                try requireProtocol(batch.acknowledged == batch.sequence, "Sensor tail was not acknowledged")
+                return batch
+            }
+            ack = batch.samples.last!.sequence
+        }
+        throw MemoMindProtocolError.invalid("Sensor drain exceeded buffer capacity")
     }
 }

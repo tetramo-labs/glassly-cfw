@@ -385,7 +385,7 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"notifications\":{\"command\":120,\"transport\":\"poll\",\"leaseTicks\":90000},"
 #endif
 #ifdef MM_SENSOR_CAPTURE
-                   "\"sensors\":{\"command\":118,\"version\":1,\"capture\":\"passive-buffered\",\"capacity\":32,\"batch\":4,\"imu\":\"icm42670-registers\",\"als\":\"native-0-1000\",\"leaseTicks\":90000},"
+                   "\"sensors\":{\"command\":118,\"version\":1,\"capture\":\"passive-buffered\",\"capacity\":32,\"batch\":4,\"batchVersion\":2,\"finish\":5,\"release\":6,\"drainTicks\":30000,\"imu\":\"icm42670-registers\",\"als\":\"native-0-1000\",\"leaseTicks\":90000},"
 #endif
 #ifdef MM_MICROPHONE_CONTROL
                    "\"microphone\":{\"command\":119,\"version\":1,\"codec\":\"opus\",\"sampleRate\":16000,\"channels\":1,\"bitrate\":16000,\"leaseTicks\":90000},"

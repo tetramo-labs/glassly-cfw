@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "sensor-drain-001",
+                        sha256: "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0", byteCount: 2_247_403, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "b947fe9870ec41eca1c6e123fd730460b86f276ad53ebe513f0be24c76c23df1",
+                        streams: streamPins(.sensorDrain10)),
         FirmwareRelease(name: "sensor-buffer-001",
                         sha256: "fa230c0c893d9b810d0901dcfec2798dc4a78f043069aef865a07c94b883eb86", byteCount: 2_247_245, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "fd93ed4c6da4f0aa3dbcfa1f923cf708c5de55677f8256d2debba6162a3834e8",
@@ -284,12 +288,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .sensorDrain10:
+            metadata = 171; appPacked = 976_301; appRaw = 1_869_664
+            metadataHash = "062213c02a8d64c4febaacdfed769d3616f333288bf5079aca7e5d34b8bdbcbc"
+            appHash = "1ccd57116312f87be94bc4b39472dc7a54b2ec5dfc27f59b3e48e627a78b6f0a"
         case .sensorBuffer9:
             metadata = 171; appPacked = 976_143; appRaw = 1_869_424
             metadataHash = "830f7a2e1580632b10737fc8c505f5f8642be5d4ef6f0e4a0c9e262cc629aa82"

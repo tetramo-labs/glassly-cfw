@@ -31,6 +31,11 @@ class SensorMachine(WakeMachine):
         result = self.service(0x76, self.request(data))[0]
         return result, bytes.fromhex(result['stateHex'])
 
+    def seal(self, generation, ack=0):
+        data = b'SC\1\5' + struct.pack('<II', generation, ack)
+        result = self.service(0x76, self.request(data))[0]
+        return result, bytes.fromhex(result['stateHex'])
+
     def native(self, name, args):
         if name == 'mic_timer':
             assert not self.critical and args[:2] == (0x13, 0x292) and args[3:5] == (8, 1000)
@@ -65,6 +70,43 @@ class SensorMachine(WakeMachine):
 
 
 class Tests(unittest.TestCase):
+    def test_generation_owned_release(self):
+        m=SensorMachine();m.sensor(1);gen=m.begin();m.finish(gen)
+        def release(g,ack):return m.service(0x76,m.request(b'SC\1\6'+struct.pack('<II',g,ack)))[0]
+        assert release(gen+1,0)['result']=='stale' and m.begin()==gen
+        assert release(gen,2)['result']=='invalid' and m.begin()==gen
+        a=release(gen,1);assert a['result']=='released' and not m.owned_live()
+        assert bytes.fromhex(a['stateHex'])[24:28]==bytes([0,32,0,0])
+        assert release(gen,1)==a
+        m.sensor(1);new=m.begin();assert release(gen,1)['result']=='stale' and m.begin()==new
+        m.seal(new);assert release(new,0)['result']=='released' and not m.owned_live()
+
+    def test_sealed_tail_replay_and_release(self):
+        m = SensorMachine();m.sensor(1);gen=m.begin()
+        for _ in range(40):m.finish(gen)
+        assert m.seal(gen+1)[0]['result']=='stale' and m.begin()==gen
+        assert m.seal(gen,41)[0]['result']=='invalid' and m.begin()==gen
+        m.fail_alloc_sizes.add(384)
+        reply,_ = m.service(0x76,m.request(b'SC\1\5'+struct.pack('<II',gen,8)))
+        m.fail_alloc_sizes.clear()
+        assert not m.begin()
+        a,b=m.seal(gen,8);assert a['abi']==2 and b[2]==2 and b[27]==2 and b[24]==32
+        assert m.batch(gen,8)==(a,b)
+        m.finish(gen);assert m.batch(gen,8)==(a,b)
+        m.sensor();assert m.sensor(3)[0]['result']=='inactive'
+        for ack in range(12,41,4):
+            _,b=m.batch(gen,ack);assert b[27]==2 and b[24]==40-ack
+        assert m.owned_live();m.sensor(2);assert not m.owned_live()
+
+    def test_sealed_expiry_rollover_and_stale_watch(self):
+        m=SensorMachine();m.now=0xfffffff0;m.sensor(1);gen=m.begin()
+        m.seal(gen);old=m.sensor_watch;m.now=(m.now+29000)&0xffffffff
+        m.seal(gen);m.tick_sensor();assert m.owned_live()
+        m.now+=1000;m.tick_sensor();assert not m.owned_live()
+        assert m.seal(gen)[0]['result']=='inactive'
+        m.sensor(1);new=m.begin();m.tick_sensor(old);assert m.begin()==new
+        m.seal(new);m.sensor_timer_error=11;m.tick_sensor();assert not m.owned_live()
+
     def test_lifecycle_and_stale_completion(self):
         m = SensorMachine()
         assert m.sensor(1)[1][3:6] == b'\3\0\0'
@@ -107,7 +149,7 @@ class Tests(unittest.TestCase):
             m.now += 1; m.finish(gen, 1 if i % 2 == 0 else 2, bytes(range(14)) if i % 2 == 0 else b'\xe8\3')
         a, wire = m.batch(gen)
         assert a['glassly'] == 'sensor-batch' and a['result'] == 'ok'
-        assert len(wire) == 124 and wire[24:28] == bytes([32, 32, 4, 0])
+        assert len(wire) == 124 and wire[24:28] == bytes([32, 32, 4, 1])
         assert struct.unpack_from('<III', wire, 12) == (0, 40, 8)
         assert [struct.unpack_from('<I', wire, 28+i*24)[0] for i in range(4)] == [9, 10, 11, 12]
         assert m.batch(gen)[1] == wire

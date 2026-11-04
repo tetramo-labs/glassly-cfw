@@ -1,0 +1,24 @@
+{
+  "version": "GLASSLYCFW/10",
+  "passed": true,
+  "imageSHA256": "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0",
+  "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+  "appHeaderSHA256": "875f7e75670271ee4e23872b5356e9103eccc9ccb516c51da37e13899d502c5b",
+  "checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "sourcesVerified": 97,
+  "nativeWitnessesVerified": 23,
+  "unchangedComponents": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "mobileBundlesIdentical": true,
+  "hardwareTested": false
+}

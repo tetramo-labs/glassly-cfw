@@ -2,8 +2,10 @@
 #include "sensor_capture.h"
 #include "flash_canary.h"
 #define P mm_graphics_native
-#define MAGIC UINT32_C(0x534e5332)
+#define MAGIC UINT32_C(0x534e5333)
 #define LEASE 90000u
+#define DRAIN_LEASE 30000u
+#define SEALED 128u
 #define CAPACITY 32u
 #define BATCH 4u
 #define WATCH_EVENT 0x292u
@@ -34,7 +36,7 @@ static owner *get(void){
     owner *o=MEMORY;return !o->magic || o->magic==MAGIC?o:0;
 }
 static void expire(owner *o,uint32_t t){
-    if(o->active && (int32_t)(o->deadline-t)<=0){o->active=0;o->valid=0;}
+    if((o->active || (o->valid&SEALED)) && (int32_t)(o->deadline-t)<=0){o->active=0;o->valid=0;}
 }
 static arena *detach(owner *o){arena *p=o->data;o->data=0;o->active=0;o->valid=0;o->count=0;o->head=0;return p;}
 static void dispose(arena *p){if(p)P.free(p);}
@@ -54,7 +56,7 @@ void glassly_sensor_watch(const uint8_t *p,uint32_t n){
     if(!p || n!=8 || word(p)!=MAGIC)return;
     owner *o=get();if(!o)return;uint32_t generation=word(p+4),t=NOW;int active=0;arena *old=0;
     glassly_canary_enter();
-    if(o->generation==generation){expire(o,t);if(o->active)active=1;else old=detach(o);}
+    if(o->generation==generation){expire(o,t);if(o->active || (o->valid&SEALED))active=1;else old=detach(o);}
     glassly_canary_leave();dispose(old);
     if(active && schedule(generation))cancel_generation(o,generation);
 }
@@ -92,7 +94,7 @@ static void *json_hex(const char *kind,const char *result,const uint8_t *b,unsig
     char *out=P.alloc(n>52?384:208);if(!out)return P.status(4,0);
     char *p=out;const char *s="{\"glassly\":\"";while(*s)*p++=*s++;
     while(*kind){*p++=*kind++;}
-    s="\",\"abi\":1,\"result\":\"";while(*s)*p++=*s++;
+    s=b[2]==2?"\",\"abi\":2,\"result\":\"":"\",\"abi\":1,\"result\":\"";while(*s)*p++=*s++;
     while(*result){*p++=*result++;}
     s="\",\"stateHex\":\"";while(*s)*p++=*s++;
     static const char hex[]="0123456789abcdef";
@@ -105,7 +107,7 @@ static void *reply(const char *result){
         if(o->valid&1)for(unsigned i=0;i<14;i++)latest[i]=o->data->imu[i];
         if(o->valid&2){latest[14]=o->data->als[0];latest[15]=o->data->als[1];}
     }glassly_canary_leave();}
-    uint32_t t=NOW;expire(&s,t);b[3]=s.active;b[4]=s.valid;
+    uint32_t t=NOW;expire(&s,t);b[3]=s.active;b[4]=s.valid&3;
     if((s.valid&1) && (uint32_t)(t-s.imu_tick)<=1000)b[5]|=1;
     if((s.valid&2) && (uint32_t)(t-s.als_tick)<=5000)b[5]|=2;
     put(b+8,s.generation);put(b+12,t);put(b+16,s.active?s.deadline:0);
@@ -113,32 +115,35 @@ static void *reply(const char *result){
     if(s.valid&2){put(b+28,s.als_seq);put(b+32,s.als_tick);b[50]=latest[14];b[51]=latest[15];}
     return json_hex("sensors",result,b,sizeof(b));
 }
-static void *batch(owner *o,uint32_t generation,uint32_t ack){
-    uint8_t b[28+BATCH*24]={'S','B',1};uint32_t t=NOW;const char *result="ok";unsigned count=0;arena *old=0;
+static void *batch(owner *o,uint32_t generation,uint32_t ack,uint8_t op){
+    uint8_t b[28+BATCH*24]={'S','B',2};uint32_t t=NOW;const char *result="ok";unsigned count=0;arena *old=0;
     glassly_canary_enter();expire(o,t);
+    if(!o->active && !(o->valid&SEALED))old=detach(o);
     if(o->generation!=generation)result="stale";
-    else if(!o->active){result="inactive";old=detach(o);}
+    else if(!o->active && !(o->valid&SEALED) && op!=6)result="inactive";
     else if(ack<o->ack || ack>o->sequence)result="invalid";
     else {
+        if(op==5 && o->active){o->active=0;o->valid=SEALED;o->deadline=t+DRAIN_LEASE;}
         o->ack=ack;
         while(o->count && word(o->data->records[o->head].bytes)<=ack){o->head=(uint8_t)((o->head+1)%CAPACITY);o->count--;}
+        if(op==6){result="released";arena *released=detach(o);if(released)old=released;}
         count=o->count<BATCH?o->count:BATCH;
         for(unsigned i=0;i<count;i++)for(unsigned j=0;j<24;j++)b[28+i*24+j]=o->data->records[(o->head+i)%CAPACITY].bytes[j];
     }
     b[3]=o->active;put(b+4,o->generation);put(b+8,t);put(b+12,o->ack);put(b+16,o->sequence);put(b+20,o->drops);
-    b[24]=o->count;b[25]=CAPACITY;b[26]=(uint8_t)count;
+    b[24]=o->count;b[25]=CAPACITY;b[26]=(uint8_t)count;b[27]=o->active?1:(o->valid&SEALED)?2:0;
     glassly_canary_leave();dispose(old);put(b+8,NOW);return json_hex("sensor-batch",result,b,28+count*24);
 }
 void glassly_sensor_command(uint32_t command,void *request,const uint8_t *event,void **response){
     (void)command;(void)event;const uint8_t *p=0;size_t n=0;uint8_t op=255,mask=0;uint32_t generation=0,ack=0;
-    if(P.request_bytes(request,&p,&n) && p && n>=4 && p[0]=='S' && p[1]=='C' && p[2]==1 && p[3]<=4 &&
-       n==(p[3]==1?5u:p[3]==4?12u:4u) && (p[3]!=1 || (p[4]>=1 && p[4]<=3))){
-        op=p[3];if(op==1)mask=p[4];if(op==4){generation=word(p+4);ack=word(p+8);if(!generation)op=255;}
+    if(P.request_bytes(request,&p,&n) && p && n>=4 && p[0]=='S' && p[1]=='C' && p[2]==1 && p[3]<=6 &&
+       n==(p[3]==1?5u:p[3]>=4?12u:4u) && (p[3]!=1 || (p[4]>=1 && p[4]<=3))){
+        op=p[3];if(op==1)mask=p[4];if(op>=4){generation=word(p+4);ack=word(p+8);if(!generation)op=255;}
     }
     if(request)P.release(&request);
     if(op==255){*response=reply("invalid");return;}
     owner *o=get();if(!o){*response=reply("unavailable");return;}
-    if(op==4){*response=batch(o,generation,ack);return;}
+    if(op>=4){*response=batch(o,generation,ack,op);return;}
     arena *fresh=0,*old=0;
     if(op==1){
         if(P.free_bytes()<32768u+sizeof(arena) || !(fresh=P.alloc(sizeof(arena)))){*response=reply("allocation-failed");return;}
@@ -149,7 +154,8 @@ void glassly_sensor_command(uint32_t command,void *request,const uint8_t *event,
         if(o->generation==UINT32_MAX)result="exhausted";
         else {old=detach(o);o->magic=MAGIC;generation=++o->generation;o->deadline=t+LEASE;o->active=mask;
             o->imu_seq=0;o->als_seq=0;o->ack=0;o->sequence=0;o->drops=0;o->data=fresh;fresh=0;}
-    }else if(op==2 || !o->active){old=detach(o);if(op==3)result="inactive";}
+    }else if(op==2 || (!o->active && !(o->valid&SEALED))){old=detach(o);if(op==3)result="inactive";}
+    else if(op==3 && !o->active)result="inactive";
     else if(op==3)o->deadline=t+LEASE;
     glassly_canary_leave();dispose(old);dispose(fresh);
     if(generation && schedule(generation)){cancel_generation(o,generation);result="schedule-failed";}

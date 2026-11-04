@@ -93,4 +93,39 @@ static void buffered(void){
     schedule_error=0;command(1,3,"ok");storage.sequence=UINT32_MAX;glassly_sensor_finish(1,storage.generation,imu);assert(!storage.active);watch();assert(!storage.data);
     command(1,3,"ok");glassly_sensor_cleanup();assert(!storage.data);
 }
-int main(void){lifecycle();expiry();boundaries();buffered();reset();puts("sensor capture host: lifecycle, freshness, rollover, stale completion, bounds and OOM passed");return 0;}
+static char *seal(uint32_t generation,uint32_t ack){uint8_t p[12]={'S','C',1,5};put(p+4,generation);put(p+8,ack);return send(p,sizeof(p));}
+static char *release_capture(uint32_t generation,uint32_t ack){uint8_t p[12]={'S','C',1,6};put(p+4,generation);put(p+8,ack);return send(p,sizeof(p));}
+static void release_owned(void){
+    reset();command(1,3,"ok");uint32_t gen=storage.generation;uint8_t imu[14]={1};glassly_sensor_finish(1,gen,imu);
+    char *a=release_capture(gen+1,0);assert(strstr(a,"stale") && storage.active==3);free(a);
+    a=release_capture(gen,2);assert(strstr(a,"invalid") && storage.active==3);free(a);
+    a=release_capture(gen,1);assert(strstr(a,"released") && !storage.data && storage.ack==1);free(a);
+    a=release_capture(gen,1);assert(strstr(a,"released"));free(a);
+    command(1,3,"ok");a=release_capture(gen,1);assert(strstr(a,"stale") && storage.active==3);free(a);
+    a=seal(storage.generation,0);free(a);a=release_capture(storage.generation,0);assert(strstr(a,"released") && !storage.data);free(a);
+}
+static void draining(void){
+    reset();ticks=UINT32_MAX-100;command(1,3,"ok");uint32_t gen=storage.generation;uint8_t imu[14]={1};
+    for(unsigned i=0;i<40;i++)glassly_sensor_finish(1,gen,imu);
+    char *a=seal(gen+1,0);assert(strstr(a,"stale") && storage.active==3);free(a);
+    a=seal(gen,41);assert(strstr(a,"invalid") && storage.active==3);free(a);
+    fail_size=384;a=seal(gen,8);assert(!strcmp(a,"oom"));free(a);fail_size=0;
+    assert(!storage.active && storage.valid==SEALED && storage.count==32 && storage.sequence==40);
+    uint32_t deadline=storage.deadline;assert(deadline==ticks+DRAIN_LEASE);
+    glassly_sensor_finish(1,gen,imu);assert(!glassly_sensor_begin(1) && storage.sequence==40);
+    a=seal(gen,8);char *b=poll(gen,8);assert(!strcmp(a,b) && strstr(a,"\"abi\":2"));free(a);free(b);
+    uint8_t state[52];snapshot(state);assert(!state[3] && !state[4] && storage.count==32);
+    command(3,0,"inactive");assert(storage.data && storage.deadline==deadline);
+    ticks+=1000;watch();assert(storage.data && storage.deadline==deadline);
+    a=seal(gen,8);free(a);assert(storage.deadline==deadline);
+    for(unsigned ack=12;ack<=40;ack+=4){a=poll(gen,ack);assert(strstr(a,"ok"));free(a);assert(storage.count==40-ack);}
+    assert(storage.data && storage.ack==40 && storage.drops==8);
+    command(2,0,"ok");assert(!storage.data);
+    command(1,3,"ok");gen=storage.generation;a=seal(gen,0);free(a);deadline=storage.deadline;
+    ticks=deadline-1;watch();assert(storage.data);ticks++;watch();assert(!storage.data);
+    a=seal(gen,0);assert(strstr(a,"inactive"));free(a);
+    command(1,3,"ok");gen=storage.generation;a=seal(gen,0);free(a);command(1,3,"ok");
+    a=seal(gen,0);assert(strstr(a,"stale") && storage.active==3);free(a);
+    a=seal(storage.generation,0);free(a);schedule_error=11;watch();assert(!storage.data);
+}
+int main(void){lifecycle();expiry();boundaries();buffered();draining();release_owned();reset();puts("sensor capture host: lifecycle, freshness, rollover, stale completion, bounds and OOM passed");return 0;}

@@ -39,9 +39,10 @@ public struct SensorCaptureSnapshot: Codable, Equatable, Sendable {
               object["glassly"]?.string == "graphics-runtime", object["abi"]?.integer == 1,
               let version = object["version"]?.string, version.hasPrefix("GLASSLYCFW/"),
               version.dropFirst(11).utf8.allSatisfy({ (48 ... 57).contains($0) }),
-              let revision = UInt32(version.dropFirst(11)), (9 ... 65535).contains(revision),
+              let revision = UInt32(version.dropFirst(11)), (10 ... 65535).contains(revision),
               let sensor = object["sensors"]?.object, sensor["command"]?.integer == 118, sensor["version"]?.integer == 1,
-              sensor["capture"]?.string == "passive-buffered", sensor["capacity"]?.integer == 32, sensor["batch"]?.integer == 4, sensor["imu"]?.string == "icm42670-registers",
+              sensor["capture"]?.string == "passive-buffered", sensor["capacity"]?.integer == 32, sensor["batch"]?.integer == 4,
+              sensor["batchVersion"]?.integer == 2, sensor["finish"]?.integer == 5, sensor["release"]?.integer == 6, sensor["drainTicks"]?.integer == 30000, sensor["imu"]?.string == "icm42670-registers",
               sensor["als"]?.string == "native-0-1000", sensor["leaseTicks"]?.integer == 90000
         else {
             throw MemoMindProtocolError.invalid("Passive sensor capture is unavailable")

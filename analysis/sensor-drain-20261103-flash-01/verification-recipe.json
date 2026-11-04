@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "cfd1d8c5584f63a6f1d5c2b6df530b0d5f32982d",
+  "glasslyCommit": "6c8fab71a58582440c57835ba3146dc5b6ed5b3e",
+  "version": "GLASSLYCFW/10",
+  "release": "sensor-drain-001",
+  "bootHelperBasedOn": "analysis/record-memory-20261103/hardware.swift",
+  "bootHelperSHA256": "06bc9cfbbc109b3a2ad88186dea113bf7b42ad70a13c2b71542b5b88dc33aa10",
+  "compileCommand": "swiftc -module-cache-path /private/tmp/memomind-v10-module-cache -I swift/MemoMindKit/.build/debug -L swift/MemoMindKit/.build/debug -lMemoMindCore -lMemoMindBluetooth -framework IOBluetooth -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __info_plist -Xlinker swift/MemoMindKit/Sources/memomind/Info.plist analysis/sensor-drain-20261103-flash-01/boot.swift -o analysis/sensor-drain-20261103-flash-01/boot",
+  "bootChecks": [
+    "Exact 256-byte installed app header at device 0 offset 0x1eb000",
+    "Live GLASSLYCFW/10 capability response"
+  ],
+  "limitations": [
+    "Not a full runtime memory readback",
+    "Not a physical display confirmation"
+  ]
+}

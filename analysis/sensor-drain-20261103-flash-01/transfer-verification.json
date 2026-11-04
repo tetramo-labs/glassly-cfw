@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "pacing_waits_seconds": [],
+  "format": "memomind-offline-application-ota-proof-v1",
+  "image_sha256": "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0",
+  "reconstructed_sha256": "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0",
+  "reconstructed_bytes": 2247403,
+  "entire_ota_reconstructed": true,
+  "blocks": 549,
+  "chunks": 3841,
+  "transferred_range": [
+    18,
+    2247403
+  ],
+  "outgoing_ota_wire_sha256": "7e0bb673f282be05c0bfc24ce36e17d1876eb9b1667b5bb1fe4498038909757f",
+  "ota_frames_consumed": 4402,
+  "all_tx_submissions_completed": true,
+  "write_submissions": {
+    "control": 3,
+    "ota": 3847
+  },
+  "control_requests": 3,
+  "unsolicited_control_messages": 4,
+  "pre_ota_acceptance_before_ota": true,
+  "block_crc_and_sequence_verified": true,
+  "device_actions": false,
+  "limitations": [
+    "Application callback TX/RX evidence, not an independent HCI/radio capture.",
+    "Independent strict frame/range reconstruction; not execution of Python StockTransaction or a live-admission bypass.",
+    "Reboot acknowledgment is not proof of post-reboot boot, UI safety or RAM savings.",
+    "Control health after last recorded traffic is not proven solely by a preserved-link result flag."
+  ],
+  "trace_sha256": "a067594b1c3661e803b6f755231f23465166cf2b1cd381388bf3df191469413f",
+  "capture": "captures/sensor-drain-20261103-flash-01",
+  "verifier_sha256": "563b9a21b2ec2f58170f657bd963992443fb3eef0c4b37e0a67ad211606dd3d0",
+  "parser_sha256": {
+    "decode_memomind.py": "d5ae990e3de1177a713e68bb107415e063b99a47c0dd8909e96e74a6810943c0",
+    "memomind_transport.py": "3e0bcf1108a582359717216e6eea049bedd5dfa87277d20b9bb47bc4ba2859d0"
+  },
+  "fullReportSHA256": "845a2396700fdf2c6a9224718483de087a99060f14e23285298169069dece6e3"
+}

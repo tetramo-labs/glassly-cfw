@@ -4,8 +4,11 @@ Revision 10 adds a bounded finish/drain/release sequence for sensor capture,
 preserving the unread tail during normal recording completion. Swift and Android
 clients use generation-checked cleanup, and Glassly bundles the matching image.
 See the [V10 checkpoint](analysis/sensor-drain-20261103/checkpoint.json) and
-[sensor protocol](runtime/graphics/SENSORS.md). V10 has not been flashed; V6 remains
-the last boot-verified image. Active sensor power and compass parity remain open.
+[sensor protocol](runtime/graphics/SENSORS.md). V10 has transferred completely and
+passed full-image trace verification; reboot was acknowledged. The first boot
+reconnect timed out, so V6 remains the last boot-verified image. See the
+[flash evidence](analysis/sensor-drain-20261103-flash-01/checkpoint.json).
+Active sensor power and compass parity remain open.
 
 The connected H001Y glasses successfully updated from **1.0.2.151 to
 1.0.3.127** on 2026-10-30. The completion screen and fresh device-version
@@ -54,7 +57,7 @@ generation-checked batch reads and watchdog buffer reclamation. The runtime is
 96,208 bytes; active capture uses784 heap bytes plus the existing48-byte registry
 slot. Swift/Android clients and the Mac recorder implement the batch protocol.
 Glassly bundled revision9 and required it for native admission. It has not been
-flashed; revision6 remains the last boot-verified image. See the
+flashed separately; its changes are included in revision10. See the
 [revision9 checkpoint](analysis/sensor-buffer-20261103/checkpoint.json).
 
 ## Compressed record transport

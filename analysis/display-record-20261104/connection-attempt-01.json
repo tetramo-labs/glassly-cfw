@@ -1,0 +1,7 @@
+{
+  "complete" : false,
+  "error" : "RFCOMM SDP timed out",
+  "flashAssetWritesStarted" : false,
+  "physicalOutputConfirmed" : false,
+  "stage" : "after"
+}

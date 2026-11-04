@@ -1,0 +1,23 @@
+{
+  "source": "logs.txt",
+  "sourceSHA256": "d723f8b09ad56506146dfe862a360d6cd1aad2e29fb9d4e56b59afd6ed8faf21",
+  "version": "GLASSLYCFW/11",
+  "bootVersionConfirmedByPhoneLog": true,
+  "installedHeaderReadbackVerified": false,
+  "physicalDisplayVerified": false,
+  "evidence": [
+    {
+      "line": 160,
+      "text": "2026-11-04T08:35:46.289Z [info] CORE: MEMOMIND: handshake complete firmware=GLASSLYCFW/11"
+    },
+    {
+      "line": 249,
+      "text": "2026-11-04T08:36:00.942Z [info] CORE: MEMOMIND: Record rejected or malformed ACK"
+    }
+  ],
+  "unusableSessionErrors": 17,
+  "limitations": [
+    "Phone log confirms a live V11 handshake, not installed header or runtime byte readback.",
+    "Raw record reply bytes are absent; initial rejection cause remains undetermined."
+  ]
+}

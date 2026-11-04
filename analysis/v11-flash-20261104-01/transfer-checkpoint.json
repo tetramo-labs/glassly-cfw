@@ -1,0 +1,28 @@
+{
+  "version": "GLASSLYCFW/11",
+  "release": "first-run-owner-001",
+  "imageBytes": 2247074,
+  "imageSHA256": "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12",
+  "containerHeaderSHA256": "507d24a319e2269d45ae5b8cc866df86b8fe36943c7210bcb318214d309c5fe0",
+  "appHeaderSHA256": "a05a4f16da4f48d3ddb10fd9705390cab743401f8448c3405fee6c5b6b42cc15",
+  "runtimeBytes": 96448,
+  "runtimeSHA256": "9c92bba16a2fcb6f3235488b6578ac0d43f79a6369d7415fd4c10f40745ed02b",
+  "sourceCommit": "3eb60d231235fc02824ccd9c803e2aa580d815a5",
+  "transferComplete": true,
+  "rebootAcknowledged": true,
+  "bootVerified": false,
+  "hardwareChecks": {
+    "physicalDisplayConfirmed": false,
+    "phoneConnectionTested": false
+  },
+  "capture": "captures/v11-flash-20261104-01",
+  "traceSHA256": "5f03781b06ab875a56bb7014f07b1a8842822a24ef169c04be39aacc235bd61e",
+  "otaVerification": "ota-verification.json",
+  "bootStatus": "Pending reconnect and installed header/version readback",
+  "pairing": {
+    "tool": "blueutil --pair",
+    "exitCode": 0,
+    "capture": "captures/v11-pair-20261104-01"
+  },
+  "glasslyBundleCommit": "b5a2910045d3f4f16014e78df052f9010dea6a99"
+}

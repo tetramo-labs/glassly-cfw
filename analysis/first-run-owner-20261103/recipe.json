@@ -1,0 +1,47 @@
+{
+  "compile": [
+    "python3",
+    "scripts/compile_memomind_graphics.py",
+    "analysis/first-run-owner-20261103/build-11-01",
+    "--scene-session",
+    "--input-observer",
+    "--flash-reader",
+    "--external-tail-reader",
+    "--storage-diagnostics",
+    "--full-store-reader",
+    "--flash-canary",
+    "--raster-commands",
+    "--rect-copy",
+    "--command-bundles",
+    "--text-commands",
+    "--diagnostic-commands",
+    "--reset-undo-trim",
+    "--minimal-launcher",
+    "--flash-scene",
+    "--wake-control",
+    "--notification-relay",
+    "--record-transport",
+    "--microphone-control",
+    "--sensor-capture",
+    "--cfw-revision",
+    "11",
+    "--rx-profile",
+    "app-rx-96k-v1"
+  ],
+  "construct": [
+    "python3",
+    "scripts/build_memomind_minimal_owner.py",
+    "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+    "analysis/first-run-owner-20261103/build-11-01",
+    "analysis/first-run-owner-20261103/image-11-01"
+  ],
+  "constructorSHA256": "b59628f720a07c613c3c6c42f990d0f0408266dfad32c3417f753d337a953816",
+  "bootTestCommand": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/first_run_boot_test.py",
+    "--build",
+    "analysis/first-run-owner-20261103/build-11-01",
+    "--report",
+    "analysis/first-run-owner-20261103/boot-selector-03.json"
+  ]
+}

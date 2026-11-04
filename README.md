@@ -1,8 +1,13 @@
 # MemoMind One firmware investigation
 
+Revision 11 fixes first-run boot selecting the stock welcome/language app after
+a factory reset. Both setup states now select the minimal display owner. The
+image is bundled in Glassly; physical acceptance is pending. See the
+[V11 checkpoint](analysis/first-run-owner-20261103/checkpoint.json).
+
 Revision 10 adds a bounded finish/drain/release sequence for sensor capture,
 preserving the unread tail during normal recording completion. Swift and Android
-clients use generation-checked cleanup, and Glassly bundles the matching image.
+clients use generation-checked cleanup; V11 retains that protocol.
 See the [V10 checkpoint](analysis/sensor-drain-20261103/checkpoint.json) and
 [sensor protocol](runtime/graphics/SENSORS.md). V10 is flashed and boot verified:
 all 2,247,403 image bytes matched, and a fresh connection confirmed the exact

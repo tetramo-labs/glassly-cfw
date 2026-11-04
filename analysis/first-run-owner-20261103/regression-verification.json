@@ -1,0 +1,620 @@
+{
+  "started_utc": "2026-11-04T02:04:18.264479+00:00",
+  "finished_utc": "2026-11-04T02:24:15.198287+00:00",
+  "all_required_offline_suites_passed": true,
+  "sources_changed_during_run": [],
+  "missing_upstream_mapped_stages": [],
+  "memo_full_suite_port_complete": false,
+  "remaining_upstream_suite_files": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "hardware_tested": false,
+  "device_actions": 0,
+  "limitations": [
+    "Reference G2 passes are not MemoMind implementation passes.",
+    "Offline passes do not establish on-device rendering or full CFW parity."
+  ],
+  "version": "GLASSLYCFW/11",
+  "report": "analysis/regression-20261103-v11-01/report.json",
+  "reportSHA256": "2c00e6704edff61462bec55f6d34ddbf076010bb45b4dca8911a3c37748d3453",
+  "passedStages": 145,
+  "stages": [
+    {
+      "name": "rebuilt_fixtures",
+      "result": "passed"
+    },
+    {
+      "name": "inventory",
+      "result": "passed"
+    },
+    {
+      "name": "inventory_scope",
+      "result": "passed"
+    },
+    {
+      "name": "firmware_transport",
+      "result": "passed"
+    },
+    {
+      "name": "native_swift",
+      "result": "passed"
+    },
+    {
+      "name": "g2_compat",
+      "result": "passed"
+    },
+    {
+      "name": "geometry",
+      "result": "passed"
+    },
+    {
+      "name": "scene",
+      "result": "passed"
+    },
+    {
+      "name": "notifications",
+      "result": "passed"
+    },
+    {
+      "name": "record_transport",
+      "result": "passed"
+    },
+    {
+      "name": "record_session_host",
+      "result": "passed"
+    },
+    {
+      "name": "record_inflater_rv32",
+      "result": "passed"
+    },
+    {
+      "name": "record_build",
+      "result": "passed"
+    },
+    {
+      "name": "first_run_boot",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_host",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_native_abi",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_native_abi",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_capture_host",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_capture_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "record_gates",
+      "result": "passed"
+    },
+    {
+      "name": "record_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "upstream_policy",
+      "result": "passed"
+    },
+    {
+      "name": "native_text_host",
+      "result": "passed"
+    },
+    {
+      "name": "scene_session_host",
+      "result": "passed"
+    },
+    {
+      "name": "input_host",
+      "result": "passed"
+    },
+    {
+      "name": "rv32_build",
+      "result": "passed"
+    },
+    {
+      "name": "rv32_probe",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_host",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_build",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_gates",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "scene_build",
+      "result": "passed"
+    },
+    {
+      "name": "scene_gates",
+      "result": "passed"
+    },
+    {
+      "name": "scene_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "input_build",
+      "result": "passed"
+    },
+    {
+      "name": "input_gates",
+      "result": "passed"
+    },
+    {
+      "name": "input_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_store",
+      "result": "passed"
+    },
+    {
+      "name": "flash_store_native",
+      "result": "passed"
+    },
+    {
+      "name": "scene_flash_store",
+      "result": "passed"
+    },
+    {
+      "name": "external_reservation_native",
+      "result": "passed"
+    },
+    {
+      "name": "exclusive_storage_native",
+      "result": "passed"
+    },
+    {
+      "name": "exclusive_storage_callers",
+      "result": "passed"
+    },
+    {
+      "name": "heap_registry_native",
+      "result": "passed"
+    },
+    {
+      "name": "dashboard_islands_native",
+      "result": "passed"
+    },
+    {
+      "name": "dashboard_ram_native",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_host",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_build",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_gates",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_contract",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_scene",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_input",
+      "result": "passed"
+    },
+    {
+      "name": "badmap_native",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_scene",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_host",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_build",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_gates",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_host",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_build",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_gates",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_reader",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_scene",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_canary",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_reader",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_host",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_build",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_gates",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_canary",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_reader",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_input",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_host",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_build",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_gates",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_canary",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_reader",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_input",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_scene",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_host",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_build",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_gates",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_canary",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_reader",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_input",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_scene",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_host",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_build",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_gates",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_canary",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_reader",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_input",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_scene",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_text",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_host",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_build",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_diagnostics",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_gates",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_canary",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_reader",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_input",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_scene",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_text",
+      "result": "passed"
+    },
+    {
+      "name": "minimal_owner_flash",
+      "result": "passed"
+    },
+    {
+      "name": "minimal_owner_flash_commands",
+      "result": "passed"
+    }
+  ]
+}

@@ -19,6 +19,14 @@ entry no longer operates on removed dashboard objects. Native zero-state flag
 getters remain intact. This is a cold-boot replacement; no old launcher code or
 static RAM is reused.
 
+Revision 11 changes the first-run boot selection at `0425bf50`. Both values of
+the stock setup-complete setting `5205` now select launcher descriptor
+`0200fc7c`, including freshly reset glasses. Previously the unset branch selected
+welcome descriptor `0200fcf4`, whose language loop kept the launcher-only wake
+and frame guards busy. The original welcome callbacks remain registered, but
+the boot path no longer starts them. The fixed four-byte instruction witness
+is checked before construction; settings and pairing data are not rewritten.
+
 The display task remains the sole owner of scene metadata, timers, native font
 calls and pixels. A persistent ordinary worker owns the native flash adapter.
 Two one-slot queues implement synchronous I/O: the display task lends a buffer

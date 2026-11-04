@@ -18,6 +18,12 @@ CALLBACKS=((0x0439a394,0x04273454,'init'),(0x0439a39c,0x04271d6a,'destroy'),
            (0x0439a3ac,0x04273266,'tick'),(0x0439a3b4,0x04272a36,'event'),
            (0x0439a3b8,0x04273734,'message'))
 BOUNDARIES=((0x0427253a,'411122c426c206c6','home'),(0x04272960,'411122c600083244','suspend'))
+def apply_first_run_gate(body):
+    address=0x0425bf50;off=address-BODY_BASE
+    before=bytes.fromhex('130549cf');after=bytes.fromhex('1385c4c7')
+    require(body[off:off+4]==before,'First-run app selection witness differs')
+    body[off:off+4]=after
+    return dict(address=address,before=before.hex(),after=after.hex(),purpose='first-run-minimal-launcher')
 def jump(address):
     require(ENTRY<=address<ENTRY+98304 and not address%2,'Invalid runtime callback')
     hi=(address+0x800)>>12;lo=address-(hi<<12)
@@ -33,6 +39,8 @@ def construct(source,blob,build):
     profile=build.get('rx_profile',DEFAULT_RX_PROFILE)
     base,base_manifest,base_proof=construct_canary(source,blob,rx_profile=profile)
     _,old=unpack_ota(base);original=old[3]['raw'][32:];body,gates=apply_ram_gates(original);body=bytearray(body);edits=[]
+    if revision>=11:
+        edits.append(apply_first_run_gate(body))
     for address,before,name in CALLBACKS:
         off=address-BODY_BASE;target=build['symbols']['glassly_launcher_'+name+'_entry']
         require(body[off:off+4]==struct.pack('<I',before),'Callback witness differs')

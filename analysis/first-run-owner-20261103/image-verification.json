@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "imageSHA256": "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12",
+  "changedBodyAddresses": [
+    "0x425bf51",
+    "0x425bf52",
+    "0x425bf53",
+    "0x43b1de2"
+  ],
+  "runtimeChange": "Only GLASSLYCFW/10 to GLASSLYCFW/11",
+  "additionalCodeChange": "First-run selector loads launcher descriptor instead of welcome descriptor",
+  "unchangedComponents": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "runtimeBytes": 96448,
+  "hardwareTested": false
+}

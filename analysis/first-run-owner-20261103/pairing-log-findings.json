@@ -1,0 +1,20 @@
+{
+  "source": "logs.txt",
+  "sourceSHA256": "698e9fdbf8d2c41c607df32c977e2aa8b029abe6ce03678b40f9b1ba55c0a50b",
+  "handshakes": [
+    {
+      "line": 491,
+      "text": "2026-11-04T01:59:18.931Z [info] CORE: MEMOMIND: handshake complete firmware=GLASSLYCFW/10"
+    },
+    {
+      "line": 869,
+      "text": "2026-11-04T02:01:58.595Z [info] CORE: MEMOMIND: handshake complete firmware=GLASSLYCFW/10"
+    }
+  ],
+  "displayBusyCount": 35,
+  "firstBusyLine": 526,
+  "lastBusyLine": 1051,
+  "userObservation": "Stock welcome text and cycling languages after Glassly connects",
+  "interpretation": "Successful V10 connection, with frame acquisition refused. The retained first-run welcome route is consistent with the observed display and launcher-only ownership guard.",
+  "liveTopAppReadback": false
+}

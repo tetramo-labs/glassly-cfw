@@ -232,6 +232,10 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        FirmwareRelease(name: "first-run-owner-001",
+                        sha256: "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12", byteCount: 2_247_074, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "507d24a319e2269d45ae5b8cc866df86b8fe36943c7210bcb318214d309c5fe0",
+                        streams: streamPins(.firstRunOwner11)),
         FirmwareRelease(name: "sensor-drain-001",
                         sha256: "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0", byteCount: 2_247_403, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "b947fe9870ec41eca1c6e123fd730460b86f276ad53ebe513f0be24c76c23df1",
@@ -288,12 +292,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .firstRunOwner11:
+            metadata = 171; appPacked = 975_972; appRaw = 1_869_664
+            metadataHash = "062213c02a8d64c4febaacdfed769d3616f333288bf5079aca7e5d34b8bdbcbc"
+            appHash = "11e64d7861c73d2963fb7a4a38dadffbde49f16ce6532cf23f1258351c745258"
         case .sensorDrain10:
             metadata = 171; appPacked = 976_301; appRaw = 1_869_664
             metadataHash = "062213c02a8d64c4febaacdfed769d3616f333288bf5079aca7e5d34b8bdbcbc"

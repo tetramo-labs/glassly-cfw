@@ -18,3 +18,18 @@ not independent HCI capture or full installed-runtime readback. The helper check
 the 256-byte installed app header and live version, following the proven V6
 read-only verification path; its build recipe is included. Raw captures, binary
 images, the compiled helper and host device inventory remain local.
+
+## Later confirmation
+
+The second read-only boot attempt reconnected successfully. The installed
+256-byte app header matched the pinned bytes, and the live capability response
+reported GLASSLYCFW/10 with batch ABI2, FINISH5 and RELEASE6. See the separate
+`boot-confirmation.json`; the original transfer checkpoint remains unchanged.
+
+A separate sensor connection initially timed out before sending commands. Its
+retry completed a 15-second passive capture: 15 contiguous ALS records, no
+reported gaps or overwrites, FINISH with a fully acknowledged empty tail, then
+generation-owned RELEASE returning inactive. No IMU records arrived. This checks
+the running command lifecycle, not calibrated sensor response, nonempty finish
+tail retention, expiry scheduling or physical display output. Full results and
+remaining limits are in `sensor-verification.json`. No second OTA was performed.

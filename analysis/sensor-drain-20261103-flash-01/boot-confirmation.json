@@ -1,0 +1,35 @@
+{
+  "appHeaderSHA256": "875f7e75670271ee4e23872b5356e9103eccc9ccb516c51da37e13899d502c5b",
+  "bootHeaderVerified": true,
+  "bootVerified": true,
+  "complete": true,
+  "flashAssetWritesStarted": false,
+  "imageSHA256": "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0",
+  "physicalOutputConfirmed": false,
+  "release": "sensor-drain-001",
+  "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+  "version": "GLASSLYCFW/10",
+  "capture": "captures/sensor-drain-20261103-boot-02",
+  "sourceCommit": "cfd1d8c5584f63a6f1d5c2b6df530b0d5f32982d",
+  "laterConfirmationOf": "checkpoint.json",
+  "fullRuntimeReadback": false,
+  "evidenceSHA256": {
+    "result.json": "baddd0fd46946fa6a939d3ff69bd40553c012c3c84350984ff4083e8491fc8cb",
+    "trace.jsonl": "e3d227f32ec65c5b1e2e49c2430921c11121ac673513d6cd825363e2b3f053cd",
+    "capabilities.json": "67a3cd826e75cb55c3ebcba679565c2f651ed5f5a3c647cdef19e6831e1e9254"
+  },
+  "sensorCapability": {
+    "als": "native-0-1000",
+    "batch": 4,
+    "batchVersion": 2,
+    "capacity": 32,
+    "capture": "passive-buffered",
+    "command": 118,
+    "drainTicks": 30000,
+    "finish": 5,
+    "imu": "icm42670-registers",
+    "leaseTicks": 90000,
+    "release": 6,
+    "version": 1
+  }
+}

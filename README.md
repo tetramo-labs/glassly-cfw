@@ -4,11 +4,15 @@ Revision 10 adds a bounded finish/drain/release sequence for sensor capture,
 preserving the unread tail during normal recording completion. Swift and Android
 clients use generation-checked cleanup, and Glassly bundles the matching image.
 See the [V10 checkpoint](analysis/sensor-drain-20261103/checkpoint.json) and
-[sensor protocol](runtime/graphics/SENSORS.md). V10 has transferred completely and
-passed full-image trace verification; reboot was acknowledged. The first boot
-reconnect timed out, so V6 remains the last boot-verified image. See the
-[flash evidence](analysis/sensor-drain-20261103-flash-01/checkpoint.json).
-Active sensor power and compass parity remain open.
+[sensor protocol](runtime/graphics/SENSORS.md). V10 is flashed and boot verified:
+all 2,247,403 image bytes matched, and a fresh connection confirmed the exact
+installed app header and live `GLASSLYCFW/10` response. See the
+[flash evidence](analysis/sensor-drain-20261103-flash-01/checkpoint.json) and
+[later boot confirmation](analysis/sensor-drain-20261103-flash-01/boot-confirmation.json).
+The 15-second hardware capture saved 15 light records and completed finish/drain/
+release with no reported gaps or overwrites. No IMU samples arrived; active sensor
+power and compass parity remain open. See the
+[sensor check](analysis/sensor-drain-20261103-flash-01/sensor-verification.json).
 
 The connected H001Y glasses successfully updated from **1.0.2.151 to
 1.0.3.127** on 2026-10-30. The completion screen and fresh device-version

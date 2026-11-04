@@ -1,0 +1,76 @@
+{
+  "application_sha256": "3f4a6bea1e7901188e7c8a202cbe4916d141ec624db66218139d9f98c01762eb",
+  "ranges": {
+    "critical_enter_exit": {
+      "start": 13596,
+      "end_exclusive": 13650,
+      "file_offset": 325960,
+      "sha256": "30ca6f070573b5c496c53fad4ccd5be4f69e9519a27a2be45bc0f31354a12d4d"
+    },
+    "ccc_clear_preserves_r0": {
+      "start": 31551566,
+      "end_exclusive": 31551608,
+      "file_offset": 93998,
+      "sha256": "35475d3f266291868162ca6600fa8d47ae40bfb8bd2530f660b1d015ffd34919"
+    },
+    "disconnect_caller_reuses_r0": {
+      "start": 31663638,
+      "end_exclusive": 31663652,
+      "file_offset": 206070,
+      "sha256": "0239f057d138c07714097b4c6940cf3f6d3d9847e395f4220ddb93621d502d6c"
+    },
+    "stack_argument": {
+      "start": 31685206,
+      "end_exclusive": 31685234,
+      "file_offset": 227638,
+      "sha256": "f1c97bd3d0c41f998be56695c41e8b7918fe1a559633ce43c67cf1247a2a8203"
+    },
+    "task_create_forward": {
+      "start": 19882,
+      "end_exclusive": 19914,
+      "file_offset": 332246,
+      "sha256": "c8dcc624e8a2974c0714ac0b61af9f3d32d31b1e100fd4223dc8e95f5729bf64"
+    },
+    "stack_words_to_bytes": {
+      "start": 19432,
+      "end_exclusive": 19450,
+      "file_offset": 331796,
+      "sha256": "95f0ee6029964e783df9cf6a3651c3dcf73d4790d6b22afce7d2ada07f3e69e1"
+    },
+    "application_rom_entry": {
+      "start": 3422,
+      "end_exclusive": 3522,
+      "file_offset": 315786,
+      "sha256": "6ce7c7027a3dd652ab71e30ba2deaca40cd3e240d38a30a878ec658d4ac6b5ab"
+    }
+  },
+  "critical_section": {
+    "entry": 13596,
+    "exit": 13624,
+    "nesting_counter": 30440,
+    "priority_mask_register": 1110440,
+    "mask_level": 6,
+    "single_core_reference": "https://raw.githubusercontent.com/Jieli-Tech/fw-AC63_BT_SDK/master/include_lib/driver/cpu/br23/asm/cpu.h",
+    "limitation": "Hardware latency and highest-priority interrupt behavior remain untested."
+  },
+  "stack": {
+    "before_words": 1024,
+    "after_words": 1152,
+    "word_bytes": 4,
+    "before_bytes": 4096,
+    "after_bytes": 4608,
+    "allocation_trace": [
+      31685212,
+      19882,
+      19432,
+      19442
+    ]
+  },
+  "recovery": {
+    "demonstrated_independent_of_application": false,
+    "rom_entry_function": 3422,
+    "rom_boot_state_api": 1124336,
+    "boot_state_argument": 2,
+    "note": "Existing application contains software-requested ROM entry; observing UBOOT1.00 alone does not establish an independent entry path."
+  }
+}

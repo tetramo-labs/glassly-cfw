@@ -1,34 +1,55 @@
 #!/usr/bin/env python3
-"""Prepare macOS backup helper from the pinned, already-local Gamebrick dependency."""
+"""Fetch pinned public dependencies and prepare the platform USB transport. No device access."""
 import argparse
 import hashlib
+import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+import venv
 
 ROOT = Path(__file__).resolve().parents[1]
-COMMIT = 'adb3f18889e88ac512ce0a3c4d8cc3d3cb30696a'
-SHA = '7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf'
 
-p = argparse.ArgumentParser(description=__doc__)
-p.add_argument('--reference', type=Path, default=ROOT.parent/'glassly-mini-gamepad')
-args = p.parse_args()
-if sys.platform != 'darwin':
-    sys.exit('This initial backup workflow supports macOS only.')
-repo = args.reference.resolve()/'research/jl-uboot-tool'
-head = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True, timeout=10).strip()
-if head != COMMIT:
-    sys.exit('Reference dependency revision mismatch; stopping.')
-data = (repo/'data/loaderblobs/usb/br23loader.bin').read_bytes()
-if len(data) != 11264 or hashlib.sha256(data).hexdigest() != SHA:
-    sys.exit('Reference loader hash mismatch; stopping.')
-target = ROOT/'research/deps/br23loader.bin'
-target.parent.mkdir(exist_ok=True)
-if target.exists():
-    if target.read_bytes() != data:
-        sys.exit('Existing local loader differs; refusing to overwrite.')
-else:
-    with target.open('xb') as f:
-        f.write(data)
-subprocess.run(['clang', '-fobjc-arc', '-dynamiclib', '-framework', 'Foundation', '-framework', 'IOKit', '-framework', 'IOUSBHost', str(ROOT/'research/native-usb.m'), '-o', str(ROOT/'research/native-usb.dylib')], check=True, timeout=60)
-print('Pinned RAM loader verified; native helper compiled. No device accessed.')
+
+def run(*args):
+    return subprocess.run(list(map(str, args)), check=True, timeout=180)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--reference', type=Path, help='Optional existing Gamebrick checkout to copy pinned dependencies from')
+    args = parser.parse_args()
+    lock = json.loads((ROOT/'sources.lock.json').read_text())
+    for field, name in [('jl_uboot_tool', 'jl-uboot-tool'), ('jl_misctools', 'jl-misctools')]:
+        pin = lock[field]
+        repo = ROOT/'research'/name
+        if not repo.exists():
+            source = args.reference/'research'/name if args.reference else pin['url']
+            run('git', 'clone', '--no-checkout', source, repo)
+            run('git', '-C', repo, 'checkout', '--detach', pin['commit'])
+        head = subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True, timeout=10).strip()
+        if head != pin['commit'] or subprocess.check_output(['git', '-C', str(repo), 'status', '--porcelain'], timeout=10).strip():
+            sys.exit(f'{name} must be clean at pinned revision {pin["commit"]}')
+    data = (ROOT/'research/jl-uboot-tool/data/loaderblobs/usb/br23loader.bin').read_bytes()
+    pin = lock['br23_loader_review']
+    if len(data) != pin['bytes'] or hashlib.sha256(data).hexdigest() != pin['sha256']:
+        sys.exit('Loader hash mismatch')
+    target = ROOT/'research/deps/br23loader.bin'
+    target.parent.mkdir(exist_ok=True)
+    if target.exists() and target.read_bytes() != data:
+        sys.exit('Existing loader differs')
+    target.write_bytes(data)
+    env = ROOT/'.venv'
+    if not env.exists():
+        venv.create(env, with_pip=True)
+    python = env/('Scripts/python.exe' if sys.platform == 'win32' else 'bin/python')
+    run(python, '-m', 'pip', 'install', '-r', ROOT/'requirements.txt')
+    if sys.platform == 'darwin':
+        run('clang', '-fobjc-arc', '-dynamiclib', '-framework', 'Foundation', '-framework', 'IOKit',
+            '-framework', 'IOUSBHost', ROOT/'research/native-usb.m', '-o', ROOT/'research/native-usb.dylib')
+    print('Setup complete. No device accessed. See README.md for the explicit target and platform driver setup.')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-03",
+  "source": "Read-only ioreg -p IOUSB -l -a inventory",
+  "product": "Xbox 360 Controller",
+  "vid": "0x4353",
+  "pid": "0x800c",
+  "location": "0x02100000",
+  "mode": "normal",
+  "update_mode_at_this_location_confirmed": false
+}

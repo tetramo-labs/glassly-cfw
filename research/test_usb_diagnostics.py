@@ -46,5 +46,21 @@ class DiagnosticsTests(unittest.TestCase):
         self.assertNotIn('csw', link.last_command)
         self.assertFalse(link.last_command['complete'])
 
+    def test_rejected_data_is_retained_without_accepting_status(self):
+        link = ScriptedLink(residue=512)
+        block = bytes(range(256)) * 2
+        def transfer(ep, value):
+            if ep == 0x81:
+                return block if value == 512 else link.csw
+            return b''
+        link.transfer = transfer
+        with self.assertRaises(LinkError):
+            link.execute(bytes.fromhex('fd07000120000200ffffffffffffffff'), n=512)
+        self.assertEqual(link.last_data, block)
+        self.assertFalse(link.last_command['complete'])
+        with self.assertRaises(LinkError):
+            link.execute(CDB, out=bytes(512))
+        self.assertIsNone(link.last_data)
+
 if __name__ == '__main__':
     unittest.main()

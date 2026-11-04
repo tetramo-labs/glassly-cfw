@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-03",
+  "requested_mode": "Switch: Pair + Up",
+  "mac_bluetooth_initially_powered_off": true,
+  "mac_bluetooth_enabled": true,
+  "ble_powered_scan_seconds": 40,
+  "ble_candidate_count": 0,
+  "classic_inquiry_seconds": 12,
+  "classic_total_results": 1,
+  "classic_controller_candidates": 0,
+  "connections_made": 0,
+  "gatt_operations": 0,
+  "conclusion": "Inconclusive: no matching controller found; pairing state and advertisement name were not independently established.",
+  "next_step": "HID mode Pair + Right; LEDs 2\u20133 flashing quickly",
+  "files": [
+    {
+      "path": "research/stock-switch-scan.log",
+      "sha256": "8ebfb8e1bf2bd8698de8203fdbb25f555ce86f63624ad428029486a4f3d6a170"
+    },
+    {
+      "path": "research/stock-switch-scan-host.log",
+      "sha256": "ba178d06d28ae009f407dd46eadbcd53fe96dbb986f48d0238cf84b87cbc913d"
+    },
+    {
+      "path": "research/stock-switch-scan-powered.log",
+      "sha256": "cbc73acc757fb9452e1773f785f140ebba0ffee38e91eaf99f1b573e730d71f1"
+    },
+    {
+      "path": "research/stock-switch-classic-inquiry.json",
+      "sha256": "9bba960fbb71d40980acff1ca1c7f37518863c17df63513f0a1298b0837ac072"
+    }
+  ]
+}

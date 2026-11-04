@@ -11,7 +11,7 @@ import signal
 import struct
 import sys
 import time
-from usb_transport import NativeLink
+from usb_transport import NativeLink, ROM_RAM_POLICY, BR23_INQUIRY
 
 ROOT = Path(__file__).resolve().parent
 LOADER_SHA = '7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf'
@@ -28,6 +28,49 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def validate_prepared_backup(folder, location, loader):
+    """Validate the complete pinned RAM transcript and rejected FB08 acknowledgement."""
+    require(len(loader) == LOADER_SIZE and digest(loader) == LOADER_SHA, 'Loader hash mismatch')
+    raw = (folder/'metadata.json').read_bytes()
+    meta = json.loads(raw)
+    inquiry = (folder/'inquiry.bin').read_bytes()
+    require(inquiry == BR23_INQUIRY and meta.get('inquiry') == inquiry.hex(), 'Prepared identity mismatch')
+    require(meta.get('operation') == 'backup' and meta.get('complete') is False and
+            meta.get('flash_modified') is False and meta.get('ram_readback_verified') is True and
+            meta.get('loader_sha256') == LOADER_SHA and meta.get('loader_address') == '0x12000' and
+            int(meta['usb_location'], 0) == location, 'Invalid prepared backup or USB location')
+    records = meta.get('ram_commands', [])
+    require(len(records) == 44, 'Missing complete RAM transcript')
+    for index, command in enumerate(records):
+        offset = (index // 2) * 512
+        block = loader[offset:offset+512]
+        write = index % 2 == 0
+        cdb = ((0xfb06 if write else 0xfd07).to_bytes(2, 'big') +
+               struct.pack('>IH', 0x12000+offset, 512))
+        cdb += b'\0' + binascii.crc_hqx(block, 0).to_bytes(2, 'little') + b'\xff'*5 if write else b'\xff'*8
+        tag = index + 2
+        cbw = struct.pack('<4sIIBBB16s', b'USBC', tag, 512, 0 if write else 0x80, 0, 16, cdb)
+        csw = struct.pack('<4sIIB', b'USBS', tag, 512, 0)
+        require(command.get('cdb') == cdb.hex() and command.get('cbw') == cbw.hex() and
+                command.get('csw') == csw.hex() and command.get('complete') is True and
+                command.get('residue_policy') == ROM_RAM_POLICY, 'Prepared RAM command mismatch')
+        if not write:
+            require(command.get('data_sha256') == digest(block), 'Prepared RAM hash mismatch')
+    jump = meta['last_usb_command']
+    cdb = bytes.fromhex('fb08000120000001') + b'\xff'*8
+    cbw = struct.pack('<4sIIBBB16s', b'USBC', 46, 16, 0x80, 0, 16, cdb)
+    csw = struct.pack('<4sIIB', b'USBS', 46, 16, 0)
+    require(jump.get('cdb') == cdb.hex() and jump.get('cbw') == cbw.hex() and
+            jump.get('csw') == csw.hex() and jump.get('complete') is False,
+            'Not the reviewed rejected loader jump')
+    data = (folder/'rejected-data-incomplete.bin').read_bytes()
+    require(len(data) == 16 and data[:2] == b'\xfb\x08' and
+            digest(data) == meta['rejected_data']['sha256'], 'Prepared jump data mismatch')
+    return dict(path=str(folder.resolve()), metadata_sha256=digest(raw),
+                jump_data_sha256=digest(data), loader_sha256=LOADER_SHA,
+                ram_transcript_verified=True, original_jump_status_rejected=True)
+
+
 class Transport:
     """Fail-closed CDB allowlist; identity, pinned RAM loader and flash reads only."""
     def __init__(self, link):
@@ -35,11 +78,15 @@ class Transport:
         self.loader = None
         self.size = None
         self.verified = set()
+        self.read_only = False
 
     def execute(self, cdb, out=None, n=0):
         cdb = bytes(cdb)
         require(0 < len(cdb) <= 16 and n >= 0 and not (out is not None and n), 'Invalid command')
         op = int.from_bytes(cdb[:2], 'big')
+        if self.read_only:
+            require(cdb == INQUIRY or op in (0xfc0a, 0xfc0b, 0xfc14, 0xfd05),
+                    'Read-loaded session forbids RAM writes and execution')
         addr = int.from_bytes(cdb[2:6], 'big')
         if cdb == INQUIRY:
             require(out is None and n == 36, 'Invalid inquiry')
@@ -84,15 +131,41 @@ class Transport:
         require(inquiry[8:16].strip() == b'BR23' and inquiry[16:32].strip() == b'UBOOT1.00', 'Unsupported bootloader; no RAM code loaded')
         require(len(loader) == LOADER_SIZE and digest(loader) == LOADER_SHA, 'Loader hash mismatch')
         self.loader = loader
+        if isinstance(self.link, NativeLink):
+            self.link.enable_br23_rom_ram(inquiry, loader)
+            if record is not None:
+                record(dict(rom_ram_residue_policy=ROM_RAM_POLICY))
+        ram_commands = []
         print('BR23 identity and pinned loader verified; uploading 11264 bytes to RAM at 0x12000.', flush=True)
         for off in range(0, len(loader), 512):
             block = loader[off:off+512]
             args = struct.pack('>IH', 0x12000+off, len(block))
             self.command(0xfb06, args+b'\0'+binascii.crc_hqx(block, 0).to_bytes(2, 'little'), out=block)
+            if isinstance(self.link, NativeLink):
+                ram_commands.append(dict(self.link.last_command))
             self.command(0xfd07, args, n=len(block))
+            if isinstance(self.link, NativeLink):
+                ram_commands.append(dict(self.link.last_command, data_sha256=digest(block)))
+        if record is not None:
+            record(dict(loader_sha256=LOADER_SHA, loader_address='0x12000',
+                        ram_readback_verified=True, ram_commands=ram_commands))
         print('All 22 RAM blocks match. Starting BR23 loader with SPI NOR argument 1.', flush=True)
-        self.reply(0xfb08, bytes.fromhex('000120000001'))
-        online, fid, buf = (self.reply(op) for op in (0xfc0a, 0xfc0b, 0xfc14))
+        jump_reply = self.reply(0xfb08, bytes.fromhex('000120000001'))
+        if record is not None and isinstance(self.link, NativeLink):
+            record(dict(loader_jump=dict(self.link.last_command),
+                        loader_jump_reply=(b'\xfb\x08'+jump_reply).hex()))
+        return self.flash_identity(record)
+
+    def flash_identity(self, record=None):
+        responses = []
+        commands = []
+        for op in (0xfc0a, 0xfc0b, 0xfc14):
+            responses.append(self.reply(op))
+            if isinstance(self.link, NativeLink):
+                commands.append(dict(self.link.last_command, reply=(op.to_bytes(2, 'big')+responses[-1]).hex()))
+                if record is not None:
+                    record(dict(flash_identity_commands=commands))
+        online, fid, buf = responses
         replies = dict(online=online.hex(), flash_id=fid.hex(), buffer_size=buf.hex(), loader_sha256=LOADER_SHA, loader_address='0x12000', ram_readback_verified=True)
         if record is not None:
             record(replies)
@@ -103,6 +176,8 @@ class Transport:
         require(16 <= (jedec & 255) <= 24, 'Unknown flash density')
         require(256 <= int.from_bytes(buf[:4], 'big') <= 65535, 'Invalid loader buffer size')
         self.size = 1 << (jedec & 255)
+        if isinstance(self.link, NativeLink):
+            self.link.enable_br23_flash_reads(self.size)
         print(f'JEDEC {jedec:06x}; flash size {self.size} bytes. Reading twice in 256-byte blocks.', flush=True)
         return dict(replies, jedec_id=f'{jedec:06x}', size=self.size)
 
@@ -128,7 +203,10 @@ def capture(transport, folder):
                 f.flush()
                 os.fsync(f.fileno())
             finally:
-                os.fchmod(f.fileno(), 0o444)
+                if hasattr(os, "fchmod"):
+                    os.fchmod(f.fileno(), 0o444)
+                else:
+                    os.chmod(dest, 0o444)
         data = dest.read_bytes()
         require(len(data) == transport.size and len(set(data)) >= 8, 'Implausible/incomplete readback')
         hashes.append(digest(data))
@@ -139,20 +217,30 @@ def capture(transport, folder):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('operation', choices=['identify', 'backup'])
+    p.add_argument('operation', choices=['identify', 'backup', 'read-loaded'])
+    p.add_argument('--prepared-backup', type=Path, help='Exact saved verified RAM upload with rejected FB08 status; read-loaded only')
     p.add_argument('--location', required=True, type=lambda s: int(s, 0), help='Observed USB locationID, e.g. 0x00100000')
     p.add_argument('--wait', type=int, default=120, help='Seconds to wait for update mode (1..300)')
     args = p.parse_args()
     require(0 < args.location <= 0xffffffff and 1 <= args.wait <= 300, 'Invalid location/wait')
+    require((args.operation == 'read-loaded') == (args.prepared_backup is not None),
+            'read-loaded requires --prepared-backup; other operations forbid it')
+    loader = (ROOT/'deps/br23loader.bin').read_bytes() if args.operation != 'identify' else None
+    prepared = validate_prepared_backup(args.prepared_backup, args.location, loader) if args.prepared_backup else None
     require(sys.platform == 'darwin', 'This initial Ananke probe supports macOS only')
     require(os.geteuid() == 0, 'Run with sudo from your interactive terminal')
     require(sys.stdin.isatty(), 'Use an interactive terminal; background admin launches are unsupported')
     signal.alarm(args.wait+600)
-    prefix = 'device-backup-' if args.operation == 'backup' else 'probe-'
+    prefix = 'probe-' if args.operation == 'identify' else 'device-backup-'
     folder = ROOT/(prefix+time.strftime('%Y%m%d-%H%M%S'))
     folder.mkdir()
-    meta = dict(operation=args.operation, usb_location=hex(args.location), complete=False, flash_modified=False)
+    meta = dict(operation=args.operation, usb_location=hex(args.location), complete=False, flash_modified=False,
+                source_hashes={name: digest((ROOT/name).read_bytes()) for name in
+                               ('backup_controller.py', 'usb_transport.py', 'native-usb.m', 'native-usb.dylib')})
     save_json(folder/'metadata.json', meta)
+    if prepared:
+        meta['prepared_source'] = prepared
+        save_json(folder/'metadata.json', meta)
     link = None
     try:
         print('Output:', folder, flush=True)
@@ -176,7 +264,14 @@ def main():
             def record(values):
                 meta.update(values)
                 save_json(folder/'metadata.json', meta)
-            meta.update(transport.prepare(inquiry, (ROOT/'deps/br23loader.bin').read_bytes(), record=record))
+            if args.operation == 'read-loaded':
+                require(inquiry == BR23_INQUIRY, 'Read-loaded live identity mismatch')
+                transport.read_only = True
+                transport.loader = loader
+                print('Prepared RAM transcript verified. Read-only loader queries and flash reads only.', flush=True)
+                meta.update(transport.flash_identity(record=record))
+            else:
+                meta.update(transport.prepare(inquiry, loader, record=record))
             save_json(folder/'metadata.json', meta)
             meta.update(capture(transport, folder))
         save_json(folder/'metadata.json', meta)
@@ -185,6 +280,15 @@ def main():
         meta['error'] = str(exc)
         if link is not None and link.last_command is not None:
             meta['last_usb_command'] = link.last_command
+            if link.last_data is not None:
+                dest = folder/'rejected-data-incomplete.bin'
+                with dest.open('xb') as f:
+                    f.write(link.last_data)
+                    f.flush()
+                    os.fsync(f.fileno())
+                    os.fchmod(f.fileno(), 0o444)
+                meta['rejected_data'] = dict(file=dest.name, bytes=len(link.last_data),
+                                             sha256=digest(link.last_data), complete=False)
         save_json(folder/'metadata.json', meta)
         raise
     finally:

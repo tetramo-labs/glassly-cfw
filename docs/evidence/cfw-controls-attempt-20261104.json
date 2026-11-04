@@ -1,0 +1,9 @@
+{
+  "capture": "cfw-gatt-20261104-controls.log",
+  "sha256": "f26902026f6a4e7c73731c7a8670629ee96b7078210709d0ac23d1237d6d7880",
+  "completed": true,
+  "ae42_packets": 3,
+  "remaining_button_mapping_confirmed": false,
+  "reason": "Only baseline and pairing-button releases arrived. User confirmed shoulder/system sequence during capture; no corresponding packets before timeout. Later A/B/L/ZL/R/ZR/Capture/Home/Minus/Plus sequence was after capture ended.",
+  "mac_activity_assertion": true
+}

@@ -1,0 +1,12 @@
+{
+  "capture": "research/device-backup-20261103-181244",
+  "metadata_sha256": "2f5f0b2b7c5e7c6b055bdb3564fb821925b9945dfedc02c0e263150717d0dbea",
+  "size": 1048576,
+  "sha256": "da281f118ea0e3dc412b2298ce27c1b73a9cf6bca795814708e900a20a9538bc",
+  "passes_match": true,
+  "matches_original": true,
+  "flash_modified": false,
+  "action": "Repeated existing pinned RAM-loader backup followed by normal capture cleanup; no run-app/reset vendor command sent",
+  "result": "USB later re-enumerated as 4353:800c Xbox 360 Controller at 0x02100000",
+  "limitation": "INQUIRY-only capture/close did not immediately exit update mode; exact delayed transition mechanism remains unconfirmed"
+}

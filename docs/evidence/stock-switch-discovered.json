@@ -1,0 +1,23 @@
+{
+  "requested_mode": "Switch: Pair + Up",
+  "user_report": "actively pairing/scanning",
+  "classic_controller_name": "Pro Controller",
+  "classic_controller_paired": false,
+  "classic_controller_connected": false,
+  "ble_scan_seconds": 40,
+  "ble_advertisers_seen": 122,
+  "ble_controller_candidates": 0,
+  "connections_made": 0,
+  "gatt_operations": 0,
+  "conclusion": "Pro Controller discovered via Bluetooth Classic; no matching BLE advertisement observed. GATT capability in other modes remains untested.",
+  "files": [
+    {
+      "path": "research/stock-switch-scan-active.log",
+      "sha256": "853ecb5ea1c831801e8ce7988c00c3fdc09f47ed62c2e1777af328b2f9c5d705"
+    },
+    {
+      "path": "research/stock-switch-classic-active.log",
+      "sha256": "ee6cd78fa11cd00d3b6323165bce85e8e99fd5b5e918015dce5fc8baf444acd2"
+    }
+  ]
+}

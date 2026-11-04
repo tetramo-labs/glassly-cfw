@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-04",
+  "capture": "cfw-gatt-20261104-fixed-controls.log",
+  "capture_sha256": "0ff3802d1e8b27f761ba7e0a8f831a8ce6ba70963ac01b64b64ad0e0a369d4c2",
+  "ae42_packets": 21,
+  "baseline_packets": 1,
+  "press_release_pairs": 10,
+  "sequence_contiguous": true,
+  "overflow_flags": 0,
+  "observed_long_batching": false,
+  "physical_to_host_latency_measured": false,
+  "buttons": [
+    "A",
+    "B",
+    "L",
+    "ZL",
+    "R",
+    "ZR",
+    "Capture",
+    "Home",
+    "Minus",
+    "Plus"
+  ],
+  "user_confirmed_order": true,
+  "termination": "Agent stopped its probe after all requested pairs were captured; no active probe remains.",
+  "ios_background_locked_tested": false
+}

@@ -1,0 +1,146 @@
+{
+  "mode": "HID: Pair + Right",
+  "device_name": "IG05 Gamepad(BLE)",
+  "source_log": "research/stock-hid-gatt.log",
+  "source_sha256": "8c37b1c70ccecf9964d75ba699a5eeeb5ef0847eb95dcc8983f613732f1b9e0f",
+  "probe_sha256": "4758a404601dfe84ec448471668160a86b8c1e04358bb0fa503229ab9e381c57",
+  "services": [
+    "180A",
+    "180F",
+    "AE40",
+    "AE00"
+  ],
+  "characteristics": [
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A29"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A24"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A25"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A27"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A26"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A28"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A23"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A2A"
+    },
+    {
+      "event": "characteristic",
+      "properties": 2,
+      "service": "180A",
+      "uuid": "2A50"
+    },
+    {
+      "event": "characteristic",
+      "properties": 18,
+      "service": "180F",
+      "uuid": "2A19"
+    },
+    {
+      "event": "characteristic",
+      "properties": 4,
+      "service": "AE40",
+      "uuid": "AE41"
+    },
+    {
+      "event": "characteristic",
+      "properties": 16,
+      "service": "AE40",
+      "uuid": "AE42"
+    },
+    {
+      "event": "characteristic",
+      "properties": 4,
+      "service": "AE00",
+      "uuid": "AE01"
+    },
+    {
+      "event": "characteristic",
+      "properties": 16,
+      "service": "AE00",
+      "uuid": "AE02"
+    }
+  ],
+  "subscriptions": [
+    {
+      "enabled": true,
+      "event": "subscription",
+      "time": "2026-11-04T02:21:17Z",
+      "uuid": "AE42"
+    },
+    {
+      "enabled": true,
+      "event": "subscription",
+      "time": "2026-11-04T02:21:17Z",
+      "uuid": "AE02"
+    }
+  ],
+  "notifications": [
+    {
+      "event": "notification",
+      "hex": "ff",
+      "time": "2026-11-04T02:21:17Z",
+      "uuid": "AE02"
+    }
+  ],
+  "completion": {
+    "event": "complete",
+    "notifications": 1,
+    "reason": "90-second limit",
+    "subscribed": [
+      "AE02",
+      "AE42"
+    ],
+    "time": "2026-11-04T02:22:11Z"
+  },
+  "button_sequence_requested": [
+    "A",
+    "B",
+    "X",
+    "Y",
+    "Up",
+    "Down"
+  ],
+  "button_sequence_confirmed": false,
+  "limitations": [
+    "The user has not confirmed performing the requested press/release sequence during capture.",
+    "AE02 ff is an observed initial message; its semantics are unknown.",
+    "Subscription success does not establish button event delivery or iOS background/locked behavior."
+  ],
+  "characteristic_commands_sent": 0
+}

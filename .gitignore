@@ -4,6 +4,8 @@
 /research/deps/
 /research/device-backup-*/
 /research/probe-*/
+/research/ram-probe-*/
+/research/pi32v2-analysis/
 /research/*.bin
 /research/*.ufw
 /research/*.zip
@@ -16,3 +18,9 @@
 /research/*.log
 
 /research/oem-unpacked/
+/research/installed-unpacked/
+/research/cfw-candidate/
+/research/flash-attempt-*/
+/research/stock-switch-classic-inquiry.json
+/research/jl-misctools/
+/research/jl-uboot-tool/

@@ -20,6 +20,7 @@ final class QueueTransport: MemoMindTransport {
     var reads: [Data]
     var writes = [Data]()
     var onWrite: ((Data) throws -> Void)?
+    var onRead: (() -> Void)?
     init(_ reads: [Data] = []) {
         self.reads = reads
     }
@@ -29,6 +30,7 @@ final class QueueTransport: MemoMindTransport {
     }
 
     func read(timeout _: TimeInterval) throws -> Data {
+        onRead?()
         guard !reads.isEmpty else { throw MemoMindProtocolError.timeout("injected timeout") }
         return reads.removeFirst()
     }

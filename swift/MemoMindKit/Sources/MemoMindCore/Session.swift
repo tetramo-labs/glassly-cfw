@@ -38,9 +38,32 @@ public final class GMSession {
     public let parser: GMStream
     public let timeout: TimeInterval
     public var unsolicited: ((GMMessage) -> Void)?
+    /// Replies to pipelined requests that arrived ahead of their turn, by event.
+    var heldReplies: [UInt8: GMMessage] = [:]
     public init(transport: MemoMindTransport, timeout: TimeInterval = 15, legacyRepeatFA: Bool = true) {
         self.transport = transport; self.timeout = timeout
         parser = GMStream(legacyRepeatFA: legacyRepeatFA, fragmentACKs: true)
+    }
+
+    /// `awaitResponse` for one of several requests in flight: `among` names their
+    /// events, and a reply to any of them is held for its own call instead of
+    /// going to `unsolicited`, so replies may arrive in any order.
+    func awaitReply(event: UInt8, among: [UInt8], service: UInt8, command: UInt8,
+                    responseFilter: ((GMMessage) throws -> Bool)? = nil) throws -> GMMessage {
+        if let reply = heldReplies.removeValue(forKey: event) { return reply }
+        let deadline = monotonicNow() + timeout
+        while true {
+            let remaining = deadline - monotonicNow()
+            guard remaining > 0 else { throw MemoMindProtocolError.timeout("Timed out awaiting correlated GM business response") }
+            for message in try parser.feed(transport.read(timeout: remaining)) {
+                guard message.service == service, message.command == command, among.contains(message.event),
+                      !message.tlvs.isEmpty, try responseFilter?(message) ?? true
+                else { unsolicited?(message); continue }
+                try requireProtocol(heldReplies[message.event] == nil, "Multiple accepted GM replies for one request")
+                heldReplies[message.event] = message
+            }
+            if let reply = heldReplies.removeValue(forKey: event) { return reply }
+        }
     }
 
     /// An optional filter distinguishes the command reply from notifications

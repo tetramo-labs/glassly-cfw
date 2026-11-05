@@ -94,6 +94,64 @@ final class LargeMessageTests: XCTestCase {
         XCTAssertEqual(io.writes.count, transfer.packets.count)
         XCTAssertTrue(io.writes.allSatisfy { $0.count <= 512 && $0[0] == 0xFA && $0[6] == 125 })
     }
+    func testPipelinedChunksMatchRepliesByEventPauseForWakesAndStopOnRefusal() throws {
+        let command = Data([8,0]) + Data((0..<3000).map { UInt8(truncatingIfNeeded: $0 * 3) })
+        let transfer = try LargeMessage(command: command, token: 9, chunkBytes: 491)
+        let count = transfer.packets.count
+        func replies(refusing: Int? = nil) throws -> [Data] {
+            var event: UInt8 = 20
+            return try (0..<count).map { index in
+                event += 1
+                let value = index == count - 1 ? "{\"result\":\"ok\"}"
+                    : index == refusing ? "{\"glassly\":\"large-message\",\"abi\":1,\"result\":\"stale\"}" : accepted
+                return try response(value, event: event, command: 125)
+            }
+        }
+        // Four chunks are on the wire before the first read, and the first two
+        // replies arrive swapped.
+        var queue = try replies(); queue.swapAt(0, 1)
+        let io = QueueTransport(queue); var writesAtFirstRead = -1
+        io.onRead = { if writesAtFirstRead < 0 { writesAtFirstRead = io.writes.count } }
+        var event: UInt8 = 20
+        let result = try GMSession(transport: io).sendLargeGraphicsMessage(command, token: 9, event: &event, chunkBytes: 491,
+                                                                           carrierVerified: true, window: 4)
+        XCTAssertEqual(writesAtFirstRead, 4)
+        XCTAssertEqual(io.writes.count, count)
+        XCTAssertEqual(result.event, 20 + UInt8(count))
+        XCTAssertTrue(io.writes.allSatisfy { $0.count <= 512 })
+        // A pause request drains the window before `paused` runs, then the transfer resumes.
+        let pausing = QueueTransport(try replies()); event = 20
+        var pauseWanted = true; var drainedAt: (writes: Int, replies: Int)?
+        _ = try GMSession(transport: pausing).sendLargeGraphicsMessage(
+            command, token: 9, event: &event, chunkBytes: 491, carrierVerified: true, window: 4,
+            pause: { pauseWanted }, paused: { drainedAt = (pausing.writes.count, count - pausing.reads.count); pauseWanted = false }
+        )
+        XCTAssertEqual(drainedAt?.writes, 4)
+        XCTAssertEqual(drainedAt?.replies, 4)
+        XCTAssertEqual(pausing.writes.count, count)
+        // A refused chunk stops the writes already queued behind the window.
+        let refused = QueueTransport(try replies(refusing: 2)); event = 20
+        XCTAssertThrowsError(try GMSession(transport: refused).sendLargeGraphicsMessage(command, token: 9, event: &event, chunkBytes: 491,
+                                                                                         carrierVerified: true, window: 4))
+        XCTAssertEqual(refused.writes.count, 2 + 4)
+        // Packets above one frame keep their fragment ACKs and go one at a time.
+        let wide = try LargeMessage(command: command, token: 9)
+        var acked: [Data] = []; event = 20
+        for index in wide.packets.indices {
+            event += 1
+            for frame in try GMCodec.frames(event: event, service: 15, command: 125,
+                                            body: GMTLV(kind: 1, value: wide.packets[index]).encoded(), fragmentPayload: 642).dropLast() {
+                var ack = Data([frame[0],0,0,9,event,15,125])
+                let sum = ack.reduce(0) { $0 + Int($1) } & 65535
+                ack.append(UInt8(sum >> 8)); ack.append(UInt8(sum & 255)); acked.append(ack)
+            }
+            acked.append(try response(index == wide.packets.count - 1 ? "{\"result\":\"ok\"}" : accepted, event: event, command: 125))
+        }
+        let sequential = QueueTransport(acked); event = 20
+        _ = try GMSession(transport: sequential).sendLargeGraphicsMessage(command, token: 9, event: &event, carrierVerified: true, window: 4)
+        XCTAssertEqual(sequential.reads.count, 0)
+    }
+
     func testUnsupportedCapabilityStopsBeforeBegin() throws {
         let io = QueueTransport([try response(caps.replacingOccurrences(of: "GLASSLYCFW/1", with: "GLASSLYCFW/x"), event: 1, command: 126)])
         var event: UInt8 = 0

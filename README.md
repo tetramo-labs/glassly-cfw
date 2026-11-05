@@ -1,5 +1,16 @@
 # MemoMind One firmware investigation
 
+Revision 13 draws default text at 4/5 of the resource font. The glasses' only
+Latin face is a 34 px line with its baseline 7 px up, so inline text overflowed
+the 24–27 px rows the phone lays out for the Even G2's 20 px font and lost its
+descenders; at 4/5 it is a 27 px line with a 22 px baseline, the G2 builtin
+font's own metrics. The text adapter scales glyph boxes, offsets, advances and
+the baseline and draws each output pixel as the mean of a 2×2 sample of the
+glyph box (`native_text.c`; control shifts stay in panel pixels, the cursor
+keeps 1/5 px so a line does not drift). The wire protocol is unchanged; the
+runtime is 94,288 bytes. Built and bundled, not flashed. See the
+[V13 checkpoint](analysis/text-scale-20261105/checkpoint.json).
+
 Revision 12 renders only what changed: a SHOW or animation tick clears and
 redraws the union of the boxes of the objects that changed, arrived, left or
 moved in the paint order, instead of the whole canvas. Cached-font strings are

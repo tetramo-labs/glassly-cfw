@@ -6,7 +6,7 @@
 #include "test_graphics.c"
 #undef main
 static fixture native_fixture;
-const mm_native_text_api mm_text_test_api={&native_fixture,MM_NATIVE_TEXT_DEFAULT_FONT,ready,info,metrics,bitmap};
+const mm_native_text_api mm_text_test_api={&native_fixture,MM_NATIVE_TEXT_DEFAULT_FONT,ready,info,metrics,bitmap,0,0};
 int g2_text_reference(uint8_t *,uint32_t,uint32_t,uint32_t,const uint8_t *,uint32_t);
 static unsigned reference_cases;
 static void compare(const uint8_t *text,size_t length,int x,int y,unsigned options){

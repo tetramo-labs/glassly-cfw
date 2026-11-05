@@ -29,10 +29,10 @@ class TextTests(unittest.TestCase):
         owned=m.owned_live();n=len(m.image_sources)
         for opt in range(256):
             m.send_scene(text(b'AB',x=10,y=10,options=opt));self.assertEqual(m.owned_live(),owned)
-            for row,values in enumerate(((0,5,10),(15,10,5))):
-                for x,v in enumerate(values):
+            for index in range(2):
+                for (dx,dy),v in S.scaled_glyph().items():
                     if not v and opt&16:continue
-                    self.assertEqual(m.pixel(10+x,11+row),(15-v if opt&32 else v)*(opt&15)//15)
+                    self.assertEqual(m.pixel(S.glyph_left(10,index)+dx,S.glyph_top(10)+dy),(15-v if opt&32 else v)*(opt&15)//15)
         self.assertEqual(len(m.image_sources),n+256)
         m.font_metrics_calls=[];m.send_scene(text(b'A\x0a\x0dB\x7f\xc2\x80\xe2\x98\x85\xf0\x9f\x98\x80',x=-1,y=-1))
         self.assertEqual(m.font_metrics_calls[:6],[(65,66),(66,127),(127,128),(128,0x2605),(0x2605,0x1f600),(0x1f600,0)])
@@ -62,11 +62,10 @@ class TextTests(unittest.TestCase):
     def test_takeover_bundle_cache_and_late_failure(self):
         m=TextMachine();m.establish();m.send_scene(S.animate_packet());pending=m.request_number
         expected=bytearray(m.pixels())
-        for left in (10,13):
-            for row,values in enumerate(((0,5,10),(15,10,5))):
-                for dx,value in enumerate(values):
-                    x=left+dx;at=(11+row)*300+x//2;shift=0 if x&1 else 4
-                    expected[at]=(expected[at]&~(15<<shift))|(value<<shift)
+        for index in range(2):
+            for (dx,dy),value in S.scaled_glyph().items():
+                x=S.glyph_left(10,index)+dx;at=(S.glyph_top(10)+dy)*300+x//2;shift=0 if x&1 else 4
+                expected[at]=(expected[at]&~(15<<shift))|(value<<shift)
         _,v=m.send_scene(text());self.assertEqual(v[0]['result'],'ok');self.assertEqual(v[1]['tag'],pending)
         self.assertEqual(m.pixels(),bytes(expected),'Text preserves the retained displayed background outside glyphs')
         old=m.pixels();m.tick_at(200);self.assertEqual(m.pixels(),old)

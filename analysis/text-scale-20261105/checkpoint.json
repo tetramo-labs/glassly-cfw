@@ -1,0 +1,34 @@
+{
+  "version": "GLASSLYCFW/13",
+  "release": "text-scale-001",
+  "change": "Default text drawn at 4/5 of the resource font (34/7 -> 27/22, the G2 builtin font's line and baseline) by native_text.c; 2x2-sample means; wire protocol unchanged",
+  "textScale": "4/5",
+  "sourceCommitG2": "e889569fe77775ed5822af6f7e47210f2984f15d",
+  "build": "build-13-01",
+  "runtimeBytes": 94288,
+  "runtimeSHA256": "ebb6ec0e8c0b57b8dacad70891027f8d9ac460f34873f047433c98f2f3a63122",
+  "linkerRelaxation": true,
+  "imageBytes": 2249152,
+  "imageSHA256": "5c638151d3a29d7847e7e8cfbdcc3362648cf3c4185c61a054f79b73aef9a1de",
+  "containerHeaderSHA256": "547a16092929877521ca07a9a341b02703c5d7a6bc2ee7512f9d89bc102d2803",
+  "appHeaderSHA256": "ab7f6e4e131582cd4c9e5ec5747724f2353f5fdeac1d4f552ec860b5684e1904",
+  "bootSelectorTest": "boot-selector-13.json",
+  "regressionVerification": "regression-verification.json",
+  "regressionNotes": "regression-13-02 with --demos-dependencies/--g2-media on ~/dev/glassly-g2-cfw (the G2 checkout renamed from ~/dev/g2flash on 2026-11-05); record-build reproduces the bundled blob; the rect-copy ladder rung links with --relax from this revision",
+  "hostSuites": "run_native_text_tests.py (new scaled case) and run_text_command_tests.py (963 pinned G2 reference cases, identity scale) pass",
+  "emulatorSuites": "scene_runtime_emulator_test.py 8/8 and text_command_runtime_emulator_test.py 5/5 against fresh builds through run_rebuilt.py, pixel expectations derived by scaled_glyph()",
+  "macToolCatalog": "text-scale-001 admitted; swift test 163 passed (incl. FontProbeTests)",
+  "flashed": false,
+  "flashAttempt": null,
+  "bootVerified": false,
+  "hardwareChecks": {
+    "physicalDisplayConfirmed": false,
+    "phoneConnectionTested": false,
+    "note": "The Mac has not reached the glasses since the V12 attempt (RFCOMM SDP timed out); V11 is what the glasses run"
+  },
+  "glasslyBundle": {
+    "commit": null,
+    "branch": "dev",
+    "files": "memomind-one-glassly-cfw-13.bin in ios/Source/Resources/MemoMindOneFirmware and android/src/main/assets/memomind-one; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; MemoMindOneRenderer textLineHeight 25"
+  }
+}

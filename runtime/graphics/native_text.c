@@ -54,6 +54,13 @@ static int glyph(const mm_native_text_api *api,uint32_t cp,uint32_t next,
        ((uint32_t)g->box_w*g->box_h*bpp+7u)/8u>1000u)return 0;
     *bits=api->bitmap(api->context,g->font,cp);return *bits!=0;
 }
+static uint32_t scaled_u(uint32_t v,unsigned num,unsigned den) {return (v*num+den/2u)/den;}
+static int32_t scaled_s(int32_t v,unsigned num,unsigned den) {
+    return v<0?-(int32_t)scaled_u((uint32_t)-v,num,den):(int32_t)scaled_u((uint32_t)v,num,den);
+}
+static int32_t floor_div(int32_t v,unsigned den) {
+    return v<0?-(int32_t)(((uint32_t)-v+den-1u)/den):(int32_t)((uint32_t)v/den);
+}
 static void dirty_rect(mm_scene_dirty *dirty,int32_t l,int32_t t,int32_t r,int32_t b) {
     if(!dirty || l>=r || t>=b)return;
     if(dirty->n<MM_SCENE_RECT_MAX){
@@ -110,22 +117,35 @@ int mm_native_builtin_text(void *user,const mm_raster *target,const uint8_t *src
     mm_native_text_glyph g;const uint8_t *bits;int32_t baseline;
     for(size_t i=0;i<count;i++)if(!(tokens[i]&CONTROL))
         if(!glyph(api,tokens[i],next_cp(tokens,count,i),&g,&bits,&baseline))return -1;
-    int32_t x=s16(src),y=s16(src+2);unsigned options=src[4],top=options&15u;
+    unsigned num=api->scale_num?api->scale_num:1u,den=api->scale_den?api->scale_den:1u;
+    /* The cursor keeps 1/den px so scaled advances do not drift along a line. */
+    int32_t xf=s16(src)*(int32_t)den,y=s16(src+2);unsigned options=src[4],top=options&15u;
     for(size_t i=0;i<count;i++){
-        if(tokens[i]&CONTROL){x+=(int32_t)(tokens[i]&31u)-11;continue;}
+        if(tokens[i]&CONTROL){xf+=((int32_t)(tokens[i]&31u)-11)*(int32_t)den;continue;}
         /* Stable synchronous resource callbacks make this identical to preflight. */
         if(!glyph(api,tokens[i],next_cp(tokens,count,i),&g,&bits,&baseline))return -1;
         if(bits){
-            int32_t gx=x+g.ofs_x,gy=y+height-baseline-(int32_t)g.box_h-g.ofs_y;
-            int32_t l=gx<0?0:gx,t=gy<0?0:gy,r=gx+g.box_w,b=gy+g.box_h;
+            uint32_t w=scaled_u(g.box_w,num,den),h=scaled_u(g.box_h,num,den);
+            if(!w)w=1u;
+            if(!h)h=1u;
+            /* Every glyph's bottom rounds from the same baseline row, so a line stays level. */
+            int32_t gx=floor_div(xf,den)+scaled_s(g.ofs_x,num,den);
+            int32_t gy=y+scaled_s(height-baseline-g.ofs_y,num,den)-(int32_t)h;
+            int32_t l=gx<0?0:gx,t=gy<0?0:gy,r=gx+(int32_t)w,b=gy+(int32_t)h;
             if(r>(int32_t)target->width)r=(int32_t)target->width;
             if(b>(int32_t)target->height)b=(int32_t)target->height;
             unsigned bpp=g.bpp_flags&15u,mask=(1u<<bpp)-1u;
             for(int32_t py=t;py<b;py++)for(int32_t px=l;px<r;px++){
-                uint32_t bit=((uint32_t)(py-gy)*g.box_w+(uint32_t)(px-gx))*bpp;
-                unsigned value=(bits[bit>>3]>>(8u-bpp-(bit&7u)))&mask;
+                uint32_t ox=(uint32_t)(px-gx),oy=(uint32_t)(py-gy);unsigned sum=0;
+                for(unsigned k=0;k<4;k++){
+                    uint32_t sx=((4u*ox+((k&1u)?3u:1u))*g.box_w)/(4u*w);
+                    uint32_t sy=((4u*oy+((k&2u)?3u:1u))*g.box_h)/(4u*h);
+                    uint32_t bit=(sy*g.box_w+sx)*bpp;
+                    unsigned value=(bits[bit>>3]>>(8u-bpp-(bit&7u)))&mask;
+                    sum+=bpp==1?value*15u:value*5u;
+                }
+                unsigned value=(sum+2u)/4u;
                 if(!value && (options&16u))continue;
-                value=bpp==1?value*15u:value*5u;
                 if(options&32u)value=15u-value;
                 value=value*top/15u;
                 size_t at=(size_t)py*target->stride+(uint32_t)px/2u;
@@ -134,7 +154,7 @@ int mm_native_builtin_text(void *user,const mm_raster *target,const uint8_t *src
             }
             dirty_rect(dirty,l,t,r,b);
         }
-        x+=g.advance;
+        xf+=(int32_t)((uint32_t)g.advance*num);
     }
     return 0;
 }
@@ -162,6 +182,7 @@ static const uint8_t *native_bitmap(void *context,uint32_t font,uint32_t cp) {
     return ((fn)(uintptr_t)0x042d14beu)((const void *)(uintptr_t)font,cp);
 }
 const mm_native_text_api mm_native_text_firmware_api={
-    0,MM_NATIVE_TEXT_DEFAULT_FONT,native_ready,native_info,native_metrics,native_bitmap
+    0,MM_NATIVE_TEXT_DEFAULT_FONT,native_ready,native_info,native_metrics,native_bitmap,
+    MM_NATIVE_TEXT_SCALE_NUM,MM_NATIVE_TEXT_SCALE_DEN
 };
 #endif

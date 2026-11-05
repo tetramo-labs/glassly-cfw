@@ -1,0 +1,58 @@
+{
+  "compile": [
+    "python3",
+    "scripts/compile_memomind_graphics.py",
+    "analysis/text-scale-20261105/build-13-01",
+    "--scene-session",
+    "--input-observer",
+    "--flash-reader",
+    "--external-tail-reader",
+    "--storage-diagnostics",
+    "--full-store-reader",
+    "--flash-canary",
+    "--raster-commands",
+    "--rect-copy",
+    "--command-bundles",
+    "--text-commands",
+    "--diagnostic-commands",
+    "--reset-undo-trim",
+    "--minimal-launcher",
+    "--flash-scene",
+    "--wake-control",
+    "--notification-relay",
+    "--record-transport",
+    "--microphone-control",
+    "--sensor-capture",
+    "--cfw-revision",
+    "13",
+    "--rx-profile",
+    "app-rx-96k-v1",
+    "--relax"
+  ],
+  "construct": [
+    "python3",
+    "scripts/build_memomind_minimal_owner.py",
+    "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+    "analysis/text-scale-20261105/build-13-01",
+    "analysis/text-scale-20261105/image-13-01"
+  ],
+  "bootTestCommand": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/first_run_boot_test.py",
+    "--build",
+    "analysis/text-scale-20261105/build-13-01",
+    "--report",
+    "analysis/text-scale-20261105/boot-selector-13.json"
+  ],
+  "regression": [
+    "python3",
+    "tests/run_tests.py",
+    "--output",
+    "analysis/text-scale-20261105/regression-13-02",
+    "--demos-dependencies",
+    "~/dev/glassly-g2-cfw/demos/node_modules",
+    "--g2-media",
+    "~/dev/glassly-g2-cfw/demos"
+  ],
+  "note": "The G2 checkout (jimrandomh/g2flash fork, e889569) lives at ~/dev/glassly-g2-cfw since 2026-11-05; run_tests.py still defaults to ~/dev/g2flash."
+}

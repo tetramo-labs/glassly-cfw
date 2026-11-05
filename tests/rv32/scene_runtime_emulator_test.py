@@ -18,6 +18,42 @@ SCENE_SHA = "cd849a72ecd662a79327d01f792ddbe6b09cd5d7a2a683aa05440301dced2bbd"
 FONT, READY = 0x0438f77c, 0x0205a048
 FONT_NATIVES = {0x042d153c: "font_metrics", 0x042d14be: "font_bitmap"}
 graphics.NATIVES.update(FONT_NATIVES)
+# The firmware text adapter draws the resource font at this ratio (native_text.h);
+# the mock font is 4 high with its baseline 1 up, its glyph 3x2 with advance 3.
+TEXT_SCALE = (4, 5)
+GLYPH_VALUES = ((0, 5, 10), (15, 10, 5))
+MOCK_FONT_HEIGHT, MOCK_FONT_BASELINE, MOCK_ADVANCE = 4, 1, 3
+
+
+def scaled(value, num=TEXT_SCALE[0], den=TEXT_SCALE[1]):
+    return (value*num + den//2)//den
+
+
+def scaled_glyph(values=GLYPH_VALUES, num=TEXT_SCALE[0], den=TEXT_SCALE[1]):
+    """The adapter's output for one mock glyph: {(dx, dy): gray}, each pixel the
+    rounded mean of a 2x2 sample of the glyph box, as native_text.c draws it."""
+    box_w, box_h = len(values[0]), len(values)
+    w, h = max(1, scaled(box_w, num, den)), max(1, scaled(box_h, num, den))
+    out = {}
+    for oy in range(h):
+        for ox in range(w):
+            total = 0
+            for k in range(4):
+                sx = ((4*ox + (3 if k & 1 else 1))*box_w)//(4*w)
+                sy = ((4*oy + (3 if k & 2 else 1))*box_h)//(4*h)
+                total += values[sy][sx]
+            out[(ox, oy)] = (total + 2)//4
+    return out
+
+
+def glyph_top(y, num=TEXT_SCALE[0], den=TEXT_SCALE[1]):
+    """Top row of a mock glyph on a line at y: the scaled baseline less the scaled box."""
+    return y + scaled(MOCK_FONT_HEIGHT - MOCK_FONT_BASELINE, num, den) - max(1, scaled(len(GLYPH_VALUES), num, den))
+
+
+def glyph_left(x, index, num=TEXT_SCALE[0], den=TEXT_SCALE[1]):
+    """Left column of the index-th glyph of a string at x (advances accumulate in 1/den px)."""
+    return (x*den + index*MOCK_ADVANCE*num)//den
 STEPS = []
 
 
@@ -263,17 +299,19 @@ class SceneRuntimeTests(unittest.TestCase):
 
     def test_actual_builtin_ascii_and_preflight_failure(self):
         m = SceneMachine(alignment_four=True)
-        # Mode36 inline text: one3x2 mocked resource glyph at(10,10),
-        # fontheight4/baseline1 shifts its pixels to y11. Two passes execute
-        # actual native_text.c and firmware wrappers; only glyph lookup is mocked.
+        # Mode36 inline text: one3x2 mocked resource glyph at(10,10), drawn at
+        # the adapter's4/5 as2x2 means (fontheight4/baseline1 put its top at y10).
+        # Two passes execute actual native_text.c and firmware wrappers; only
+        # glyph lookup is mocked.
         record = bytes([17, 1, 15, 0])+struct.pack("<hhhhB", 10, 10, 20, 10, 2)+b"AB"
         _, values = m.send_scene(bytes([36, 1])+record)
         self.assertEqual(values[0]["result"], "ok")
         self.assertEqual(m.font_metrics_calls, [(65, 66), (66, 0)]*2)
-        for row, expected in enumerate(((0, 5, 10), (15, 10, 5))):
-            for x, value in enumerate(expected):
-                self.assertEqual(m.pixel(10+x, 11+row), value)
-                self.assertEqual(m.pixel(13+x, 11+row), value)
+        self.assertEqual(scaled_glyph(), {(0, 0): 3, (1, 0): 8, (0, 1): 13, (1, 1): 8})
+        for index in range(2):
+            for (dx, dy), value in scaled_glyph().items():
+                self.assertEqual(m.pixel(glyph_left(10, index)+dx, glyph_top(10)+dy), value)
+        self.assertEqual(m.pixel(10, 12), 0, "nothing below the scaled box")
         before = m.read(m.image_sources[-1][4]+64, 105000)
         m.font_missing = 66
         shifted = bytes([17, 1, 15, 0])+struct.pack("<hhhhB", 30, 10, 20, 10, 2)+b"AB"

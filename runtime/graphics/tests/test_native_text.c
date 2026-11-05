@@ -33,7 +33,7 @@ static const uint8_t *bitmap(void *v,uint32_t font,uint32_t cp){
     return font==MM_NATIVE_TEXT_EMOJI_FONT?bits1:bits2;
 }
 static fixture fresh(void){fixture f={0};f.ready=1;f.w=3;f.h=2;f.advance=3;return f;}
-static mm_native_text_api api(fixture *f){return (mm_native_text_api){f,MM_NATIVE_TEXT_DEFAULT_FONT,ready,info,metrics,bitmap};}
+static mm_native_text_api api(fixture *f){return (mm_native_text_api){f,MM_NATIVE_TEXT_DEFAULT_FONT,ready,info,metrics,bitmap,0,0};}
 static unsigned pixel(const mm_raster *r,unsigned x,unsigned y){return (r->pixels[y*r->stride+x/2]>>((x&1)?0:4))&15;}
 static size_t message(uint8_t *out,int x,int y,unsigned options,const uint8_t *str,size_t n){
     out[0]=(uint8_t)x;out[1]=(uint8_t)((uint16_t)x>>8);out[2]=(uint8_t)y;out[3]=(uint8_t)((uint16_t)y>>8);
@@ -128,4 +128,29 @@ static void edges(void){
     uint8_t controls[128];memset(controls,11,sizeof(controls));n=message(msg,0,0,15,controls,sizeof(controls));
     assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));
 }
-int main(void){packing_clipping();options_and_controls();failures();edges();puts("native text tests passed");return 0;}
+static void scaled(void){
+    /* Boxes, offsets, advances and the baseline at2/3; control shifts stay in panel px. */
+    fixture f=fresh();mm_native_text_api a=api(&f);a.scale_num=2;a.scale_den=3;
+    uint8_t pixels[20],msg[16];uint32_t tokens[128];
+    memset(pixels,0xcc,sizeof(pixels));mm_raster r={pixels,sizeof(pixels),5,4,5};mm_scene_dirty d={0};
+    size_t n=message(msg,0,-1,15,(const uint8_t *)"AB",2);
+    assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));
+    /* A3x2 glyph becomes2x1 means of2x2 samples: (0+5+15+10)/4 and (5+10+10+5)/4; B lands at advance3*2/3. */
+    for(unsigned x=0;x<4;x++)assert(pixel(&r,x,0)==8);
+    assert(pixel(&r,4,0)==12 && pixel(&r,0,1)==12);
+    assert(d.n==2 && d.r[0].l==0 && d.r[0].t==0 && d.r[0].w==2 && d.r[0].h==1 && d.r[1].l==2 && d.r[1].w==2);
+    const uint8_t shifted[]={'A',12,'B'};memset(pixels,0xcc,sizeof(pixels));d.n=0;
+    n=message(msg,0,-1,32|15,shifted,sizeof(shifted));assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));
+    assert(pixel(&r,0,0)==7 && pixel(&r,1,0)==7 && pixel(&r,2,0)==12 && pixel(&r,3,0)==7 && pixel(&r,4,0)==7);
+    f.dx=-1;memset(pixels,0xcc,sizeof(pixels));d.n=0;n=message(msg,0,-1,15,(const uint8_t *)"A",1);
+    assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));
+    assert(pixel(&r,0,0)==8 && pixel(&r,1,0)==12 && d.n==1 && d.r[0].l==0 && d.r[0].w==1);
+    /* The fallback font's baseline (2) scales too: the star's single row is y itself. */
+    f=fresh();const uint8_t star[]={0xe2,0x98,0x85};memset(pixels,0xcc,sizeof(pixels));d.n=0;
+    n=message(msg,0,0,15,star,sizeof(star));assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,1));
+    assert(pixel(&r,0,0)==8 && pixel(&r,1,0)==8 && pixel(&r,0,1)==12 && pixel(&r,2,0)==12);
+    /* 1/1 and0/0 are the unscaled adapter. */
+    a.scale_num=1;a.scale_den=1;memset(pixels,0xcc,sizeof(pixels));d.n=0;n=message(msg,0,-1,15,(const uint8_t *)"A",1);
+    assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));assert(pixel(&r,0,1)==15 && pixel(&r,2,0)==10 && d.r[0].w==3);
+}
+int main(void){packing_clipping();options_and_controls();failures();edges();scaled();puts("native text tests passed");return 0;}

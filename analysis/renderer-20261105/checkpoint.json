@@ -1,0 +1,90 @@
+{
+  "version": "GLASSLYCFW/12",
+  "release": "partial-render-001",
+  "sourceCommitG2": "e889569fe77775ed5822af6f7e47210f2984f15d",
+  "build": "build-12-05",
+  "runtimeBytes": 94000,
+  "runtimeSHA256": "48323d0c77fdc3ed4bb8deb80fdfc2db32699add2592e8ee15dcf3ce8753e17a",
+  "linkerRelaxation": true,
+  "imageBytes": 2248988,
+  "imageSHA256": "fc6c4d1f14bdc1d04e610b25b80140d7e2b82375cf57b3f34b21ae54fd1df31c",
+  "containerHeaderSHA256": "88099a0bb7665f189c91a265b680476afb3e3548dc16e4a8e28f4495c0bc805f",
+  "appHeaderSHA256": "1a522f71f4eacee1c76aa629240f7e292969102b28daa0e0058735667d4e891b",
+  "bootSelectorTest": "boot-selector-12.json",
+  "regressionVerification": "regression-verification.json",
+  "benchmark": {
+    "fixture": "tests/rv32/fixtures/dashboard-scene-commands.json",
+    "v11": "benchmark-v11.json",
+    "v12": "benchmark-v12.json",
+    "instructions": {
+      "cold-open[0] mode 41 (6 B)": {
+        "v11": 687310,
+        "v12": 703462
+      },
+      "cold-open[1] mode 37 (387 B)": {
+        "v11": 409310,
+        "v12": 169117
+      },
+      "cold-open[2] mode 37 (8185 B)": {
+        "v11": 476710,
+        "v12": 252292
+      },
+      "cold-open[3] mode 37 (288 B)": {
+        "v11": 1733256,
+        "v12": 1077928
+      },
+      "cold-open[4] mode 38 (608 B)": {
+        "v11": 3476637,
+        "v12": 2620590
+      },
+      "clock-tick[0] mode 38 (149 B)": {
+        "v11": 3400384,
+        "v12": 249089
+      },
+      "tween[0] mode 38 (165 B)": {
+        "v11": 3401810,
+        "v12": 372387
+      },
+      "hide[0] mode 39 (7 B)": {
+        "v11": 542894,
+        "v12": 543543
+      },
+      "reopen[0] mode 38 (171 B)": {
+        "v11": 3393563,
+        "v12": 2495595
+      },
+      "tick 1 (+33 ms)": {
+        "v11": 236,
+        "v12": 232
+      },
+      "tick 2 (+33 ms)": {
+        "v11": 236,
+        "v12": 232
+      },
+      "tick 3 (+33 ms)": {
+        "v11": 236,
+        "v12": 232
+      },
+      "tick 4 (+33 ms)": {
+        "v11": 236,
+        "v12": 232
+      }
+    }
+  },
+  "macToolCatalog": "partial-render-001 admitted (inspect eligible=true); swift test OTA/protocol suites 52 passed",
+  "flashed": false,
+  "flashAttempt": {
+    "capture": "captures/v12-check-20261105-01",
+    "command": "check",
+    "error": "RFCOMM SDP timed out",
+    "macPairedWithGlasses": false,
+    "glassesConnectedToMac": false
+  },
+  "bootVerified": false,
+  "hardwareChecks": {
+    "physicalDisplayConfirmed": false,
+    "phoneConnectionTested": false
+  },
+  "postFlashVerifier": "verify.swift (header readback at device 0 offset 0x1eb000, capabilities GLASSLYCFW/12, 30 s builtin-text hold)",
+  "glasslyBundle": "pending the firmware commit hash"
+}

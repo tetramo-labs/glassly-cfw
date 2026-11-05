@@ -1,0 +1,63 @@
+{
+  "compile": [
+    "python3",
+    "scripts/compile_memomind_graphics.py",
+    "analysis/renderer-20261105/build-12-05",
+    "--scene-session",
+    "--input-observer",
+    "--flash-reader",
+    "--external-tail-reader",
+    "--storage-diagnostics",
+    "--full-store-reader",
+    "--flash-canary",
+    "--raster-commands",
+    "--rect-copy",
+    "--command-bundles",
+    "--text-commands",
+    "--diagnostic-commands",
+    "--reset-undo-trim",
+    "--minimal-launcher",
+    "--flash-scene",
+    "--wake-control",
+    "--notification-relay",
+    "--record-transport",
+    "--microphone-control",
+    "--sensor-capture",
+    "--cfw-revision",
+    "12",
+    "--rx-profile",
+    "app-rx-96k-v1",
+    "--relax"
+  ],
+  "construct": [
+    "python3",
+    "scripts/build_memomind_minimal_owner.py",
+    "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+    "analysis/renderer-20261105/build-12-05",
+    "analysis/renderer-20261105/image-12-05"
+  ],
+  "bootTestCommand": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/first_run_boot_test.py",
+    "--build",
+    "analysis/renderer-20261105/build-12-05",
+    "--report",
+    "analysis/renderer-20261105/boot-selector-12.json"
+  ],
+  "benchmark": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/scene_render_benchmark.py",
+    "--build",
+    "../../analysis/renderer-20261105/build-12-05",
+    "--commands",
+    "fixtures/dashboard-scene-commands.json",
+    "--report",
+    "../../analysis/renderer-20261105/benchmark-v12.json"
+  ],
+  "regression": [
+    "python3",
+    "tests/run_tests.py",
+    "--output",
+    "analysis/renderer-20261105/regression-12-05"
+  ]
+}

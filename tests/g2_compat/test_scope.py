@@ -31,9 +31,9 @@ class ScopeTests(unittest.TestCase):
         excluded = {name for name, row in rows.items() if not row['parity_required']}
         self.assertEqual(excluded, {'patches/host/keyboard_host_test.c', 'patches/host/keyboard_emulator_test.py', 'demos/keyboard.test.ts', 'demos/keyboard.ts', 'demos/head-up-test.ts', 'demos/ring-touch-test.ts', 'demos/sound-test.ts', 'patches/host/volume_gate_host_test.c'})
         self.assertEqual(inventory['host_core_scenarios']['total'], 46)
-        self.assertEqual(inventory['host_core_scenarios']['original_assertion_sites'], 746)
+        self.assertEqual(inventory['host_core_scenarios']['original_assertion_sites'], 769)
         self.assertEqual(inventory['required_host_core_scenarios']['total'], 38)
-        self.assertEqual(inventory['required_host_core_scenarios']['original_assertion_sites'], 622)
+        self.assertEqual(inventory['required_host_core_scenarios']['original_assertion_sites'], 645)
         self.assertEqual(inventory['required_bun_test_cases'], 11)
         mixed = rows['patches/host/upstream_host_test.c']
         self.assertTrue(mixed['parity_required'])

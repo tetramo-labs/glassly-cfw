@@ -1,7 +1,7 @@
 {
   "scene_internal.h": {
-    "base_sha256": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
-    "result_sha256": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "base_sha256": "f711a46936ab8b56bf734c501295bf0b99c675d7d1a9d4244b667180cdcef3e5",
+    "result_sha256": "e25d01809deefdc2bc0d19fe1e7d4009cc2b9620d3e0b47973453cdbd517b896",
     "hunks": [
       {
         "start": 119,
@@ -16,8 +16,8 @@
     ]
   },
   "scene_shapes.inc": {
-    "base_sha256": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
-    "result_sha256": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c",
+    "base_sha256": "168aa3e9818d57fa514eaa3448e03173266b569581e7db84a4fa900e6488978e",
+    "result_sha256": "681171067c6963dddf247ae868ca4596ba7af4718cd4baafa477333d07158caa",
     "hunks": [
       {
         "start": 70,
@@ -32,8 +32,8 @@
     ]
   },
   "scene_cache.inc": {
-    "base_sha256": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
-    "result_sha256": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "base_sha256": "39fdfdcee9b65d93d65d6c7c26722cf10095b470482b3bfd29e645e0d194f052",
+    "result_sha256": "e789103f98a80fa2ac5a345207f3239b6178734e90909992bad5a0ccd2a34ade",
     "hunks": [
       {
         "start": 234,
@@ -106,8 +106,8 @@
         ]
       },
       {
-        "start": 618,
-        "end": 618,
+        "start": 681,
+        "end": 681,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -121,8 +121,8 @@
         ]
       },
       {
-        "start": 639,
-        "end": 639,
+        "start": 702,
+        "end": 702,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -137,8 +137,51 @@
         ]
       },
       {
-        "start": 642,
-        "end": 642,
+        "start": 711,
+        "end": 711,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (ctx->external_ready) {\n",
+          "        mm_scene_bytes sb = mm_asset_bytes((mm_scene_context *)ctx, str->offset, str->length);\n",
+          "        mm_scene_bytes fb = mm_asset_bytes((mm_scene_context *)ctx, font->offset, font->length);\n",
+          "        uint8_t s[CFW_SHAPE_TEXT_MAX];\n",
+          "        if (str->length > sizeof s || font->length < CFW_FONT_TABLE_BYTES || mm_scene_bytes_read(&sb, 0, s, str->length)) return 0;\n",
+          "        int32_t x = 0, l = 0, r = 0, h = 0;\n",
+          "        for (uint32_t i = 0; i < str->length; i++) {\n",
+          "            uint32_t ch = s[i];\n",
+          "            if (ch <= 31u) { x += (int32_t)ch - 11; if (x < l) l = x; continue; }\n",
+          "            if (ch > 127u) return 0;\n",
+          "            uint8_t raw[4], hd[2];\n",
+          "            if (mm_scene_bytes_read(&fb, (ch - 32u) * 4u, raw, 4)) return 0;\n",
+          "            uint32_t off = rd32(raw);\n",
+          "            if (off == 0 || off + 2u > font->length || mm_scene_bytes_read(&fb, off, hd, 2)) return 0;\n",
+          "            x += hd[0];\n",
+          "            if (x > r) r = x;\n",
+          "            if (hd[1] > h) h = hd[1];\n",
+          "        }\n",
+          "        ext[0] = l; ext[1] = r; ext[2] = h;\n",
+          "        return 1;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 755,
+        "end": 755,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if (ctx->external_ready) {\n",
+          "            mm_scene_bytes b = mm_asset_bytes((mm_scene_context *)ctx, a->offset, a->length);\n",
+          "            if (a->length < 2u || mm_scene_bytes_read(&b, 0, hd, 2)) return 0;\n",
+          "        } else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 798,
+        "end": 798,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -147,14 +190,14 @@
         ]
       },
       {
-        "start": 648,
-        "end": 648,
+        "start": 860,
+        "end": 860,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
           "        if(ctx->external_ready && o->type==CFW_SHAPE_PATH) {\n",
           "            mm_raster target=mm_scene_raster(&r);\n",
-          "            mm_vector_transform transform={o->p[0],o->p[1],(uint16_t)o->p[2],{o->rotation.angle,o->rotation.px,o->rotation.py}};\n",
+          "            mm_vector_transform transform={s.p[0],s.p[1],(uint16_t)s.p[2],{rot.angle,rot.px,rot.py}};\n",
           "            int rc=sc->vector_work ? mm_vector_draw_path_reader(&target,sc->vector_work,sizeof(*sc->vector_work),&s.asset_region,&transform,o->color&15):-1;\n",
           "            if(rc){ctx->shadow_invalid=1;if(rc==-6)ctx->storage_io=1;}\n",
           "        } else\n",
@@ -162,18 +205,18 @@
         ]
       },
       {
-        "start": 655,
-        "end": 655,
+        "start": 867,
+        "end": 867,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
-          "        if(ctx->shadow_invalid)break;\n",
+          "        if(ctx->shadow_invalid){sc->full_redraw=1;break;}\n",
           "#endif\n"
         ]
       },
       {
-        "start": 825,
-        "end": 825,
+        "start": 1038,
+        "end": 1038,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -182,18 +225,42 @@
         ]
       },
       {
-        "start": 911,
-        "end": 911,
+        "start": 1125,
+        "end": 1125,
         "before": [],
         "after": [
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
           "    if(t->sc->owner->external_ready && !undo)return cfw_txn_fail(t,CFW_CACHE_REPLY_CAPACITY,0);\n",
           "#endif\n"
         ]
       },
       {
-        "start": 915,
-        "end": 915,
+        "start": 1129,
+        "end": 1129,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -205,8 +272,8 @@
         ]
       },
       {
-        "start": 919,
-        "end": 919,
+        "start": 1133,
+        "end": 1133,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -215,8 +282,8 @@
         ]
       },
       {
-        "start": 971,
-        "end": 971,
+        "start": 1185,
+        "end": 1185,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -226,8 +293,8 @@
         ]
       },
       {
-        "start": 993,
-        "end": 993,
+        "start": 1207,
+        "end": 1207,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -250,8 +317,8 @@
         ]
       },
       {
-        "start": 1077,
-        "end": 1077,
+        "start": 1291,
+        "end": 1291,
         "before": [],
         "after": [
           "    #ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -260,16 +327,16 @@
         ]
       },
       {
-        "start": 1078,
-        "end": 1078,
+        "start": 1292,
+        "end": 1292,
         "before": [],
         "after": [
           "#endif\n"
         ]
       },
       {
-        "start": 1081,
-        "end": 1081,
+        "start": 1295,
+        "end": 1295,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -279,8 +346,8 @@
         ]
       },
       {
-        "start": 1086,
-        "end": 1086,
+        "start": 1300,
+        "end": 1300,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -292,8 +359,8 @@
         ]
       },
       {
-        "start": 1168,
-        "end": 1169,
+        "start": 1382,
+        "end": 1383,
         "before": [
           "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n"
         ],
@@ -306,8 +373,8 @@
         ]
       },
       {
-        "start": 1170,
-        "end": 1170,
+        "start": 1384,
+        "end": 1384,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -317,8 +384,8 @@
         ]
       },
       {
-        "start": 1182,
-        "end": 1183,
+        "start": 1396,
+        "end": 1397,
         "before": [
           "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n"
         ],
@@ -331,8 +398,8 @@
         ]
       },
       {
-        "start": 1184,
-        "end": 1184,
+        "start": 1398,
+        "end": 1398,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -344,8 +411,8 @@
         ]
       },
       {
-        "start": 1189,
-        "end": 1189,
+        "start": 1403,
+        "end": 1403,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -354,8 +421,8 @@
         ]
       },
       {
-        "start": 1486,
-        "end": 1487,
+        "start": 1708,
+        "end": 1709,
         "before": [
           "    if (sc == 0 || store == 0) { cfw_reply_simple(ctx, 37, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
         ],
@@ -369,8 +436,8 @@
         ]
       },
       {
-        "start": 1489,
-        "end": 1490,
+        "start": 1711,
+        "end": 1712,
         "before": [
           "    if (srclen > 4u && !cfw_txn_snapshot(t)) {\n"
         ],
@@ -383,8 +450,8 @@
         ]
       },
       {
-        "start": 1505,
-        "end": 1505,
+        "start": 1727,
+        "end": 1727,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -393,8 +460,8 @@
         ]
       },
       {
-        "start": 1541,
-        "end": 1541,
+        "start": 1763,
+        "end": 1763,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -405,8 +472,8 @@
         ]
       },
       {
-        "start": 1545,
-        "end": 1546,
+        "start": 1767,
+        "end": 1768,
         "before": [
           "    if (puts && store == 0) { cfw_reply_simple(ctx, 38, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
         ],
@@ -420,8 +487,8 @@
         ]
       },
       {
-        "start": 1548,
-        "end": 1549,
+        "start": 1770,
+        "end": 1771,
         "before": [
           "    if (puts && !cfw_txn_snapshot(tp)) {\n"
         ],
@@ -434,8 +501,8 @@
         ]
       },
       {
-        "start": 1577,
-        "end": 1577,
+        "start": 1799,
+        "end": 1799,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -444,8 +511,8 @@
         ]
       },
       {
-        "start": 1583,
-        "end": 1583,
+        "start": 1805,
+        "end": 1805,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -454,8 +521,8 @@
         ]
       },
       {
-        "start": 1586,
-        "end": 1586,
+        "start": 1808,
+        "end": 1808,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -464,8 +531,8 @@
         ]
       },
       {
-        "start": 1596,
-        "end": 1596,
+        "start": 1818,
+        "end": 1818,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -474,8 +541,8 @@
         ]
       },
       {
-        "start": 1673,
-        "end": 1673,
+        "start": 1900,
+        "end": 1900,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -484,8 +551,8 @@
         ]
       },
       {
-        "start": 1751,
-        "end": 1751,
+        "start": 1979,
+        "end": 1979,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -494,8 +561,8 @@
         ]
       },
       {
-        "start": 1858,
-        "end": 1858,
+        "start": 2086,
+        "end": 2086,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -509,8 +576,8 @@
         ]
       },
       {
-        "start": 1859,
-        "end": 1859,
+        "start": 2087,
+        "end": 2087,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -527,8 +594,8 @@
         ]
       },
       {
-        "start": 1879,
-        "end": 1879,
+        "start": 2107,
+        "end": 2107,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",
@@ -542,8 +609,8 @@
         ]
       },
       {
-        "start": 1940,
-        "end": 1940,
+        "start": 2168,
+        "end": 2168,
         "before": [],
         "after": [
           "#ifdef MM_SCENE_EXTERNAL_STORE\n",

@@ -74,3 +74,22 @@ The test approach is patterned on G2's
 stub explicit native imports, inspect arguments and memory, and fail on unknown
 calls. This is a separate RV32 implementation; G2's ARM binary and repository
 are not modified or relabeled as MemoMind firmware.
+
+## Render instruction profile
+
+`scene_render_benchmark.py` replays scene commands a phone renderer produced
+(`fixtures/dashboard-scene-commands.json`: a dashboard cold open, a clock tick, a
+tween, an unchanged frame, HIDE and reopen, captured from the iOS renderer) through
+the real display job of a linked build and attributes every instruction to the
+runtime function it ran in, with the most frequent caller -> callee entries on
+request. Native fonts, flash and LVGL are the existing mocks, so this measures the
+runtime's own work for comparing builds, not time on the glasses.
+
+```sh
+cd tests/rv32 && ../../.tools/rv32-tests-venv/bin/python scene_render_benchmark.py \
+  --build ../../analysis/renderer-20261105/build-12-05 \
+  --commands fixtures/dashboard-scene-commands.json --report /tmp/bench.json --calls 12
+```
+
+`analysis/renderer-20261105/benchmark-v11.json` and `benchmark-v12.json` are the
+revision 11 and 12 profiles of that fixture.

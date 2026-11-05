@@ -7,7 +7,7 @@ import re
 import sys
 ROOT=Path(__file__).resolve().parents[1]
 SRC=ROOT.parents[1]/'tests/g2_compat/upstream/patches'
-NOTICE='/* Derived from pinned G2 commit1a6db4fd75de202a96599cc8f9f12fa721e7c3ce.\n * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */\n'
+NOTICE='/* Derived from pinned G2 commite889569fe77775ed5822af6f7e47210f2984f15d.\n * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */\n'
 
 def emit(path,text):
     # Explicit optional-backend overlay: original upstream generation remains
@@ -94,6 +94,16 @@ def main():
     core=core.replace('cv_shape_draw(&r, sc->vector_work, &s, &o->rotation, rl);',
         'mm_scene_shape_draw(ctx, &r, sc->vector_work, &s, &o->rotation, rl);')
     core=core.replace('cfw_shape_draw(&r, &s, rl);','mm_scene_shape_draw(ctx, &r, 0, &s, 0, rl);')
+    # Revision 51 partial render: the panel box and the clipped view come from the owner's raster.
+    core=core.replace('int32_t pw = (int32_t)IMAGE_W, ph = (int32_t)IMAGE_H;',
+        'int32_t pw = (int32_t)ctx->raster.width, ph = (int32_t)ctx->raster.height;')
+    core=core.replace('cfw_raster r = { fb + (uint32_t)dirty.t * IMAGE_STRIDE + ((uint32_t)dirty.l >> 1), IMAGE_STRIDE, dirty.r - dirty.l, dirty.b - dirty.t };',
+        'cfw_raster r = { fb + (uint32_t)dirty.t * ctx->raster.stride + ((uint32_t)dirty.l >> 1),\n                     ctx->raster.stride, dirty.r - dirty.l, dirty.b - dirty.t };')
+    core=core.replace('cv_path_draw(&r, sc->vector_work, path, s.p, &rot, o->color);',
+        'mm_scene_path_draw(&r, sc->vector_work, path, s.p, &rot, o->color);')
+    core=core.replace('cv_shape_draw(&r, sc->vector_work, &s, &rot, &scratch);',
+        'mm_scene_shape_draw(ctx, &r, sc->vector_work, &s, &rot, &scratch);')
+    core=core.replace('cfw_shape_draw(&r, &s, &scratch);','mm_scene_shape_draw(ctx, &r, 0, &s, 0, &scratch);')
     core=core.replace('cv_compile(w, s.text, (uint16_t)s.p[3])','mm_vector_compile(w, sizeof(*w), s.text, (uint16_t)s.p[3], s.width, 0, 0)')
     core=core.replace('void scene_tick(void *arg) {','static void scene_tick(void *arg) {')
     core=core.replace('path->edges[i] = w->edges[i];','memcpy(&path->edges[i], &w->edges[i], sizeof(cfw_edge));')

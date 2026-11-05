@@ -2,7 +2,16 @@
 #include "scene_internal.h"
 static void bzero(uint8_t *p,uint32_t n) { volatile uint8_t *v=p;while(n--)*v++=0; }
 static void *mm_scene_memcpy(void *d,const void *s,size_t n) {
-    volatile uint8_t *out=d;const uint8_t *in=s;for(size_t i=0;i<n;i++)out[i]=in[i];return d;
+    /* The 45 KiB rollback snapshot runs through here on every transaction:
+     * copy words while both sides are aligned, bytes for the rest. */
+    volatile uint8_t *a=d;const uint8_t *b=s;      /* volatile: no memcpy idiom in a freestanding build */
+    if(!(((uintptr_t)a|(uintptr_t)b)&3u)){
+        volatile uint32_t *wa=(volatile uint32_t *)a;const uint32_t *wb=(const uint32_t *)(const void *)b;
+        for(;n>=4;n-=4)*wa++=*wb++;
+        a=(volatile uint8_t *)wa;b=(const uint8_t *)wb;
+    }
+    while(n--)*a++=*b++;
+    return d;
 }
 #define memcpy mm_scene_memcpy
 static uint32_t rd16(const uint8_t *p) {return (uint32_t)p[0]|((uint32_t)p[1]<<8);}

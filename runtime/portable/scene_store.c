@@ -31,13 +31,16 @@ int mm_scene_cursor_init(mm_scene_cursor *c,const mm_scene_bytes *b){
     mm_scene_bytes saved=*b;c->bytes=saved;c->start=c->used=0;return 0;
 }
 int mm_scene_cursor_read(mm_scene_cursor *c,uint32_t off,void *dst,size_t n) {
-    if(!span(c,sizeof(*c))||!valid(&c->bytes)||c->used>256||c->start>c->bytes.length||
+    if(!span(c,sizeof(*c))||c->used>256||c->start>c->bytes.length||
        c->used>c->bytes.length-c->start||off>c->bytes.length||n>c->bytes.length-off)return -1;
     if(!n)return 0;
-    if(!span(dst,n)||overlap(dst,n,c,sizeof(*c))||data_alias(&c->bytes,dst,n))return -1;
+    if(!span(dst,n)||overlap(dst,n,c,sizeof(*c)))return -1;
     uint8_t *out=dst;
     while(n){
         if(off<c->start||off-c->start>=c->used){
+            /* The source and the destination are checked when the window is
+             * filled; a read served from the window copies validated bytes. */
+            if(!valid(&c->bytes)||data_alias(&c->bytes,dst,n))return -1;
             c->start=off;c->used=c->bytes.length-off;if(c->used>256)c->used=256;
             int rc=mm_scene_bytes_read(&c->bytes,off,c->data,c->used);if(rc){c->used=0;return rc;}
         }

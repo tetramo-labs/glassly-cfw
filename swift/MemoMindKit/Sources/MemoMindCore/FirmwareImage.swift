@@ -232,6 +232,11 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        // Partial scene renders and the relaxed 94,000-byte runtime (GLASSLYCFW/12).
+        FirmwareRelease(name: "partial-render-001",
+                        sha256: "fc6c4d1f14bdc1d04e610b25b80140d7e2b82375cf57b3f34b21ae54fd1df31c", byteCount: 2_248_988, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "88099a0bb7665f189c91a265b680476afb3e3548dc16e4a8e28f4495c0bc805f",
+                        streams: streamPins(.partialRender12)),
         FirmwareRelease(name: "first-run-owner-001",
                         sha256: "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12", byteCount: 2_247_074, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "507d24a319e2269d45ae5b8cc866df86b8fe36943c7210bcb318214d309c5fe0",
@@ -292,12 +297,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .partialRender12:
+            metadata = 171; appPacked = 977_886; appRaw = 1_867_216
+            metadataHash = "8a845205e06e5c68e15e11015918aba3265bbda22add7f8d39a581cf31f75ab4"
+            appHash = "998f1321b5d76dd777e4df68f64d652fc39e85cd074f245d01de02f082e6d485"
         case .firstRunOwner11:
             metadata = 171; appPacked = 975_972; appRaw = 1_869_664
             metadataHash = "062213c02a8d64c4febaacdfed769d3616f333288bf5079aca7e5d34b8bdbcbc"

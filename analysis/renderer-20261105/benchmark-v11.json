@@ -1,0 +1,862 @@
+{
+ "build": "first-run-owner-20261103/build-11-01",
+ "blob_sha256": "9c92bba16a2fcb6f3235488b6578ac0d43f79a6369d7415fd4c10f40745ed02b",
+ "cfw_revision": 11,
+ "commands": "tests/rv32/fixtures/dashboard-scene-commands.json",
+ "steps": [
+  {
+   "step": "cold-open[0] mode 41 (6 B)",
+   "instructions": 687310,
+   "top": [
+    {
+     "function": "bzero",
+     "instructions": 351593,
+     "share": 0.512
+    },
+    {
+     "function": "create",
+     "instructions": 321392,
+     "share": 0.468
+    },
+    {
+     "function": "mm_flash_store_init",
+     "instructions": 9159,
+     "share": 0.013
+    },
+    {
+     "function": "memcpy",
+     "instructions": 1079,
+     "share": 0.002
+    },
+    {
+     "function": "cache_response",
+     "instructions": 547,
+     "share": 0.001
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 423,
+     "share": 0.001
+    },
+    {
+     "function": "find_owner",
+     "instructions": 270,
+     "share": 0.0
+    },
+    {
+     "function": "execute_inner",
+     "instructions": 197,
+     "share": 0.0
+    },
+    {
+     "function": "mm_scene_input_valid",
+     "instructions": 187,
+     "share": 0.0
+    },
+    {
+     "function": "mm_scene_session_init",
+     "instructions": 151,
+     "share": 0.0
+    },
+    {
+     "function": "word",
+     "instructions": 144,
+     "share": 0.0
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 139,
+     "share": 0.0
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[1] mode 37 (387 B)",
+   "instructions": 409310,
+   "top": [
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 303943,
+     "share": 0.743
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 27456,
+     "share": 0.067
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 14076,
+     "share": 0.034
+    },
+    {
+     "function": "read_map",
+     "instructions": 13428,
+     "share": 0.033
+    },
+    {
+     "function": "bzero",
+     "instructions": 8457,
+     "share": 0.021
+    },
+    {
+     "function": "cfw_asset_find",
+     "instructions": 7740,
+     "share": 0.019
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 5776,
+     "share": 0.014
+    },
+    {
+     "function": "data_alias",
+     "instructions": 5504,
+     "share": 0.013
+    },
+    {
+     "function": "cfw_asset_supersede",
+     "instructions": 4678,
+     "share": 0.011
+    },
+    {
+     "function": "aliases",
+     "instructions": 4170,
+     "share": 0.01
+    },
+    {
+     "function": "glassly_graphics_command",
+     "instructions": 3557,
+     "share": 0.009
+    },
+    {
+     "function": "mm_flash_store_write",
+     "instructions": 3324,
+     "share": 0.008
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[2] mode 37 (8185 B)",
+   "instructions": 476710,
+   "top": [
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 303943,
+     "share": 0.638
+    },
+    {
+     "function": "glassly_graphics_command",
+     "instructions": 73739,
+     "share": 0.155
+    },
+    {
+     "function": "mm_flash_store_write",
+     "instructions": 43115,
+     "share": 0.09
+    },
+    {
+     "function": "read_map",
+     "instructions": 25656,
+     "share": 0.054
+    },
+    {
+     "function": "cfw_txn_new_asset",
+     "instructions": 12958,
+     "share": 0.027
+    },
+    {
+     "function": "bzero",
+     "instructions": 8326,
+     "share": 0.017
+    },
+    {
+     "function": "cfw_asset_find",
+     "instructions": 3870,
+     "share": 0.008
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 1431,
+     "share": 0.003
+    },
+    {
+     "function": "cache_response",
+     "instructions": 519,
+     "share": 0.001
+    },
+    {
+     "function": "mm_flash_store_commit",
+     "instructions": 272,
+     "share": 0.001
+    },
+    {
+     "function": "mm_flash_store_begin",
+     "instructions": 271,
+     "share": 0.001
+    },
+    {
+     "function": "mm_scene_input_valid",
+     "instructions": 270,
+     "share": 0.001
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[3] mode 37 (288 B)",
+   "instructions": 1733256,
+   "top": [
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 636258,
+     "share": 0.367
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 322251,
+     "share": 0.186
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 303943,
+     "share": 0.175
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 134178,
+     "share": 0.077
+    },
+    {
+     "function": "data_alias",
+     "instructions": 131024,
+     "share": 0.076
+    },
+    {
+     "function": "aliases",
+     "instructions": 98310,
+     "share": 0.057
+    },
+    {
+     "function": "read_map",
+     "instructions": 25062,
+     "share": 0.014
+    },
+    {
+     "function": "mm_scene_bytes_read",
+     "instructions": 16742,
+     "share": 0.01
+    },
+    {
+     "function": "mm_flash_store_read",
+     "instructions": 12915,
+     "share": 0.007
+    },
+    {
+     "function": "bzero",
+     "instructions": 8326,
+     "share": 0.005
+    },
+    {
+     "function": "valid.part.0",
+     "instructions": 7640,
+     "share": 0.004
+    },
+    {
+     "function": "cfw_asset_find",
+     "instructions": 5198,
+     "share": 0.003
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[4] mode 38 (608 B)",
+   "instructions": 3476637,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 1308131,
+     "share": 0.376
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 547266,
+     "share": 0.157
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 397344,
+     "share": 0.114
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 304229,
+     "share": 0.088
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 255056,
+     "share": 0.073
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 200583,
+     "share": 0.058
+    },
+    {
+     "function": "data_alias",
+     "instructions": 81600,
+     "share": 0.023
+    },
+    {
+     "function": "aliases",
+     "instructions": 61242,
+     "share": 0.018
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 55468,
+     "share": 0.016
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 53972,
+     "share": 0.016
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.008
+    },
+    {
+     "function": "read_map",
+     "instructions": 18979,
+     "share": 0.005
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "clock-tick[0] mode 38 (149 B)",
+   "instructions": 3400384,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 1308131,
+     "share": 0.385
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 547266,
+     "share": 0.161
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 397344,
+     "share": 0.117
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 304229,
+     "share": 0.089
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 255056,
+     "share": 0.075
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 200583,
+     "share": 0.059
+    },
+    {
+     "function": "data_alias",
+     "instructions": 81600,
+     "share": 0.024
+    },
+    {
+     "function": "aliases",
+     "instructions": 61242,
+     "share": 0.018
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 53972,
+     "share": 0.016
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.008
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 20271,
+     "share": 0.006
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 16944,
+     "share": 0.005
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "tween[0] mode 38 (165 B)",
+   "instructions": 3401810,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 1308131,
+     "share": 0.385
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 547266,
+     "share": 0.161
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 397344,
+     "share": 0.117
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 304372,
+     "share": 0.089
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 255056,
+     "share": 0.075
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 200583,
+     "share": 0.059
+    },
+    {
+     "function": "data_alias",
+     "instructions": 81600,
+     "share": 0.024
+    },
+    {
+     "function": "aliases",
+     "instructions": 61242,
+     "share": 0.018
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 53972,
+     "share": 0.016
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.008
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 21715,
+     "share": 0.006
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 16944,
+     "share": 0.005
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "hide[0] mode 39 (7 B)",
+   "instructions": 542894,
+   "top": [
+    {
+     "function": "rs_hspan",
+     "instructions": 533750,
+     "share": 0.983
+    },
+    {
+     "function": "mm_raster_clear",
+     "instructions": 4232,
+     "share": 0.008
+    },
+    {
+     "function": "cache_response",
+     "instructions": 519,
+     "share": 0.001
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 440,
+     "share": 0.001
+    },
+    {
+     "function": "find_owner",
+     "instructions": 392,
+     "share": 0.001
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 286,
+     "share": 0.001
+    },
+    {
+     "function": "cfw_object_advance",
+     "instructions": 280,
+     "share": 0.001
+    },
+    {
+     "function": "word",
+     "instructions": 276,
+     "share": 0.001
+    },
+    {
+     "function": "mm_scene_input_valid",
+     "instructions": 270,
+     "share": 0.0
+    },
+    {
+     "function": "cfw_object_freeze",
+     "instructions": 252,
+     "share": 0.0
+    },
+    {
+     "function": "memcpy",
+     "instructions": 143,
+     "share": 0.0
+    },
+    {
+     "function": "execute_inner",
+     "instructions": 142,
+     "share": 0.0
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "reopen[0] mode 38 (171 B)",
+   "instructions": 3393563,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 1299472,
+     "share": 0.383
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 547266,
+     "share": 0.161
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 397344,
+     "share": 0.117
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 304229,
+     "share": 0.09
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 255056,
+     "share": 0.075
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 200583,
+     "share": 0.059
+    },
+    {
+     "function": "data_alias",
+     "instructions": 81600,
+     "share": 0.024
+    },
+    {
+     "function": "aliases",
+     "instructions": 61242,
+     "share": 0.018
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 53972,
+     "share": 0.016
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.008
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 21645,
+     "share": 0.006
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 16944,
+     "share": 0.005
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "tick 1 (+33 ms)",
+   "instructions": 236,
+   "top": [
+    {
+     "function": "tick",
+     "instructions": 48,
+     "share": 0.203
+    },
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.191
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.169
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.131
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.085
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 16,
+     "share": 0.068
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.051
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.047
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.042
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 3,
+     "share": 0.013
+    }
+   ]
+  },
+  {
+   "step": "tick 2 (+33 ms)",
+   "instructions": 236,
+   "top": [
+    {
+     "function": "tick",
+     "instructions": 48,
+     "share": 0.203
+    },
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.191
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.169
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.131
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.085
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 16,
+     "share": 0.068
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.051
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.047
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.042
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 3,
+     "share": 0.013
+    }
+   ]
+  },
+  {
+   "step": "tick 3 (+33 ms)",
+   "instructions": 236,
+   "top": [
+    {
+     "function": "tick",
+     "instructions": 48,
+     "share": 0.203
+    },
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.191
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.169
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.131
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.085
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 16,
+     "share": 0.068
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.051
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.047
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.042
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 3,
+     "share": 0.013
+    }
+   ]
+  },
+  {
+   "step": "tick 4 (+33 ms)",
+   "instructions": 236,
+   "top": [
+    {
+     "function": "tick",
+     "instructions": 48,
+     "share": 0.203
+    },
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.191
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.169
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.131
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.085
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 16,
+     "share": 0.068
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.051
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.047
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.042
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 3,
+     "share": 0.013
+    }
+   ]
+  }
+ ]
+}

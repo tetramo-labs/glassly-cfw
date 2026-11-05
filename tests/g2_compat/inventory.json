@@ -1,5 +1,5 @@
 {
-  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
   "inventory_scope": "all tracked patches/host C/Python files, demos *.test.ts, tracked test/probe/build harnesses",
   "parity_scope": {
     "effective_date": "2026-11-02",
@@ -32,7 +32,7 @@
   },
   "required_host_core_scenarios": {
     "total": 38,
-    "original_assertion_sites": 622,
+    "original_assertion_sites": 645,
     "native_adapter_coverage_included": false
   },
   "required_bun_test_cases": 11,
@@ -40,7 +40,7 @@
   "host_core_scenarios": {
     "total": 46,
     "exercised": 46,
-    "original_assertion_sites": 746,
+    "original_assertion_sites": 769,
     "native_adapter_coverage_included": false
   },
   "rows": [
@@ -2605,7 +2605,7 @@
     },
     {
       "upstream_file": "patches/host/shapes_host_test.c",
-      "upstream_sha256": "5cbf860519d82b810ef8da4e829788c4804e7df2539f6e3a9fe24d33e6849c10",
+      "upstream_sha256": "598fc59d482609c35dd4e679593d3430b21bf3c28d5149ecc3172bb66d29ab9f",
       "memo_copy": "tests/g2_compat/upstream/patches/host/shapes_host_test.c",
       "assertions": [
         {
@@ -4577,37 +4577,175 @@
           "sha256": "65aa7021710cc2f3f881f1882c10ae59ef0e804df4100615bddbc0b49fa65752"
         },
         {
-          "line": 1385,
+          "line": 1388,
+          "macro": "CHECK",
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "94ae8c7457a309ffea065c5f8c5aa9efcc543e95caeb287f297c594b4d3999de"
+        },
+        {
+          "line": 1392,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1393,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && rl.r[0].l == 0 && rl.r[0].t == 0 && rl.r[0].w == IMAGE_W && rl.r[0].h == IMAGE_H",
+          "sha256": "e26f366f9acc1b549729b502404585e75c7a783f127092bdec52d94337e72ff1"
+        },
+        {
+          "line": 1394,
+          "macro": "CHECK",
+          "expression": "count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000",
+          "sha256": "5fc97b7123dbc1700df5ee320848118934a0fbb7fcdca1277962ed9f7f9310aa"
+        },
+        {
+          "line": 1400,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1401,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && rl.r[0].l >= 396 && rl.r[0].t >= 296 && rl.r[0].l + rl.r[0].w <= 524 && rl.r[0].t + rl.r[0].h <= 404",
+          "sha256": "5e7eade93eaf46cf6c24831dd425b6bd63833f49144b740ff6059a945267e70e"
+        },
+        {
+          "line": 1402,
+          "macro": "CHECK",
+          "expression": "pixel_at(sc->fb, 410, 350) == 0 && pixel_at(sc->fb, 500, 350) == 9 && count_color(sc->fb, 9) == 10000",
+          "sha256": "76cec693d4a51358922e19c26f33ef77c18631b7c2d6e48264ede7bcd1e2423d"
+        },
+        {
+          "line": 1403,
+          "macro": "CHECK",
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77 && count_color(sc->fb, 15) == 10000",
+          "sha256": "b74ed9d38cd8349f5f1ee9652c4825c823bfdef6f435ddc2428435cf812f8f15"
+        },
+        {
+          "line": 1406,
+          "macro": "CHECK",
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "94ae8c7457a309ffea065c5f8c5aa9efcc543e95caeb287f297c594b4d3999de"
+        },
+        {
+          "line": 1409,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1410,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && rl.r[0].l + rl.r[0].w <= 164 && rl.r[0].t + rl.r[0].h <= 164",
+          "sha256": "86c25de1cbb864983c6e242b4f167ec4940921d89a94b28f7a77349203c8a85b"
+        },
+        {
+          "line": 1411,
+          "macro": "CHECK",
+          "expression": "pixel_at(sc->fb, 100, 100) == 15 && pixel_at(sc->fb, 140, 140) == 5 && pixel_at(sc->fb, 30, 30) == 15",
+          "sha256": "506ccbae6757beff86489745d9c8ab207d51558796c4acc321a768f44183d991"
+        },
+        {
+          "line": 1412,
+          "macro": "CHECK",
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "c71d34b0a75dbfe235d337af622fd6e3a32d9fef3e40a99b5e0c3e0d12d6254d"
+        },
+        {
+          "line": 1415,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1416,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && count_color(sc->fb, 5) == 0 && count_color(sc->fb, 15) == 10000 && sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "a99091a339194a137d9967e504a592c9f48ff9ea84233e6d4ca43e652964a3f8"
+        },
+        {
+          "line": 1419,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1420,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && rl.r[0].w == IMAGE_W && rl.r[0].h == IMAGE_H && sc->fb[10 * IMAGE_STRIDE + 300] == 0x22",
+          "sha256": "7efe13945619b6f30da1e39ba6df94cb6136f89d8f797db46fb062393a58158f"
+        },
+        {
+          "line": 1423,
+          "macro": "CHECK",
+          "expression": "send(39) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && count_color(sc->fb, 15) == 0",
+          "sha256": "fcf79028398824ebe8094a80d245dd3f77a635e09831c1e9f002f8e0cff3e10c"
+        },
+        {
+          "line": 1426,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "line": 1427,
+          "macro": "CHECK",
+          "expression": "rl.n == 1 && count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000 && sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "f9e28327976fe1b6462466b88423ff8af06d941ec01d3114ebc113c9ac4a48d1"
+        },
+        {
+          "line": 1430,
+          "macro": "CHECK",
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && sc->anim_active",
+          "sha256": "ec1d8f3fcfb242bb8db2addbc36d56a498d5a2de88d5dff52c80b03bda8d1fa0"
+        },
+        {
+          "line": 1433,
+          "macro": "CHECK",
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77 && count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000",
+          "sha256": "083bfab62533370e2f5eadb57719b2da6dda3fb0a09cd6b8efbaa56ab0e20d9f"
+        },
+        {
+          "line": 1435,
+          "macro": "CHECK",
+          "expression": "obj(1)->p[0] == 220 && sc->anim_active == 0 && pixel_at(sc->fb, 30, 30) == 0 && pixel_at(sc->fb, 300, 100) == 15",
+          "sha256": "6212fdfb570f0d0d02907ea591542ce5ba2b7c23e126fe2832e37f8141589b1e"
+        },
+        {
+          "line": 1445,
           "macro": "CHECK",
           "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == half",
           "sha256": "1d725012275eb9cfb2293298685d6b7fa5dffc71389fa9f8b83b55068836c83c"
         },
         {
-          "line": 1396,
+          "line": 1456,
           "macro": "CHECK",
           "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_REFUSED && asset(7)->filled == off",
           "sha256": "db0cc02d0fae7ec76ebf929ca97dd55fe96efb1a080b408bba8685d2b3df9008"
         },
         {
-          "line": 1399,
+          "line": 1459,
           "macro": "CHECK",
           "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == off + len",
           "sha256": "265e999f5002e27f37d4daba8d9f8db3b8d79c1806b901203a76e3cb3991abbf"
         },
         {
-          "line": 1400,
+          "line": 1460,
           "macro": "CHECK",
           "expression": "sc->undo && sc->undo_capacity == 0",
           "sha256": "aa378d118ab20a04178cf3f27c67bad8cd6e17b79d2ef96dbd44e3230a80b878"
         },
         {
-          "line": 1403,
+          "line": 1463,
           "macro": "CHECK",
           "expression": "bytes_equal(g_ctx.texture_cache + asset(7)->offset, big, bl)",
           "sha256": "17833109fae7ddcd1b4e142c87e64c067770a4e6cf8a15d8f69bb1fb0ec40568"
         },
         {
-          "line": 1426,
+          "line": 1487,
           "macro": "CHECK",
           "expression": "g_alloc_live == 0",
           "sha256": "e478b896575c61834d7d19f35b2dbde42c5c127de4d5382ebdff90c794c94d5c"
@@ -4757,8 +4895,8 @@
         },
         {
           "name": "test_upload_continuation",
-          "line": 1378,
-          "end_line": 1405,
+          "line": 1438,
+          "end_line": 1465,
           "assertion_sites": 5,
           "status": "ported",
           "counterpart": "runtime/portable/scene.c + runtime/portable/tests/scene/shapes_host_test.c",
@@ -6749,38 +6887,176 @@
           "sha256": "65aa7021710cc2f3f881f1882c10ae59ef0e804df4100615bddbc0b49fa65752"
         },
         {
-          "upstream_line": 1385,
-          "ported_line": 1342,
-          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == half",
-          "sha256": "1d725012275eb9cfb2293298685d6b7fa5dffc71389fa9f8b83b55068836c83c"
+          "upstream_line": 1388,
+          "ported_line": 1345,
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "94ae8c7457a309ffea065c5f8c5aa9efcc543e95caeb287f297c594b4d3999de"
         },
         {
-          "upstream_line": 1396,
-          "ported_line": 1353,
-          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_REFUSED && asset(7)->filled == off",
-          "sha256": "db0cc02d0fae7ec76ebf929ca97dd55fe96efb1a080b408bba8685d2b3df9008"
+          "upstream_line": 1392,
+          "ported_line": 1349,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
         },
         {
-          "upstream_line": 1399,
-          "ported_line": 1356,
-          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == off + len",
-          "sha256": "265e999f5002e27f37d4daba8d9f8db3b8d79c1806b901203a76e3cb3991abbf"
+          "upstream_line": 1393,
+          "ported_line": 1350,
+          "expression": "rl.n == 1 && rl.r[0].l == 0 && rl.r[0].t == 0 && rl.r[0].w == IMAGE_W && rl.r[0].h == IMAGE_H",
+          "sha256": "e26f366f9acc1b549729b502404585e75c7a783f127092bdec52d94337e72ff1"
+        },
+        {
+          "upstream_line": 1394,
+          "ported_line": 1351,
+          "expression": "count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000",
+          "sha256": "5fc97b7123dbc1700df5ee320848118934a0fbb7fcdca1277962ed9f7f9310aa"
         },
         {
           "upstream_line": 1400,
           "ported_line": 1357,
-          "expression": "sc->undo && sc->undo_capacity == 0",
-          "sha256": "aa378d118ab20a04178cf3f27c67bad8cd6e17b79d2ef96dbd44e3230a80b878"
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "upstream_line": 1401,
+          "ported_line": 1358,
+          "expression": "rl.n == 1 && rl.r[0].l >= 396 && rl.r[0].t >= 296 && rl.r[0].l + rl.r[0].w <= 524 && rl.r[0].t + rl.r[0].h <= 404",
+          "sha256": "5e7eade93eaf46cf6c24831dd425b6bd63833f49144b740ff6059a945267e70e"
+        },
+        {
+          "upstream_line": 1402,
+          "ported_line": 1359,
+          "expression": "pixel_at(sc->fb, 410, 350) == 0 && pixel_at(sc->fb, 500, 350) == 9 && count_color(sc->fb, 9) == 10000",
+          "sha256": "76cec693d4a51358922e19c26f33ef77c18631b7c2d6e48264ede7bcd1e2423d"
         },
         {
           "upstream_line": 1403,
           "ported_line": 1360,
-          "expression": "bytes_equal(g_ctx.texture_cache + asset(7)->offset, big, bl)",
-          "sha256": "17833109fae7ddcd1b4e142c87e64c067770a4e6cf8a15d8f69bb1fb0ec40568"
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77 && count_color(sc->fb, 15) == 10000",
+          "sha256": "b74ed9d38cd8349f5f1ee9652c4825c823bfdef6f435ddc2428435cf812f8f15"
+        },
+        {
+          "upstream_line": 1406,
+          "ported_line": 1363,
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "94ae8c7457a309ffea065c5f8c5aa9efcc543e95caeb287f297c594b4d3999de"
+        },
+        {
+          "upstream_line": 1409,
+          "ported_line": 1366,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "upstream_line": 1410,
+          "ported_line": 1367,
+          "expression": "rl.n == 1 && rl.r[0].l + rl.r[0].w <= 164 && rl.r[0].t + rl.r[0].h <= 164",
+          "sha256": "86c25de1cbb864983c6e242b4f167ec4940921d89a94b28f7a77349203c8a85b"
+        },
+        {
+          "upstream_line": 1411,
+          "ported_line": 1368,
+          "expression": "pixel_at(sc->fb, 100, 100) == 15 && pixel_at(sc->fb, 140, 140) == 5 && pixel_at(sc->fb, 30, 30) == 15",
+          "sha256": "506ccbae6757beff86489745d9c8ab207d51558796c4acc321a768f44183d991"
+        },
+        {
+          "upstream_line": 1412,
+          "ported_line": 1369,
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "c71d34b0a75dbfe235d337af622fd6e3a32d9fef3e40a99b5e0c3e0d12d6254d"
+        },
+        {
+          "upstream_line": 1415,
+          "ported_line": 1372,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "upstream_line": 1416,
+          "ported_line": 1373,
+          "expression": "rl.n == 1 && count_color(sc->fb, 5) == 0 && count_color(sc->fb, 15) == 10000 && sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "a99091a339194a137d9967e504a592c9f48ff9ea84233e6d4ca43e652964a3f8"
+        },
+        {
+          "upstream_line": 1419,
+          "ported_line": 1376,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "upstream_line": 1420,
+          "ported_line": 1377,
+          "expression": "rl.n == 1 && rl.r[0].w == IMAGE_W && rl.r[0].h == IMAGE_H && sc->fb[10 * IMAGE_STRIDE + 300] == 0x22",
+          "sha256": "7efe13945619b6f30da1e39ba6df94cb6136f89d8f797db46fb062393a58158f"
+        },
+        {
+          "upstream_line": 1423,
+          "ported_line": 1380,
+          "expression": "send(39) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && count_color(sc->fb, 15) == 0",
+          "sha256": "fcf79028398824ebe8094a80d245dd3f77a635e09831c1e9f002f8e0cff3e10c"
         },
         {
           "upstream_line": 1426,
           "ported_line": 1383,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED",
+          "sha256": "0a0aff698ac3c0edea79fa0a8204e805f43b4a22931e0d09a0655e0cbb236c1d"
+        },
+        {
+          "upstream_line": 1427,
+          "ported_line": 1384,
+          "expression": "rl.n == 1 && count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000 && sc->fb[10 * IMAGE_STRIDE + 300] == 0x77",
+          "sha256": "f9e28327976fe1b6462466b88423ff8af06d941ec01d3114ebc113c9ac4a48d1"
+        },
+        {
+          "upstream_line": 1430,
+          "ported_line": 1387,
+          "expression": "cfw_scene_dispatch(&g_ctx, 38, g_msg, g_len, 1, &rl) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && sc->anim_active",
+          "sha256": "ec1d8f3fcfb242bb8db2addbc36d56a498d5a2de88d5dff52c80b03bda8d1fa0"
+        },
+        {
+          "upstream_line": 1433,
+          "ported_line": 1390,
+          "expression": "sc->fb[10 * IMAGE_STRIDE + 300] == 0x77 && count_color(sc->fb, 15) == 10000 && count_color(sc->fb, 9) == 10000",
+          "sha256": "083bfab62533370e2f5eadb57719b2da6dda3fb0a09cd6b8efbaa56ab0e20d9f"
+        },
+        {
+          "upstream_line": 1435,
+          "ported_line": 1392,
+          "expression": "obj(1)->p[0] == 220 && sc->anim_active == 0 && pixel_at(sc->fb, 30, 30) == 0 && pixel_at(sc->fb, 300, 100) == 15",
+          "sha256": "6212fdfb570f0d0d02907ea591542ce5ba2b7c23e126fe2832e37f8141589b1e"
+        },
+        {
+          "upstream_line": 1445,
+          "ported_line": 1402,
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == half",
+          "sha256": "1d725012275eb9cfb2293298685d6b7fa5dffc71389fa9f8b83b55068836c83c"
+        },
+        {
+          "upstream_line": 1456,
+          "ported_line": 1413,
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_REFUSED && asset(7)->filled == off",
+          "sha256": "db0cc02d0fae7ec76ebf929ca97dd55fe96efb1a080b408bba8685d2b3df9008"
+        },
+        {
+          "upstream_line": 1459,
+          "ported_line": 1416,
+          "expression": "send(37) == 0 && reply_status() == CFW_CACHE_REPLY_APPLIED && asset(7)->filled == off + len",
+          "sha256": "265e999f5002e27f37d4daba8d9f8db3b8d79c1806b901203a76e3cb3991abbf"
+        },
+        {
+          "upstream_line": 1460,
+          "ported_line": 1417,
+          "expression": "sc->undo && sc->undo_capacity == 0",
+          "sha256": "aa378d118ab20a04178cf3f27c67bad8cd6e17b79d2ef96dbd44e3230a80b878"
+        },
+        {
+          "upstream_line": 1463,
+          "ported_line": 1420,
+          "expression": "bytes_equal(g_ctx.texture_cache + asset(7)->offset, big, bl)",
+          "sha256": "17833109fae7ddcd1b4e142c87e64c067770a4e6cf8a15d8f69bb1fb0ec40568"
+        },
+        {
+          "upstream_line": 1487,
+          "ported_line": 1444,
           "expression": "g_alloc_live == 0",
           "sha256": "e478b896575c61834d7d19f35b2dbde42c5c127de4d5382ebdff90c794c94d5c"
         }
@@ -6789,7 +7065,7 @@
         "native built-in font callback",
         "native allocator/timer/display integration and device memory budget"
       ],
-      "assertion_site_count": 334,
+      "assertion_site_count": 357,
       "parity_required": true,
       "parity_scope": "required"
     },
@@ -11058,7 +11334,7 @@
     },
     {
       "upstream_file": "patches/scene.c",
-      "upstream_sha256": "3792ddb1b2b42814d9e77aeabc60cf6ed4b53e05a17cef54d46075cf733d1b5f",
+      "upstream_sha256": "a5bdf5fea19cd242e79cab71b74dba092bdda66e827f73fd89ec20c091b85f5d",
       "upstream_functions": [
         "cfw_scene_dispatch",
         "cfw_cache_prepare",

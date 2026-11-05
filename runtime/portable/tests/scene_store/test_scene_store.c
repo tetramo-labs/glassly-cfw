@@ -113,8 +113,9 @@ static void cached_assets_and_io(void){
  uint8_t invalid[]={2,2,0};n=asset_message(msg,request++,13,1,0,sizeof invalid,0,invalid,sizeof invalid);
  pair(a,b,msg,n);assert(b->ctx.cache_reply[3]==CFW_CACHE_REPLY_REFUSED);metadata_equal(&before,b->ctx.scene);
  assert(!mm_flash_store_read(&b->flash,0,logical,262144));assert(!memcmp(logical,saved,262144));
- /* Every render read fails in turn, including the second drawing pass. */
- show[3]=101;b->ops=0;assert(!send(b,show,sizeof show));size_t render_reads=b->ops;unsigned presents=b->presents;
+ /* Every render read fails in turn, including the second drawing pass. A new
+  * background redraws the whole scene; an unchanged list would draw nothing. */
+ show[3]=101;show[6]=1;b->ops=0;assert(!send(b,show,sizeof show));size_t render_reads=b->ops;unsigned presents=b->presents;assert(render_reads);
  for(size_t at=1;at<=render_reads;at++){
   *b->ctx.scene=before;b->flash=flash;b->ctx.shadow_invalid=0;b->ops=0;b->fail_at=at;
   assert(send(b,show,sizeof show)==MM_SCENE_STORAGE_IO);assert(b->ops==at);assert(b->ctx.shadow_invalid&&b->presents==presents&&!b->ctx.scene->anim_active);b->fail_at=0;

@@ -1,5 +1,16 @@
 # MemoMind One firmware investigation
 
+Revision 12 renders only what changed: a SHOW or animation tick clears and
+redraws the union of the boxes of the objects that changed, arrived, left or
+moved in the paint order, instead of the whole canvas. Cached-font strings are
+bounded from their glyph headers, resident glyphs are drawn without a second
+validation pass, cursor reads inside the window skip the per-read checks and the
+rollback snapshot is copied by words. On the phone's captured dashboard
+commands the clock tick runs 7% of the revision 11 instructions, a tween frame
+11% and a cold open 71%. The linker now relaxes calls (`--relax`, no gp use),
+so the runtime is 94,000 bytes with 4,304 to spare. The same scene core is G2
+CFW revision 51. See the [V12 checkpoint](analysis/renderer-20261105/checkpoint.json).
+
 Revision 11 fixes first-run boot selecting the stock welcome/language app after
 a factory reset. Both setup states now select the minimal display owner. The
 image is bundled in Glassly; physical acceptance is pending. See the

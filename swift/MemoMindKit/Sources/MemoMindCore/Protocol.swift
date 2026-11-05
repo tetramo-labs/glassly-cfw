@@ -121,6 +121,11 @@ public final class GMStream {
         buffer.removeAll(); body.removeAll(); key = nil; fragment = 0
     }
 
+    /// head/logical length/event/service/command
+    private static func describe(_ head: UInt8, _ key: [UInt32]) -> String {
+        String(format: "%02X/%u/%u/%u/%u", head, key[0], key[1], key[2], key[3])
+    }
+
     public func feed(_ data: Data) throws -> [GMMessage] {
         buffer += data
         var messages = [GMMessage]()
@@ -134,7 +139,9 @@ public final class GMStream {
                 let first = head == 0xFA && !repeated
                 if !ack && !first {
                     try requireProtocol(key == nextKey && (Int(head) == fragment || repeated),
-                                        "GM continuation identity or order mismatch")
+                                        "GM continuation identity or order mismatch: got \(Self.describe(head, nextKey)), expected " +
+                                            (key.map { Self.describe(UInt8(truncatingIfNeeded: fragment), $0) } ?? "FA") +
+                                            ", bytes " + buffer.prefix(16).map { String(format: "%02x", $0) }.joined())
                 }
                 let physical = ack ? 9 : min(512, logical - (first ? 0 : body.count))
                 try requireProtocol(physical >= 9, "Invalid GM continuation length")

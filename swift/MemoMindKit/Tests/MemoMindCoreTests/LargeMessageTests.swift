@@ -71,6 +71,29 @@ final class LargeMessageTests: XCTestCase {
         XCTAssertThrowsError(try GMSession(transport: lost).sendLargeGraphicsMessage(command, token: 33, event: &start))
         XCTAssertEqual(lost.writes.count, expectedWrites)
     }
+    func testFrameSizedChunksWithVerifiedCarrierSendOneFramePerPacket() throws {
+        let command = Data([8,0]) + Data((0..<2000).map { UInt8(truncatingIfNeeded: $0 * 7) })
+        let transfer = try LargeMessage(command: command, token: 7, chunkBytes: 491)
+        XCTAssertEqual(transfer.packets.count, 2 + (command.count + 490) / 491)
+        XCTAssertTrue(transfer.packets.allSatisfy { $0.count <= 499 })
+        XCTAssertEqual(Data(transfer.packets.dropFirst().dropLast().flatMap { $0.dropFirst(8) }), command)
+        for size in [0, 1025] {
+            XCTAssertThrowsError(try LargeMessage(command: command, token: 7, chunkBytes: size))
+        }
+        var event: UInt8 = 10
+        var replies = [Data]()
+        for index in transfer.packets.indices {
+            event += 1
+            replies.append(try response(index == transfer.packets.count - 1 ? "{\"result\":\"ok\"}" : accepted,
+                                        event: event, command: 125))
+        }
+        let io = QueueTransport(replies); var start: UInt8 = 10
+        let result = try GMSession(transport: io).sendLargeGraphicsMessage(command, token: 7, event: &start,
+                                                                           chunkBytes: 491, carrierVerified: true)
+        XCTAssertEqual(result.event, event)
+        XCTAssertEqual(io.writes.count, transfer.packets.count)
+        XCTAssertTrue(io.writes.allSatisfy { $0.count <= 512 && $0[0] == 0xFA && $0[6] == 125 })
+    }
     func testUnsupportedCapabilityStopsBeforeBegin() throws {
         let io = QueueTransport([try response(caps.replacingOccurrences(of: "GLASSLYCFW/1", with: "GLASSLYCFW/x"), event: 1, command: 126)])
         var event: UInt8 = 0

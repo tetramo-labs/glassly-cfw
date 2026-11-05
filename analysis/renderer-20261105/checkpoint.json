@@ -86,5 +86,9 @@
     "phoneConnectionTested": false
   },
   "postFlashVerifier": "verify.swift (header readback at device 0 offset 0x1eb000, capabilities GLASSLYCFW/12, 30 s builtin-text hold)",
-  "glasslyBundle": "pending the firmware commit hash"
+  "glasslyBundle": {
+    "commit": "ee0b8faa43",
+    "branch": "dev",
+    "iosTests": "MemoMindOneFirmwareTests + MemoMindOneRendererTests passed on iPhone 17 simulator"
+  }
 }

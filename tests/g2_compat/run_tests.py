@@ -20,9 +20,9 @@ def main():
     parser.add_argument('--include-keyboard-reference',action='store_true',help='Run optional historical keyboard checks; their failures do not block in-scope parity')
     parser.add_argument('--include-volume-gate-reference',action='store_true',help='Run optional volume-gate reference; excluded from parity')
     parser.add_argument('--bun',default='bun')
-    parser.add_argument('--demos-dependencies',type=Path,default=Path.home()/'dev/g2flash/demos/node_modules',
+    parser.add_argument('--demos-dependencies',type=Path,default=Path.home()/'dev/glassly-g2-cfw/demos/node_modules',
                         help='Existing installed dependency tree copied into output; no install scripts or downloads')
-    parser.add_argument('--g2-media',type=Path,default=Path.home()/'dev/g2flash/demos',
+    parser.add_argument('--g2-media',type=Path,default=Path.home()/'dev/glassly-g2-cfw/demos',
                         help='Read-only upstream media directory (GIF required; prepared SVG video optional)')
     args=parser.parse_args();out=args.output.resolve();out.mkdir(parents=True,exist_ok=False)
     pin=json.loads((ROOT/'UPSTREAM.json').read_text())

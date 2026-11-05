@@ -52,8 +52,8 @@ def main():
     parser.add_argument('--rv32-python', type=Path,
                         default=ROOT / '.tools/rv32-tests-venv/bin/python')
     parser.add_argument('--demos-dependencies', type=Path,
-                        default=Path.home() / 'dev/g2flash/demos/node_modules')
-    parser.add_argument('--g2-media', type=Path, default=Path.home() / 'dev/g2flash/demos')
+                        default=Path.home() / 'dev/glassly-g2-cfw/demos/node_modules')
+    parser.add_argument('--g2-media', type=Path, default=Path.home() / 'dev/glassly-g2-cfw/demos')
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)

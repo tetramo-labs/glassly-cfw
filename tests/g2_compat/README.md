@@ -49,7 +49,7 @@ all nine ordered completion notifications, malformed-command rejection and clear
 The latest aggregate passes all **94 required stages**, including **222 Python**
 and **79 Swift** tests. See [hardware evidence](../../analysis/bundle-native-20261102/report.json).
 
-The local `~/dev/g2flash` checkout still matches the pinned commit and all 96 copied
+The local `~/dev/glassly-g2-cfw` checkout still matches the pinned commit and all 96 copied
 files. The inventory freshness check passes. **21 required suite/integration
 entries remain incomplete** at the file level; partial portable coverage does not
 close their native adapter or hardware obligations. Full suite porting remains a
@@ -137,14 +137,14 @@ python3 tests/g2_compat/run_tests.py --output /tmp/memo-g2-compat
 
 The runner checks every copied source hash before compiling. It needs local
 Clang with ASan/UBSan, host zlib, Bun and the existing installed dependency tree
-at `~/dev/g2flash/demos/node_modules` (override with `--demos-dependencies`). It
+at `~/dev/glassly-g2-cfw/demos/node_modules` (override with `--demos-dependencies`). It
 copies that tree into the output directory and performs no install/download or
 write to the G2 checkout. Copied dependency package versions/hashes are saved in
 `dependency-versions.json`; the recorded run also has a complete dependency-file
 hash manifest. The G2 checkout remained clean after the recorded execution.
 The default runner runs the vector TypeScript check (keyboard is opt-in), generates the vector
 fixture, and replays it and 300 GIF frames against the G2 reference runtime.
-`--g2-media` defaults to `~/dev/g2flash/demos`; its `bad_apple_quarter.gif` is
+`--g2-media` defaults to `~/dev/glassly-g2-cfw/demos`; its `bad_apple_quarter.gif` is
 required. Prepared `.cache/bad-apple/smooth/video.json` is optional and, when
 present, adds a second 300-frame replay. Media is read without modification and
 its hashes are recorded. These are G2 reference replays, not MemoMind rendering.

@@ -98,7 +98,7 @@
     "patches/zlib_glue.c": "b69474dd056c2864098b81e001ad645d5ff9e6e853327820cc26c37989f96692",
     "send_message_probe.py": "4341dd3f80a2821d806781153ef4455fefda74ca8d39018fbfc73a3fc5389865"
   },
-  "source": "/Users/fosse/dev/g2flash",
+  "source": "/Users/fosse/dev/glassly-g2-cfw",
   "purpose": "Pinned tests/source corpus; not proof of MemoMind platform support",
   "local_naming_normalization": {
     "description": "Legacy product identifiers and comments normalized to Glassly; CFW revision strings retain GLASSLYCFW/N. Original assertion predicates and numeric protocol values are preserved.",

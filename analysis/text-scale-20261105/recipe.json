@@ -54,5 +54,5 @@
     "--g2-media",
     "~/dev/glassly-g2-cfw/demos"
   ],
-  "note": "The G2 checkout (jimrandomh/g2flash fork, e889569) lives at ~/dev/glassly-g2-cfw since 2026-11-05; run_tests.py still defaults to ~/dev/g2flash."
+  "note": "The G2 checkout (jimrandomh/g2flash fork, e889569) lives at ~/dev/glassly-g2-cfw since 2026-11-05; run_tests.py defaults to it from the follow-up commit, so the explicit flags above are no longer needed."
 }

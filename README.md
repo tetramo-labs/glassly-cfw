@@ -46,7 +46,7 @@ The connected H001Y glasses successfully updated from **1.0.2.151 to
 response confirm the result. The downloaded OTA, APKs, Bluetooth HCI recording,
 network capture and app logs are retained locally.
 
-The target is full `~/dev/g2flash` CFW feature and capacity parity. As of
+The target is full `~/dev/glassly-g2-cfw` CFW feature and capacity parity. As of
 2026-11-01, preserving MemoMind stock UI, app-protocol compatibility or plugin
 behavior is explicitly not required. The proven hardware drivers and OTA path
 remain development dependencies while useful. The pinned G2 assertion corpus and its feature semantics remain requirements.

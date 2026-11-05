@@ -50,7 +50,7 @@ The mirror is unchanged: 20 px system font, 25 px rows.
   emulator: `scene_runtime_emulator_test.py` 8/8 and
   `text_command_runtime_emulator_test.py` 5/5 through `run_rebuilt.py` on fresh
   `--scene-session` and mode-15 ladder builds.
-- `regression-13-02/`: `tests/run_tests.py` with `--demos-dependencies`/`--g2-media` on `~/dev/glassly-g2-cfw` (the G2 checkout was renamed from `~/dev/g2flash` on 2026-11-05); the rect-copy ladder rung now links with `--relax` like the rungs above it, since the adapter put it 160 bytes over its 64 KiB bound (see `checkpoint.json`).
+- `regression-13-02/`: `tests/run_tests.py` with `--demos-dependencies`/`--g2-media` on `~/dev/glassly-g2-cfw` (the G2 checkout was renamed from `~/dev/g2flash` on 2026-11-05; the suite defaults to the new path since the follow-up commit); the rect-copy ladder rung now links with `--relax` like the rungs above it, since the adapter put it 160 bytes over its 64 KiB bound (see `checkpoint.json`).
 - Mac tool catalog: `text-scale-001`. Not flashed; the Mac cannot reach the
   glasses (`RFCOMM SDP timed out` since the V12 attempt) and no hardware pixel
   check has been made. Expected on the glasses: dashboard lines the size of the

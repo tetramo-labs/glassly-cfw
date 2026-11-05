@@ -1,0 +1,57 @@
+{
+  "kind": "Offline concrete one-zero-byte FF13 keepalive event test",
+  "hardware_accessed": false,
+  "lifecycle": {
+    "ble_state_address": "0x00020682",
+    "connected_value": 2,
+    "disconnected_value": 3,
+    "event_opcodes": {
+      "connect": 2,
+      "disconnect": 5,
+      "data": 8
+    },
+    "timer_address": "0x00021ebc",
+    "timer_delay_argument": 5999,
+    "wrong_handle_preserves_timer": true,
+    "matching_handle_cancels_timer": true,
+    "single_zero_byte_vendor_write_clears_idle_and_watchdog": true,
+    "synthetic_handle": "0x2345",
+    "watchdog_cases": [
+      {
+        "disconnected": false,
+        "mode": 0,
+        "flags": 0,
+        "restart_entry_calls": 1
+      },
+      {
+        "disconnected": false,
+        "mode": 3,
+        "flags": 0,
+        "restart_entry_calls": 0
+      },
+      {
+        "disconnected": false,
+        "mode": 0,
+        "flags": 64,
+        "restart_entry_calls": 0
+      },
+      {
+        "disconnected": true,
+        "mode": 0,
+        "flags": 0,
+        "restart_entry_calls": 0
+      }
+    ],
+    "stubs": [
+      "0x0101f98c",
+      "0x0101f9a0",
+      "0x0101c874",
+      "0x01023290"
+    ],
+    "radio_event_generation_verified": false,
+    "ccc_semantics_verified": false,
+    "restart_executed": false,
+    "wall_time_verified": false
+  },
+  "source_sha256": "e2e1efe16c2c62f41a083f2499b388189466b26e600bf7f87dcad6c50796356b"
+}

@@ -1,0 +1,42 @@
+{
+  "scope": "Read-only investigation; no control/selector writes",
+  "observations": [
+    {
+      "address": "0xc8000",
+      "requested_bytes": 2,
+      "basis": "Pinned YC3121 SDK BT_REV and BT_STEP",
+      "exit_code": 0,
+      "reader_sha256": "cb3bb17b324aa0ea48754f8396cf8859c62fdd7cb4202d2672fd736744687cee",
+      "protocol_status": 0,
+      "data_hex": "ffff",
+      "capture_directory": "build/hardware/20261105T184412.337900Z-radio-id",
+      "interpretation": "Raw response only; all-ones does not establish readable MMIO or radio identity"
+    },
+    {
+      "address": "0xf856c",
+      "requested_bytes": 4,
+      "basis": "YC3121 SYSCTRL_CLK_CLS register; BT clock gate bit 13",
+      "exit_code": 0,
+      "reader_sha256": "1459b13fc80a96d82dc4a00200e4f16c0cb196bd1a02447516ababb050cc3e5a",
+      "protocol_status": 0,
+      "data_hex": "ffffffff",
+      "value": "0xffffffff",
+      "capture_directory": "build/hardware/20261105T184519.130152Z-radio-clock",
+      "bit13_set_in_raw_response": true,
+      "valid_register_value_established": false,
+      "interpretation": "Raw response only; all-ones does not establish readable MMIO or radio identity"
+    },
+    {
+      "request_address": "0x20000",
+      "requested_bytes": 32,
+      "basis": "Distinguish documented CPU RAM address from flash-offset interpretation using independently captured application bytes at 0x01020000",
+      "exit_code": 0,
+      "protocol_status": 0,
+      "data_sha256": "c3ae00687a61f7469e02ab50fa5cc49042e662d35bad4b5cdaee4ed3ad898140",
+      "matches_captured_flash_01020000": false,
+      "all_ff": false,
+      "capture_directory": "build/hardware/20261105T184614.741891Z-address-space-check"
+    }
+  ],
+  "conclusion": "Peripheral reads remain unvalidated; do not derive a register write from all-ones responses"
+}

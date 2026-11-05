@@ -1,0 +1,237 @@
+{
+  "kind": "offline printer comparison; not a Zero 2 binding",
+  "tool_sha256": {
+    "inspect_printer_reference.py": "81bf159ce289f590749b3058289e86d03a922e1ebca9f769d4ca7ffc36673d5c",
+    "radio_config.py": "0e43048167f71eee6c9ae49bc03d4dfe8de513eb46342aba6203f3d290afd0b8",
+    "radio_disasm.py": "3725d8b7086e9a53ce98470e0459259e36c3a828e2261545e7944e9d33e46767",
+    "firmware_image.py": "c70a2e9a81f9b08cfdecf2f733a29bf0ce1785a85e1d1ee21b4c2ef22d195c89"
+  },
+  "unicorn_version": "2.1.4",
+  "references": {
+    "D110_6.10.bin": {
+      "sha256": "ff11bf410aa87538aaa8f10fd486f714d3d81d226fae2a570faa8fef8bced962",
+      "size": 90924,
+      "inferred_load_address": 16842752,
+      "script_offset": 72868,
+      "script_size": 5298,
+      "records": 66,
+      "microcode_size": 4062,
+      "microcode_sha256": "277dfdab3e64df00d45ce9937da9f5642c4b246ccc2a599c2cd3d6904fa06bc1"
+    },
+    "B1_2.03.bin": {
+      "sha256": "c5d23953e4e368ba118f1b9d72264152f039cd4c4c48a6bde150a5412b5066b8",
+      "size": 107968,
+      "inferred_load_address": 16842752,
+      "script_offset": 82832,
+      "script_size": 5298,
+      "records": 66,
+      "microcode_size": 4062,
+      "microcode_sha256": "277dfdab3e64df00d45ce9937da9f5642c4b246ccc2a599c2cd3d6904fa06bc1"
+    }
+  },
+  "d110_anchors": {
+    "registration_and_payload_builder": {
+      "offset": 42122,
+      "size": 100,
+      "sha256": "29c9c1647acf0d6f0b6c901dd553ad8ba8824646d32e6fbeef781f135cb313e1"
+    },
+    "opcode09_wrapper": {
+      "offset": 37422,
+      "size": 82,
+      "sha256": "2aa0155343ee8232f96dc6ca69dc38f3ee13cd3c16e76e4e9c59fed8aed9086f"
+    },
+    "ipc_submit": {
+      "offset": 41308,
+      "size": 42,
+      "sha256": "d88abebbb21d55fc1b4b1aace86d3c26d8c03a5146a9ad0a252600b90574ae9d"
+    }
+  },
+  "printer_microcode_identical": true,
+  "printer_microcode_equals_zero2": false,
+  "common_handle_lookup": {
+    "printer_pc": 437,
+    "zero2_pc": 640,
+    "words": 3,
+    "sha256": "079409948344746de071c1d0ad3969158f980541dc3fdbbf743245e25ae0e27c"
+  },
+  "printer_notification_continuation": {
+    "pc": 447,
+    "word": 3263319809,
+    "mnemonic": "bbit1",
+    "operands": "0x04, 0x4f01",
+    "target": 20225
+  },
+  "radio_tail_hex": "d399",
+  "d110_emulation": {
+    "packet_cases": [
+      {
+        "handle": 0,
+        "data_length": 0,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 0,
+        "data_length": 1,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 0,
+        "data_length": 8,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 0,
+        "data_length": 20,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 0,
+        "data_length": 253,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 0,
+        "data_length": 254,
+        "submitted": false,
+        "result": 0
+      },
+      {
+        "handle": 9029,
+        "data_length": 0,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 9029,
+        "data_length": 1,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 9029,
+        "data_length": 8,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 9029,
+        "data_length": 20,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 9029,
+        "data_length": 253,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 9029,
+        "data_length": 254,
+        "submitted": false,
+        "result": 0
+      },
+      {
+        "handle": 65535,
+        "data_length": 0,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 65535,
+        "data_length": 1,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 65535,
+        "data_length": 8,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 65535,
+        "data_length": 20,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 65535,
+        "data_length": 253,
+        "submitted": true,
+        "result": 1
+      },
+      {
+        "handle": 65535,
+        "data_length": 254,
+        "submitted": false,
+        "result": 0
+      }
+    ],
+    "null_payload_rejected": true,
+    "completion_cases": [
+      {
+        "injected_condition": "delayed",
+        "timeout_checks": 2,
+        "result": 1
+      },
+      {
+        "injected_condition": "wrong_bit",
+        "timeout_checks": 3,
+        "result": 0
+      },
+      {
+        "injected_condition": "timeout",
+        "timeout_checks": 3,
+        "result": 0
+      },
+      {
+        "injected_condition": "rejected",
+        "timeout_checks": 3,
+        "result": 0
+      }
+    ],
+    "registration_return_handle_used": true,
+    "stale_ack_bit_cleared": true,
+    "caller_payload_unchanged": true,
+    "acknowledgement_bit": 6,
+    "timeout_argument": 500,
+    "timeout_units_established": false,
+    "stubs": [
+      {
+        "address": 16884060,
+        "purpose": "capture IPC descriptor; inject selected acknowledgement"
+      },
+      {
+        "address": 16876418,
+        "purpose": "synthetic timestamp"
+      },
+      {
+        "address": 16876424,
+        "purpose": "bounded synthetic timeout and delayed acknowledgement"
+      },
+      {
+        "address": 16881986,
+        "purpose": "capture service registration arguments"
+      },
+      {
+        "address": 16882066,
+        "purpose": "supply synthetic returned handle"
+      }
+    ],
+    "radio_delivery_tested": false,
+    "zero2_contract_proven": false
+  },
+  "limits": [
+    "Different application and radio patch; no matching ROM identity established",
+    "IPC and time stubbed; no FIFO acceptance, CCC semantics or radio delivery proved",
+    "Printer payload length limit and timeout are not Zero 2 limits",
+    "B1 has static comparison only; its ARM routines are not emulated",
+    "No hardware access, patch, full boot or firmware image produced"
+  ]
+}

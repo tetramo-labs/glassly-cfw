@@ -1,0 +1,43 @@
+{
+  "kind": "Experimental name-only firmware package; no custom GATT stream",
+  "stock_sha256": "43a313564ac1125df1de9c5b47c393fb5ebfc4d9ff70790e519fb72e609da808",
+  "package_sha256": "f0938c2b6a6bb0186d948a6ac9655153111927267188fb1ec32a08ee739b2f20",
+  "payload_sha256": "8a1725b90710223d073754583de314552c6dce8a468cc09633a156c23a079050",
+  "size": 124472,
+  "section_offset": 51228,
+  "name_payload_offset": 71628,
+  "old_name": "8BitDo Zero 2 gamepad",
+  "new_name": "Glassly Zero 2 test01",
+  "changed_plaintext_offsets": [
+    71628,
+    71629,
+    71630,
+    71631,
+    71632,
+    71633,
+    71634,
+    71635,
+    71636,
+    71637,
+    71638,
+    71639,
+    71640,
+    71641,
+    71642,
+    71643,
+    71644,
+    71645,
+    71646,
+    71647,
+    71648
+  ],
+  "gd32_section_and_both_headers_unchanged": true,
+  "tail_matches_stock_zeros": true,
+  "startup_data_unchanged": true,
+  "usb_name_callback": "0x010221c0 reads pointer 0x206a0; conversion at 0x01021320",
+  "limits": [
+    "Shared model name may affect Bluetooth naming",
+    "No button-stream or CCC integration",
+    "Hardware result must be recorded separately"
+  ]
+}

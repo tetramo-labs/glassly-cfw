@@ -1,0 +1,49 @@
+{
+  "kind": "Experimental button streaming; independent compact implementation, not the unbound C components",
+  "package_sha256": "a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be",
+  "plaintext_sha256": "bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54",
+  "baseline_plaintext_sha256": "2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6450cd2b83fe22",
+  "hooks": {
+    "0x1918": {
+      "before": "09f0cafc",
+      "after": "10f082f9"
+    },
+    "0x1ae0": {
+      "before": "02f0c8fe",
+      "after": "10f096f8"
+    },
+    "0x3e28": {
+      "before": "00f00afe",
+      "after": "0df019ff"
+    },
+    "0x3e36": {
+      "before": "03f00bf8",
+      "after": "0df005ff"
+    },
+    "0xbbba": {
+      "before": "0322",
+      "after": "0222"
+    }
+  },
+  "tail_offset": "0x11c04",
+  "tail_used_bytes": 364,
+  "state_address": "0x22514",
+  "state_bytes": 48,
+  "reserved_pool_block_bytes": 600,
+  "pool_600_byte_blocks_before": 3,
+  "pool_600_byte_blocks_after": 2,
+  "startup_ram_unchanged": true,
+  "gd32_and_headers_unchanged": true,
+  "assembly_sha256": "c96d24b5a3cb0bce9f776f370976e9d956516b87268f8124f9e64f435a5f9012",
+  "protocol_version": 4,
+  "queue_snapshots": 16,
+  "packet_bytes": 8,
+  "limits": [
+    "Next hardware experiment; no button notifications yet observed",
+    "Host must subscribe then write A1; write A0 before unsubscribing; connect resets session",
+    "Whole-mask two-sample qualification at stock timer cadence, not the unbound 8 ms filter",
+    "Nonzero/missing radio ACK stalls sending; queued states remain and overflow is marked",
+    "One OEM 600-byte pool block is reserved, reducing OEM allocation capacity",
+    "No iOS background, long-term battery, full stack or physical label claim"
+  ]
+}

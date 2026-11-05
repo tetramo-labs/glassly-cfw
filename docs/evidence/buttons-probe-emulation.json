@@ -1,0 +1,50 @@
+{
+  "kind": "Offline button streaming execution and independent queue model",
+  "hardware_accessed": false,
+  "package_sha256": "a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be",
+  "plaintext_sha256": "bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54",
+  "source_sha256": "c96d24b5a3cb0bce9f776f370976e9d956516b87268f8124f9e64f435a5f9012",
+  "gpio_combinations": 4096,
+  "ipc_capacity_irq_cases": 2048,
+  "random_model_polls": 12000,
+  "model_overflows": 164,
+  "model_packets": 1371,
+  "startup_matches_stock": true,
+  "startup_reads_tail": false,
+  "pool_block_reserved": true,
+  "oem_pool_counts": [
+    2,
+    4,
+    4,
+    3,
+    1,
+    3,
+    5,
+    3
+  ],
+  "reserved_block_pointer_candidates": [],
+  "sole_pool_base_pointer_offset": "0xbc1c",
+  "state_written_extent": [
+    "0x22514",
+    "0x22544"
+  ],
+  "poll_entry": "0x1029c5e",
+  "idle_entry": "0x1029c44",
+  "idle_states": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "maximum_observed_stack_bytes": 892,
+  "stubs": {
+    "0x0101ca40": "OEM report task returns 0x55; argument and saved registers checked",
+    "0x0101c874": "OEM connection power/indicator helper only"
+  },
+  "limits": [
+    "No radio, interrupt execution, actual sampling cadence or physical button labels",
+    "ACK bits are synthetic; no new proof of radio FIFO errors or CCC ordering",
+    "No complete stack/ROM/DMA ownership claim; static word scan cannot exclude computed accesses",
+    "Reduced OEM allocation capacity needs live coexistence testing"
+  ]
+}

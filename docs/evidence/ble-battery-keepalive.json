@@ -1,0 +1,498 @@
+{
+  "kind": "Live battery keepalive comparison and reconnect/subscription cycle",
+  "usb_observation": "build/hardware/20261105T203258.437607Z/summary.json",
+  "usb_target_devices_observed": [],
+  "firmware": "Previously verified BLE visibility probe; not modified during these captures",
+  "initial_attempt": "Disconnected after 1.225 seconds, before subscription completion or any vendor write; cause unknown",
+  "completed_keepalive_connected_seconds": 188.39530837535858,
+  "writes_acknowledged": 9,
+  "value_hex": "00",
+  "target_service": "0000FF10-0000-1000-8000-00805F9B34FB",
+  "target_characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+  "notifications_received": 0,
+  "following_reconnect_succeeded": true,
+  "subscription_cycle_acknowledged": [
+    true,
+    false,
+    true
+  ],
+  "captures": [
+    {
+      "local_directory": "build/hardware/20261105T203214.235285Z-ble-keepalive",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.0126953748986125,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:32:14Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 30.295609958004206,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -37,
+          "services": [],
+          "time": "2026-11-05T20:32:44Z"
+        },
+        {
+          "elapsed_seconds": 30.296746749896556,
+          "event": "connecting",
+          "time": "2026-11-05T20:32:44Z"
+        },
+        {
+          "connected_seconds": 0.0006156666204333305,
+          "elapsed_seconds": 30.80950191663578,
+          "event": "connected",
+          "time": "2026-11-05T20:32:45Z"
+        },
+        {
+          "connected_seconds": 0.41744345845654607,
+          "elapsed_seconds": 31.22632974991575,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:32:45Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47820137487724423,
+          "elapsed_seconds": 31.287087541539222,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:32:45Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47856404166668653,
+          "elapsed_seconds": 31.287450583186,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T20:32:45Z",
+          "uuid": "FF13"
+        },
+        {
+          "connected_seconds": 1.224601958412677,
+          "elapsed_seconds": 32.03348512481898,
+          "error": "The connection has timed out unexpectedly.",
+          "event": "disconnected",
+          "time": "2026-11-05T20:32:46Z"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 1.2250979165546596,
+          "discovery_complete": false,
+          "elapsed_seconds": 32.03398429136723,
+          "event": "complete",
+          "exit_code": 1,
+          "keepalive_writes_acknowledged": 0,
+          "notifications": 0,
+          "reason": "Peripheral disconnected before capture ended",
+          "subscribed": false,
+          "subscription_transitions": 0,
+          "time": "2026-11-05T20:32:46Z"
+        }
+      ],
+      "events_sha256": "6ef1e49480a56a87cd10f25a3acabb3accf15d633c2142e39a792e24890610fb",
+      "source_sha256": {
+        "scripts/ble_probe.py": "76d9a12f48a25e30255d9491bb745aba3240413aa7ac4ede18b3927bfe5f8f40",
+        "tools/probe_zero2.swift": "d7ca50aede3d6d68068fcc9196d0a621b5c7460444a78cb2f2ed2fac011f19a8"
+      },
+      "exit_code": 1
+    },
+    {
+      "local_directory": "build/hardware/20261105T203257.683692Z-ble-keepalive",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.01397620839998126,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:32:57Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.32465912494808435,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -34,
+          "services": [],
+          "time": "2026-11-05T20:32:58Z"
+        },
+        {
+          "elapsed_seconds": 0.32504666643217206,
+          "event": "connecting",
+          "time": "2026-11-05T20:32:58Z"
+        },
+        {
+          "connected_seconds": 0.00023033330217003822,
+          "elapsed_seconds": 0.6061065415851772,
+          "event": "connected",
+          "time": "2026-11-05T20:32:58Z"
+        },
+        {
+          "connected_seconds": 0.4173196251504123,
+          "elapsed_seconds": 1.0231957915239036,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:32:58Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.4775865003466606,
+          "elapsed_seconds": 1.0834625833667815,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:32:58Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47781766671687365,
+          "elapsed_seconds": 1.083693833090365,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T20:32:58Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5386257502250373,
+          "elapsed_seconds": 1.1445019165985286,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:32:58Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.5387920001521707,
+          "elapsed_seconds": 1.1446682084351778,
+          "event": "discovery_complete",
+          "time": "2026-11-05T20:32:58Z"
+        },
+        {
+          "connected_seconds": 0.5972266253083944,
+          "elapsed_seconds": 1.2031026664189994,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T20:32:59Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.5974741666577756,
+          "elapsed_seconds": 1.2033502915874124,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:32:59Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.6573834586888552,
+          "count": 1,
+          "elapsed_seconds": 1.2632594997994602,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:32:59Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 21.658499625045806,
+          "elapsed_seconds": 22.264371041674167,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:33:20Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 21.717567708343267,
+          "count": 2,
+          "elapsed_seconds": 22.32344333315268,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:33:20Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 42.717512249946594,
+          "elapsed_seconds": 43.323388083372265,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:33:41Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 42.778146458324045,
+          "count": 3,
+          "elapsed_seconds": 43.384022208396345,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:33:41Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 63.78046149993315,
+          "elapsed_seconds": 64.38633570820093,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:34:02Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 63.83947975002229,
+          "count": 4,
+          "elapsed_seconds": 64.4453543331474,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:34:02Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 84.83681533345953,
+          "elapsed_seconds": 85.44269095826894,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:34:23Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 84.90008175000548,
+          "count": 5,
+          "elapsed_seconds": 85.50595733337104,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:34:23Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 105.90075487503782,
+          "elapsed_seconds": 106.50663054175675,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:34:44Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 105.96004533348605,
+          "count": 6,
+          "elapsed_seconds": 106.56592145841569,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:34:44Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 126.95810745842755,
+          "elapsed_seconds": 127.56398312514648,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:35:05Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 127.01953200018033,
+          "count": 7,
+          "elapsed_seconds": 127.62540774978697,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:35:05Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 148.0203457083553,
+          "elapsed_seconds": 148.62622066680342,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:35:26Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 148.11044233338907,
+          "count": 8,
+          "elapsed_seconds": 148.71631749998778,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:35:26Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 169.1111866249703,
+          "elapsed_seconds": 169.71706212498248,
+          "event": "keepalive_write_requested",
+          "hex": "00",
+          "time": "2026-11-05T20:35:47Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 169.17094695847481,
+          "count": 9,
+          "elapsed_seconds": 169.77682237513363,
+          "event": "keepalive_write_acknowledged",
+          "time": "2026-11-05T20:35:47Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 188.39530837535858,
+          "discovery_complete": true,
+          "elapsed_seconds": 189.00118429167196,
+          "event": "complete",
+          "exit_code": 0,
+          "keepalive_writes_acknowledged": 9,
+          "notifications": 0,
+          "reason": "Time limit; notification count is separate from subscription success",
+          "subscribed": true,
+          "subscription_transitions": 1,
+          "time": "2026-11-05T20:36:06Z"
+        }
+      ],
+      "events_sha256": "2edfb905905dba9da8d9f80f84f2935e799213cc46af4a2209b997208eeba796",
+      "source_sha256": {
+        "scripts/ble_probe.py": "76d9a12f48a25e30255d9491bb745aba3240413aa7ac4ede18b3927bfe5f8f40",
+        "tools/probe_zero2.swift": "d7ca50aede3d6d68068fcc9196d0a621b5c7460444a78cb2f2ed2fac011f19a8"
+      },
+      "exit_code": 0
+    },
+    {
+      "local_directory": "build/hardware/20261105T203612.983014Z-ble-cycle",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.015320333186537027,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:36:13Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.354395791888237,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -40,
+          "services": [],
+          "time": "2026-11-05T20:36:13Z"
+        },
+        {
+          "elapsed_seconds": 0.35474454145878553,
+          "event": "connecting",
+          "time": "2026-11-05T20:36:13Z"
+        },
+        {
+          "connected_seconds": 0.00022175023332238197,
+          "elapsed_seconds": 0.5690970835275948,
+          "event": "connected",
+          "time": "2026-11-05T20:36:13Z"
+        },
+        {
+          "connected_seconds": 0.41934812534600496,
+          "elapsed_seconds": 0.9882234167307615,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:36:14Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47956991707906127,
+          "elapsed_seconds": 1.0484452499076724,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:36:14Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47976916702464223,
+          "elapsed_seconds": 1.0486445417627692,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T20:36:14Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5415220833383501,
+          "elapsed_seconds": 1.1103969998657703,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:36:14Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.5419384585693479,
+          "elapsed_seconds": 1.1108134165406227,
+          "event": "discovery_complete",
+          "time": "2026-11-05T20:36:14Z"
+        },
+        {
+          "connected_seconds": 0.5998242502100766,
+          "elapsed_seconds": 1.1686990414746106,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T20:36:14Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 3.748195208609104,
+          "elapsed_seconds": 4.317070083227009,
+          "enabled": false,
+          "event": "subscription_requested",
+          "time": "2026-11-05T20:36:17Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 3.8093568752519786,
+          "elapsed_seconds": 4.378232125192881,
+          "enabled": false,
+          "event": "subscription",
+          "time": "2026-11-05T20:36:17Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 6.956285625230521,
+          "elapsed_seconds": 7.525160958524793,
+          "enabled": true,
+          "event": "subscription_requested",
+          "time": "2026-11-05T20:36:20Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 7.01959270844236,
+          "elapsed_seconds": 7.588467708323151,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T20:36:20Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 12.269611791707575,
+          "discovery_complete": true,
+          "elapsed_seconds": 12.838486166670918,
+          "event": "complete",
+          "exit_code": 0,
+          "keepalive_writes_acknowledged": 0,
+          "notifications": 0,
+          "reason": "Subscribed, unsubscribed, resubscribed; final hold complete",
+          "subscribed": true,
+          "subscription_transitions": 3,
+          "time": "2026-11-05T20:36:26Z"
+        }
+      ],
+      "events_sha256": "2446f26992da1ec674a72d78441098cad954acd426afcf9a4511610923a3b59d",
+      "source_sha256": {
+        "scripts/ble_probe.py": "76d9a12f48a25e30255d9491bb745aba3240413aa7ac4ede18b3927bfe5f8f40",
+        "tools/probe_zero2.swift": "d7ca50aede3d6d68068fcc9196d0a621b5c7460444a78cb2f2ed2fac011f19a8"
+      },
+      "exit_code": 0
+    }
+  ],
+  "interpretation": "Periodic vendor writes prevented the earlier roughly 61-second shutdown during this bounded test",
+  "limits": [
+    "The write handler clears both idle counter and BLE watchdog, so this comparison does not isolate either one",
+    "Host subscription callbacks do not prove firmware CCC ordering or reset semantics",
+    "No custom notifications, button stream or Glassly app code tested",
+    "No long-term battery-life or sleep measurements"
+  ]
+}

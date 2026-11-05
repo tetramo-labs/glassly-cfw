@@ -1,0 +1,42 @@
+{
+  "observed_date": "2026-11-05",
+  "hardware_operations": "Command-5 reads only; no flash writes, resets, erase or protection changes",
+  "arm_rom_prefix": {
+    "start": "0x0",
+    "end_exclusive": "0x7fa0",
+    "size": 32672,
+    "sha256": "cd416afad292582d97a74cfc07bae1009fbcc637de44955873e479cd0b65222a",
+    "independent_read_identical": true,
+    "verification_directory": "build/hardware/20261105T183845.230541Z-arm-rom-prefix-verification",
+    "post_read_usb_mode": "8BitDo Boot / 2dc8:3208",
+    "post_read_registry_directory": "build/hardware/20261105T183904.220366Z",
+    "missing_tail_bytes": 96
+  },
+  "radio_patch_loader": {
+    "stock_section1_sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+    "entry": "0x010233b8",
+    "selector_writes": [
+      "0xc8024 = 0",
+      "0xc8022 = 0",
+      "0xc8023 = 0x80"
+    ],
+    "dma_channel": 6,
+    "dma_destination": "0xc8025",
+    "payload_bytes": 6010,
+    "control_clear_instruction": "0x0102341a",
+    "radio_rom_read_mapping_established": false,
+    "hardware_register_writes_attempted": false
+  },
+  "flash_boot_entry": {
+    "rom_branch_addresses": [
+      "0x78c4",
+      "0x7904"
+    ],
+    "target": "0x01000200",
+    "requested_bytes": 32,
+    "protocol_status": 1,
+    "accepted_bytes": 0,
+    "directory": "build/hardware/20261105T183956.760166Z-boot-entry",
+    "rejection_reason": "unknown"
+  }
+}

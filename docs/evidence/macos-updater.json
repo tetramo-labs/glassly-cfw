@@ -1,0 +1,36 @@
+{
+  "url": "https://download.8bitdo.com/Tools/FirmwareUpdater/8BitDo_Firmware_Updater_macOS.zip?00=",
+  "source_page": "https://support.8bitdo.com/firmware-updater.html",
+  "sha256": "4f197854e6eca261a77b0a0fc03db60d9f0b860fcb511dadb8484f5d9edea887",
+  "size": 10415585,
+  "version": "2.5.2",
+  "build": "5",
+  "bundle_id": "com.8bitdo.firmwareupdater",
+  "signature_check": "Valid on disk; satisfies designated requirement; spctl accepted Notarized Developer ID (outside sandbox)",
+  "initial_sandbox_signature_failure": "Trust validation failed inside sandbox; resolved by repeating unmodified bundle validation outside sandbox",
+  "stock_flash": {
+    "date": "2026-11-05",
+    "selection": "Zero 2 gamepad V1.08, online catalog",
+    "ui_result": "Update from v1.08 to v1.08; Update complete",
+    "post_flash_registry": "build/hardware/20261105T191346.141754Z/summary.json",
+    "runtime_vid_pid": "2dc8:9018",
+    "readback": {
+      "path": "build/hardware/stock-reflash-verification/application.bin",
+      "size": 73216,
+      "sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+      "whole_section_matches_pinned_stock": true,
+      "original_508_byte_tail_overwritten_with_stock_zeros": true
+    },
+    "custom_code_flashed": false
+  },
+  "rea": {
+    "repository": "/Users/fosse/dev/rea",
+    "revision": "d48e472fa6a664cacbb400560e673533005795ce",
+    "version": "6.8.0",
+    "operation": "inspect-native-dispatch-metadata",
+    "evidence_id": "ev_321378fbae9caf40aa718dd27cb1788391f22ca1da7fb93f7014dd92087b93b0",
+    "evidence_path": "build/rea-updater-dispatch.json",
+    "evidence_sha256": "78d1c77d00ff5bbf82bf30ce50a6b33eb82bf82b3e4055a9dd1e2f0ff7687d27",
+    "deep_provider": "Unavailable; native metadata provider succeeded. otool disassembly and Unicorn emulation used for protocol audit."
+  }
+}

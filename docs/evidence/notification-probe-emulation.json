@@ -1,0 +1,51 @@
+{
+  "kind": "Offline probe plus actual stock startup, dispatcher, FIFO, timer and IPC code",
+  "hardware_accessed": false,
+  "instruction_stubs": [],
+  "package_sha256": "3a92dd60565e136a810fd0dc0148418c7b13cdb678eae66a5d5a8e2634369ed3",
+  "plaintext_sha256": "940d562d4552a35d70fa25538ef452708cd1fbed6e930eeb43d8eae720373aa5",
+  "event_cases": 2098,
+  "idle_cases": [
+    {
+      "ble_state": 0,
+      "idle_count": 124,
+      "watchdog_active": true
+    },
+    {
+      "ble_state": 1,
+      "idle_count": 124,
+      "watchdog_active": true
+    },
+    {
+      "ble_state": 2,
+      "idle_count": 0,
+      "watchdog_active": false
+    },
+    {
+      "ble_state": 3,
+      "idle_count": 124,
+      "watchdog_active": true
+    }
+  ],
+  "startup_matches_stock": true,
+  "startup_reads_tail": false,
+  "conservative_direct_branch_candidates_into_stock_tail": [],
+  "aligned_stock_tail_pointer_offsets": [
+    "0x1183c"
+  ],
+  "maximum_observed_dispatcher_and_callees_stack_bytes": 904,
+  "irq_mask_restored": true,
+  "ipc_exact_fill_rejected": true,
+  "sleeping_sends_skipped": true,
+  "limits": [
+    "Synthetic IRQ registers and ring; no interrupt execution or radio consumer",
+    "Measured isolated stack excludes caller/main/exception nesting",
+    "Static reference search cannot exclude arbitrary computed/OEM-ROM references",
+    "No CCC enforcement, radio acknowledgement or on-air notification is simulated"
+  ],
+  "source_sha256": {
+    "firmware/notify_probe.s": "8d34c87084fab3e457c0e6f2d62fe5668fd7ace2185d9ec0de4aea0780c73303",
+    "tools/build_notify_probe.py": "426f46685d9baeb3b796fbe7134f1b3399c7983144ac3fd5116a57e7b948bad9",
+    "tools/inspect_notify_probe.py": "97e6e8797a6db78289add0289f87eedb6aa17d893a39b31266fe36e7f8b3c770"
+  }
+}

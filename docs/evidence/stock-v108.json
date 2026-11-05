@@ -1,0 +1,1217 @@
+{
+  "status": "offline analysis; no bound firmware image",
+  "stock_sha256": "43a313564ac1125df1de9c5b47c393fb5ebfc4d9ff70790e519fb72e609da808",
+  "byte_exact_roundtrip": true,
+  "sections": [
+    {
+      "offset": 0,
+      "id": 108,
+      "addr": 134231040,
+      "payload_len": 51200,
+      "pid": 0,
+      "sha256": "f46d302669e66cb39fd3044362f0e65799fb0e6e9043f806de3ce580aa9446ed"
+    },
+    {
+      "offset": 51228,
+      "id": 108,
+      "addr": 16875520,
+      "payload_len": 73216,
+      "pid": 36888,
+      "sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0"
+    }
+  ],
+  "radio_script": {
+    "offset": 55918,
+    "size": 7596,
+    "sha256": "73d2a159a27681a20dd45ab2cae2923f2cfa634e6b95f20e60c4288d54974283",
+    "records": [
+      {
+        "offset": 55920,
+        "address": null,
+        "payload_offset": 55924,
+        "size": 6010,
+        "sha256": "1a1d499e74e3373b017893985d9ea8a0a61c0c20a15aad066ab80fea789bbb15"
+      },
+      {
+        "offset": 61934,
+        "address": 802816,
+        "payload_offset": 61940,
+        "size": 64,
+        "sha256": "b9370c6158a38b27efa84e2f6424237de04f3b3cfd0b57876f6ca828784bd58e"
+      },
+      {
+        "offset": 62004,
+        "address": 804462,
+        "payload_offset": 62010,
+        "size": 1,
+        "sha256": "e77b9a9ae9e30b0dbdb6f510a264ef9de781501d7b6b92ae89eb059c5ab743db"
+      },
+      {
+        "offset": 62011,
+        "address": 803877,
+        "payload_offset": 62017,
+        "size": 7,
+        "sha256": "3eb44d9fbe41aaf2693385bd4fcfb671bcc6cecf6599fb2a0585270db1286720"
+      },
+      {
+        "offset": 62024,
+        "address": 803944,
+        "payload_offset": 62030,
+        "size": 8,
+        "sha256": "e2ef3018e995269ec74f329c6443dfca3bc5b072fbad690929645bb7fcd10cec"
+      },
+      {
+        "offset": 62038,
+        "address": 804044,
+        "payload_offset": 62044,
+        "size": 2,
+        "sha256": "e79e418e48623569d75e2a7b09ae88ed9b77b126a445b9ff9dc6989a08efa079"
+      },
+      {
+        "offset": 62046,
+        "address": 803960,
+        "payload_offset": 62052,
+        "size": 1,
+        "sha256": "8f11b05da785e43e713d03774c6bd3405d99cd3024af334ffd68db663aa37034"
+      },
+      {
+        "offset": 62053,
+        "address": 803962,
+        "payload_offset": 62059,
+        "size": 1,
+        "sha256": "8f11b05da785e43e713d03774c6bd3405d99cd3024af334ffd68db663aa37034"
+      },
+      {
+        "offset": 62060,
+        "address": 803984,
+        "payload_offset": 62066,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 62067,
+        "address": 803935,
+        "payload_offset": 62073,
+        "size": 1,
+        "sha256": "ca358758f6d27e6cf45272937977a748fd88391db679ceda7dc7bf1f005ee879"
+      },
+      {
+        "offset": 62074,
+        "address": 803992,
+        "payload_offset": 62080,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 62081,
+        "address": 803648,
+        "payload_offset": 62087,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 62088,
+        "address": 803924,
+        "payload_offset": 62094,
+        "size": 2,
+        "sha256": "eec4121f2a07b61aba16414812aa9afc39ab0a136360a5ace2240dc19b0464eb"
+      },
+      {
+        "offset": 62096,
+        "address": 803954,
+        "payload_offset": 62102,
+        "size": 6,
+        "sha256": "a875ca1bddb6a32ac548cfc9713e708c6e23c10d0e1a84b1bf086cf6c1c42457"
+      },
+      {
+        "offset": 62108,
+        "address": 803713,
+        "payload_offset": 62114,
+        "size": 15,
+        "sha256": "ef58e420d627db407999b0dd3bedfa0fd49f5f1bc4e05f4af655a69e7a982624"
+      },
+      {
+        "offset": 62129,
+        "address": 803649,
+        "payload_offset": 62135,
+        "size": 28,
+        "sha256": "07fb80cf9a0729157db06acd22a1a10d2a6ec48c508efdb6ddb2c93a64830ef3"
+      },
+      {
+        "offset": 62163,
+        "address": 803681,
+        "payload_offset": 62169,
+        "size": 17,
+        "sha256": "a86014b8be969a648caf3edff1923905b4b51953cb2ec2195e67430e45903afd"
+      },
+      {
+        "offset": 62186,
+        "address": 803982,
+        "payload_offset": 62192,
+        "size": 2,
+        "sha256": "6248a56b6399731d0281fe7b6928f523c7392ea6cd1fe706a846a2bfbbc88046"
+      },
+      {
+        "offset": 62194,
+        "address": 805237,
+        "payload_offset": 62200,
+        "size": 202,
+        "sha256": "66ac0ac3cc8372d952c7f55fd4c52d4c452961dc96daa4e72918a897195f07a5"
+      },
+      {
+        "offset": 62402,
+        "address": 803334,
+        "payload_offset": 62408,
+        "size": 1,
+        "sha256": "8f11b05da785e43e713d03774c6bd3405d99cd3024af334ffd68db663aa37034"
+      },
+      {
+        "offset": 62409,
+        "address": 802963,
+        "payload_offset": 62415,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 62416,
+        "address": 804461,
+        "payload_offset": 62422,
+        "size": 1,
+        "sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9"
+      },
+      {
+        "offset": 62423,
+        "address": 804397,
+        "payload_offset": 62429,
+        "size": 3,
+        "sha256": "0b1c04b90ea923fa9a0a6564e26386f4e52cddf515e800371d9923ceba041377"
+      },
+      {
+        "offset": 62432,
+        "address": 804396,
+        "payload_offset": 62438,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 62439,
+        "address": 804404,
+        "payload_offset": 62445,
+        "size": 1,
+        "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 62446,
+        "address": 804436,
+        "payload_offset": 62452,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 62453,
+        "address": 802976,
+        "payload_offset": 62459,
+        "size": 6,
+        "sha256": "f477c81aa3b318a17e29f874ab8a8b7859e7c5b752c50062c9a0c936cc3df911"
+      },
+      {
+        "offset": 62465,
+        "address": 804071,
+        "payload_offset": 62471,
+        "size": 15,
+        "sha256": "8eba900fbf5c08026541142bffd438f095ea2bb301c6272d720cf65a2ca6b787"
+      },
+      {
+        "offset": 62486,
+        "address": 803300,
+        "payload_offset": 62492,
+        "size": 3,
+        "sha256": "b1abf8e682e163f73f36ae9675dac20c75bedfc618c00d50056c90dc2db86f91"
+      },
+      {
+        "offset": 62495,
+        "address": 803304,
+        "payload_offset": 62501,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 62502,
+        "address": 804140,
+        "payload_offset": 62508,
+        "size": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      {
+        "offset": 62509,
+        "address": 802986,
+        "payload_offset": 62515,
+        "size": 3,
+        "sha256": "7f31a30fa31bb97b48ac1ff646cb4de65bc9b61a512204f4ec904194ddf18827"
+      },
+      {
+        "offset": 62518,
+        "address": 802962,
+        "payload_offset": 62524,
+        "size": 1,
+        "sha256": "6b23c0d5f35d1b11f9b683f0b0a617355deb11277d91ae091d399c655b87940d"
+      },
+      {
+        "offset": 62525,
+        "address": 803163,
+        "payload_offset": 62531,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 62532,
+        "address": 802968,
+        "payload_offset": 62538,
+        "size": 8,
+        "sha256": "ace28fed3b2f25239fb45776284aabdb079fc0bb08cc24fb9787b7f7383a10d0"
+      },
+      {
+        "offset": 62546,
+        "address": 803025,
+        "payload_offset": 62552,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 62553,
+        "address": 804169,
+        "payload_offset": 62559,
+        "size": 14,
+        "sha256": "5c3dcc77b86719568989fffcf84d6fbdf06cc39d5774687091d45925cde97b79"
+      },
+      {
+        "offset": 62573,
+        "address": 804191,
+        "payload_offset": 62579,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 62580,
+        "address": 804167,
+        "payload_offset": 62586,
+        "size": 2,
+        "sha256": "9734b67ad3470ea464885e572797005174b13f12e1af25fb12f2366eb3b40e80"
+      },
+      {
+        "offset": 62588,
+        "address": 804483,
+        "payload_offset": 62594,
+        "size": 602,
+        "sha256": "6c2337a9491084cb66f287f3b647d35086a9e8a8efb29a70e1342c6c3777cf66"
+      },
+      {
+        "offset": 63196,
+        "address": 802962,
+        "payload_offset": 63202,
+        "size": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      {
+        "offset": 63203,
+        "address": 803348,
+        "payload_offset": 63209,
+        "size": 3,
+        "sha256": "a0beb78f0bd080c132377ae2697154a6652f764927a52884efbb9616ac8c1fbf"
+      },
+      {
+        "offset": 63212,
+        "address": 806896,
+        "payload_offset": 63218,
+        "size": 16,
+        "sha256": "18cc69524bf5760b1772d1e7d053ac2ac9e83125a6036c69f79a741a4524691a"
+      },
+      {
+        "offset": 63234,
+        "address": 804456,
+        "payload_offset": 63240,
+        "size": 2,
+        "sha256": "860298c9f5d9cea0c24b6e6b1d4be6d5b273a6cea10c39f08e1b9c499226fedb"
+      },
+      {
+        "offset": 63242,
+        "address": 804460,
+        "payload_offset": 63248,
+        "size": 1,
+        "sha256": "084fed08b978af4d7d196a7446a86b58009e636b611db16211b65a9aadff29c5"
+      },
+      {
+        "offset": 63249,
+        "address": 804463,
+        "payload_offset": 63255,
+        "size": 1,
+        "sha256": "ca358758f6d27e6cf45272937977a748fd88391db679ceda7dc7bf1f005ee879"
+      },
+      {
+        "offset": 63256,
+        "address": 804473,
+        "payload_offset": 63262,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 63263,
+        "address": 802961,
+        "payload_offset": 63269,
+        "size": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      {
+        "offset": 63270,
+        "address": 803156,
+        "payload_offset": 63276,
+        "size": 3,
+        "sha256": "5331fed036518120c7f345726537745c5929b8ea1fa37b99b2bb58f702671541"
+      },
+      {
+        "offset": 63279,
+        "address": 803188,
+        "payload_offset": 63285,
+        "size": 1,
+        "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 63286,
+        "address": 803300,
+        "payload_offset": 63292,
+        "size": 2,
+        "sha256": "7a2a7c0a81d1bd595dff09b918f8ecb5b5e8493654a4f83496956ed8eb017674"
+      },
+      {
+        "offset": 63294,
+        "address": 805817,
+        "payload_offset": 63300,
+        "size": 16,
+        "sha256": "4a80fcbe6c5fffe7df3c3a543238cc279cfbea3f2ab90dc681155a6b8c3cf5d4"
+      },
+      {
+        "offset": 63316,
+        "address": 803281,
+        "payload_offset": 63322,
+        "size": 6,
+        "sha256": "503c81c10a03a8ac0d5c783ab439a5f1c8ad88c8cea156835534a02913da3616"
+      },
+      {
+        "offset": 63328,
+        "address": 805834,
+        "payload_offset": 63334,
+        "size": 4,
+        "sha256": "2a12d6a0791b9b5895781215a7e63f8f83b9615d70add50dabf34b9b494387e0"
+      },
+      {
+        "offset": 63338,
+        "address": 803263,
+        "payload_offset": 63344,
+        "size": 16,
+        "sha256": "ed733a51fa5ba2fff818e03eab41dbda989829ed288425f5e2d77e03cfacc055"
+      },
+      {
+        "offset": 63360,
+        "address": 803295,
+        "payload_offset": 63366,
+        "size": 1,
+        "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+      },
+      {
+        "offset": 63367,
+        "address": 803190,
+        "payload_offset": 63373,
+        "size": 7,
+        "sha256": "83ee75aa28d5606a7df2052906d639b7e0e64759b335220935d73b3660b5fe6a"
+      },
+      {
+        "offset": 63380,
+        "address": 803159,
+        "payload_offset": 63386,
+        "size": 2,
+        "sha256": "3c424ff1aac6d969fe33cb3f6c9c230e80ee4a44235617c249248ca5e04cd2e4"
+      },
+      {
+        "offset": 63388,
+        "address": 786593,
+        "payload_offset": 63394,
+        "size": 8,
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+      },
+      {
+        "offset": 63402,
+        "address": 803005,
+        "payload_offset": 63408,
+        "size": 2,
+        "sha256": "6c7ca952d46473101dd810ed530210f7c627a7b1b0a8bed62532ba423d4a8bbe"
+      },
+      {
+        "offset": 63410,
+        "address": 802989,
+        "payload_offset": 63416,
+        "size": 8,
+        "sha256": "f345dbba92f8d996297201065655d9cf82094a5116451761c518f7306fdb7723"
+      },
+      {
+        "offset": 63424,
+        "address": 803003,
+        "payload_offset": 63430,
+        "size": 2,
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4"
+      },
+      {
+        "offset": 63432,
+        "address": 802999,
+        "payload_offset": 63438,
+        "size": 4,
+        "sha256": "4c820d9224be10dc92b938f461151f2a1e674ceaf7ede4a09baa9c5103b1119c"
+      },
+      {
+        "offset": 63442,
+        "address": 803007,
+        "payload_offset": 63448,
+        "size": 4,
+        "sha256": "39810002821d2ed09e9314809f016bf0c70c7cff069bebb28993d45085daf977"
+      },
+      {
+        "offset": 63452,
+        "address": 804066,
+        "payload_offset": 63458,
+        "size": 5,
+        "sha256": "884fceb559cdd2925aa814abb175c94c0baa21c68a9b83a35a22f9569b41ca17"
+      },
+      {
+        "offset": 63463,
+        "address": 803330,
+        "payload_offset": 63469,
+        "size": 2,
+        "sha256": "0b1d31977c702a4231dc4df99545346fbef34aa9a8a41e0203f6ff7e1d7a5d6f"
+      },
+      {
+        "offset": 63471,
+        "address": 803344,
+        "payload_offset": 63477,
+        "size": 1,
+        "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+      },
+      {
+        "offset": 63478,
+        "address": 803296,
+        "payload_offset": 63484,
+        "size": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      {
+        "offset": 63485,
+        "address": 805743,
+        "payload_offset": 63491,
+        "size": 15,
+        "sha256": "8bbd36045dd23fd9f9b14a37253f4f4e43b4341ab1232cee6d3c947049e29033"
+      },
+      {
+        "offset": 63506,
+        "address": 803011,
+        "payload_offset": 63512,
+        "size": 2,
+        "sha256": "dca6311fe66235c58355f5250a16d1cd4b99b02087d884bdddb886c9fa7e5913"
+      }
+    ]
+  },
+  "radio_attribute_table": {
+    "offset": 62200,
+    "size": 202,
+    "attributes": [
+      {
+        "handle": 1,
+        "uuid": "2800",
+        "value_hex": "0118",
+        "offset": 0
+      },
+      {
+        "handle": 2,
+        "uuid": "2803",
+        "value_hex": "20",
+        "offset": 8
+      },
+      {
+        "handle": 3,
+        "uuid": "2A05",
+        "value_hex": "00",
+        "offset": 15
+      },
+      {
+        "handle": 4,
+        "uuid": "2902",
+        "value_hex": "0000",
+        "offset": 22
+      },
+      {
+        "handle": 5,
+        "uuid": "2800",
+        "value_hex": "0018",
+        "offset": 30
+      },
+      {
+        "handle": 6,
+        "uuid": "2803",
+        "value_hex": "02",
+        "offset": 38
+      },
+      {
+        "handle": 7,
+        "uuid": "2A00",
+        "value_hex": "4254342e32204b6579626f617264202020202020202020202020202020",
+        "offset": 45
+      },
+      {
+        "handle": 8,
+        "uuid": "2803",
+        "value_hex": "02",
+        "offset": 80
+      },
+      {
+        "handle": 9,
+        "uuid": "2A01",
+        "value_hex": "c103",
+        "offset": 87
+      },
+      {
+        "handle": 10,
+        "uuid": "2803",
+        "value_hex": "02",
+        "offset": 95
+      },
+      {
+        "handle": 11,
+        "uuid": "2A04",
+        "value_hex": "1000180020002c01",
+        "offset": 102
+      },
+      {
+        "handle": 12,
+        "uuid": "2800",
+        "value_hex": "0a18",
+        "offset": 116
+      },
+      {
+        "handle": 13,
+        "uuid": "2803",
+        "value_hex": "02",
+        "offset": 124
+      },
+      {
+        "handle": 14,
+        "uuid": "2A29",
+        "value_hex": "596943686970",
+        "offset": 131
+      },
+      {
+        "handle": 15,
+        "uuid": "2800",
+        "value_hex": "02fb349b5f800000800010000010ff00",
+        "offset": 143
+      },
+      {
+        "handle": 16,
+        "uuid": "2803",
+        "value_hex": "14",
+        "offset": 165
+      },
+      {
+        "handle": 17,
+        "uuid": "0100ff13-0000-1000-8000-00805f9b34fb",
+        "value_hex": "",
+        "offset": 172
+      },
+      {
+        "handle": 18,
+        "uuid": "2902",
+        "value_hex": "0000",
+        "offset": 192
+      }
+    ],
+    "caveat": "Initial table only: ARM startup issues delete/add service commands; do not bind its handles as runtime handles"
+  },
+  "runtime_initialization": {
+    "scatter_records": [
+      {
+        "source": 16947276,
+        "destination": 131072,
+        "size": 1932,
+        "initializer": 16876490
+      },
+      {
+        "source": 16948228,
+        "destination": 133004,
+        "size": 9100,
+        "initializer": 16921410
+      }
+    ],
+    "compressed_bytes_consumed": 950,
+    "regions": [
+      {
+        "address": 131072,
+        "size": 1932,
+        "sha256": "e489fc10a48aaff465ace394ba75397442071af89f3990cc294861788603edb5"
+      },
+      {
+        "address": 133004,
+        "size": 9100,
+        "sha256": "6d66c9915b403b93ca8218fe03ff8ab9885e8969bbc30efb57a6d14f531ed620"
+      }
+    ],
+    "caveat": "Only static initialization boundaries; RAM above these regions is not proven free"
+  },
+  "memory_constraints": {
+    "section_sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+    "placement_approved": false,
+    "ram": {
+      "initialized_start": 131072,
+      "initialized_end": 133004,
+      "zero_start": 133004,
+      "zero_end": 142104,
+      "pools": [
+        {
+          "head": 132832,
+          "start": 139364,
+          "end": 141164,
+          "count": 3,
+          "stride": 600
+        },
+        {
+          "head": 132836,
+          "start": 141164,
+          "end": 141244,
+          "count": 4,
+          "stride": 20
+        },
+        {
+          "head": 132840,
+          "start": 141244,
+          "end": 141500,
+          "count": 4,
+          "stride": 64
+        },
+        {
+          "head": 132844,
+          "start": 141500,
+          "end": 141680,
+          "count": 3,
+          "stride": 60
+        },
+        {
+          "head": 132848,
+          "start": 141680,
+          "end": 141696,
+          "count": 1,
+          "stride": 16
+        },
+        {
+          "head": 132852,
+          "start": 141696,
+          "end": 141816,
+          "count": 3,
+          "stride": 40
+        },
+        {
+          "head": 132856,
+          "start": 141816,
+          "end": 141956,
+          "count": 5,
+          "stride": 28
+        },
+        {
+          "head": 132860,
+          "start": 141956,
+          "end": 141992,
+          "count": 3,
+          "stride": 12
+        }
+      ],
+      "pool_storage_bytes": 2628,
+      "boot_fields": [
+        {
+          "address": 196592,
+          "size": 4,
+          "role": "mode/restart marker"
+        },
+        {
+          "address": 196596,
+          "size": 4,
+          "role": "startup version marker"
+        }
+      ],
+      "unproven_interval": {
+        "start": 142104,
+        "end": 196352,
+        "size": 54248,
+        "free_ram_claimed": false
+      }
+    },
+    "stack": {
+      "initial_sp": 196352,
+      "main_local_bytes": 24,
+      "event_dispatcher_frame_bytes": 824,
+      "main_plus_dispatcher_bytes": 848,
+      "worst_case_bound": null,
+      "caveat": "These frames exclude callees, ROM routines, exception frames and nesting"
+    },
+    "image_tail": {
+      "compressed_data_end_offset": 72706,
+      "alignment_bytes": 2,
+      "offset": 72708,
+      "address": 16948228,
+      "size": 508,
+      "sha256": "64d6c19683061d281bcee4c3cb3fa451f3724613dcc114467cebfd53ee182e31",
+      "reclaimable": false,
+      "caveat": "Package padding is not free flash: live readback differs in this region (see findings.md); preserve it, with no placement approved"
+    },
+    "external_arm_rom_calls": [
+      {
+        "call_site": 16928388,
+        "thumb_target": 17453,
+        "sdk_name": "INIT_OTP"
+      },
+      {
+        "call_site": 16928948,
+        "thumb_target": 17881,
+        "argument": 131072,
+        "sdk_name": "READ_CHIPID"
+      },
+      {
+        "call_site": 16925012,
+        "thumb_target": 17537,
+        "sdk_name": "DEINIT_OTP"
+      }
+    ],
+    "rom_symbol_source": "docs/evidence/references.json:rt_thread_core_rom_api",
+    "caveat": "Selected observed constraints, not a complete memory or call graph; ROM implementation is absent"
+  },
+  "runtime_gatt_command_arguments": {
+    "service_address": 132698,
+    "service_payload_hex": "10fb349b5f800000800010000010ff0000",
+    "service_uuid": "0000ff10-0000-1000-8000-00805f9b34fb",
+    "characteristic_address": 132715,
+    "characteristic_payload_hex": "1810fb349b5f800000800010000013ff00000100",
+    "characteristic_uuid": "0000ff13-0000-1000-8000-00805f9b34fb",
+    "properties": 24,
+    "initial_value_hex": "00",
+    "returned_handle_storage": 132680,
+    "caveat": "Arguments reconstructed from compressed startup data and traced call sites; live registration/handle assignment untested"
+  },
+  "radio_instruction_evidence": {
+    "instruction_bytes": 4,
+    "byte_order": "big",
+    "address_unit": "radio instruction index; not ARM bytes",
+    "complete_words": 1502,
+    "trailing_bytes_hex": "c1e6",
+    "memory_count_shift": 17,
+    "caveat": "Partial decoder; cross-chip encoding reference adapted against stock constructor transfer sizes; unknown encodings retained",
+    "ranges": {
+      "command_dispatch": {
+        "start_pc": 445,
+        "end_pc": 464,
+        "section_offset": 57704,
+        "sha256": "6f1cc4d628b5436d9b0f000a30d1831bf686c2f36a804c944250fdb151ed4db3",
+        "external_targets": [
+          20060
+        ]
+      },
+      "command_09_state_guard": {
+        "start_pc": 1328,
+        "end_pc": 1332,
+        "section_offset": 61236,
+        "sha256": "81bf1fda07d0b1569d76692ab6b388f49de88783b7674a2a430288301d49f42f",
+        "external_targets": [
+          20186,
+          20508
+        ]
+      },
+      "shared_authentication_guard_candidate": {
+        "start_pc": 1332,
+        "end_pc": 1341,
+        "section_offset": 61252,
+        "sha256": "2b86fad86555dde63259cc726e2ca1b297910f01b3e9eff773edded363aa1b9c",
+        "external_targets": [
+          32191,
+          32193
+        ]
+      },
+      "notification_property_check": {
+        "start_pc": 631,
+        "end_pc": 655,
+        "section_offset": 58448,
+        "sha256": "2d12edcab5be4c86ceaa65893b15dffe874d2034901d22efe33783d72a06d025",
+        "external_targets": [
+          20225,
+          20508,
+          20704,
+          23373,
+          32181
+        ]
+      },
+      "delete_custom_attributes": {
+        "start_pc": 503,
+        "end_pc": 509,
+        "section_offset": 57936,
+        "sha256": "786787674d54149a4b3d11cb9a54bc94688f5e16c14b3b9d886d76f6758e2824",
+        "external_targets": [
+          20511,
+          23373
+        ]
+      },
+      "attribute_constructors_and_return_handle": {
+        "start_pc": 509,
+        "end_pc": 572,
+        "section_offset": 57960,
+        "sha256": "a3ed4d826d7d03c3c864424216da99871a06a6def63f626964380b567888ada4",
+        "external_targets": [
+          20645,
+          23373,
+          26553,
+          26605
+        ]
+      },
+      "att_write_patch": {
+        "start_pc": 1298,
+        "end_pc": 1317,
+        "section_offset": 61116,
+        "sha256": "d32f89151039f39c77d656d45939e8ed69ad2f8faa9e73b1e7e41addf95b5ddf",
+        "external_targets": [
+          23230,
+          23693,
+          24093,
+          24151
+        ]
+      },
+      "write_callback_candidate": {
+        "start_pc": 432,
+        "end_pc": 440,
+        "section_offset": 57652,
+        "sha256": "c17079a4e2a7afe95a44662c3f501169ff4dabd031f958609a7d2599fb1c7526",
+        "external_targets": [
+          20667
+        ]
+      }
+    },
+    "command_09": {
+      "dispatch_pc": 452,
+      "entry_pc": 1328,
+      "state_address": 18002,
+      "required_state_bit": 9,
+      "external_continuation": 20186,
+      "external_failure_path": 20508,
+      "external_guard": 32193,
+      "notification_handle_candidate": 18043,
+      "pending_length_candidate": 18042,
+      "payload_prefix": "LE16 attribute handle supported by reference source; exact Zero 2 ROM parsing remains unavailable",
+      "arm_completion_event": 6,
+      "arm_ack_bit": 6,
+      "bound": false
+    }
+  },
+  "anchors": {
+    "entry_trampoline": {
+      "offset": 0,
+      "address": 16875520,
+      "size": 4,
+      "sha256": "e082a25dfe4a8174c8e0fc1870f476d37306b7ac754404f17fb922f51ea724eb"
+    },
+    "startup_stack_and_c_runtime": {
+      "offset": 512,
+      "address": 16876032,
+      "size": 20,
+      "sha256": "83594f2da78243ae95b936f3aed2db23561f3d366616f3a327329abcbda82115"
+    },
+    "radio_configuration_load": {
+      "offset": 28366,
+      "address": 16903886,
+      "size": 10,
+      "sha256": "b5a07b98d73d74058bb6cdc9a10c2f27bfb1f4448d37d7f75f0a54cdd1349746"
+    },
+    "radio_configuration_pointer": {
+      "offset": 28408,
+      "address": 16903928,
+      "size": 4,
+      "sha256": "ba04e81d4f206eac846faf2182079aa4b23172f925fb9e5809c5d5c0cf2dde24"
+    },
+    "radio_configuration_loader": {
+      "offset": 46008,
+      "address": 16921528,
+      "size": 272,
+      "sha256": "b20c0a3bff8510155ea9eedfa0a9b75630aca687c0fb637fda974832ffce48a7"
+    },
+    "report_router_entry": {
+      "offset": 29140,
+      "address": 16904660,
+      "size": 112,
+      "sha256": "1703ba91d16602a0bcd0b25e044ed689e34f664a864ff7f540b1a540a7bf9548"
+    },
+    "report_router_connection_gate": {
+      "offset": 29248,
+      "address": 16904768,
+      "size": 8,
+      "sha256": "a276b1a5d896f2133b6ad1441329aa8751cef007cb69d5f1be03cd1ad8e911b8"
+    },
+    "ipc_capacity_checked_submit": {
+      "offset": 33480,
+      "address": 16909000,
+      "size": 42,
+      "sha256": "4800668483b56a1eee25f1a04241fbcce7ac3166eef068b895cb9744a5f60f8e"
+    },
+    "ipc_copy_three_byte_header": {
+      "offset": 27472,
+      "address": 16902992,
+      "size": 232,
+      "sha256": "b2ebda2c83c9ef4824a56168895f02141a5af96785502cbd89e160c7fc64face"
+    },
+    "ipc_copy_four_byte_header": {
+      "offset": 27704,
+      "address": 16903224,
+      "size": 228,
+      "sha256": "bd4bc1905300b20b9d1a494c3b8648becd0ab97ff733d9ed6801816122dec872"
+    },
+    "hid_wrapper_ignores_submit_result": {
+      "offset": 7608,
+      "address": 16883128,
+      "size": 48,
+      "sha256": "e84062cd370f2b6a3dbc91e721f3ad743f46a386cb0ba25d2ba752ebceeb2a85"
+    },
+    "runtime_scatter_loader": {
+      "offset": 868,
+      "address": 16876388,
+      "size": 36,
+      "sha256": "b87d68de889a11fe2d2a895e16967f88b21547599e9ebb570c8190f5b9764521"
+    },
+    "runtime_data_decompressor": {
+      "offset": 970,
+      "address": 16876490,
+      "size": 86,
+      "sha256": "edab9ee2a1da8a9fd6c4d42de399e41d59a23c357a40bee35bc615f4b40cb40f"
+    },
+    "runtime_scatter_table": {
+      "offset": 71724,
+      "address": 16947244,
+      "size": 32,
+      "sha256": "b90d66c9c931bc83462584ca34aaba54ddb23744da275381ef128c78b430c2cf"
+    },
+    "runtime_gatt_delete_add_service_add_characteristic": {
+      "offset": 9876,
+      "address": 16885396,
+      "size": 26,
+      "sha256": "114ff666fa649deb68283d78b7968fd63b8c21889ee8d2bd670666d20fe3a1c6"
+    },
+    "command_complete_switch_table": {
+      "offset": 4326,
+      "address": 16879846,
+      "size": 19,
+      "sha256": "b0f7ae3670a5d6e662143bee602050abc01b9ea696c4ebbeef1006106785be7a"
+    },
+    "command_09_ack_sets_bit_6_on_zero_status": {
+      "offset": 4918,
+      "address": 16880438,
+      "size": 22,
+      "sha256": "ac64ec37f549a5cb2c8499f88bf6888aedd7609f59dbff76a50fb2acaa9f03d6"
+    },
+    "gpio_mask_reader": {
+      "offset": 30284,
+      "address": 16905804,
+      "size": 202,
+      "sha256": "66cc0385cdbb62b854ad8b38552e267dfe131739b904b5f76fa3159dd9e3e33b"
+    },
+    "gpio_bank_read": {
+      "offset": 15224,
+      "address": 16890744,
+      "size": 28,
+      "sha256": "6c120d0b298d73aa22cd71269768d2cce3e374448fc61f15a1e05b3a13fa2f63"
+    },
+    "input_wrapper_with_bypassed_resample_branch": {
+      "offset": 30488,
+      "address": 16906008,
+      "size": 112,
+      "sha256": "09ffe88d233c32315647703d4651bef357d92f646c3ae730f1499dcadfb0c113"
+    },
+    "input_predicate_always_returns_one": {
+      "offset": 28828,
+      "address": 16904348,
+      "size": 4,
+      "sha256": "64d23481cb6a254816fb9c4c9b22031f78ed0a6ece5a6b0f6849a3ee7f77a2bb"
+    },
+    "input_wrapper_call_before_report_router": {
+      "offset": 19438,
+      "address": 16894958,
+      "size": 20,
+      "sha256": "a0fde3fcf8f72d29c308aa17f2e5dbb7105bf4a2654d28ee0c2adce69a4e954e"
+    },
+    "input_ipc_capacity_gate": {
+      "offset": 19232,
+      "address": 16894752,
+      "size": 32,
+      "sha256": "8c1505bafd8939fb9100e27ad3f685e06cabfce2c4903ec891cd801480fa5973"
+    },
+    "input_software_ring_gate": {
+      "offset": 19420,
+      "address": 16894940,
+      "size": 22,
+      "sha256": "064f7200ef1d861ee1625c043df36cbc4a44856b61c298b5ff3c153f5b42d739"
+    },
+    "software_ring_headroom_check": {
+      "offset": 28548,
+      "address": 16904068,
+      "size": 28,
+      "sha256": "74031e60acadb314999d4c07b04ce624bd58d5a1854888edaf27a89e804802e7"
+    },
+    "input_timer_registration": {
+      "offset": 33444,
+      "address": 16908964,
+      "size": 36,
+      "sha256": "54868d9ed220b9cc39a1dd25ff8933b2946d3b8f5b0662f24700cad18f449be5"
+    },
+    "input_timer_callback_and_rearm": {
+      "offset": 15892,
+      "address": 16891412,
+      "size": 120,
+      "sha256": "50f8c2dcdca88408473006cb850dac3fcb475a9701c4bb568269fcf53c6edac4"
+    },
+    "run_loop_vtable": {
+      "offset": 69976,
+      "address": 16945496,
+      "size": 40,
+      "sha256": "46bfe0d2aa43a99e165feeff8bbf272c7b3421496578bdd43afd6a7571bbc29e"
+    },
+    "run_loop_timer_deadline": {
+      "offset": 49020,
+      "address": 16924540,
+      "size": 32,
+      "sha256": "1aee249315abcba0d44c5ae1b539588901b73ca1c6f702d7535d8a79d969cd89"
+    },
+    "run_loop_tick_increment": {
+      "offset": 49052,
+      "address": 16924572,
+      "size": 28,
+      "sha256": "c5f4ae72a7795f33d14d0f4a05966982927103fa478c140ca2258d4aaa70e656"
+    },
+    "run_loop_delay_to_ticks": {
+      "offset": 49080,
+      "address": 16924600,
+      "size": 20,
+      "sha256": "9b105825fc011aef398041b177bd61542518d31d788dbcd6f3a6f63007f975aa"
+    },
+    "tick_scale_configuration": {
+      "offset": 18480,
+      "address": 16894000,
+      "size": 68,
+      "sha256": "c6cf021645c69a6487c550c3dde33ae4490dff9f9b86080b0264d263402614c8"
+    },
+    "static_pool_registration": {
+      "offset": 10042,
+      "address": 16885562,
+      "size": 4,
+      "sha256": "cb8c3cc9ec1a1dd18d1912f673ef4d92cab4d03762b9702587b48608c02a454b"
+    },
+    "static_pool_initializer": {
+      "offset": 48052,
+      "address": 16923572,
+      "size": 168,
+      "sha256": "66509bdf68e401e0f1385ec2c15568239a735b58d43abe0f3e5f66ff75dcde76"
+    },
+    "static_pool_list_construction": {
+      "offset": 48220,
+      "address": 16923740,
+      "size": 98,
+      "sha256": "cbbf8787f099ab455572088163e79befd8d2ce020346e17f107cedfb6940d0c9"
+    },
+    "event_dispatcher_stack_frame": {
+      "offset": 6252,
+      "address": 16881772,
+      "size": 6,
+      "sha256": "96725b9c4294799bd3d6c75901017745db7f52e41619adf144fc40e8cf173f55"
+    },
+    "main_stack_frame": {
+      "offset": 53064,
+      "address": 16928584,
+      "size": 2,
+      "sha256": "8f85aa4402eb778f21c5df56c25b8d6be417568233936b5b10ea29ebb6063d90"
+    },
+    "startup_external_arm_rom_call": {
+      "offset": 53416,
+      "address": 16928936,
+      "size": 24,
+      "sha256": "a35e4cab49e30077cb7c99f8a72326044296629101087fccef598d656f1d0e61"
+    },
+    "boot_version_marker_write": {
+      "offset": 33636,
+      "address": 16909156,
+      "size": 16,
+      "sha256": "6567756394e6535a72feda0e08543393c8e2fa44934b3567fec44f55bb6e69ba"
+    },
+    "boot_mode_marker_writes": {
+      "offset": 33712,
+      "address": 16909232,
+      "size": 32,
+      "sha256": "87fa80f0f81cb35321d01dfcf65e2253a99feec38a4c1e7006dfd43086d131be"
+    },
+    "application_event_switch_table": {
+      "offset": 6282,
+      "address": 16881802,
+      "size": 25,
+      "sha256": "7e655ff76fa186fa46d8ced3457050723b075eca84660b875e43a4f09579f062"
+    },
+    "ble_connect_event_handler": {
+      "offset": 6866,
+      "address": 16882386,
+      "size": 24,
+      "sha256": "5485fe70bad0a34f44feb18b9211ce873458f86d674408b93c880b0268d58e3f"
+    },
+    "ble_disconnect_event_handler": {
+      "offset": 6956,
+      "address": 16882476,
+      "size": 20,
+      "sha256": "ee0ae27a0de7205d5df8253b210db9c3faef711609e1d21c0f424b6bb4f109ed"
+    },
+    "vendor_write_handle_filter_and_watchdog_cancel": {
+      "offset": 6376,
+      "address": 16881896,
+      "size": 54,
+      "sha256": "ba7f94ff3003a1aa49998df66b715b555697aea858424ce1a1b73d49810a42cf"
+    },
+    "ble_watchdog_registration": {
+      "offset": 47708,
+      "address": 16923228,
+      "size": 52,
+      "sha256": "209f52a307e579c229be44fa218b9f3ce9c7e37a870d150d411144f84c2c7909"
+    },
+    "ble_watchdog_guard_and_rearm": {
+      "offset": 47760,
+      "address": 16923280,
+      "size": 64,
+      "sha256": "0997a35dddfcaeede9c948de60a01c100bb7e88569e4b628a57caf8219e6b4ac"
+    },
+    "ble_watchdog_cancel": {
+      "offset": 47824,
+      "address": 16923344,
+      "size": 24,
+      "sha256": "6ac508975dac07e19eb65d73ce50f03cbca8058b9f06cdc937b21d0bcdcb153c"
+    },
+    "restart_path_called_by_watchdog": {
+      "offset": 45712,
+      "address": 16921232,
+      "size": 30,
+      "sha256": "04cc505a61ecfa343d8b051ad7426bb5e55c3445e166c3f053604c90ed72d9a0"
+    },
+    "restart_entry_trampoline": {
+      "offset": 180,
+      "address": 16875700,
+      "size": 14,
+      "sha256": "c7f79abfb4515e647f337026526033eee61f9989157fb887b35f59ff41cec100"
+    }
+  },
+  "unresolved": [
+    "Hardware variant selection between package sections",
+    "Radio command 0x09 ROM payload/acknowledgement semantics and CCC lifecycle",
+    "Input polling hook before congestion gates, clock/sleep ownership and physical button mapping",
+    "Independent GATT path before HID connection/readiness gates",
+    "Reserved RAM, startup relocation, stack and executable payload placement",
+    "Actual foreground/background/locked delivery on iPhone"
+  ]
+}

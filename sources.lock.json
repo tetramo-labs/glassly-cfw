@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "cryptdo8": {
+    "url": "https://github.com/aeromodes/8cryptdo",
+    "revision": "aaffcebafa481631de9c1d722a5693d02234e43a",
+    "sha256": "6701ba2b6089c47686b2785e1c5729e8533ef1102e1f7cdde904bad9b73167bc"
+  },
+  "stock": {
+    "name": "Zero 2 v1.08",
+    "url": "http://dl.8bitdo.com:8080/firmwareFile/upload/69749f0f-bdf5-447c-be6a-d32f1394ed1e.dat",
+    "path": "research/downloads/Zero2-v1.08.dat",
+    "size": 124472,
+    "sha256": "43a313564ac1125df1de9c5b47c393fb5ebfc4d9ff70790e519fb72e609da808",
+    "catalog_type": 30,
+    "catalog_id": 1986,
+    "catalog_md5": "77F76375A4C041EBE9C2D774A065EEBC",
+    "observed_md5": "4dfe36e1a45180393e0b22edb1d3f2e5",
+    "catalog_md5_matches": false,
+    "sections": [
+      {
+        "offset": 0,
+        "id": 108,
+        "addr": 134231040,
+        "payload_len": 51200,
+        "pid": 0,
+        "cipher": "gd32",
+        "sha256": "f46d302669e66cb39fd3044362f0e65799fb0e6e9043f806de3ce580aa9446ed"
+      },
+      {
+        "offset": 51228,
+        "id": 108,
+        "addr": 16875520,
+        "payload_len": 73216,
+        "pid": 36888,
+        "cipher": "yichip",
+        "sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0"
+      }
+    ]
+  },
+  "updater_research": {
+    "url": "https://download.8bitdo.com/Tools/FirmwareUpdater/8BitDo_Firmware_Updater_Win.zip",
+    "source_page": "https://support.8bitdo.com/firmware-updater.html",
+    "path": "research/downloads/8BitDo_Firmware_Updater_Win.zip",
+    "size": 19148000,
+    "sha256": "88fd6af7eb62a33546415db75a40907ef9120d14f10c6cd7a4337ea59994a26f",
+    "purpose": "Static analysis and isolated in-memory comparison only; never launch updater",
+    "members": {
+      "8BitDo_Firmware_Updater_Win/8BitDoFirmwareUpdaterTools.dll": {
+        "size": 2045440,
+        "sha256": "b38ffa61b12af29d41dc55212e5ba44e509130facf6e3c4db9a7141aa313f974"
+      },
+      "8BitDo_Firmware_Updater_Win/8BitDo Firmware Updater.exe": {
+        "size": 19883520,
+        "sha256": "5880c67c092f6d6e658f5a3a10c87dd42a439d561de75384599befe7b905916c"
+      }
+    }
+  }
+}

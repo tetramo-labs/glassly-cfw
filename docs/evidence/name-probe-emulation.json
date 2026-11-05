@@ -1,0 +1,127 @@
+{
+  "kind": "Offline execution of unmodified callback and string converter",
+  "package_sha256": "f0938c2b6a6bb0186d948a6ac9655153111927267188fb1ec32a08ee739b2f20",
+  "cases": [
+    {
+      "patched": false,
+      "mode": 0,
+      "index": 0,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 0,
+      "index": 1,
+      "name": "Pro Controller"
+    },
+    {
+      "patched": false,
+      "mode": 1,
+      "index": 0,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 1,
+      "index": 1,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 2,
+      "index": 0,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 2,
+      "index": 1,
+      "name": "Wireless Controller"
+    },
+    {
+      "patched": false,
+      "mode": 3,
+      "index": 0,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 3,
+      "index": 1,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 4,
+      "index": 0,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": false,
+      "mode": 4,
+      "index": 1,
+      "name": "8BitDo Zero 2 gamepad"
+    },
+    {
+      "patched": true,
+      "mode": 0,
+      "index": 0,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 0,
+      "index": 1,
+      "name": "Pro Controller"
+    },
+    {
+      "patched": true,
+      "mode": 1,
+      "index": 0,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 1,
+      "index": 1,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 2,
+      "index": 0,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 2,
+      "index": 1,
+      "name": "Wireless Controller"
+    },
+    {
+      "patched": true,
+      "mode": 3,
+      "index": 0,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 3,
+      "index": 1,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 4,
+      "index": 0,
+      "name": "Glassly Zero 2 test01"
+    },
+    {
+      "patched": true,
+      "mode": 4,
+      "index": 1,
+      "name": "Glassly Zero 2 test01"
+    }
+  ],
+  "hardware_accessed": false
+}

@@ -1,0 +1,57 @@
+{
+  "mode": "offline_emulation",
+  "hardware_access": false,
+  "rom_prefix_sha256": "cd416afad292582d97a74cfc07bae1009fbcc637de44955873e479cd0b65222a",
+  "rom_prefix_bytes": 32672,
+  "unicorn_version": "2.1.4",
+  "tool_sha256": "884bbab4adebc5c893d3a37edc9dfac317c5e42afc25b62551241b5e383d000a",
+  "startup_otp": {
+    "cases": 64,
+    "clock_selector_values": 16,
+    "synthetic_otp_patterns": 2,
+    "destination_addresses": [
+      "0x20000",
+      "0x28000"
+    ],
+    "chipid_destination_bytes": 6,
+    "otp_byte_offsets": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "max_isolated_stack_bytes": {
+      "init_otp": 24,
+      "read_chipid": 32,
+      "deinit_otp": 0
+    },
+    "other_ram_writes": false,
+    "instructions_executed": 359664,
+    "delay_loop_executed": true,
+    "peripheral_writes": [
+      {
+        "address": "0xc8973",
+        "size": 1
+      },
+      {
+        "address": "0xf8508",
+        "size": 2
+      },
+      {
+        "address": "0xf850a",
+        "size": 2
+      },
+      {
+        "address": "0xf856c",
+        "size": 4
+      }
+    ],
+    "limitations": [
+      "Synthetic peripheral values; no live OTP access",
+      "No IRQ nesting, timing, radio execution or other RAM owners modeled",
+      "The final 96 ROM bytes are unavailable; this is not a full-ROM audit"
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "kind": "Live battery-powered BLE observation; disconnect and failed rediscovery",
+  "user_report": "Unplugged and blinking after normal startup and Select pairing procedure",
+  "usb_observation": "build/hardware/20261105T202322.817838Z/summary.json",
+  "usb_target_devices_observed": [],
+  "firmware": "Verified BLE visibility probe; not reread during this wireless test",
+  "captures": [
+    {
+      "local_directory": "build/hardware/20261105T202324.043523Z-ble-subscribe",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.01854541664943099,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:23:24Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.3973563751205802,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -37,
+          "services": [],
+          "time": "2026-11-05T20:23:24Z"
+        },
+        {
+          "elapsed_seconds": 0.3975839167833328,
+          "event": "connecting",
+          "time": "2026-11-05T20:23:24Z"
+        },
+        {
+          "connected_seconds": 0.00025745807215571404,
+          "elapsed_seconds": 0.663533375132829,
+          "event": "connected",
+          "time": "2026-11-05T20:23:25Z"
+        },
+        {
+          "connected_seconds": 0.41848433297127485,
+          "elapsed_seconds": 1.0817600414156914,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:23:25Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47825287468731403,
+          "elapsed_seconds": 1.1415290418080986,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:23:25Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.47856662468984723,
+          "elapsed_seconds": 1.1418427918106318,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T20:23:25Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5393475415185094,
+          "elapsed_seconds": 1.202623374760151,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:23:25Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.5397435831837356,
+          "elapsed_seconds": 1.203019583132118,
+          "event": "discovery_complete",
+          "time": "2026-11-05T20:23:25Z"
+        },
+        {
+          "connected_seconds": 0.5977514581754804,
+          "elapsed_seconds": 1.2610272914171219,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T20:23:25Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 61.0972885414958,
+          "elapsed_seconds": 61.76056291675195,
+          "error": "The connection has timed out unexpectedly.",
+          "event": "disconnected",
+          "time": "2026-11-05T20:24:26Z"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 61.0976851247251,
+          "discovery_complete": true,
+          "elapsed_seconds": 61.76096120849252,
+          "event": "complete",
+          "exit_code": 1,
+          "notifications": 0,
+          "reason": "Peripheral disconnected before capture ended",
+          "subscribed": true,
+          "time": "2026-11-05T20:24:26Z"
+        }
+      ],
+      "events_sha256": "f6ed287677ec51d8ca1e5a61ef041bb944951a1738fc299486b81ac1b944bb17",
+      "source_sha256": {
+        "scripts/ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4",
+        "tools/probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c"
+      },
+      "exit_code": 1
+    },
+    {
+      "local_directory": "build/hardware/20261105T202443.849018Z-ble-cycle",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.022219541482627392,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:24:44Z"
+        },
+        {
+          "candidates": 0,
+          "discovery_complete": false,
+          "elapsed_seconds": 31.501511708367616,
+          "event": "complete",
+          "exit_code": 3,
+          "notifications": 0,
+          "reason": "Time limit; notification count is separate from subscription success",
+          "subscribed": false,
+          "subscription_transitions": 0,
+          "time": "2026-11-05T20:25:15Z"
+        }
+      ],
+      "events_sha256": "0ca56c0d25c944d87a1c191be6aa9b5e9ec84748387f6f9582f9840cfdc9b8e5",
+      "source_sha256": {
+        "scripts/ble_probe.py": "08a9c6223732dfa7c1f3101e710c4f1e5446a526f4a42c1af8579ebb91a96f39",
+        "tools/probe_zero2.swift": "3e1d64ede43311b7f3effe67486afb9ce5f9da1dfedfb11bed2573d4b1909d10"
+      },
+      "exit_code": 3
+    }
+  ],
+  "observed_connected_seconds": 61.0972885414958,
+  "notifications_received": 0,
+  "reconnection_succeeded": false,
+  "unsubscribe_cycle_exercised": false,
+  "cause": "Unproven; investigate idle/shutdown and BLE watchdog",
+  "limits": [
+    "No vendor value write sent in these captures",
+    "Cycle mode timed out while scanning, before any connection or CCC write",
+    "LED off supports shutdown but does not identify the executed firmware path or power cause"
+  ],
+  "subsequent_user_led_observation": "Off, before further button presses requested"
+}

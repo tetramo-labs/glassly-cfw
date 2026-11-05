@@ -7,7 +7,11 @@ application image `nuttx_ap.bin` to add one thing: a Glassly link on BLE busines
 forwards touch/crown gestures back. It is the firmware counterpart of the
 phone-side RayNeo iO support in the Glassly repo.
 
-**Revision: `GLASSLYCFW-IO/13`** (host-tested and built; v13 has not been flashed or hardware-validated).
+**Revision: `GLASSLYCFW-IO/14`** (host-tested and built; v14 has not been flashed or hardware-validated).
+
+Revision 14 hides the stock launcher (the app carousel and the board) while a
+phone is linked and drops the local long-press close. See
+[v14 changes and validation](docs/V14.md).
 
 Revision 13 moves the head-event relay before the stock re-pairing gate and adds
 head diagnostics. See [v13 fix and validation](docs/V13.md).
@@ -151,6 +155,7 @@ patches/
   anim.c                SHOW ops, easing, frame timer, SETTLED (G2 port, revision 4)
   page.c input.c ident.c  page lifecycle/lease, gesture capture, IDENT/DIAG/PAGE replies
   ancs.c                ANCS relay hook (notification JSON -> 0xF0 ANCS records)
+  launcher.c            launcher home hooks (no app list or board while a phone is linked)
   symbols.json          AP symbol table (name_ptr, address, tableOffset)
   build.py              clang -> single blob, no-linker reloc resolver, AP splice
   gen_patches.py        build.py -> committed cfw_patches.json

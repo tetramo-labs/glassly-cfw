@@ -40,10 +40,6 @@ static int cfw_btn_interceptor(int event) {
     customCfwContext *ctx = cfw_ctx_peek();
     if (!ctx || !ctx->page_open) return 0;
     switch (event) {
-    case BTN_EV_FIRST_PRESS:
-    case BTN_EV_RELEASED:
-        keyq_push(ctx, event);
-        return 0;                       /* press state flows on (indev, activity) */
     case BTN_EV_CLICK:
     case BTN_EV_DOUBLE_CLICK:
     case BTN_EV_HOLD_1S:
@@ -79,12 +75,6 @@ void cfw_input_poll(customCfwContext *ctx) {
         uint8_t event = ctx->keyq[ctx->keyq_r];
         ctx->keyq_r = (uint8_t)((ctx->keyq_r + 1u) % KEYQ_SIZE);
         switch (event) {
-        case BTN_EV_FIRST_PRESS:
-            ctx->press_start_tick = fw_tick();        /* the tick closes the page after LONG_CLOSE_MS held */
-            break;
-        case BTN_EV_RELEASED:
-            ctx->press_start_tick = 0;
-            break;
         case BTN_EV_CLICK:        cfw_gesture(ctx, GEST_SINGLE, event); break;
         case BTN_EV_DOUBLE_CLICK: cfw_gesture(ctx, GEST_DOUBLE, event); break;
         case BTN_EV_HOLD_1S:      cfw_gesture(ctx, GEST_TAP_HOLD, event); break;

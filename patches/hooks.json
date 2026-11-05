@@ -1,13 +1,13 @@
 {
   "base": "nuttx_ap.bin (Strix OS 1.0.4.12)",
-  "revision": "GLASSLYCFW-IO/13",
+  "revision": "GLASSLYCFW-IO/14",
   "ap_load_base": "0x10190000",
   "partition_capacity": "0x9f0000",
   "size_ceiling_bytes": 9600000,
   "build_info_footer": "1d3457be00001930",
   "module_va": "0x10a972c0",
-  "module_bytes": 78288,
-  "ap_sha256": "aec839c79c5c134e503ebb229f0ce5c604d414b44861ad2095d965c87515be53",
+  "module_bytes": 78308,
+  "ap_sha256": "3c326bc7ea1f91eaa61ae036f04f2f0756b7bcacbb0454402882a11ac1ceaaab",
   "hooks": [
     {
       "site_va": "0x106d9d1a",
@@ -228,6 +228,26 @@
       "verified": true,
       "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
       "purpose": "append CFW module (78288 B) 32-aligned at 0x10a972c0 + relocated footer"
+    },
+    {
+      "site_va": "0x107a1b76",
+      "file_offset": "0x611b76",
+      "length": 4,
+      "displaced": "f8f705fe",
+      "new": "fcf204f9",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "ViewManager::onEnterState: bl AppListView::show -> cfw_applist_show (launcher app list hidden while a phone is linked)"
+    },
+    {
+      "site_va": "0x107a1ab4",
+      "file_offset": "0x611ab4",
+      "length": 4,
+      "displaced": "9af006f8",
+      "new": "fcf27ef9",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "ViewManager::onEnterState: bl BoardView::show -> cfw_board_show (launcher board hidden while a phone is linked)"
     }
   ]
 }

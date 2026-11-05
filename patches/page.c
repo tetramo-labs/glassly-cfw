@@ -176,10 +176,6 @@ void cfw_page_tick(customCfwContext *ctx) {
             return;
         }
     }
-    if (ctx->press_start_tick && (now - ctx->press_start_tick) >= LONG_CLOSE_MS) {
-        ctx->press_start_tick = 0;
-        cfw_page_close(ctx, PAGE_USER);
-    }
     /* a present request the display thread never served (screen off) must
      * not block the next one forever */
     if (ctx->disp_pan_pending && (now - ctx->disp_pan_tick) > PRESENT_RETRY_MS) ctx->disp_pan_pending = 0;

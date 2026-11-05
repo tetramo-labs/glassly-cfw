@@ -66,6 +66,20 @@ static inline void *fw_sysstate_monitor(void) {
     void *mm = FW(void *(*)(void), FWA_monitor_manager_instance)();
     return mm ? FW(void *(*)(void *), FWA_monitor_manager_sysstate)(mm) : 0;
 }
+/* The launcher's LinkMonitor caches the phone link's state at +6
+ * (LinkMonitor::notifyConnectionChange stores it; syncConnectionStateFromInterface
+ * compares against it): MonitorManager::getLinkMonitor returns [mm + 0x14]. */
+#define LINK_MONITOR_CONNECTED 6u
+static inline void *fw_link_monitor(void) {
+    void *mm = FW(void *(*)(void), FWA_monitor_manager_instance)();
+    return mm ? FW(void *(*)(void *), FWA_monitor_manager_link)(mm) : 0;
+}
+static inline void fw_applist_show(void *view) {
+    FW(void (*)(void *), FWA_applist_show)(view);
+}
+static inline void fw_board_show(void *view) {
+    FW(void (*)(void *), FWA_board_show)(view);
+}
 static inline void fw_handle_head(void *handler, const void *message) {
     FW(void (*)(void *, const void *), FWA_launcher_handle_head)(handler, message);
 }
@@ -196,9 +210,9 @@ static inline int fw_inflate_end(cfw_zstream *z) { return FW(int (*)(void *), FW
 
 /* ---- CFW link wire protocol (business 0xF0) -------------------------------- */
 #define BIZ_GLASSLY 0xF0u
-#define REV_MAJOR 13u
-#define REV_TEXT  "13"                /* keep with REV_MAJOR: shown on the connect screen (hint.c) */
-#define REV_STRING "GLASSLYCFW-IO/13"
+#define REV_MAJOR 14u
+#define REV_TEXT  "14"                /* keep with REV_MAJOR: shown on the connect screen (hint.c) */
+#define REV_STRING "GLASSLYCFW-IO/14"
 #define MAX_CHUNK 240u
 /* The store is the largest of 256/192/128/96/64 KiB the heap grants at context
  * creation (ctx.c); IDENT, STATE and DIAG report the size obtained. */
@@ -407,7 +421,6 @@ typedef struct {
  * Revisions 5-7 spaced them 25 ms apart, 100 ms+ per stereo SHOW. */
 #define UPLINK_MAX 192u
 #define CROWN_PER_DETENT 600       /* raw wheel units per detent */
-#define LONG_CLOSE_MS 2000u        /* a >2s press closes the page locally */
 /* RayNeo button driver events (rayneo_button_event_to_string), as
  * rayneo_intercept_btn_event(event) hands them to the registered interceptors
  * on the button poll thread. The crown button is not a BES HAL key. */
@@ -607,7 +620,6 @@ typedef struct {
     volatile uint8_t keyq_w, keyq_r;
     /* gestures */
     int32_t crown_accum;
-    uint32_t press_start_tick;
 
     /* compass (compass.c): the sensor thread writes, the page timer reads */
     uint8_t compass_mode;          /* 0 off, 1 headings, 2 headings + raw */
@@ -736,6 +748,9 @@ void cfw_compass_tick(customCfwContext *ctx);
 
 /* hint.c */
 const char *cfw_disconnect_hint(void *i18n, const char *key);
+int cfw_link_up(void);
+void cfw_applist_show(void *view);
+void cfw_board_show(void *view);
 void cfw_hint_unregistered(void *i18n, void *label, const char *key);
 void cfw_bond_name_label(void *label, const char *name);
 const char *cfw_bond_language(void *self);

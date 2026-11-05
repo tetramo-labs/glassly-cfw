@@ -91,6 +91,9 @@ FW_SYMBOLS = [
     ("launcher_is_business_idle", "rayneo::service::launcher::LauncherAPI::isBussinessIdle", None),
     ("monitor_manager_instance", "rayneo::service::launcher::MonitorManager::getInstance", None),
     ("monitor_manager_input", "rayneo::service::launcher::MonitorManager::getInputEventMonitor", None),
+    ("monitor_manager_link", "rayneo::service::launcher::MonitorManager::getLinkMonitor", 0x106E8469),
+    ("applist_show", "rayneo::app::launcher::AppListView::show", 0x1079A785),
+    ("board_show", "rayneo::app::launcher::BoardView::show", 0x1083BAC5),
     ("input_register_wheel", "rayneo::service::launcher::InputEventMonitor::registerRawWheelListener", None),
     ("input_unregister_wheel", "rayneo::service::launcher::InputEventMonitor::unregisterRawWheelListener", None),
     ("btn_register", "rayneo_register_btn_event_interceptor", None),
@@ -139,6 +142,14 @@ SHIM_STOCK = bytes.fromhex("00241f48204b84610360")
 # Launcher UI-thread head event dispatch, preserving the stock handler.
 HEAD_SITE = 0x106EBCAE
 HEAD_STOCK_TARGET = 0x106EB4DD
+# Launcher home (revision 14): the one `bl AppListView::show` inside
+# ViewManager::onEnterState (after ensureAppListView) -> bl cfw_applist_show
+# (launcher.c), which keeps the app list hidden while a phone is linked.
+APPLIST_SITE = 0x107A1B76
+APPLIST_STOCK_TARGET = 0x1079A785
+# ...and the one `bl BoardView::show` in the same function -> bl cfw_board_show.
+BOARD_SITE = 0x107A1AB4
+BOARD_STOCK_TARGET = 0x1083BAC5
 # ANCS relay: the one `bl handleAncsNotificationReceived` inside
 # NotificationMessageHandler::handleMessage -> bl cfw_ancs_hook (ancs.c).
 ANCS_SITE = 0x10702E7E
@@ -540,6 +551,19 @@ def build_ap(ap, src=None):
     ops.append({"offset": off(HEAD_SITE), "old": head_stock.hex(), "new": head_new.hex(),
                 "desc": "LauncherThreadMsgHandler::handleMessage -> cfw_head_hook (relay before stock rebond gate)"})
 
+    applist_stock = _branch_bytes(APPLIST_SITE, APPLIST_STOCK_TARGET, link=True)
+    if ap[off(APPLIST_SITE):off(APPLIST_SITE) + 4] != applist_stock:
+        raise BuildError("app list hook site is not `bl AppListView::show`")
+    applist_new = _branch_bytes(APPLIST_SITE, (module_va + funcs["cfw_applist_show"]) | 1, link=True)
+    ops.append({"offset": off(APPLIST_SITE), "old": applist_stock.hex(), "new": applist_new.hex(),
+                "desc": "ViewManager::onEnterState: bl AppListView::show -> cfw_applist_show (no launcher home while linked)"})
+    board_stock = _branch_bytes(BOARD_SITE, BOARD_STOCK_TARGET, link=True)
+    if ap[off(BOARD_SITE):off(BOARD_SITE) + 4] != board_stock:
+        raise BuildError("board hook site is not `bl BoardView::show`")
+    board_new = _branch_bytes(BOARD_SITE, (module_va + funcs["cfw_board_show"]) | 1, link=True)
+    ops.append({"offset": off(BOARD_SITE), "old": board_stock.hex(), "new": board_new.hex(),
+                "desc": "ViewManager::onEnterState: bl BoardView::show -> cfw_board_show (no launcher board while linked)"})
+
     # 2c. Display present: retarget both layer_update calls in pandisp_exec.
     lcdc_hooks = []
     for site in LCDC_SITES:
@@ -600,6 +624,10 @@ def build_ap(ap, src=None):
                    "purpose": "call cfw_ancs_hook instead of handleAncsNotificationReceived (tail-calls it)"},
                   {"site": hex(HEAD_SITE), "len": 4, "old": head_stock.hex(), "new": head_new.hex(),
                    "purpose": "relay head up/down on the launcher thread and preserve stock handling"},
+                  {"site": hex(APPLIST_SITE), "len": 4, "old": applist_stock.hex(), "new": applist_new.hex(),
+                   "purpose": "call cfw_applist_show instead of AppListView::show (launcher home hidden while a phone is linked)"},
+                  {"site": hex(BOARD_SITE), "len": 4, "old": board_stock.hex(), "new": board_new.hex(),
+                   "purpose": "call cfw_board_show instead of BoardView::show (launcher board hidden while a phone is linked)"},
                   *lcdc_hooks],
     }
     return patched, ops, info

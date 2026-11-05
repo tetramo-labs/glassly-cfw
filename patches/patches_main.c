@@ -26,4 +26,5 @@
 #include "ancs.c"
 #include "disp.c"
 #include "hint.c"
+#include "launcher.c"
 #include "compass.c"

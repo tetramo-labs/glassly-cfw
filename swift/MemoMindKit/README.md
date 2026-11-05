@@ -92,6 +92,21 @@ control-link checks every 100 ms. This is a forward block request, not a retry.
 Unknown pacing values still stop the transaction. See the
 [native pacing evidence](../../analysis/ota-pacing-20261103/NOTES.md).
 
+`fontprobe` measures which Unicode scalars the glasses' resource fonts draw.
+The OTA does not carry the font partition, and the native text adapter refuses
+a whole string over one missing glyph, so the sweep draws strings off the panel
+with mode 15 under a wake and frame lease and bisects the refused ones
+(`FontProbe.swift`; ideographic and syllabic blocks are sampled, the rest is
+settled per scalar). It needs text commands (GLASSLYCFW/10+), runs a few
+minutes over RFCOMM and ends with the runs as Swift and Kotlin range literals,
+which pin `MemoMindOneRenderer.fontLacks` in glassly:
+
+```sh
+swift/MemoMindKit/.build/release/memomind fontprobe \
+  --address 4C:3C:8F:90:CC:C3 \
+  --output captures/font-probe-01
+```
+
 Every live attempt creates a new private directory containing `trace.jsonl` and
 either `result.json` or `failure.json`. Existing directories are rejected. RX,
 TX submission and native TX completion are recorded separately and fsynced.

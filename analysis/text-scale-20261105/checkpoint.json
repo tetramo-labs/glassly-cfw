@@ -27,8 +27,10 @@
     "note": "The Mac has not reached the glasses since the V12 attempt (RFCOMM SDP timed out); V11 is what the glasses run"
   },
   "glasslyBundle": {
-    "commit": null,
+    "commit": "3a27902c7f",
     "branch": "dev",
-    "files": "memomind-one-glassly-cfw-13.bin in ios/Source/Resources/MemoMindOneFirmware and android/src/main/assets/memomind-one; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; MemoMindOneRenderer textLineHeight 25"
+    "files": "memomind-one-glassly-cfw-13.bin in ios/Source/Resources/MemoMindOneFirmware and android/src/main/assets/memomind-one; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; MemoMindOneRenderer textLineHeight 25",
+    "featureCommit": "365d0fcd5e",
+    "iosTests": "MemoMindOneRendererTests 12, MemoMindOneFirmwareTests 2, MemoMindOneAdapterTests 23 passed; Android MemoMindOneRendererTest 6, MemoMindWireTest 19 passed; tools/memomind-one-mac swift test 140 passed"
   }
 }

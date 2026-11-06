@@ -8,6 +8,12 @@ static owner storage;
 static unsigned critical,layout=1,allocation_failure,allocations,schedule_error,schedules,arenas;
 static size_t fail_size;
 uint32_t mm_sensor_schedule(uint32_t generation){assert(!critical && generation);schedules++;return schedule_error;}
+static unsigned sample_schedules,sample_schedule_error,reads,read_result=1;static uint32_t sample_interval,sample_generation;
+static uint8_t als_flags;static unsigned settings;static uint8_t setting_values[16];
+uint32_t mm_sensor_schedule_sample(uint32_t generation,uint32_t interval){assert(!critical && generation && interval);sample_schedules++;sample_generation=generation;sample_interval=interval;return sample_schedule_error;}
+uint8_t mm_sensor_als_flags(void){assert(!critical);return als_flags;}
+void mm_sensor_als_setting(uint32_t key,const uint8_t *value){assert(!critical && key==0x5904 && value && *value<=1 && settings<sizeof(setting_values));setting_values[settings++]=*value;if(*value)als_flags|=8;else als_flags&=(uint8_t)~8;}
+int mm_sensor_als_read(uint16_t *out){assert(!critical && out);reads++;if(read_result){uint8_t als[2]={200,0};*out=200;glassly_sensor_finish(2,storage.generation,als);}return read_result;}
 static uint32_t ticks;
 void *mm_sensor_memory(void){return &storage;}
 uint32_t mm_sensor_clock(void){assert(!critical);return ticks;}
@@ -19,7 +25,7 @@ static int request_bytes(void *r,const uint8_t **p,size_t *n){if(!r)return 0;req
 static void release(void **p){*p=0;}
 static void *json(const char *s){assert(!critical);size_t n=strlen(s)+1;assert(n<=384);char *p=malloc(n);assert(p);memcpy(p,s,n);return p;}
 static void *status(uint32_t code,const char *s){(void)s;assert(code==4);return json("oom");}
-static void *alloc(size_t n){assert(!critical && (n==208 || n==384 || n==784));allocations++;if(allocation_failure || n==fail_size)return 0;if(n==784)arenas++;return malloc(n);}
+static void *alloc(size_t n){assert(!critical && (n==208 || n==384 || n==788));allocations++;if(allocation_failure || n==fail_size)return 0;if(n==788)arenas++;return malloc(n);}
 static uint32_t free_bytes(void){return 65536;}
 static void free_out(void *p){assert(!critical);free(p);}
 const mm_graphics_platform mm_graphics_native={.request_bytes=request_bytes,.release=release,.json=json,.status=status,.alloc=alloc,.free=free_out,.free_bytes=free_bytes};
@@ -32,7 +38,8 @@ static void snapshot(uint8_t *out){
     uint8_t b[4]={'S','C',1,0};char *s=send(b,4);char *hex=strstr(s,"\"stateHex\":\"");assert(hex);hex+=12;
     for(unsigned i=0;i<52;i++){unsigned v;assert(sscanf(hex+i*2,"%2x",&v)==1);out[i]=(uint8_t)v;}assert(hex[104]=='"');free(s);
 }
-static void reset(void){if(storage.data)free(storage.data);memset(&storage,0,sizeof(storage));schedule_error=schedules=0;fail_size=0;critical=allocation_failure=allocations=0;layout=1;ticks=100;}
+static void reset(void){if(storage.data)free(storage.data);memset(&storage,0,sizeof(storage));schedule_error=schedules=0;fail_size=0;critical=allocation_failure=allocations=0;layout=1;ticks=100;
+    sample_schedules=sample_schedule_error=reads=settings=0;read_result=1;sample_interval=sample_generation=0;als_flags=2;memset(setting_values,0,sizeof(setting_values));}
 static void lifecycle(void){
     reset();uint8_t state[52],imu[14];for(unsigned i=0;i<14;i++)imu[i]=(uint8_t)i;uint8_t als[2]={232,3};
     assert(!glassly_sensor_begin(1));snapshot(state);assert(!state[3] && !state[4]);
@@ -83,7 +90,7 @@ static void buffered(void){
     a=poll(gen,11);assert(strstr(a,"invalid"));free(a);assert(storage.ack==12 && storage.count==28);
     a=poll(gen,41);assert(strstr(a,"invalid"));free(a);assert(storage.ack==12);
     a=poll(gen+1,40);assert(strstr(a,"stale"));free(a);assert(storage.ack==12);
-    arena *old=storage.data;fail_size=784;command(1,3,"allocation-failed");assert(storage.data==old && storage.generation==gen);
+    arena *old=storage.data;fail_size=788;command(1,3,"allocation-failed");assert(storage.data==old && storage.generation==gen);
     fail_size=0;command(1,3,"ok");assert(storage.generation==gen+1 && !storage.count && !storage.sequence);
     glassly_sensor_finish(1,gen,imu);assert(!storage.count);
     uint8_t obsolete[8];put(obsolete,MAGIC);put(obsolete+4,gen);glassly_sensor_watch(obsolete,8);assert(storage.active==3);
@@ -128,4 +135,50 @@ static void draining(void){
     a=seal(gen,0);assert(strstr(a,"stale") && storage.active==3);free(a);
     a=seal(storage.generation,0);free(a);schedule_error=11;watch();assert(!storage.data);
 }
-int main(void){lifecycle();expiry();boundaries();buffered();draining();release_owned();reset();puts("sensor capture host: lifecycle, freshness, rollover, stale completion, bounds and OOM passed");return 0;}
+static void start_active(uint8_t mask,uint32_t interval,const char *result){
+    uint8_t b[7]={'S','C',1,1,mask,(uint8_t)interval,(uint8_t)(interval>>8)};char *s=send(b,7);char expected[64];
+    snprintf(expected,sizeof(expected),"\"result\":\"%s\"",result);assert(strstr(s,expected));free(s);
+}
+static void sample(void){uint8_t b[8];put(b,MAGIC);put(b+4,sample_generation);glassly_sensor_sample(b,sizeof(b));}
+static void active_sampling(void){
+    reset();
+    /* Passive starts never touch the sensor or schedule samples. */
+    command(1,3,"ok");assert(!sample_schedules && !settings && !storage.data->interval && !storage.data->forced);
+    sample();assert(!reads);
+    /* An interval needs light in the mask and clamps to the stock range. */
+    start_active(1,500,"invalid");start_active(2,0,"invalid");
+    uint8_t six[6]={'S','C',1,1,3,244};char *s=send(six,6);assert(strstr(s,"invalid"));free(s);
+    /* Suspended (auto-brightness off): the start forces the sensor and the arena remembers it. */
+    start_active(3,50,"ok");assert(storage.data->interval==100 && sample_interval==100 && sample_generation==storage.generation);
+    assert(settings==1 && setting_values[0]==1 && storage.data->forced && (als_flags&8));
+    /* A restart releases the old arena's force before forcing again. */
+    start_active(2,9000,"ok");assert(storage.data->interval==5000 && sample_interval==5000 && storage.active==2);
+    assert(settings==3 && !setting_values[1] && setting_values[2]==1 && storage.data->forced && (als_flags&8));
+    unsigned scheduled=sample_schedules;sample();assert(reads==1 && sample_schedules==scheduled+1 && storage.valid==2 && storage.count==1);
+    uint8_t state[52];snapshot(state);assert(state[50]==200 && !state[51]);
+    /* A read failure publishes nothing and keeps sampling. */
+    read_result=0;sample();assert(reads==2 && storage.count==1 && sample_schedules==scheduled+2);read_result=1;
+    /* Stale generation and the lease expiry stop the sampling without a read. */
+    uint8_t stale[8];put(stale,MAGIC);put(stale+4,storage.generation+1);glassly_sensor_sample(stale,8);assert(reads==2);
+    ticks+=LEASE;sample();assert(reads==2 && sample_schedules==scheduled+2 && storage.data);
+    /* The watchdog detaches the expired arena, releasing the force. */
+    watch();assert(!storage.data && settings==4 && !setting_values[3] && !(als_flags&8));
+    /* Already running or already forced: no setting change, release leaves it alone. */
+    settings=0;als_flags=2|4;start_active(3,250,"ok");assert(!settings && !storage.data->forced);command(2,0,"ok");assert(!settings);
+    als_flags=2|8;start_active(3,250,"ok");assert(!settings && !storage.data->forced);command(2,0,"ok");assert(!settings);
+    /* Stop, restart, cleanup and release all undo a force exactly once. */
+    als_flags=2;start_active(3,250,"ok");assert(settings==1 && setting_values[0]==1);
+    start_active(3,300,"ok");assert(settings==3 && !setting_values[1] && setting_values[2]==1 && storage.data->forced);
+    command(2,0,"ok");assert(settings==4 && !setting_values[3] && !(als_flags&8));
+    settings=0;start_active(3,250,"ok");assert(settings==1);glassly_sensor_cleanup();assert(settings==2 && !setting_values[1]);
+    settings=0;start_active(3,250,"ok");assert(settings==1);uint32_t gen=storage.generation;
+    char *r=release_capture(gen,0);assert(strstr(r,"released") && settings==2 && !setting_values[1]);free(r);
+    /* A failed sample schedule cancels the start and its force. */
+    settings=0;sample_schedule_error=11;start_active(3,250,"schedule-failed");assert(!storage.data && settings==2 && !setting_values[1]);
+    sample_schedule_error=0;settings=0;start_active(3,250,"ok");sample_schedule_error=11;sample();assert(!storage.data && settings==2);
+    sample_schedule_error=0;
+    /* Draining freezes sampling too. */
+    settings=0;start_active(3,250,"ok");gen=storage.generation;r=seal(gen,0);free(r);reads=0;sample();assert(!reads && storage.data);
+    r=release_capture(gen,0);free(r);assert(settings==2);
+}
+int main(void){lifecycle();expiry();boundaries();buffered();draining();release_owned();active_sampling();reset();puts("sensor capture host: lifecycle, freshness, rollover, stale completion, bounds, OOM and active light sampling passed");return 0;}

@@ -13,12 +13,35 @@ from wake_control_runtime_emulator_test import WakeMachine
 from flash_canary_runtime_emulator_test import REGISTRY
 import sensor_native_abi_test as S
 
+G.NATIVES.update({0x0422b67a: 'als_read', 0x0422b620: 'als_setting'})
+ALS_FLAGS = 0x02011628
+
 
 class SensorMachine(WakeMachine):
     def __init__(self):
         super().__init__()
         self.sensor_watch = None
         self.sensor_timer_error = 0
+        self.sensor_sample = None
+        self.sensor_sample_error = 0
+        self.sample_interval = None
+        self.als_reads = 0
+        self.als_read_result = 1
+        self.als_settings = []
+        try:
+            self.uc.mem_map(ALS_FLAGS & ~4095, 4096)
+        except G.u.UcError:
+            pass
+        self.flags(2)
+
+    def flags(self, value):
+        self.uc.mem_write(ALS_FLAGS, bytes([value]))
+
+    def tick_sample(self, payload=None):
+        data = payload or self.sensor_sample
+        p = self.allocate(len(data), 'sensor-sample-job', data, writable=False)
+        self.call('glassly_microphone_task_entry', 0x293, p, len(data))
+        self.discard(p)
 
     def tick_sensor(self, payload=None):
         data = payload or self.sensor_watch
@@ -38,12 +61,36 @@ class SensorMachine(WakeMachine):
 
     def native(self, name, args):
         if name == 'mic_timer':
-            assert not self.critical and args[:2] == (0x13, 0x292) and args[3:5] == (8, 1000)
-            if not self.sensor_timer_error:self.sensor_watch = self.read(args[2], 8)
-            return self.sensor_timer_error
+            assert not self.critical and args[0] == 0x13 and args[1] in (0x292, 0x293) and args[3] == 8
+            if args[1] == 0x292:
+                assert args[4] == 1000
+                if not self.sensor_timer_error:self.sensor_watch = self.read(args[2], 8)
+                return self.sensor_timer_error
+            assert 100 <= args[4] <= 5000
+            if not self.sensor_sample_error:
+                self.sensor_sample = self.read(args[2], 8)
+                self.sample_interval = args[4]
+            return self.sensor_sample_error
         if name == 'mic_clock':
             assert not self.critical
             return self.now
+        if name == 'als_read':
+            # The stock read's patched prologue publishes a success through the
+            # hook; the test replays that publication after the tick (a nested
+            # emulator call inside a native stub would end the outer run).
+            assert not self.critical and args[0] % 2 == 0 and self.region(args[0], 2) == 'stack'
+            self.als_reads += 1
+            if self.als_read_result:
+                self.uc.mem_write(args[0], b'\xc8\0')
+            return self.als_read_result
+        if name == 'als_setting':
+            assert not self.critical and args[0] == 0x5904 and self.region(args[1], 1) == 'stack'
+            value = self.read(args[1], 1)[0]
+            assert value <= 1
+            self.als_settings.append(value)
+            flags = self.read(ALS_FLAGS, 1)[0]
+            self.flags(flags | 8 if value else flags & ~8)
+            return 0
         return super().native(name, args)
 
     def region(self, address, size, writing=False):
@@ -51,10 +98,15 @@ class SensorMachine(WakeMachine):
             if writing:
                 assert self.critical
             return 'sensor-registry'
+        if address == ALS_FLAGS and size == 1:
+            assert not writing and not self.critical
+            return 'als-flags'
         return super().region(address, size, writing)
 
-    def sensor(self, op=0, mask=3):
+    def sensor(self, op=0, mask=3, interval=None):
         body = b'SC\1' + bytes([op]) + (bytes([mask]) if op == 1 else b'')
+        if interval is not None:
+            body += struct.pack('<H', interval)
         reply = self.service(0x76, self.request(body))[0]
         assert reply['glassly'] == 'sensors' and reply['abi'] == 1
         return reply, bytes.fromhex(reply['stateHex'])
@@ -161,7 +213,7 @@ class Tests(unittest.TestCase):
         m.call('glassly_sensor_cleanup'); assert not m.owned_live()
 
     def test_arena_failures_and_watch_generation(self):
-        m = SensorMachine();m.fail_alloc_sizes.add(784)
+        m = SensorMachine();m.fail_alloc_sizes.add(788)
         assert m.sensor(1)[0]['result'] == 'allocation-failed' and not m.owned_live()
         m.fail_alloc_sizes.clear();m.sensor(1);old = m.sensor_watch
         m.sensor(1);m.tick_sensor(old);assert m.sensor()[1][3] == 3
@@ -171,6 +223,57 @@ class Tests(unittest.TestCase):
         m.sensor_timer_error=0;m.sensor(1);m.sensor_timer_error=11;m.tick_sensor()
         assert m.sensor()[1][3] == 0 and not m.owned_live()
         m.sensor_timer_error=0;m.sensor(1);m.execute_display(bytes([11]));assert not m.owned_live()
+
+    def test_active_light_sampling(self):
+        m = SensorMachine()
+        # Passive starts leave the sensor alone; an interval needs light in the mask.
+        reply, state = m.sensor(1)
+        assert reply['result'] == 'ok' and m.sensor_sample is None and not m.als_settings
+        assert m.sensor(1, 1, 500)[0]['result'] == 'invalid'
+        assert m.sensor(1, 3, 0)[0]['result'] == 'invalid'
+        assert m.sensor(1, 3, 50)[0]['result'] == 'ok' and m.sample_interval == 100
+        generation = struct.unpack_from('<I', state, 8)[0] + 1
+        assert m.sensor_sample == struct.pack('<II', 0x534e5333, generation)
+        # Auto-brightness off: the start forces the sensor through the stock setting.
+        assert m.als_settings == [1] and m.read(ALS_FLAGS, 1)[0] & 8
+        m.sensor_sample, m.sample_interval = None, None
+        m.tick_sample(struct.pack('<II', 0x534e5333, generation))
+        assert m.als_reads == 1 and m.sample_interval == 100 and m.sensor_sample is not None
+        assert m.begin(2) == generation
+        m.finish(generation, 2, b'\xc8\0')
+        reply, state = m.sensor()
+        assert state[4] & 2 and state[50:52] == b'\xc8\0'
+        result, batch = m.batch(generation)
+        assert result['result'] == 'ok' and batch[26] == 1 and batch[28 + 8] == 2
+        # A failed read publishes nothing but keeps the cadence.
+        m.als_read_result = 0
+        m.tick_sample()
+        assert m.als_reads == 2 and m.batch(generation)[1][26] == 1
+        m.als_read_result = 1
+        # Stale and expired generations do not read; the watchdog releases the force.
+        m.tick_sample(struct.pack('<II', 0x534e5333, generation + 1))
+        assert m.als_reads == 2
+        m.now += 90000
+        m.tick_sample()
+        assert m.als_reads == 2
+        m.tick_sensor()
+        assert m.als_settings == [1, 0] and not m.read(ALS_FLAGS, 1)[0] & 8
+        # Running already (auto-brightness on): no force, and stop changes nothing.
+        m.flags(2 | 4)
+        assert m.sensor(1, 3, 9000)[0]['result'] == 'ok' and m.sample_interval == 5000 and m.als_settings == [1, 0]
+        assert m.sensor(2)[0]['result'] == 'ok' and m.als_settings == [1, 0]
+        # Stop releases a force; a failed sample schedule cancels the start and its force.
+        m.flags(2)
+        assert m.sensor(1, 2, 250)[0]['result'] == 'ok' and m.als_settings == [1, 0, 1]
+        assert m.sensor(2)[0]['result'] == 'ok' and m.als_settings == [1, 0, 1, 0]
+        m.sensor_sample_error = 11
+        reply, state = m.sensor(1, 3, 250)
+        assert reply['result'] == 'schedule-failed' and state[3] == 0 and m.als_settings == [1, 0, 1, 0, 1, 0]
+        m.sensor_sample_error = 0
+        # Mode-11 cleanup releases the force as well.
+        assert m.sensor(1, 3, 250)[0]['result'] == 'ok' and m.als_settings[-1] == 1
+        m.call('glassly_sensor_cleanup')
+        assert m.als_settings[-1] == 0 and m.sensor()[1][3] == 0
 
     def test_freestanding_memset(self):
         m = SensorMachine()

@@ -154,6 +154,7 @@ static void configure(owner *o,const uint8_t *p){
 void glassly_microphone_task(uint32_t event,const uint8_t *p,uint32_t n){
 #ifdef MM_SENSOR_CAPTURE
     if(event==0x292u){glassly_sensor_watch(p,n);return;}
+    if(event==0x293u){glassly_sensor_sample(p,n);return;}
 #endif
     owner *o=get();if(!o)return;
     if(event==WATCH_EVENT){

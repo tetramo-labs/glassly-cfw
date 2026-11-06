@@ -1,0 +1,35 @@
+{
+ "version": "GLASSLYCFW/14",
+ "release": "active-als-001",
+ "change": "Active light sampling: a sensor start with an interval makes the CFW read the light sensor on the app task at 100-5000 ms, forcing it active via the stock settings listener while auto-brightness has it suspended; capability activeAls",
+ "sourceCommitG2": "e889569fe77775ed5822af6f7e47210f2984f15d",
+ "build": "build-14-01",
+ "runtimeBytes": 94816,
+ "runtimeSHA256": "9c2a6c130b76e507f025ee137c0e00cf64ad489e9773f076883eba11d42d8856",
+ "linkerRelaxation": true,
+ "imageBytes": 2249519,
+ "imageSHA256": "e9e42be73f1a45052d2091237a87c1131d6abfb896c0d48c3db7188ceddf553f",
+ "containerHeaderSHA256": "e950fee8585c60adb17f675c1cb846ddf6670e1456c246a6864e0133fec5d7eb",
+ "appHeaderSHA256": "31642bf2c02e0c54a787aa5d6c75ba7ee12a1cf287211bcfc015c9533c652d4c",
+ "bootSelectorTest": "boot-selector-14.json",
+ "sensorRuntimeTest": "sensor-capture-runtime.json",
+ "regression": "regression-14-01",
+ "regressionVerification": "regression-verification.json",
+ "hostSuites": "run_sensor_capture_tests.py with active_sampling() passes under ASan/UBSan",
+ "macToolCatalog": "active-als-001 admitted; swift test SensorCaptureTests+FirmwareImageTests 41 passed",
+ "flashed": false,
+ "flashAttempt": null,
+ "bootVerified": false,
+ "hardwareChecks": {
+  "physicalDisplayConfirmed": false,
+  "phoneConnectionTested": false,
+  "activeSamplingObserved": false,
+  "note": "The glasses were not discoverable from the Mac on 2026-11-06; V11 is what the glasses run"
+ },
+ "glasslyBundle": {
+  "commit": null,
+  "branch": "dev",
+  "files": "memomind-one-glassly-cfw-14.bin in ios/Source/Resources/MemoMindOneFirmware and android/src/main/assets/memomind-one; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; clients send the interval when activeAls is advertised"
+ },
+ "regressionNotes": "regression-14-01: all 145 required offline stages passed, no source drift, no missing mapped stages; record-build reproduces the bundled blob at revision 14"
+}

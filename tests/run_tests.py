@@ -93,7 +93,7 @@ def main():
           '--storage-diagnostics', '--full-store-reader', '--flash-canary', '--raster-commands',
           '--rect-copy', '--command-bundles', '--text-commands', '--diagnostic-commands',
           '--reset-undo-trim', '--minimal-launcher', '--flash-scene', '--wake-control',
-          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--cfw-revision', '13', '--rx-profile', 'app-rx-96k-v1', '--relax']),
+          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--cfw-revision', '14', '--rx-profile', 'app-rx-96k-v1', '--relax']),
         ('first_run_boot', 'Fresh and configured boot select the minimal owner; altered patch witnesses rejected',
          [str(args.rv32_python.absolute()), 'tests/rv32/first_run_boot_test.py',
           '--build', str(out / 'record-build'), '--report', str(out / 'first-run-boot.json')]),

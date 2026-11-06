@@ -71,7 +71,11 @@ final class SensorCaptureTests: XCTestCase {
             let request = try XCTUnwrap(GMStream().feed(bytes).first)
             XCTAssertEqual(request.command, 118)
             let command = try XCTUnwrap(SensorCaptureCommand(rawValue: request.tlvs[0].value[3]))
-            XCTAssertEqual(request.tlvs[0].value, command.encoded())
+            if request.tlvs[0].value.count == 7 {
+                XCTAssertEqual(request.tlvs[0].value, try SensorCaptureCommand.activeStart(mask: 3, intervalMilliseconds: 250))
+            } else {
+                XCTAssertEqual(request.tlvs[0].value, command.encoded())
+            }
             seen.append(request.event)
             var b = self.fixture()
             if command == .stop {
@@ -84,7 +88,22 @@ final class SensorCaptureTests: XCTestCase {
         var event: UInt8 = 254
         XCTAssertNotNil(try session.sensorCapture(.start, event: &event).imu)
         XCTAssertEqual(try session.sensorCapture(.renew, event: &event).generation, 7)
+        XCTAssertEqual(try session.sensorCaptureActiveStart(intervalMilliseconds: 250, event: &event).light?.normalized, 1000)
         XCTAssertEqual(try session.sensorCapture(.stop, event: &event).activeMask, 0)
-        XCTAssertEqual(seen, [255, 1, 2])
+        XCTAssertEqual(seen, [255, 1, 2, 3])
+    }
+
+    func testActiveStartEncodingAndRanges() throws {
+        XCTAssertEqual([UInt8](try SensorCaptureCommand.activeStart(intervalMilliseconds: 500)), [83, 67, 1, 1, 3, 244, 1])
+        XCTAssertEqual([UInt8](try SensorCaptureCommand.activeStart(mask: 2, intervalMilliseconds: 5000)), [83, 67, 1, 1, 2, 136, 19])
+        XCTAssertThrowsError(try SensorCaptureCommand.activeStart(mask: 1, intervalMilliseconds: 500))
+        XCTAssertThrowsError(try SensorCaptureCommand.activeStart(mask: 4, intervalMilliseconds: 500))
+        XCTAssertThrowsError(try SensorCaptureCommand.activeStart(intervalMilliseconds: 99))
+        XCTAssertThrowsError(try SensorCaptureCommand.activeStart(intervalMilliseconds: 5001))
+        // Extra capability keys (activeAls) do not disturb the revision 10 contract.
+        let sensors: [String: Any] = ["command": 118, "version": 1, "capture": "passive-buffered", "capacity": 32, "batch": 4, "batchVersion": 2, "finish": 5, "release": 6, "drainTicks": 30000, "imu": "icm42670-registers",
+                                      "als": "native-0-1000", "leaseTicks": 90000, "activeAls": 1, "activeAlsMinMs": 100, "activeAlsMaxMs": 5000]
+        let caps = try messageJSON(["glassly": "graphics-runtime", "abi": 1, "version": "GLASSLYCFW/14", "sensors": sensors], command: 0x7E)
+        XCTAssertNoThrow(try SensorCaptureSnapshot.validateCapability(caps))
     }
 }

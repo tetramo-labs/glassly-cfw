@@ -6,6 +6,16 @@ public enum SensorCaptureCommand: UInt8, Sendable {
     public func encoded() -> Data {
         Data([0x53, 0x43, 1, rawValue] + (self == .start ? [3] : []))
     }
+
+    /// Revision 14: a start with an interval makes the glasses sample the light
+    /// sensor themselves at that cadence (100...5000 ms, light must be in the
+    /// mask) instead of waiting for the stock reader.
+    public static func activeStart(mask: UInt8 = 3, intervalMilliseconds: Int) throws -> Data {
+        try requireProtocol(mask & 2 != 0 && mask <= 3, "Active light sampling needs the light sensor in the mask")
+        try requireProtocol((100 ... 5000).contains(intervalMilliseconds), "Light sampling interval is outside 100...5000 ms")
+        return Data([0x53, 0x43, 1, SensorCaptureCommand.start.rawValue, mask,
+                     UInt8(intervalMilliseconds & 255), UInt8(intervalMilliseconds >> 8)])
+    }
 }
 
 public struct SensorVector: Codable, Equatable, Sendable {
@@ -100,6 +110,17 @@ public struct SensorCaptureSnapshot: Codable, Equatable, Sendable {
 }
 
 public extension GMSession {
+    /// Starts a capture with active light sampling (revision 14 `activeAls`).
+    func sensorCaptureActiveStart(mask: UInt8 = 3, intervalMilliseconds: Int, event: inout UInt8) throws -> SensorCaptureSnapshot {
+        let body = try SensorCaptureCommand.activeStart(mask: mask, intervalMilliseconds: intervalMilliseconds)
+        event = event == 255 ? 1 : event + 1
+        let state = try SensorCaptureSnapshot.decode(request(event: event, service: 15, command: 0x76,
+                                                             body: GMTLV(kind: 1, value: body).encoded()))
+        try requireProtocol(state.result == "ok", "Sensor control refused: \(state.result)")
+        try requireProtocol(state.activeMask == mask, "Sensor capture did not restart")
+        return state
+    }
+
     func sensorCapture(_ command: SensorCaptureCommand, event: inout UInt8) throws -> SensorCaptureSnapshot {
         event = event == 255 ? 1 : event + 1
         let state = try SensorCaptureSnapshot.decode(request(event: event, service: 15, command: 0x76,

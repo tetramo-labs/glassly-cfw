@@ -232,6 +232,11 @@ private struct FirmwareRelease {
                         streams: streamPins(.resetUndoTrim)),
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
+        // Active light sampling: the CFW reads the sensor at a requested interval (GLASSLYCFW/14).
+        FirmwareRelease(name: "active-als-001",
+                        sha256: "e9e42be73f1a45052d2091237a87c1131d6abfb896c0d48c3db7188ceddf553f", byteCount: 2_249_519, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "e950fee8585c60adb17f675c1cb846ddf6670e1456c246a6864e0133fec5d7eb",
+                        streams: streamPins(.activeAls14)),
         // Default text drawn at 4/5 of the resource font, the G2's 27 px line (GLASSLYCFW/13).
         FirmwareRelease(name: "text-scale-001",
                         sha256: "5c638151d3a29d7847e7e8cfbdcc3362648cf3c4185c61a054f79b73aef9a1de", byteCount: 2_249_152, modified: true,
@@ -302,12 +307,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .activeAls14:
+            metadata = 171; appPacked = 978_417; appRaw = 1_868_032
+            metadataHash = "f01432efa94b3c8e71ea2c1cd22479a4e5fe174b6d1bdca18f08b27bfb502165"
+            appHash = "7ad8b0bfc73d613ea6f3b10010191192188f779611b378806e3ce90b0a367e3a"
         case .textScale13:
             metadata = 171; appPacked = 978_050; appRaw = 1_867_504
             metadataHash = "66a0d5c4b944f74f9aa74d74210fd8f3b4ad66987f4eaa67bcf65b7954a09afa"

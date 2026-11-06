@@ -1,5 +1,16 @@
 # MemoMind One firmware investigation
 
+Revision 14 adds active light sampling to the sensor capture: a start carrying
+an interval (100–5000 ms) makes the glasses call the stock light read
+themselves on the app task at that cadence, forcing the sensor active through
+the stock settings listener while auto-brightness has it suspended and
+releasing that force with the capture. It is the firmware half of the G2's
+mode 16; the Glassly App already serves the G2 light contract over the passive
+capture and uses the interval when the firmware advertises `activeAls`. The
+runtime is 94,816 bytes. Built, catalogued and bundled, not flashed. See the
+[sensor contract](runtime/graphics/SENSORS.md) and the
+[V14 checkpoint](analysis/active-als-20261106/checkpoint.json).
+
 Revision 13 draws default text at 4/5 of the resource font. The glasses' only
 Latin face is a 34 px line with its baseline 7 px up, so inline text overflowed
 the 24–27 px rows the phone lays out for the Even G2's 20 px font and lost its

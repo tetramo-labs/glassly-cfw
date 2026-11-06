@@ -1,10 +1,12 @@
-# Buffered passive sensor capture (GLASSLYCFW/10)
+# Buffered sensor capture (GLASSLYCFW/10, active light sampling in GLASSLYCFW/14)
 
 Service 15 command 118 (`0x76`) observes stock sensor reads without changing
 sensor power, polling rate or calibration. Revision 10 adds a frozen tail and generation-checked release to the
 32-record FIFO. It is bounded capture, not a
 lossless stream or calibrated G2 sensor adapter. No compass source is established.
-A successful start can have no samples until native firmware reads a sensor.
+A passive start can have no samples until native firmware reads a sensor;
+revision 14 adds an active light mode, below, where the CFW reads the light
+sensor itself at a requested interval.
 
 Commands use a single binary TLV 1. All lengths are exact. Integers in commands
 are little-endian.
@@ -13,6 +15,7 @@ are little-endian.
 | --- | --- |
 | Status | `53 43 01 00` |
 | Start | `53 43 01 01 mask` (1 IMU, 2 ALS, 3 both) |
+| Start, active light | `53 43 01 01 mask interval:u16` (mask includes 2; interval ms, clamped 100–5000; revision 14) |
 | Stop | `53 43 01 02` |
 | Renew | `53 43 01 03` |
 | Batch | `53 43 01 04 generation:u32 acknowledged:u32` |
@@ -23,8 +26,8 @@ Start replaces the capture generation, clears validity and resets sequences,
 ACK and drop counts. The lease is 90,000 RTOS ticks. Renew only extends a live
 capture; stop, expiry, whole-session cleanup, mode 11 and launcher destruction
 invalidate samples and release the buffer. Releasing a display frame preserves
-capture. Start allocates 784 bytes with a 32 KiB heap reserve. Allocation failure
-leaves a prior capture intact. Restart can briefly hold two arenas (1,568 bytes)
+capture. Start allocates 788 bytes with a 32 KiB heap reserve. Allocation failure
+leaves a prior capture intact. Restart can briefly hold two arenas (1,576 bytes)
 before freeing the old one; reply scratch is at most 384 bytes, excluding native
 JSON/allocator overhead. Scheduling failure cancels only the generation
 whose watchdog could not be queued. The 48-byte owner remains at `0x0205e1f8`. Its internal validity byte uses
@@ -45,6 +48,35 @@ tick is sampled outside the critical section. FIFO ordering reflects publication
 order, not a guarantee of timestamp order across different sensors. Sequence
 exhaustion disables capture instead of wrapping. Each successful publication
 increments its per-sensor latest-sample sequence and the combined FIFO sequence.
+
+## Active light sampling (GLASSLYCFW/14)
+
+A start carrying an interval (`activeAls` in the capability reply, 100–5000 ms,
+light in the mask) makes the firmware sample the light sensor itself: a
+generation-tagged job on the app task (event `0x293`, the same delayed-task API
+as the watchdog) calls the stock sample read `0x0422b67a` once per interval and
+re-arms itself; the read's patched prologue publishes each success into the
+FIFO exactly as a stock read would. The job stops without a read once the
+generation is stale, the capture stopped, sealed or expired, or light left the
+active mask; a failed re-arm cancels the generation like a failed watchdog.
+
+The stock reader only samples while auto-brightness keeps the sensor running.
+When the sensor is suspended and not already forced (light-manager flags
+`0x02011628` bits 2 and 3 both clear), the start forces it active through the
+stock settings listener (`0x0422b620`, setting `0x5904`, value 1). That changes
+the RAM flag only; nothing is persisted. The arena records the force, and
+whatever releases the arena (stop, restart, release, lease expiry through the
+watchdog, mode 11 cleanup, a failed schedule) clears it again (value 0) outside
+the critical section. A sensor already running or already forced is left alone.
+A forced read resumes the sensor, sleeps 110 native ticks and suspends it again
+under the I2C lock, on the app task, per sample: at 100 ms that is most of the
+task's time, so prefer 250 ms or more unless the sensor is running anyway.
+Passive starts (5 bytes) are unchanged. An interval with an IMU-only mask, a
+zero interval or a 6-byte start is `invalid`.
+
+Native sampling cadence, the sleep inside the forced read and the force's
+interaction with a user toggling auto-brightness are unverified on hardware;
+host and RV32 emulator tests mock the read, the flags and the listener.
 
 ## Finishing and releasing a capture
 

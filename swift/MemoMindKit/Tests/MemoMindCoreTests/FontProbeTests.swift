@@ -74,6 +74,20 @@ final class FontProbeTests: XCTestCase {
         XCTAssertEqual(bounded.nextScalar, 0x200, "--to reports where the sweep would continue")
     }
 
+    func testMemberBlocksProbeOnlyTheListedScalars() throws {
+        let set = FontProbe.Block("gb", members: [0x4E2D, 0x56FD, 0x4EBA, 0x4EBA, 0x9FA5])
+        XCTAssertEqual(FontProbe.scalars(set), [0x4E2D, 0x4EBA, 0x56FD, 0x9FA5], "sorted, unique")
+        XCTAssertEqual(set.first, 0x4E2D)
+        XCTAssertEqual(set.last, 0x9FA5)
+        var sent: [UInt32] = []
+        let report = try FontProbe.probe(blocks: [set], draw: font([ascii, 0x4E00 ... 0x9FA4], log: { sent += String(decoding: $0, as: UTF8.self).unicodeScalars.map(\.value) }))
+        XCTAssertEqual(report.runs, [FontProbe.Run(first: 0x4E2D, last: 0x4E2D), FontProbe.Run(first: 0x4EBA, last: 0x4EBA), FontProbe.Run(first: 0x56FD, last: 0x56FD)])
+        XCTAssertEqual(report.blocks[0].absent, 1)
+        XCTAssertFalse(sent.contains(0x4E2E), "nothing between the members is drawn")
+        let clipped = try FontProbe.probe(blocks: [set], from: 0x5000, draw: font([ascii]))
+        XCTAssertEqual(clipped.blocks[0].absent, 2, "--from keeps only the members at or above it")
+    }
+
     func testScalarsSkipControlsSurrogatesAndNoncharacters() {
         XCTAssertEqual(FontProbe.scalars(FontProbe.Block("x", 0x0000, 0x0020)), [0x20])
         XCTAssertTrue(FontProbe.scalars(FontProbe.Block("x", 0x0020, 0x007F)).contains(0x7F), "DEL is a glyph to the decoder")

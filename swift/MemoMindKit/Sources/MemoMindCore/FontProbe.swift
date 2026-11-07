@@ -20,12 +20,20 @@ public enum FontProbe {
         public let first: UInt32
         public let last: UInt32
         public let resolution: Resolution
+        /// An explicit scalar list (a character set rather than a Unicode range), kept sorted and unique.
+        public let members: [UInt32]?
 
-        public init(_ name: String, _ first: UInt32, _ last: UInt32, _ resolution: Resolution = .exact) {
+        public init(_ name: String, _ first: UInt32, _ last: UInt32, _ resolution: Resolution = .exact, members: [UInt32]? = nil) {
             self.name = name
             self.first = first
             self.last = last
             self.resolution = resolution
+            self.members = members.map { Array(Set($0)).sorted() }
+        }
+
+        /// A block over the listed scalars, e.g. a national character set's common tier.
+        public init(_ name: String, members: [UInt32], _ resolution: Resolution = .exact) {
+            self.init(name, members.min() ?? 0, members.max() ?? 0, resolution, members: members)
         }
     }
 
@@ -173,7 +181,8 @@ public enum FontProbe {
     /// controls (bytes 1..31 are x shifts, NUL is invalid), surrogates or
     /// noncharacters.
     public static func scalars(_ block: Block) -> [UInt32] {
-        (block.first ... block.last).filter { value in
+        (block.members ?? Array(block.first ... block.last)).filter { value in
+            (block.first ... block.last).contains(value) &&
             value >= 0x20 && !(0xD800 ... 0xDFFF).contains(value) && !(0xFDD0 ... 0xFDEF).contains(value)
                 && value & 0xFFFE != 0xFFFE && value <= 0x10FFFF
         }
@@ -232,7 +241,7 @@ public enum FontProbe {
         let table = blocks
         let blocks = blocks.compactMap { block -> Block? in
             block.last < from || block.first > to ? nil
-                : Block(block.name, max(block.first, from), min(block.last, to), sampled ? .sampled : block.resolution)
+                : Block(block.name, max(block.first, from), min(block.last, to), sampled ? .sampled : block.resolution, members: block.members)
         }
         var requests = 0, misses = 0
         func draws(_ scalars: [UInt32]) throws -> Bool {

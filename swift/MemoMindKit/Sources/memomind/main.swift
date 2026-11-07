@@ -79,7 +79,20 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
             result = try captureOwnership(session: session, capture: capture,
                                           seconds: Int(args.value("--seconds"))!)
         } else if args.command == "fontprobe" {
-            result = try captureFontProbe(session: session, capture: capture,
+            // --scalars FILE: one U+XXXX or hex scalar per line, probed as a single exact block.
+            var blocks = FontProbe.blocks
+            if let path = try? args.value("--scalars") {
+                let text = try String(contentsOfFile: path, encoding: .utf8)
+                let members = try text.split(whereSeparator: \.isNewline).map { line -> UInt32 in
+                    guard let value = Arguments.scalar(String(line.trimmingCharacters(in: .whitespaces))) else {
+                        throw CLIError("Bad scalar in \(path): \(line)")
+                    }
+                    return value
+                }
+                guard !members.isEmpty else { throw CLIError("\(path) lists no scalars") }
+                blocks = [FontProbe.Block("scalars:" + URL(fileURLWithPath: path).lastPathComponent, members: members)]
+            }
+            result = try captureFontProbe(session: session, capture: capture, blocks: blocks,
                                           from: (try? args.value("--from")).flatMap(Arguments.scalar) ?? 0,
                                           to: (try? args.value("--to")).flatMap(Arguments.scalar) ?? 0x10FFFF,
                                           sampled: args.sampled,

@@ -23,7 +23,7 @@ struct Arguments {
       memomind sensors --address MAC --seconds 30 [--interval MS] --output NEW_DIRECTORY
       memomind microphone --address MAC --seconds 10 --output NEW_DIRECTORY
       memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
-      memomind fontprobe --address MAC [--from U+XXXX] [--to U+XXXX] [--sampled] [--miss-budget N] --output NEW_DIRECTORY
+      memomind fontprobe --address MAC [--from U+XXXX] [--to U+XXXX] [--scalars FILE] [--sampled] [--miss-budget N] --output NEW_DIRECTORY
       memomind check --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY
       memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write
 
@@ -60,7 +60,7 @@ struct Arguments {
                 index += 1
                 continue
             }
-            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval", "--from", "--to", "--miss-budget"].contains(flag),
+            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval", "--from", "--to", "--miss-budget", "--scalars"].contains(flag),
                   values[flag] == nil, index + 1 < arguments.count,
                   !arguments[index + 1].hasPrefix("--")
             else {
@@ -71,7 +71,7 @@ struct Arguments {
         }
         let optional: Set<String> = switch command {
         case "sensors": ["--interval"]
-        case "fontprobe": ["--from", "--to", "--miss-budget"]
+        case "fontprobe": ["--from", "--to", "--miss-budget", "--scalars"]
         default: []
         }
         let allowed: Set<String> = switch command {

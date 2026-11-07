@@ -21,14 +21,15 @@
  "flashAttempt": "captures/v14-flash-20261106-01",
  "bootVerified": true,
  "hardwareChecks": {
-  "physicalDisplayConfirmed": false,
+  "physicalDisplayConfirmed": true,
   "phoneConnectionTested": false,
   "activeSamplingObserved": true,
   "passiveCapture": "captures/v14-sensors-passive-20261106-01 (20 light samples / 20 s, 1000 ms spacing, 0 missing)",
   "activeCapture": "captures/v14-sensors-active500-20261106-02 (90 light samples / 30 s at --interval 500, 0 missing, 0 overwrites)",
   "stockTickCoexists": true,
   "note": "Flashed from the Mac 2026-11-06 after blueutil --pair. The stock 1 Hz light reader keeps publishing while the 500 ms job runs (deltas repeat 261/239/500 ms), so an active capture yields interval rate + 1 Hz. Light stayed at 4/1000 (dark room); forced path and auto-brightness interaction unobserved.",
-  "fontProbe": "complete 2026-11-07: 13,141 scalars present across the plane; see font-probe-v14.json"
+  "fontProbe": "complete 2026-11-07: 13,141 scalars present across the plane; see font-probe-v14.json",
+  "textScaleDescenders": "confirmed by eye 2026-11-07: eight rows at the 25 px dashboard pitch with descenders whole and rows separate (analysis/active-als-20261106/descender.swift, captures/v14-descender-20261107-01)"
  },
  "glasslyBundle": {
   "commit": "11b71a8c64",

@@ -21,7 +21,9 @@ Every refused string costs one stock glyph-lookup miss and the glasses reboot
 after 75–180 misses per boot, so the sweep spent about fifty reboots; the
 phone sends only measured text inline (`fontprobe --from/--to/--sampled/
 --scalars`, `analysis/active-als-20261106/font-probe-v14.json`).
-Physical display and the phone path are unconfirmed. See the
+The 4/5 text scale from revision 13 was confirmed on the panel on 2026-11-07:
+descenders stay whole at the 25 px dashboard pitch. The phone path is
+unconfirmed. See the
 [sensor contract](runtime/graphics/SENSORS.md) and the
 [V14 checkpoint](analysis/active-als-20261106/checkpoint.json).
 

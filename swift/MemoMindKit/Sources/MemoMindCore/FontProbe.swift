@@ -55,6 +55,10 @@ public enum FontProbe {
         public let runs: [Run]
         public let blocks: [BlockResult]
         public let requests: Int
+        /// Refused strings: each one costs the stock glyph lookup a miss.
+        public let misses: Int
+        /// The first scalar not swept because the miss budget ran out, or nil when every block was settled.
+        public let nextScalar: UInt32?
 
         /// The runs as a Swift `[ClosedRange<UInt32>]` body (MemoMindOneRenderer.fontRanges).
         public var swiftRanges: String {
@@ -212,16 +216,24 @@ public enum FontProbe {
     /// any other outcome should throw. Two calibration strings come first:
     /// ASCII must draw and an unassigned scalar must be refused.
     public static func probe(
-        blocks: [Block] = blocks, from: UInt32 = 0, draw: (Data) throws -> Bool, progress: ((BlockResult) -> Void)? = nil
+        blocks: [Block] = blocks, from: UInt32 = 0, sampled: Bool = false, missBudget: Int = 0,
+        draw: (Data) throws -> Bool, progress: ((BlockResult) -> Void)? = nil
     ) throws -> Report {
         // Resuming after a reboot: drop the blocks already settled and clip the one `from` lands in.
+        // `sampled` forces the cheap resolution everywhere: an absent block then costs a few misses
+        // instead of one per scalar. The stock glyph lookup leaks on every miss and the glasses reboot
+        // after about a hundred, so `missBudget` stops the sweep at a block boundary before that.
         let blocks = blocks.compactMap { block -> Block? in
-            block.last < from ? nil : Block(block.name, max(block.first, from), block.last, block.resolution)
+            block.last < from ? nil : Block(block.name, max(block.first, from), block.last, sampled ? .sampled : block.resolution)
         }
-        var requests = 0
+        var requests = 0, misses = 0
         func draws(_ scalars: [UInt32]) throws -> Bool {
             requests += 1
-            return try draw(utf8(scalars))
+            let drew = try draw(utf8(scalars))
+            if !drew {
+                misses += 1
+            }
+            return drew
         }
         guard try draws(Array("The quick brown fox 0123456789 ~".unicodeScalars.map(\.value))) else {
             throw Failure.asciiRefused
@@ -230,7 +242,12 @@ public enum FontProbe {
 
         var present: [UInt32] = []
         var results: [BlockResult] = []
+        var nextScalar: UInt32?
         for block in blocks {
+            if missBudget > 0, misses >= missBudget {
+                nextScalar = block.first
+                break
+            }
             let before = requests
             var found = 0, absent = 0, unresolved = 0
             /// `scalars` were refused as a whole: settle each one.
@@ -278,7 +295,7 @@ public enum FontProbe {
             results.append(result)
             progress?(result)
         }
-        return Report(runs: runs(present), blocks: results, requests: requests)
+        return Report(runs: runs(present), blocks: results, requests: requests, misses: misses, nextScalar: nextScalar)
     }
 
     /// Maximal runs of consecutive values.

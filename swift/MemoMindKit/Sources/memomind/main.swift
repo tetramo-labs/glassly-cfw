@@ -80,7 +80,9 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
                                           seconds: Int(args.value("--seconds"))!)
         } else if args.command == "fontprobe" {
             result = try captureFontProbe(session: session, capture: capture,
-                                          from: (try? args.value("--from")).flatMap(Arguments.scalar) ?? 0)
+                                          from: (try? args.value("--from")).flatMap(Arguments.scalar) ?? 0,
+                                          sampled: args.sampled,
+                                          missBudget: (try? args.value("--miss-budget")).flatMap { Int($0) } ?? 0)
         } else {
             result = try ["device": dictionary(identity), "heartbeatStatus": 0,
                           "operationsSent": ["heartbeat", "device_information"], "flashMutations": 0]

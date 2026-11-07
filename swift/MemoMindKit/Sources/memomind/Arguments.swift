@@ -23,7 +23,7 @@ struct Arguments {
       memomind sensors --address MAC --seconds 30 [--interval MS] --output NEW_DIRECTORY
       memomind microphone --address MAC --seconds 10 --output NEW_DIRECTORY
       memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
-      memomind fontprobe --address MAC [--from U+XXXX] --output NEW_DIRECTORY
+      memomind fontprobe --address MAC [--from U+XXXX] [--sampled] [--miss-budget N] --output NEW_DIRECTORY
       memomind check --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY
       memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write
 
@@ -35,6 +35,7 @@ struct Arguments {
     let command: String
     let values: [String: String]
     let confirmWrite: Bool
+    let sampled: Bool
 
     init(_ arguments: [String]) throws {
         guard let command = arguments.first else { throw CLIError(Self.usage) }
@@ -43,17 +44,23 @@ struct Arguments {
         }
         self.command = command
         var values: [String: String] = [:]
-        var confirm = false
+        var confirm = false, sampled = false
         var index = 1
         while index < arguments.count {
             let flag = arguments[index]
+            if flag == "--sampled" {
+                guard command == "fontprobe", !sampled else { throw CLIError("--sampled is a fontprobe option, once") }
+                sampled = true
+                index += 1
+                continue
+            }
             if flag == "--confirm-write" {
                 guard !confirm else { throw CLIError("Duplicate --confirm-write") }
                 confirm = true
                 index += 1
                 continue
             }
-            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval", "--from"].contains(flag),
+            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval", "--from", "--miss-budget"].contains(flag),
                   values[flag] == nil, index + 1 < arguments.count,
                   !arguments[index + 1].hasPrefix("--")
             else {
@@ -64,7 +71,7 @@ struct Arguments {
         }
         let optional: Set<String> = switch command {
         case "sensors": ["--interval"]
-        case "fontprobe": ["--from"]
+        case "fontprobe": ["--from", "--miss-budget"]
         default: []
         }
         let allowed: Set<String> = switch command {
@@ -87,6 +94,9 @@ struct Arguments {
                 throw CLIError("Duration must be 1...\(maximum) seconds")
             }
         }
+        if let budget = values["--miss-budget"] {
+            guard let n = Int(budget), (1...1000).contains(n) else { throw CLIError("--miss-budget must be 1...1000") }
+        }
         if let from = values["--from"] {
             guard Self.scalar(from) != nil else { throw CLIError("--from must be U+XXXX inside the Unicode range") }
         }
@@ -102,6 +112,7 @@ struct Arguments {
         }
         self.values = values
         confirmWrite = confirm
+        self.sampled = sampled
     }
 
     /// "U+01F7" or bare hex → scalar value.

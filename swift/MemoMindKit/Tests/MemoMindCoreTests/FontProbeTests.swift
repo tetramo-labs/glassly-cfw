@@ -44,6 +44,22 @@ final class FontProbeTests: XCTestCase {
         XCTAssertEqual(try FontProbe.probe(blocks: blocks, from: 0x300, draw: font([ascii])).blocks, [], "past the last block: nothing to sweep")
     }
 
+    func testMissBudgetStopsAtABlockBoundaryAndSampledForcesTheCheapResolution() throws {
+        let blocks = [FontProbe.Block("a", 0x100, 0x17F), FontProbe.Block("b", 0x180, 0x1FF), FontProbe.Block("c", 0x200, 0x27F)]
+        // Only ASCII draws: every block is absent.
+        let exact = try FontProbe.probe(blocks: blocks, draw: font([ascii]))
+        XCTAssertEqual(exact.blocks.map(\.absent), [128, 128, 128], "exact resolution settles each scalar")
+        XCTAssertGreaterThan(exact.misses, 384, "one miss per scalar plus the chunks")
+        XCTAssertNil(exact.nextScalar)
+        let cheap = try FontProbe.probe(blocks: blocks, sampled: true, draw: font([ascii]))
+        XCTAssertEqual(cheap.blocks.map(\.unresolved), [128, 128, 128])
+        XCTAssertLessThanOrEqual(cheap.misses, 1 + 3 * 2 * 3, "a chunk plus three samples per chunk, two chunks per block")
+        let budgeted = try FontProbe.probe(blocks: blocks, sampled: true, missBudget: 5, draw: font([ascii]))
+        XCTAssertEqual(budgeted.blocks.map(\.name), ["a"], "the budget is checked before each block")
+        XCTAssertEqual(budgeted.nextScalar, 0x180)
+        XCTAssertGreaterThanOrEqual(budgeted.misses, 5)
+    }
+
     func testScalarsSkipControlsSurrogatesAndNoncharacters() {
         XCTAssertEqual(FontProbe.scalars(FontProbe.Block("x", 0x0000, 0x0020)), [0x20])
         XCTAssertTrue(FontProbe.scalars(FontProbe.Block("x", 0x0020, 0x007F)).contains(0x7F), "DEL is a glyph to the decoder")

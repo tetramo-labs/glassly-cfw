@@ -5,7 +5,7 @@ import MemoMindCore
 /// panel, under a wake and frame lease, and save the measured runs. Only the
 /// retained-scene firmware with text commands (GLASSLYCFW/10+) answers; the
 /// result pins MemoMindOneRenderer's inline allowlist in glassly.
-func captureFontProbe(session: GMSession, capture: Capture) throws -> [String: Any] {
+func captureFontProbe(session: GMSession, capture: Capture, from: UInt32 = 0) throws -> [String: Any] {
     var event: UInt8 = 0x30
     var pendingNonce: UInt16?
     var eventError: Error?
@@ -79,10 +79,10 @@ func captureFontProbe(session: GMSession, capture: Capture) throws -> [String: A
     }
     guard try control(.status).framePresented else { throw CLIError("Frame was not presented") }
     try capture.record(["event": "font-probe-display-ready", "version": capabilities.version])
-    fputs("FONT PROBE: \(capabilities.version); sweeping \(FontProbe.blocks.count) blocks\n", stderr)
+    fputs("FONT PROBE: \(capabilities.version); sweeping \(FontProbe.blocks.count) blocks from U+\(String(from, radix: 16, uppercase: true))\n", stderr)
     var lastRenewal = ProcessInfo.processInfo.systemUptime
     let began = lastRenewal
-    let report = try FontProbe.probe(draw: { bytes in
+    let report = try FontProbe.probe(from: from, draw: { bytes in
         if let error = eventError {
             throw error
         }
@@ -116,7 +116,7 @@ func captureFontProbe(session: GMSession, capture: Capture) throws -> [String: A
     guard !frame.frameLease, !wake.wakeLease else { throw CLIError("Ownership cleanup failed") }
     try capture.save(try dictionary(report), name: "font-repertoire.json")
     fputs("SWIFT: \(report.swiftRanges)\nKOTLIN: \(report.kotlinRanges)\n", stderr)
-    return ["complete": true, "version": capabilities.version, "requests": report.requests,
+    return ["complete": true, "version": capabilities.version, "requests": report.requests, "from": from,
             "elapsedSeconds": ProcessInfo.processInfo.systemUptime - began,
             "runs": report.runs.map { ["first": $0.first, "last": $0.last] },
             "blocks": try report.blocks.map { try dictionary($0) },

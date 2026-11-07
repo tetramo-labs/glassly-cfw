@@ -12,9 +12,14 @@ the installed header matches, capabilities report GLASSLYCFW/14 with `activeAls`
 and a 500 ms capture returned 90 lossless light samples in 30 s. The stock 1 Hz
 reader keeps publishing beside the interval job, so active captures run at the
 requested rate plus 1 Hz. `memomind sensors --interval MS` drives the active
-start. A `fontprobe` sweep on the same day proved every glyph of U+0020–U+017F
-present; Latin Extended-B is patchy and the glasses rebooted while drawing
-U+01F5 U+01F6, so the sweep stopped there (`analysis/active-als-20261106/font-probe-v14.json`).
+start. Fifteen `fontprobe` sessions the same day measured U+0020–U+04A5: Latin
+through Extended-A, Greek and Cyrillic draw almost completely, Extended-B, IPA
+and the modifier letters sparsely (614 scalars present). Every session ended
+in a reboot after roughly 100–180 refused strings: a refused string costs one
+stock glyph-lookup miss and the stock firmware leaks or overflows on misses,
+while successful draws are free. The phone therefore sends only measured scalars
+inline; `fontprobe --from U+XXXX` resumes a sweep after a reboot
+(`analysis/active-als-20261106/font-probe-v14.json`).
 Physical display and the phone path are unconfirmed. See the
 [sensor contract](runtime/graphics/SENSORS.md) and the
 [V14 checkpoint](analysis/active-als-20261106/checkpoint.json).

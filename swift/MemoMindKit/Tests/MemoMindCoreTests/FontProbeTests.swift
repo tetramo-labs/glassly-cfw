@@ -31,6 +31,19 @@ final class FontProbeTests: XCTestCase {
         XCTAssertEqual(FontProbe.utf8([0x41, 0xE9, 0x4E00, 0x1F600]), Data("A\u{E9}\u{4E00}\u{1F600}".utf8))
     }
 
+    func testResumingFromAScalarClipsAndDropsSettledBlocks() throws {
+        let blocks = [FontProbe.Block("a", 0x20, 0x7F), FontProbe.Block("b", 0x100, 0x17F), FontProbe.Block("c", 0x180, 0x24F)]
+        var sent: [Data] = []
+        let report = try FontProbe.probe(blocks: blocks, from: 0x1F7, draw: font([ascii, 0x1F7 ... 0x24F], log: { sent.append($0) }))
+        XCTAssertEqual(report.blocks.map(\.name), ["c"], "settled blocks are dropped")
+        XCTAssertEqual(report.blocks[0].first, 0x1F7, "the resumed block starts at --from")
+        XCTAssertEqual(report.runs, [FontProbe.Run(first: 0x1F7, last: 0x24F)])
+        // Calibration strings aside, nothing below the resume point is sent.
+        let probed = sent.dropFirst(2).flatMap { String(decoding: $0, as: UTF8.self).unicodeScalars.map(\.value) }
+        XCTAssertEqual(probed.min(), 0x1F7)
+        XCTAssertEqual(try FontProbe.probe(blocks: blocks, from: 0x300, draw: font([ascii])).blocks, [], "past the last block: nothing to sweep")
+    }
+
     func testScalarsSkipControlsSurrogatesAndNoncharacters() {
         XCTAssertEqual(FontProbe.scalars(FontProbe.Block("x", 0x0000, 0x0020)), [0x20])
         XCTAssertTrue(FontProbe.scalars(FontProbe.Block("x", 0x0020, 0x007F)).contains(0x7F), "DEL is a glyph to the decoder")

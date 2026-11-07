@@ -23,7 +23,7 @@ struct Arguments {
       memomind sensors --address MAC --seconds 30 [--interval MS] --output NEW_DIRECTORY
       memomind microphone --address MAC --seconds 10 --output NEW_DIRECTORY
       memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
-      memomind fontprobe --address MAC --output NEW_DIRECTORY
+      memomind fontprobe --address MAC [--from U+XXXX] --output NEW_DIRECTORY
       memomind check --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY
       memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write
 
@@ -53,7 +53,7 @@ struct Arguments {
                 index += 1
                 continue
             }
-            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval"].contains(flag),
+            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval", "--from"].contains(flag),
                   values[flag] == nil, index + 1 < arguments.count,
                   !arguments[index + 1].hasPrefix("--")
             else {
@@ -62,7 +62,11 @@ struct Arguments {
             values[flag] = arguments[index + 1]
             index += 2
         }
-        let optional: Set<String> = command == "sensors" ? ["--interval"] : []
+        let optional: Set<String> = switch command {
+        case "sensors": ["--interval"]
+        case "fontprobe": ["--from"]
+        default: []
+        }
         let allowed: Set<String> = switch command {
         case "probe", "fontprobe": ["--address", "--output"]
         case "buttons", "microphone", "sensors", "ownership": ["--address", "--output", "--seconds"]
@@ -83,6 +87,9 @@ struct Arguments {
                 throw CLIError("Duration must be 1...\(maximum) seconds")
             }
         }
+        if let from = values["--from"] {
+            guard Self.scalar(from) != nil else { throw CLIError("--from must be U+XXXX inside the Unicode range") }
+        }
         if let interval = values["--interval"] {
             guard let ms = Int(interval), (100...5000).contains(ms) else {
                 throw CLIError("Interval must be 100...5000 ms")
@@ -95,6 +102,13 @@ struct Arguments {
         }
         self.values = values
         confirmWrite = confirm
+    }
+
+    /// "U+01F7" or bare hex → scalar value.
+    static func scalar(_ text: String) -> UInt32? {
+        let hex = text.hasPrefix("U+") || text.hasPrefix("u+") ? String(text.dropFirst(2)) : text
+        guard let value = UInt32(hex, radix: 16), value <= 0x10FFFF else { return nil }
+        return value
     }
 
     func value(_ key: String) throws -> String {

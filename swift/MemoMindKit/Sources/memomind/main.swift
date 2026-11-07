@@ -79,7 +79,8 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
             result = try captureOwnership(session: session, capture: capture,
                                           seconds: Int(args.value("--seconds"))!)
         } else if args.command == "fontprobe" {
-            result = try captureFontProbe(session: session, capture: capture)
+            result = try captureFontProbe(session: session, capture: capture,
+                                          from: (try? args.value("--from")).flatMap(Arguments.scalar) ?? 0)
         } else {
             result = try ["device": dictionary(identity), "heartbeatStatus": 0,
                           "operationsSent": ["heartbeat", "device_information"], "flashMutations": 0]

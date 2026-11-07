@@ -212,8 +212,12 @@ public enum FontProbe {
     /// any other outcome should throw. Two calibration strings come first:
     /// ASCII must draw and an unassigned scalar must be refused.
     public static func probe(
-        blocks: [Block] = blocks, draw: (Data) throws -> Bool, progress: ((BlockResult) -> Void)? = nil
+        blocks: [Block] = blocks, from: UInt32 = 0, draw: (Data) throws -> Bool, progress: ((BlockResult) -> Void)? = nil
     ) throws -> Report {
+        // Resuming after a reboot: drop the blocks already settled and clip the one `from` lands in.
+        let blocks = blocks.compactMap { block -> Block? in
+            block.last < from ? nil : Block(block.name, max(block.first, from), block.last, block.resolution)
+        }
         var requests = 0
         func draws(_ scalars: [UInt32]) throws -> Bool {
             requests += 1

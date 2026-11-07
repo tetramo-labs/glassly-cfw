@@ -6,10 +6,599 @@
  "missing_upstream_mapped_stages": [],
  "hardware_tested": false,
  "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
- "version": "GLASSLYCFW/14",
- "stages": 145,
- "report": "analysis/active-als-20261106/regression-14-01/report.json",
- "reportSHA256": "8b5da67709a7cfd42cb6159c088a4ad773103112b9979cc3059274097b32a7a4",
+ "version": "GLASSLYCFW/16",
+ "stages": [
+  {
+   "name": "rebuilt_fixtures",
+   "passed": null
+  },
+  {
+   "name": "inventory",
+   "passed": null
+  },
+  {
+   "name": "inventory_scope",
+   "passed": null
+  },
+  {
+   "name": "firmware_transport",
+   "passed": null
+  },
+  {
+   "name": "native_swift",
+   "passed": null
+  },
+  {
+   "name": "g2_compat",
+   "passed": null
+  },
+  {
+   "name": "geometry",
+   "passed": null
+  },
+  {
+   "name": "scene",
+   "passed": null
+  },
+  {
+   "name": "notifications",
+   "passed": null
+  },
+  {
+   "name": "record_transport",
+   "passed": null
+  },
+  {
+   "name": "record_session_host",
+   "passed": null
+  },
+  {
+   "name": "record_inflater_rv32",
+   "passed": null
+  },
+  {
+   "name": "record_build",
+   "passed": null
+  },
+  {
+   "name": "ble_probe_runtime",
+   "passed": null
+  },
+  {
+   "name": "raw_present_runtime",
+   "passed": null
+  },
+  {
+   "name": "first_run_boot",
+   "passed": null
+  },
+  {
+   "name": "microphone_host",
+   "passed": null
+  },
+  {
+   "name": "microphone_native_abi",
+   "passed": null
+  },
+  {
+   "name": "sensor_native_abi",
+   "passed": null
+  },
+  {
+   "name": "sensor_capture_host",
+   "passed": null
+  },
+  {
+   "name": "sensor_capture_runtime",
+   "passed": null
+  },
+  {
+   "name": "microphone_runtime",
+   "passed": null
+  },
+  {
+   "name": "record_gates",
+   "passed": null
+  },
+  {
+   "name": "record_runtime",
+   "passed": null
+  },
+  {
+   "name": "upstream_policy",
+   "passed": null
+  },
+  {
+   "name": "native_text_host",
+   "passed": null
+  },
+  {
+   "name": "scene_session_host",
+   "passed": null
+  },
+  {
+   "name": "input_host",
+   "passed": null
+  },
+  {
+   "name": "rv32_build",
+   "passed": null
+  },
+  {
+   "name": "rv32_probe",
+   "passed": null
+  },
+  {
+   "name": "graphics_host",
+   "passed": null
+  },
+  {
+   "name": "graphics_build",
+   "passed": null
+  },
+  {
+   "name": "graphics_gates",
+   "passed": null
+  },
+  {
+   "name": "graphics_runtime",
+   "passed": null
+  },
+  {
+   "name": "scene_build",
+   "passed": null
+  },
+  {
+   "name": "scene_gates",
+   "passed": null
+  },
+  {
+   "name": "scene_runtime",
+   "passed": null
+  },
+  {
+   "name": "input_build",
+   "passed": null
+  },
+  {
+   "name": "input_gates",
+   "passed": null
+  },
+  {
+   "name": "input_runtime",
+   "passed": null
+  },
+  {
+   "name": "flash_read_host",
+   "passed": null
+  },
+  {
+   "name": "flash_read_build",
+   "passed": null
+  },
+  {
+   "name": "flash_read_gates",
+   "passed": null
+  },
+  {
+   "name": "flash_read_runtime",
+   "passed": null
+  },
+  {
+   "name": "flash_read_contract",
+   "passed": null
+  },
+  {
+   "name": "external_read_host",
+   "passed": null
+  },
+  {
+   "name": "external_read_build",
+   "passed": null
+  },
+  {
+   "name": "external_read_gates",
+   "passed": null
+  },
+  {
+   "name": "external_read_runtime",
+   "passed": null
+  },
+  {
+   "name": "external_read_contract",
+   "passed": null
+  },
+  {
+   "name": "flash_store",
+   "passed": null
+  },
+  {
+   "name": "flash_store_native",
+   "passed": null
+  },
+  {
+   "name": "scene_flash_store",
+   "passed": null
+  },
+  {
+   "name": "external_reservation_native",
+   "passed": null
+  },
+  {
+   "name": "exclusive_storage_native",
+   "passed": null
+  },
+  {
+   "name": "exclusive_storage_callers",
+   "passed": null
+  },
+  {
+   "name": "heap_registry_native",
+   "passed": null
+  },
+  {
+   "name": "dashboard_islands_native",
+   "passed": null
+  },
+  {
+   "name": "dashboard_ram_native",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_host",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_build",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_gates",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_runtime",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_contract",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_scene",
+   "passed": null
+  },
+  {
+   "name": "storage_diag_input",
+   "passed": null
+  },
+  {
+   "name": "badmap_native",
+   "passed": null
+  },
+  {
+   "name": "full_store_read_host",
+   "passed": null
+  },
+  {
+   "name": "full_store_read_build",
+   "passed": null
+  },
+  {
+   "name": "full_store_read_gates",
+   "passed": null
+  },
+  {
+   "name": "full_store_read_runtime",
+   "passed": null
+  },
+  {
+   "name": "full_store_read_contract",
+   "passed": null
+  },
+  {
+   "name": "full_store_scene",
+   "passed": null
+  },
+  {
+   "name": "full_store_input",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_host",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_build",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_gates",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_runtime",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_host",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_build",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_gates",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_runtime",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_reader",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_scene",
+   "passed": null
+  },
+  {
+   "name": "flash_canary_input",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_canary",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_reader",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_input",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "raster_commands_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_host",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_build",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_gates",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_runtime",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_canary",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_reader",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_input",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "rect_copy_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_host",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_build",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_runtime",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_gates",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_canary",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_reader",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_input",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_scene",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "command_bundle_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "text_command_host",
+   "passed": null
+  },
+  {
+   "name": "text_command_build",
+   "passed": null
+  },
+  {
+   "name": "text_command_runtime",
+   "passed": null
+  },
+  {
+   "name": "text_command_gates",
+   "passed": null
+  },
+  {
+   "name": "text_command_canary",
+   "passed": null
+  },
+  {
+   "name": "text_command_reader",
+   "passed": null
+  },
+  {
+   "name": "text_command_input",
+   "passed": null
+  },
+  {
+   "name": "text_command_scene",
+   "passed": null
+  },
+  {
+   "name": "text_command_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "text_command_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "text_command_bundle",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_host",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_build",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_runtime",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_gates",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_canary",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_reader",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_input",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_scene",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_bundle",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_text",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_canary_contract",
+   "passed": null
+  },
+  {
+   "name": "diagnostic_command_reader_contract",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_host",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_build",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_runtime",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_diagnostics",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_gates",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_canary",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_reader",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_input",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_scene",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_bundle",
+   "passed": null
+  },
+  {
+   "name": "reset_undo_trim_text",
+   "passed": null
+  },
+  {
+   "name": "minimal_owner_flash",
+   "passed": null
+  },
+  {
+   "name": "minimal_owner_flash_commands",
+   "passed": null
+  }
+ ],
+ "report": "analysis/ble-probe-20261107/regression-16-02/report.json",
+ "reportSHA256": "7582ebbf50cd09309de3cba7e79b0b0849e1e77d5e23135984ce13c42b12ef54",
  "demos_dependencies": "~/dev/glassly-g2-cfw/demos/node_modules",
  "g2_media": "~/dev/glassly-g2-cfw/demos",
  "regression": "analysis/ble-probe-20261107/regression-16-02",

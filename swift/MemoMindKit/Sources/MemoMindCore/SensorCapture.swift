@@ -59,6 +59,13 @@ public struct SensorCaptureSnapshot: Codable, Equatable, Sendable {
         }
     }
 
+    /// Revision 14 advertises `sensors.activeAls:1` with the accepted interval range.
+    public static func advertisesActiveSampling(_ message: GMMessage) -> Bool {
+        guard message.tlvs.count == 1, let object = try? StrictDeviceJSON.decode(message.tlvs[0].value, maximumBytes: 8192).object,
+              let sensor = object["sensors"]?.object else { return false }
+        return sensor["activeAls"]?.integer == 1 && sensor["activeAlsMinMs"]?.integer == 100 && sensor["activeAlsMaxMs"]?.integer == 5000
+    }
+
     public static func decode(_ message: GMMessage) throws -> Self {
         try requireProtocol(message.service == 15 && message.command == 0x76 && message.tlvs.count == 1 && message.tlvs[0].kind == 5,
                             "Expected sensor capture response")

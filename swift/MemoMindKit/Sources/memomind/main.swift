@@ -73,7 +73,8 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
                                            address: address, capture: capture,
                                            seconds: Int(args.value("--seconds"))!)
         } else if args.command == "sensors" {
-            result = try captureSensors(session: session, capture: capture, seconds: Int(args.value("--seconds"))!)
+            result = try captureSensors(session: session, capture: capture, seconds: Int(args.value("--seconds"))!,
+                                        intervalMilliseconds: (try? args.value("--interval")).flatMap { Int($0) })
         } else if args.command == "ownership" {
             result = try captureOwnership(session: session, capture: capture,
                                           seconds: Int(args.value("--seconds"))!)

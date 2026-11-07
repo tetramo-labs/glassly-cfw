@@ -20,7 +20,7 @@ struct Arguments {
       memomind replay --firmware FILE --expected-sha256 HASH --transcript TSV
       memomind probe --address MAC --output NEW_DIRECTORY
       memomind buttons --address MAC --seconds 180 --output NEW_DIRECTORY
-      memomind sensors --address MAC --seconds 30 --output NEW_DIRECTORY
+      memomind sensors --address MAC --seconds 30 [--interval MS] --output NEW_DIRECTORY
       memomind microphone --address MAC --seconds 10 --output NEW_DIRECTORY
       memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
       memomind fontprobe --address MAC --output NEW_DIRECTORY
@@ -53,7 +53,7 @@ struct Arguments {
                 index += 1
                 continue
             }
-            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds"].contains(flag),
+            guard ["--address", "--firmware", "--expected-sha256", "--output", "--transcript", "--seconds", "--interval"].contains(flag),
                   values[flag] == nil, index + 1 < arguments.count,
                   !arguments[index + 1].hasPrefix("--")
             else {
@@ -62,6 +62,7 @@ struct Arguments {
             values[flag] = arguments[index + 1]
             index += 2
         }
+        let optional: Set<String> = command == "sensors" ? ["--interval"] : []
         let allowed: Set<String> = switch command {
         case "probe", "fontprobe": ["--address", "--output"]
         case "buttons", "microphone", "sensors", "ownership": ["--address", "--output", "--seconds"]
@@ -70,7 +71,7 @@ struct Arguments {
         case "replay": ["--firmware", "--expected-sha256", "--transcript"]
         default: []
         }
-        guard Set(values.keys) == allowed else {
+        guard Set(values.keys).subtracting(optional) == allowed else {
             throw CLIError("\(command) requires exactly: \(allowed.sorted().joined(separator: " "))")
         }
         guard confirm == (command == "flash") else {
@@ -80,6 +81,11 @@ struct Arguments {
             let maximum = command == "microphone" ? 15 : 600
             guard let duration = Int(seconds), (1...maximum).contains(duration) else {
                 throw CLIError("Duration must be 1...\(maximum) seconds")
+            }
+        }
+        if let interval = values["--interval"] {
+            guard let ms = Int(interval), (100...5000).contains(ms) else {
+                throw CLIError("Interval must be 100...5000 ms")
             }
         }
         if let address = values["--address"] {

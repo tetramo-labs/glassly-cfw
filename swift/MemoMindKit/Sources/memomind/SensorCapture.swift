@@ -1,9 +1,13 @@
 import Foundation
 import MemoMindCore
 
-func captureSensors(session: GMSession, capture: Capture, seconds: Int) throws -> [String: Any] {
+func captureSensors(session: GMSession, capture: Capture, seconds: Int, intervalMilliseconds: Int? = nil) throws -> [String: Any] {
     var event: UInt8 = 0x40
-    try SensorCaptureSnapshot.validateCapability(session.request(event: event, service: 15, command: 0x7E))
+    let capability = try session.request(event: event, service: 15, command: 0x7E)
+    try SensorCaptureSnapshot.validateCapability(capability)
+    if intervalMilliseconds != nil {
+        guard SensorCaptureSnapshot.advertisesActiveSampling(capability) else { throw CLIError("The glasses do not advertise activeAls") }
+    }
     let initial = try session.sensorCapture(.status, event: &event)
     guard initial.activeMask == 0 else { throw CLIError("A sensor capture is already active") }
     var started = false
@@ -13,7 +17,8 @@ func captureSensors(session: GMSession, capture: Capture, seconds: Int) throws -
             _ = try? session.releaseSensorCapture(generation: generation, acknowledged: acknowledged, event: &event)
         }
     }
-    let start = try session.sensorCapture(.start, event: &event)
+    let start = try intervalMilliseconds.map { try session.sensorCaptureActiveStart(intervalMilliseconds: $0, event: &event) }
+        ?? session.sensorCapture(.start, event: &event)
     started = true
     generation = start.generation
     try capture.record(["event": "sensor-start", "snapshot": dictionary(start)])
@@ -59,7 +64,7 @@ func captureSensors(session: GMSession, capture: Capture, seconds: Int) throws -
     let stopped = try session.releaseSensorCapture(generation: start.generation, acknowledged: acknowledged, event: &event)
     started = false
     try capture.record(["event": "sensor-stopped", "snapshot": dictionary(stopped)])
-    return ["complete": true, "passiveCapture": true, "imuSnapshotsSaved": imuSamples, "lightSnapshotsSaved": lightSamples,
+    return ["complete": true, "passiveCapture": intervalMilliseconds == nil, "activeIntervalMilliseconds": intervalMilliseconds as Any, "imuSnapshotsSaved": imuSamples, "lightSnapshotsSaved": lightSamples,
             "subscriptionStopped": true, "physicalUnitsVerified": false, "flashMutations": 0,
             "missingSequences": missed, "reportedOverwrites": drops, "lastSavedSequence": acknowledged,
             "tailDrained": true, "finalSequence": drained.sequence, "stopDiscardsUnread": false, "losslessCapture": false]

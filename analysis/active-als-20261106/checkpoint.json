@@ -17,19 +17,27 @@
  "regressionVerification": "regression-verification.json",
  "hostSuites": "run_sensor_capture_tests.py with active_sampling() passes under ASan/UBSan",
  "macToolCatalog": "active-als-001 admitted; swift test SensorCaptureTests+FirmwareImageTests 41 passed",
- "flashed": false,
- "flashAttempt": null,
- "bootVerified": false,
+ "flashed": true,
+ "flashAttempt": "captures/v14-flash-20261106-01",
+ "bootVerified": true,
  "hardwareChecks": {
   "physicalDisplayConfirmed": false,
   "phoneConnectionTested": false,
-  "activeSamplingObserved": false,
-  "note": "The glasses were not discoverable from the Mac on 2026-11-06; V11 is what the glasses run"
+  "activeSamplingObserved": true,
+  "passiveCapture": "captures/v14-sensors-passive-20261106-01 (20 light samples / 20 s, 1000 ms spacing, 0 missing)",
+  "activeCapture": "captures/v14-sensors-active500-20261106-02 (90 light samples / 30 s at --interval 500, 0 missing, 0 overwrites)",
+  "stockTickCoexists": true,
+  "note": "Flashed from the Mac 2026-11-06 after blueutil --pair. The stock 1 Hz light reader keeps publishing while the 500 ms job runs (deltas repeat 261/239/500 ms), so an active capture yields interval rate + 1 Hz. Light stayed at 4/1000 (dark room); forced path and auto-brightness interaction unobserved.",
+  "fontProbe": "partial: U+0020-U+017F fully present; glasses rebooted on U+01F5 U+01F6 (see font-probe-v14.json)"
  },
  "glasslyBundle": {
-  "commit": null,
+  "commit": "11b71a8c64",
   "branch": "dev",
   "files": "memomind-one-glassly-cfw-14.bin in ios/Source/Resources/MemoMindOneFirmware and android/src/main/assets/memomind-one; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; clients send the interval when activeAls is advertised"
  },
- "regressionNotes": "regression-14-01: all 145 required offline stages passed, no source drift, no missing mapped stages; record-build reproduces the bundled blob at revision 14"
+ "regressionNotes": "regression-14-01: all 145 required offline stages passed, no source drift, no missing mapped stages; record-build reproduces the bundled blob at revision 14",
+ "preflightCheck": "captures/v14-check-20261106-01",
+ "bootVerification": "captures/v14-boot-20261106-01",
+ "bootVerificationScript": "analysis/active-als-20261106/verify.swift",
+ "fontProbe": "analysis/active-als-20261106/font-probe-v14.json"
 }

@@ -7,7 +7,15 @@ the stock settings listener while auto-brightness has it suspended and
 releasing that force with the capture. It is the firmware half of the G2's
 mode 16; the Glassly App already serves the G2 light contract over the passive
 capture and uses the interval when the firmware advertises `activeAls`. The
-runtime is 94,816 bytes. Built, catalogued and bundled, not flashed. See the
+runtime is 94,816 bytes. Flashed from the Mac on 2026-11-06 and boot verified:
+the installed header matches, capabilities report GLASSLYCFW/14 with `activeAls`,
+and a 500 ms capture returned 90 lossless light samples in 30 s. The stock 1 Hz
+reader keeps publishing beside the interval job, so active captures run at the
+requested rate plus 1 Hz. `memomind sensors --interval MS` drives the active
+start. A `fontprobe` sweep on the same day proved every glyph of U+0020–U+017F
+present; Latin Extended-B is patchy and the glasses rebooted while drawing
+U+01F5 U+01F6, so the sweep stopped there (`analysis/active-als-20261106/font-probe-v14.json`).
+Physical display and the phone path are unconfirmed. See the
 [sensor contract](runtime/graphics/SENSORS.md) and the
 [V14 checkpoint](analysis/active-als-20261106/checkpoint.json).
 

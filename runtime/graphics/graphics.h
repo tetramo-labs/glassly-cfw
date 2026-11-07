@@ -25,6 +25,9 @@ void glassly_graphics_detach(void *);
 #define MM_GRAPHICS_LEASE_TICKS 1000u
 #endif
 #define MM_GRAPHICS_TIMER_TICKS 20u
+#ifdef MM_RAW_PRESENT
+#define MM_RAW_STRIDE 320u
+#endif
 #define MM_GRAPHICS_METADATA_MARGIN 65536u
 
 typedef void (*mm_callback)(void *);
@@ -62,6 +65,16 @@ typedef struct {
     uint32_t (*now)(void);
     uint32_t (*free_bytes)(void);
     uint32_t (*low_water_bytes)(void);
+#ifdef MM_RAW_PRESENT
+    /* Stock framebuffer slices (two 175-row halves of the 600x350 GRAY4 panel,
+     * 320-byte stride, even x in the high nibble). lock takes inclusive rows and
+     * writes the slice mask; submit with a NULL rect releases without presenting,
+     * otherwise it hands the rect {x1,y1,x2,y2} (inclusive) and the slices to the
+     * transfer pipeline, which releases them. Only valid on the display worker. */
+    uint32_t (*slice_lock)(uint32_t y1,uint32_t y2,uint32_t auxiliary,uint8_t *mask);
+    uint8_t *(*slice_pixels)(int32_t x,int32_t y,uint32_t auxiliary);
+    uint32_t (*slice_submit)(uint32_t mask,const uint16_t *rect,uint32_t present);
+#endif
 } mm_graphics_platform;
 extern const mm_graphics_platform mm_graphics_native;
 

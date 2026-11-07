@@ -29,7 +29,8 @@ static void deallocate(void *user,void *p) {
 static uint32_t free_bytes(void *u){device *d=u;return (uint32_t)(d->capacity-d->used-d->wire_bytes);}
 static uint32_t now(void *u){return ((device *)u)->now;}
 static int active(void *u){return ((device *)u)->active;}
-static void present(void *u,const mm_raster *r) {
+static void present(void *u,const mm_raster *r,const mm_scene_dirty *dirty) {
+    (void)dirty;
     device *d=u;assert(r->pixels==d->pixels);d->presents++;
 }
 static void settled(void *u,uint16_t tag){device *d=u;d->settled++;d->last_tag=tag;}

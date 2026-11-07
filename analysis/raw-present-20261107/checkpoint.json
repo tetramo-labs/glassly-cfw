@@ -1,0 +1,33 @@
+{
+ "version": "GLASSLYCFW/15",
+ "release": "raw-present-001",
+ "change": "Raw presents: a presenting command or animation tick copies only its changed box from the owned GRAY4 raster into the locked panel slices and submits that rectangle, bypassing the LVGL redraw; the image object is sourced once as the fallback and restored only after a storage-error detach. The per-tick hide/re-source and the per-dispatch whole-raster re-present are gone in this mode. Bundles present the union of their segments' boxes.",
+ "sourceCommitG2": "e889569fe77775ed5822af6f7e47210f2984f15d",
+ "build": "build-15-01",
+ "runtimeBytes": 95456,
+ "runtimeSHA256": "7c7ac47b16550ee987a6ab9902e37293f3e0b90b9ca9259588d968e0b26b6323",
+ "linkerRelaxation": true,
+ "imageBytes": 2250013,
+ "imageSHA256": "9d8a7bffc7804a923bd6f6cd9387cd5bd62a0b27dbace9219f0c21b5a54a4488",
+ "containerHeaderSHA256": "401a001fd8720b275ea792a7883723254094d2f965c6dcb07c2b5d840e736e77",
+ "appHeaderSHA256": "c7fc16853fc187aaad91102488ee8f85f87bfc0c1cdee5fa7d2853d36bb8592b",
+ "bootSelectorTest": "boot-selector-15.json",
+ "rawPresentTest": "raw-present-runtime.json",
+ "regression": "regression-15-01",
+ "hostSuites": "scene session + command bundle host suites pass with the three-argument present hook",
+ "macToolCatalog": "raw-present-001 admitted",
+ "flashed": false,
+ "flashAttempt": null,
+ "bootVerified": false,
+ "hardwareChecks": {
+  "physicalDisplayConfirmed": false,
+  "phoneConnectionTested": false,
+  "rawPresentObserved": false,
+  "baselineRev14": "captures/v14-anim-timing-20261107-05: empty-36 full present 116 ms median RTT (38 ms transport floor), 570-630 ms stall after a clock-tick SHOW while its tween runs, tween-time presents 113 ms"
+ },
+ "glasslyBundle": {
+  "commit": null,
+  "branch": "dev",
+  "files": "pending"
+ }
+}

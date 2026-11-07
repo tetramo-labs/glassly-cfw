@@ -187,6 +187,10 @@ wake_service_gate:
     li t0,0x76
     beq a0,t0,glassly_sensor_command
 #endif
+#ifdef MM_BLE_PROBE
+    li t0,0x74
+    beq a0,t0,glassly_ble_probe_command
+#endif
 #ifdef MM_MICROPHONE_CONTROL
     li t0, 0x77
     beq a0,t0,glassly_microphone_command

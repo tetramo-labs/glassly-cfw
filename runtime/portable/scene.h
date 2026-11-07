@@ -89,6 +89,8 @@ int mm_scene_immediate_mode(mm_scene_context *,const mm_raster *,const uint8_t *
 #endif
 void mm_scene_tick(void *);
 void mm_scene_render_if_due(mm_scene_context *,uint8_t *);
+/* Same, appending the rendered boxes to dirty (nothing when no render was due). */
+void mm_scene_render_if_due_rects(mm_scene_context *,uint8_t *,mm_scene_dirty *);
 void mm_scene_takeover(mm_scene_context *);
 void mm_scene_lose(mm_scene_context *);
 void mm_scene_reap(mm_scene_context *);

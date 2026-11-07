@@ -233,6 +233,16 @@ private struct FirmwareRelease {
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
         // Active light sampling: the CFW reads the sensor at a requested interval (GLASSLYCFW/14).
+        // Raw presents plus the post-boot GATT service probe on command 0x74 (GLASSLYCFW/16).
+        FirmwareRelease(name: "ble-probe-001",
+                        sha256: "50400aadfecdd3c6693b3233613ba5e6b0b637c3156f4989f5fe0adb47473a84", byteCount: 2_251_154, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "6de746a501f08aea3e2e92eff13a597548c529ede2234686008fe33e4f450529",
+                        streams: streamPins(.bleProbe16)),
+        // Raw presents: changed boxes go straight into the panel slices (GLASSLYCFW/15).
+        FirmwareRelease(name: "raw-present-001",
+                        sha256: "9d8a7bffc7804a923bd6f6cd9387cd5bd62a0b27dbace9219f0c21b5a54a4488", byteCount: 2_250_013, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "401a001fd8720b275ea792a7883723254094d2f965c6dcb07c2b5d840e736e77",
+                        streams: streamPins(.rawPresent15)),
         FirmwareRelease(name: "active-als-001",
                         sha256: "e9e42be73f1a45052d2091237a87c1131d6abfb896c0d48c3db7188ceddf553f", byteCount: 2_249_519, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "e950fee8585c60adb17f675c1cb846ddf6670e1456c246a6864e0133fec5d7eb",
@@ -307,12 +317,20 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .bleProbe16:
+            metadata = 171; appPacked = 980_052; appRaw = 1_870_496
+            metadataHash = "df19e79bebcbce6c195f3f8c2bc0135ab4b94886079ee4673ce961f4151226a9"
+            appHash = "0cbb5e97bd90374684bfaa7693aefd35a9d61192414837879bb70cafa06c3061"
+        case .rawPresent15:
+            metadata = 171; appPacked = 978_911; appRaw = 1_868_672
+            metadataHash = "5488b7bb1815724ff2bbdcd290e13ad2614da8bfd9ec6a99db3efc1720e601a9"
+            appHash = "14e082668474d2c79351bb793167765da31eae6226cb3957fe9432c2b160c6f5"
         case .activeAls14:
             metadata = 171; appPacked = 978_417; appRaw = 1_868_032
             metadataHash = "f01432efa94b3c8e71ea2c1cd22479a4e5fe174b6d1bdca18f08b27bfb502165"

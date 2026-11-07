@@ -102,6 +102,11 @@ typedef void *(*object_fn)(void *);
 typedef void (*cache_fn)(const mm_native_image *);
 typedef void *(*timer_fn)(mm_callback,uint32_t,void *);
 typedef uint32_t (*now_fn)(void);
+#ifdef MM_RAW_PRESENT
+typedef uint32_t (*slice_lock_fn)(uint32_t,uint32_t,uint32_t,uint8_t *);
+typedef uint8_t *(*slice_pixels_fn)(int32_t,int32_t,uint32_t);
+typedef uint32_t (*slice_submit_fn)(uint32_t,const uint16_t *,uint32_t);
+#endif
 const mm_graphics_platform mm_graphics_native={
     request_bytes,FN(0x042eff8eu,release_fn),FN(0x042ef9f6u,json_fn),FN(0x042ef924u,status_fn),
     try_alloc,FN(0x0434e6eeu,free_fn),post,send,screen,launcher_active,find_owner,
@@ -109,6 +114,9 @@ const mm_graphics_platform mm_graphics_native={
     FN(0x042b68c8u,cache_fn),FN(0x042c7854u,object_fn),FN(0x042b27cau,timer_fn),
     FN(0x042b285au,free_fn),timer_userdata,FN(0x042d02c6u,now_fn),
     FN(0x0433c460u,now_fn),FN(0x0433c4a4u,now_fn)
+#ifdef MM_RAW_PRESENT
+    ,FN(0x0425f20eu,slice_lock_fn),FN(0x0425f7fau,slice_pixels_fn),FN(0x0425f292u,slice_submit_fn)
+#endif
 };
 
 #ifdef MM_DIAGNOSTIC_COMMANDS

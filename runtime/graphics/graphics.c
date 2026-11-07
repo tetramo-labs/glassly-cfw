@@ -55,6 +55,12 @@ typedef struct {
     mm_scene_session scene;
     uint16_t settled_tags[4];
     uint8_t settled_count, event;
+#ifdef MM_RAW_PRESENT
+    /* lvgl_stale: the image object is hidden or unsourced and must be restored
+     * (one stock redraw) before raw copies can rely on it as the fallback. */
+    uint8_t lvgl_stale;
+    uint32_t raw_presents, raw_fallbacks;
+#endif
 #ifdef MM_COMMAND_BUNDLES
     /* Display-call owned scratch, borrowed here solely by settled callbacks. */
     uint16_t *bundle_tags;
@@ -165,7 +171,7 @@ void glassly_graphics_cleanup(void) {
 #ifdef MM_GRAPHICS_SCENE
 static void flush_settled(owner *o);
 #ifdef MM_FLASH_SCENE
-static void scene_present(void *,const mm_raster *);
+static void scene_present(void *,const mm_raster *,const mm_scene_dirty *);
 #endif
 #endif
 static void tick(void *timer) {
@@ -191,13 +197,16 @@ static void tick(void *timer) {
         return;
     }
 #ifdef MM_GRAPHICS_SCENE
-#ifdef MM_FLASH_SCENE
+#if defined(MM_FLASH_SCENE) && !defined(MM_RAW_PRESENT)
+    /* The stock refresh could paint a half-rendered raster: hide the image
+     * around the tick and re-present afterwards. Raw presents copy only
+     * finished boxes, so they skip both invalidations. */
     int detached=o->scene.timer_armed && (uint32_t)(P.now()-o->scene.timer_started)>=o->scene.timer_period;
     if(detached)glassly_graphics_detach(o->image);
 #endif
     mm_scene_session_pump(&o->scene);
-#ifdef MM_FLASH_SCENE
-    if(detached)scene_present(o,&o->scene.raster);
+#if defined(MM_FLASH_SCENE) && !defined(MM_RAW_PRESENT)
+    if(detached)scene_present(o,&o->scene.raster,0);
 #endif
     flush_settled(o);
 #endif
@@ -213,6 +222,9 @@ static owner *create(void *parent) {
 #endif
     o->magic=OWNER_MAGIC; o->parent=parent; o->image=0; o->timer=0;
     o->started=P.now();
+#ifdef MM_RAW_PRESENT
+    o->lvgl_stale=1;
+#endif
     o->descriptor.header=(MM_GRAPHICS_HEIGHT<<21)|(MM_GRAPHICS_WIDTH<<10)|9u;
     o->descriptor.data_size=64u+MM_GRAPHICS_PIXELS;
     o->descriptor.data=0;
@@ -249,19 +261,81 @@ static int scene_active(void *user) {
 #endif
         );
 }
-static void scene_present(void *user,const mm_raster *raster) {
-    owner *o=user;(void)raster;
+#ifdef MM_RAW_PRESENT
+/* Copy the changed box of the owned raster straight into the locked panel
+ * slices and submit it, bypassing the LVGL redraw. Returns 0 when the stock
+ * lock refuses (display inactive, another app current) so the caller falls
+ * back to the image object. The raster and the panel share GRAY4 packing;
+ * only the stride differs (300 vs 320 bytes). */
+static int raw_present(owner *o,const mm_raster *raster,const mm_scene_dirty *dirty) {
+    if(!P.slice_lock || !P.slice_pixels || !P.slice_submit || !raster || !raster->pixels ||
+       raster->width!=MM_GRAPHICS_WIDTH || raster->height!=MM_GRAPHICS_HEIGHT || raster->stride!=MM_GRAPHICS_STRIDE ||
+       !P.launcher_active() || P.screen()!=o->parent)return 0;
+    uint32_t l=0,t=0,r=MM_GRAPHICS_WIDTH,b=MM_GRAPHICS_HEIGHT;
+    /* direct_failed is not initialized by every producer (the generated tick
+     * sets only n/direct_submitted) and the session already drops presents of
+     * an invalid shadow, so only the box list is consulted here. */
+    if(dirty && dirty->n && dirty->n<MM_SCENE_RECT_MAX){
+        l=MM_GRAPHICS_WIDTH;t=MM_GRAPHICS_HEIGHT;r=0;b=0;
+        for(uint32_t i=0;i<dirty->n;i++){
+            const mm_scene_rect *q=&dirty->r[i];
+            if(!q->w || !q->h)continue;
+            if(q->l<l)l=q->l;
+            if(q->t<t)t=q->t;
+            if((uint32_t)q->l+q->w>r)r=(uint32_t)q->l+q->w;
+            if((uint32_t)q->t+q->h>b)b=(uint32_t)q->t+q->h;
+        }
+        if(r<=l || b<=t)return 1; /* nothing changed */
+        if(r>MM_GRAPHICS_WIDTH)r=MM_GRAPHICS_WIDTH;
+        if(b>MM_GRAPHICS_HEIGHT)b=MM_GRAPHICS_HEIGHT;
+    }
+    l&=~1u;r=(r+1u)&~1u;
+    if(r>MM_GRAPHICS_WIDTH)r=MM_GRAPHICS_WIDTH;
+    uint8_t mask=0;
+    if(!(P.slice_lock(t,b-1u,0,&mask)&0xffu) || !mask)return 0;
+    uint32_t x0=l>>1,bytes=(r-l)>>1;
+    for(uint32_t y=t;y<b;y++){
+        uint8_t *dst=P.slice_pixels(0,(int32_t)y,0);
+        if(!dst){P.slice_submit(mask,0,0);return 0;}
+        const uint8_t *src=raster->pixels+(size_t)y*raster->stride+x0;
+        for(uint32_t i=0;i<bytes;i++)dst[x0+i]=src[i];
+    }
+    uint16_t rect[4]={(uint16_t)l,(uint16_t)t,(uint16_t)(r-1u),(uint16_t)(b-1u)};
+    return (P.slice_submit(mask,rect,1)&0xffu)!=0;
+}
+#endif
+static void scene_present(void *user,const mm_raster *raster,const mm_scene_dirty *dirty) {
+    owner *o=user;
 #ifdef MM_FLASH_SCENE
-    if(o->scene.core.shadow_invalid){glassly_graphics_detach(o->image);return;}
+    if(o->scene.core.shadow_invalid){glassly_graphics_detach(o->image);
+#ifdef MM_RAW_PRESENT
+        o->lvgl_stale=1;
+#endif
+        return;}
 #endif
 #ifdef MM_COMMAND_BUNDLES
     if(o->bundle_active && o->bundle_overflow)return;
 #endif
+#ifdef MM_RAW_PRESENT
+    if(o->lvgl_stale){
+        /* One stock redraw restores the fallback object; the raw copy below
+         * still reaches the panel first. */
+        P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
+#ifdef MM_FLASH_SCENE
+        glassly_diagnostics_hidden(o->image,0);
+#endif
+        o->lvgl_stale=0;
+    }
+    if(raw_present(o,raster,dirty))o->raw_presents++;
+    else {o->raw_fallbacks++;P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);}
+#else
+    (void)dirty;(void)raster;
     P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
+#endif
 #ifdef MM_WAKE_CONTROL
     glassly_wake_presented(o->parent);
 #endif
-#ifdef MM_FLASH_SCENE
+#if defined(MM_FLASH_SCENE) && !defined(MM_RAW_PRESENT)
     glassly_diagnostics_hidden(o->image,0);
 #endif
 #ifdef MM_DIAGNOSTIC_COMMANDS
@@ -597,7 +671,7 @@ void glassly_graphics_display(void *envelope) {
                     if((data[0]&127u)==8 && !begin_bundle(o,data[1])) result=no_memory;
                     else {
 #endif
-#ifdef MM_FLASH_SCENE
+#if defined(MM_FLASH_SCENE) && !defined(MM_RAW_PRESENT)
                     glassly_graphics_detach(o->image);
 #endif
 #ifdef MM_RECORD_TRANSPORT
@@ -615,11 +689,20 @@ void glassly_graphics_display(void *envelope) {
 #ifdef MM_FLASH_SCENE
                     if(o->scene.core.storage_io || o->scene.core.shadow_invalid){
                         glassly_graphics_detach(o->image);
+#ifdef MM_RAW_PRESENT
+                        o->lvgl_stale=1;
+#endif
                         result="{\"glassly\":\"graphics\",\"abi\":1,\"result\":\"storage-error\"}";
                         status=-4;
                     }
+#ifdef MM_RAW_PRESENT
+                    /* Presenting commands already copied their boxes; only a
+                     * hidden fallback object needs restoring here. */
+                    if(status!=-4 && o->lvgl_stale)scene_present(o,&o->scene.raster,0);
+#else
                     /* Non-presenting commands retain a valid previous raster. */
-                    if(status!=-4)scene_present(o,&o->scene.raster);
+                    if(status!=-4)scene_present(o,&o->scene.raster,0);
+#endif
 #endif
 #ifdef MM_DIAGNOSTIC_COMMANDS
                     if(status)mm_diagnostics_failure(parent,data[0],status==-3);

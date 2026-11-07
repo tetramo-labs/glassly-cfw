@@ -1,0 +1,85 @@
+{
+ "compile": [
+  "python3",
+  "scripts/compile_memomind_graphics.py",
+  "analysis/ble-probe-20261107/build-16-01",
+  "--scene-session",
+  "--input-observer",
+  "--flash-reader",
+  "--external-tail-reader",
+  "--storage-diagnostics",
+  "--full-store-reader",
+  "--flash-canary",
+  "--raster-commands",
+  "--rect-copy",
+  "--command-bundles",
+  "--text-commands",
+  "--diagnostic-commands",
+  "--reset-undo-trim",
+  "--minimal-launcher",
+  "--flash-scene",
+  "--wake-control",
+  "--notification-relay",
+  "--record-transport",
+  "--microphone-control",
+  "--sensor-capture",
+  "--raw-present",
+  "--ble-probe",
+  "--cfw-revision",
+  "16",
+  "--rx-profile",
+  "app-rx-96k-v1",
+  "--relax"
+ ],
+ "construct": [
+  "python3",
+  "scripts/build_memomind_minimal_owner.py",
+  "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+  "analysis/ble-probe-20261107/build-16-01",
+  "analysis/ble-probe-20261107/image-16-01"
+ ],
+ "bootTestCommand": [
+  ".tools/rv32-tests-venv/bin/python",
+  "tests/rv32/first_run_boot_test.py",
+  "--build",
+  "analysis/ble-probe-20261107/build-16-01",
+  "--report",
+  "analysis/ble-probe-20261107/boot-selector-16.json"
+ ],
+ "sensorRuntimeTest": [
+  ".tools/rv32-tests-venv/bin/python",
+  "tests/rv32/sensor_capture_runtime_test.py",
+  "--build",
+  "analysis/ble-probe-20261107/build-16-01",
+  "--report",
+  "analysis/ble-probe-20261107/sensor-capture-runtime.json"
+ ],
+ "sensorHostTest": [
+  "python3",
+  "runtime/graphics/tests/run_sensor_capture_tests.py",
+  "--output",
+  "NEW_DIRECTORY"
+ ],
+ "regression": [
+  "python3",
+  "tests/run_tests.py",
+  "--output",
+  "analysis/ble-probe-20261107/regression-16-01"
+ ],
+ "rawPresentTest": [
+  ".tools/rv32-tests-venv/bin/python",
+  "tests/rv32/raw_present_runtime_emulator_test.py",
+  "--build",
+  "analysis/ble-probe-20261107/build-16-01",
+  "--report",
+  "analysis/ble-probe-20261107/raw-present-runtime.json"
+ ],
+ "bleProbeTest": [
+  ".tools/rv32-tests-venv/bin/python",
+  "tests/rv32/ble_probe_runtime_emulator_test.py",
+  "--build",
+  "analysis/ble-probe-20261107/build-16-01",
+  "--report",
+  "analysis/ble-probe-20261107/ble-probe-runtime.json"
+ ]
+}

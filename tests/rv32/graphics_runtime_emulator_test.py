@@ -34,7 +34,10 @@ NATIVES = {
     0x042c7854: "event_userdata", 0x042b27ca: "timer_create",
     0x042b285a: "timer_delete", 0x042d02c6: "now",
     0x0433c460: "free_bytes", 0x0433c4a4: "low_water",
+    # Stock framebuffer slices (raw presents): lock rows, row pointer, submit rect.
+    0x0425f20e: "slice_lock", 0x0425f7fa: "slice_pixels", 0x0425f292: "slice_submit",
 }
+FRAMEBUFFER_STRIDE, FRAMEBUFFER_ROWS = 320, 350
 RESULTS = []
 
 
@@ -63,6 +66,8 @@ class Machine:
         self.allocations, self.next_heap, self.requests, self.replies = {}, HEAP, {}, {}
         self.events, self.calls, self.queue, self.sent, self.images, self.timers = [], [], [], [], {}, {}
         self.children, self.callback_frames, self.image_sources = [], [], []
+        # Raw presents: a panel framebuffer, the slice mask currently locked and every submit.
+        self.framebuffer, self.locked_mask, self.slices, self.fail_slice = None, 0, [], False
         self.request_releases = []
         self.now, self.free_bytes, self.low_water = 100, 0x80000, 0x40000
         self.free_values = []
@@ -292,7 +297,38 @@ class Machine:
         if name == "now": return self.now
         if name == "free_bytes": return self.free_values.pop(0) if self.free_values else self.free_bytes
         if name == "low_water": return self.low_water
+        if name == "slice_lock":
+            y1, y2, auxiliary, mask = a0, a1, a2, a3
+            assert auxiliary == 0 and y1 <= y2 < FRAMEBUFFER_ROWS and mask
+            assert self.locked_mask == 0, "Slice locked twice"
+            if self.fail_slice: return 0
+            if self.framebuffer is None:
+                self.framebuffer = self.allocate(FRAMEBUFFER_STRIDE*FRAMEBUFFER_ROWS, "native-framebuffer")
+            bits = (1 if y1 < 175 else 0) | (2 if y2 >= 175 else 0)
+            self.native_write(mask, bytes([bits])); self.locked_mask = bits
+            self.slices.append(("lock", y1, y2, bits)); return 1
+        if name == "slice_pixels":
+            x, y, auxiliary = a0, a1, a2
+            assert auxiliary == 0 and x == 0 and y < FRAMEBUFFER_ROWS and self.locked_mask
+            assert self.locked_mask & (1 if y < 175 else 2), "Row outside the locked slice"
+            return self.framebuffer+FRAMEBUFFER_STRIDE*y+(x >> 1)
+        if name == "slice_submit":
+            mask, rect, present = a0, a1, a2
+            assert mask == self.locked_mask and mask
+            self.locked_mask = 0
+            if rect == 0:
+                assert present == 0
+                self.slices.append(("release", mask)); return 1
+            x1, y1, x2, y2 = struct.unpack("<HHHH", self.read(rect, 8))
+            assert x1 <= x2 < 600 and y1 <= y2 < FRAMEBUFFER_ROWS and x1 % 2 == 0 and x2 % 2 == 1
+            assert mask == (1 if y1 < 175 else 0) | (2 if y2 >= 175 else 0)
+            self.slices.append(("submit", mask, (x1, y1, x2, y2), present)); return 1
         raise AssertionError("Unknown native contract: "+name)
+
+    def panel_pixel(self, x, y):
+        assert self.framebuffer is not None
+        value = self.read(self.framebuffer+FRAMEBUFFER_STRIDE*y+x//2, 1)[0]
+        return value & 15 if x & 1 else value >> 4
 
     def finish_image_delete(self, image):
         info = self.images.pop(image)

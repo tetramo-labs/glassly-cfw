@@ -1,0 +1,19 @@
+{
+ "started_utc": "2026-11-07T20:27:31.668066+00:00",
+ "finished_utc": "2026-11-07T20:44:49.236157+00:00",
+ "all_required_offline_suites_passed": true,
+ "sources_changed_during_run": [],
+ "missing_upstream_mapped_stages": [],
+ "hardware_tested": false,
+ "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
+ "version": "GLASSLYCFW/14",
+ "stages": 145,
+ "report": "analysis/active-als-20261106/regression-14-01/report.json",
+ "reportSHA256": "8b5da67709a7cfd42cb6159c088a4ad773103112b9979cc3059274097b32a7a4",
+ "demos_dependencies": "~/dev/glassly-g2-cfw/demos/node_modules",
+ "g2_media": "~/dev/glassly-g2-cfw/demos",
+ "regression": "analysis/ble-probe-20261107/regression-16-02",
+ "stages_passed": 147,
+ "stages_failed": 0,
+ "note": "Revision 16 record build (raw presents + BLE probe); the first run (regression-16-01) failed only record_gates because the gate test did not yet expect command 0x74, and the revision 15 run (analysis/raw-present-20261107/regression-15-01) failed five reset-undo-trim suites only because the compile script changed mid-run."
+}

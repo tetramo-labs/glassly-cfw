@@ -1,0 +1,36 @@
+{
+ "version": "GLASSLYCFW/16",
+ "release": "ble-probe-001",
+ "change": "Revision 15 (raw presents) plus command 0x74: a post-boot GATT service probe that registers Glassly service 0x9400 / characteristic 0x9401 through the stock app-side server, arms and runs the registration state machine, enables an advertising slot, counts writes and echoes them as notifications. Inert until commanded.",
+ "sourceCommitG2": "e889569fe77775ed5822af6f7e47210f2984f15d",
+ "build": "build-16-01",
+ "runtimeBytes": 97280,
+ "runtimeSHA256": "83628b7ce89297b5a5b51054212bcb3e4be57b1aa5ab75761a0acd300919c136",
+ "linkerRelaxation": true,
+ "imageBytes": 2251154,
+ "imageSHA256": "50400aadfecdd3c6693b3233613ba5e6b0b637c3156f4989f5fe0adb47473a84",
+ "containerHeaderSHA256": "6de746a501f08aea3e2e92eff13a597548c529ede2234686008fe33e4f450529",
+ "appHeaderSHA256": "3abb2e864e33f1af3a3b4d3f5d2906b885262be47046a4cf3f12c461e3f88736",
+ "bootSelectorTest": "boot-selector-16.json",
+ "rawPresentTest": "../raw-present-20261107/raw-present-runtime.json",
+ "bleProbeTest": "ble-probe-runtime.json",
+ "regression": "regression-16-02",
+ "offlineNotes": "The revision 15 regression (analysis/raw-present-20261107/regression-15-01) passed 141 stages; its five reset-undo-trim suite stages failed only because the compile script gained the --ble-probe flag while the run was in progress (source digest mismatch, sources_changed_during_run).",
+ "flashed": false,
+ "flashAttempt": null,
+ "bootVerified": false,
+ "hardwareChecks": {
+  "physicalDisplayConfirmed": false,
+  "phoneConnectionTested": false,
+  "rawPresentObserved": false,
+  "bleRegistrationObserved": false,
+  "baselineRev14": "captures/v14-anim-timing-20261107-05: empty-36 full present 116 ms median RTT (38 ms transport floor), 570-630 ms stall after a clock-tick SHOW while its tween runs"
+ },
+ "glasslyBundle": {
+  "commit": null,
+  "branch": "dev",
+  "files": "memomind-one-glassly-cfw-16.bin in both resource dirs; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; staged, uncommitted"
+ },
+ "regressionVerification": "regression-verification.json",
+ "regressionNotes": "regression-16-02: all 147 required offline stages passed, no source drift"
+}

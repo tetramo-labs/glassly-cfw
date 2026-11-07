@@ -68,11 +68,15 @@ static void present(void *user,mm_scene_context *ctx,const mm_raster *raster,
     mm_scene_session *s=user;
     /* The original timer deferred rendering to a second display task. Here
      * we already own that task: finish the pending frame before LVGL borrows it. */
+#ifdef MM_RAW_PRESENT
+    mm_scene_render_if_due_rects(ctx,raster->pixels,dirty);
+#else
     mm_scene_render_if_due(ctx,raster->pixels);
+#endif
 #ifdef MM_FLASH_SCENE
     if(ctx->shadow_invalid){dirty->direct_failed=1;return;}
 #endif
-    s->hooks.present(s->hooks.user,raster);
+    s->hooks.present(s->hooks.user,raster,dirty);
     dirty->direct_submitted=1;
 }
 static void settled(void *user,uint16_t tag) {
@@ -137,11 +141,19 @@ static int text_command(mm_scene_session *s,const uint8_t *data,size_t size) {
 static int bundle_segment(mm_scene_session *s,const uint8_t *data,size_t size) {
     uint8_t mode=data[0]&127u;
 #ifdef MM_TEXT_COMMANDS
-    if(mode==15)return text_command(s,data,size);
+    if(mode==15){
+#ifdef MM_RAW_PRESENT
+        s->bundle_full=1;
+#endif
+        return text_command(s,data,size);
+    }
 #endif
     if(mode==3 || mode==6 || mode==9){
 #ifdef MM_DIAGNOSTIC_COMMANDS
         if(s->hooks.frame)s->hooks.frame(s->hooks.user,data,size);
+#endif
+#ifdef MM_RAW_PRESENT
+        s->bundle_full=1;
 #endif
         if(mode==9 ? mm_rect_copy_validate(&s->raster,data,size):mm_raster_command_validate(&s->raster,data,size))return -1;
         mm_scene_takeover(&s->core);
@@ -151,7 +163,12 @@ static int bundle_segment(mm_scene_session *s,const uint8_t *data,size_t size) {
         return 0;
     }
     mm_scene_dirty dirty;dirty.n=0;dirty.direct_submitted=0;dirty.direct_failed=0;
+#ifdef MM_RAW_PRESENT
+    if(mode>=37 && mode<=41)return mm_scene_dispatch(&s->core,mode,data+1,size-1,0,&s->bundle_dirty);
+    s->bundle_full=1;
+#else
     if(mode>=37 && mode<=41)return mm_scene_dispatch(&s->core,mode,data+1,size-1,0,&dirty);
+#endif
     if(mode==19 || mode==20 || mode==36){
         int rc=mm_scene_immediate_mode(&s->core,&s->raster,data,size,mode,&dirty);
         if(!rc)mm_scene_takeover(&s->core);
@@ -164,6 +181,9 @@ static int bundle_segment(mm_scene_session *s,const uint8_t *data,size_t size) {
 static int bundle(mm_scene_session *s,const uint8_t *data,size_t size) {
     if(size<2)return -1;
     mm_scene_prepare(&s->core,8,data+1,size-1);
+#ifdef MM_RAW_PRESENT
+    s->bundle_dirty.n=0;s->bundle_dirty.direct_submitted=0;s->bundle_dirty.direct_failed=0;s->bundle_full=0;
+#endif
     size_t pos=2;
     for(unsigned i=0;i<data[1];i++){
         if(size-pos<2)return -1;
@@ -177,7 +197,13 @@ static int bundle(mm_scene_session *s,const uint8_t *data,size_t size) {
         pos+=n;
     }
     /* Even count0 presents once. Trailing bytes are ignored as upstream. */
-    s->hooks.present(s->hooks.user,&s->raster);
+#ifdef MM_RAW_PRESENT
+    mm_scene_render_if_due_rects(&s->core,s->raster.pixels,&s->bundle_dirty);
+    s->hooks.present(s->hooks.user,&s->raster,
+                     s->bundle_full || s->bundle_dirty.n>=MM_SCENE_RECT_MAX ? 0:&s->bundle_dirty);
+#else
+    s->hooks.present(s->hooks.user,&s->raster,0);
+#endif
     return 0;
 }
 #endif
@@ -194,7 +220,7 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
 #ifdef MM_TEXT_COMMANDS
     if((mode&127u)==15){
         int rc=text_command(s,data,size);
-        if(!rc)s->hooks.present(s->hooks.user,&s->raster);
+        if(!rc)s->hooks.present(s->hooks.user,&s->raster,0);
         return rc;
     }
 #endif
@@ -208,7 +234,7 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
         mm_scene_takeover(&s->core);
         if (mm_rect_copy_draw(&s->raster,data,size)) return -1;
         s->core.shadow_stale=0;
-        s->hooks.present(s->hooks.user,&s->raster);
+        s->hooks.present(s->hooks.user,&s->raster,0);
         return 0;
     }
 #endif
@@ -225,7 +251,7 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
         mm_scene_takeover(&s->core);
         if (mm_raster_command_draw(&s->raster,data,size)) return -1;
         s->core.shadow_stale=0;
-        s->hooks.present(s->hooks.user,&s->raster);
+        s->hooks.present(s->hooks.user,&s->raster,0);
         return 0;
     }
 #endif
@@ -248,7 +274,7 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
         int result=mm_scene_immediate(&s->core,&s->raster,data,size,&dirty);
         if (!result) {
             mm_scene_takeover(&s->core);
-            s->hooks.present(s->hooks.user,&s->raster);
+            s->hooks.present(s->hooks.user,&s->raster,0);
         }
         return result;
     }

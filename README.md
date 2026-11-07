@@ -1,5 +1,26 @@
 # MemoMind One firmware investigation
 
+Revision 16 adds command 0x74, a post-boot GATT probe for a BLE command channel:
+it registers Glassly service 0x9400 / characteristic 0x9401 through the stock
+app-side server (`app_gatts.c` / `wq_gatts.c`, mapped in
+`analysis/ghidra/ble-survey/NOTES.md`), arms and runs the registration state
+machine, enables an advertising slot, counts writes and echoes them back as
+notifications (opcode 0x210). Inert until commanded. The runtime is 97,280
+bytes. Built, catalogued (`ble-probe-001`) and bundled; not flashed. See the
+[V16 checkpoint](analysis/ble-probe-20261107/checkpoint.json).
+
+Revision 15 bypasses the LVGL redraw: a presenting command or animation tick
+copies only its changed box from the owned GRAY4 raster into the locked panel
+slices and submits that rectangle (stock slice API in
+`analysis/ghidra/display-adapter/report.md`). The image object is sourced once
+as the fallback and restored only after a storage-error detach; the per-tick
+hide/re-source and the per-dispatch whole-raster re-present are gone; bundles
+present the union of their segments' boxes. On revision 14 a full present cost
+116 ms round trip against a 38 ms transport floor and a clock-tick SHOW stalled
+the display worker 570–630 ms while its tween ran
+(`captures/v14-anim-timing-20261107-05`). Built, catalogued (`raw-present-001`);
+not flashed. See the [V15 checkpoint](analysis/raw-present-20261107/checkpoint.json).
+
 Revision 14 adds active light sampling to the sensor capture: a start carrying
 an interval (100–5000 ms) makes the glasses call the stock light read
 themselves on the app task at that cadence, forcing the sensor active through

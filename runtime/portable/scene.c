@@ -50,10 +50,22 @@ static void mm_scene_reply_capacity_hint(mm_scene_context *ctx,uint8_t capacity)
 static void cfw_scene_notify_settled(mm_scene_context *ctx,uint16_t tag) {
     if(ctx->platform.settled)ctx->platform.settled(ctx->platform.user,tag);
 }
+static cfw_cache *cfw_cache_peek(customCfwContext *ctx);
+static void cfw_scene_render(customCfwContext *ctx,cfw_cache *sc,uint8_t *fb,cfw_rectlist *rl);
+/* A due deferred render draws into fb and reports its box on rl (a null rl
+ * discards it, as the generated cfw_scene_render_if_due does). */
+static void render_due_into(mm_scene_context *ctx,uint8_t *fb,cfw_rectlist *rl) {
+    cfw_cache *sc=cfw_cache_peek(ctx);
+    if(sc==0 || !sc->render_due || fb==0 || fb!=sc->fb)return;
+    sc->render_due=0;
+    cfw_rectlist scratch;
+    if(!rl){rl=&scratch;rl->n=0;rl->direct_submitted=0;rl->direct_failed=0;}
+    cfw_scene_render(ctx,sc,fb,rl);
+}
 static void present_buffer(mm_scene_context *ctx,const uint8_t *fb,cfw_rectlist *rl) {
 #ifdef MM_SCENE_EXTERNAL_STORE
     if(ctx->external_ready){
-        cfw_scene_render_if_due(ctx,(uint8_t *)(uintptr_t)fb);
+        render_due_into(ctx,(uint8_t *)(uintptr_t)fb,rl);
         if(ctx->shadow_invalid){cfw_scene_stop(ctx);return;}
     }
 #endif
@@ -264,6 +276,13 @@ int mm_scene_immediate(mm_scene_context *ctx,const mm_raster *target,const uint8
 #endif
 void mm_scene_tick(void *ctx) {scene_tick(ctx);}
 void mm_scene_render_if_due(mm_scene_context *ctx,uint8_t *fb) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_scene_render_if_due(ctx,fb);}
+void mm_scene_render_if_due_rects(mm_scene_context *ctx,uint8_t *fb,mm_scene_dirty *dirty) {
+    if(!ctx || ctx->magic!=MM_SCENE_MAGIC)return;
+    uint32_t before=dirty?dirty->n:0;
+    render_due_into(ctx,fb,dirty);
+    /* rl_add drops boxes past capacity: a full list means "everything" to callers. */
+    if(dirty && dirty->n>=CFW_RECT_MAX && before<CFW_RECT_MAX)dirty->n=CFW_RECT_MAX;
+}
 void mm_scene_takeover(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_scene_takeover(ctx);}
 void mm_scene_lose(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_cache_lose(ctx);}
 void mm_scene_reap(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_cache_reap(ctx);}

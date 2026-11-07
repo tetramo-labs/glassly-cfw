@@ -76,7 +76,7 @@ static void core_free(void *u,void *p){(void)u;assert(core_allocs);core_allocs--
 static uint32_t core_free_bytes(void *u){(void)u;return 1024*1024;}
 static uint32_t core_now(void *u){(void)u;return 0;}
 static int core_active(void *u){(void)u;return 1;}
-static void core_present(void *u,const mm_raster *r){(void)u;assert(r->width==600);core_presents++;}
+static void core_present(void *u,const mm_raster *r,const mm_scene_dirty *d){(void)u;(void)d;assert(r->width==600);core_presents++;}
 static void final_scratch_clear(void){
     mm_scene_session *s=calloc(1,sizeof(*s));uint8_t *frame=calloc(1,105000);assert(s&&frame);
     mm_scene_session_hooks h={0,core_alloc,core_free,core_free_bytes,core_now,core_active,core_present,0,0};

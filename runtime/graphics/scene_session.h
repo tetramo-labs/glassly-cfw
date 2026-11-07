@@ -18,7 +18,8 @@ typedef struct {
     uint32_t (*free_bytes)(void *);
     uint32_t (*now_ms)(void *);
     int (*active)(void *);
-    void (*present)(void *, const mm_raster *);
+    /* dirty lists the changed boxes, or is NULL when the whole raster changed. */
+    void (*present)(void *, const mm_raster *, const mm_scene_dirty *);
     void (*settled)(void *, uint16_t);
     int (*builtin_text)(void *,const mm_raster *,const uint8_t *,size_t,
                         mm_scene_dirty *,uint32_t *,size_t);
@@ -39,6 +40,11 @@ typedef struct {
     uint32_t timer_started, timer_period;
     uint32_t denied_allocations;
     uint8_t initialized, timer_armed;
+#ifdef MM_RAW_PRESENT
+    /* Boxes drawn by a bundle's segments; bundle_full when a segment drew outside them. */
+    mm_scene_dirty bundle_dirty;
+    uint8_t bundle_full;
+#endif
 } mm_scene_session;
 
 /* Initialize only zero/unowned storage. All calls, including pump and dispose,

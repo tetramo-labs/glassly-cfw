@@ -5,7 +5,7 @@ import MemoMindCore
 /// panel, under a wake and frame lease, and save the measured runs. Only the
 /// retained-scene firmware with text commands (GLASSLYCFW/10+) answers; the
 /// result pins MemoMindOneRenderer's inline allowlist in glassly.
-func captureFontProbe(session: GMSession, capture: Capture, from: UInt32 = 0, sampled: Bool = false, missBudget: Int = 0) throws -> [String: Any] {
+func captureFontProbe(session: GMSession, capture: Capture, from: UInt32 = 0, to: UInt32 = 0x10FFFF, sampled: Bool = false, missBudget: Int = 0) throws -> [String: Any] {
     var event: UInt8 = 0x30
     var pendingNonce: UInt16?
     var eventError: Error?
@@ -82,7 +82,7 @@ func captureFontProbe(session: GMSession, capture: Capture, from: UInt32 = 0, sa
     fputs("FONT PROBE: \(capabilities.version); sweeping \(FontProbe.blocks.count) blocks from U+\(String(from, radix: 16, uppercase: true))\n", stderr)
     var lastRenewal = ProcessInfo.processInfo.systemUptime
     let began = lastRenewal
-    let report = try FontProbe.probe(from: from, sampled: sampled, missBudget: missBudget, draw: { bytes in
+    let report = try FontProbe.probe(from: from, to: to, sampled: sampled, missBudget: missBudget, draw: { bytes in
         if let error = eventError {
             throw error
         }
@@ -117,9 +117,9 @@ func captureFontProbe(session: GMSession, capture: Capture, from: UInt32 = 0, sa
     try capture.save(try dictionary(report), name: "font-repertoire.json")
     fputs("SWIFT: \(report.swiftRanges)\nKOTLIN: \(report.kotlinRanges)\n", stderr)
     if let next = report.nextScalar {
-        fputs("MISS BUDGET REACHED (\(report.misses) misses); resume with --from U+\(String(next, radix: 16, uppercase: true))\n", stderr)
+        fputs("STOPPED after \(report.misses) misses; resume with --from U+\(String(next, radix: 16, uppercase: true))\n", stderr)
     }
-    return ["complete": report.nextScalar == nil, "version": capabilities.version, "requests": report.requests, "from": from,
+    return ["complete": report.nextScalar == nil, "version": capabilities.version, "requests": report.requests, "from": from, "to": to,
             "sampled": sampled, "missBudget": missBudget, "misses": report.misses,
             "nextScalar": report.nextScalar.map { String(format: "U+%04X", $0) } as Any,
             "elapsedSeconds": ProcessInfo.processInfo.systemUptime - began,

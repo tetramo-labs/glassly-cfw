@@ -57,7 +57,8 @@ public enum FontProbe {
         public let requests: Int
         /// Refused strings: each one costs the stock glyph lookup a miss.
         public let misses: Int
-        /// The first scalar not swept because the miss budget ran out, or nil when every block was settled.
+        /// The first scalar not settled because the miss budget ran out (or `to` was reached), or nil
+        /// when every block was settled.
         public let nextScalar: UInt32?
 
         /// The runs as a Swift `[ClosedRange<UInt32>]` body (MemoMindOneRenderer.fontRanges).
@@ -215,16 +216,23 @@ public enum FontProbe {
     /// returns whether the glasses drew it (`ok`) or refused it (`invalid`);
     /// any other outcome should throw. Two calibration strings come first:
     /// ASCII must draw and an unassigned scalar must be refused.
+    /// Thrown inside the sweep when the miss budget is spent; `resume` is the lowest scalar of the
+    /// string that was just refused, and everything from it on is unsettled.
+    private struct BudgetSpent: Error { let resume: UInt32 }
+
     public static func probe(
-        blocks: [Block] = blocks, from: UInt32 = 0, sampled: Bool = false, missBudget: Int = 0,
+        blocks: [Block] = blocks, from: UInt32 = 0, to: UInt32 = 0x10FFFF, sampled: Bool = false, missBudget: Int = 0,
         draw: (Data) throws -> Bool, progress: ((BlockResult) -> Void)? = nil
     ) throws -> Report {
-        // Resuming after a reboot: drop the blocks already settled and clip the one `from` lands in.
+        // Resuming after a reboot: drop the blocks outside `from...to` and clip the ones they land in.
         // `sampled` forces the cheap resolution everywhere: an absent block then costs a few misses
         // instead of one per scalar. The stock glyph lookup leaks on every miss and the glasses reboot
-        // after about a hundred, so `missBudget` stops the sweep at a block boundary before that.
+        // after 75-180 of them, so `missBudget` stops the sweep right after the miss that spends it;
+        // bisection settles scalars in order, so everything below the refused string is settled.
+        let table = blocks
         let blocks = blocks.compactMap { block -> Block? in
-            block.last < from ? nil : Block(block.name, max(block.first, from), block.last, sampled ? .sampled : block.resolution)
+            block.last < from || block.first > to ? nil
+                : Block(block.name, max(block.first, from), min(block.last, to), sampled ? .sampled : block.resolution)
         }
         var requests = 0, misses = 0
         func draws(_ scalars: [UInt32]) throws -> Bool {
@@ -232,6 +240,9 @@ public enum FontProbe {
             let drew = try draw(utf8(scalars))
             if !drew {
                 misses += 1
+                if missBudget > 0, misses >= missBudget, let lowest = scalars.min() {
+                    throw BudgetSpent(resume: lowest)
+                }
             }
             return drew
         }
@@ -243,11 +254,7 @@ public enum FontProbe {
         var present: [UInt32] = []
         var results: [BlockResult] = []
         var nextScalar: UInt32?
-        for block in blocks {
-            if missBudget > 0, misses >= missBudget {
-                nextScalar = block.first
-                break
-            }
+        sweep: for block in blocks {
             let before = requests
             var found = 0, absent = 0, unresolved = 0
             /// `scalars` were refused as a whole: settle each one.
@@ -266,34 +273,49 @@ public enum FontProbe {
                     }
                 }
             }
-            for chunk in chunks(scalars(block)) {
-                if try draws(chunk) {
-                    present.append(contentsOf: chunk)
-                    found += chunk.count
-                    continue
-                }
-                switch block.resolution {
-                case .exact:
-                    try bisect(chunk)
-                case .sampled:
-                    var hit = false
-                    for sample in Set([chunk[0], chunk[chunk.count / 2], chunk[chunk.count - 1]]).sorted() {
-                        if try draws([sample]) {
-                            hit = true
-                            break
+            var last = block.last
+            do {
+                for chunk in chunks(scalars(block)) {
+                    if try draws(chunk) {
+                        present.append(contentsOf: chunk)
+                        found += chunk.count
+                        continue
+                    }
+                    switch block.resolution {
+                    case .exact:
+                        try bisect(chunk)
+                    case .sampled:
+                        var hit = false
+                        for sample in Set([chunk[0], chunk[chunk.count / 2], chunk[chunk.count - 1]]).sorted() {
+                            if try draws([sample]) {
+                                hit = true
+                                break
+                            }
+                        }
+                        if hit {
+                            try bisect(chunk)
+                        } else {
+                            unresolved += chunk.count
                         }
                     }
-                    if hit {
-                        try bisect(chunk)
-                    } else {
-                        unresolved += chunk.count
-                    }
                 }
+            } catch let spent as BudgetSpent {
+                // Keep what this block settled below the refused string; the rest is the next session's.
+                nextScalar = spent.resume
+                present.removeAll { $0 >= spent.resume }
+                found = present.filter { block.first <= $0 && $0 <= block.last }.count
+                last = spent.resume > block.first ? spent.resume - 1 : block.first
             }
-            let result = BlockResult(name: block.name, first: block.first, last: block.last, resolution: block.resolution,
+            let result = BlockResult(name: block.name, first: block.first, last: last, resolution: block.resolution,
                                      present: found, absent: absent, unresolved: unresolved, requests: requests - before)
             results.append(result)
             progress?(result)
+            if nextScalar != nil {
+                break sweep
+            }
+        }
+        if nextScalar == nil, to < 0x10FFFF, let after = table.first(where: { $0.first > to })?.first {
+            nextScalar = max(after, to + 1)
         }
         return Report(runs: runs(present), blocks: results, requests: requests, misses: misses, nextScalar: nextScalar)
     }

@@ -55,9 +55,23 @@ final class FontProbeTests: XCTestCase {
         XCTAssertEqual(cheap.blocks.map(\.unresolved), [128, 128, 128])
         XCTAssertLessThanOrEqual(cheap.misses, 1 + 3 * 2 * 3, "a chunk plus three samples per chunk, two chunks per block")
         let budgeted = try FontProbe.probe(blocks: blocks, sampled: true, missBudget: 5, draw: font([ascii]))
-        XCTAssertEqual(budgeted.blocks.map(\.name), ["a"], "the budget is checked before each block")
-        XCTAssertEqual(budgeted.nextScalar, 0x180)
-        XCTAssertGreaterThanOrEqual(budgeted.misses, 5)
+        XCTAssertEqual(budgeted.misses, 5, "the sweep stops on the miss that spends the budget")
+        let resume = try XCTUnwrap(budgeted.nextScalar)
+        XCTAssertTrue((0x100 ... 0x180).contains(resume), "five misses do not get past block a")
+        XCTAssertEqual(budgeted.blocks.map(\.name), ["a"])
+        XCTAssertEqual(budgeted.blocks[0].last, resume - 1, "a stopped block is clipped to what it settled")
+        XCTAssertTrue(budgeted.runs.allSatisfy { $0.last < resume }, "nothing at or above the resume point counts as present")
+        // Mid-chunk stop: an exact block of absent scalars settles them in order, so the resume point
+        // is the lowest scalar of the refused string and the run below it is kept.
+        let partial = try FontProbe.probe(blocks: [FontProbe.Block("p", 0x100, 0x11F)], missBudget: 8, draw: font([ascii, 0x100 ... 0x10F]))
+        XCTAssertEqual(partial.runs, [FontProbe.Run(first: 0x100, last: 0x10F)])
+        XCTAssertNotNil(partial.nextScalar)
+        XCTAssertGreaterThanOrEqual(partial.nextScalar!, 0x110)
+        XCTAssertLessThanOrEqual(partial.nextScalar!, 0x11F)
+        XCTAssertNil(try FontProbe.probe(blocks: blocks, draw: font([ascii])).nextScalar)
+        let bounded = try FontProbe.probe(blocks: blocks, to: 0x1FF, draw: font([ascii, 0x100 ... 0x1FF]))
+        XCTAssertEqual(bounded.blocks.map(\.name), ["a", "b"])
+        XCTAssertEqual(bounded.nextScalar, 0x200, "--to reports where the sweep would continue")
     }
 
     func testScalarsSkipControlsSurrogatesAndNoncharacters() {

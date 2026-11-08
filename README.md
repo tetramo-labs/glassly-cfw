@@ -11,7 +11,10 @@ unbonded central a few seconds after connect (stock LE connection policy); the
 bonded iPhone is the real client and the next test. The status op now reports
 the stock advertising slot and BT link flags, op 5 restarts enabled slots, and a
 60 s poll of the notification relay returned status records only (no iPhone ANCS
-link during the run). Regression: 147/147. See the
+link during the run). Animation timing re-measured on this image
+(`captures/v19-anim-timing-20261108-01`): idle status 38.7 ms, presents after a
+clock-tick SHOW 117 / 54 / 64 ms, SHOW during a tween 87 ms, the same raw-present
+numbers as revision 16. Regression: 147/147. See the
 [V19 checkpoint](analysis/ble-probe-20261108c/checkpoint.json).
 
 Revision 18 (`ble-probe-003`) is the first GATT probe that registers on the

@@ -46,14 +46,14 @@ do {
  result["bootHeaderVerified"]=true;result["appHeaderSHA256"]=expectedHash;result["release"]=release
  try save("boot-checkpoint.json",result)
  let caps=try object(request(0x7e));try save("capabilities.json",caps)
- try need(caps["version"] as? String=="GLASSLYCFW/18","Wrong revision")
+ try need(caps["version"] as? String=="GLASSLYCFW/19","Wrong revision")
  _=try request(0x7d,Data([11]))
  try need(session.ownership(.acquireWake,event:&event).wakeLease,"Wake refused")
  try need(session.ownership(.acquireFrame,event:&event).frameLease,"Frame refused")
  let records=try GraphicsRecordSession(session:session)
  func draw()throws {
   _=try records.send(RasterCommands.fullFrame(pixels:Data(repeating:0,count:105000)),event:&event)
-  _=try records.send(RasterCommands.builtinText(bytes:Data("GLASSLYCFW/18".utf8),x:20,y:30),event:&event)
+  _=try records.send(RasterCommands.builtinText(bytes:Data("GLASSLYCFW/19".utf8),x:20,y:30),event:&event)
   _=try records.send(RasterCommands.builtinText(bytes:Data("RAW PRESENT + BLE PROBE".utf8),x:20,y:80),event:&event)
   try need(session.ownership(.status,event:&event).framePresented,"Frame not presented")
  }

@@ -1,5 +1,19 @@
 # MemoMind One firmware investigation
 
+Revision 19 (`ble-probe-004`) proves the BLE command channel on hardware. The
+probe now clears the pending flag before registering, so the stock
+`register_service` kick is the only kick: service 0x9400 got handle 14, the
+characteristic 0x9401 value handle 16 and CCCD 17, and a Mac central listed
+9401 (props 0x1e, descriptor 2902) under 9400, subscribed, wrote 20 payloads and
+received each back as a 0x210 notification with a 61.5 ms median round trip
+(59.4–89.8 ms, MTU 509) against 110–170 ms over iAP2. The glasses still drop an
+unbonded central a few seconds after connect (stock LE connection policy); the
+bonded iPhone is the real client and the next test. The status op now reports
+the stock advertising slot and BT link flags, op 5 restarts enabled slots, and a
+60 s poll of the notification relay returned status records only (no iPhone ANCS
+link during the run). Regression: 147/147. See the
+[V19 checkpoint](analysis/ble-probe-20261108c/checkpoint.json).
+
 Revision 18 (`ble-probe-003`) is the first GATT probe that registers on the
 glasses without crashing them: service 0x9400 got handle 14, characteristic
 0x9401 value handle 17 and CCCD 18, advertising enabled and a Mac central

@@ -13,15 +13,22 @@
 /* Stock app-side GATT server (segment-3 body, see analysis/ghidra/ble-survey). */
 typedef void *(*register_service_fn)(const uint8_t *);
 typedef void *(*register_chara_fn)(void *,const uint8_t *);
-typedef void (*arm_pending_fn)(int);
 typedef uint32_t (*run_registration_fn)(void);
 typedef uint32_t (*adv_enable_fn)(uint32_t);
 typedef int (*notify_fn)(const uint8_t *,void *,const uint8_t *,uint16_t);
 #define REGISTER_SERVICE FN(0x0431a7feu,register_service_fn)
 #define REGISTER_CHARA FN(0x0431a93au,register_chara_fn)
-#define ARM_PENDING FN(0x0431b504u,arm_pending_fn)
 #define RUN_REGISTRATION FN(0x0431a42eu,run_registration_fn)
+typedef void (*adv_resume_fn)(int);
+typedef void (*registration_failed_fn)(int);
+#define ADV_RESUME FN(0x043179c2u,adv_resume_fn)
+#define REGISTRATION_FAILED FN(0x0431a6a8u,registration_failed_fn)
+#define CURSOR_CHARA (*(volatile uint8_t **)(uintptr_t)0x02012228u)
+#define CURSOR_SERVICE (*(volatile uint8_t **)(uintptr_t)0x0201222cu)
 #define ADV_ENABLE FN(0x04317164u,adv_enable_fn)
+typedef uint8_t *(*find_slot_fn)(uint32_t);
+#define FIND_SLOT FN(0x04316df8u,find_slot_fn)
+#define LINK_FLAGS ((const volatile uint8_t *)(uintptr_t)0x02012218u)
 #define NOTIFY FN(0x0431a712u,notify_fn)
 #define SERVICE_LIST (*(uint8_t **)(uintptr_t)0x0201223cu)
 #define PENDING (*(volatile uint8_t *)(uintptr_t)0x02012230u)
@@ -54,6 +61,9 @@ static state *state_of(void *desc){
     if(!desc)return 0;
     uint8_t *node=(uint8_t *)desc-4;
     if(*(uint16_t *)(node+8)!=BLE_CHARA_UUID)return 0;
+    /* The spare bytes travel inside the characteristic registration message, so
+     * they stay zero until the BT core has assigned the value handle. */
+    if(*(uint16_t *)(node+0x18)==0xffffu)return 0;
     state *s=(state *)(node+0x24);
     if(s->magic!=STATE_MAGIC){
         for(unsigned i=0;i<sizeof(*s);i++)((uint8_t *)s)[i]=0;
@@ -80,7 +90,7 @@ void glassly_ble_on_cccd(const uint8_t *msg,void *desc,uint32_t enabled){
     (void)msg;state *s=state_of(desc);if(s)s->cccd=enabled?1:0;
 }
 static void *json_hex(const char *result,const uint8_t *b,unsigned n){
-    char *out=P.alloc(208);if(!out)return P.status(4,0);
+    char *out=P.alloc(2u*n+96u);if(!out)return P.status(4,0); /* prefix + result (<=24) + hex + close */
     char *p=out;const char *s="{\"glassly\":\"ble-probe\",\"abi\":1,\"result\":\"";while(*s)*p++=*s++;
     while(*result)*p++=*result++;
     s="\",\"stateHex\":\"";while(*s)*p++=*s++;
@@ -91,7 +101,7 @@ static void *json_hex(const char *result,const uint8_t *b,unsigned n){
 static void put16(uint8_t *p,uint32_t v){p[0]=(uint8_t)v;p[1]=(uint8_t)(v>>8);}
 static void put32(uint8_t *p,uint32_t v){for(unsigned i=0;i<4;i++)p[i]=(uint8_t)(v>>(i*8));}
 static void *status(const char *result,uint32_t rc){
-    uint8_t b[64]={'B','P',1};uint8_t *svc=find_service(),*chr=find_chara();
+    uint8_t b[128]={'B','P',1};uint8_t *svc=find_service(),*chr=find_chara();
     b[3]=svc?1:0;b[4]=chr?1:0;b[5]=REGISTERING;b[6]=PENDING;b[7]=ADV_SLOTS;
     put16(b+8,svc?*(uint16_t *)(svc+0x1c):0xffffu);
     put16(b+10,chr?*(uint16_t *)(chr+0x18):0xffffu);put16(b+12,chr?*(uint16_t *)(chr+0x1a):0xffffu);
@@ -103,13 +113,19 @@ static void *status(const char *result,uint32_t rc){
     for(unsigned i=0;i<6;i++)b[36+i]=s?s->peer[i]:0;
     for(unsigned i=0;i<18;i++)b[42+i]=s?s->last[i]:0;
     put32(b+60,rc);
+    /* Stock advertising slot (0x38 bytes: +8 configured, +9 enabled, +0xb state,
+     * +0xd id, +0x10/+0x12 interval) and the BT link flags that gate posts. */
+    uint8_t *slot=ADV_SLOTS?FIND_SLOT((uint32_t)ADV_SLOTS-1u):0;
+    for(unsigned i=0;i<0x38;i++)b[64+i]=slot?slot[i]:0;
+    for(unsigned i=0;i<4;i++)b[120+i]=LINK_FLAGS[i];
     return json_hex(result,b,sizeof(b));
 }
 /* Request: 'B','P',1,op[,arg...]. op1 register (idempotent), op2 enable adv slot
- * arg, op3 status, op4 notify the last peer with the remaining bytes. */
+ * arg, op3 status, op4 notify the last peer with the remaining bytes, op5 restart
+ * every enabled advertising slot (the stock resume). */
 void glassly_ble_probe_command(uint32_t command,void *request,const uint8_t *event,void **response){
     (void)command;(void)event;const uint8_t *p=0;size_t n=0;uint8_t op=255,arg=0;uint8_t payload[20];unsigned plen=0;
-    if(P.request_bytes(request,&p,&n) && p && n>=4 && p[0]=='B' && p[1]=='P' && p[2]==1 && p[3]>=1 && p[3]<=4){
+    if(P.request_bytes(request,&p,&n) && p && n>=4 && p[0]=='B' && p[1]=='P' && p[2]==1 && p[3]>=1 && p[3]<=5){
         op=p[3];
         if(op==2){if(n==5)arg=p[4];else op=255;}
         else if(op==4){if(n>4 && n<=4+sizeof(payload)){plen=(unsigned)n-4;for(unsigned i=0;i<plen;i++)payload[i]=p[4+i];}else op=255;}
@@ -130,14 +146,33 @@ void glassly_ble_probe_command(uint32_t command,void *request,const uint8_t *eve
             *(uintptr_t *)(chr+0x58)=(uintptr_t)glassly_ble_on_read;
             *(uintptr_t *)(chr+0x5c)=(uintptr_t)glassly_ble_on_write;
             *(uintptr_t *)(chr+0x60)=(uintptr_t)glassly_ble_on_cccd;
+            /* The stock register_service/register_chara kick the state machine
+             * themselves while the pending flag is set (the boot-time done
+             * callback re-arms it), so clear it first: revision 18 let that kick
+             * post the service, then ran the machine again and posted the same
+             * service twice (handles 14 and 15), which split the chara away from
+             * the first record and left its group empty. One kick, after both
+             * nodes exist, mirrors the stock sequence exactly. */
+            PENDING=0;
             void *service=find_service();
             if(!service)service=REGISTER_SERVICE(svc);
             if(!service)result="service-failed";
             else if(!REGISTER_CHARA(service,chr))result="chara-failed";
-            else {ARM_PENDING(1);rc=RUN_REGISTRATION();}
+            else {
+                /* Handle replies (0x15f/0x160 service, 0x162/0x163 chara) are only
+                 * accepted while registering is set and the cursors point at the
+                 * entry in flight; the reply handler re-enters the machine until
+                 * every handle is assigned, then the stock done callback posts
+                 * register_done (0x213). */
+                ADV_RESUME(0);REGISTERING=1;CURSOR_CHARA=0;CURSOR_SERVICE=(uint8_t *)service;
+                rc=RUN_REGISTRATION();
+                if(rc){REGISTRATION_FAILED(1);result="registration-refused";}
+            }
         }
     } else if(op==2){
         rc=ADV_ENABLE(arg);if(rc)result="adv-refused";
+    } else if(op==5){
+        ADV_RESUME(0);
     } else if(op==4){
         uint8_t *chr=find_chara();state *s=chr?state_of(chr+4):0;
         if(!s || !s->writes)result="no-peer";

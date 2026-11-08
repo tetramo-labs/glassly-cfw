@@ -27,7 +27,7 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
     defer { ota.close(); control.close() }
     do {
         try capture.record(["event": "attempt", "command": args.command, "address": address,
-                            "imageSHA256": firmware?.sha256 ?? NSNull(), "confirmWrite": args.confirmWrite])
+                            "imageSHA256": firmware?.sha256 ?? NSNull(), "confirmWrite": args.confirmWrite, "resume": args.resume])
         try capture.record(["event": "connect-intent", "session": "control",
                             "service": MemoMindBluetoothService.normal.rawValue])
         try control.connect(address: address, service: .normal)
@@ -51,6 +51,7 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
                                 "channel": ota.resolvedChannelID as Any? ?? NSNull()])
             let transaction = try OTATransaction(transport: ota, firmware: firmware,
                                                  identity: identity, address: address,
+                                                 allowResume: args.resume,
                                                  checkControlLink: {
                                                      try control.checkHealth()
                                                      // Every byte was durably recorded in the receive callback.

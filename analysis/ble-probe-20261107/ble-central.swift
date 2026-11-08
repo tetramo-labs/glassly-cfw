@@ -3,7 +3,8 @@
 import CoreBluetooth
 import Foundation
 final class Central: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    let service = CBUUID(string: "9400"), chara = CBUUID(string: "9401")
+    let service = CBUUID(string: ProcessInfo.processInfo.environment["BLE_SERVICE"] ?? "9400")
+    let chara = CBUUID(string: ProcessInfo.processInfo.environment["BLE_CHARA"] ?? "9401")
     let nameHint: String, deadline: Date
     var manager: CBCentralManager!, peripheral: CBPeripheral?, characteristic: CBCharacteristic?
     var seen: [String: (Int, [String: Any])] = [:], sentAt = Date(), round = 0, rtts: [Double] = []
@@ -27,11 +28,12 @@ final class Central: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(_ c: CBCentralManager, didFailToConnect p: CBPeripheral, error: Error?) { log("connect failed: \(String(describing: error))") }
     func centralManager(_ c: CBCentralManager, didDisconnectPeripheral p: CBPeripheral, error: Error?) { log("disconnected: \(String(describing: error))") }
     func peripheral(_ p: CBPeripheral, didDiscoverServices error: Error?) {
-        log("services: \((p.services ?? []).map(\.uuid.uuidString))")
-        for s in p.services ?? [] where s.uuid == service { p.discoverCharacteristics(nil, for: s) }
-        if !(p.services ?? []).contains(where: { $0.uuid == service }) { log("service 9400 absent") }
+        log("services: \((p.services ?? []).map(\.uuid.uuidString)) error \(String(describing: error))")
+        for s in p.services ?? [] where s.uuid == service { log("discovering characteristics of \(s.uuid.uuidString)"); p.discoverCharacteristics(nil, for: s) }
+        if !(p.services ?? []).contains(where: { $0.uuid == service }) { log("service \(service.uuidString) absent") }
     }
     func peripheral(_ p: CBPeripheral, didDiscoverCharacteristicsFor s: CBService, error: Error?) {
+        log("characteristics of \(s.uuid.uuidString): \((s.characteristics ?? []).count) error \(String(describing: error))")
         for ch in s.characteristics ?? [] {
             log("chara \(ch.uuid.uuidString) props \(ch.properties.rawValue)")
             if ch.uuid == chara { characteristic = ch; p.setNotifyValue(true, for: ch) }

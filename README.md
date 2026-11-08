@@ -1,13 +1,37 @@
 # MemoMind One firmware investigation
 
-Revision 16 adds command 0x74, a post-boot GATT probe for a BLE command channel:
-it registers Glassly service 0x9400 / characteristic 0x9401 through the stock
-app-side server (`app_gatts.c` / `wq_gatts.c`, mapped in
-`analysis/ghidra/ble-survey/NOTES.md`), arms and runs the registration state
-machine, enables an advertising slot, counts writes and echoes them back as
-notifications (opcode 0x210). Inert until commanded. The runtime is 97,280
-bytes. Built, catalogued (`ble-probe-001`) and bundled; not flashed. See the
-[V16 checkpoint](analysis/ble-probe-20261107/checkpoint.json).
+Revision 18 (`ble-probe-003`) is the first GATT probe that registers on the
+glasses without crashing them: service 0x9400 got handle 14, characteristic
+0x9401 value handle 17 and CCCD 18, advertising enabled and a Mac central
+connected and listed services 0x9200/0x9300/0x9400 within a second. Two
+findings stop there. The 0x9400 group came back with no characteristics: the
+stock `register_service`/`register_chara` run the registration walker themselves
+while the pending flag is set, so the probe's own kick posted the service a second
+time (records at 14 and 15; the characteristic landed under 14 whose group ends
+at 14). And the glasses terminate every central, ours or one reading the stock
+0x9201, 3.6 s after connect; the app image's only LE disconnect caller is the
+ring path, so the policy sits in the BT core (`analysis/ghidra/bt-image/`), still
+unidentified. Flashed by resuming an interrupted transfer (`memomind flash
+--resume`, the device keeps a cursor keyed on the image length and CRC32). See
+the [V18 checkpoint](analysis/ble-probe-20261108b/checkpoint.json).
+
+Revision 17 (`ble-probe-002`) mirrored the stock registration kick so the BT
+core's handle replies would be accepted; its register command rebooted the
+glasses because the probe kept its state in the characteristic node's bytes
++0x24.., which the walker copies into the registration message as the descriptor
+count and list (the core asserts count <= 2). See the
+[V17 checkpoint](analysis/ble-probe-20261108/checkpoint.json).
+
+Revision 16 (`ble-probe-001`) added command 0x74, the post-boot GATT probe
+(register 0x9400/0x9401 through the stock app-side server, enable an advertising
+slot, count writes, echo them as 0x210 notifications). Flashed and booted; its
+registration left both handles unassigned (the kick skipped the registering flag
+and cursors). It also carries revision 15's raw presents, measured there for the
+first time (`captures/v16-anim-timing-20261108-01`): an empty-36 full present
+dropped from 116 to 40 ms against the 38 ms transport floor, the display-worker
+stall after a clock-tick SHOW from 575 to 114 ms, presents during a tween from
+121 to 63 ms, a cold-open PUT from 643 to 81 ms and its SHOW from 364 to 179 ms.
+See the [V16 checkpoint](analysis/ble-probe-20261107/checkpoint.json).
 
 Revision 15 bypasses the LVGL redraw: a presenting command or animation tick
 copies only its changed box from the owned GRAY4 raster into the locked panel

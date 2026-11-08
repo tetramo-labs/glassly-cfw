@@ -26,6 +26,7 @@ public final class OTATransaction {
     private let transport: MemoMindTransport
     private let image: Data
     private let modified: Bool
+    private let allowResume: Bool
     private let identity: DeviceIdentity
     private let pace: TimeInterval
     private let timeout: TimeInterval
@@ -44,23 +45,25 @@ public final class OTATransaction {
     public convenience init(transport: MemoMindTransport, firmware: EligibleFirmware,
                             identity: DeviceIdentity, address: String,
                             pace: TimeInterval = 0.045, timeout: TimeInterval = 15,
+                            allowResume: Bool = false,
                             checkControlLink: (() throws -> Void)? = nil) throws
     {
         try self.init(transport: transport, image: firmware.data, modified: firmware.modified,
                       identity: identity, address: address, pace: pace, timeout: timeout,
-                      checkControlLink: checkControlLink)
+                      allowResume: allowResume, checkControlLink: checkControlLink)
     }
 
     /// Internal raw entry is for independent recorded/synthetic tests, never the CLI.
     init(transport: MemoMindTransport, image: Data, modified: Bool, identity: DeviceIdentity,
          address: String, pace: TimeInterval = 0.045, timeout: TimeInterval = 15,
-         checkControlLink: (() throws -> Void)? = nil,
+         allowResume: Bool = false, checkControlLink: (() throws -> Void)? = nil,
          waitForPacing: @escaping (TimeInterval) throws -> Void = { Thread.sleep(forTimeInterval: $0) }) throws
     {
         try identity.validate(address: address)
         try requireProtocol(image.count >= 18 && UInt64(image.count) <= UInt64(UInt32.max), "Invalid image length")
         try requireProtocol(pace.isFinite && pace >= 0 && timeout.isFinite && timeout > 0, "Invalid OTA timing")
         self.transport = transport; self.image = image; self.modified = modified; self.identity = identity
+        self.allowResume = allowResume
         self.pace = pace; self.timeout = timeout; self.checkControlLink = checkControlLink
         self.waitForPacing = waitForPacing
     }
@@ -131,7 +134,10 @@ public final class OTATransaction {
         let entry = try command(0xE3)
         try requireProtocol(entry.count == 8 && entry.first == 0 && entry.last == 1, "Unsupported OTA entry result/CRC mode")
         var offset = Int(readBE(entry[1 ..< 5])), size = Int(readBE(entry[5 ..< 7]))
-        try requireProtocol(!modified || offset == 18, "Modified image requires fresh offset 18; refusing stale/partial resume before chunks")
+        // The device keeps a resume cursor only while the e2 identification (length + CRC32)
+        // matches the staged image, and re-verifies the whole stage before committing.
+        try requireProtocol(!modified || offset == 18 || allowResume,
+                            "Modified image requires fresh offset 18; refusing stale/partial resume before chunks (pass --resume to continue the same image)")
         var previousEnd: Int?
         while true {
             phase = "block at offset \(offset), length \(size)"

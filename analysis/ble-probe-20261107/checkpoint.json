@@ -16,15 +16,17 @@
  "bleProbeTest": "ble-probe-runtime.json",
  "regression": "regression-16-02",
  "offlineNotes": "The revision 15 regression (analysis/raw-present-20261107/regression-15-01) passed 141 stages; its five reset-undo-trim suite stages failed only because the compile script gained the --ble-probe flag while the run was in progress (source digest mismatch, sources_changed_during_run).",
- "flashed": false,
- "flashAttempt": null,
- "bootVerified": false,
+ "flashed": true,
+ "flashAttempt": "captures/v16-flash-20261108-01 (550 blocks, 3,847 chunks, bytes [18, 2251154), reboot acknowledged)",
+ "bootVerified": true,
  "hardwareChecks": {
-  "physicalDisplayConfirmed": false,
+  "physicalDisplayConfirmed": true,
   "phoneConnectionTested": false,
-  "rawPresentObserved": false,
+  "rawPresentObserved": true,
   "bleRegistrationObserved": false,
-  "baselineRev14": "captures/v14-anim-timing-20261107-05: empty-36 full present 116 ms median RTT (38 ms transport floor), 570-630 ms stall after a clock-tick SHOW while its tween runs"
+  "baselineRev14": "captures/v14-anim-timing-20261107-05: empty-36 full present 116 ms median RTT (38 ms transport floor), 570-630 ms stall after a clock-tick SHOW while its tween runs",
+  "rawPresentMeasurement": "captures/v16-anim-timing-20261108-01: empty-36 full present 40 ms median RTT (38 ms transport floor), stall after a clock-tick SHOW 114 ms (was 575), presents during the tween 63 ms (was 121), cold-open PUT 81 ms (was 643), SHOW 179 ms (was 364)",
+  "bleProbe": "captures/v16-ble-register-20261108-01 / v16-ble-status-20261108-02: registration ran but both handles stayed 0xffff; the kick skipped the registering flag and cursors that the handle replies require (fixed in revision 17)"
  },
  "glasslyBundle": {
   "commit": null,
@@ -32,5 +34,6 @@
   "files": "memomind-one-glassly-cfw-16.bin in both resource dirs; MemoMindOneFirmware.swift and MemoMindOTA.kt pins; staged, uncommitted"
  },
  "regressionVerification": "regression-verification.json",
- "regressionNotes": "regression-16-02: all 147 required offline stages passed, no source drift"
+ "regressionNotes": "regression-16-02: all 147 required offline stages passed, no source drift",
+ "bootCapture": "captures/v16-boot-20261108-02 (installed app header 3abb2e86\u2026 matches ble-probe-001, GLASSLYCFW/16)"
 }

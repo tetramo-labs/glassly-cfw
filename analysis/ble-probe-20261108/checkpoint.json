@@ -1,0 +1,28 @@
+{
+ "version": "GLASSLYCFW/17",
+ "release": "ble-probe-002",
+ "change": "Revision 16 plus a registration kick that mirrors the stock one (pending cleared, advertising resumed, registering set, cursors on the new service) so the BT core's handle replies are accepted.",
+ "build": "build-17-01",
+ "runtimeBytes": 97376,
+ "runtimeSHA256": "03b893de80f1325d803a928b2df7b5bc08bb7fe26185fd32c52e1c68043b43b9",
+ "linkerRelaxation": true,
+ "imageBytes": 2250786,
+ "imageSHA256": "88cfc79005e75da0af10350d6d09088907c4aa55b9c4cf99e53798ce72afe507",
+ "containerHeaderSHA256": "2d0d89d1e06a9795a68f05f1a461ead51eb35165e9941e2ea3d1908e80479637",
+ "appHeaderSHA256": "aab945580d70dc17565af83df41ef1d989ab22f55f3f9b4502907c8f43f76cc9",
+ "bootSelectorTest": "boot-selector-17.json",
+ "rawPresentTest": "raw-present-runtime.json",
+ "bleProbeTest": "ble-probe-runtime.json",
+ "recordGates": "record-gates-17.json",
+ "flashed": true,
+ "flashAttempt": "captures/v17-flash-20261108-02 (550 blocks, 3,847 chunks, bytes [18, 2250786), reboot acknowledged; v17-flash-20261108-01 timed out opening RFCOMM)",
+ "bootVerified": true,
+ "bootCapture": "captures/v17-boot-20261108-02 (installed app header aab94558\u2026 matches ble-probe-002)",
+ "hardwareChecks": {
+  "bleRegistrationObserved": false,
+  "bleProbe": "captures/v17-ble-register-20261108-01: the register command closed the RFCOMM link and the glasses rebooted. Cause (BT core, bt_service_gatts_register_chara at 0x14060900 asserts descriptor count <= 2): the probe stored its state in the characteristic node's bytes +0x24.., which the registration walker copies into the 0x20e message as the descriptor count and descriptor list. Fixed in revision 18 by leaving those bytes alone until the value handle exists.",
+  "postReboot": "captures/v17-ble-status-20261108-01 after the reboot: no service node (chara 0), stock state"
+ },
+ "regression": null,
+ "regressionNotes": "not run separately; revision 18 supersedes it"
+}

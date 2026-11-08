@@ -25,16 +25,18 @@ struct Arguments {
       memomind ownership --address MAC --seconds 120 --output NEW_DIRECTORY
       memomind fontprobe --address MAC [--from U+XXXX] [--to U+XXXX] [--scalars FILE] [--sampled] [--miss-budget N] --output NEW_DIRECTORY
       memomind check --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY
-      memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write
+      memomind flash --address MAC --firmware FILE --expected-sha256 HASH --output NEW_DIRECTORY --confirm-write [--resume]
 
     check stops before OTA entry; flash transfers and requests reboot.
-    Every live operation records a new durable JSONL trace. No retry or resume.
+    Every live operation records a new durable JSONL trace. No retry; --resume only
+    continues a device-side stage of the same image from the offset the device offers.
     Firmware must match the compiled release catalog and explicit hash.
     """
 
     let command: String
     let values: [String: String]
     let confirmWrite: Bool
+    let resume: Bool
     let sampled: Bool
 
     init(_ arguments: [String]) throws {
@@ -44,13 +46,19 @@ struct Arguments {
         }
         self.command = command
         var values: [String: String] = [:]
-        var confirm = false, sampled = false
+        var confirm = false, sampled = false, resume = false
         var index = 1
         while index < arguments.count {
             let flag = arguments[index]
             if flag == "--sampled" {
                 guard command == "fontprobe", !sampled else { throw CLIError("--sampled is a fontprobe option, once") }
                 sampled = true
+                index += 1
+                continue
+            }
+            if flag == "--resume" {
+                guard command == "flash", !resume else { throw CLIError("--resume is a flash option, once") }
+                resume = true
                 index += 1
                 continue
             }
@@ -114,6 +122,7 @@ struct Arguments {
         }
         self.values = values
         confirmWrite = confirm
+        self.resume = resume
         self.sampled = sampled
     }
 

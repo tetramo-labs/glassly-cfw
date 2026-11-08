@@ -1,0 +1,54 @@
+{
+ "version": "GLASSLYCFW/18",
+ "release": "ble-probe-003",
+ "imageBytes": 2251153,
+ "imageSHA256": "80364527bd91081bb31c36fa29899d958af827d6e04d2124ab5b9dd663e3b1bb",
+ "containerHeaderSHA256": "133ca7d69449be87f7c3629dcbe81e781ba29733e069df3a3030d13ac9bc1360",
+ "appHeaderSHA256": "692401e424ecc4e492dd18394a5985f7f554caeae29c4ceafc6ae6040f6225db",
+ "runtimeBytes": 97392,
+ "runtimeSHA256": "371aff8e3b27605bf317741c47698e05f6e43f6a9bf924eec956ab19b47d0164",
+ "streams": [
+  {
+   "index": 0,
+   "packedBytes": 171,
+   "rawBytes": 344,
+   "packedSHA256": "7c5534035b51256e2a4cc93cccd0eebd904c3f6de5896b8c7dcbfb5c296793dd"
+  },
+  {
+   "index": 1,
+   "packedBytes": 481265,
+   "rawBytes": 909676,
+   "packedSHA256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+  },
+  {
+   "index": 2,
+   "packedBytes": 437783,
+   "rawBytes": 695512,
+   "packedSHA256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+  },
+  {
+   "index": 3,
+   "packedBytes": 980051,
+   "rawBytes": 1870608,
+   "packedSHA256": "49c6722c4796e3bcd3dae4f79401592d2d48cdf3ed1c141685c0e73baa12b43d"
+  },
+  {
+   "index": 4,
+   "packedBytes": 283737,
+   "rawBytes": 284300,
+   "packedSHA256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+  },
+  {
+   "index": 5,
+   "packedBytes": 986,
+   "rawBytes": 3616,
+   "packedSHA256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+  },
+  {
+   "index": 6,
+   "packedBytes": 67006,
+   "rawBytes": 81594,
+   "packedSHA256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+  }
+ ]
+}

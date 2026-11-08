@@ -233,6 +233,21 @@ private struct FirmwareRelease {
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
         // Active light sampling: the CFW reads the sensor at a requested interval (GLASSLYCFW/14).
+        // GATT probe with a single registration kick, slot/link state in its status and a resume op (GLASSLYCFW/19).
+        FirmwareRelease(name: "ble-probe-004",
+                        sha256: "ff06f107b078d2c464f4c4f5e64189bccbfdcaab9b3650732863d33315a2826b", byteCount: 2_251_180, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "1d33a3c06552e26db4598f2de35b498bee4637c05f8c8699958d627ec1790b2e",
+                        streams: streamPins(.bleProbe19)),
+        // GATT probe that leaves the characteristic's spare bytes alone until its handle exists (GLASSLYCFW/18).
+        FirmwareRelease(name: "ble-probe-003",
+                        sha256: "80364527bd91081bb31c36fa29899d958af827d6e04d2124ab5b9dd663e3b1bb", byteCount: 2_251_153, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "133ca7d69449be87f7c3629dcbe81e781ba29733e069df3a3030d13ac9bc1360",
+                        streams: streamPins(.bleProbe18)),
+        // GATT probe whose registration kick mirrors the stock one (GLASSLYCFW/17).
+        FirmwareRelease(name: "ble-probe-002",
+                        sha256: "88cfc79005e75da0af10350d6d09088907c4aa55b9c4cf99e53798ce72afe507", byteCount: 2_250_786, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "2d0d89d1e06a9795a68f05f1a461ead51eb35165e9941e2ea3d1908e80479637",
+                        streams: streamPins(.bleProbe17)),
         // Raw presents plus the post-boot GATT service probe on command 0x74 (GLASSLYCFW/16).
         FirmwareRelease(name: "ble-probe-001",
                         sha256: "50400aadfecdd3c6693b3233613ba5e6b0b637c3156f4989f5fe0adb47473a84", byteCount: 2_251_154, modified: true,
@@ -317,12 +332,24 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .bleProbe19:
+            metadata = 171; appPacked = 980_078; appRaw = 1_870_736
+            metadataHash = "83a36158a987a2428af0dcd13a6e1fcb9a392e291c32e5ed59df6f86c0d6b136"
+            appHash = "6757502ede9f7945753a533d93473c0df54aa1a6c6a151027f9bd4325dd54281"
+        case .bleProbe18:
+            metadata = 171; appPacked = 980_051; appRaw = 1_870_608
+            metadataHash = "7c5534035b51256e2a4cc93cccd0eebd904c3f6de5896b8c7dcbfb5c296793dd"
+            appHash = "49c6722c4796e3bcd3dae4f79401592d2d48cdf3ed1c141685c0e73baa12b43d"
+        case .bleProbe17:
+            metadata = 171; appPacked = 979_684; appRaw = 1_870_592
+            metadataHash = "af2aa1ea16b816500ca6285a9116c6b053c10645639c33efbd99e20a71c3a39b"
+            appHash = "1b132a9730ce244a2db8b8ae843b27faf62bb60b254b5f6c9e92c0dde7e8cc1e"
         case .bleProbe16:
             metadata = 171; appPacked = 980_052; appRaw = 1_870_496
             metadataHash = "df19e79bebcbce6c195f3f8c2bc0135ab4b94886079ee4673ce961f4151226a9"

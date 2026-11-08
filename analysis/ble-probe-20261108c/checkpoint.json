@@ -30,6 +30,7 @@
  "bootCapture": "captures/v19-boot-20261108-07 (installed app header ab41a4e7\u2026 matches ble-probe-004; attempts 03-06 failed only on the verify tool's stale revision string)",
  "glasslyBundle": {
   "files": "memomind-one-glassly-cfw-19.bin in both resource dirs, MemoMindOneFirmware.swift and MemoMindOTA.kt pins, READMEs, FirmwareImage.swift copy, UPSTREAM.json repin",
-  "branch": "dev"
+  "branch": "dev",
+  "commit": "94402db408"
  }
 }

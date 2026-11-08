@@ -1,0 +1,333 @@
+{
+  "source_sha256": "5e23c574e3dfd8c27172f4f9a33475e6efd0d33e7230bfcce8f4fe8ca59fe433",
+  "source_size": 1857523,
+  "profile": "WuQi-ADK-update-container",
+  "outer_magic": "0000",
+  "inner_header_words": [
+    "0x1",
+    "0x7f",
+    "0xffffffff",
+    "0x16c"
+  ],
+  "component_count": 6,
+  "table_crc_offset": 146,
+  "stream_start": 150,
+  "metadata_header_words": [
+    0,
+    16,
+    0,
+    33980416,
+    0,
+    65536
+  ],
+  "partitions": [
+    {
+      "index": 0,
+      "type": 48,
+      "flash_start": 65536,
+      "load_address": 335609888,
+      "body_size": 953824,
+      "allocation_size": 1097728
+    },
+    {
+      "index": 1,
+      "type": 112,
+      "flash_start": 1163264,
+      "load_address": 637534208,
+      "body_size": 488900,
+      "allocation_size": 622592
+    },
+    {
+      "index": 2,
+      "type": 32,
+      "flash_start": 1785856,
+      "load_address": 68894752,
+      "body_size": 2383776,
+      "allocation_size": 2588672
+    },
+    {
+      "index": 3,
+      "type": 144,
+      "flash_start": 4374528,
+      "load_address": 0,
+      "body_size": 1416,
+      "allocation_size": 4096
+    },
+    {
+      "index": 4,
+      "type": 145,
+      "flash_start": 4378624,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    },
+    {
+      "index": 5,
+      "type": 160,
+      "flash_start": 4382720,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 720896
+    },
+    {
+      "index": 6,
+      "type": 4,
+      "flash_start": 5103616,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 2408448
+    },
+    {
+      "index": 7,
+      "type": 200,
+      "flash_start": 7512064,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 786432
+    },
+    {
+      "index": 8,
+      "type": 196,
+      "flash_start": 8298496,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 9,
+      "type": 195,
+      "flash_start": 8306688,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 10,
+      "type": 194,
+      "flash_start": 8314880,
+      "load_address": 0,
+      "body_size": 7148,
+      "allocation_size": 8192
+    },
+    {
+      "index": 11,
+      "type": 193,
+      "flash_start": 8323072,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 12,
+      "type": 192,
+      "flash_start": 8331264,
+      "load_address": 0,
+      "body_size": 3016,
+      "allocation_size": 8192
+    },
+    {
+      "index": 13,
+      "type": 7,
+      "flash_start": 8339456,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 32768
+    },
+    {
+      "index": 14,
+      "type": 8,
+      "flash_start": 8372224,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 15,
+      "type": 2,
+      "flash_start": 8380416,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    }
+  ],
+  "streams": [
+    {
+      "index": 0,
+      "offset": 150,
+      "packed_size": 161,
+      "unpacked_size": 364,
+      "packed_sha256": "9feb43bf93a7c9f16374797300cd779d5fae672b12d04ed482f76da759a5613e",
+      "unpacked_sha256": "fa20504aabe2b1cc092e6c311e7d9af3138dcc98b88cf2ba6a5e6fa768b3d9cf",
+      "flash_start": null,
+      "flash_end": null
+    },
+    {
+      "index": 1,
+      "offset": 311,
+      "packed_size": 506664,
+      "unpacked_size": 953856,
+      "packed_sha256": "70ed0919c0bd118b4c12a0944d9b091f5ff687f9a9c3c1d3a99e73b574d1998c",
+      "unpacked_sha256": "38d9b70ea171315de2b82dbeaaa4b825fdde4afdf7924a2150e164a6485a029e",
+      "flash_start": 65536,
+      "flash_end": 1163264,
+      "image_header_words": [
+        2766445079,
+        953824,
+        1114113,
+        335609888,
+        4228356279,
+        0,
+        270921728,
+        0
+      ],
+      "body_sha256": "c508f4267b55fc93abd4b8d2000c74405f4be69fb9a1b9a60779d08f8bed56a7",
+      "body_crc32": 4228356279,
+      "load_address_candidate": 335609888,
+      "auxiliary_address_unknown": 270921728,
+      "partition_index": 0,
+      "partition_type": 48
+    },
+    {
+      "index": 2,
+      "offset": 506975,
+      "packed_size": 317465,
+      "unpacked_size": 488932,
+      "packed_sha256": "96fbb43fcf4b83d6f32fe37c1e747d910d0c1a5f23f6eaab4bf3a3d405551e69",
+      "unpacked_sha256": "27c8e76ae41b8be07341879cf5aed868ec074972bcbb75fa797e0e20fb907225",
+      "flash_start": 1163264,
+      "flash_end": 1785856,
+      "image_header_words": [
+        2766445079,
+        488900,
+        1114113,
+        637534208,
+        1735653381,
+        0,
+        642250752,
+        0
+      ],
+      "body_sha256": "10db17936b3907174ff27a99d48386e76269dc32a63c483da0c1d449bc6762dc",
+      "body_crc32": 1735653381,
+      "load_address_candidate": 637534208,
+      "auxiliary_address_unknown": 642250752,
+      "partition_index": 1,
+      "partition_type": 112
+    },
+    {
+      "index": 3,
+      "offset": 824440,
+      "packed_size": 1029741,
+      "unpacked_size": 2383808,
+      "packed_sha256": "fff10026ec5d1cfd39bbd4283d9517a5cbe9697ddfb5b171228621e8209a6113",
+      "unpacked_sha256": "c4f56f3256ccb922875dbcfdf92dd9185579c910cc5c9ea52b234453d08bcedb",
+      "flash_start": 1785856,
+      "flash_end": 4374528,
+      "image_header_words": [
+        2766445079,
+        2383776,
+        1114113,
+        68894752,
+        3468949886,
+        0,
+        34598912,
+        0
+      ],
+      "body_sha256": "0b1af8b525a046af1f64c0e472ad0de009d8d4c7699ef6347c3b51472c2fca87",
+      "body_crc32": 3468949886,
+      "load_address_candidate": 68894752,
+      "auxiliary_address_unknown": 34598912,
+      "partition_index": 2,
+      "partition_type": 32
+    },
+    {
+      "index": 4,
+      "offset": 1854181,
+      "packed_size": 1355,
+      "unpacked_size": 1448,
+      "packed_sha256": "3c4f63814c1f8f44837ec454b3b192f625c39462f0eae6f421c1e0b8e12a2d8d",
+      "unpacked_sha256": "1b10441344cd7b806c91a46db673a58160ad518cf9db7e1e4a67676bd7d6de97",
+      "flash_start": 4374528,
+      "flash_end": 4378624,
+      "image_header_words": [
+        2766445079,
+        1416,
+        0,
+        0,
+        2688660134,
+        0,
+        0,
+        0
+      ],
+      "body_sha256": "8dac10e760169edbd0ff8dd38312be67e77c640d8896447aba78dbcac8c22e06",
+      "body_crc32": 2688660134,
+      "load_address_candidate": 0,
+      "auxiliary_address_unknown": 0,
+      "partition_index": 3,
+      "partition_type": 144
+    },
+    {
+      "index": 5,
+      "offset": 1855536,
+      "packed_size": 746,
+      "unpacked_size": 7180,
+      "packed_sha256": "2be424f1dfe133927f28bc99070c6c69a0e8626b7ea97380dd18a5e807fae3e5",
+      "unpacked_sha256": "322623fafadeed4321719d07a4aa8ce9854eb4d6e2bed50b7c3b5d287be2db2b",
+      "flash_start": 8314880,
+      "flash_end": 8323072,
+      "image_header_words": [
+        2766445079,
+        7148,
+        0,
+        0,
+        1235162134,
+        0,
+        0,
+        0
+      ],
+      "body_sha256": "53e913d9a898afd0a35387a16c5ed901dbdaa7a42dd875002892c49299c16c29",
+      "body_crc32": 1235162134,
+      "load_address_candidate": 0,
+      "auxiliary_address_unknown": 0,
+      "partition_index": 10,
+      "partition_type": 194
+    },
+    {
+      "index": 6,
+      "offset": 1856282,
+      "packed_size": 1237,
+      "unpacked_size": 3048,
+      "packed_sha256": "daa223ed3b78a31619b98bfb46dbe7d979d078c174b625c8dc8947a4df805216",
+      "unpacked_sha256": "c6a98a733b53e109b2e66b3b10339537df2bfc7753ed2610410e42fb6db0e49f",
+      "flash_start": 8331264,
+      "flash_end": 8339456,
+      "image_header_words": [
+        2766445079,
+        3016,
+        0,
+        0,
+        1887331268,
+        0,
+        0,
+        0
+      ],
+      "body_sha256": "06e04964a0a466e2d034c296131e36a50851d4e97687999f2504f9606942ff86",
+      "body_crc32": 1887331268,
+      "load_address_candidate": 0,
+      "auxiliary_address_unknown": 0,
+      "partition_index": 12,
+      "partition_type": 192
+    }
+  ],
+  "checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-6"
+  },
+  "unaccounted_bytes": 0,
+  "limitations": [
+    "Uninterpreted header words are retained, not assigned invented semantics.",
+    "CRC validity does not prove modified firmware is accepted or safe to boot.",
+    "No standalone signature block is identified; enforcement remains unknown."
+  ]
+}

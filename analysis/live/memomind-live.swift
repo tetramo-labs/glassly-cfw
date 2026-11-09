@@ -47,7 +47,7 @@ var lastBeatLog=0.0, lastObserveTry=0.0
 var event:UInt8=0x30, framed=false, lastBeat=0.0, lastRenew=0.0, holdUntil=0.0
 var pendingOwnership:[OwnershipSnapshot]=[]
 var observer:ButtonObserverClient?, lastPoll=0.0, wantButtons=false, firstPoll=true, lastStepAt=0.0
-var steps:[[String:Any]]=[], stepIndex=0, finished=false
+var steps:[[String:Any]]=[], stepIndex=0, finished=false, finishedAt=0.0
 func object(_ m:GMMessage)->Any{guard m.tlvs.count==1,m.tlvs[0].kind==5 else{return ["bodyHex":hex(m.body)]};var b=m.tlvs[0].value;while b.last==0{b.removeLast()}
  return (try? JSONSerialization.jsonObject(with:b)) ?? ["text":String(decoding:b,as:UTF8.self)]}
 func request(_ command:UInt8,_ bytes:Data=Data())throws->Any{
@@ -132,7 +132,7 @@ func nextStep(trigger:String)throws{
  emit("step",["index":stepIndex,"of":steps.count,"label":step["label"] ?? "","trigger":trigger])
  for c in (step["commands"] as? [String]) ?? [] { _=try run(c) }
  emit("step-shown",["index":stepIndex,"label":step["label"] ?? "","next":stepIndex<steps.count ? (steps[stepIndex]["label"] ?? ""):"(end)"])
- if stepIndex>=steps.count {finished=true}
+ if stepIndex>=steps.count {finished=true;finishedAt=ProcessInfo.processInfo.systemUptime}
 }
 emit("started",["pid":getpid(),"in":inPath,"heartbeatSeconds":beatSeconds])
 signal(SIGPIPE,SIG_IGN)
@@ -176,7 +176,8 @@ while running {
   } catch { emit("link-lost",["error":String(describing:error)]);close() }
  }
  // Disarm: the last step ran, or nobody touched the test for idleExit seconds.
- if running, (finished && stepIndex>=steps.count) || (session != nil && ProcessInfo.processInfo.systemUptime-lastActivity>=idleExit) {
+ // The last step stays on screen for 5 s before the display is released.
+ if running, (finished && stepIndex>=steps.count && ProcessInfo.processInfo.systemUptime-finishedAt>=5) || (session != nil && ProcessInfo.processInfo.systemUptime-lastActivity>=idleExit) {
   emit("disarmed",["reason":finished ? "steps finished":"idle"]);close();running=false
  }
  usleep(100_000)

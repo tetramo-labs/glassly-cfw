@@ -11,7 +11,9 @@ notifications, with echoes at 60.9 ms in the same link; iAP2 needs 110–170 ms
 per request. Limits: notifications pace at about 120 ms per 500-byte chunk,
 asynchronous "settled" replies still go to the Classic link only, and the
 stock policy still drops an unbonded central a few seconds after connect (the
-bonded iPhone is the intended client). See the
+bonded iPhone is the intended client). Animation timing on this image
+(`captures/v20-anim-timing-20261108-12`): idle status 38.4 ms, presents after a
+clock-tick SHOW 40 / 39 / 39 ms, tick SHOW 53 ms, cold open 84 ms. See the
 [V20 checkpoint](analysis/ble-probe-20261108d/checkpoint.json).
 
 Revision 19 (`ble-probe-004`) proves the BLE command channel on hardware. The

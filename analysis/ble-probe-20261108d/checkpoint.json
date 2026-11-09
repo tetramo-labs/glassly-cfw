@@ -24,7 +24,7 @@
   "registration": "service 14, value 16, CCCD 17 (v20-ble-register/status captures)",
   "bleTransport": "analysis/ble-probe-20261107/ble-central with BLE_CMD=1 after v20-ble-adv-*: real commands over BLE \u2014 0x7b topology (flash-read JSON) 151 / 148 ms, 0x74 probe status 123 ms, 0x7e capabilities (1.9 KB JSON, four 500-byte notifications) 480-484 ms; the capabilities reply reports version GLASSLYCFW/20; probe counters writes 4 / notified 8 after two sessions; echoes in the same link 60.9 ms median",
   "transportNotes": "notification chunks pace at ~120 ms per 500 bytes, so large replies cost ~0.25 ms/byte; asynchronous ('settled') replies that the Classic link receives via P.send are not forwarded over BLE yet (a 0x7d present returned nothing); the stock policy still drops the unbonded Mac ~3.5 s after connect, so each test is a fresh connection",
-  "animationTiming": "unchanged raw-present path (see revision 19: captures/v19-anim-timing-20261108-01)",
+  "animationTiming": "captures/v20-anim-timing-20261108-12 (analysis/ble-probe-20261108d/anim-timing after, 17:35 local): medians idle status 38.4 ms, idle renew 40.0 ms, cold-open 84.2 ms, presents after a clock-tick SHOW 40.4 / 38.8 / 39.4 ms, tick SHOW 53.4 ms; status during a running tween 39.0 ms after the 1,049 ms tween wait; same raw-present path as revisions 16/19 (rev 19: 117 / 54 / 64 ms after a tick) against revision 14's 116 ms full present and 575 ms stall",
   "advertising": "an enable issued inside an RFCOMM session only takes effect once the session is closed and re-enabled; the first central attempt after a flash found nothing, the second found the glasses within 1 s"
  },
  "glasslyBundle": {

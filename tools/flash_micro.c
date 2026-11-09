@@ -104,9 +104,12 @@ static void match(CFMutableDictionaryRef d,CFStringRef key,int32_t x) {
 }
 static const uint8_t descriptor[]={5,140,9,1,161,1,9,3,21,0,38,0,255,117,8,149,64,129,2,9,4,21,0,38,0,255,117,8,149,64,145,2,192};
 static const char *stock_hash="e31c7f7656fb041ec6ede6603762d841783eb3d9b760321eaaa0c582aaa59233";
-static const char *buttons_hash="7a16629b0ade32cad181bbb01181d2fe33d76d80083c1432ff8b75b67df706d4";
-static const char *notify_hash="1c172f49d5cf74e9443277f4b904ad61fe7021c0c957acc2da2e5b91ed50a456";
-static const char *probe_hash="fca4e5698166c69b67feabcce95e6674d7afcd72478f9acb25c3b9b71caf6e8e";
+static const char *previous_buttons_hash="7a16629b0ade32cad181bbb01181d2fe33d76d80083c1432ff8b75b67df706d4";
+static const char *buttons_hash="9e54738d54ae4dcb57a65f8306edefb660604c41c065f83948599a8132c2cf5e";
+static const char *previous_notify_hash="1c172f49d5cf74e9443277f4b904ad61fe7021c0c957acc2da2e5b91ed50a456";
+static const char *notify_hash="460a8ac2c12e1e8aa6d47a6a08079ad5f6abb1907910b9302ea3bf88b2be86b8";
+static const char *previous_probe_hash="fca4e5698166c69b67feabcce95e6674d7afcd72478f9acb25c3b9b71caf6e8e";
+static const char *probe_hash="5eab57a52b5df4df7c41b606243e0b40280b16c8af4277f71c58c26c348be1be";
 
 
 /* Exact original image of the development unit; independently read twice.
@@ -123,9 +126,9 @@ int main(int argc,char **argv) {
     if(!dat || !expected){fprintf(stderr,"Cannot read exact-sized firmware inputs\n");return 2;}
     char dh[65],ph[65];hash(dat,77852,dh);hash(expected,SIZE,ph);
     int stock=!strcmp(dh,"74f0a12709758cc13a358e44adaa1d6193a3532aac2685db07e913c8e3609ce6") && !strcmp(ph,stock_hash);
-    int probe=!strcmp(dh,"6c12c506242b60c75c446cfa9bff265102b214aa6d5e5afb7aa63f33c88c7d1a") && !strcmp(ph,probe_hash);
-    int notify=!strcmp(dh,"e86ba128884dd1a741bcefd21d4978b2a7757a94d00c42d315b424097cd598c3") && !strcmp(ph,notify_hash);
-    int buttons=!strcmp(dh,"643e17862c39b6a693ac27b7dc61be16d73a7827937165ebd56d3e459eea3d1d") && !strcmp(ph,buttons_hash);
+    int probe=!strcmp(dh,"f1dbc998fab6789493b3b736ed1a0a8bd1fd25e1d3020450c3c3fd5da4130b34") && !strcmp(ph,probe_hash);
+    int notify=!strcmp(dh,"340f25b175eb8b415f17bcf57d509ef54d5f31ca9280778821c8ce7178558907") && !strcmp(ph,notify_hash);
+    int buttons=!strcmp(dh,"72713359970e57dfd5697c807a7a5ba97ef521ed19fd87a3615332aefc5d3091") && !strcmp(ph,buttons_hash);
     if(!stock && !probe && !notify && !buttons){fprintf(stderr,"Refusing unreviewed image/payload hash pair\n");return 2;}
     const uint8_t *header=dat,*ciphertext=header+28;
     if(u32(header)!=105 || u32(header+4)!=BASE || u32(header+8)!=SIZE || u32(header+12)!=0x9020)return 2;
@@ -153,7 +156,7 @@ int main(int argc,char **argv) {
     if(!read_range(dev,BASE,backup,SIZE) || !save(argv[5],"before-application.bin",backup,SIZE))goto done;
     if(!read_range(dev,META_BASE,metadata,META_SIZE) || !save(argv[5],"before-metadata.bin",metadata,META_SIZE))goto done;
     hash(backup,SIZE,ph);printf("backup_sha256=%s\n",ph);
-    if(strcmp(ph,stock_hash) && strcmp(ph,probe_hash) && strcmp(ph,notify_hash) && strcmp(ph,buttons_hash) && strcmp(ph,factory_hash)){fprintf(stderr,"Unexpected installed baseline; backup saved, no erase performed\n");goto done;}
+    if(strcmp(ph,stock_hash) && strcmp(ph,probe_hash) && strcmp(ph,notify_hash) && strcmp(ph,buttons_hash) && strcmp(ph,factory_hash) && strcmp(ph,previous_probe_hash) && strcmp(ph,previous_notify_hash) && strcmp(ph,previous_buttons_hash)){fprintf(stderr,"Unexpected installed baseline; backup saved, no erase performed\n");goto done;}
     if(u32(metadata+0x40)!=105){fprintf(stderr,"Unexpected version record; no erase performed\n");goto done;}
     if(!save(argv[5],"target.dat",dat,77852) || !save(argv[5],"expected.bin",expected,SIZE))goto done;
     fprintf(stderr,"Backup saved. Erasing application and vendor version record.\n");

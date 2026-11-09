@@ -236,3 +236,14 @@ all 4,096 metadata bytes unchanged, verified version 105, and rebooted as
 `Glassly Micro test01` with the expected runtime HID descriptor. The original
 and post-update backups are preserved locally. Physical button/BLE tests have
 not been repeated on this unit. See `evidence/second-micro-flash.json`.
+
+### Runtime name cleanup
+
+On 2026-11-09, the user reported that the second Micro worked. This is user
+acceptance, not a repeat of the instrumented button or battery tests.
+Newly generated images now use `Glassly Micro`, with zero padding preserving
+the original name-slot size. Restoring the old name reproduces each previously
+pinned plaintext hash, establishing that no other bytes changed. Package pins
+were updated; previously flashed images remain accepted upgrade baselines.
+Historical captures retain their observed names. No controller was flashed for
+this cleanup. See `evidence/runtime-name-cleanup.json`.

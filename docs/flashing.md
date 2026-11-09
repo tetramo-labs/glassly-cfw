@@ -33,7 +33,7 @@ inspect the device:
 python3 tools/inspect_usb.py
 ```
 
-Expect `8BitDo Micro gamepad` or `Glassly Micro test01`, VID/PID `2dc8:9020`.
+Expect `8BitDo Micro gamepad` or `Glassly Micro`, VID/PID `2dc8:9020`.
 Replace `USB_LOCATION` below with the reported `location` value for your unit.
 
 ```sh
@@ -47,7 +47,7 @@ After update entry, expect `8BitDo Boot`, `2dc8:3208`, at the same location. The
 flasher independently checks the boot descriptor and product `9020`, saves the
 application and metadata, writes the image, verifies **all 77,824 plaintext
 bytes**, commits/verifies version 105 and reboots. Keep USB connected until it
-finishes. Check exit code zero and normal runtime USB `Glassly Micro test01`.
+finishes. Check exit code zero and normal runtime USB `Glassly Micro`.
 
 Transactions and source snapshots are saved under `build/hardware/`, including
 `before-application.bin` and `before-metadata.bin`. Preserve these files. The

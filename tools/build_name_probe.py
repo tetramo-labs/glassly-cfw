@@ -4,7 +4,7 @@ from firmware_image import ROOT, load_crypto, load_stock, sha256, unpack
 
 OFFSET = 0x12a44
 BEFORE = b'8BitDo Micro gamepad\0'
-AFTER = b'Glassly Micro test01\0'
+AFTER = b'Glassly Micro\0'.ljust(len(BEFORE), b'\0')
 
 
 def build():

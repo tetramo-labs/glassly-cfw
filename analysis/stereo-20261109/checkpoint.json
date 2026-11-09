@@ -43,7 +43,17 @@
   "allShowsAccepted": true,
   "perEyeShowMedianMs": 61.8,
   "pairMedianMs": 114.6,
-  "wearerConfirmation": "pending"
+  "wearerConfirmation": {
+   "utc": "2026-11-09T19:23Z",
+   "tool": "analysis/live/memomind-live + eye-test.json (0x7D direct scene commands)",
+   "step1": "left one square, right two squares (as sent)",
+   "step2": "swapped (as sent)",
+   "step3": "square and bar shown; depth impression not yet reported",
+   "step4": "two squares both eyes",
+   "step5": "end of test"
+  },
+  "panelMapping": "bit 5 (0x20) = left eye, bit 4 (0x10) = right eye: confirmed"
  },
- "iphoneBle": "pending (glasses factory reset; phone must re-pair)"
+ "iphoneBle": "pending (glasses factory reset; phone must re-pair)",
+ "recordTransportNote": "Scene commands through GraphicsRecordSession (mode 126) return CAPACITY; the earlier stereo-check captures timed refusals. Direct 0x7D is what the phone uses."
 }

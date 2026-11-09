@@ -6,7 +6,7 @@ func captureButtons(session: GMSession, capture: Capture, seconds: Int) throws -
     let status = try observer.status()
     guard !status.active else { throw CLIError("A button observer is already active") }
     let nonce = UInt32.random(in: 1 ... UInt32.max)
-    let subscription = try observer.subscribe(nonce: nonce)
+    let subscription = try observer.subscribe(nonce: nonce, mask: 3)
     try capture.record(["event": "button-subscription", "snapshot": dictionary(subscription)])
     fputs("BUTTON CAPTURE READY: \(seconds) seconds\n", stderr)
     let deadline = ProcessInfo.processInfo.systemUptime + Double(seconds)
@@ -19,7 +19,8 @@ func captureButtons(session: GMSession, capture: Capture, seconds: Int) throws -
             try observer.acknowledge(savedThrough: last.sequence)
             records += snapshot.records.count
             for record in snapshot.records {
-                fputs("Button \(record.sequence): \(String(format: "%04x", record.identifier))\n", stderr)
+                let label = record.imuGesture.map { "gesture \($0)" } ?? "button \(String(format: "%04x", record.identifier))"
+                fputs("Event \(record.sequence): class \(record.classID) \(label)\n", stderr)
             }
         }
         drops = snapshot.drops

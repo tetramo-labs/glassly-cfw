@@ -4,16 +4,16 @@ import XCTest
 
 final class ButtonObserverTests: XCTestCase {
     private func snapshot(active: Bool = true, sequence: UInt32 = 0, ack: UInt32 = 0,
-                          rows: [[String: Any]] = []) -> [String: Any]
+                          rows: [[String: Any]] = [], mask: Int = 1) -> [String: Any]
     {
         ["glassly": "input", "abi": 1, "result": "ok", "active": active,
-         "nonce": active ? 0x1234_5678 : 0, "mask": active ? 1 : 0,
+         "nonce": active ? 0x1234_5678 : 0, "mask": active ? mask : 0,
          "capacity": 32, "leaseTicks": 30000, "sequence": sequence, "ack": ack,
          "drops": 0, "exhausted": sequence == UInt32.max, "records": rows]
     }
 
-    private func record(_ serial: UInt32, _ id: UInt16 = 0x1F7B) -> [String: Any] {
-        ["tick": UInt32.max, "sequence": serial, "id": id, "class": 2]
+    private func record(_ serial: UInt32, _ id: UInt16 = 0x1F7B, cls: Int = 2) -> [String: Any] {
+        ["tick": UInt32.max, "sequence": serial, "id": id, "class": cls]
     }
 
     private func wire(_ object: [String: Any], event: UInt8) throws -> Data {
@@ -38,10 +38,23 @@ final class ButtonObserverTests: XCTestCase {
         XCTAssertTrue(try decode(JSONSerialization.data(withJSONObject: overflow)).exhausted)
     }
 
+    func testIMUGesturesDecodeUnderTheirMask() throws {
+        let rows = (1 ... 8).map { record(UInt32($0), UInt16($0), cls: 3) }
+        let decoded = try decode(JSONSerialization.data(withJSONObject: snapshot(sequence: 8, rows: rows, mask: 3)))
+        XCTAssertEqual(decoded.mask, 3)
+        XCTAssertEqual(decoded.records.map(\.imuGesture), [.nod, .headRaise, .headLower, .shake, .raiseTimeout, .lowerTimeout, .left, .right])
+        XCTAssertNil(decoded.records.first?.primaryAction)
+        let mixed = try decode(JSONSerialization.data(withJSONObject: snapshot(sequence: 2, rows: [record(1, 2, cls: 3), record(2)], mask: 3)))
+        XCTAssertEqual(mixed.records.map(\.imuGesture), [.headRaise, nil])
+        XCTAssertEqual(mixed.records.map(\.primaryAction), [nil, .single])
+        let gesturesOnly = try decode(JSONSerialization.data(withJSONObject: snapshot(sequence: 1, rows: [record(1, 2, cls: 3)], mask: 2)))
+        XCTAssertEqual(gesturesOnly.records.first?.imuGesture, .headRaise)
+    }
+
     func testMalformedMetadataAndRecordsRejected() throws {
         var cases = [[String: Any]]()
         for (key, value) in [("nonce", true as Any), ("sequence", 4_294_967_296 as Any), ("ack", 1 as Any),
-                             ("mask", 3 as Any), ("capacity", 33 as Any), ("active", 1 as Any), ("exhausted", true as Any)]
+                             ("mask", 4 as Any), ("capacity", 33 as Any), ("active", 1 as Any), ("exhausted", true as Any)]
         {
             var item = snapshot(); item[key] = value; cases.append(item)
         }
@@ -50,7 +63,9 @@ final class ButtonObserverTests: XCTestCase {
         cases.append(snapshot(sequence: 9, rows: (1 ... 9).map { record(UInt32($0)) }))
         cases.append(snapshot(sequence: 1, rows: [record(1, 0xFFFF)]))
         var wrong = record(1); wrong["class"] = 3
-        cases.append(snapshot(sequence: 1, rows: [wrong]))
+        cases.append(snapshot(sequence: 1, rows: [wrong]))                 // button id under the gesture class
+        cases.append(snapshot(sequence: 1, rows: [record(1, 2, cls: 3)]))   // gesture outside a buttons-only mask
+        cases.append(snapshot(sequence: 1, rows: [record(1, 9, cls: 3)], mask: 3))
         for item in cases {
             XCTAssertThrowsError(try decode(JSONSerialization.data(withJSONObject: item)))
         }

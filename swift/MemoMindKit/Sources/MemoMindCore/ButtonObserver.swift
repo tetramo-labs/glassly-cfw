@@ -5,12 +5,24 @@ public struct ButtonRecord: Equatable, Encodable, Sendable {
     public let tick: UInt32
     public let sequence: UInt32
     public let identifier: UInt16
+    /// Cooked class: 2 buttons/navigation, 3 IMU gestures.
+    public let classID: UInt8
     public enum PrimaryAction: UInt16, Sendable {
         case single = 0x1F7B, double, long, veryLong, release
     }
 
     public var primaryAction: PrimaryAction? {
-        PrimaryAction(rawValue: identifier)
+        classID == 2 ? PrimaryAction(rawValue: identifier) : nil
+    }
+
+    /// Stock IMU gesture identifiers (`app_gmimu`): the head raise/lower pair is the
+    /// dashboard's head-up gesture; timeouts fire when the pose outlasts settings 5005/5006.
+    public enum IMUGesture: UInt16, Sendable {
+        case nod = 1, headRaise, headLower, shake, raiseTimeout, lowerTimeout, left, right
+    }
+
+    public var imuGesture: IMUGesture? {
+        classID == 3 ? IMUGesture(rawValue: identifier) : nil
     }
 }
 
@@ -21,6 +33,8 @@ public struct ButtonSnapshot: Equatable, Encodable, Sendable {
     public let acknowledged: UInt32
     public let drops: UInt32
     public let exhausted: Bool
+    /// Subscribed classes: 1 buttons, 2 IMU gestures, 3 both; 0 while inactive.
+    public let mask: UInt8
     public let records: [ButtonRecord]
 
     public static func decode(_ message: GMMessage) throws -> Self {
@@ -50,7 +64,7 @@ public struct ButtonSnapshot: Equatable, Encodable, Sendable {
         try requireProtocol(object["capacity"]?.integer == 32 && object["leaseTicks"]?.integer == 30000 &&
             ack <= sequence && exhausted == (sequence == UInt32.max) && rows.count <= 8,
             "Invalid bounded observer metadata")
-        try requireProtocol(active ? (nonce != 0 && mask == 1) :
+        try requireProtocol(active ? (nonce != 0 && (1 ... 3).contains(mask)) :
             (nonce == 0 && mask == 0 && sequence == 0 && ack == 0 && drops == 0 && !exhausted && rows.isEmpty),
             "Unexpected observer session")
         var records = [ButtonRecord](), previous = ack
@@ -58,15 +72,17 @@ public struct ButtonSnapshot: Equatable, Encodable, Sendable {
             guard let row = value.object else { throw MemoMindProtocolError.invalid("Invalid button record") }
             let tick = try number(row, "tick"), serial = try number(row, "sequence")
             let id = try number(row, "id", Int64(UInt16.max))
-            try requireProtocol(row["class"]?.integer == 2 &&
-                ((0x1F7B ... 0x1F7F).contains(id) || (0x1FB0 ... 0x1FB9).contains(id)) &&
+            let cls = row["class"]?.integer
+            let button = cls == 2 && ((0x1F7B ... 0x1F7F).contains(id) || (0x1FB0 ... 0x1FB9).contains(id))
+            let gesture = cls == 3 && (1 ... 8).contains(id)
+            try requireProtocol((button && mask & 1 != 0 || gesture && mask & 2 != 0) &&
                 previous < serial && serial <= sequence,
-                "Invalid cooked button event or sequence")
-            records.append(ButtonRecord(tick: tick, sequence: serial, identifier: UInt16(id)))
+                "Invalid cooked event, class outside the subscription, or sequence")
+            records.append(ButtonRecord(tick: tick, sequence: serial, identifier: UInt16(id), classID: UInt8(cls!)))
             previous = serial
         }
         return Self(active: active, nonce: nonce, sequence: sequence, acknowledged: ack,
-                    drops: drops, exhausted: exhausted, records: records)
+                    drops: drops, exhausted: exhausted, mask: UInt8(mask), records: records)
     }
 }
 
@@ -75,6 +91,7 @@ public final class ButtonObserverClient {
     private let session: GMSession
     private var event: UInt8
     private var nonce: UInt32 = 0, ack: UInt32 = 0, delivered: UInt32 = 0
+    private var mask: UInt8 = 1
     private var sequence: UInt32 = 0, drops: UInt32 = 0
     private var failed = false
     public init(session: GMSession, initialEvent: UInt8 = 0x70) {
@@ -98,7 +115,7 @@ public final class ButtonObserverClient {
     }
 
     private func sameSession(_ reply: ButtonSnapshot) throws {
-        try requireProtocol(reply.active && reply.nonce == nonce && reply.sequence >= sequence && reply.drops >= drops,
+        try requireProtocol(reply.active && reply.nonce == nonce && reply.mask == mask && reply.sequence >= sequence && reply.drops >= drops,
                             "Button session or counters changed")
     }
 
@@ -111,10 +128,12 @@ public final class ButtonObserverClient {
         }
     }
 
-    public func subscribe(nonce newNonce: UInt32) throws -> ButtonSnapshot {
-        try requireProtocol(nonce == 0 && newNonce != 0, "Subscribe requires a fresh nonzero nonce")
-        let result = try request(Data([1, 1, 1]) + le(newNonce)) { reply in
-            try requireProtocol(reply.active && reply.nonce == newNonce && reply.records.isEmpty &&
+    /// `mask` selects the cooked classes: 1 buttons/navigation, 2 IMU gestures, 3 both.
+    public func subscribe(nonce newNonce: UInt32, mask newMask: UInt8 = 1) throws -> ButtonSnapshot {
+        try requireProtocol(nonce == 0 && newNonce != 0 && (1 ... 3).contains(newMask), "Subscribe requires a fresh nonzero nonce and a class mask")
+        mask = newMask
+        let result = try request(Data([1, 1, newMask]) + le(newNonce)) { reply in
+            try requireProtocol(reply.active && reply.nonce == newNonce && reply.mask == newMask && reply.records.isEmpty &&
                 reply.sequence == 0 && reply.acknowledged == 0 && reply.drops == 0,
                 "Subscribe attached to an unexpected or nonempty session")
         }

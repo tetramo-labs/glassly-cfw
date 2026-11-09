@@ -23,7 +23,7 @@ enum Wire {
     }
 
     /// Request frames for one command; several when the app payload exceeds a chunk.
-    static func frames(cmd: UInt8, key: UInt8, payload: Data = Data(), ack: Bool = true) -> [Data] {
+    static func frames(cmd: UInt8, key: UInt8, payload: Data = Data(), ack: Bool = true, chunk: Int = Wire.chunk) -> [Data] {
         var full = Data([cmd, key, UInt8(payload.count & 0xFF), UInt8(payload.count >> 8)])
         full.append(payload)
         let count = max(1, (full.count + chunk - 1) / chunk)

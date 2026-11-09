@@ -75,9 +75,19 @@ carries:
   mode, firmware block with CRC and offset checks, refresh firmware status,
   sync state, reboot). The command set matches the MemoMind One's RFCOMM OTA
   (`02, e1, e2, e3, e5, e6, 03`); the GATT characteristics are 0x2001 (write)
-  and 0x2002 (notify) per the vendor SDK. The frame prefix/suffix bytes are
-  checked by the handler but not yet recovered (the MemoMind `70 07 6e ... 33`
-  envelope does not appear as a literal).
+  and 0x2002 (notify) per the vendor SDK. The glasses also advertise the
+  MemoMind-style RFCOMM OTA service (SDP UUID 0x7034, channel 6) and the
+  recording service (0x2024 "COM6", channel 4); the 0x7033 data channel is
+  GATT over the classic ATT bearer (L2CAP PSM 31, handles 1..19), which macOS
+  does not let user space open. On 2026-11-09 the Mac tool opened RFCOMM 6 on
+  `Nimo-4026` and the read-only attach (`70 07 6e c0 02 ...`) was answered
+  with the MemoMind reply layout: field 1 = `00 00 02 01`, the first four bytes
+  of the NIMO OTA container, plus fields 0 (`00 0F 00 0F 02`), 2 (`bc`), 3, 4
+  and 5. The NIMO OTA transport is therefore the WuQi RFCOMM protocol the
+  MemoMind flasher already speaks; the BLE 0x2001/0x2002 path is an
+  alternative, not a requirement. Channel opens only succeed on a fresh
+  baseband link and are intermittent; a half-open session from an earlier host
+  run answers nothing until the link drops.
 - 0.1.1.1 only: the Dynamic Layout screen (`[DYNAMIC_LAYOUT]`,
   `cli_dynamic_layout`, "V1 Dynamic", preflight/render rejection logs) and a
   WASM application runtime (WAMR-style interpreter strings, `csdk_*` host

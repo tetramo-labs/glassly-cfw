@@ -16,3 +16,10 @@ LE (one vendor service, no 0x7033). The data channel is GATT over the classic
 link, so the Mac must be paired with `Nimo-XXXX` in System Settings first; the
 tool then picks the system-connected peripheral up without scanning. The host
 terminal needs Bluetooth permission.
+
+`nimo ota-info` opens the 0x7034 RFCOMM OTA channel and sends only the
+read-only attach query (and the file-identification query), the same first
+step the MemoMind flasher takes. `nimo sdp` dumps the classic service records.
+The ATT bearer (PSM 31) cannot be opened from user space on macOS, so `probe`
+and `layout` need another host for now; the attach reply does not carry the
+firmware version.

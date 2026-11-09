@@ -12,8 +12,7 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "nimo", exclude: ["Info.plist"],
-            linkerSettings: [.unsafeFlags(["-Xlinker", "-sectcreate", "-Xlinker", "__TEXT",
-                                           "-Xlinker", "__info_plist", "-Xlinker", infoPlist])]
+            linkerSettings: [.linkedFramework("IOBluetooth")]
         ),
     ]
 )

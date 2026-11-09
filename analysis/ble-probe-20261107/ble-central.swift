@@ -7,7 +7,7 @@ final class Central: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     let chara = CBUUID(string: ProcessInfo.processInfo.environment["BLE_CHARA"] ?? "9401")
     let nameHint: String, deadline: Date
     var manager: CBCentralManager!, peripheral: CBPeripheral?, characteristic: CBCharacteristic?
-    var seen: [String: (Int, [String: Any])] = [:], sentAt = Date(), round = 0, rtts: [Double] = []
+    var seen: [String: (Int, [String: Any])] = [:], sentAt = Date(), round = 0, rtts: [Double] = [], cmdRtts: [Double] = []
     init(seconds: Double, nameHint: String) { self.nameHint = nameHint; deadline = Date().addingTimeInterval(seconds); super.init(); manager = CBCentralManager(delegate: self, queue: nil) }
     func log(_ s: String) { print(String(format: "[%.3f] ", Date().timeIntervalSince(deadline) + 0) + s); fflush(stdout) }
     func centralManagerDidUpdateState(_ c: CBCentralManager) {
@@ -43,21 +43,33 @@ final class Central: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         log("notify state \(ch.isNotifying) error \(String(describing: error)); mtu \(p.maximumWriteValueLength(for: .withoutResponse))")
         if ch.isNotifying { send(p) }
     }
+    let commands: [Data] = (ProcessInfo.processInfo.environment["BLE_CMD"] ?? "").isEmpty ? [] :
+        [Data([0x47, 0x4d, 0x7b, 2]), Data([0x47, 0x4d, 0x74, 0x42, 0x50, 1, 3]), Data([0x47, 0x4d, 0x7b, 2]), Data([0x47, 0x4d, 0x7e])]
+    var pending = Data()
     func send(_ p: CBPeripheral) {
         guard let ch = characteristic, round < 20 else { finish(); return }
-        round += 1; sentAt = Date()
-        let payload = Data("glassly-\(round)".utf8)
+        round += 1; sentAt = Date(); pending = Data()
+        let payload = round <= commands.count ? commands[round-1] : Data("glassly-\(round)".utf8)
         p.writeValue(payload, for: ch, type: ch.properties.contains(.writeWithoutResponse) ? .withoutResponse : .withResponse)
     }
     func peripheral(_ p: CBPeripheral, didUpdateValueFor ch: CBCharacteristic, error: Error?) {
-        let rtt = Date().timeIntervalSince(sentAt) * 1000; rtts.append(rtt)
-        log(String(format: "echo %@ after %.1f ms", String(decoding: ch.value ?? Data(), as: UTF8.self), rtt))
+        let rtt = Date().timeIntervalSince(sentAt) * 1000
+        if round <= commands.count {
+            pending.append(ch.value ?? Data())
+            guard (try? JSONSerialization.jsonObject(with: pending)) != nil else { log(String(format: "partial reply %d bytes after %.1f ms", pending.count, rtt)); return }
+            log(String(format: "command %02x reply %@ after %.1f ms", commands[round-1][2], String(decoding: pending, as: UTF8.self), rtt))
+            cmdRtts.append(rtt)
+        } else {
+            rtts.append(rtt)
+            log(String(format: "echo %@ after %.1f ms", String(decoding: ch.value ?? Data(), as: UTF8.self), rtt))
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { self.send(p) }
     }
     func peripheral(_ p: CBPeripheral, didWriteValueFor ch: CBCharacteristic, error: Error?) { if let e = error { log("write error \(e)") } }
     func finish() {
+        if !cmdRtts.isEmpty { log(String(format: "command RTTs %@ ms", cmdRtts.map { String(format: "%.1f", $0) }.joined(separator: ", "))) }
         if !rtts.isEmpty { let s = rtts.sorted(); log(String(format: "echo RTT median %.1f ms, min %.1f, max %.1f over %d rounds", s[s.count/2], s[0], s[s.count-1], s.count)) }
-        exit(rtts.isEmpty ? 1 : 0)
+        exit(rtts.isEmpty && cmdRtts.isEmpty ? 1 : 0)
     }
 }
 let seconds = Double(CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "40") ?? 40

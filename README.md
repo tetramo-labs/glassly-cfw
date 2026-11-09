@@ -1,5 +1,19 @@
 # MemoMind One firmware investigation
 
+Revision 20 (`ble-probe-005`) turns the BLE probe into a command transport. A
+write to 0x9401 that starts with `G`,`M`,command carries the command's TLV
+bytes; the firmware wraps them in a stock kind-1 request node and runs them
+through the same `service_entry` the Classic link uses, then notifies every
+reply node's bytes back in 500-byte chunks. On hardware a Mac central ran the
+flash-read topology command in 151 ms, the probe status in 123 ms and the full
+1.9 KB capabilities query (reporting `GLASSLYCFW/20`) in 480 ms across four
+notifications, with echoes at 60.9 ms in the same link; iAP2 needs 110–170 ms
+per request. Limits: notifications pace at about 120 ms per 500-byte chunk,
+asynchronous "settled" replies still go to the Classic link only, and the
+stock policy still drops an unbonded central a few seconds after connect (the
+bonded iPhone is the intended client). See the
+[V20 checkpoint](analysis/ble-probe-20261108d/checkpoint.json).
+
 Revision 19 (`ble-probe-004`) proves the BLE command channel on hardware. The
 probe now clears the pending flag before registering, so the stock
 `register_service` kick is the only kick: service 0x9400 got handle 14, the

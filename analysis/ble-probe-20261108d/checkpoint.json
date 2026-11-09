@@ -1,0 +1,34 @@
+{
+ "version": "GLASSLYCFW/20",
+ "release": "ble-probe-005",
+ "change": "Revision 19 plus a BLE command ingress: a write to 0x9401 starting with 'G','M',command carries TLV bytes that become a kind-1 request node (stock TLV constructor 0x042efe44) and run through service_entry exactly like a Classic-link command; every reply node's bytes are notified back in 500-byte chunks. Other writes still echo.",
+ "build": "build-20-01",
+ "runtimeBytes": 97792,
+ "runtimeSHA256": "11ea130154cdc7648cd3baa372b58bb3690b40d670d9ea2bd55ce17c1a5f2b09",
+ "linkerRelaxation": true,
+ "imageBytes": 2251457,
+ "imageSHA256": "783c3d974026c0ea6422857afe2549565c80c82346dd6bf4ca78aca37cc862d1",
+ "containerHeaderSHA256": "c668ba07e7196bbfa5f27b38ffc69152c6b4654ab64af596a514d1492995ad49",
+ "appHeaderSHA256": "4405aea9d49f268639916ff2c58c748194631a93da24c45958d0cb78b3c34498",
+ "bootSelectorTest": "boot-selector-20.json",
+ "rawPresentTest": "raw-present-runtime.json",
+ "bleProbeTest": "ble-probe-runtime.json (8 tests)",
+ "recordGates": "record-gates-20.json",
+ "regression": "regression-20-01 (running at record time; see the follow-up commit)",
+ "flashed": true,
+ "flashAttempt": "captures/v20-flash-20261108-01 (550 blocks, 3,848 chunks, bytes [18, 2251457), reboot acknowledged)",
+ "bootVerified": true,
+ "bootCapture": "captures/v20-boot-20261108-03 (installed app header 4405aea9\u2026 matches ble-probe-005)",
+ "hardwareChecks": {
+  "bleRegistrationObserved": true,
+  "registration": "service 14, value 16, CCCD 17 (v20-ble-register/status captures)",
+  "bleTransport": "analysis/ble-probe-20261107/ble-central with BLE_CMD=1 after v20-ble-adv-*: real commands over BLE \u2014 0x7b topology (flash-read JSON) 151 / 148 ms, 0x74 probe status 123 ms, 0x7e capabilities (1.9 KB JSON, four 500-byte notifications) 480-484 ms; the capabilities reply reports version GLASSLYCFW/20; probe counters writes 4 / notified 8 after two sessions; echoes in the same link 60.9 ms median",
+  "transportNotes": "notification chunks pace at ~120 ms per 500 bytes, so large replies cost ~0.25 ms/byte; asynchronous ('settled') replies that the Classic link receives via P.send are not forwarded over BLE yet (a 0x7d present returned nothing); the stock policy still drops the unbonded Mac ~3.5 s after connect, so each test is a fresh connection",
+  "animationTiming": "unchanged raw-present path (see revision 19: captures/v19-anim-timing-20261108-01)",
+  "advertising": "an enable issued inside an RFCOMM session only takes effect once the session is closed and re-enabled; the first central attempt after a flash found nothing, the second found the glasses within 1 s"
+ },
+ "glasslyBundle": {
+  "commit": null,
+  "branch": "dev"
+ }
+}

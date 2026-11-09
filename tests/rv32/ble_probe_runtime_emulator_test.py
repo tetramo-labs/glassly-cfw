@@ -15,7 +15,7 @@ from sensor_capture_runtime_test import SensorMachine
 
 GATT_NATIVES = {0x0431a7fe: "gatt_register_service", 0x0431a93a: "gatt_register_chara",
                 0x043179c2: "adv_resume", 0x0431a6a8: "gatt_registration_failed", 0x0431a42e: "gatt_run_registration",
-                0x04317164: "adv_enable", 0x0431a712: "gatt_notify", 0x04316df8: "adv_find_slot"}
+                0x04317164: "adv_enable", 0x0431a712: "gatt_notify", 0x04316df8: "adv_find_slot", 0x042efe44: "tlv_append"}
 G.NATIVES.update(GATT_NATIVES)
 GLOBALS = (0x02012200, 0x02012300)      # DAT_0201220a adv slots, 0x0201223c list head, 0x02012230/31 flags
 SERVICE_LIST, PENDING, REGISTERING, ADV_SLOTS = 0x0201223c, 0x02012230, 0x02012231, 0x0201220a
@@ -38,6 +38,13 @@ class BleMachine(SensorMachine):
         self.fail_register = False
         self.fail_run = False
         self.slot_lookups = 0
+        self.tlv_appends = []
+
+    def response(self, value):
+        # Real stock reply layout so the BLE serializer can walk it: node{next, hdr*}, hdr{kind 5, len24, data*}.
+        node = self.request(json.dumps(value).encode(), kind=5)
+        self.replies[node] = value
+        return node
 
     def region(self, address, size, writing=False):
         if GLOBALS[0] <= address and address+size <= GLOBALS[1]:
@@ -73,6 +80,15 @@ class BleMachine(SensorMachine):
             self.gatt_charas.append(node); return node
         if name == "adv_resume":
             self.gatt_calls.append(name); assert a0 == 0; return 0
+        if name == "tlv_append":
+            kind, length, data = a1, a2, self.read(a3, a2)
+            node = self.request(bytes(data), kind=kind)
+            head = self.word(a0)
+            if head == 0: self.native_write(a0, struct.pack("<I", node))
+            else:
+                while self.word(head): head = self.word(head)
+                self.native_write(head, struct.pack("<I", node))
+            self.tlv_appends.append((kind, bytes(data))); return node
         if name == "adv_find_slot":
             self.slot_lookups += 1; assert a0 == 1, "status looks up the last stock slot"; return FAKE_SLOT
         if name == "gatt_registration_failed":
@@ -189,6 +205,24 @@ class BleProbeTests(unittest.TestCase):
         self.assertEqual(r["result"], "ok")
         self.assertEqual(m.gatt_calls[:1], ["adv_resume"])
         self.assertEqual(m.probe(b"BP\x01\x06")["result"], "invalid")
+
+    def test_gm_frames_run_a_command_and_notify_the_reply(self):
+        m = BleMachine(); m.probe(b"BP\x01\x01"); node = m.gatt_charas[-1]
+        peer = m.allocate(6, "peer", bytes([1, 2, 3, 4, 5, 6]), writable=False)
+        m.call("glassly_ble_on_cccd", peer, node+4, 1)
+        frame = m.allocate(3, "frame", b"GM\x74", writable=False)
+        m.call("glassly_ble_on_write", peer, node+4, frame, 3)
+        self.assertEqual(m.tlv_appends, [], "a bare command carries no request node")
+        self.assertEqual(len(m.notifies), 1)
+        reply = json.loads(m.notifies[-1][1]); self.assertEqual(reply["result"], "invalid")
+        self.assertEqual(m.notifies[-1][0], bytes([1, 2, 3, 4, 5, 6]))
+        frame = m.allocate(5, "frame2", b"GM\x74BP", writable=False)   # probe status with a malformed request node
+        m.call("glassly_ble_on_write", peer, node+4, frame, 5)
+        self.assertEqual(m.tlv_appends, [(1, b"BP")])
+        self.assertEqual(len(m.notifies), 2)
+        self.assertEqual(json.loads(m.notifies[-1][1])["result"], "invalid")
+        self.assertEqual(json.loads(m.notifies[-1][1])["result"], "invalid")
+        s = m.state(m.probe(b"BP\x01\x03")); self.assertEqual((s["writes"], s["notified"], s["notifyFailed"]), (2, 2, 0))
 
 
 def main():

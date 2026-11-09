@@ -30,6 +30,10 @@ typedef uint8_t *(*find_slot_fn)(uint32_t);
 #define FIND_SLOT FN(0x04316df8u,find_slot_fn)
 #define LINK_FLAGS ((const volatile uint8_t *)(uintptr_t)0x02012218u)
 #define NOTIFY FN(0x0431a712u,notify_fn)
+typedef void *(*tlv_append_fn)(void **,uint32_t,uint32_t,const void *);
+#define TLV_APPEND FN(0x042efe44u,tlv_append_fn)
+extern void service_entry(uint32_t,void *,const uint8_t *,void **);
+#define BLE_CHUNK 500u
 #define SERVICE_LIST (*(uint8_t **)(uintptr_t)0x0201223cu)
 #define PENDING (*(volatile uint8_t *)(uintptr_t)0x02012230u)
 #define REGISTERING (*(volatile uint8_t *)(uintptr_t)0x02012231u)
@@ -76,8 +80,27 @@ uint32_t glassly_ble_on_read(const uint8_t *msg,void *desc,uint8_t *buf,uint32_t
     buf[0]=(uint8_t)s->writes;buf[1]=(uint8_t)(s->writes>>8);buf[2]=(uint8_t)(s->writes>>16);buf[3]=(uint8_t)(s->writes>>24);
     return 4;
 }
+/* BLE command frame: 'G','M',command,TLV bytes. The command runs through the same
+ * service entry the Classic link uses (a kind-1 request node built by the stock
+ * TLV constructor); every reply node's bytes are notified in MTU-sized chunks. */
+static void ble_command(const uint8_t *msg,uint8_t *chr,state *s,const uint8_t *data,uint32_t len){
+    void *request=0,*response=0;
+    if(len>3 && !TLV_APPEND(&request,1,len-3,data+3)){s->notify_failed++;return;}
+    service_entry(data[2],request,msg,&response); /* handlers release the request */
+    for(uint8_t *node=response;node;node=*(uint8_t **)node){
+        const uint8_t *h=*(const uint8_t **)(node+4);if(!h)continue;
+        uint32_t n=h[1]|((uint32_t)h[2]<<8)|((uint32_t)h[3]<<16);const uint8_t *p=*(const uint8_t **)(h+4);
+        while(p && n){uint32_t c=n<BLE_CHUNK?n:BLE_CHUNK;
+            if(NOTIFY(msg,chr,p,(uint16_t)c))s->notified++;else s->notify_failed++;p+=c;n-=c;}
+    }
+    if(response)P.release(&response);
+}
 void glassly_ble_on_write(const uint8_t *msg,void *desc,const uint8_t *data,uint32_t len){
     state *s=state_of(desc);if(!s || !msg)return;
+    if(len>=3 && data && data[0]=='G' && data[1]=='M'){
+        s->writes++;for(unsigned i=0;i<6;i++)s->peer[i]=msg[i];
+        ble_command(msg,(uint8_t *)desc-4,s,data,len);return;
+    }
     s->writes++;s->last_len=(uint16_t)len;
     for(unsigned i=0;i<6;i++)s->peer[i]=msg[i];
     for(unsigned i=0;i<sizeof(s->last);i++)s->last[i]=data && i<len?data[i]:0;

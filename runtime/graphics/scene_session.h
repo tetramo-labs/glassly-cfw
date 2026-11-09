@@ -44,6 +44,9 @@ typedef struct {
     /* Boxes drawn by a bundle's segments; bundle_full when a segment drew outside them. */
     mm_scene_dirty bundle_dirty;
     uint8_t bundle_full;
+    /* Eye a standalone SHOW names in flag bits 4-5 (1 left, 2 right); 0 both
+     * (bundles always present to both eyes). */
+    uint8_t lens;
 #endif
 } mm_scene_session;
 

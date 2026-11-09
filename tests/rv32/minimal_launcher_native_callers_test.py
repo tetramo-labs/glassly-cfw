@@ -18,7 +18,9 @@ class Machine(FlashMachine):
   for p in range(BODY_BASE&~4095,(BODY_BASE+len(BODY)+4095)&~4095,4096):
    if p not in existing:self.uc.mem_map(p,4096,G.u.UC_PROT_READ|G.u.UC_PROT_EXEC)
   self.uc.mem_write(BODY_BASE,BODY)
-  self.uc.mem_map(0x0200f000,0x7000,G.u.UC_PROT_READ|G.u.UC_PROT_WRITE)
+  existing={p for lo,hi,_ in self.uc.mem_regions() for p in range(lo,hi+1,4096)}
+  for p in range(0x0200f000,0x02016000,4096):
+   if p not in existing:self.uc.mem_map(p,4096,G.u.UC_PROT_READ|G.u.UC_PROT_WRITE)
   self.uc.mem_write(0x0200fc7c,BODY[0x0439a38c-BODY_BASE:0x0439a3c8-BODY_BASE])
   # Deliberately poison the old root/header object pointers. No path may read
   # or forward them to LVGL after the cold-boot lifecycle replacement.

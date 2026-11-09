@@ -60,6 +60,9 @@ typedef struct {
      * (one stock redraw) before raw copies can rely on it as the fallback. */
     uint8_t lvgl_stale;
     uint32_t raw_presents, raw_fallbacks;
+    /* Box (l,t,r,b; empty when r<=l) each eye's panel still lacks: a SHOW for
+     * one eye leaves the other panel's box pending. [0] left, [1] right. */
+    uint16_t eye_box[2][4];
 #endif
 #ifdef MM_COMMAND_BUNDLES
     /* Display-call owned scratch, borrowed here solely by settled callbacks. */
@@ -262,11 +265,45 @@ static int scene_active(void *user) {
         );
 }
 #ifdef MM_RAW_PRESENT
-/* Copy the changed box of the owned raster straight into the locked panel
- * slices and submit it, bypassing the LVGL redraw. Returns 0 when the stock
- * lock refuses (display inactive, another app current) so the caller falls
- * back to the image object. The raster and the panel share GRAY4 packing;
- * only the stride differs (300 vs 320 bytes). */
+/* The stock JBD013 driver feeds both eyes' panels from one framebuffer: bit
+ * 4 of this byte enables panel 1 (right eye, calibration "right"), bit 5
+ * panel 2 (left). With one bit clear the synchronous submit queues the box
+ * for the other panel only; the bits are put back right after. */
+#define PANEL_ENABLE ((volatile uint8_t *)0x02010318u)
+static const uint16_t whole_panel[4]={0,0,MM_GRAPHICS_WIDTH,MM_GRAPHICS_HEIGHT};
+static __attribute__((noinline)) void box_join(uint16_t *a,const uint16_t *b) {
+    if(b[2]<=b[0])return;
+    unsigned empty=a[2]<=a[0];
+    for(unsigned i=0;i<4;i++)if(empty || (i<2 ? b[i]<a[i]:b[i]>a[i]))a[i]=b[i];
+}
+/* Copy box l,t,r,b of the owned raster straight into the locked panel slices
+ * and submit it to `panels` (0x30 both), bypassing the LVGL redraw. Returns 0
+ * when the stock lock refuses (display inactive, another app current). The
+ * raster and the panel share GRAY4 packing; only the stride differs (300 vs
+ * 320 bytes). */
+static __attribute__((noinline)) int raw_submit(const mm_raster *raster,const uint16_t *box,uint8_t panels) {
+    uint32_t l=box[0],t=box[1],r=box[2],b=box[3];
+    if(r<=l)return 1;
+    uint8_t mask=0;
+    if(!(P.slice_lock(t,b-1u,0,&mask)&0xffu) || !mask)return 0;
+    uint32_t x0=l>>1,bytes=(r-l)>>1;
+    for(uint32_t y=t;y<b;y++){
+        uint8_t *dst=P.slice_pixels(0,(int32_t)y,0);
+        if(!dst){P.slice_submit(mask,0,0);return 0;}
+        const uint8_t *src=raster->pixels+(size_t)y*raster->stride+x0;
+        for(uint32_t i=0;i<bytes;i++)dst[x0+i]=src[i];
+    }
+    uint16_t rect[4]={(uint16_t)l,(uint16_t)t,(uint16_t)(r-1u),(uint16_t)(b-1u)};
+    volatile uint8_t *enable=PANEL_ENABLE;
+    uint8_t on=*enable&0x30u;
+    if(on==0x30u)*enable=(uint8_t)((*enable&~0x30u)|panels);
+    int submitted=(P.slice_submit(mask,rect,1)&0xffu)!=0;
+    if(on==0x30u)*enable=(uint8_t)((*enable&~0x30u)|on);
+    return submitted;
+}
+/* Present the changed box. A SHOW that names one eye reaches only that eye's
+ * panel; every present sends a panel at least what changed since its last
+ * one, so the eyes stay exact through any order of one-eye and both-eye frames. */
 static int raw_present(owner *o,const mm_raster *raster,const mm_scene_dirty *dirty) {
     if(!P.slice_lock || !P.slice_pixels || !P.slice_submit || !raster || !raster->pixels ||
        raster->width!=MM_GRAPHICS_WIDTH || raster->height!=MM_GRAPHICS_HEIGHT || raster->stride!=MM_GRAPHICS_STRIDE ||
@@ -285,23 +322,27 @@ static int raw_present(owner *o,const mm_raster *raster,const mm_scene_dirty *di
             if((uint32_t)q->l+q->w>r)r=(uint32_t)q->l+q->w;
             if((uint32_t)q->t+q->h>b)b=(uint32_t)q->t+q->h;
         }
-        if(r<=l || b<=t)return 1; /* nothing changed */
         if(r>MM_GRAPHICS_WIDTH)r=MM_GRAPHICS_WIDTH;
         if(b>MM_GRAPHICS_HEIGHT)b=MM_GRAPHICS_HEIGHT;
+        if(r<=l || b<=t)r=l=0; /* nothing changed */
     }
     l&=~1u;r=(r+1u)&~1u;
     if(r>MM_GRAPHICS_WIDTH)r=MM_GRAPHICS_WIDTH;
-    uint8_t mask=0;
-    if(!(P.slice_lock(t,b-1u,0,&mask)&0xffu) || !mask)return 0;
-    uint32_t x0=l>>1,bytes=(r-l)>>1;
-    for(uint32_t y=t;y<b;y++){
-        uint8_t *dst=P.slice_pixels(0,(int32_t)y,0);
-        if(!dst){P.slice_submit(mask,0,0);return 0;}
-        const uint8_t *src=raster->pixels+(size_t)y*raster->stride+x0;
-        for(uint32_t i=0;i<bytes;i++)dst[x0+i]=src[i];
+    uint16_t box[4]={(uint16_t)l,(uint16_t)t,(uint16_t)r,(uint16_t)b};
+    uint16_t (*eye)[4]=o->eye_box;
+    box_join(eye[0],box);box_join(eye[1],box);
+    unsigned lens=o->scene.lens;
+    if(lens==1u || lens==2u){
+        uint16_t *pending=eye[lens-1u];
+        if(!raw_submit(raster,pending,lens==1u ? 0x20u:0x10u))return 0;
+        pending[0]=pending[2]=0;
+        return 1;
     }
-    uint16_t rect[4]={(uint16_t)l,(uint16_t)t,(uint16_t)(r-1u),(uint16_t)(b-1u)};
-    return (P.slice_submit(mask,rect,1)&0xffu)!=0;
+    /* Both eyes show this raster: one broadcast of everything either lacks. */
+    box_join(eye[0],eye[1]);
+    if(!raw_submit(raster,eye[0],0x30u))return 0;
+    eye[0][0]=eye[0][2]=eye[1][0]=eye[1][2]=0;
+    return 1;
 }
 #endif
 static void scene_present(void *user,const mm_raster *raster,const mm_scene_dirty *dirty) {
@@ -325,9 +366,15 @@ static void scene_present(void *user,const mm_raster *raster,const mm_scene_dirt
         glassly_diagnostics_hidden(o->image,0);
 #endif
         o->lvgl_stale=0;
+        /* The redraw puts this raster on both panels: each eye is resent whole. */
+        box_join(o->eye_box[0],whole_panel);box_join(o->eye_box[1],whole_panel);
     }
     if(raw_present(o,raster,dirty))o->raw_presents++;
-    else {o->raw_fallbacks++;P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);}
+    else {
+        o->raw_fallbacks++;P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
+        /* LVGL draws this raster to both panels. */
+        o->eye_box[0][0]=o->eye_box[0][2]=o->eye_box[1][0]=o->eye_box[1][2]=0;
+    }
 #else
     (void)dirty;(void)raster;
     P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);

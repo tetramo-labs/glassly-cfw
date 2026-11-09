@@ -38,6 +38,8 @@ NATIVES = {
     0x0425f20e: "slice_lock", 0x0425f7fa: "slice_pixels", 0x0425f292: "slice_submit",
 }
 FRAMEBUFFER_STRIDE, FRAMEBUFFER_ROWS = 320, 350
+# Stock JBD013 panel-enable byte: bit 4 panel 1 (right eye), bit 5 panel 2 (left).
+PANEL_ENABLE = 0x02010318
 RESULTS = []
 
 
@@ -68,6 +70,13 @@ class Machine:
         self.children, self.callback_frames, self.image_sources = [], [], []
         # Raw presents: a panel framebuffer, the slice mask currently locked and every submit.
         self.framebuffer, self.locked_mask, self.slices, self.fail_slice = None, 0, [], False
+        # Panel-enable byte as each submit saw it (both panels on at rest).
+        self.panel_enables = []
+        try:
+            self.uc.mem_map(PANEL_ENABLE & ~4095, 4096, u.UC_PROT_READ | u.UC_PROT_WRITE)
+        except u.UcError:
+            pass
+        self.uc.mem_write(PANEL_ENABLE, bytes([0x30]))
         self.request_releases = []
         self.now, self.free_bytes, self.low_water = 100, 0x80000, 0x40000
         self.free_values = []
@@ -102,6 +111,8 @@ class Machine:
             return "stack"
         if not writing and ENTRY <= address and address+size <= ENTRY+len(self.blob):
             return "flash"
+        if address == PANEL_ENABLE and size == 1:
+            return "panel-enable"
         for pointer, block in self.allocations.items():
             if block["live"] and pointer <= address and address+size <= pointer+block["size"]:
                 assert not writing or block["writable"], f"Write to immutable {block['tag']}"
@@ -322,6 +333,7 @@ class Machine:
             x1, y1, x2, y2 = struct.unpack("<HHHH", self.read(rect, 8))
             assert x1 <= x2 < 600 and y1 <= y2 < FRAMEBUFFER_ROWS and x1 % 2 == 0 and x2 % 2 == 1
             assert mask == (1 if y1 < 175 else 0) | (2 if y2 >= 175 else 0)
+            self.panel_enables.append(self.read(PANEL_ENABLE, 1)[0])
             self.slices.append(("submit", mask, (x1, y1, x2, y2), present)); return 1
         raise AssertionError("Unknown native contract: "+name)
 

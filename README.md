@@ -1,5 +1,19 @@
 # MemoMind One firmware investigation
 
+Revision 22 (`stereo-001`) gives each eye its own raster. The stock
+`jbd013_api.c` driver feeds two JBD013 micro-LED panels from one framebuffer
+(`analysis/ghidra/depth-20261109/`): bit 4 of the byte at 0x02010318 enables
+panel 1 (calibration "right"), bit 5 panel 2 ("left"), and with one bit clear
+the synchronous `slice_submit` queues the box for the other panel only. A
+standalone SHOW whose flags carry 0x10 (left) or 0x20 (right) is presented to
+that eye's panel; the generated scene core ignores the bits, so it is unchanged.
+`graphics.c` keeps the box each panel still lacks, so one-eye and both-eye
+frames can come in any order; a both-eye frame broadcasts the union once. The
+phone sends a frame with element depth as a left and a right SHOW through the
+one object cache (Glassly `0b31c9acd3`). Also carries revision 21. Blob 98,288
+B (16 B free). `analysis/stereo-20261109/stereo-check` holds each eye on a
+different scene for the wearer to confirm; hardware result pending.
+
 Revision 21 (`ble-probe-006`) registers the Glassly GATT service at boot. The
 stock boot path's call to its GATT registration batch (`jal 0x042d58cc` at
 0x042db6e8) now goes through `glassly_ble_boot_entry`, which runs the stock

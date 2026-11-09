@@ -75,6 +75,49 @@ class RawPresentTests(unittest.TestCase):
         self.assertEqual(m.pixel(106, 6), 7, "the owned raster matches the panel")
         m.assert_clear()
 
+    def test_one_eye_shows_reach_only_their_panel_and_the_other_catches_up(self):
+        m = RawMachine(); m.establish()
+        before = len(m.submits())
+        self.assertTrue(all(enable == 0x30 for enable in m.panel_enables), "both-eye frames broadcast")
+        left = bytearray(moved_show_packet()); left[5] |= 0x10
+        reply, _ = m.send_scene(bytes(left)); self.assertEqual(reply[3], 0)
+        self.assertEqual(len(m.submits()), before+1)
+        self.assertEqual(m.panel_enables[-1], 0x20, "a left SHOW enables only panel 2")
+        self.assertEqual(m.read(G.PANEL_ENABLE, 1)[0], 0x30, "both panels enabled again after the submit")
+        moved = m.submits()[-1][2]
+        self.assertTrue(moved[0] <= 5 and moved[2] >= 109, f"the left panel gets the move: {moved}")
+        # The right eye's SHOW moves the object again: panel 1 gets that move and the
+        # first one it missed.
+        right = bytearray(moved_show_packet()); right[5] |= 0x20
+        reply, _ = m.send_scene(bytes(right)); self.assertEqual(reply[3], 0)
+        self.assertEqual(len(m.submits()), before+2)
+        self.assertEqual(m.panel_enables[-1], 0x10, "a right SHOW enables only panel 1")
+        x1, y1, x2, y2 = m.submits()[-1][2]
+        self.assertTrue(x1 <= moved[0] and y1 <= moved[1] and x2 >= moved[2] and y2 >= moved[3],
+                        f"the right panel receives the box it missed: {(x1, y1, x2, y2)} vs {moved}")
+        # Both eyes caught up: a both-eye frame broadcasts its own box once.
+        reply, _ = m.send_scene(S.show_packet()); self.assertEqual(reply[3], 0)
+        self.assertEqual(len(m.submits()), before+3)
+        self.assertEqual(m.panel_enables[-1], 0x30)
+        self.assertEqual(m.panel_pixel(206, 6), 7); self.assertEqual(m.panel_pixel(106, 6), 0)
+        m.assert_clear()
+
+    def test_a_both_eye_frame_after_one_eye_broadcasts_what_either_lacks(self):
+        m = RawMachine(); m.establish()
+        before = len(m.submits())
+        left = bytearray(moved_show_packet()); left[5] |= 0x10
+        reply, _ = m.send_scene(bytes(left)); self.assertEqual(reply[3], 0)
+        moved = m.submits()[-1][2]
+        # A both-eye SHOW: one broadcast covers its own change and the move the
+        # right panel lacks.
+        reply, _ = m.send_scene(moved_show_packet()); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.panel_enables[before:], [0x20, 0x30])
+        x1, y1, x2, y2 = m.submits()[-1][2]
+        self.assertTrue(x1 <= moved[0] and y1 <= moved[1] and x2 >= moved[2] and y2 >= moved[3],
+                        f"the broadcast covers the move the right panel lacks: {(x1, y1, x2, y2)} vs {moved}")
+        self.assertEqual(m.read(G.PANEL_ENABLE, 1)[0], 0x30)
+        m.assert_clear()
+
     def test_refused_slice_lock_falls_back_to_the_image_object(self):
         m = RawMachine(); m.fail_slice = True
         m.establish()

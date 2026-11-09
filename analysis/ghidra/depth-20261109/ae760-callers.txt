@@ -1,0 +1,16 @@
+CALL ram:042608d0 FUNCTION ram:042608b4
+ram:042608b6  c.swsp s0,0x18(sp)
+ram:042608b8  c.swsp s1,0x14(sp)
+ram:042608ba  c.addi4spn s0,sp,0x20
+ram:042608bc  c.swsp ra,0x1c(sp)
+ram:042608be  c.mv s1,a0
+ram:042608c0  sw a1,-0x14(s0)
+ram:042608c4  jal ra,0x0425ec64
+ram:042608c8  c.beqz a0,0x042608e0
+ram:042608ca  lw a1,-0x14(s0)
+ram:042608ce  c.mv a0,s1
+ram:042608d0  jal ra,0x042ae760
+ram:042608d4  c.lwsp s0,0x18(sp)
+ram:042608d6  c.lwsp ra,0x1c(sp)
+ram:042608d8  c.lwsp s1,0x14(sp)
+ram:042608da  c.addi16sp sp,0x20

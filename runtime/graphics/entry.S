@@ -207,3 +207,22 @@ wake_service_gate:
     j glassly_wake_command
 .size wake_service_gate, .-wake_service_gate
 #endif
+
+#ifdef MM_BLE_PROBE
+/* Replaces the stock `jal 042d58cc` in the BT init (042db6e8): run the stock
+ * app_ble_adv init, then append the Glassly GATT nodes to its service list. */
+.section .text.glassly_ble_boot_entry,"ax",@progbits
+.align 1
+.global glassly_ble_boot_entry
+.type glassly_ble_boot_entry, @function
+glassly_ble_boot_entry:
+    addi sp, sp, -16
+    sw ra, 12(sp)
+    li t0, 0x042d58cc
+    jalr ra, t0
+    jal ra, glassly_ble_boot_register
+    lw ra, 12(sp)
+    addi sp, sp, 16
+    ret
+.size glassly_ble_boot_entry, .-glassly_ble_boot_entry
+#endif

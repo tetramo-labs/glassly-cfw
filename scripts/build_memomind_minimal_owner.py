@@ -106,6 +106,14 @@ def construct(source,blob,build):
         ins=((delta>>20&1)<<31)|((delta>>1&1023)<<21)|((delta>>11&1)<<20)|((delta>>12&255)<<12)|(1<<7)|0x6f
         after=struct.pack('<I',ins);body[off:off+4]=after
         edits.append(dict(address=address,before=before,after=after.hex(),purpose='sensor-imu'))
+    if build.get('ble_probe') and 'glassly_ble_boot_entry' in build['symbols']:
+        address=0x042db6e8;before='efa04f9e';target=build['symbols']['glassly_ble_boot_entry']
+        require(ENTRY<=target<ENTRY+len(blob) and target%2==0,'BLE boot entry outside runtime')
+        off=address-BODY_BASE;require(body[off:off+4]==bytes.fromhex(before),'BLE init call witness differs')
+        delta=target-address;require(-(1<<20)<=delta<(1<<20) and delta%2==0,'BLE JAL range')
+        ins=((delta>>20&1)<<31)|((delta>>1&1023)<<21)|((delta>>11&1)<<20)|((delta>>12&255)<<12)|(1<<7)|0x6f
+        after=struct.pack('<I',ins);body[off:off+4]=after
+        edits.append(dict(address=address,before=before,after=after.hex(),purpose='ble-boot-register'))
     allowed={i for row in gates+edits for i in range(row['address']-BODY_BASE,row['address']-BODY_BASE+len(bytes.fromhex(row['after'])))}
     changed=[i for i,(a,b) in enumerate(zip(original,body)) if a!=b]
     require(set(changed)<=allowed and len(body)==len(original),'Change outside fixed lifecycle gates')

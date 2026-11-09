@@ -1,5 +1,15 @@
 # MemoMind One firmware investigation
 
+Revision 21 (`ble-probe-006`) registers the Glassly GATT service at boot. The
+stock boot path's call to its GATT registration batch (`jal 0x042d58cc` at
+0x042db6e8) now goes through `glassly_ble_boot_entry`, which runs the stock
+batch and then creates the 0x9400 service and 0x9401 characteristic nodes, so
+the stock walker assigns their handles with everything else and the stock
+re-register path (BT restarts, iAP2 pairing) keeps them. The first TestFlight
+build found the phone connected while a probe-time registration was still in
+flight and the service absent. Built and gated offline (blob 97,872 B, 432 B
+free); hardware result pending.
+
 Revision 20 (`ble-probe-005`) turns the BLE probe into a command transport. A
 write to 0x9401 that starts with `G`,`M`,command carries the command's TLV
 bytes; the firmware wraps them in a stock kind-1 request node and runs them

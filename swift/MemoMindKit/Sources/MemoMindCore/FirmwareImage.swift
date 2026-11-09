@@ -233,6 +233,11 @@ private struct FirmwareRelease {
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
         // Active light sampling: the CFW reads the sensor at a requested interval (GLASSLYCFW/14).
+        // Glassly GATT service registered at boot inside the stock batch, so 0x9400 exists before any phone connects (GLASSLYCFW/21).
+        FirmwareRelease(name: "ble-probe-006",
+                        sha256: "35738944836157122267cb5c0250e33d49ea75a5aa6d953cf035bdf3f81f01a7", byteCount: 2_251_426, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "f879deeff433412fe14be442e6f66ba521ac2a45deba1644b7bb58ff94d6a292",
+                        streams: streamPins(.bleProbe21)),
         // BLE command ingress: 'G','M',command,TLV writes run through the service entry, replies notified (GLASSLYCFW/20).
         FirmwareRelease(name: "ble-probe-005",
                         sha256: "783c3d974026c0ea6422857afe2549565c80c82346dd6bf4ca78aca37cc862d1", byteCount: 2_251_457, modified: true,
@@ -337,12 +342,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .bleProbe21:
+            metadata = 171; appPacked = 980_324; appRaw = 1_871_088
+            metadataHash = "a3119085c5951871cfbebd7bbae0ed566a7930a873a1c7fc76c321b10485929a"
+            appHash = "960b1c66caa589cc7bda94a70c62f6cfa91bff08041160c462c20850ff04eb88"
         case .bleProbe20:
             metadata = 171; appPacked = 980_355; appRaw = 1_871_008
             metadataHash = "6a4bfa8f2f6077380048891274c130d9bc9e36f1af14bbdfa3ac8fe7fa5f1456"

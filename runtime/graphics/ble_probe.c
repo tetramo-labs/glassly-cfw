@@ -143,6 +143,31 @@ static void *status(const char *result,uint32_t rc){
     for(unsigned i=0;i<4;i++)b[120+i]=LINK_FLAGS[i];
     return json_hex(result,b,sizeof(b));
 }
+/* Appends the Glassly service and characteristic nodes to the stock list (idempotent).
+ * Returns the service node, or 0 when either allocation failed. */
+static void *register_nodes(void){
+    uint8_t svc[0x24],chr[0x68];
+    for(unsigned i=0;i<sizeof(svc);i++)svc[i]=0;
+    for(unsigned i=0;i<sizeof(chr);i++)chr[i]=0;
+    svc[4]=1;put16(svc+8,BLE_SERVICE_UUID);put32(svc+0x18,0xf0000000u);put32(svc+0x1c,0xffffu);
+    chr[4]=1;put16(chr+8,BLE_CHARA_UUID);put32(chr+0x18,0xffffffffu);chr[0x1e]=0x1eu; /* read|write-no-rsp|write|notify */
+    *(uintptr_t *)(chr+0x58)=(uintptr_t)glassly_ble_on_read;
+    *(uintptr_t *)(chr+0x5c)=(uintptr_t)glassly_ble_on_write;
+    *(uintptr_t *)(chr+0x60)=(uintptr_t)glassly_ble_on_cccd;
+    void *service=find_service();
+    if(!service)service=REGISTER_SERVICE(svc);
+    if(!service)return 0;
+    if(!find_chara() && !REGISTER_CHARA(service,chr))return 0;
+    return service;
+}
+/* Boot hook: runs right after the stock app_ble_adv init (042d58cc) registers
+ * 0x9200/0x9300, so the Glassly service sits in the same list the stock registers,
+ * re-registers after a BT restart (0431b592) and exposes before any phone connects.
+ * The pending flag is left alone: whatever kick the stock uses for its own nodes
+ * covers ours. */
+void glassly_ble_boot_register(void){
+    (void)register_nodes();
+}
 /* Request: 'B','P',1,op[,arg...]. op1 register (idempotent), op2 enable adv slot
  * arg, op3 status, op4 notify the last peer with the remaining bytes, op5 restart
  * every enabled advertising slot (the stock resume). */
@@ -161,26 +186,9 @@ void glassly_ble_probe_command(uint32_t command,void *request,const uint8_t *eve
         if(find_chara())result="exists";
         else if(REGISTERING)result="busy";
         else {
-            uint8_t svc[0x24],chr[0x68];
-            for(unsigned i=0;i<sizeof(svc);i++)svc[i]=0;
-            for(unsigned i=0;i<sizeof(chr);i++)chr[i]=0;
-            svc[4]=1;put16(svc+8,BLE_SERVICE_UUID);put32(svc+0x18,0xf0000000u);put32(svc+0x1c,0xffffu);
-            chr[4]=1;put16(chr+8,BLE_CHARA_UUID);put32(chr+0x18,0xffffffffu);chr[0x1e]=0x1eu; /* read|write-no-rsp|write|notify */
-            *(uintptr_t *)(chr+0x58)=(uintptr_t)glassly_ble_on_read;
-            *(uintptr_t *)(chr+0x5c)=(uintptr_t)glassly_ble_on_write;
-            *(uintptr_t *)(chr+0x60)=(uintptr_t)glassly_ble_on_cccd;
-            /* The stock register_service/register_chara kick the state machine
-             * themselves while the pending flag is set (the boot-time done
-             * callback re-arms it), so clear it first: revision 18 let that kick
-             * post the service, then ran the machine again and posted the same
-             * service twice (handles 14 and 15), which split the chara away from
-             * the first record and left its group empty. One kick, after both
-             * nodes exist, mirrors the stock sequence exactly. */
             PENDING=0;
-            void *service=find_service();
-            if(!service)service=REGISTER_SERVICE(svc);
-            if(!service)result="service-failed";
-            else if(!REGISTER_CHARA(service,chr))result="chara-failed";
+            void *service=register_nodes();
+            if(!service)result=find_service()?"chara-failed":"service-failed";
             else {
                 /* Handle replies (0x15f/0x160 service, 0x162/0x163 chara) are only
                  * accepted while registering is set and the cursors point at the

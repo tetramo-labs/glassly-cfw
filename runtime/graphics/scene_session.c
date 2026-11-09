@@ -76,7 +76,14 @@ static void present(void *user,mm_scene_context *ctx,const mm_raster *raster,
 #ifdef MM_FLASH_SCENE
     if(ctx->shadow_invalid){dirty->direct_failed=1;return;}
 #endif
+#ifdef MM_SCENE_STEREO_EYES
+    /* A per-eye pass reaches only its eye's panel; the SHOW's own lens returns after. */
+    uint8_t lens=s->lens;if(ctx->eye)s->lens=ctx->eye;
     s->hooks.present(s->hooks.user,raster,dirty);
+    s->lens=lens;
+#else
+    s->hooks.present(s->hooks.user,raster,dirty);
+#endif
     dirty->direct_submitted=1;
 }
 static void settled(void *user,uint16_t tag) {

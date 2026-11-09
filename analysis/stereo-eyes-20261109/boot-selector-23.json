@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "imageSHA256": "a50afd695659cfebc44f1b13f61f71d991685d2ef33d25da5e348d97a1e01eb8",
+  "runtimeSHA256": "f02e1eeaf5c87fddc51dd236c456f8b9e54a30b0fd0306d56213461651f1340e",
+  "cases": [
+    {
+      "setting": 0,
+      "stock": "0x200fcf4",
+      "patched": "0x200fc7c"
+    },
+    {
+      "setting": 1,
+      "stock": "0x200fc7c",
+      "patched": "0x200fc7c"
+    },
+    {
+      "setting": 2,
+      "stock": "0x200fc7c",
+      "patched": "0x200fc7c"
+    },
+    {
+      "setting": -1,
+      "stock": "0x200fc7c",
+      "patched": "0x200fc7c"
+    }
+  ],
+  "witnessRejections": 4,
+  "gate": {
+    "address": 69582672,
+    "before": "130549cf",
+    "after": "1385c4c7",
+    "purpose": "first-run-minimal-launcher"
+  },
+  "hardwareTested": false,
+  "limitations": [
+    "Settings lookup and app-manager entry mocked; actual boot selector instructions executed.",
+    "No pairing, UI appearance or persistent setting writes exercised."
+  ]
+}

@@ -21,6 +21,23 @@ def moved_show_packet():
     return bytes(data)
 
 
+def tagged_put(oid, x, y, color=7):
+    """PUT of one 20x20 filled rect under object id `oid` (bit 31: one eye; bit 30: right)."""
+    data = bytearray(34); data[0] = 37; data[5] = 1
+    S.w32(data, 6, oid); S.w32(data, 10, 1)
+    data[14:18] = bytes([3, 1, color, 0])
+    for offset, value in ((18, x), (20, y), (22, 20), (24, 20)):
+        S.w16(data, offset, value)
+    return bytes(data)
+
+
+def refs_show(ids):
+    data = bytearray([38, 0, 0, 0, 0, 1, 0, 0]) + struct.pack("<H", len(ids))
+    for oid in ids:
+        data += struct.pack("<II", oid, 1)
+    return bytes(data)
+
+
 class RawMachine(SensorMachine):
     """The full record build: flash, wake, notification and sensor natives mocked."""
     def submits(self):
@@ -116,6 +133,24 @@ class RawPresentTests(unittest.TestCase):
         self.assertTrue(x1 <= moved[0] and y1 <= moved[1] and x2 >= moved[2] and y2 >= moved[3],
                         f"the broadcast covers the move the right panel lacks: {(x1, y1, x2, y2)} vs {moved}")
         self.assertEqual(m.read(G.PANEL_ENABLE, 1)[0], 0x30)
+        m.assert_clear()
+
+    def test_eye_tagged_objects_render_and_present_once_per_eye(self):
+        m = RawMachine(); m.establish()
+        left, right = 0x80000010, 0xC0000011
+        for packet in (tagged_put(left, 100, 100), tagged_put(right, 200, 100)):
+            reply, _ = m.send_scene(packet); self.assertEqual(reply[3], 0)
+        samples = []
+        m.on_submit = lambda: samples.append((m.read(G.PANEL_ENABLE, 1)[0], m.panel_pixel(106, 106), m.panel_pixel(206, 106)))
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        self.assertEqual(samples, [(0x20, 7, 0), (0x10, 0, 7)],
+                         "the left panel gets only the left object, then the right panel only the right one")
+        self.assertEqual(m.read(G.PANEL_ENABLE, 1)[0], 0x30)
+        self.assertEqual(m.panel_pixel(6, 6), 7, "shared objects draw in both passes")
+        # Without tagged objects the scene presents once to both panels again.
+        before = len(m.submits())
+        reply, _ = m.send_scene(refs_show([1])); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.panel_enables[before:], [0x30])
         m.assert_clear()
 
     def test_refused_slice_lock_falls_back_to_the_image_object(self):

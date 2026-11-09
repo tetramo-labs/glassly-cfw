@@ -75,7 +75,7 @@ def construct(source,blob,build):
         body[off:off+8]=after
         edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose='ancs-prestock'))
     if build.get('microphone_control'):
-        require(revision>=7 and build.get('record_transport') and build.get('wake_control'),'Invalid microphone profile')
+        require(revision>=7 and build.get('wake_control'),'Invalid microphone profile')
         target=build['symbols']['glassly_microphone_task_entry']
         require(ENTRY<=target<ENTRY+len(blob) and target%2==0,'Microphone callback outside runtime')
         hi=(target+0x800)>>12;lo=target-(hi<<12)

@@ -916,6 +916,9 @@ static void cfw_scene_render(customCfwContext *ctx, cfw_cache *sc, uint8_t *fb, 
     for (uint32_t i = 0; i < sc->active_count; i++) {
         const cfw_object *o = &sc->objects[sc->active[i]];
         if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;
+#ifdef MM_SCENE_STEREO_EYES
+        if ((o->id >> 31) && ctx->eye && ((o->id >> 30) & 1u) + 1u != ctx->eye) continue;
+#endif
         cfw_box box;
         cfw_box_load(o->drawn, &box);
         if (!cfw_box_overlaps(&box, &dirty)) continue;

@@ -2,7 +2,7 @@
  * Native read holds native serialization and may busy-wait without a timeout.
  */
 #include "flash_read.h"
-#ifdef MM_STORAGE_DIAGNOSTICS
+#ifdef MM_STORAGE_DIAG_OPS
 #include "storage_diag.h"
 #endif
 #define FP mm_graphics_native
@@ -13,7 +13,7 @@ static const char failed[]="{\"glassly\":\"flash-read\",\"abi\":1,\"result\":\"r
 #define READ_PROFILE "H001Y-1.0.3.127-flash-canary-v1"
 #elif defined(MM_FULL_STORE_READ)
 #define READ_PROFILE "H001Y-1.0.3.127-full-store-read-v1"
-#elif defined(MM_STORAGE_DIAGNOSTICS)
+#elif defined(MM_STORAGE_DIAG_OPS)
 #define READ_PROFILE "H001Y-1.0.3.127-storage-diag-v1"
 #elif defined(MM_EXTERNAL_TAIL_READ)
 #define READ_PROFILE "H001Y-1.0.3.127-external-v1"
@@ -59,13 +59,13 @@ static char *number(char *p,uint32_t value){char digits[10];unsigned n=0;do{digi
 void glassly_flash_read_command(uint32_t command,void *request,const uint8_t *event,void **response){
     (void)command;const uint8_t *data=0;size_t length=0;
     uint32_t device=0,offset=0,count=0;int valid=0,is_query=0;
-#ifdef MM_STORAGE_DIAGNOSTICS
+#ifdef MM_STORAGE_DIAG_OPS
     int diagnostic=0;
 #endif
     *response=0;
     if(event && FP.request_bytes(request,&data,&length) && data){
         if(length==1 && data[0]==0){valid=1;is_query=1;}
-#ifdef MM_STORAGE_DIAGNOSTICS
+#ifdef MM_STORAGE_DIAG_OPS
         else if(length==1 && (data[0]==2 || data[0]==3)){valid=1;diagnostic=data[0];}
 #endif
         else if(length==8 && data[0]==1){
@@ -82,7 +82,7 @@ void glassly_flash_read_command(uint32_t command,void *request,const uint8_t *ev
     if(is_query){*response=reply(query);return;}
     flash_workspace *w=FP.alloc(sizeof(*w));
     if(!w){*response=reply(nomem);return;}
-#ifdef MM_STORAGE_DIAGNOSTICS
+#ifdef MM_STORAGE_DIAG_OPS
     if(diagnostic){
         int ok=diagnostic==2?mm_storage_topology_json(w->json,sizeof(w->json)):
             mm_storage_badmap_json(w->json,sizeof(w->json),w->bytes);

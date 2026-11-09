@@ -32,6 +32,14 @@ def emit(path,text):
         if text.count(anchor) != 1:
             raise RuntimeError('RESET undo policy anchor drift')
         text = text.replace(anchor, anchor + "#ifdef MM_SCENE_RESET_UNDO_TRIM\n    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n     * before pinning/evicting/staging instead of entering revision50's no-undo\n     * fallback. The default portable G2 policy remains unchanged. */\n    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n#endif\n", 1)
+    # Per-eye rendering is a separate native opt-in: an object id with bit 31
+    # belongs to one eye (bit 30: 0 left, 1 right) and a render with ctx->eye
+    # set skips the other eye's objects. Ids without bit 31 draw in both.
+    if path.name == 'scene_cache.inc':
+        anchor = '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n        cfw_box box;\n'
+        if text.count(anchor) != 1:
+            raise RuntimeError('Stereo eye filter anchor drift')
+        text = text.replace(anchor, '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n#ifdef MM_SCENE_STEREO_EYES\n        if ((o->id >> 31) && ctx->eye && ((o->id >> 30) & 1u) + 1u != ctx->eye) continue;\n#endif\n        cfw_box box;\n', 1)
     if '--check' in sys.argv:
         if path.read_text()!=text:raise RuntimeError('Generated scene source drift: '+str(path))
     else:path.write_text(text)

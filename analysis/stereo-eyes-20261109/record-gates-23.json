@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "serviceCases": 512,
+  "prestockCases": 14,
+  "runtimeSHA256": "f02e1eeaf5c87fddc51dd236c456f8b9e54a30b0fd0306d56213461651f1340e",
+  "nativeAndObserverMocked": true,
+  "hardwareTested": false
+}

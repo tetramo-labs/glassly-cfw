@@ -233,6 +233,11 @@ private struct FirmwareRelease {
         // Minimal launcher + 256KiB COW assets and 65535-byte raw carrier.
         // Exact reviewed 96KiB RX allocation; catalog admission is not boot proof.
         // Active light sampling: the CFW reads the sensor at a requested interval (GLASSLYCFW/14).
+        // Eye-tagged objects (id bit 31; bit 30 right) render and present once per eye, so tweens run with depth; no record transport (GLASSLYCFW/23).
+        FirmwareRelease(name: "stereo-002",
+                        sha256: "a50afd695659cfebc44f1b13f61f71d991685d2ef33d25da5e348d97a1e01eb8", byteCount: 2_242_382, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "b6e1342e66f8c4585fbc1ae86703b73494dd3662de611d149539640ba9adcb92",
+                        streams: streamPins(.stereo23)),
         // A SHOW naming one eye (flag bits 4-5) is presented to that eye's panel only: per-element depth (GLASSLYCFW/22).
         FirmwareRelease(name: "stereo-001",
                         sha256: "ee9029bd3f75cb9ec203b77f3ec1f485dd2a72397df8c225cadd48b1378a4bb2", byteCount: 2_251_853, modified: true,
@@ -347,12 +352,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case stereo23, stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .stereo23:
+            metadata = 171; appPacked = 971_280; appRaw = 1_855_664
+            metadataHash = "1a443f0f75e065cb69a5333815875dd0a3a3ecc8be7be5d31b340a476080098f"
+            appHash = "7a2db74cf8c03b428902d6f53343efe177bf89daee0f2e8a0ad7b683d0ba5ca2"
         case .stereo22:
             metadata = 171; appPacked = 980_751; appRaw = 1_871_504
             metadataHash = "02de528f9512bc4cb672273c5c38d28dd3dfff3892bbf4a6056158c60dfa2dc6"

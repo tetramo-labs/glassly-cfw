@@ -93,7 +93,7 @@ def main():
           '--storage-diagnostics', '--full-store-reader', '--flash-canary', '--raster-commands',
           '--rect-copy', '--command-bundles', '--text-commands', '--diagnostic-commands',
           '--reset-undo-trim', '--minimal-launcher', '--flash-scene', '--wake-control',
-          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--raw-present', '--ble-probe', '--cfw-revision', '18', '--rx-profile', 'app-rx-96k-v1', '--relax']),
+          '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--raw-present', '--ble-probe', '--lean-diagnostics', '--lean-capabilities', '--cfw-revision', '18', '--rx-profile', 'app-rx-96k-v1', '--relax']),
         ('ble_probe_runtime', 'BLE probe registers a Glassly GATT service after boot, enables advertising, counts and echoes writes; stock GATT natives mocked',
          [str(args.rv32_python.absolute()), 'tests/rv32/ble_probe_runtime_emulator_test.py',
           '--build', str(out / 'record-build'), '--report', str(out / 'ble-probe-runtime.json')]),

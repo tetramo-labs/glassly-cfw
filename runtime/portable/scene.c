@@ -62,6 +62,37 @@ static void render_due_into(mm_scene_context *ctx,uint8_t *fb,cfw_rectlist *rl) 
     if(!rl){rl=&scratch;rl->n=0;rl->direct_submitted=0;rl->direct_failed=0;}
     cfw_scene_render(ctx,sc,fb,rl);
 }
+#ifdef MM_SCENE_STEREO_EYES
+/* A scene holding eye-tagged objects is presented once per eye: the box of
+ * every tagged object plus what this render changed is redrawn with the other
+ * eye's objects skipped and presented with ctx->eye naming the panel. The
+ * shared raster ends holding the right eye; outside the box both eyes agree. */
+static int stereo_present(mm_scene_context *ctx,uint8_t *fb,const mm_raster *target,cfw_rectlist *rl) {
+    cfw_cache *sc=cfw_cache_peek(ctx);
+    if(!sc || !ctx->platform.present)return 0;
+    int16_t box[4]={32767,32767,-32768,-32768};unsigned tagged=0;
+    for(uint32_t i=0;i<sc->active_count;i++){
+        const cfw_object *o=&sc->objects[sc->active[i]];
+        if(!(o->id>>31) || !(o->draw&CFW_DRAW_VALID))continue;
+        tagged=1;
+        for(unsigned k=0;k<4;k++)if(k<2 ? o->drawn[k]<box[k]:o->drawn[k]>box[k])box[k]=o->drawn[k];
+    }
+    if(!tagged)return 0;
+    for(uint32_t i=0;rl && i<rl->n && i<CFW_RECT_MAX;i++){
+        int16_t r[4]={(int16_t)rl->r[i].l,(int16_t)rl->r[i].t,(int16_t)(rl->r[i].l+rl->r[i].w),(int16_t)(rl->r[i].t+rl->r[i].h)};
+        for(unsigned k=0;k<4;k++)if(k<2 ? r[k]<box[k]:r[k]>box[k])box[k]=r[k];
+    }
+    for(uint8_t eye=1;eye<=2;eye++){
+        for(unsigned k=0;k<4;k++)sc->stale[k]=box[k];
+        cfw_rectlist pass;pass.n=0;pass.direct_submitted=0;pass.direct_failed=0;
+        ctx->eye=eye;cfw_scene_render(ctx,sc,fb,&pass);
+        ctx->platform.present(ctx->platform.user,ctx,target,&pass);
+    }
+    ctx->eye=0;
+    if(rl)rl->direct_submitted=1;
+    return 1;
+}
+#endif
 static void present_buffer(mm_scene_context *ctx,const uint8_t *fb,cfw_rectlist *rl) {
 #ifdef MM_SCENE_EXTERNAL_STORE
     if(ctx->external_ready){
@@ -70,6 +101,9 @@ static void present_buffer(mm_scene_context *ctx,const uint8_t *fb,cfw_rectlist 
     }
 #endif
     mm_raster target;mm_scene_memcpy(&target,&ctx->raster,sizeof(target));target.pixels=(uint8_t *)(uintptr_t)fb;
+#ifdef MM_SCENE_STEREO_EYES
+    if(stereo_present(ctx,(uint8_t *)(uintptr_t)fb,&target,rl))return;
+#endif
     if(ctx->platform.present)ctx->platform.present(ctx->platform.user,ctx,&target,rl);
 }
 #include "scene_assets.inc"

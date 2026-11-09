@@ -72,6 +72,7 @@ class Machine:
         self.framebuffer, self.locked_mask, self.slices, self.fail_slice = None, 0, [], False
         # Panel-enable byte as each submit saw it (both panels on at rest).
         self.panel_enables = []
+        self.on_submit = None  # test hook: sample the panel as each submit sees it
         try:
             self.uc.mem_map(PANEL_ENABLE & ~4095, 4096, u.UC_PROT_READ | u.UC_PROT_WRITE)
         except u.UcError:
@@ -334,6 +335,7 @@ class Machine:
             assert x1 <= x2 < 600 and y1 <= y2 < FRAMEBUFFER_ROWS and x1 % 2 == 0 and x2 % 2 == 1
             assert mask == (1 if y1 < 175 else 0) | (2 if y2 >= 175 else 0)
             self.panel_enables.append(self.read(PANEL_ENABLE, 1)[0])
+            if self.on_submit: self.on_submit()
             self.slices.append(("submit", mask, (x1, y1, x2, y2), present)); return 1
         raise AssertionError("Unknown native contract: "+name)
 

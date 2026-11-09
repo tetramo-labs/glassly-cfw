@@ -496,7 +496,13 @@ void glassly_graphics_probe(uint32_t command, void *request,
     if (request) P.release(&request);
     /* Add bounded hexadecimal allocator snapshots without importing printf or
      * allocating a formatting buffer. json() copies the string synchronously. */
-    static const char template[]="{\"glassly\":\"graphics-runtime\",\"abi\":1,\"profile\":\"H001Y-1.0.3.127\","
+    /* MM_LEAN_CAPABILITIES drops keys no client reads (code space). */
+#ifdef MM_LEAN_CAPABILITIES
+#define MM_CAP(text)
+#else
+#define MM_CAP(text) text
+#endif
+    static const char template[]="{\"glassly\":\"graphics-runtime\",\"abi\":1," MM_CAP("\"profile\":\"H001Y-1.0.3.127\",")
                    "\"width\":600,\"height\":350,"
 #ifdef MM_MINIMAL_LAUNCHER
                    "\"version\":\"GLASSLYCFW/" MM_STRING(MM_CFW_REVISION) "\",\"displayOwner\":\"minimal\","
@@ -515,7 +521,7 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"ownership\":{\"command\":121,\"leaseTicks\":90000,\"fallbackTicks\":400,\"claimedTicks\":5000},"
 #endif
 #ifdef MM_GRAPHICS_FLASH_READ
-                   "\"flashRead\":123,"
+                   MM_CAP("\"flashRead\":123,")
 #endif
 #ifdef MM_GRAPHICS_INPUT
                    "\"inputObserver\":{\"command\":124,\"capacity\":32,\"leaseTicks\":30000},"
@@ -526,11 +532,11 @@ void glassly_graphics_probe(uint32_t command, void *request,
 #ifdef MM_COMMAND_BUNDLES
 #ifdef MM_TEXT_COMMANDS
 #ifdef MM_DIAGNOSTIC_COMMANDS
-                   "\"modes\":[3,6,7,8,9,11,15,19,20,36,37,38,39,40,41],\"diagnostics\":\"native-v1\",\"snapshotBytes\":20,\"cleanup\":\"graphics-input-current-screen\",\"rasterLens\":\"first-left\","
+                   MM_CAP("\"modes\":[3,6,7,8,9,11,15,19,20,36,37,38,39,40,41],\"diagnostics\":\"native-v1\",\"snapshotBytes\":20,\"cleanup\":\"graphics-input-current-screen\",\"rasterLens\":\"first-left\",")
 #else
                    "\"modes\":[3,6,8,9,11,15,19,20,36,37,38,39,40,41],\"rasterLens\":\"first-left\","
 #endif
-                   "\"bundleModes\":[3,6,9,15,19,20,36,37,38,39,40,41],\"bundleMaxSegments\":255,\"textMaxBytes\":255,\"textFont\":\"native-resource\",\"missingGlyph\":\"reject\","
+                   MM_CAP("\"bundleModes\":[3,6,9,15,19,20,36,37,38,39,40,41],\"bundleMaxSegments\":255,\"textMaxBytes\":255,\"textFont\":\"native-resource\",\"missingGlyph\":\"reject\",")
 #else
                    "\"modes\":[3,6,8,9,11,19,20,36,37,38,39,40,41],\"rasterLens\":\"first-left\","
                    "\"bundleModes\":[3,6,9,19,20,36,37,38,39,40,41],\"bundleMaxSegments\":255,"
@@ -554,21 +560,21 @@ void glassly_graphics_probe(uint32_t command, void *request,
                    "\"modes\":[11,19,20,36,37,38,39,40,41],\"maxMessageBytes\":8192,"
 #endif
 #ifdef MM_FLASH_SCENE
-                   "\"storeKiB\":256,\"assetStorage\":\"flash-volatile-map\","
+                   "\"storeKiB\":256," MM_CAP("\"assetStorage\":\"flash-volatile-map\",")
 #else
                    "\"storeKiB\":64,"
 #endif
-                   "\"builtinText\":true,\"emptyGeometry\":\"lease-only\","
+                   MM_CAP("\"builtinText\":true,\"emptyGeometry\":\"lease-only\",")
 #else
                    "\"modes\":[11,36],\"shapeTypes\":[1,2,3,4,5,6,7,8,9,10,11,12,13],"
 #endif
 #ifdef MM_FLASH_SCENE
-                   "\"maxGeometryRecords\":255,\"leaseTicks\":30000,\"tickMs\":1,"
+                   MM_CAP("\"maxGeometryRecords\":255,\"leaseTicks\":30000,\"tickMs\":1,")
 #else
                    "\"maxGeometryRecords\":255,\"leaseTicks\":1000,\"tickMs\":1,"
 #endif
 #ifdef MM_FLASH_CANARY
-                   "\"flashCanary\":122,\"registryBytes\":256,\"writableStaticBytes\":256,"
+                   MM_CAP("\"flashCanary\":122,\"registryBytes\":256,\"writableStaticBytes\":256,")
 #else
                    "\"writableStaticBytes\":0,"
 #endif

@@ -88,15 +88,15 @@ def check_stack_usage(rows):
             raise ValueError("Nonstatic or oversized function stack frame: "+row)
 
 
-def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, notification_relay=False, record_transport=False, microphone_control=False, sensor_capture=False, raw_present=False, ble_probe=False, relax=False, cfw_revision=None, rx_profile=DEFAULT_RX_PROFILE):
+def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_observer=False, flash_reader=False, external_tail_reader=False, storage_diagnostics=False, full_store_reader=False, flash_canary=False, raster_commands=False, rect_copy=False, command_bundles=False, text_commands=False, diagnostic_commands=False, reset_undo_trim=False, minimal_launcher=False, flash_scene=False, wake_control=False, notification_relay=False, record_transport=False, microphone_control=False, sensor_capture=False, raw_present=False, ble_probe=False, lean_diagnostics=False, lean_capabilities=False, relax=False, cfw_revision=None, rx_profile=DEFAULT_RX_PROFILE):
     limit = rx_limit(rx_profile)
     if cfw_revision is None: cfw_revision = 2 if notification_relay else 1
     if type(cfw_revision) is not int or not 1 <= cfw_revision <= 65535:
         raise ValueError("CFW revision must be an integer in 1..65535")
     if record_transport and (not flash_scene or not diagnostic_commands):
         raise ValueError("Record transport requires flash scene and diagnostic commands")
-    if microphone_control and (not record_transport or not wake_control or cfw_revision < 7):
-        raise ValueError("Microphone control requires record/wake profile and CFW revision >=7")
+    if microphone_control and (not wake_control or cfw_revision < 7):
+        raise ValueError("Microphone control requires the wake profile and CFW revision >=7")
     if sensor_capture and (not microphone_control or cfw_revision < 10):
         raise ValueError("Sensor capture requires microphone profile and CFW revision >=10")
     if notification_relay and cfw_revision < 2:
@@ -169,7 +169,10 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if flash_reader:
         sources += [ROOT/"runtime/graphics/flash_read.c"]
     if storage_diagnostics:
-        sources += [ROOT/"runtime/graphics/storage_diag.c", ROOT/"runtime/graphics/storage_diag_native.c"]
+        # The native veneers back the flash broker; the 0x7B topology/badmap ops are dev-only.
+        sources += [ROOT/"runtime/graphics/storage_diag_native.c"]
+        if not lean_diagnostics:
+            sources += [ROOT/"runtime/graphics/storage_diag.c"]
     if flash_canary:
         sources += [ROOT/"runtime/graphics/flash_canary.c", ROOT/"runtime/graphics/flash_canary_native.c",
                     ROOT/"runtime/graphics/flash_canary_entry.S", ROOT/"runtime/graphics/flash_store_native.c"]
@@ -214,7 +217,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if raw_present:
         if not scene_session or not flash_scene:
             raise ValueError("Raw presents require the scene session and flash scene")
-        flags += ["-DMM_RAW_PRESENT=1"]
+        # Per-eye panels: eye-tagged objects render and present once per eye.
+        flags += ["-DMM_RAW_PRESENT=1", "-DMM_SCENE_STEREO_EYES=1"]
     if wake_control:
         flags += ["-DMM_WAKE_CONTROL=1"]
     if minimal_launcher:
@@ -239,6 +243,10 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         flags += ["-DMM_EXTERNAL_TAIL_READ=1"]
     if storage_diagnostics:
         flags += ["-DMM_STORAGE_DIAGNOSTICS=1"]
+        if not lean_diagnostics:
+            flags += ["-DMM_STORAGE_DIAG_OPS=1"]
+    if lean_capabilities:
+        flags += ["-DMM_LEAN_CAPABILITIES=1"]
     if full_store_reader:
         flags += ["-DMM_FULL_STORE_READ=1"]
     if flash_canary:
@@ -323,6 +331,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "rect_copy": rect_copy,
               "raw_present": raw_present,
               "ble_probe": ble_probe,
+              "lean_diagnostics": lean_diagnostics,
+              "lean_capabilities": lean_capabilities,
               "command_bundles": command_bundles,
               "text_commands": text_commands,
               "diagnostic_commands": diagnostic_commands,
@@ -361,6 +371,8 @@ def main():
     parser.add_argument("--notification-relay", action="store_true")
     parser.add_argument("--microphone-control", action="store_true")
     parser.add_argument("--sensor-capture", action="store_true")
+    parser.add_argument("--lean-diagnostics", action="store_true", help="Leave out the 0x7B storage topology/badmap ops (dev-only)")
+    parser.add_argument("--lean-capabilities", action="store_true", help="Leave out capability keys no client reads")
     parser.add_argument("--ble-probe", action="store_true", help="Add command 0x74: register a Glassly GATT service after boot, enable advertising, count and echo writes")
     parser.add_argument("--raw-present", action="store_true", help="Present changed boxes straight into the panel slices, bypassing the LVGL redraw; requires scene-session and flash-scene")
     parser.add_argument("--relax", action="store_true", help="Let the linker shorten calls and jumps inside the blob; no gp-relative data (revision 12: the partial renderer needs the 5.6 KB)")
@@ -388,7 +400,7 @@ def main():
     args = parser.parse_args()
     try:
         print(json.dumps(compile_graphics(args.output, gate_fixture=args.gate_fixture,
-                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, notification_relay=args.notification_relay, record_transport=args.record_transport, microphone_control=args.microphone_control, sensor_capture=args.sensor_capture, raw_present=args.raw_present, ble_probe=args.ble_probe, relax=args.relax, cfw_revision=args.cfw_revision, rx_profile=args.rx_profile), indent=2))
+                                         scene_session=args.scene_session, input_observer=args.input_observer, flash_reader=args.flash_reader, external_tail_reader=args.external_tail_reader, storage_diagnostics=args.storage_diagnostics, full_store_reader=args.full_store_reader, flash_canary=args.flash_canary, raster_commands=args.raster_commands, rect_copy=args.rect_copy, command_bundles=args.command_bundles, text_commands=args.text_commands, diagnostic_commands=args.diagnostic_commands, reset_undo_trim=args.reset_undo_trim, minimal_launcher=args.minimal_launcher, flash_scene=args.flash_scene, wake_control=args.wake_control, notification_relay=args.notification_relay, record_transport=args.record_transport, microphone_control=args.microphone_control, sensor_capture=args.sensor_capture, raw_present=args.raw_present, ble_probe=args.ble_probe, lean_diagnostics=args.lean_diagnostics, lean_capabilities=args.lean_capabilities, relax=args.relax, cfw_revision=args.cfw_revision, rx_profile=args.rx_profile), indent=2))
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         if isinstance(exc, subprocess.CalledProcessError):
             parser.exit(2, exc.stderr.decode()+str(exc)+"\n")

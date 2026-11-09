@@ -55,6 +55,11 @@ struct mm_scene_context {
 #endif
     uint8_t shape_text_buf[136];
     uint32_t shape_tokens[128];
+#ifdef MM_SCENE_STEREO_EYES
+    /* Eye of the render pass in progress: 0 both, 1 left, 2 right. Objects
+     * whose id has bit 31 belong to one eye (bit 30: 0 left, 1 right). */
+    uint8_t eye;
+#endif
 };
 /* Context owns allocations made through platform; caller owns shadow and timer.
  * Single serialized message owner. prepare must precede the display gate;

@@ -14,7 +14,7 @@
  "rawPresentTest": "raw-present-runtime.json",
  "bleProbeTest": "ble-probe-runtime.json (8 tests)",
  "recordGates": "record-gates-20.json",
- "regression": "regression-20-01 (running at record time; see the follow-up commit)",
+ "regression": "regression-20-01",
  "flashed": true,
  "flashAttempt": "captures/v20-flash-20261108-01 (550 blocks, 3,848 chunks, bytes [18, 2251457), reboot acknowledged)",
  "bootVerified": true,
@@ -28,7 +28,8 @@
   "advertising": "an enable issued inside an RFCOMM session only takes effect once the session is closed and re-enabled; the first central attempt after a flash found nothing, the second found the glasses within 1 s"
  },
  "glasslyBundle": {
-  "commit": null,
+  "commit": "6451eb7c5b",
   "branch": "dev"
- }
+ },
+ "regressionNotes": "all 147 required offline stages passed, no source drift (report.json)"
 }

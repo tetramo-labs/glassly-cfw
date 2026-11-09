@@ -13,3 +13,4 @@ __pycache__/
 *.btsnoop
 *.dSYM/
 .DS_Store
+tools/nimo-mac/.build/

@@ -47,7 +47,10 @@ extern void service_entry(uint32_t,void *,const uint8_t *,void **);
 typedef struct {
     uint32_t magic,writes,notified,notify_failed,last_rc;
     uint16_t last_len;uint8_t cccd,pad;
-    uint8_t peer[6];uint8_t last[22];
+    uint8_t peer[6];uint8_t last[12];
+    /* A command larger than one write arrives as 'G','m',flags fragments (bit 0
+     * first, carrying the total length; bit 1 last) and is assembled here. */
+    uint8_t *frag;uint16_t frag_len,frag_total;
 } state;
 _Static_assert(sizeof(state)<=0x34,"Probe state fits the spare descriptor bytes");
 static uint8_t *find_service(void){
@@ -83,23 +86,56 @@ uint32_t glassly_ble_on_read(const uint8_t *msg,void *desc,uint8_t *buf,uint32_t
 /* BLE command frame: 'G','M',command,TLV bytes. The command runs through the same
  * service entry the Classic link uses (a kind-1 request node built by the stock
  * TLV constructor); every reply node's bytes are notified in MTU-sized chunks. */
-static void ble_command(const uint8_t *msg,uint8_t *chr,state *s,const uint8_t *data,uint32_t len){
-    void *request=0,*response=0;
-    if(len>3 && !TLV_APPEND(&request,1,len-3,data+3)){s->notify_failed++;return;}
-    service_entry(data[2],request,msg,&response); /* handlers release the request */
+static void notify_nodes(const uint8_t *peer,uint8_t *chr,state *s,void *response){
     for(uint8_t *node=response;node;node=*(uint8_t **)node){
         const uint8_t *h=*(const uint8_t **)(node+4);if(!h)continue;
         uint32_t n=h[1]|((uint32_t)h[2]<<8)|((uint32_t)h[3]<<16);const uint8_t *p=*(const uint8_t **)(h+4);
         while(p && n){uint32_t c=n<BLE_CHUNK?n:BLE_CHUNK;
-            if(NOTIFY(msg,chr,p,(uint16_t)c))s->notified++;else s->notify_failed++;p+=c;n-=c;}
+            if(NOTIFY(peer,chr,p,(uint16_t)c))s->notified++;else s->notify_failed++;p+=c;n-=c;}
     }
+}
+/* Requests from BLE run with event 0, which no Classic client uses (their
+ * counters wrap 255 -> 1): a handler that replies later from the display
+ * worker (graphics 0x7D) comes back through glassly_ble_reply. */
+static void ble_command(const uint8_t *msg,uint8_t *chr,state *s,const uint8_t *data,uint32_t len){
+    void *request=0,*response=0;static const uint8_t ble_event[1]={0};
+    if(len>3 && !TLV_APPEND(&request,1,len-3,data+3)){s->notify_failed++;return;}
+    service_entry(data[2],request,ble_event,&response); /* handlers release the request */
+    notify_nodes(msg,chr,s,response);
     if(response)P.release(&response);
+}
+int glassly_ble_reply(void *response){
+    uint8_t *chr=find_chara();state *s=chr ? state_of(chr+4):0;
+    if(!s || !s->cccd)return 0;
+    notify_nodes(s->peer,chr,s,response);
+    return 1;
 }
 void glassly_ble_on_write(const uint8_t *msg,void *desc,const uint8_t *data,uint32_t len){
     state *s=state_of(desc);if(!s || !msg)return;
     if(len>=3 && data && data[0]=='G' && data[1]=='M'){
         s->writes++;for(unsigned i=0;i<6;i++)s->peer[i]=msg[i];
         ble_command(msg,(uint8_t *)desc-4,s,data,len);return;
+    }
+    if(len>=3 && data && data[0]=='G' && data[1]=='m'){
+        s->writes++;for(unsigned i=0;i<6;i++)s->peer[i]=msg[i];
+        unsigned flags=data[2];const uint8_t *p=data+3;uint32_t n=len-3;
+        if(flags&1u){
+            if(s->frag){P.free(s->frag);s->frag=0;}
+            if(n<2){s->notify_failed++;return;}
+            uint32_t total=p[0]|((uint32_t)p[1]<<8);p+=2;n-=2;
+            if(total<3 || total>8192u || !(s->frag=P.alloc(total))){s->notify_failed++;return;}
+            s->frag_total=(uint16_t)total;s->frag_len=0;
+        }
+        if(!s->frag || n>(uint32_t)(s->frag_total-s->frag_len)){if(s->frag)P.free(s->frag);s->frag=0;s->notify_failed++;return;}
+        for(uint32_t i=0;i<n;i++)s->frag[s->frag_len+i]=p[i];
+        s->frag_len=(uint16_t)(s->frag_len+n);
+        if(flags&2u){
+            uint8_t *whole=s->frag;s->frag=0;
+            if(s->frag_len==s->frag_total && whole[0]=='G' && whole[1]=='M')ble_command(msg,(uint8_t *)desc-4,s,whole,s->frag_len);
+            else s->notify_failed++;
+            P.free(whole);
+        }
+        return;
     }
     s->writes++;s->last_len=(uint16_t)len;
     for(unsigned i=0;i<6;i++)s->peer[i]=msg[i];
@@ -134,7 +170,7 @@ static void *status(const char *result,uint32_t rc){
     put32(b+20,s?s->writes:0);put32(b+24,s?s->notified:0);put32(b+28,s?s->notify_failed:0);
     put16(b+32,s?s->last_len:0);b[34]=s?s->cccd:0;b[35]=0;
     for(unsigned i=0;i<6;i++)b[36+i]=s?s->peer[i]:0;
-    for(unsigned i=0;i<18;i++)b[42+i]=s?s->last[i]:0;
+    for(unsigned i=0;i<12;i++)b[42+i]=s?s->last[i]:0;
     put32(b+60,rc);
     /* Stock advertising slot (0x38 bytes: +8 configured, +9 enabled, +0xb state,
      * +0xd id, +0x10/+0x12 interval) and the BT link flags that gate posts. */

@@ -224,6 +224,42 @@ class BleProbeTests(unittest.TestCase):
         self.assertEqual(json.loads(m.notifies[-1][1])["result"], "invalid")
         s = m.state(m.probe(b"BP\x01\x03")); self.assertEqual((s["writes"], s["notified"], s["notifyFailed"]), (2, 2, 0))
 
+    def test_fragments_assemble_into_one_command(self):
+        m = BleMachine(); m.probe(b"BP\x01\x01"); node = m.gatt_charas[-1]
+        peer = m.allocate(6, "peer", bytes([1, 2, 3, 4, 5, 6]), writable=False)
+        m.call("glassly_ble_on_cccd", peer, node+4, 1)
+        whole = b"GM\x74BP"
+        first = m.allocate(7, "first", b"Gm\x01" + struct.pack("<H", len(whole)) + whole[:2], writable=False)
+        m.call("glassly_ble_on_write", peer, node+4, first, 7)
+        self.assertEqual(m.notifies, [], "nothing runs before the last fragment")
+        last = m.allocate(6, "last", b"Gm\x02" + whole[2:], writable=False)
+        m.call("glassly_ble_on_write", peer, node+4, last, 6)
+        self.assertEqual(m.tlv_appends, [(1, b"BP")], "the assembled frame runs as one command")
+        self.assertEqual(len(m.notifies), 1)
+        self.assertEqual(json.loads(m.notifies[-1][1])["result"], "invalid")
+        # A fragment without a first one is refused, and nothing leaks.
+        stray = m.allocate(5, "stray", b"Gm\x02ab", writable=False)
+        m.call("glassly_ble_on_write", peer, node+4, stray, 5)
+        self.assertEqual(len(m.notifies), 1)
+
+    def test_graphics_replies_to_ble_requests_go_back_over_ble(self):
+        m = BleMachine(); m.probe(b"BP\x01\x01"); node = m.gatt_charas[-1]
+        peer = m.allocate(6, "peer", bytes([1, 2, 3, 4, 5, 6]), writable=False)
+        m.call("glassly_ble_on_cccd", peer, node+4, 1)
+        frame = m.allocate(8, "frame", b"GM\x7d" + bytes([41, 0, 0, 0, 0])[:5], writable=False)
+        before_sent, before_notifies = len(m.sent), len(m.notifies)
+        m.call("glassly_ble_on_write", peer, node+4, frame, 8)
+        self.assertTrue(m.queue, "the graphics command is queued for the display worker")
+        job = m.queue.pop(0)
+        self.assertEqual(job[1], 0, "BLE requests carry event 0")
+        raw = bytes([0, 63, 0, 0]) + struct.pack("<HH", 0x474c, len(job)) + job
+        envelope = m.allocate(len(raw), "envelope", raw, writable=False)
+        m.call("glassly_graphics_display", envelope, display=True)
+        self.assertEqual(len(m.sent), before_sent, "no reply on the Classic link")
+        self.assertGreater(len(m.notifies), before_notifies, "the worker's reply is notified over BLE")
+        self.assertEqual(m.notifies[-1][0], bytes([1, 2, 3, 4, 5, 6]))
+        self.assertEqual(json.loads(m.notifies[-1][1])["glassly"], "graphics")
+
 
 def main():
     parser = argparse.ArgumentParser()

@@ -23,24 +23,29 @@ and ships first.
 
 ## Phase 1 — OTA path
 
-- [ ] Recover the BLE OTA framing: Ghidra on the 0.1.1.1 application body
-      (`handle_ota_*`, `ota_transport_ble.c`), cross-checked against the
-      MemoMind envelope (`70 07 6e | flags | cmd | len16 | payload | 33`) and
-      the vendor SDK's `OtaController` step order (device info → file offset →
-      can-update → enter update mode → blocks → complete → sync → reset).
-- [ ] If a NIMO device is available: capture one vendor-app OTA (Android HCI
-      snoop) to confirm the framing and the resume/offset behaviour.
-- [ ] Offline flasher core (Python, then Swift/Kotlin for the Glassly App) that
-      replays a recorded session byte for byte before any live mode.
+- [x] OTA framing recovered from the vendor app's update of `Nimo-4026`
+      (2026-11-09 HCI capture; `docs/firmware-format.md`): GATT `2001`/`2002`
+      in service `7033`, MemoMind envelope and command set.
+- [x] One flasher for phone and Mac: `ios/Source/sgcs/NimoOta.swift` in the
+      Glassly SDK (`FirmwareFlashable` on the iOS NIMO driver), symlinked into
+      `mobile/modules/bluetooth-sdk/tools/nimo-mac` (CoreBluetooth). Tested
+      against a simulated device; not yet run against the glasses.
+- [x] Mac: CoreBluetooth reaches `7033` over the classic link
+      (`retrieveConnectedPeripherals`, 512-byte writes); `nimo-mac check` with
+      the 1.1.5.1 GLASSLYCFW/1 image got can-update 3 on 2026-11-09.
+- [ ] Android: Kotlin port of the flasher on the NIMO driver.
 
 ## Phase 2 — first accepted custom image
 
-- [ ] Same-length text patch of a visible string in the 0.1.1.1 application
-      body (the MemoMind "first text patch" pattern), repacked with
-      `nimo_ota.py`, to learn whether the updater checks anything beyond the
-      CRC layers. Boot and visual confirmation recorded under `analysis/`.
-- [ ] Version-string patch so the glasses report `GLASSLYCFW/N` through
-      `getVersionDetail`; the Glassly App classifies on that string.
+- [ ] `GLASSLYCFW/1` (`patches/glasslycfw-1/{0.1.1.1,1.1.5.1}.json`, built by
+      `scripts/build_cfw.py`; the glasses now run 1.1.5.1):
+      the waiting-for-phone title reads "Glassly CFW running" (English) or
+      "Glassly 就绪" (Chinese), and the `FW-VERSION-` build tag carries
+      `GLASSLYCFW/1` with the numeric version unchanged. Built and verified
+      offline (0.1.1.1 base `3c2be1c5…16cf`, 1.1.5.1 base `6f6e9043…aa5d`;
+      7-Zip decodes the repacked stream identically); not yet flashed. Open: whether the updater
+      checks anything beyond the CRC layers, and whether `getVersionDetail`
+      returns the `FW-VERSION-` string.
 
 ## Phase 3 — runtime
 

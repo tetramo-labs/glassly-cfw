@@ -3,11 +3,12 @@
 
 The layout is the WuQi ADK update container also used by the MemoMind One
 (``glassly-memomind-one-cfw/scripts/memomind_ota.py``): an 18-byte outer
-envelope, a 0xabcd6543 inner header with a component table, one LZMA-alone
-stream per table row preceded by a partition-metadata stream, and a trailing
-CRC32. NIMO images differ from the MemoMind ones in the outer magic (two zero
-bytes rather than ``ME``) and in the component count (four rather than six),
-so both are derived from the bytes instead of being pinned.
+envelope, a 0xabcd6543 inner header with a stream table, one LZMA-alone
+stream per table row, and a trailing CRC32. One row carries the partition
+metadata and is marked by the flash range (2, 0); the 0.1.x images put it
+first, the 1.1.5.1 image fourth. NIMO images differ from the MemoMind ones in
+the outer magic (two zero bytes rather than ``ME``) and in the component count
+(four or six), so counts and order are derived from the bytes, not pinned.
 
 This validates container integrity only. It says nothing about device
 acceptance, boot safety, signatures or recovery, and it never contacts a
@@ -25,8 +26,8 @@ import zlib
 OUTER_SIZE = 18
 INNER_MAGIC = 0xabcd6543
 IMAGE_MAGIC = 0xa4e49a17
-META_SIZE_OFFSET = 0x22
-TABLE_START = 0x32
+ROWS_START = 0x22
+META_RANGE = (2, 0)
 LZMA_PROPS = bytes.fromhex("5d00800000")
 MAX_COMPONENTS = 16
 
@@ -54,46 +55,48 @@ def pack_stream(raw):
 
 
 def locate_table(data):
-    """Return (component_count, table_crc_offset, stream_start).
+    """Return (row_count, table_crc_offset, stream_start).
 
-    The metadata LZMA stream follows the table CRC and declares the metadata
-    size from the header, so the row count is the unique count whose table
-    CRC verifies and whose following bytes are that stream's header.
+    The first row's LZMA stream follows the table CRC and declares that row's
+    size, so the row count is the unique count whose table CRC verifies and
+    whose following bytes are that stream's header.
     """
-    meta_size = struct.unpack_from("<I", data, META_SIZE_OFFSET)[0]
+    first_size = struct.unpack_from("<I", data, ROWS_START)[0]
     candidates = []
-    for count in range(1, MAX_COMPONENTS + 1):
-        crc_offset = TABLE_START + 16 * count
+    for rows in range(2, MAX_COMPONENTS + 2):
+        crc_offset = ROWS_START + 16 * rows
         start = crc_offset + 4
         if start + 13 > len(data):
             break
-        if struct.unpack_from("<I", data, crc_offset)[0] != crc(data[META_SIZE_OFFSET:crc_offset]):
+        if struct.unpack_from("<I", data, crc_offset)[0] != crc(data[ROWS_START:crc_offset]):
             continue
-        if data[start:start + 5] != LZMA_PROPS or struct.unpack_from("<Q", data, start + 5)[0] != meta_size:
+        if data[start:start + 5] != LZMA_PROPS or struct.unpack_from("<Q", data, start + 5)[0] != first_size:
             continue
-        candidates.append((count, crc_offset, start))
+        candidates.append((rows, crc_offset, start))
     require(len(candidates) == 1, "Component table size is ambiguous or unverifiable")
     return candidates[0]
 
 
 def unpack_ota(data):
-    require(len(data) >= TABLE_START + 16 + 4 + 13 + 4, "Container too short")
+    require(len(data) >= ROWS_START + 32 + 4 + 13 + 4, "Container too short")
     require(data[2:6] == bytes.fromhex("02011001"), "Unsupported envelope profile")
     require(struct.unpack_from(">I", data, 6)[0] == len(data) - OUTER_SIZE, "Envelope payload length mismatch")
     require(struct.unpack_from(">I", data, 14)[0] == crc(data[OUTER_SIZE:]), "Envelope payload CRC32 mismatch")
     require(struct.unpack_from("<I", data, 18)[0] == INNER_MAGIC, "Unsupported inner magic")
-    count, header_crc, stream_start = locate_table(data)
+    rows, header_crc, stream_start = locate_table(data)
+    count = rows - 1
     require(struct.unpack_from("<I", data, len(data) - 4)[0] == crc(data[stream_start:-4]),
             "Compressed stream CRC32 mismatch")
-    meta_size, meta_packed = struct.unpack_from("<II", data, META_SIZE_OFFSET)
-    entries = [(meta_size, meta_packed, None, None)]
-    entries += [struct.unpack_from("<IIII", data, TABLE_START + i * 16) for i in range(count)]
+    entries = [struct.unpack_from("<IIII", data, ROWS_START + i * 16) for i in range(rows)]
+    meta_rows = [i for i, entry in enumerate(entries) if entry[2:] == META_RANGE]
+    require(len(meta_rows) == 1, "No unique partition-metadata row")
+    meta_row = meta_rows[0]
     streams = []
     offset = stream_start
     for index, (size, packed_size, start, end) in enumerate(entries):
         require(packed_size >= 13 and offset + packed_size <= len(data) - 4,
                 f"Stream {index} exceeds container bounds")
-        if index:
+        if index != meta_row:
             require(start < end and 32 <= size <= end - start,
                     f"Component {index} exceeds declared flash range")
         packed = data[offset:offset + packed_size]
@@ -104,9 +107,11 @@ def unpack_ota(data):
         require(len(raw) == size and decoder.eof and not decoder.unused_data,
                 f"Stream {index} decoded length or end boundary mismatch")
         info = {"index": index, "offset": offset, "packed_size": packed_size, "unpacked_size": size,
-                "packed_sha256": sha(packed), "unpacked_sha256": sha(raw),
-                "flash_start": start, "flash_end": end}
-        if index:
+                "packed_sha256": sha(packed), "unpacked_sha256": sha(raw)}
+        if index == meta_row:
+            info["metadata"] = True
+        else:
+            info.update(flash_start=start, flash_end=end)
             words = struct.unpack_from("<8I", raw)
             require(words[0] == IMAGE_MAGIC and words[1] == len(raw) - 32,
                     f"Component {index} image header/length invalid")
@@ -116,7 +121,7 @@ def unpack_ota(data):
         streams.append({"info": info, "raw": raw, "packed": packed})
         offset += packed_size
     require(offset == len(data) - 4, "Unaccounted bytes before trailer")
-    metadata = streams[0]["raw"]
+    metadata = streams[meta_row]["raw"]
     header_words = struct.unpack_from("<6I", metadata)
     partition_count = header_words[1]
     require(24 + 20 * partition_count <= len(metadata), "Partition table exceeds metadata stream")
@@ -125,8 +130,10 @@ def unpack_ota(data):
         kind, flash, load, body_size, allocation = struct.unpack_from("<5I", metadata, 24 + 20 * index)
         partitions.append({"index": index, "type": kind, "flash_start": flash, "load_address": load,
                            "body_size": body_size, "allocation_size": allocation})
-    for stream in streams[1:]:
+    for stream in streams:
         info = stream["info"]
+        if info.get("metadata"):
+            continue
         matches = [p for p in partitions if p["flash_start"] == info["flash_start"]]
         require(len(matches) == 1, f"Component {info['index']} has no unique partition")
         partition = matches[0]
@@ -140,7 +147,8 @@ def unpack_ota(data):
               "profile": "WuQi-ADK-update-container",
               "outer_magic": data[:2].hex(),
               "inner_header_words": [hex(w) for w in struct.unpack_from("<4I", data, 22)],
-              "component_count": count, "table_crc_offset": header_crc, "stream_start": stream_start,
+              "component_count": count, "metadata_row": meta_row,
+              "table_crc_offset": header_crc, "stream_start": stream_start,
               "metadata_header_words": list(header_words), "partitions": partitions,
               "streams": [s["info"] for s in streams],
               "checksums": {"outer_payload_crc32": "verified", "compression_table_crc32": "verified",
@@ -156,10 +164,9 @@ def unpack_ota(data):
 def rebuild(data, streams, stream_start, header_crc):
     """Reassemble a container from (possibly replaced) streams, refreshing every checksum."""
     header = bytearray(data[:stream_start])
-    struct.pack_into("<I", header, META_SIZE_OFFSET + 4, len(streams[0]["packed"]))
-    for index, stream in enumerate(streams[1:]):
-        struct.pack_into("<II", header, TABLE_START + index * 16, len(stream["raw"]), len(stream["packed"]))
-    struct.pack_into("<I", header, header_crc, crc(header[META_SIZE_OFFSET:header_crc]))
+    for index, stream in enumerate(streams):
+        struct.pack_into("<II", header, ROWS_START + index * 16, len(stream["raw"]), len(stream["packed"]))
+    struct.pack_into("<I", header, header_crc, crc(header[ROWS_START:header_crc]))
     packed = b"".join(s["packed"] for s in streams)
     result = header + packed + struct.pack("<I", crc(packed))
     struct.pack_into(">I", result, 6, len(result) - OUTER_SIZE)
@@ -170,7 +177,8 @@ def rebuild(data, streams, stream_start, header_crc):
 def repack(data, replacements):
     report, streams = unpack_ota(data)
     for index, body in replacements.items():
-        require(1 <= index <= report["component_count"], "Component index outside the table")
+        require(0 <= index < len(streams) and index != report["metadata_row"],
+                "Replacement index is not a component row")
         stream = streams[index]
         old = stream["raw"]
         require(len(body) == len(old) - 32, "Only same-length body replacement is supported")
@@ -181,6 +189,33 @@ def repack(data, replacements):
         stream.update(raw=bytes(raw), packed=pack_stream(bytes(raw)))
     result = rebuild(data, streams, report["stream_start"], report["table_crc_offset"])
     unpack_ota(result)
+    return result
+
+
+def replace_body(data, index, body):
+    """Replace one component body with one of any length that fits its flash
+    allocation. Updates the image header (length, CRC), the partition row's body
+    size in the metadata stream, and every container length and checksum."""
+    report, streams = unpack_ota(data)
+    meta_row = report["metadata_row"]
+    require(0 <= index < len(streams) and index != meta_row, "Replacement index is not a component row")
+    stream = streams[index]
+    info = stream["info"]
+    require(32 + len(body) <= info["flash_end"] - info["flash_start"], "Body exceeds the partition allocation")
+    raw = bytearray(stream["raw"][:32]) + body
+    struct.pack_into("<I", raw, 4, len(body))
+    struct.pack_into("<I", raw, 16, crc(body))
+    stream.update(raw=bytes(raw), packed=pack_stream(bytes(raw)))
+    meta = bytearray(streams[meta_row]["raw"])
+    struct.pack_into("<I", meta, 24 + 20 * info["partition_index"] + 12, len(body))
+    if bytes(meta) != streams[meta_row]["raw"]:
+        streams[meta_row].update(raw=bytes(meta), packed=pack_stream(bytes(meta)))
+    result = rebuild(data, streams, report["stream_start"], report["table_crc_offset"])
+    rebuilt, _ = unpack_ota(result)
+    staging = [p for p in rebuilt["partitions"] if p["type"] == 4]
+    if staging:  # vendor images stage the whole OTA in partition type 4
+        require(len(staging) == 1 and (len(result) - OUTER_SIZE + 4095) // 4096 * 4096 <= staging[0]["allocation_size"],
+                "Image exceeds the staging partition")
     return result
 
 
@@ -208,7 +243,7 @@ def main():
                 index = stream["info"]["index"]
                 (args.output / f"segment-{index}.bin").write_bytes(stream["raw"])
                 (args.output / f"segment-{index}.lzma").write_bytes(stream["packed"])
-                if index:
+                if index != report["metadata_row"]:
                     (args.output / f"segment-{index}.body.bin").write_bytes(stream["raw"][32:])
             (args.output / "manifest.json").write_text(json.dumps(report, indent=2) + "\n")
         elif args.command == "repack":

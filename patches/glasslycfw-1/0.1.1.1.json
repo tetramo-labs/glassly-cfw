@@ -1,0 +1,30 @@
+{
+  "name": "GLASSLYCFW/1",
+  "purpose": "First custom image: string-only edits that prove the updater accepts a repacked image and that it boots. No code, pointer, length or layout changes.",
+  "source": {
+    "file": "ota-0.1.1.1-20260827164351-537cf1-dirty-dynamic-v1.bin",
+    "sha256": "5e23c574e3dfd8c27172f4f9a33475e6efd0d33e7230bfcce8f4fe8ca59fe433"
+  },
+  "output": "ota-0.1.1.1-glasslycfw-1.bin",
+  "partition_type": 32,
+  "edits": [
+    {
+      "what": "Build tag after FW-VERSION-; the numeric version stays 0.1.1.1 so the Glassly Dynamic Layout gate still passes",
+      "offset": "0x2433b3",
+      "old": "v0.1.1.1-20260827164351-537cf1-dirty-Debug",
+      "new": "v0.1.1.1-20260827164351-GLASSLYCFW/1-Debug"
+    },
+    {
+      "what": "English title of the waiting-for-phone widget",
+      "offset": "0x1abf84",
+      "old": "Phone not connected",
+      "new": "Glassly CFW running"
+    },
+    {
+      "what": "Chinese title of the waiting-for-phone widget (one byte shorter, NUL padded)",
+      "offset": "0x1ac764",
+      "old": "未连接手机",
+      "new": "Glassly 就绪"
+    }
+  ]
+}

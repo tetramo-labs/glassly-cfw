@@ -59,6 +59,9 @@ struct mm_scene_context {
     /* Eye of the render pass in progress: 0 both, 1 left, 2 right. Objects
      * whose id has bit 31 belong to one eye (bit 30: 0 left, 1 right). */
     uint8_t eye;
+    /* Both panels hold their own eye wherever this raster has tagged pixels;
+     * the platform clears it when a panel gets pixels outside a stereo pair. */
+    uint8_t eye_synced;
 #endif
 };
 /* Context owns allocations made through platform; caller owns shadow and timer.

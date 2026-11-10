@@ -38,6 +38,19 @@ def refs_show(ids):
     return bytes(data)
 
 
+def eye_panels(m, snapshots):
+    """Replays every submit into a model of each eye's panel (bit 5 left, bit 4 right)."""
+    panels = {0x20: bytearray(600*350), 0x10: bytearray(600*350)}
+    for (enable, frame), (_, _, (x1, y1, x2, y2), _) in zip(snapshots, m.submits()):
+        for bit, panel in panels.items():
+            if not enable & bit: continue
+            for y in range(y1, y2+1):
+                for x in range(x1, x2+1):
+                    byte = frame[G.FRAMEBUFFER_STRIDE*y+x//2]
+                    panel[600*y+x] = byte & 15 if x & 1 else byte >> 4
+    return lambda bit, x, y: panels[bit][600*y+x]
+
+
 class RawMachine(SensorMachine):
     """The full record build: flash, wake, notification and sensor natives mocked."""
     def submits(self):
@@ -151,6 +164,52 @@ class RawPresentTests(unittest.TestCase):
         before = len(m.submits())
         reply, _ = m.send_scene(refs_show([1])); self.assertEqual(reply[3], 0)
         self.assertEqual(m.panel_enables[before:], [0x30])
+        m.assert_clear()
+
+    def test_a_synced_stereo_frame_redraws_only_its_change_and_keeps_each_eye(self):
+        m = RawMachine()
+        snapshots = []
+        m.on_submit = lambda: snapshots.append((m.read(G.PANEL_ENABLE, 1)[0], m.read(m.framebuffer, G.FRAMEBUFFER_STRIDE*350)))
+        m.establish()
+        left, right = 0x80000010, 0xC0000011
+        for packet in (tagged_put(left, 100, 100), tagged_put(right, 200, 100)):
+            reply, _ = m.send_scene(packet); self.assertEqual(reply[3], 0)
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        first = len(m.submits())
+        reply, _ = m.send_scene(tagged_put(right, 260, 100)); self.assertEqual(reply[3], 0)
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        moved = m.submits()[first:]
+        self.assertEqual([enable for enable, _ in snapshots[first:]], [0x20, 0x10], "one present per eye")
+        for _, _, (x1, y1, x2, y2), _ in moved:
+            self.assertGreaterEqual(x1, 120, f"the unchanged left object is not redrawn: {(x1, y1, x2, y2)}")
+        pixel = eye_panels(m, snapshots)
+        self.assertEqual((pixel(0x20, 106, 106), pixel(0x20, 206, 106), pixel(0x20, 266, 106)), (7, 0, 0),
+                         "the left panel keeps the left object and never shows the right one")
+        self.assertEqual((pixel(0x10, 106, 106), pixel(0x10, 206, 106), pixel(0x10, 266, 106)), (0, 0, 7),
+                         "the right panel shows only the moved right object")
+        self.assertEqual((pixel(0x20, 6, 6), pixel(0x10, 6, 6)), (7, 7), "shared objects reach both panels")
+        m.assert_clear()
+
+    def test_a_fallback_present_makes_the_next_stereo_frame_redraw_every_tagged_object(self):
+        m = RawMachine()
+        snapshots = []
+        m.on_submit = lambda: snapshots.append((m.read(G.PANEL_ENABLE, 1)[0], m.read(m.framebuffer, G.FRAMEBUFFER_STRIDE*350)))
+        m.establish()
+        left, right = 0x80000010, 0xC0000011
+        for packet in (tagged_put(left, 100, 100), tagged_put(right, 200, 100)):
+            reply, _ = m.send_scene(packet); self.assertEqual(reply[3], 0)
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        # LVGL draws a refused raw present to both panels, right eye's pixels included.
+        m.fail_slice = True
+        reply, _ = m.send_scene(moved_show_packet()); self.assertEqual(reply[3], 0)
+        m.fail_slice = False
+        reply, _ = m.send_scene(tagged_put(right, 260, 100)); self.assertEqual(reply[3], 0)
+        before = len(m.submits())
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.panel_enables[-2:], [0x20, 0x10])
+        for _, _, (x1, y1, x2, y2), _ in m.submits()[before:]:
+            self.assertLessEqual(x1, 100, f"the resync covers the left object again: {(x1, y1, x2, y2)}")
+            self.assertGreaterEqual(x2, 279, f"and the moved right object: {(x1, y1, x2, y2)}")
         m.assert_clear()
 
     def test_refused_slice_lock_falls_back_to_the_image_object(self):

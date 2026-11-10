@@ -63,25 +63,30 @@ static void render_due_into(mm_scene_context *ctx,uint8_t *fb,cfw_rectlist *rl) 
     cfw_scene_render(ctx,sc,fb,rl);
 }
 #ifdef MM_SCENE_STEREO_EYES
-/* A scene holding eye-tagged objects is presented once per eye: the box of
- * every tagged object plus what this render changed is redrawn with the other
- * eye's objects skipped and presented with ctx->eye naming the panel. The
- * shared raster ends holding the right eye; outside the box both eyes agree. */
+/* A scene holding eye-tagged objects is presented once per eye with the other
+ * eye's objects skipped and ctx->eye naming the panel. Synced panels redraw
+ * only what this render changed; otherwise the box of every tagged object is
+ * redrawn too. The shared raster ends holding the right eye. */
+static void eye_join(int16_t *box,const int16_t *r) {
+    for(unsigned k=0;k<4;k++)if(k<2 ? r[k]<box[k]:r[k]>box[k])box[k]=r[k];
+}
 static int stereo_present(mm_scene_context *ctx,uint8_t *fb,const mm_raster *target,cfw_rectlist *rl) {
     cfw_cache *sc=cfw_cache_peek(ctx);
     if(!sc || !ctx->platform.present)return 0;
-    int16_t box[4]={32767,32767,-32768,-32768};unsigned tagged=0;
+    int16_t tag[4]={32767,32767,-32768,-32768},box[4]={32767,32767,-32768,-32768};unsigned tagged=0;
     for(uint32_t i=0;i<sc->active_count;i++){
         const cfw_object *o=&sc->objects[sc->active[i]];
         if(!(o->id>>31) || !(o->draw&CFW_DRAW_VALID))continue;
-        tagged=1;
-        for(unsigned k=0;k<4;k++)if(k<2 ? o->drawn[k]<box[k]:o->drawn[k]>box[k])box[k]=o->drawn[k];
+        tagged=1;eye_join(tag,o->drawn);
     }
     if(!tagged)return 0;
     for(uint32_t i=0;rl && i<rl->n && i<CFW_RECT_MAX;i++){
+        if(!rl->r[i].w || !rl->r[i].h)continue;
         int16_t r[4]={(int16_t)rl->r[i].l,(int16_t)rl->r[i].t,(int16_t)(rl->r[i].l+rl->r[i].w),(int16_t)(rl->r[i].t+rl->r[i].h)};
-        for(unsigned k=0;k<4;k++)if(k<2 ? r[k]<box[k]:r[k]>box[k])box[k]=r[k];
+        eye_join(box,r);
     }
+    if(!ctx->eye_synced || !rl || !rl->n || rl->n>=CFW_RECT_MAX || box[2]<=box[0] || box[3]<=box[1])eye_join(box,tag);
+    ctx->eye_synced=1;
     for(uint8_t eye=1;eye<=2;eye++){
         for(unsigned k=0;k<4;k++)sc->stale[k]=box[k];
         cfw_rectlist pass;pass.n=0;pass.direct_submitted=0;pass.direct_failed=0;

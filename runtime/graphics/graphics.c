@@ -330,9 +330,17 @@ static int raw_present(owner *o,const mm_raster *raster,const mm_scene_dirty *di
     if(r>MM_GRAPHICS_WIDTH)r=MM_GRAPHICS_WIDTH;
     uint16_t box[4]={(uint16_t)l,(uint16_t)t,(uint16_t)r,(uint16_t)b};
     uint16_t (*eye)[4]=o->eye_box;
-    box_join(eye[0],box);box_join(eye[1],box);
     unsigned lens=o->scene.lens;
+#ifdef MM_SCENE_STEREO_EYES
+    /* A stereo pair redraws this box for the other eye next. */
+    if(o->scene.core.eye)box_join(eye[lens-1u],box);
+    else
+#endif
+    {box_join(eye[0],box);box_join(eye[1],box);}
     if(lens==1u || lens==2u){
+#ifdef MM_SCENE_STEREO_EYES
+        if(!o->scene.core.eye)o->scene.core.eye_synced=0;
+#endif
         uint16_t *pending=eye[lens-1u];
         if(!raw_submit(raster,pending,lens==1u ? 0x20u:0x10u))return 0;
         pending[0]=pending[2]=0;
@@ -351,6 +359,9 @@ static void scene_present(void *user,const mm_raster *raster,const mm_scene_dirt
     if(o->scene.core.shadow_invalid){glassly_graphics_detach(o->image);
 #ifdef MM_RAW_PRESENT
         o->lvgl_stale=1;
+#endif
+#ifdef MM_SCENE_STEREO_EYES
+        o->scene.core.eye_synced=0;
 #endif
         return;}
 #endif
@@ -374,6 +385,9 @@ static void scene_present(void *user,const mm_raster *raster,const mm_scene_dirt
         o->raw_fallbacks++;P.cache_invalidate(&o->descriptor);P.image_source(o->image,&o->descriptor);
         /* LVGL draws this raster to both panels. */
         o->eye_box[0][0]=o->eye_box[0][2]=o->eye_box[1][0]=o->eye_box[1][2]=0;
+#ifdef MM_SCENE_STEREO_EYES
+        o->scene.core.eye_synced=0;
+#endif
     }
 #else
     (void)dirty;(void)raster;
@@ -744,6 +758,9 @@ void glassly_graphics_display(void *envelope) {
                         glassly_graphics_detach(o->image);
 #ifdef MM_RAW_PRESENT
                         o->lvgl_stale=1;
+#endif
+#ifdef MM_SCENE_STEREO_EYES
+                        o->scene.core.eye_synced=0;
 #endif
                         result="{\"glassly\":\"graphics\",\"abi\":1,\"result\":\"storage-error\"}";
                         status=-4;

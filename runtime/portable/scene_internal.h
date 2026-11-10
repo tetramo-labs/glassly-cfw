@@ -129,7 +129,9 @@ typedef struct {
 /* Capacity of the asset store (scene.c). Kept under its historical name: the
  * 256 KiB block on the EvenHub heap is the same allocation, but revision 38
  * owns it through the asset allocator instead of exposing raw offsets. */
+#ifndef CFW_TEXTURE_CACHE_SIZE
 #define CFW_TEXTURE_CACHE_SIZE (256u * 1024u)
+#endif
 
 /* Cached image format:  [width:u8][height:u8][4bpp RLE tokens...]
  * Font asset format:    [96 x u32 glyph offsets, relative to the asset][glyph images]
@@ -183,8 +185,12 @@ static int cfw_texture_string_valid(const uint8_t *s, uint32_t len);
  * the top of scene.c. */
 
 #define CFW_CACHE_MAGIC          0x43414348u   /* 'CACH' */
+#ifndef CFW_CACHE_OBJECTS
 #define CFW_CACHE_OBJECTS        256u
+#endif
+#ifndef CFW_CACHE_ASSETS
 #define CFW_CACHE_ASSETS         256u
+#endif
 #define CFW_CACHE_STORE_BYTES    CFW_TEXTURE_CACHE_SIZE   /* the store's maximum; the heap decides (scene.c) */
 #define CFW_CACHE_STORE_MIN      (64u * 1024u)
 #define CFW_CACHE_GRANULE        16u

@@ -1,0 +1,623 @@
+{
+  "scene_internal.h": {
+    "base_sha256": "272b30db465f067b3f666696d8403255503b0a912fe62ab6b34a3c2a33605d28",
+    "result_sha256": "9f2946606722a17efd7959fecd0c17c9d1c6858256cfa66351dc038b00abcba5",
+    "hunks": [
+      {
+        "start": 119,
+        "end": 119,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    mm_scene_bytes asset_region,font_region;\n",
+          "#endif\n"
+        ]
+      }
+    ]
+  },
+  "scene_shapes.inc": {
+    "base_sha256": "6e3fdfb7589bed2281d8e7b59ecca1a043877973809c940a333c514efe39fa41",
+    "result_sha256": "3f2a4f6b98209b96d4ec02fc4fb80fdd1b0c20dceed73a03812553a32fe9b560",
+    "hunks": [
+      {
+        "start": 70,
+        "end": 70,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    out->asset_region=(mm_scene_bytes){0};out->font_region=(mm_scene_bytes){0};\n",
+          "#endif\n"
+        ]
+      }
+    ]
+  },
+  "scene_cache.inc": {
+    "base_sha256": "48fe9aded956bd974297bdc22eef39f142cf93957ba73e1a6b52804a4bf9fab0",
+    "result_sha256": "e331ff763c3a1e68699da304dc728286e2b53f4a7634f290e18bbb5e38393194",
+    "hunks": [
+      {
+        "start": 234,
+        "end": 234,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "#define MM_STORE_READY(ctx) ((ctx)->external_ready || (ctx)->texture_cache != 0)\n",
+          "#else\n",
+          "#define MM_STORE_READY(ctx) ((ctx)->texture_cache != 0)\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 243,
+        "end": 244,
+        "before": [
+          "    sc->store_bytes = ctx->texture_cache ? ctx->texture_cache_size : 0;\n"
+        ],
+        "after": [
+          "    sc->store_bytes = MM_STORE_READY(ctx) ? ctx->texture_cache_size : 0;\n"
+        ]
+      },
+      {
+        "start": 253,
+        "end": 253,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->external_store.read) {\n",
+          "        if(!ctx->external_ready){ctx->external_store.reset(ctx->external_store.user);ctx->external_ready=1;}\n",
+          "        ctx->texture_cache_size=ctx->external_store.capacity;\n",
+          "        cfw_cache *sc=cfw_cache_peek(ctx);if(sc)sc->store_bytes=ctx->texture_cache_size;\n",
+          "        return 0; /* No fabricated CPU pointer for a noncontiguous store. */\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 271,
+        "end": 271,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx&&ctx->external_ready){ctx->external_store.reset(ctx->external_store.user);ctx->external_ready=0;ctx->texture_cache_size=0;}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 327,
+        "end": 328,
+        "before": [
+          "    if (ctx->scene || ctx->texture_cache) {\n"
+        ],
+        "after": [
+          "    if (ctx->scene || MM_STORE_READY(ctx)) {\n"
+        ]
+      },
+      {
+        "start": 360,
+        "end": 360,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(sc->owner->external_ready) {\n",
+          "        if(!sc->undo)sc->undo=mm_scene_allocate(sc->owner,MM_SCENE_PERSISTENT,sizeof(cfw_undo));\n",
+          "        sc->undo_capacity=0;return;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 681,
+        "end": 681,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    s->asset_region=(mm_scene_bytes){0};s->font_region=(mm_scene_bytes){0};\n",
+          "    if(sc->owner->external_ready) {\n",
+          "        if(o->asset){const cfw_asset *a=&sc->assets[o->asset-1];s->asset_region=mm_asset_bytes(sc->owner,a->offset,a->length);s->asset_len=a->length;}\n",
+          "        if(o->font){const cfw_asset *a=&sc->assets[o->font-1];s->font_region=mm_asset_bytes(sc->owner,a->offset,a->length);s->font_len=a->length;}\n",
+          "        return;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 702,
+        "end": 702,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "static uint32_t mm_external_path_count(cfw_cache *sc,const cfw_object *o) {\n",
+          "    if(o->type!=CFW_SHAPE_PATH||!o->asset)return 0;\n",
+          "    const cfw_asset *a=&sc->assets[o->asset-1];uint8_t header[4];\n",
+          "    mm_scene_bytes b=mm_asset_bytes(sc->owner,a->offset,a->length);\n",
+          "    if(a->kind!=CFW_ASSET_EDGES||mm_external_read(sc->owner,&b,0,header,4))return 0;\n",
+          "    return rd16(header);\n",
+          "}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 711,
+        "end": 711,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (ctx->external_ready) {\n",
+          "        mm_scene_bytes sb = mm_asset_bytes((mm_scene_context *)ctx, str->offset, str->length);\n",
+          "        mm_scene_bytes fb = mm_asset_bytes((mm_scene_context *)ctx, font->offset, font->length);\n",
+          "        uint8_t s[CFW_SHAPE_TEXT_MAX];\n",
+          "        if (str->length > sizeof s || font->length < CFW_FONT_TABLE_BYTES || mm_scene_bytes_read(&sb, 0, s, str->length)) return 0;\n",
+          "        int32_t x = 0, l = 0, r = 0, h = 0;\n",
+          "        for (uint32_t i = 0; i < str->length; i++) {\n",
+          "            uint32_t ch = s[i];\n",
+          "            if (ch <= 31u) { x += (int32_t)ch - 11; if (x < l) l = x; continue; }\n",
+          "            if (ch > 127u) return 0;\n",
+          "            uint8_t raw[4], hd[2];\n",
+          "            if (mm_scene_bytes_read(&fb, (ch - 32u) * 4u, raw, 4)) return 0;\n",
+          "            uint32_t off = rd32(raw);\n",
+          "            if (off == 0 || off + 2u > font->length || mm_scene_bytes_read(&fb, off, hd, 2)) return 0;\n",
+          "            x += hd[0];\n",
+          "            if (x > r) r = x;\n",
+          "            if (hd[1] > h) h = hd[1];\n",
+          "        }\n",
+          "        ext[0] = l; ext[1] = r; ext[2] = h;\n",
+          "        return 1;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 755,
+        "end": 755,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if (ctx->external_ready) {\n",
+          "            mm_scene_bytes b = mm_asset_bytes((mm_scene_context *)ctx, a->offset, a->length);\n",
+          "            if (a->length < 2u || mm_scene_bytes_read(&b, 0, hd, 2)) return 0;\n",
+          "        } else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 798,
+        "end": 798,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    ctx->shadow_invalid=0;ctx->storage_io=0;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 860,
+        "end": 860,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(ctx->external_ready && o->type==CFW_SHAPE_PATH) {\n",
+          "            mm_raster target=mm_scene_raster(&r);\n",
+          "            mm_vector_transform transform={s.p[0],s.p[1],(uint16_t)s.p[2],{rot.angle,rot.px,rot.py}};\n",
+          "            int rc=sc->vector_work ? mm_vector_draw_path_reader(&target,sc->vector_work,sizeof(*sc->vector_work),&s.asset_region,&transform,o->color&15):-1;\n",
+          "            if(rc){ctx->shadow_invalid=1;if(rc==-6)ctx->storage_io=1;}\n",
+          "        } else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 867,
+        "end": 867,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(ctx->shadow_invalid){sc->full_redraw=1;break;}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1038,
+        "end": 1038,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->shadow_invalid){cfw_scene_stop(ctx);return -1;}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1125,
+        "end": 1125,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_RESET_UNDO_TRIM\n",
+          "    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n",
+          "     * before pinning/evicting/staging instead of entering revision50's no-undo\n",
+          "     * fallback. The default portable G2 policy remains unchanged. */\n",
+          "    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n",
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(t->sc->owner->external_ready && !undo)return cfw_txn_fail(t,CFW_CACHE_REPLY_CAPACITY,0);\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1129,
+        "end": 1129,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    mm_scene_context *ctx=t->sc->owner;\n",
+          "    if(ctx->external_ready&&ctx->external_store.begin(ctx->external_store.user)) {\n",
+          "        ctx->storage_io=1;t->undo_active=0;return cfw_txn_fail(t,CFW_CACHE_REPLY_CAPACITY,0);\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1133,
+        "end": 1133,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(t->sc->owner->external_ready)return 1;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1185,
+        "end": 1185,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(sc->owner->external_ready)sc->owner->external_store.abort(sc->owner->external_store.user);\n",
+          "        else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1207,
+        "end": 1207,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "static int mm_external_write(cfw_txn *t,uint32_t off,const void *data,size_t n) {\n",
+          "    mm_scene_context *ctx=t->sc->owner;\n",
+          "    if(ctx->external_store.write(ctx->external_store.user,off,data,n)) {\n",
+          "        ctx->storage_io=1;return cfw_txn_fail(t,CFW_CACHE_REPLY_CAPACITY,0);\n",
+          "    }\n",
+          "    return 1;\n",
+          "}\n",
+          "static int mm_external_commit(cfw_txn *t) {\n",
+          "    mm_scene_context *ctx=t->sc->owner;\n",
+          "    if(!ctx->external_ready)return 1;\n",
+          "    if(ctx->external_store.commit(ctx->external_store.user)) {\n",
+          "        ctx->storage_io=1;cfw_txn_fail(t,CFW_CACHE_REPLY_CAPACITY,0);cfw_txn_abort(t);return 0;\n",
+          "    }\n",
+          "    return 1;\n",
+          "}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1291,
+        "end": 1291,
+        "before": [],
+        "after": [
+          "    #ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (!MM_STORE_READY(sc->owner)) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#else\n"
+        ]
+      },
+      {
+        "start": 1292,
+        "end": 1292,
+        "before": [],
+        "after": [
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1295,
+        "end": 1295,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(sc->owner->external_ready){if(!mm_external_write(t,sc->assets[idx].offset+offset,data,len))return 0;}\n",
+          "    else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1300,
+        "end": 1300,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(sc->owner->external_ready) {\n",
+          "            mm_scene_bytes b=mm_asset_bytes(sc->owner,sc->assets[idx].offset,total);\n",
+          "            if(!mm_external_content(sc->owner,&b,kind))return cfw_txn_fail(t,sc->owner->storage_io?CFW_CACHE_REPLY_CAPACITY:CFW_CACHE_REPLY_REFUSED,CFW_CACHE_REFUSE_ASSET);\n",
+          "        } else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1382,
+        "end": 1383,
+        "before": [
+          "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n"
+        ],
+        "after": [
+          "        #ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (!MM_STORE_READY(sc->owner)) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#else\n",
+          "    if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1384,
+        "end": 1384,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(sc->owner->external_ready){if(!mm_external_write(t,sc->assets[pa].offset,s.text,len))return 0;}\n",
+          "        else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1396,
+        "end": 1397,
+        "before": [
+          "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n"
+        ],
+        "after": [
+          "        #ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (!MM_STORE_READY(sc->owner)) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#else\n",
+          "    if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1398,
+        "end": 1398,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        if(sc->owner->external_ready){\n",
+          "            uint8_t header[4]={(uint8_t)n,(uint8_t)((unsigned)n>>8),s.width,0};\n",
+          "            if(!mm_external_write(t,sc->assets[pa].offset,header,4)||!mm_external_write(t,sc->assets[pa].offset+4,w->edges,(size_t)n*sizeof(cfw_edge)))return 0;\n",
+          "        }else {\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1403,
+        "end": 1403,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1708,
+        "end": 1709,
+        "before": [
+          "    if (sc == 0 || store == 0) { cfw_reply_simple(ctx, 37, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
+        ],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (sc == 0 || !MM_STORE_READY(ctx)) {\n",
+          "#else\n",
+          "    if (sc == 0 || store == 0) {\n",
+          "#endif\n",
+          " cfw_reply_simple(ctx, 37, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
+        ]
+      },
+      {
+        "start": 1711,
+        "end": 1712,
+        "before": [
+          "    if (srclen > 4u && !cfw_txn_snapshot(t)) {\n"
+        ],
+        "after": [
+          "    if ((srclen > 4u\n",
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "         ||ctx->external_ready\n",
+          "#endif\n",
+          "        ) && !cfw_txn_snapshot(t)) {\n"
+        ]
+      },
+      {
+        "start": 1727,
+        "end": 1727,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(!mm_external_commit(t))return 0;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1763,
+        "end": 1763,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        /* A prior storage read may have failed after descriptor commit. Heal\n",
+          "         * pixels without restarting the request's animation or mutations. */\n",
+          "        if(ctx->external_ready&&ctx->shadow_invalid&&(flags&CFW_SHOW_FLAG_PRESENT)&&cfw_scene_present(ctx,sc,present,rl))return -1;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1767,
+        "end": 1768,
+        "before": [
+          "    if (puts && store == 0) { cfw_reply_simple(ctx, 38, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
+        ],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if (puts && !MM_STORE_READY(ctx)) {\n",
+          "#else\n",
+          "    if (puts && store == 0) {\n",
+          "#endif\n",
+          " cfw_reply_simple(ctx, 38, request, CFW_CACHE_REPLY_CAPACITY, sc, 0); return 0; }\n"
+        ]
+      },
+      {
+        "start": 1770,
+        "end": 1771,
+        "before": [
+          "    if (puts && !cfw_txn_snapshot(tp)) {\n"
+        ],
+        "after": [
+          "    if ((puts\n",
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "         ||ctx->external_ready\n",
+          "#endif\n",
+          "        ) && !cfw_txn_snapshot(tp)) {\n"
+        ]
+      },
+      {
+        "start": 1799,
+        "end": 1799,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "            if(ctx->external_ready)edges+=mm_external_path_count(sc,&sc->objects[idx]);else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1805,
+        "end": 1805,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "                if(ctx->external_ready)edges+=mm_external_path_count(sc,o);else\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1808,
+        "end": 1808,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->storage_io)cfw_txn_fail(tp,CFW_CACHE_REPLY_CAPACITY,0);\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1818,
+        "end": 1818,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(!mm_external_commit(tp))return 0;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1900,
+        "end": 1900,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "        ctx->shadow_invalid=0;\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 1979,
+        "end": 1979,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->external_ready)ctx->external_store.reset(ctx->external_store.user);\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 2086,
+        "end": 2086,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "static int mm_external_region(customCfwContext *ctx,uint32_t id,uint8_t kind,mm_scene_bytes *out) {\n",
+          "    cfw_cache *sc=cfw_cache_peek(ctx);if(!sc||!ctx->external_ready)return 0;\n",
+          "    int idx=cfw_asset_find(sc,id,0,0);if(idx<0)return 0;const cfw_asset *a=&sc->assets[idx];\n",
+          "    if(a->kind!=kind||!(a->state&CFW_CACHE_ST_COMPLETE))return 0;\n",
+          "    *out=mm_asset_bytes(ctx,a->offset,a->length);return 1;\n",
+          "}\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 2087,
+        "end": 2087,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx&&ctx->external_ready) {\n",
+          "        s->asset_region=(mm_scene_bytes){0};s->font_region=(mm_scene_bytes){0};\n",
+          "        if(s->type==CFW_SHAPE_IMAGE)return mm_external_region(ctx,s->asset_id,CFW_ASSET_IMAGE,&s->asset_region);\n",
+          "        if(s->type==CFW_SHAPE_TEXT||s->type==CFW_SHAPE_TEXT_CACHED) {\n",
+          "            if(!mm_external_region(ctx,s->asset_id,CFW_ASSET_STRING,&s->asset_region))return 0;\n",
+          "            return s->type==CFW_SHAPE_TEXT||mm_external_region(ctx,s->font_id,CFW_ASSET_FONT,&s->font_region);\n",
+          "        }\n",
+          "        return 1;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 2107,
+        "end": 2107,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->external_ready) {\n",
+          "        cfw_raster r={shadow,stride,(int32_t)panel_w,(int32_t)panel_h};mm_scene_bytes asset;\n",
+          "        if(mode==19){if(srclen!=9||!mm_external_region(ctx,rd32(src),CFW_ASSET_IMAGE,&asset))return -1;return mm_external_image_draw(ctx,&r,&asset,(int16_t)rd16(src+4),(int16_t)rd16(src+6),src[8],rl);}\n",
+          "        if(mode==20){if(srclen<10||srclen!=10u+src[9]||!mm_external_region(ctx,rd32(src),CFW_ASSET_FONT,&asset))return -1;mm_scene_bytes string={src+10,0,0,src[9]};return mm_external_string_draw(ctx,&r,&asset,&string,(int16_t)rd16(src+4),(int16_t)rd16(src+6),src[8],rl);}\n",
+          "        return -1;\n",
+          "    }\n",
+          "#endif\n"
+        ]
+      },
+      {
+        "start": 2168,
+        "end": 2168,
+        "before": [],
+        "after": [
+          "#ifdef MM_SCENE_EXTERNAL_STORE\n",
+          "    if(ctx->shadow_invalid){cfw_scene_stop(ctx);return;}\n",
+          "#endif\n"
+        ]
+      }
+    ]
+  }
+}

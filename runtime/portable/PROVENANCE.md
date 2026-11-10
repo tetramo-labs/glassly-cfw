@@ -98,3 +98,22 @@ Glassly. Original upstream hashes remain in `UPSTREAM.json` under `original_file
 `files` pins the normalized bundled copies. The copied-corpus manifest also records
 both hashes for each changed file. Assertion expressions and numeric wire values
 are preserved. CFW advertisements retain `GLASSLYCFW/N` with a numeric revision.
+
+
+NIMO fixed-eye policy (2026-11-09): with `MM_SCENE_FIXED_EYE` beside
+`MM_SCENE_STEREO_EYES`, `scene.c` skips the per-eye present passes. Each NIMO
+arm drives one panel and owns one scene context whose `eye` is set once, so a
+render draws shared objects plus only that eye's tagged objects. Without the
+define the code is unchanged. The host tests under `tests/` are the MemoMind
+portable runners and sources; they read the pinned G2 reference in place from
+the MemoMind repository (hash-checked against `UPSTREAM.json`, never copied
+here), and `tests/scene_store/generated-overlay.json` carries hashes recomputed
+for this tree's notice lines. `tests/csource.py` provides the predicate/function
+extraction the port check uses.
+
+
+NIMO capacities (2026-11-10): `scene_internal.h` wraps `CFW_TEXTURE_CACHE_SIZE`,
+`CFW_CACHE_OBJECTS` and `CFW_CACHE_ASSETS` in `#ifndef` so a native build can
+set them. Without the defines the values (256 KiB, 256, 256) and the code are
+unchanged. The NIMO build passes 64 KiB, 128 and 128: the retained scene then
+fits the heap the glasses have once the lease holds the display.

@@ -62,7 +62,7 @@ static void render_due_into(mm_scene_context *ctx,uint8_t *fb,cfw_rectlist *rl) 
     if(!rl){rl=&scratch;rl->n=0;rl->direct_submitted=0;rl->direct_failed=0;}
     cfw_scene_render(ctx,sc,fb,rl);
 }
-#ifdef MM_SCENE_STEREO_EYES
+#if defined(MM_SCENE_STEREO_EYES) && !defined(MM_SCENE_FIXED_EYE)
 /* A scene holding eye-tagged objects is presented once per eye: the box of
  * every tagged object plus what this render changed is redrawn with the other
  * eye's objects skipped and presented with ctx->eye naming the panel. The
@@ -101,7 +101,7 @@ static void present_buffer(mm_scene_context *ctx,const uint8_t *fb,cfw_rectlist 
     }
 #endif
     mm_raster target;mm_scene_memcpy(&target,&ctx->raster,sizeof(target));target.pixels=(uint8_t *)(uintptr_t)fb;
-#ifdef MM_SCENE_STEREO_EYES
+#if defined(MM_SCENE_STEREO_EYES) && !defined(MM_SCENE_FIXED_EYE)
     if(stereo_present(ctx,(uint8_t *)(uintptr_t)fb,&target,rl))return;
 #endif
     if(ctx->platform.present)ctx->platform.present(ctx->platform.user,ctx,&target,rl);

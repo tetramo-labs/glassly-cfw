@@ -57,7 +57,9 @@ struct mm_scene_context {
     uint32_t shape_tokens[128];
 #ifdef MM_SCENE_STEREO_EYES
     /* Eye of the render pass in progress: 0 both, 1 left, 2 right. Objects
-     * whose id has bit 31 belong to one eye (bit 30: 0 left, 1 right). */
+     * whose id has bit 31 belong to one eye (bit 30: 0 left, 1 right). With
+     * MM_SCENE_FIXED_EYE the owner drives one panel per context: it sets eye
+     * once and every render skips the other eye's objects (no per-eye passes). */
     uint8_t eye;
 #endif
 };

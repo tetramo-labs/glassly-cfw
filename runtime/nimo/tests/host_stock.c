@@ -1,0 +1,207 @@
+/* Host stand-ins for the stock entry points (see host_stock.h). Test-only. MIT. */
+#include "host_stock.h"
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+host_state host;
+_Alignas(16) unsigned char nimo_host_ram[NIMO_RAM_BYTES];
+_Alignas(16) unsigned char nimo_host_crumbs[NIMO_CRUMB_BYTES];
+volatile uint8_t nimo_host_panel_up, nimo_host_left, nimo_host_display_on, nimo_host_lit;
+volatile uint16_t nimo_host_panel_brightness;
+volatile uint32_t nimo_host_blank_ticks;
+_Alignas(16) uint8_t nimo_host_fb[2][NIMO_PANEL_STRIDE * NIMO_PANEL_H];
+volatile uint8_t nimo_host_fb_back, nimo_host_fb_front;
+static int mutex_object, screen_object, timer_object;
+
+typedef struct block { struct block *next, *prev; size_t size; } block;
+typedef union { max_align_t align; block b; } heap_header;
+static block live = { &live, &live, 0 };
+
+static void no_critical(void) { assert(host.critical == 0 && "stock call with interrupts masked"); }
+
+void host_reset(int left)
+{
+    uint32_t x = 0x6e696d6fu;
+    for (unsigned i = 0; i < sizeof nimo_host_crumbs; i++) {
+        x = x * 1103515245u + 12345u;
+        nimo_host_crumbs[i] = (uint8_t)(x >> 16);
+    }
+    host_reboot(left);
+}
+
+void host_reboot(int left)
+{
+    while (live.next != &live) {
+        block *b = live.next;
+        live.next = b->next;
+        free(b);
+    }
+    live.prev = &live;
+    memset(&host, 0, sizeof host);
+    memset(nimo_host_ram, 0, sizeof nimo_host_ram);
+    host.heap_capacity = 400u * 1024u;
+    host.master = 1;
+    host.now = 1000;
+    nimo_host_panel_up = 1;
+    nimo_host_left = (uint8_t)left;
+    nimo_host_display_on = 1;
+    nimo_host_lit = 0;
+    nimo_host_blank_ticks = 7;
+    nimo_host_panel_brightness = 20;
+    /* The stock frames after a flip: front 0 holds the last frame, back 1 the next. */
+    memset(nimo_host_fb[0], 0x3C, sizeof nimo_host_fb[0]);
+    memset(nimo_host_fb[1], 0x5A, sizeof nimo_host_fb[1]);
+    nimo_host_fb_front = 0;
+    nimo_host_fb_back = 1;
+}
+
+unsigned host_run_ui(void)
+{
+    unsigned ran = 0;
+    while (host.queue_count != 0) {
+        nimo_ui_fn fn = host.queue[0].fn;
+        void *arg = host.queue[0].arg;
+        memmove(host.queue, host.queue + 1, (host.queue_count - 1) * sizeof host.queue[0]);
+        host.queue_count--;
+        fn(arg);
+        ran++;
+    }
+    return ran;
+}
+
+void host_timer_tick(void)
+{
+    assert(host.timer_live && host.timer_fn);
+    host.timer_fn(&timer_object);
+}
+
+void nimo_critical_enter(void)
+{
+    host.critical++;
+    host.criticals++;
+}
+
+void nimo_critical_exit(void)
+{
+    assert(host.critical != 0);
+    host.critical--;
+}
+
+int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t len)
+{
+    no_critical();
+    assert(len <= sizeof host.replies[0].data && host.reply_count < 256);
+    if (!host.master) return 0;
+    host_reply *r = &host.replies[host.reply_count++];
+    r->cmd = cmd;
+    r->key = key;
+    r->len = len;
+    memcpy(r->data, data, len);
+    return 0;
+}
+
+int nimo_is_master(void) { return host.master; }
+
+int nimo_gui_post_async(nimo_ui_fn fn, void *arg)
+{
+    no_critical();
+    if (host.queue_fail || host.queue_count == 48) return 0;
+    host.queue[host.queue_count].fn = fn;
+    host.queue[host.queue_count].arg = arg;
+    host.queue_count++;
+    return 1;
+}
+
+void *nimo_malloc(uint32_t size)
+{
+    no_critical();
+    host.alloc_attempts++;
+    if (host.alloc_attempts == host.alloc_fail_at || size > host.heap_capacity - host.heap_used) return 0;
+    heap_header *h = malloc(sizeof *h + size);
+    assert(h);
+    h->b.size = size;
+    h->b.next = live.next;
+    h->b.prev = &live;
+    live.next->prev = &h->b;
+    live.next = &h->b;
+    memset(h + 1, 0xA5, size);
+    host.heap_used += size;
+    if (host.heap_used > host.heap_peak) host.heap_peak = host.heap_used;
+    host.allocations++;
+    return h + 1;
+}
+
+void nimo_free(void *ptr)
+{
+    no_critical();
+    assert(ptr);
+    heap_header *h = (heap_header *)ptr - 1;
+    assert(host.allocations && host.heap_used >= h->b.size);
+    host.heap_used -= h->b.size;
+    host.allocations--;
+    h->b.prev->next = h->b.next;
+    h->b.next->prev = h->b.prev;
+    free(h);
+}
+
+uint32_t nimo_heap_free(void) { return (uint32_t)(host.heap_capacity - host.heap_used); }
+uint32_t nimo_heap_largest(uint32_t caps) { (void)caps; return nimo_heap_free(); }
+uint32_t nimo_now_ms(void) { return host.now; }
+void *nimo_display_mutex(void) { return &mutex_object; }
+
+void nimo_os_lock(void *mutex)
+{
+    assert(mutex == &mutex_object && host.lock_depth == 0);
+    host.lock_depth++;
+    host.locks++;
+}
+
+void nimo_os_unlock(void *mutex)
+{
+    assert(mutex == &mutex_object && host.lock_depth == 1);
+    host.lock_depth--;
+}
+
+int nimo_panel_flush(const uint8_t *fb, uint32_t x, uint32_t row0, uint32_t w, uint32_t nrows)
+{
+    no_critical();
+    if (host.reset_in_flush) longjmp(*host.reset_in_flush, 1);
+    assert(host.lock_depth == 1 && x == 0 && w == NIMO_PANEL_W);
+    assert(nrows != 0 && row0 + nrows <= NIMO_PANEL_H && host.flush_count < 512);
+    host.flushes[host.flush_count].row0 = row0;
+    host.flushes[host.flush_count].nrows = nrows;
+    host.flush_count++;
+    if (host.flush_rc == 0)
+        memcpy(host.panel + row0 * NIMO_PANEL_STRIDE, fb + row0 * NIMO_PANEL_STRIDE, nrows * NIMO_PANEL_STRIDE);
+    return host.flush_rc;
+}
+
+int nimo_set_brightness(uint32_t level)
+{
+    host.brightness_calls++;
+    host.brightness = level;
+    nimo_host_panel_brightness = (uint16_t)level;
+    return 0;
+}
+
+void nimo_repaint_all(void) { host.repaints++; }
+void nimo_cancel_auto_off(uint32_t reason) { assert(reason == 2); host.cancels++; }
+void *nimo_lv_screen_active(void) { return &screen_object; }
+void nimo_lv_obj_invalidate(void *obj) { assert(obj == &screen_object); host.invalidates++; }
+
+void *nimo_lv_timer_create(nimo_timer_fn fn, uint32_t period_ms, void *user)
+{
+    assert(fn && period_ms == NIMO_PUMP_MS && !user && !host.timer_live);
+    host.timer_fn = fn;
+    host.timers_created++;
+    host.timer_live = 1;
+    return &timer_object;
+}
+
+void nimo_lv_timer_delete(void *timer)
+{
+    assert(timer == &timer_object && host.timer_live);
+    host.timer_live = 0;
+    host.timers_deleted++;
+}

@@ -60,6 +60,7 @@ FAKE_FLUSH = 0x05001000
 ROUTER_UNROUTED, ROUTER_EPILOGUE = 0x0426E036, 0x0426E112
 KICK_REJOIN, KICK_TAIL = 0x041F7044, 0x041F705C   # the frame kick after the hooked bytes; its frame-task tail call
 KICK_FLAG = 0x02011FA5                             # 1157(gp): the byte the kick tests first
+UI_DISPATCH_REJOIN = 0x04208DDA                    # the stock UI dispatcher after the hooked prologue
 GP = 0x02011B20
 # The stock framebuffers and their index bytes (runtime/nimo/stock.h). The
 # machine starts flipped (front 0, back 1), so the lease's canvas is buffer 0.
@@ -116,7 +117,7 @@ class Machine:
         base = origin & ~0xFFF
         self.uc.mem_map(base, (origin + len(blob) - base + 0xFFF) & ~0xFFF, u.UC_PROT_READ | u.UC_PROT_EXEC)
         self.uc.mem_write(origin, blob)
-        stops = [ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL]
+        stops = [ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN]
         pages = sorted({a & ~0xFFF for a in [*STOCK.values(), *stops]} - {RAM & ~0xFFF})
         for page in pages:
             if not RAM <= page < RAM + RAM_SIZE:
@@ -138,7 +139,7 @@ class Machine:
         self.uc.mem_write(LEFT, bytes([1 if left else 0]))
         self.uc.mem_write(DISPLAY_ON, b"\x01")
         self.uc.mem_write(PANEL_UP, b"\x01")
-        self.uc.mem_write(PANEL_BRIGHTNESS, struct.pack("<H", 16))
+        self.uc.mem_write(PANEL_BRIGHTNESS, struct.pack("<H", 4))   # Nimo-4026's level, 2026-11-10
         self.uc.mem_write(BLANK, struct.pack("<I", 5))
         if crumbs is not None:
             self.uc.mem_write(self.crumbs[0], crumbs)
@@ -248,7 +249,7 @@ class Machine:
         return max(0, self.heap_base_free - sum(n + 8 for n in self.allocations.values()))
 
     def stub(self, uc, address, size, data):
-        if address in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL):
+        if address in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN):
             self.stopped_at = address
             uc.emu_stop()
             return
@@ -310,6 +311,11 @@ class Machine:
             check(0 < a[4] and a[2] + a[4] <= H, f"flush rows {a[2]}+{a[4]}")
             rows = bytes(self.uc.mem_read(a[0] + a[2] * STRIDE, a[4] * STRIDE))
             self.flushes.append((a[2], a[4], a[0], rows))
+        elif name == "set_brightness":
+            if a[0] <= 32:
+                self.uc.mem_write(PANEL_BRIGHTNESS, struct.pack("<H", a[0]))
+            else:
+                result = 1
         elif name == "lv_screen_active":
             result = SCREEN
         elif name == "lv_obj_invalidate":
@@ -341,7 +347,7 @@ class Machine:
         self.stopped_at = None
         self.uc.emu_start(function, until, count=50_000_000)
         pc = self.pc()
-        if pc in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL):
+        if pc in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN):
             self.stopped_at = pc
         check(self.stopped_at is not None, f"call to {function:#x} did not return (pc {pc:#x})")
         check(self.critical == 0, "returned inside a critical section")
@@ -376,6 +382,16 @@ class Machine:
         for _ in range(int(seconds * 1000 / self.tick_ms)):
             self.tick()
 
+    def touch(self, message, param):
+        """The stock UI dispatcher receiving a touch message: the input gate's view."""
+        self.uc.mem_write(self.payload, param)
+        self.payload_len = len(param)
+        before = len(self.replies)
+        self.call(self.symbols["glassly_input_gate"], message, self.payload, len(param), context="ui",
+                  until=UI_DISPATCH_REJOIN)
+        self.payload_len = 0
+        return self.stopped_at, self.replies[before:]
+
     def status(self):
         return json.loads(self.command(0x04)[2][1:].decode())
 
@@ -409,7 +425,8 @@ def step_payload(step):
     if "payload_file" not in step:
         return bytes.fromhex(step.get("payload_hex", ""))
     name = Path(step["payload_file"]).name
-    generated = scene_packets.demo() if name == "demo-geometry.bin" else scene_packets.retained()[name]
+    generated = scene_packets.demo() if name == "demo-geometry.bin" else \
+        {**scene_packets.retained(), **scene_packets.cues()}[name]
     path = ROOT / step["payload_file"]
     if path.is_file():
         check(path.read_bytes() == generated, f"{path} differs from scripts/scene_packets.py")
@@ -424,7 +441,14 @@ def run_steps(m, steps, upto=None, log=None):
             break
         check(step["cmd"] == "7e", "only 0x7E steps replay here")
         key = int(step["key"], 16)
-        cmd, rkey, data = m.command(key, step_payload(step))
+        if step.get("await"):
+            touch = step["emulate_input"]
+            stopped, sent = m.touch(touch["id"], bytes.fromhex(touch["param_hex"]))
+            matching = [rep for rep in sent if rep[1] == key]
+            check(stopped == RETURN and matching, f"step {step['step']}: the touch reached the stock dispatcher")
+            cmd, rkey, data = matching[0]
+        else:
+            cmd, rkey, data = m.command(key, step_payload(step))
         out[step["step"]] = data
         where = f"step {step['step']} ({step['title']})"
         if "expect_status" in step:
@@ -518,6 +542,46 @@ def test_kick_gate(build):
     check(m.stopped_at == RETURN and m.reg(10) == 0 and m.reg(2) == STACK_TOP and m.u32(m.ram_block[0] + 12) == 1,
           "owned path: return 0 to the caller, count the skip")
     check(all(m.reg(x) == v for x, v in saved.items()), "owned path changed a callee-saved register")
+
+
+@test("input gate: touches while owned go to the phone, auto brightness waits after a 0x23 level")
+def test_input_gate(build):
+    m = Machine(build)
+    saved = {x: 0x4000 + x for x in (8, 9, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
+    tap = bytes.fromhex("0101030005000000")
+    m.uc.mem_write(PAYLOAD, tap)
+
+    def gate(message, owned):
+        m.uc.mem_write(m.ram_block[0] + 8, bytes([owned]))
+        before = len(m.replies)
+        m.call(m.symbols["glassly_input_gate"], regs={10: message, 11: PAYLOAD, 12: len(tap), **saved},
+               context="ui", until=UI_DISPATCH_REJOIN)
+        return m.stopped_at, m.replies[before:]
+
+    stopped, sent = gate(0x88, 0)
+    check(stopped == UI_DISPATCH_REJOIN and not sent, "not owned: the dispatcher gets the tap")
+    check(m.reg(2) == UI_TOP - 128 and (m.reg(10), m.reg(11), m.reg(12)) == (0x88, PAYLOAD, 8),
+          "replayed frame or changed arguments")
+    for slot, x in ((120, 8), (116, 9), (108, 19)):
+        check(m.u32(UI_TOP - 128 + slot) == saved[x], f"replayed save of x{x} at {slot}(sp)")
+    for message in (0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x98, 0x99):
+        stopped, sent = gate(message, 1)
+        check(stopped == RETURN and sent == [(0x7E, 0x26, bytes([0, message, 8]) + tap)],
+              f"owned: message {message:#x} forwarded {sent}")
+        check(m.reg(2) == UI_TOP and all(m.reg(x) == v for x, v in saved.items()), "callee-saved registers")
+    for message in (0x87, 0x8D, 0x97, 0x9A, 0xA7, 0xBB, 0x24):
+        stopped, sent = gate(message, 1)
+        check(stopped == UI_DISPATCH_REJOIN and not sent, f"owned: message {message:#x} is not a touch")
+    check(m.u32(m.ram_block[0] + 0x84) == 7, "inputs counter")
+    # Auto-brightness steps (0xa8) pass until the phone sets a level, then wait.
+    skips = m.u32(m.ram_block[0] + 12)
+    stopped, sent = gate(0xA8, 1)
+    check(stopped == UI_DISPATCH_REJOIN and not sent, "auto brightness before a 0x23 level")
+    m.uc.mem_write(m.ram_block[0] + 0x89, b"\x01")
+    stopped, sent = gate(0xA8, 1)
+    check(stopped == RETURN and not sent and m.u32(m.ram_block[0] + 12) == skips + 1, "auto brightness held off")
+    stopped, sent = gate(0xA8, 0)
+    check(stopped == UI_DISPATCH_REJOIN, "auto brightness while not owned")
 
 
 def demo_session(build, left):
@@ -716,7 +780,7 @@ def test_breadcrumbs(build):
     m = Machine(build, crumbs=m.crumb_bytes())
     m.status()
     block = m.ram_block[0]
-    for offset in [0x0C, *range(0x20, 0x54, 4)]:
+    for offset in [0x0C, *range(0x20, 0x54, 4), 0x80, 0x84]:
         m.uc.mem_write(block + offset, b"\xff\xff\xff\xff")
     m.uc.mem_write(block + 0x1C, struct.pack("<I", 0xFFFFFFFE))
     m.uc.mem_write(block + 0x54, b"\x02")
@@ -750,7 +814,7 @@ def main():
         path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(got, indent=2))
         return
-    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_left, test_right,
+    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_left, test_right,
              test_steps_to_geometry, test_all_steps, test_canvas_timing, test_odd_payload, test_breadcrumbs]
     for fn in tests:
         fn(args.build)

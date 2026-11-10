@@ -7,6 +7,9 @@ Immediate geometry (mode 36): [36][count][records], each record
 4/5 circle outline/filled (cx,cy,r). Coordinates are panel pixels (540x280).
 
   demo OUT        one mode-36 frame (border, diagonals, gray circles)
+  cues DIR        mode-36 frames that ask the wearer for a touch, for the input
+                  steps (no text yet): a filled circle on the side to tap, a
+                  bar for a long press
   retained DIR    retained-scene messages that replay in order after an acquire,
                   using a fixed epoch (adopted by the RESET in the first file)
                   and distinct request ids, so no reply has to be read:
@@ -53,6 +56,17 @@ def demo():
         records.append(record(CIRCLE_FILL, 2 + i * 2, 0, 70 + i * 57, 140, 22))
     records.append(record(CIRCLE, 15, 2, 270, 140, 110))
     return geometry(records)
+
+
+def cues():
+    def frame(*shapes):
+        # Mode 36 draws over whatever the canvas holds: black first.
+        return geometry([record(RECT_FILL, 0, 0, 0, 0, W, H, 0), record(RECT, 6, 2, 2, 2, 536, 276, 16), *shapes])
+    return {
+        "cue-tap-right.bin": frame(record(CIRCLE_FILL, 15, 0, 420, 140, 60)),
+        "cue-tap-left.bin": frame(record(CIRCLE_FILL, 15, 0, 120, 140, 60)),
+        "cue-long-right.bin": frame(record(RECT_FILL, 15, 0, 320, 115, 200, 50, 20)),
+    }
 
 
 def header(mode, request):
@@ -106,7 +120,7 @@ def retained():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("scene", choices=["demo", "retained"])
+    parser.add_argument("scene", choices=["demo", "retained", "cues"])
     parser.add_argument("output", type=Path, help="file for demo, directory for retained")
     args = parser.parse_args()
     if args.scene == "demo":
@@ -117,11 +131,11 @@ def main():
         return
     args.output.mkdir(parents=True, exist_ok=True)
     files = {}
-    for name, data in retained().items():
+    for name, data in (retained() if args.scene == "retained" else cues()).items():
         (args.output / name).write_bytes(data)
         files[name] = {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
         print(f"{args.output / name}: {len(data)} bytes")
-    (args.output / "retained.json").write_text(json.dumps({"epoch": EPOCH, "files": files}, indent=2) + "\n")
+    (args.output / f"{args.scene}.json").write_text(json.dumps({"epoch": EPOCH, "files": files}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

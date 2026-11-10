@@ -120,13 +120,14 @@ reply once the work is done; a busy refusal is answered at once.
 | 0x01 | — | identity JSON: `version`, `revision`, `platform`, `base`, `arm` (master/slave), `eye` (left/right), `canvas` `{width 540, height 280, stride 270, format gray4}`, `eyes`, `scene` `{modes, store 65536, objects 128, assets 128, show_eye_bits, eye_objects, text false}`, `max_message` 12284, `owned` |
 | 0x02 | bytes (≤ 499) | the same bytes |
 | 0x03 | bytes (≤ 12,284) | `[0][len u32 LE][crc32 u32 LE]` of the payload (zlib CRC-32), to verify multi-packet transfers |
-| 0x04 | — | status JSON: `owned`, `session`, `boot` and `last_crash` (breadcrumbs, below), `heap_free`, `heap_largest`, `display_on`, `panel_brightness` (stock level), `brightness` (last 0x23 level, 255 none), counters `gate_skips` (stock panel writes and frame kicks held off), `repins`, `presents`, `present_rows`, `deferred`, `flush_errors`, `scenes`, `rejected`, `settled`, `busy`, `alloc_failures`, `pump_ticks`, `commands`; at most 548 bytes with the status byte (reply buffer 560) |
+| 0x04 | — | status JSON: `owned`, `session`, `boot` and `last_crash` (breadcrumbs, below), `heap_free`, `heap_largest`, `display_on`, `panel_brightness` (stock level), `brightness` (last 0x23 level, 255 none), counters `gate_skips` (stock panel writes and frame kicks held off), `repins`, `inputs` (touch messages the input gate handed over), `presents`, `deferred`, `flush_errors`, `scenes`, `rejected`, `settled`, `busy`, `alloc_failures`, `pump_ticks`, `commands`; at most 551 bytes with the status byte (reply buffer 560; `present_rows` left the JSON in revision 8 to make room) |
 | 0x10 | `[pattern]` | *UI* GLASSLYCFW/4 test frame (0 bars, 1 border + diagonal, 2 black): `[status][flush rc][left]` |
 | 0x20 | one scene message `[mode][...]` | *UI* `[status][cache reply...]`: the message is dispatched to the session (modes below); cache modes 37–41 and bundles append the core's reply (`[mode][request u16][status][epoch u16][revision u32][extra]`); status 3 when not owned |
 | 0x21 | — | *UI* acquire: `[status][flush rc][display on][eye]`. Pins the stock framebuffers and borrows one as the canvas (status 1 if the index bytes are not 0/1), creates the session (status 2 if the heap cannot spare it + 32 KB), starts the pump, sets owned, presents the whole canvas (black on a new session, the retained scene on a repeat) |
 | 0x22 | — | *UI* release: `[0]`. Stops the pump, frees the session and every scene allocation, gives the canvas buffer back (below), clears owned, then `0x041fe71a()` and `lv_obj_invalidate(lv_screen_active())` |
-| 0x23 | `[level 0..32]` | *UI* `[status][stock rc]` from `0x041fec90` (not persisted) |
+| 0x23 | `[level 0..32]` | *UI* `[status][stock rc]` from `0x041fec90` (not persisted). A level set during a lease lasts until its release, which sets the stock level the lease began with again |
 | 0x24 | — (notification) | unsolicited `[0][tag u16 LE]` when a SHOW with the TAG flag has settled; follows the 0x20 reply that started it |
+| 0x26 | — (notification) | while owned, every stock touch message: `[0][message id][stock length][up to 16 parameter bytes]`. Ids 0x88 tap, 0x89 double, 0x8a triple, 0x8b long, 0x8c very long, 0x98 press, 0x99 release; tap gestures carry `[side (1 left)][1][source u16][gesture sequence u32]`. The master keeps them from the stock screens; the slave hands them to its stock dispatcher (the stock code may forward them to the master from there) |
 | 0x25 | — | *UI* `[status][crc32 u32 LE][eye 1/2]`: zlib CRC-32 of this arm's 75,600-byte canvas (status 3 when not owned). Only the master (right arm) answers, so hardware steps compare the right canvas with the emulator's render |
 | other | — | status 5 |
 
@@ -286,6 +287,28 @@ borrowed buffer); `repins` and `flush_errors` stayed 0. The first flash
 attempt stopped at 45 % when the Mac's Bluetooth controller turned off (the
 glasses kept running GLASSLYCFW/6); the retry took 73 s.
 
+## Touch forwarding and brightness (GLASSLYCFW/8 and /9, 2026-11-10)
+
+GLASSLYCFW/8 adds the input gate and the brightness restore. On the glasses,
+touches reached the phone as key 0x26 from both touchpads while owned: side
+byte 0 for the right touchpad and 1 for the left, every tap as press 0x98, tap
+0x88 and release 0x99 with one gesture sequence number, and a long press
+0x8b. No double tap (0x89) came in any run; two quick taps are two 0x88 with
+consecutive sequence numbers, so double taps are the phone's to detect.
+Source was 0x0010 for both sides, so the master sees the left arm's touches
+directly (the slave still hands its own to its stock dispatcher). The same
+runs showed the stock auto-brightness moving the level while owned (24 → 1 → 4
+over a few minutes, with falling light reports), which made the frames hard
+to see.
+
+GLASSLYCFW/9 holds the auto-brightness steps (UI message 0xa8,
+`UI_MSG_ID_DISPLAY_SET_BRIGHTNESS_SYNC`, both arms) once 0x23 has set a level
+during the lease; 0xa7 (a level the wearer chose) still passes. On the glasses
+(`steps-9.json`, `captures/suite-9.json`) the level stayed at 12 through the
+lease and the 40 s hold with one auto step held, and release set the lease's
+starting level (11) again. Every display, scene and checksum step passed. The
+touch steps received no touch in that run (`inputs` 0); the /8 runs had.
+
 ## Breadcrumbs (GLASSLYCFW/6)
 
 The heap region starts 256 bytes past the RAM block (`0x0209cf74`, size
@@ -350,6 +373,8 @@ field; RV32 offsets):
 | 0x58 | `last[3]` | the previous boot's lanes (12 bytes each), as the first command found them |
 | 0x7c | `pinned` (u8), 0x7d `front`, 0x7e `back` | 1 while the framebuffer indices are pinned; the front index the lease found (restored at release) and the back index it pinned |
 | 0x80 | `repins` | pump ticks that found the indices moved and pinned them again (expected 0) |
+| 0x84 | `inputs` | touch messages the input gate handed over while owned |
+| 0x88 | `lease_brightness` (u8), 0x89 `brightness_changed`, 0x8a `acquired` | the stock panel level at the lease's first acquire; 1 once 0x23 set a level during it; 1 from that acquire to the release |
 
 The rest of the 4 KB is reserved. The canvas (540×280 GRAY4, stride 270,
 75,600 B) is the borrowed stock framebuffer; the session and the scene's own
@@ -366,8 +391,9 @@ becomes a CAPACITY reply, not a crash). A full retained scene (128 objects,
 | router-unrouted | jump (`auipc t1; jalr x0`) | `0x0426e02e` | `378637044a87d287` | `17a31a006700239b` | `glassly_router_gate` `0x44179e0` |
 | frame-flush | call (`auipc ra; jalr ra`) | `0x041fd63c` | `4a8781499c4b8297` | `97a02100e780403d` | `glassly_flush_gate` `0x4417a10`, returns to `0x041fd644` |
 | frame-kick | jump (`auipc t1; jalr x0`) | `0x041f703c` | `83c7514891cf0111` | `17132200670043a1` | `glassly_kick_gate` `0x4417a50`, rejoins at `0x041f7044` / `0x041f705c` |
+| ui-dispatch | jump (`auipc t1; jalr x0`) | `0x04208dd2` | `1971a2dca6daced6` | `17f320006700a3cb` | `glassly_input_gate` `0x4417a8c`, rejoins at `0x04208dda` |
 
-(Patched bytes and gate addresses are those of the revision 7 build; the build
+(Patched bytes and gate addresses are those of the revision 8 build; the build
 recomputes and checks them, and scans the whole stock body so that no direct
 branch lands inside any hook.)
 
@@ -387,6 +413,20 @@ returns 0 to the kick's caller, so the commit (and the frame task behind it)
 does not run. Callers: the LVGL refresh (`0x0423b150`, return ignored), the
 wrapper `0x041f65be` (app pages, the WASM host), and `0x041feaf4`/`0x041feb22`,
 which are posted to the UI task's rings.
+
+The input gate replaces the stock UI dispatcher's prologue (`c.addi16sp
+sp,-128; c.swsp s0,120(sp); c.swsp s1,116(sp); c.swsp s3,108(sp)`). The
+dispatcher (`0x04208dd2(id, param, len)`, 7,686 bytes, called from the UI
+task's drain `0x04206342`) routes every UI message, touch included: ids
+0x88-0x8c are tap gestures (handlers from `0x04206144`.. by gesture, falling
+back to a "no handler" default), 0x98/0x99 press/release, and a global
+interceptor at `*(code **)0x0201239c` sees single, double and long taps first
+(called with 1, 2, 3). While `owned` is set, the gate passes touch ids to
+`glassly_input` (16-byte frame, saving ra and a0-a2), which sends the 0x26
+notification and returns `is_master()`; nonzero returns straight to the
+dispatcher's caller, zero (the slave) replays the prologue and rejoins at
+`0x04208dda`. Every other id, and every message while not owned, takes the
+replay path untouched.
 
 ### Lease
 

@@ -31,9 +31,12 @@ ARGS = [f"a{i}" for i in range(8)]
 CALLER_SAVED = {"ra", *ARGS, *(f"t{i}" for i in range(7))}
 # Packet pointers on entry: the router gate's s5 (payload) and the UI side's
 # copy, which nimo_ui_scene passes to the session as job->data.
-PACKET_SEEDS = {"glassly_router_gate": {"s5"}, "mm_scene_session_dispatch": {"a1"}}
+# The input gate's a1 is the stock dispatcher's parameter pointer.
+PACKET_SEEDS = {"glassly_router_gate": {"s5"}, "mm_scene_session_dispatch": {"a1"}, "glassly_input": {"a1"}}
+# The input gate runs inside the stock UI dispatcher (0x04208dd2, a 128-byte
+# frame) on the drain; UI_TASK_STACK in build_runtime.py covers both.
 UI_ENTRIES = ("nimo_ui_scene", "nimo_ui_acquire", "nimo_ui_release", "nimo_ui_brightness",
-              "nimo_ui_draw_test", "pump")
+              "nimo_ui_draw_test", "nimo_ui_canvas", "pump", "glassly_input_gate")
 ROUTER_ENTRIES = ("glassly_router_gate",)
 
 

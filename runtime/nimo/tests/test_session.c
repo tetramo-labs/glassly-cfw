@@ -425,6 +425,53 @@ static void test_borrowed_canvas(int flipped)
            flipped ? "flipped" : "unflipped");
 }
 
+/* Touch messages while owned reach the phone (key 0x26) and, on the master,
+ * no stock screen; a level set during the lease gives way to the wearer's. */
+static void test_input_and_brightness(void)
+{
+    host_reset(1);
+    static const uint8_t tap[8] = { 1, 1, 3, 0, 9, 0, 0, 0 };
+    assert(glassly_input(0x88, tap, sizeof tap) == 0 && host.reply_count == 0);
+    acquire();
+    unsigned before = host.reply_count;
+    assert(glassly_input(0x88, tap, sizeof tap) == 1);
+    host_reply *r = &host.replies[before];
+    assert(host.reply_count == before + 1 && r->key == KEY_INPUT && r->len == 3 + sizeof tap);
+    assert(r->data[0] == STATUS_OK && r->data[1] == 0x88 && r->data[2] == 8 && !memcmp(r->data + 3, tap, 8));
+    assert(glassly_input(0x99, 0, 0) == 1 && last()->len == 3 && last()->data[2] == 0);
+    static uint8_t big[300];
+    assert(glassly_input(0x98, big, sizeof big) == 1 && last()->len == 3 + NIMO_INPUT_BYTES && last()->data[2] == 255);
+    host.master = 0;
+    before = host.reply_count;
+    assert(glassly_input(0x88, tap, sizeof tap) == 0 && host.reply_count == before);
+    host.master = 1;
+    assert(NIMO_RAM->inputs == 4);
+    /* brightness: stock auto steps pass until the phone sets a level, then
+     * wait for the release, which brings the wearer's level (20 here) back */
+    static const uint8_t step[16] = { 9 };
+    assert(glassly_input(NIMO_MSG_AUTO_BRIGHTNESS, step, sizeof step) == 0);
+    uint8_t level[1] = { 3 };
+    assert(command(KEY_BRIGHTNESS, level, 1)->data[0] == STATUS_OK && nimo_host_panel_brightness == 3);
+    before = host.reply_count;
+    uint32_t skips = NIMO_RAM->gate_skips;
+    assert(glassly_input(NIMO_MSG_AUTO_BRIGHTNESS, step, sizeof step) == 1 && host.reply_count == before);
+    assert(NIMO_RAM->gate_skips == skips + 1 && NIMO_RAM->inputs == 4);
+    unsigned calls = host.brightness_calls;
+    release();
+    assert(host.brightness_calls == calls + 1 && nimo_host_panel_brightness == 20 && NIMO_RAM->brightness == 3);
+    /* no 0x23 during a lease: release leaves the level alone */
+    acquire();
+    calls = host.brightness_calls;
+    release();
+    assert(host.brightness_calls == calls);
+    /* outside a lease 0x23 is the phone's to keep */
+    assert(command(KEY_BRIGHTNESS, level, 1)->data[0] == STATUS_OK);
+    acquire();
+    release();
+    assert(nimo_host_panel_brightness == 3);
+    printf("input forwarding (master keeps, slave hands on) and brightness restore passed\n");
+}
+
 static void test_slave_and_draw(void)
 {
     host_reset(0);
@@ -511,6 +558,8 @@ static void test_breadcrumbs(void)
     for (uint32_t *p = &NIMO_RAM->commands; p <= &NIMO_RAM->pump_ticks; p++) *p = 0xFFFFFFFFu;
     NIMO_RAM->commands = 0xFFFFFFFEu;
     NIMO_RAM->gate_skips = 0xFFFFFFFFu;
+    NIMO_RAM->repins = 0xFFFFFFFFu;
+    NIMO_RAM->inputs = 0xFFFFFFFFu;
     NIMO_RAM->crumbs = 2;
     NIMO_RAM->boot = 0xFFFFFFFFu;
     NIMO_RAM->last[NIMO_LANE_UI].stage = NIMO_STAGE_DONE;
@@ -614,6 +663,7 @@ int main(int argc, char **argv)
     test_queue_and_memory();
     test_borrowed_canvas(1);
     test_borrowed_canvas(0);
+    test_input_and_brightness();
     test_slave_and_draw();
     test_breadcrumbs();
     printf("PASS: NIMO session host tests\n");

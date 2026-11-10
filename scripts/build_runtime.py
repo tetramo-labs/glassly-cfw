@@ -48,6 +48,9 @@ HOOKS = [
     {"name": "frame-kick", "kind": "jump", "address": 0x041F703C, "witness": "83c7514891cf0111",
      "target": "glassly_kick_gate", "function": [0x041F703C, 122],
      "replay": ["lbu\ta5,1157(gp)", "c.addi\tsp,-32"]},
+    {"name": "ui-dispatch", "kind": "jump", "address": 0x04208DD2, "witness": "1971a2dca6daced6",
+     "target": "glassly_input_gate", "function": [0x04208DD2, 7686], "listing": 40,
+     "replay": ["c.addi16sp\tsp,-128", "c.swsp\ts0,120(sp)", "c.swsp\ts1,116(sp)", "c.swsp\ts3,108(sp)"]},
 ]
 # The lease borrows one of the two stock framebuffers (runtime/nimo/stock.h).
 # Every stock function that forms an address inside them, and what it does
@@ -427,7 +430,7 @@ def build(source, strings, revision, out):
         expected = ("t1", "zero", "t1") if hook["kind"] == "jump" else ("ra", "ra", "ra")
         nimo_ota.require((rd, link, base) == expected and decoded == target,
                          f"{hook['name']}: patched site decodes to {rd},{link},{base} -> {decoded:#x}")
-        gate = gate_listing(asm, hook["target"], 24)
+        gate = gate_listing(asm, hook["target"], hook.get("listing", 24))
         replay = [g for g in gate if g in hook["replay"]]
         nimo_ota.require(replay == hook["replay"], f"{hook['name']}: gate does not replay {hook['replay']}: {gate}")
         hooks.append({"name": hook["name"], "kind": hook["kind"], "address": hex(hook["address"]),

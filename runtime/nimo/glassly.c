@@ -191,8 +191,8 @@ static uint32_t status_json(uint8_t *out)
     n = field(out, n, ",\"brightness\":", ram->brightness_set ? ram->brightness : 0xFFu);
     n = field(out, n, ",\"gate_skips\":", ram->gate_skips);
     n = field(out, n, ",\"repins\":", ram->repins);
+    n = field(out, n, ",\"inputs\":", ram->inputs);
     n = field(out, n, ",\"presents\":", ram->presents);
-    n = field(out, n, ",\"present_rows\":", ram->present_rows);
     n = field(out, n, ",\"deferred\":", ram->presents_deferred);
     n = field(out, n, ",\"flush_errors\":", ram->flush_errors);
     n = field(out, n, ",\"scenes\":", ram->scene_messages);

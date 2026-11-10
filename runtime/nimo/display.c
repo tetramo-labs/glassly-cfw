@@ -315,6 +315,11 @@ void nimo_ui_acquire(void *arg)
         }
         ram->session = s;
     }
+    if (!ram->acquired) {
+        ram->lease_brightness = (uint8_t)NIMO_PANEL_BRIGHTNESS;
+        ram->brightness_changed = 0;
+        ram->acquired = 1;
+    }
     if (ram->timer == 0) ram->timer = nimo_lv_timer_create(pump, NIMO_PUMP_MS, 0);
     ram->eye = s->eye;
     ram->owned = 1;
@@ -343,6 +348,10 @@ void nimo_ui_release(void *arg)
     }
     if (s != 0) session_destroy(s);
     unpin_canvas();
+    /* A level set during the lease was the phone's; the wearer's comes back. */
+    if (ram->acquired && ram->brightness_changed) nimo_set_brightness(ram->lease_brightness);
+    ram->acquired = 0;
+    ram->brightness_changed = 0;
     ram->releases++;
     /* Stock repaint: every framebuffer row dirty, then a full LVGL redraw. */
     nimo_repaint_all();
@@ -391,6 +400,7 @@ void nimo_ui_brightness(void *arg)
     if (rc == 0) {
         ram->brightness = (uint8_t)level;
         ram->brightness_set = 1;
+        if (ram->acquired) ram->brightness_changed = 1;
     }
     reply(KEY_BRIGHTNESS, out, sizeof out);
 }
@@ -462,4 +472,32 @@ void nimo_ui_canvas(void *arg)
         for (uint32_t i = 0; i < 4; i++) out[1 + i] = (uint8_t)(crc >> (8u * i));
     }
     reply(KEY_CANVAS, out, sizeof out);
+}
+
+/* Touch messages while owned: [status][message id][stock length][first bytes
+ * of the stock parameter, at most NIMO_INPUT_BYTES] as key 0x26 (the master
+ * answers). Tap gestures carry 8 bytes: side (1 left), 1, source u16, gesture
+ * sequence u32. The master keeps them from the stock screens; the slave hands
+ * them on, as the stock code may forward them to the master from there. */
+int glassly_input(uint32_t id, const uint8_t *param, uint32_t len)
+{
+    nimo_ram *ram = NIMO_RAM;
+    if (!ram->owned) return 0;
+    /* Once the phone has set a level, the stock ALS steps (both arms get
+     * them) wait for the release. */
+    if (id == NIMO_MSG_AUTO_BRIGHTNESS) {
+        if (!ram->brightness_changed) return 0;
+        ram->gate_skips++;
+        return 1;
+    }
+    uint32_t seq = ++ram->inputs;
+    job_start(KEY_INPUT, seq, id, len);
+    uint8_t out[3 + NIMO_INPUT_BYTES];
+    uint32_t n = param == 0 ? 0 : len < NIMO_INPUT_BYTES ? len : NIMO_INPUT_BYTES;
+    out[0] = STATUS_OK;
+    out[1] = (uint8_t)id;
+    out[2] = (uint8_t)(len > 255u ? 255u : len);
+    for (uint32_t i = 0; i < n; i++) out[3 + i] = param[i];
+    reply(KEY_INPUT, out, 3 + n);
+    return nimo_is_master();
 }

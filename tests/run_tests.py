@@ -48,7 +48,7 @@ def source_snapshot():
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output", type=Path, required=True, help="New evidence directory")
-    parser.add_argument("--revision", type=int, default=7)
+    parser.add_argument("--revision", type=int, default=9)
     parser.add_argument("--rv32-python", type=Path,
                         default=Path.home() / "dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python")
     args = parser.parse_args()

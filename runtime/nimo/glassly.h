@@ -10,7 +10,7 @@ enum {
     GLASSLY_CMD = 0x7E,
     KEY_IDENTITY = 0x01, KEY_ECHO = 0x02, KEY_CHECKSUM = 0x03, KEY_STATUS = 0x04, KEY_DRAW_TEST = 0x10,
     KEY_SCENE = 0x20, KEY_ACQUIRE = 0x21, KEY_RELEASE = 0x22, KEY_BRIGHTNESS = 0x23,
-    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25,
+    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26,
 };
 enum {
     STATUS_OK = 0, STATUS_INVALID = 1, STATUS_NO_MEMORY = 2, STATUS_NOT_OWNED = 3,
@@ -27,6 +27,10 @@ enum {
 #define NIMO_PUMP_MS 10u
 #define NIMO_SESSION_MAGIC 0x53534e47u /* "GNSS" */
 #define NIMO_SETTLED_QUEUE 8u
+#define NIMO_INPUT_BYTES 16u
+/* UI_MSG_ID_DISPLAY_SET_BRIGHTNESS_SYNC: the auto-brightness step from the
+ * light sensor, sent to both arms. 0xa7 (a level the wearer chose) passes. */
+#define NIMO_MSG_AUTO_BRIGHTNESS 0xa8u
 
 typedef struct nimo_session {
     uint32_t magic;
@@ -68,4 +72,7 @@ void nimo_ui_canvas(void *unused);
 uint32_t nimo_crc32(const uint8_t *data, uint32_t len);
 
 int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t len);
+/* A stock touch or auto-brightness message while owned (UI task, from the
+ * input gate); nonzero when the stock dispatcher must not see it. */
+int glassly_input(uint32_t id, const uint8_t *param, uint32_t len);
 #endif

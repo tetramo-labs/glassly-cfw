@@ -26,7 +26,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define NIMO_RAM_MAGIC 0x374d524eu   /* "NRM7" once a command has run this boot */
+#define NIMO_RAM_MAGIC 0x394d524eu   /* "NRM9" once a command has run this boot */
 #define NIMO_CRUMB_MAGIC 0x3642434eu /* "NCB6" */
 
 struct nimo_session;
@@ -65,7 +65,7 @@ typedef struct {
     uint8_t brightness;           /* 0x09 last level set through 0x7E/0x23 */
     uint8_t brightness_set;       /* 0x0a 1 once brightness has been set */
     uint8_t eye;                  /* 0x0b 1 left, 2 right (at the last acquire) */
-    volatile uint32_t gate_skips; /* 0x0c stock panel writes and frame kicks skipped while owned */
+    volatile uint32_t gate_skips; /* 0x0c stock panel writes, frame kicks and auto-brightness steps held off while owned */
     void *timer;                  /* 0x10 lv_timer_t of the scene pump; UI task only */
     volatile uint32_t jobs;       /* 0x14 scene jobs queued and not yet run; critical section only */
     uint16_t epoch;               /* 0x18 last scene epoch; the next session starts past it */
@@ -93,6 +93,11 @@ typedef struct {
     uint8_t back;                 /* 0x7e the stock back index while pinned; the canvas is the other buffer */
     uint8_t reserved3;
     uint32_t repins;              /* 0x80 pump ticks that found the stock indices moved and pinned them again */
+    uint32_t inputs;              /* 0x84 touch messages the input gate handed over while owned */
+    uint8_t lease_brightness;     /* 0x88 the stock panel level when the lease began */
+    uint8_t brightness_changed;   /* 0x89 1 once 0x7E/0x23 set a level during this lease */
+    uint8_t acquired;             /* 0x8a 1 from a lease's first acquire to its release */
+    uint8_t reserved4;
 } nimo_ram;
 
 _Static_assert(sizeof(nimo_ram) <= NIMO_RAM_BYTES, "RAM block layout exceeds the carve");
@@ -103,7 +108,7 @@ _Static_assert(sizeof(nimo_crumbs) <= NIMO_CRUMB_BYTES - 16, "breadcrumbs exceed
 _Static_assert(offsetof(nimo_ram, owned) == NIMO_RAM_OWNED, "flush gate reads the owned flag here");
 _Static_assert(offsetof(nimo_ram, gate_skips) == NIMO_RAM_GATE_SKIPS, "flush gate counts here");
 _Static_assert(offsetof(nimo_ram, last) == 0x58 && offsetof(nimo_ram, repins) == 0x80 &&
-               sizeof(nimo_ram) == 0x84, "layout offsets documented above");
+               offsetof(nimo_ram, inputs) == 0x84 && sizeof(nimo_ram) == 0x8c, "layout offsets documented above");
 _Static_assert(NIMO_RAM_BASE + NIMO_RAM_BYTES == NIMO_CRUMB_BASE, "breadcrumbs follow the block");
 #endif
 

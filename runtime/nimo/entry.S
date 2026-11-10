@@ -77,3 +77,47 @@ glassly_kick_gate:
     sw      t1, NIMO_RAM_GATE_SKIPS(t0)
     li      a0, 0
     ret
+
+/* Input gate. The stock UI dispatcher (0x04208dd2, UI task) jumps here from
+ * its entry with `auipc t1; jalr x0` in place of `c.addi16sp sp,-128;
+ * c.swsp s0,120(sp); c.swsp s1,116(sp); c.swsp s3,108(sp)`, so a0 = message
+ * id, a1 = parameter bytes, a2 = their length and ra = the dispatcher's
+ * caller. While the runtime owns the panel, touch messages (0x88..0x8c tap
+ * gestures, 0x98 press, 0x99 release) and the auto-brightness step (0xa8) go
+ * to glassly_input first; when it returns nonzero the dispatcher never sees
+ * them. Everything else, and every
+ * message while not owned, replays the four instructions and rejoins. */
+    .balign 4
+    .globl glassly_input_gate
+glassly_input_gate:
+    li      t0, NIMO_RAM_BASE
+    lbu     t1, NIMO_RAM_OWNED(t0)
+    beqz    t1, 6f
+    addi    t1, a0, -0x88
+    sltiu   t2, t1, 5
+    bnez    t2, 5f
+    addi    t1, a0, -0x98
+    sltiu   t2, t1, 2
+    bnez    t2, 5f
+    li      t2, 0xa8
+    bne     a0, t2, 6f
+5:  addi    sp, sp, -16
+    sw      ra, 12(sp)
+    sw      a0, 8(sp)
+    sw      a1, 4(sp)
+    sw      a2, 0(sp)
+    call    glassly_input
+    mv      t0, a0
+    lw      ra, 12(sp)
+    lw      a0, 8(sp)
+    lw      a1, 4(sp)
+    lw      a2, 0(sp)
+    addi    sp, sp, 16
+    beqz    t0, 6f
+    ret
+6:  addi    sp, sp, -128
+    sw      s0, 120(sp)
+    sw      s1, 116(sp)
+    sw      s3, 108(sp)
+    li      t1, 0x04208dda
+    jr      t1

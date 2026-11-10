@@ -91,7 +91,8 @@ def main():
         checked = []
         for step in steps:
             name = Path(step.get("payload_file", "")).name
-            if step["key"] == "20" and name:
+            # The touch cues are plain mode-36 frames; the RV32 emulator replays them.
+            if step["key"] == "20" and name in demos:
                 answers = replies.get(name, set())
                 exact, prefix = step.get("expect_reply_hex"), step.get("expect_reply_prefix_hex", "")
                 answer = next(iter(answers)) if len(answers) == 1 else None

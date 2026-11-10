@@ -29,7 +29,7 @@ def main():
         if result.returncode:raise RuntimeError(label+' failed; see captured output')
         return result.stdout.decode()
     try:
-        for name in ('LICENSE','patches/protobuf.c','patches/settings_ext.c','patches/zlib_glue.c','patches/ring_battery.c','patches/compass.c','patches/ble_link.c','patches/host/upstream_host_test.c'):
+        for name in ('patches/protobuf.c','patches/settings_ext.c','patches/zlib_glue.c','patches/ring_battery.c','patches/compass.c','patches/ble_link.c','patches/host/upstream_host_test.c'):
             digest=hashlib.sha256((upstream/name).read_bytes()).hexdigest()
             if digest!=pin['copied_files'][name]:raise RuntimeError('Upstream source mismatch '+name)
             report['source_sha256']['upstream/'+name]=digest

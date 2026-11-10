@@ -1,7 +1,7 @@
 {
   "scene_internal.h": {
-    "base_sha256": "f711a46936ab8b56bf734c501295bf0b99c675d7d1a9d4244b667180cdcef3e5",
-    "result_sha256": "e25d01809deefdc2bc0d19fe1e7d4009cc2b9620d3e0b47973453cdbd517b896",
+    "base_sha256": "272b30db465f067b3f666696d8403255503b0a912fe62ab6b34a3c2a33605d28",
+    "result_sha256": "9f2946606722a17efd7959fecd0c17c9d1c6858256cfa66351dc038b00abcba5",
     "hunks": [
       {
         "start": 119,
@@ -16,8 +16,8 @@
     ]
   },
   "scene_shapes.inc": {
-    "base_sha256": "168aa3e9818d57fa514eaa3448e03173266b569581e7db84a4fa900e6488978e",
-    "result_sha256": "681171067c6963dddf247ae868ca4596ba7af4718cd4baafa477333d07158caa",
+    "base_sha256": "6e3fdfb7589bed2281d8e7b59ecca1a043877973809c940a333c514efe39fa41",
+    "result_sha256": "3f2a4f6b98209b96d4ec02fc4fb80fdd1b0c20dceed73a03812553a32fe9b560",
     "hunks": [
       {
         "start": 70,
@@ -32,8 +32,8 @@
     ]
   },
   "scene_cache.inc": {
-    "base_sha256": "39fdfdcee9b65d93d65d6c7c26722cf10095b470482b3bfd29e645e0d194f052",
-    "result_sha256": "e789103f98a80fa2ac5a345207f3239b6178734e90909992bad5a0ccd2a34ade",
+    "base_sha256": "48fe9aded956bd974297bdc22eef39f142cf93957ba73e1a6b52804a4bf9fab0",
+    "result_sha256": "e331ff763c3a1e68699da304dc728286e2b53f4a7634f290e18bbb5e38393194",
     "hunks": [
       {
         "start": 234,

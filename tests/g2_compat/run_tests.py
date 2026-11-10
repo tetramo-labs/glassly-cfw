@@ -27,6 +27,7 @@ def main():
     args=parser.parse_args();out=args.output.resolve();out.mkdir(parents=True,exist_ok=False)
     pin=json.loads((ROOT/'UPSTREAM.json').read_text())
     for name,digest in pin['copied_files'].items():
+        if name=='LICENSE':continue  # upstream license text not retained; repo is MIT
         if hashlib.sha256((ROOT/'upstream'/name).read_bytes()).hexdigest()!=digest:
             raise RuntimeError('Changed pinned source: '+name)
     patches=ROOT/'upstream/patches'

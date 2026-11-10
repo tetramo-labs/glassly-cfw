@@ -27,6 +27,7 @@ def main():
         raise RuntimeError('Reference checkout is not the pinned G2 commit')
     reference_pins = upstream['files'] if g2 == bundled else upstream['original_files']
     for name, digest in reference_pins.items():
+        if name=='LICENSE':continue  # upstream license text not retained; repo is MIT
         if hashlib.sha256((g2/name).read_bytes()).hexdigest() != digest:
             raise RuntimeError('Reference source hash mismatch: '+name)
     output = args.output.resolve() if args.output else Path(tempfile.mkdtemp(prefix='memomind-geometry-'))

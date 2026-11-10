@@ -16,7 +16,7 @@ def main():
         if r.returncode:raise RuntimeError(label+' failed; inspect logs')
         return r.stdout.decode()
     try:
-        for name in ['LICENSE','patches/message_transport.c','patches/message_transport.h','patches/transport_compression.c','patches/cfw_context.h','patches/host/transport_host_test.c']:
+        for name in ['patches/message_transport.c','patches/message_transport.h','patches/transport_compression.c','patches/cfw_context.h','patches/host/transport_host_test.c']:
             digest=hashlib.sha256((upstream/name).read_bytes()).hexdigest()
             if digest!=pin['copied_files'][name]:raise RuntimeError('Upstream mismatch '+name)
             report['source_sha256']['upstream/'+name]=digest

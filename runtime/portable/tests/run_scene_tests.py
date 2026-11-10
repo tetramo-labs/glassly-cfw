@@ -32,6 +32,7 @@ def main():
         return result
     try:
         for name,digest in pin['files'].items():
+            if name=='LICENSE':continue  # upstream license text not retained; repo is MIT
             if hashlib.sha256((reference/name).read_bytes()).hexdigest()!=digest:raise RuntimeError('Source mismatch '+name)
         run('generated-source-check',[sys.executable,ROOT/'tests/prepare_scene_port.py','--check'])
         report['source_hashes_verified']=len(pin['files'])

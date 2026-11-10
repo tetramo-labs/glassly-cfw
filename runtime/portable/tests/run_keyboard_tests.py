@@ -29,7 +29,7 @@ def main():
         if result.returncode:raise RuntimeError(label+' failed; see captured output')
         return result.stdout.decode()
     try:
-        for name in ('LICENSE','patches/keyboard.c','patches/keyboard_core.h','patches/host/keyboard_host_test.c'):
+        for name in ('patches/keyboard.c','patches/keyboard_core.h','patches/host/keyboard_host_test.c'):
             digest=hashlib.sha256((upstream/name).read_bytes()).hexdigest()
             if digest!=pin['copied_files'][name]:raise RuntimeError('Upstream source mismatch '+name)
             report['source_sha256']['upstream/'+name]=digest

@@ -26,6 +26,7 @@ func runInstall(_ args: Arguments) throws {
         print("Install \(GlasslyInstall.version)? The glasses restart when it finishes. [y/N] ", terminator: "")
         guard readLine()?.lowercased().hasPrefix("y") == true else { throw CLIError("Cancelled") }
     }
+    Thread.sleep(forTimeInterval: GlasslyInstall.attemptSpacing)
     let logs = try logDirectory()
     var flash = ["flash", "--address", glasses.address, "--firmware", path, "--expected-sha256", GlasslyInstall.sha256,
                  "--output", logs.path, "--confirm-write"]
@@ -53,10 +54,19 @@ func bundledFirmwarePath() -> String {
     return executable.deletingLastPathComponent().appendingPathComponent(GlasslyInstall.fileName).path
 }
 
-func pairedGlasses(address: String?) throws -> PairedBluetoothDevice {
-    let paired = try MacRFCOMMTransport.pairedDevices()
+struct InstallTarget {
+    let address: String
+    let name: String?
+}
+
+func normalizedAddress(_ address: String) -> String {
+    address.uppercased().replacingOccurrences(of: "-", with: ":")
+}
+
+func pairedGlasses(address: String?) throws -> InstallTarget {
+    let paired = try MacRFCOMMTransport.pairedDevices().map { InstallTarget(address: normalizedAddress($0.address), name: $0.name) }
     if let address {
-        guard let device = paired.first(where: { $0.address.caseInsensitiveCompare(address) == .orderedSame }) else {
+        guard let device = paired.first(where: { $0.address == normalizedAddress(address) }) else {
             throw CLIError("No paired device has address \(address)")
         }
         return device

@@ -1,0 +1,17 @@
+  0.012 central state 5
+  1.564 advert MemoMind One rssi -65 services (
+    9200
+)
+  2.384 connected
+  2.817 services ["9200", "9300", "9400"]
+  2.877 characteristics ["9401 props 30", "9402 props 30"]
+  2.998 notify 9401 true 
+  3.057 hello reply 80010119
+  4.047 hello reply 80010119
+  5.038 hello reply 80010119
+  6.057 hello reply 80010119
+  7.047 hello reply 80010119
+  8.038 hello reply 80010119
+  9.057 hello reply 80010119
+ 10.047 hello reply 80010119
+ 10.710 disconnected: The specified device has disconnected from us. accepted=false

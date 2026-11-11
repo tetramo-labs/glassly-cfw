@@ -29,7 +29,13 @@ at 0x042db2a8). Revision 25 fills both in (`analysis/ghidra/ble-transport-202611
 The 'G','M' / 'G','m' probe formats of revisions 20 and 24 are gone; command 0x74
 keeps register/adv/status ops with a v2 status block. Runtime 83,824 B (14,480 B
 free); the record-transport profile still fits (97,264 B). 18 emulator tests and
-the offline regression pass; not flashed yet. The microphone still uses the
+the offline regression pass. Flashed 2026-11-11 with `memomind install` (548
+blocks, reboot acknowledged) and booted: capabilities over Classic report
+GLASSLYCFW/25. On hardware the glasses advertise 0x9200 after boot, expose 0x9401
+and 0x9402 (props 0x1e) and answer an unbonded Mac's hello `80 01 01 19` until the
+stock policy drops it 8.3 s in; bonded-phone acceptance, GM and OTA over BLE are
+still to be checked from an iPhone
+([checkpoint](analysis/ble-link-20261110/flash-25-01/checkpoint.json)). The microphone still uses the
 Classic recording channel, and the GM writer's caller can wait for a Classic
 link's sniff exit before writing (`04216db2` on the 0x3b path), which hardware
 has to measure.

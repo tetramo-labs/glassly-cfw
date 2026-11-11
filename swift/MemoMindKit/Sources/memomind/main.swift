@@ -8,7 +8,7 @@ func loadFirmware(_ args: Arguments) throws -> EligibleFirmware {
     return try EligibleFirmware.load(data: data, expectedSHA256: args.value("--expected-sha256"))
 }
 
-func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
+func runLive(_ args: Arguments, firmware: EligibleFirmware?, printResult: Bool = true) throws {
     let capture = try Capture(path: args.value("--output"))
     let address = try args.value("--address").uppercased()
     func transport(_ name: String) -> MacRFCOMMTransport {
@@ -108,7 +108,9 @@ func runLive(_ args: Arguments, firmware: EligibleFirmware?) throws {
         result["automaticRetries"] = 0
         try capture.record(["event": "operation-complete", "result": result])
         try capture.save(result, name: "result.json")
-        try printJSON(result)
+        if printResult {
+            try printJSON(result)
+        }
     } catch {
         let failure: [String: Any] = ["complete": false, "command": args.command,
                                       "error": String(describing: error), "automaticRetries": 0,
@@ -126,6 +128,7 @@ do {
     let args = try Arguments(Array(CommandLine.arguments.dropFirst()))
     switch args.command {
     case "help", "--help", "-h": print(Arguments.usage)
+    case "install": try runInstall(args)
     case "devices":
         let host = try MacRFCOMMTransport.hostStatus()
         let paired = try MacRFCOMMTransport.pairedDevices().map { device -> [String: Any] in
@@ -147,6 +150,6 @@ do {
     default: throw CLIError(Arguments.usage)
     }
 } catch {
-    fputs("memomind: \(error)\n", stderr)
+    fputs("memomind: \((error as? LocalizedError)?.errorDescription ?? String(describing: error))\n", stderr)
     exit(1)
 }

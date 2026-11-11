@@ -238,6 +238,10 @@ private struct FirmwareRelease {
                         sha256: "17a69ad20d7e364f0185eb0d6ec61e34dd08ed2c057a76648d67c8c554b3d0a8", byteCount: 2_242_788, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "841c961e21bfc0b11c33c70101889ebe7e4bb614e5b88cd203b6cd972f1cd009",
                         streams: streamPins(.bleFrames24)),
+        FirmwareRelease(name: "ble-link-001",
+                        sha256: "9cdd04786fceee283c30dafc20a01d680894d60026fdc78dbb7a8195fe54fae1", byteCount: 2_243_544, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "e6b967699f3425c305b6fd5f5bf65004f0ebe697366429498d5b601614c2f8f5",
+                        streams: streamPins(.bleLink25)),
         // Eye-tagged objects (id bit 31; bit 30 right) render and present once per eye, so tweens run with depth; no record transport (GLASSLYCFW/23).
         FirmwareRelease(name: "stereo-002",
                         sha256: "a50afd695659cfebc44f1b13f61f71d991685d2ef33d25da5e348d97a1e01eb8", byteCount: 2_242_382, modified: true,
@@ -357,12 +361,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case bleFrames24, stereo23, stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case bleLink25, bleFrames24, stereo23, stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .bleLink25:
+            metadata = 171; appPacked = 972_442; appRaw = 1_857_040
+            metadataHash = "a55b172f54dfeeaed71306ba6e89738cc7869e98fd0772f8435d0485641f2eca"
+            appHash = "4d1aa36ed1106c9002c900feab7c36fcef2d2e03d306764c6106a0770fbb7851"
         case .bleFrames24:
             metadata = 171; appPacked = 971_686; appRaw = 1_856_208
             metadataHash = "af8528cc3a1e8f472dcec32de244f242b06d434e124dcc8a3df9e7f292d44589"

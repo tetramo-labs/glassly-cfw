@@ -279,7 +279,7 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
     if notification_relay:
         retain += ["-Wl,--undefined=glassly_notification_entry"]
     if ble_probe:
-        retain += ["-Wl,--undefined=glassly_ble_boot_entry"]
+        retain += ["-Wl,--undefined="+name for name in ("glassly_ble_boot_entry","glassly_gm_write_entry","glassly_ota_ble_send","glassly_adv_stop")]
     run("gcc", *flags, "-Wl,--" + ("relax" if relax else "no-relax") + ",--gc-sections,--build-id=none,--fatal-warnings",
         *retain, "-Wl,-Map="+str(out/"graphics.map"), "-T", linker, *objects, "-o", elf)
     if run("nm", "-u", elf).strip():

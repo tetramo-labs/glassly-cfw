@@ -1,0 +1,61 @@
+{
+ "version": "GLASSLYCFW/25",
+ "release": "ble-link-001",
+ "imageBytes": 2243544,
+ "imageSHA256": "9cdd04786fceee283c30dafc20a01d680894d60026fdc78dbb7a8195fe54fae1",
+ "containerHeaderSHA256": "e6b967699f3425c305b6fd5f5bf65004f0ebe697366429498d5b601614c2f8f5",
+ "appHeaderSHA256": "c5b4fcd592909a8c33af834a6eb283832e61f502d3ec2af946122524e034fcf1",
+ "runtimeBytes": 83824,
+ "runtimeSHA256": "39d3adb2257a6f22aeff4cc492f94c861ca32440e23260bf2a20174cab28b3cd",
+ "streams": [
+  {
+   "index": 0,
+   "packedBytes": 171,
+   "rawBytes": 344,
+   "packedSHA256": "a55b172f54dfeeaed71306ba6e89738cc7869e98fd0772f8435d0485641f2eca",
+   "rawSHA256": "9ce798c821ae03d53f15b7effd1ecd4335a2f195e532b0be3864b4d9f7ce196c"
+  },
+  {
+   "index": 1,
+   "packedBytes": 481265,
+   "rawBytes": 909676,
+   "packedSHA256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1",
+   "rawSHA256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db"
+  },
+  {
+   "index": 2,
+   "packedBytes": 437783,
+   "rawBytes": 695512,
+   "packedSHA256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0",
+   "rawSHA256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d"
+  },
+  {
+   "index": 3,
+   "packedBytes": 972442,
+   "rawBytes": 1857040,
+   "packedSHA256": "4d1aa36ed1106c9002c900feab7c36fcef2d2e03d306764c6106a0770fbb7851",
+   "rawSHA256": "65fc541541ca9c8bb5777dcfd06749dac9ff9ff8374df337e1f0110dc9c88dea"
+  },
+  {
+   "index": 4,
+   "packedBytes": 283737,
+   "rawBytes": 284300,
+   "packedSHA256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c",
+   "rawSHA256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82"
+  },
+  {
+   "index": 5,
+   "packedBytes": 986,
+   "rawBytes": 3616,
+   "packedSHA256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee",
+   "rawSHA256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24"
+  },
+  {
+   "index": 6,
+   "packedBytes": 67006,
+   "rawBytes": 81594,
+   "packedSHA256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca",
+   "rawSHA256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203"
+  }
+ ]
+}

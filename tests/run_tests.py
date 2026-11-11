@@ -94,7 +94,7 @@ def main():
           '--rect-copy', '--command-bundles', '--text-commands', '--diagnostic-commands',
           '--reset-undo-trim', '--minimal-launcher', '--flash-scene', '--wake-control',
           '--notification-relay', '--record-transport', '--microphone-control', '--sensor-capture', '--raw-present', '--ble-probe', '--lean-diagnostics', '--lean-capabilities', '--cfw-revision', '18', '--rx-profile', 'app-rx-96k-v1', '--relax']),
-        ('ble_probe_runtime', 'BLE probe registers a Glassly GATT service after boot, enables advertising, counts and echoes writes; stock GATT natives mocked',
+        ('ble_probe_runtime', 'BLE link: GM and OTA characteristics, bonded-peer acceptance window, GM ingress/egress gates, OTA transport and advertising gate; stock GATT natives mocked',
          [str(args.rv32_python.absolute()), 'tests/rv32/ble_probe_runtime_emulator_test.py',
           '--build', str(out / 'record-build'), '--report', str(out / 'ble-probe-runtime.json')]),
         ('raw_present_runtime', 'Raw presents copy changed boxes into the locked panel slices; the LVGL image is the fallback; slice natives mocked',

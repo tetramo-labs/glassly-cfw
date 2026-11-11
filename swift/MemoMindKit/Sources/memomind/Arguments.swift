@@ -15,6 +15,7 @@ struct Arguments {
     static let usage = """
     Native MemoMind One RFCOMM flasher
 
+      memomind install [--address MAC] [--firmware FILE] [--yes] [--resume]
       memomind devices
       memomind inspect --firmware FILE --expected-sha256 HASH
       memomind replay --firmware FILE --expected-sha256 HASH --transcript TSV
@@ -38,15 +39,16 @@ struct Arguments {
     let confirmWrite: Bool
     let resume: Bool
     let sampled: Bool
+    let assumeYes: Bool
 
     init(_ arguments: [String]) throws {
         guard let command = arguments.first else { throw CLIError(Self.usage) }
-        guard ["devices", "inspect", "replay", "probe", "buttons", "microphone", "sensors", "ownership", "fontprobe", "check", "flash", "help", "--help", "-h"].contains(command) else {
+        guard ["install", "devices", "inspect", "replay", "probe", "buttons", "microphone", "sensors", "ownership", "fontprobe", "check", "flash", "help", "--help", "-h"].contains(command) else {
             throw CLIError("Unknown command: \(command)\n\(Self.usage)")
         }
         self.command = command
         var values: [String: String] = [:]
-        var confirm = false, sampled = false, resume = false
+        var confirm = false, sampled = false, resume = false, assumeYes = false
         var index = 1
         while index < arguments.count {
             let flag = arguments[index]
@@ -56,8 +58,14 @@ struct Arguments {
                 index += 1
                 continue
             }
+            if flag == "--yes" {
+                guard command == "install", !assumeYes else { throw CLIError("--yes is an install option, once") }
+                assumeYes = true
+                index += 1
+                continue
+            }
             if flag == "--resume" {
-                guard command == "flash", !resume else { throw CLIError("--resume is a flash option, once") }
+                guard command == "flash" || command == "install", !resume else { throw CLIError("--resume is a flash or install option, once") }
                 resume = true
                 index += 1
                 continue
@@ -80,6 +88,7 @@ struct Arguments {
         let optional: Set<String> = switch command {
         case "sensors": ["--interval"]
         case "fontprobe": ["--from", "--to", "--miss-budget", "--scalars"]
+        case "install": ["--address", "--firmware"]
         default: []
         }
         let allowed: Set<String> = switch command {
@@ -124,6 +133,7 @@ struct Arguments {
         confirmWrite = confirm
         self.resume = resume
         self.sampled = sampled
+        self.assumeYes = assumeYes
     }
 
     /// "U+01F7" or bare hex → scalar value.

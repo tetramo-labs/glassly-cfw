@@ -1,5 +1,39 @@
 # MemoMind One firmware investigation
 
+Revision 25 (`ble-link-001`) makes BLE the iPhone's only link, because App
+Review refuses the vendor's `ql.iap2.*` protocols without its MFi plan ID. The
+stock firmware already models BLE as phone link type 4 (`042d9aa6`: flag
+0x02012077, peer 0x02012088) and its OTA updater has an empty "BLE" transport
+vtable (0x0435d958) beside IAP2 and SPP, but nothing sets the flag and the GM
+writer's BLE branch notifies a NULL characteristic (`042db006`, `jal 0431a712`
+at 0x042db2a8). Revision 25 fills both in (`analysis/ghidra/ble-transport-20261110/`):
+- 0x9400 gains 0x9402 beside 0x9401, both registered at boot, and a GATT link
+  listener (`04319adc`) tracks the phone central.
+- Writes are fragments of one GM packet (0x9401) or one OTA frame (0x9402): flags
+  byte, bit 0 first with a u16 total, bit 1 last. A whole GM packet is posted to
+  the BT app task as message 0x3a (`042361b8(0xd,0x3a,…)`, the stock receive
+  path into `042e8554`); a whole OTA frame goes to the BLE slot's receive callback
+  (`0423cc32`).
+- Acceptance: the central's hello (`80 01` + notify size) is answered `80 01 01 25`
+  until it has stayed connected 10 s, past the stock policy that drops centrals
+  that are not the bonded phone, then `80 01 00 25`; only then is 0x02012077 set
+  and GM or OTA traffic accepted.
+- The GM writer's first 8 bytes jump to `glassly_gm_write_entry`, which notifies
+  the frame on 0x9401 while a phone is accepted and subscribed, and otherwise
+  replays the displaced prologue into stock. The OTA vtable's send slot
+  (0x0435d978) points at `glassly_ota_ble_send`; a BLE disconnect after OTA
+  traffic calls the slot's disconnect callback (`042388e0`).
+- The five stock stop-advertising calls in the BT task go through
+  `glassly_adv_stop`, which keeps advertising while the Glassly service exists;
+  the link listener restarts advertising (`042d52bc`) after the phone leaves.
+The 'G','M' / 'G','m' probe formats of revisions 20 and 24 are gone; command 0x74
+keeps register/adv/status ops with a v2 status block. Runtime 83,824 B (14,480 B
+free); the record-transport profile still fits (97,264 B). 18 emulator tests and
+the offline regression pass; not flashed yet. The microphone still uses the
+Classic recording channel, and the GM writer's caller can wait for a Classic
+link's sniff exit before writing (`04216db2` on the 0x3b path), which hardware
+has to measure.
+
 Revision 22 (`stereo-001`) gives each eye its own raster. The stock
 `jbd013_api.c` driver feeds two JBD013 micro-LED panels from one framebuffer
 (`analysis/ghidra/depth-20261109/`): bit 4 of the byte at 0x02010318 enables

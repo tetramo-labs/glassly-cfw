@@ -3,9 +3,6 @@
  * global hooks. Stock LVGL/response allocation can still assert on native OOM.
  */
 #include "graphics.h"
-#ifdef MM_BLE_PROBE
-#include "ble_probe.h"
-#endif
 #ifdef MM_GRAPHICS_INPUT
 #include "input.h"
 #endif
@@ -33,9 +30,6 @@ static void post(const void *data,size_t size) {
 }
 static void send(uint8_t event,void *response) {
     typedef uint32_t (*send_fn)(uint8_t,uint8_t,uint8_t,void *,uint32_t);
-#ifdef MM_BLE_PROBE
-    if(event==0 && glassly_ble_reply(response))return; /* the request came over BLE */
-#endif
     (void)FN(0x042e866eu,send_fn)(event,15,MM_GRAPHICS_COMMAND,response,1);
 }
 #ifdef MM_GRAPHICS_INPUT

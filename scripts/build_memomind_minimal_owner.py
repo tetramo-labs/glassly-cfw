@@ -28,6 +28,26 @@ def jump(address):
     require(ENTRY<=address<ENTRY+98304 and not address%2,'Invalid runtime callback')
     hi=(address+0x800)>>12;lo=address-(hi<<12)
     return struct.pack('<II',(hi<<12)|(5<<7)|0x37,((lo&4095)<<20)|(5<<15)|0x67)
+def jal(address,target):
+    delta=target-address;require(-(1<<20)<=delta<(1<<20) and delta%2==0,'JAL range')
+    ins=((delta>>20&1)<<31)|((delta>>1&1023)<<21)|((delta>>11&1)<<20)|((delta>>12&255)<<12)|(1<<7)|0x6f
+    return struct.pack('<I',ins)
+BLE_ADV_STOP_SITES=(0x042e0ff6,0x042e1020,0x042e2062,0x042df852,0x042d5b56)
+def apply_ble_link(body,symbols,blob_bytes):
+    def target(name):
+        address=symbols[name];require(ENTRY<=address<ENTRY+blob_bytes and address%2==0,name+' outside runtime')
+        return address
+    edits=[]
+    def patch(address,before,after,purpose):
+        off=address-BODY_BASE;require(body[off:off+len(before)]==before,purpose+' witness differs')
+        body[off:off+len(after)]=after
+        edits.append(dict(address=address,before=before.hex(),after=after.hex(),purpose=purpose))
+    patch(0x042db006,bytes.fromhex('397122dc4ad852d4'),jump(target('glassly_gm_write_entry')),'ble-gm-writer')
+    patch(0x0435d978,struct.pack('<I',0x04240430),struct.pack('<I',target('glassly_ota_ble_send')),'ble-ota-send')
+    stop=target('glassly_adv_stop')
+    for address in BLE_ADV_STOP_SITES:
+        patch(address,jal(address,0x042d556a),jal(address,stop),'ble-adv-stop')
+    return edits
 def construct(source,blob,build):
     require(build.get('minimal_launcher') and build.get('diagnostic_commands') and build.get('reset_undo_trim'),'Requires minimal launcher diagnostic profile')
     require(sha(blob)==build['blob_sha256'] and len(blob)==build['blob_bytes'],'Runtime pin mismatch')
@@ -114,6 +134,8 @@ def construct(source,blob,build):
         ins=((delta>>20&1)<<31)|((delta>>1&1023)<<21)|((delta>>11&1)<<20)|((delta>>12&255)<<12)|(1<<7)|0x6f
         after=struct.pack('<I',ins);body[off:off+4]=after
         edits.append(dict(address=address,before=before,after=after.hex(),purpose='ble-boot-register'))
+    if build.get('ble_probe') and revision>=25:
+        edits+=apply_ble_link(body,build['symbols'],len(blob))
     allowed={i for row in gates+edits for i in range(row['address']-BODY_BASE,row['address']-BODY_BASE+len(bytes.fromhex(row['after'])))}
     changed=[i for i,(a,b) in enumerate(zip(original,body)) if a!=b]
     require(set(changed)<=allowed and len(body)==len(original),'Change outside fixed lifecycle gates')

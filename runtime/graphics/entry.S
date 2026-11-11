@@ -225,4 +225,47 @@ glassly_ble_boot_entry:
     addi sp, sp, 16
     ret
 .size glassly_ble_boot_entry, .-glassly_ble_boot_entry
+
+.section .text.glassly_gm_write_entry,"ax",@progbits
+.align 1
+.global glassly_gm_write_entry
+.type glassly_gm_write_entry, @function
+glassly_gm_write_entry:
+    mv t0,sp
+    andi sp,sp,-16
+    addi sp,sp,-48
+    sw t0,0(sp)
+    sw ra,4(sp)
+    sw a0,8(sp)
+    sw a1,12(sp)
+    sw a2,16(sp)
+    sw a3,20(sp)
+    sw a4,24(sp)
+    sw a5,28(sp)
+    sw a6,32(sp)
+    sw a7,36(sp)
+    call glassly_gm_write
+    beqz a0,1f
+    addi a0,a0,-1
+    seqz a0,a0
+    lw ra,4(sp)
+    lw t0,0(sp)
+    mv sp,t0
+    ret
+1:
+    lw a0,8(sp)
+    lw a1,12(sp)
+    lw a2,16(sp)
+    lw a3,20(sp)
+    lw a4,24(sp)
+    lw a5,28(sp)
+    lw a6,32(sp)
+    lw a7,36(sp)
+    lw ra,4(sp)
+    lw t0,0(sp)
+    mv sp,t0
+    .byte 0x39,0x71,0x22,0xdc,0x4a,0xd8,0x52,0xd4
+    li t0,0x042db00e
+    jr t0
+.size glassly_gm_write_entry, .-glassly_gm_write_entry
 #endif

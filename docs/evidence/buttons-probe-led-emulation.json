@@ -1,0 +1,116 @@
+{
+  "kind": "Offline button streaming execution and independent queue model",
+  "hardware_accessed": false,
+  "package_sha256": "007ca4b94e765ba20bfeb7aaaf7728c14a741b6bac821d74932084b8536334a8",
+  "plaintext_sha256": "9c93ce2bbf3bba0a4e41e7505e65b4c0deeedb082668ad384e8653aad3333528",
+  "source_sha256": "115b35519e949001f4bb4358a093e50608a376547fa3e23402c0869b2f59fad9",
+  "gpio_combinations": 4096,
+  "ipc_capacity_irq_cases": 2048,
+  "random_model_polls": 12000,
+  "model_overflows": 164,
+  "model_packets": 1371,
+  "startup_matches_stock": true,
+  "startup_reads_tail": false,
+  "pool_block_reserved": true,
+  "oem_pool_counts": [
+    2,
+    4,
+    4,
+    3,
+    1,
+    3,
+    5,
+    3
+  ],
+  "reserved_block_pointer_candidates": [],
+  "sole_pool_base_pointer_offset": "0xbc1c",
+  "state_written_extent": [
+    "0x22514",
+    "0x22544"
+  ],
+  "poll_entry": "0x1029c5e",
+  "idle_entry": "0x1029c44",
+  "idle_states": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "maximum_observed_stack_bytes": 892,
+  "led": {
+    "led_driver": "0x010232bc (mask bit0 GPIO0.3, bit1 GPIO0.2, bit2 GPIO2.3)",
+    "led_engine": {
+      "start": "0x10247c4",
+      "tick": "0x1024584",
+      "selector": "0x10242f0",
+      "selector_pairing_test": "0x01024304 calls 0x0101f080 (bit 6 of 0x000201dc)",
+      "selector_connected_test": "0x01024354 reads HID state 0x00020182 == 2",
+      "snapshot_predicate_calls": [
+        "0x010245ee",
+        "0x0102462e"
+      ]
+    },
+    "hook_targets": {
+      "0xc304": "0x1029d54",
+      "0xc354": "0x1029d6c",
+      "0xc5ee": "0x1029d58",
+      "0xc62e": "0x1029d58"
+    },
+    "scenarios": {
+      "reconnect": {
+        "stock_changes_in_400_ticks_after_event02": 6,
+        "stock_hid_connect_output": [
+          0,
+          0,
+          1
+        ],
+        "patched_event02_output": [
+          0,
+          0,
+          1
+        ]
+      },
+      "pairing": {
+        "stock_changes_in_400_ticks_after_event02": 39,
+        "stock_hid_connect_output": [
+          0,
+          0,
+          1
+        ],
+        "patched_event02_output": [
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "patched_a1_a0_unchanged": true,
+    "patched_event05_restores_stock_sequence": true,
+    "selector_equivalence_cases": 9216,
+    "selector_cases_changed_by_ble_link": 2382,
+    "lockstep_ticks": 6000,
+    "ram_write_sets_match_stock": true,
+    "observed_led_tick_stack_bytes": {
+      "stock": 40,
+      "patched": 40
+    },
+    "stubs": {
+      "0x101a304": "command-02 visibility submission during pairing entry only"
+    },
+    "limits": [
+      "Physical LED colour/pin population on the Zero 2 PCB is not established",
+      "No interrupt, timer cadence or radio execution; events are injected into the software ring",
+      "Not observed on hardware"
+    ]
+  },
+  "stubs": {
+    "0x0101ca40": "OEM report task returns 0x55; argument and saved registers checked",
+    "0x0101c874": "OEM connection power/indicator helper only"
+  },
+  "limits": [
+    "No radio, interrupt execution, actual sampling cadence or physical button labels",
+    "ACK bits are synthetic; no new proof of radio FIFO errors or CCC ordering",
+    "No complete stack/ROM/DMA ownership claim; static word scan cannot exclude computed accesses",
+    "Reduced OEM allocation capacity needs live coexistence testing"
+  ]
+}

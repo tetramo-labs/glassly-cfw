@@ -22,6 +22,10 @@ short per-unit suffix. Pair inside Glassly, leaving it unpaired in phone setting
 - Battery A press/release and 187.95 seconds connected without keepalive writes,
   including 166.26 seconds idle after release.
 
+The current build also keeps the LED steady while a BLE host is connected, as
+stock does for a connected host. That change is checked in emulation only and has
+not yet been flashed.
+
 This is experimental firmware tested on one YC3121 unit. Flashing can brick a
 controller. iPhone background/locked delivery and long-term battery life still
 need hardware validation; the earlier macOS captures do not establish them.

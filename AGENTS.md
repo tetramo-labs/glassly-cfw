@@ -40,7 +40,7 @@ valid BLE baseline are observed. All 12 physical buttons delivered press/release
 packets in a user-confirmed ordered capture; A+B also worked. Evidence and masks
 are in `docs/evidence/buttons-probe-mapping.json`.
 Read `docs/buttons-probe.md` before changing or flashing it. It reserves one OEM
-600-byte pool block (48 bytes used), uses 364 bytes of the audited tail, and has
+600-byte pool block (48 bytes used), uses 408 bytes of the audited tail, and has
 its own sample-based filter/16-entry queue. It does not link the unbound C objects.
 Its host contract requires FF13 subscription then A1; A0 before unsubscribe.
 Battery A press/release and a 187.951-second connection without keepalives also

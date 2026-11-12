@@ -42,6 +42,13 @@ or a minimal change. Earlier emulation results remain offline evidence.
   have no gaps or overflow flags.
 - [x] Battery button/idle test: A press/release, 187.951 seconds connected,
   166.260 seconds idle after release, no keepalives, A0 acknowledged.
+- [x] Trace why the LED keeps blinking during a Glassly session (LED engine keys
+  only off the pairing flag and HID state `0x20182`) and build a revision that
+  selects the stock connected branch while BLE state is 2. Offline checks pass;
+  see `buttons-probe.md`.
+- [ ] Flash the LED revision (`007ca4b9…` / `9c93ce2b…`) and observe a steady LED
+  while Glassly is connected (from pairing and from reconnect), the stock blink
+  after disconnect, and unchanged charging/low-battery indications.
 - [ ] Integrate firmware idle/watchdog ownership with the notification sender,
   then test notification delivery and device-side CCC/reset ordering. Long-term
   battery use, idle/wake and sleep remain unverified.

@@ -109,6 +109,7 @@ static const char *ble_hash="2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6
 static const char *notify_hash="940d562d4552a35d70fa25538ef452708cd1fbed6e930eeb43d8eae720373aa5";
 
 static const char *buttons_hash="bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54";
+static const char *buttons_led_hash="9c93ce2bbf3bba0a4e41e7505e65b4c0deeedb082668ad384e8653aad3333528";
 
 int main(int argc,char **argv) {
     if(argc!=6 || strcmp(argv[1],"--apply")) {
@@ -124,7 +125,8 @@ int main(int argc,char **argv) {
     int ble=!strcmp(dh,"c51e350561aa51130b552efbaa64b3b5c2547731947001a0255ac36e60f43e59") && !strcmp(ph,ble_hash);
     int notify=!strcmp(dh,"3a92dd60565e136a810fd0dc0148418c7b13cdb678eae66a5d5a8e2634369ed3") && !strcmp(ph,notify_hash);
     int buttons=!strcmp(dh,"a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be") && !strcmp(ph,buttons_hash);
-    if(!stock && !probe && !ble && !notify && !buttons){fprintf(stderr,"Refusing unreviewed image/payload hash pair\n");return 2;}
+    int buttons_led=!strcmp(dh,"007ca4b94e765ba20bfeb7aaaf7728c14a741b6bac821d74932084b8536334a8") && !strcmp(ph,buttons_led_hash);
+    if(!stock && !probe && !ble && !notify && !buttons && !buttons_led){fprintf(stderr,"Refusing unreviewed image/payload hash pair\n");return 2;}
     const uint8_t *header=dat+0xc81c,*ciphertext=header+28;
     if(u32(header)!=108 || u32(header+4)!=BASE || u32(header+8)!=SIZE || u32(header+12)!=0x9018)return 2;
     printf("image_sha256=%s\nplaintext_sha256=%s\n",dh,ph);
@@ -151,7 +153,8 @@ int main(int argc,char **argv) {
     if(!read_range(dev,BASE,backup,SIZE) || !save(argv[5],"before-application.bin",backup,SIZE))goto done;
     if(!read_range(dev,META_BASE,metadata,META_SIZE) || !save(argv[5],"before-metadata.bin",metadata,META_SIZE))goto done;
     hash(backup,SIZE,ph);printf("backup_sha256=%s\n",ph);
-    if(strcmp(ph,stock_hash) && strcmp(ph,probe_hash) && strcmp(ph,ble_hash) && strcmp(ph,notify_hash) && strcmp(ph,buttons_hash)){fprintf(stderr,"Unexpected installed baseline; backup saved, no erase performed\n");goto done;}
+    if(strcmp(ph,stock_hash) && strcmp(ph,probe_hash) && strcmp(ph,ble_hash) && strcmp(ph,notify_hash) &&
+       strcmp(ph,buttons_hash) && strcmp(ph,buttons_led_hash)){fprintf(stderr,"Unexpected installed baseline; backup saved, no erase performed\n");goto done;}
     if(u32(metadata+0x40)!=108){fprintf(stderr,"Unexpected version record; no erase performed\n");goto done;}
     if(!save(argv[5],"target.dat",dat,124472) || !save(argv[5],"expected.bin",expected,SIZE))goto done;
     fprintf(stderr,"Backup saved. Erasing application and vendor version record.\n");

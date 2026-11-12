@@ -19,6 +19,8 @@
 .Lcapacity:
 .org 0x6e50
 .Lincrement_idle:
+.org 0x7080
+.Lpairing_mode:            // Bit 6 of 0x201dc, set by pairing entry 0x0101b5d8.
 .org 0x764c
 .Lgpio:
 .org 0x82c8
@@ -29,6 +31,14 @@
 .Lcancel_watchdog:
 .org 0xbbba
     movs r2, #2            // Keep third 600-byte block out of OEM free list.
+.org 0xc304
+    bl .Lled_pairing       // LED pattern selector's pairing-flag test.
+.org 0xc354
+    bl .Lled_link          // LED pattern selector's HID-state read.
+.org 0xc5ee
+    bl .Lled_snapshot      // LED tick snapshot compare.
+.org 0xc62e
+    bl .Lled_snapshot      // LED tick snapshot store.
 
 .org 0x11c04
 .Lreset:
@@ -203,6 +213,33 @@
     bl .Lstock_input       // Preserve OEM reports and its return/idle policy.
     add sp, #28
     pop {r4,r5,r6,r7,pc}
+.Lled_pairing:
+    // Stock HID connect clears the pairing flag; hide it while BLE is connected.
+    movs r0, #0
+    b .Lled_flag
+.Lled_snapshot:
+    // Snapshot value 2 while BLE is connected, so link changes reselect.
+    movs r0, #2
+.Lled_flag:
+    ldr r1, .Lble
+    ldrb r1, [r1]
+    cmp r1, #2
+    beq .Lled_flag_done
+    push {r4,lr}
+    bl .Lpairing_mode
+    pop {r4,pc}
+.Lled_flag_done:
+    bx lr
+.Lled_link:
+    // A BLE connection selects the stock HID-connected LED branch. r0 only.
+    ldr r0, .Lble
+    ldrb r0, [r0]
+    cmp r0, #2
+    beq .Lled_link_done
+    ldr r0, .Lhid
+    ldrb r0, [r0]
+.Lled_link_done:
+    bx lr
 .balign 4
 .Lstate: .word 0x00022514
 .Lble: .word 0x00020682
@@ -211,3 +248,4 @@
 .Ldescriptor: .word 0x000a0900
 .Lhandle: .word 0x00020648
 .Ltag: .word 0x04470000
+.Lhid: .word 0x00020182

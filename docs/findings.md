@@ -129,6 +129,23 @@ isolated. A fresh battery connection is being tested separately. No iPhone or
 Glassly background result, long-term battery-life measurement or radio-overflow
 stress result is claimed.
 
+### Connected LED indication (2026-11-12, offline only)
+
+The user reported that the LED keeps blinking while the Glassly App is connected.
+The stock LED engine (selector `0x010242f0`, tick `0x01024584`, driver
+`0x010232bc`) first shows the pairing pattern while bit 6 of `0x201dc` is set
+(stored by pairing entry `0x0101b5d8`, the Select-hold pairing step), and the
+steady connected indication only for HID state `0x20182 == 2`. Stock HID connect
+(dispatcher case `0xb7`) sets that state and clears `0x201dc`. BLE event `0x02`
+only sets BLE state `0x20682`, which no LED code reads, so a GATT session keeps
+the pairing or reconnect blink; no missing CCC or encryption event is involved.
+Emulating the stock dispatcher, pairing entry and LED engine reproduces this.
+The current `buttons-probe` build replaces the selector's pairing and HID tests
+and the tick's two snapshot predicate calls, so BLE state 2 takes the stock
+connected branch and BLE disconnect returns to the stock pattern. Package
+`007ca4b9…`, plaintext `9c93ce2b…`; **not flashed and not observed on hardware**.
+Details and checks: `buttons-probe.md`.
+
 ## Initial hardware identification
 
 ### BLE visibility experiment (flashed and verified)

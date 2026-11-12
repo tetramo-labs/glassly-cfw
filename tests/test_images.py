@@ -20,7 +20,8 @@ class ContainerTests(unittest.TestCase):
     def test_buttons_image_preserves_extent_startup_and_other_section(self):
         package, payload, report = build_buttons_probe()
         original_package, baseline, _ = build_ble_probe()
-        allowed = set(range(0x11c04, 0x11d70))
+        self.assertLessEqual(report['tail_used_bytes'], 508)
+        allowed = set(range(0x11c04, 0x11c04 + report['tail_used_bytes']))
         for offset, old in HOOKS.items():
             allowed.update(range(offset, offset+len(old)))
         changed = {i for i, (a,b) in enumerate(zip(payload,baseline)) if a != b}
@@ -29,8 +30,14 @@ class ContainerTests(unittest.TestCase):
         self.assertEqual(len(package), len(original_package))
         self.assertEqual(package[:0xc81c], original_package[:0xc81c])
         self.assertEqual(payload[0x1182c:0x11c04], baseline[0x1182c:0x11c04])
-        self.assertEqual(report['package_sha256'], 'a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be')
-        self.assertEqual(report['plaintext_sha256'], 'bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54')
+        self.assertEqual(report['tail_used_bytes'], 408)
+        self.assertEqual(report['led_hooks'], ['0xc304', '0xc354', '0xc5ee', '0xc62e'])
+        self.assertEqual(report['package_sha256'], '007ca4b94e765ba20bfeb7aaaf7728c14a741b6bac821d74932084b8536334a8')
+        self.assertEqual(report['plaintext_sha256'], '9c93ce2bbf3bba0a4e41e7505e65b4c0deeedb082668ad384e8653aad3333528')
+        flasher = (ROOT / 'tools/flash_zero2.c').read_text()
+        for pinned in (report['package_sha256'], report['plaintext_sha256'],
+                       report['previous_buttons_plaintext_sha256']):
+            self.assertIn(pinned, flasher)
 
     @unittest.skipUnless((ROOT / 'research/downloads/Zero2-v1.08.dat').exists(), 'Fetch pinned OEM image')
     def test_notification_probe_changes_only_two_calls_and_bounded_tail(self):

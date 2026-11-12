@@ -8,7 +8,12 @@ from startup import reconstruct
 
 HOOKS = {0x1918: bytes.fromhex('09f0cafc'), 0x1ae0: bytes.fromhex('02f0c8fe'),
          0x3e28: bytes.fromhex('00f00afe'), 0x3e36: bytes.fromhex('03f00bf8'),
-         0xbbba: bytes.fromhex('0322')}
+         0xbbba: bytes.fromhex('0322'), 0xc304: bytes.fromhex('faf7bcfe'),
+         0xc354: bytes.fromhex('86480078'), 0xc5ee: bytes.fromhex('faf747fd'),
+         0xc62e: bytes.fromhex('faf727fd')}
+LED_HOOKS = (0xc304, 0xc354, 0xc5ee, 0xc62e)
+TAIL_LIMIT = 508
+PREVIOUS_PLAINTEXT = 'bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54'
 STATE = 0x22514
 STATE_BYTES = 48
 
@@ -23,8 +28,8 @@ def build():
     subprocess.run(['clang', '--target=arm-none-eabi', '-mcpu=cortex-m0', '-mthumb', '-c',
                     str(ROOT/'firmware/buttons_probe.s'), '-o', str(out/'buttons_probe.o')], check=True)
     compiled = text_section((out/'buttons_probe.o').read_bytes())
-    if not TAIL < len(compiled) <= len(base):
-        raise ValueError('Code exceeds existing image extent')
+    if not TAIL < len(compiled) <= TAIL + TAIL_LIMIT:
+        raise ValueError('Code exceeds the audited 508-byte tail')
     patched = bytearray(base)
     for offset, expected in HOOKS.items():
         if base[offset:offset+len(expected)] != expected:
@@ -51,12 +56,14 @@ def build():
                   pool_600_byte_blocks_before=3, pool_600_byte_blocks_after=2,
                   startup_ram_unchanged=True, gd32_and_headers_unchanged=True,
                   assembly_sha256=sha256((ROOT/'firmware/buttons_probe.s').read_bytes()),
+                  led_hooks=[hex(k) for k in LED_HOOKS], previous_buttons_plaintext_sha256=PREVIOUS_PLAINTEXT,
                   protocol_version=4, queue_snapshots=16, packet_bytes=8,
                   limits=['Offline build only; hardware results are recorded separately in docs/buttons-probe.md',
                           'Host must subscribe then write A1; write A0 before unsubscribing; connect resets session',
                           'Whole-mask two-sample qualification at stock timer cadence, not the unbound 8 ms filter',
                           'Nonzero/missing radio ACK stalls sending; queued states remain and overflow is marked',
                           'One OEM 600-byte pool block is reserved, reducing OEM allocation capacity',
+                          'BLE connection selects the stock HID-connected LED branch; LED change not observed on hardware',
                           'No iOS background, long-term battery or complete stack ownership claim'])
     return package, patched, report
 

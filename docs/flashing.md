@@ -28,8 +28,12 @@ an offline flash plan. The built package is
 `build/buttons-probe/Zero2-v1.08-buttons-probe.dat`, SHA256:
 
 ```text
-a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be
+007ca4b94e765ba20bfeb7aaaf7728c14a741b6bac821d74932084b8536334a8
 ```
+
+This revision adds the steady connected LED and has only been checked offline;
+the hardware results so far are from the previous package `a64e0b6e…`, which the
+flasher still accepts and recognizes as an installed baseline.
 
 The downloader rejects changed size/SHA256. Its catalog-MD5 warning is expected
 and documented in `sources.lock.json`; do not bypass a SHA256 failure.

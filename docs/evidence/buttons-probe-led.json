@@ -1,0 +1,73 @@
+{
+  "kind": "Experimental button streaming; independent compact implementation, not the unbound C components",
+  "package_sha256": "007ca4b94e765ba20bfeb7aaaf7728c14a741b6bac821d74932084b8536334a8",
+  "plaintext_sha256": "9c93ce2bbf3bba0a4e41e7505e65b4c0deeedb082668ad384e8653aad3333528",
+  "baseline_plaintext_sha256": "2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6450cd2b83fe22",
+  "hooks": {
+    "0x1918": {
+      "before": "09f0cafc",
+      "after": "10f082f9"
+    },
+    "0x1ae0": {
+      "before": "02f0c8fe",
+      "after": "10f096f8"
+    },
+    "0x3e28": {
+      "before": "00f00afe",
+      "after": "0df019ff"
+    },
+    "0x3e36": {
+      "before": "03f00bf8",
+      "after": "0df005ff"
+    },
+    "0xbbba": {
+      "before": "0322",
+      "after": "0222"
+    },
+    "0xc304": {
+      "before": "faf7bcfe",
+      "after": "05f026fd"
+    },
+    "0xc354": {
+      "before": "86480078",
+      "after": "05f00afd"
+    },
+    "0xc5ee": {
+      "before": "faf747fd",
+      "after": "05f0b3fb"
+    },
+    "0xc62e": {
+      "before": "faf727fd",
+      "after": "05f093fb"
+    }
+  },
+  "tail_offset": "0x11c04",
+  "tail_used_bytes": 408,
+  "state_address": "0x22514",
+  "state_bytes": 48,
+  "reserved_pool_block_bytes": 600,
+  "pool_600_byte_blocks_before": 3,
+  "pool_600_byte_blocks_after": 2,
+  "startup_ram_unchanged": true,
+  "gd32_and_headers_unchanged": true,
+  "assembly_sha256": "115b35519e949001f4bb4358a093e50608a376547fa3e23402c0869b2f59fad9",
+  "led_hooks": [
+    "0xc304",
+    "0xc354",
+    "0xc5ee",
+    "0xc62e"
+  ],
+  "previous_buttons_plaintext_sha256": "bcb8f2e9b65402dccd767be32ae56a19660a25dbd245e56387b1fdae92b1ea54",
+  "protocol_version": 4,
+  "queue_snapshots": 16,
+  "packet_bytes": 8,
+  "limits": [
+    "Offline build only; hardware results are recorded separately in docs/buttons-probe.md",
+    "Host must subscribe then write A1; write A0 before unsubscribing; connect resets session",
+    "Whole-mask two-sample qualification at stock timer cadence, not the unbound 8 ms filter",
+    "Nonzero/missing radio ACK stalls sending; queued states remain and overflow is marked",
+    "One OEM 600-byte pool block is reserved, reducing OEM allocation capacity",
+    "BLE connection selects the stock HID-connected LED branch; LED change not observed on hardware",
+    "No iOS background, long-term battery or complete stack ownership claim"
+  ]
+}

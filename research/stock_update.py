@@ -44,6 +44,7 @@ def build(original,replacement,original_sha=None):
     require(jl_crc16(region[area[3]+32:used])==p11[1],'P11 CRC mismatch')
     growth=len(replacement)-app[3]
     require(base+used+growth<limit,'Update exceeds active area')
+    require(growth<=0 or all(b==0xff for b in original[base+used:base+used+growth]),'Application growth would overwrite non-erased bytes after the used area')
     updated=region[:app[2]]+replacement+region[app[2]+app[3]:]
     struct.pack_into('<H',updated,34,jl_crc16(replacement))
     struct.pack_into('<I',updated,40,len(replacement));header_crc(updated,32)

@@ -121,3 +121,19 @@ Images are now derived per unit. `research/devices.json` pins each unit's origin
 unit2 backup `221856d2…` matched unit1's factory image everywhere outside runtime storage (463 VM bytes, 7 BTIF bytes); the key/MAC sector is blank on both units. The official application was installed first (50 sectors, final `51b28f43…`, storage unchanged), confirmed physically: normal LED, USB `Hid Gamepade`, vendor queries answering version `0x0300`/`mt_IINE`, C-mode pairing with all six buttons, and update-mode entry. The replacement custom image was then installed (eight sectors, final `f735d787…`, which is the pinned `e1dc827e…` with 38 live VM bytes preserved after pairing). Evidence: `evidence/stock-install-result-unit2.json`, `evidence/custom-install-result-unit2.json`, `evidence/custom-install-preflight-unit2.json`.
 
 The custom image boots: normal orange LED, USB enumeration and vendor queries unchanged. An AE42-only CoreBluetooth capture in H mode (`IINE_keyboard`) received 100 packets with isolated press and release for all six buttons, combinations, no sequence gaps, no overflow and no unrecognized packets; firmware A/B labels match the physical buttons. One controller-initiated disconnect occurred about ten seconds after the first unbonded connection, with reconnection after thirteen seconds; its cause is not established. Evidence: `evidence/ae42-validation-unit2-1.jsonl`. USB HID and BLE HID regression under the custom image, other modes, standby/wake and iOS background delivery remain to be checked. This is a Mac test and does not establish iOS background support.
+
+## Second flash part on a user's Gamebrick: 2026-11-13
+
+A user flashing from Windows (`research/flash_gamebrick.py install`) was refused after the RAM
+loader verified: the loader reported device type `0x03`, flash ID `cd7013`, read-ID `00cd70`,
+buffer 32,768 bytes. Both development units report `cd7113` / `00cd71` with the same buffer.
+The manufacturer byte and the `13` density byte (512 KiB) match; only the memory-type byte
+differs, so this is a different 512 KiB SPI NOR part behind the same BD19 loader, not a
+different controller. `flash_stock.py` now accepts `cd7113` and `cd7013` and requires the
+read-ID to agree with whichever is reported. Every later step still reads the whole flash
+twice, verifies each erased sector and programmed page, and verifies the whole flash at the
+end, so an incompatible part stops before the header sector is committed. No flash with
+`cd7013` has completed yet; this is a user report, not a captured transaction. An earlier
+attempt on the same machine failed mid-loader-upload with Windows `WinError 31` (device not
+functioning); the following attempt loaded and verified the loader normally. Its cause is
+not established.

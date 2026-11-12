@@ -13,6 +13,8 @@ TARGET_SHA=STOCK_SHA
 # Never written; its live contents are carried into both the source and target images.
 STORAGE=(('VM',0x7a000,0x2000,0x12),('BTIF',0x7c000,0x1000,0x92),('USERIF',0x7d000,0x2000,0x92))
 LOADER_SHA='faa1b519a3ff1b082f11ccafac8c73d31150161ac972ef9f1934002bcbb8df4f'
+# 512 KiB SPI NOR parts seen in Gamebricks: cd7113 on both development units, cd7013 on a user's unit (2026-11-13).
+FLASH_IDS=(0xcd7113,0xcd7013)
 
 class Transport:
     """Command allowlist and bounds over a platform link (usb_transport). Every CDB is checked here first."""
@@ -58,8 +60,9 @@ class Transport:
         online=self.reply(0xfc0a);fid=self.reply(0xfc0b);buf=self.reply(0xfc14)
         found=f'device type {online[0]:#04x}, flash ID {int.from_bytes(online[2:6],"little"):#08x}, read-ID {fid[:3].hex()}, buffer {int.from_bytes(buf[:4],"big")} bytes'
         print(f'Loader reports {found}.',flush=True)
-        require(online[0]==3 and int.from_bytes(online[2:6],'little')==0xcd7113,f'Unsupported flash: the loader reports {found}; the supported controllers have SPI NOR flash ID 0xcd7113 (type 0x03). Nothing was written. Report this message so this flash chip can be checked.')
-        require(int.from_bytes(fid[:3],'big')==0xcd71,f'Flash ID responses disagree ({found})')
+        flash_id=int.from_bytes(online[2:6],'little')
+        require(online[0]==3 and flash_id in FLASH_IDS,f'Unsupported flash: the loader reports {found}; the supported controllers have 512 KiB SPI NOR flash ID 0xcd7113 or 0xcd7013 (type 0x03). Nothing was written. Report this message so this flash chip can be checked.')
+        require(int.from_bytes(fid[:3],'big')==flash_id>>8,f'Flash ID responses disagree ({found})')
         require(int.from_bytes(buf[:4],'big')>=PAGE,'Insufficient loader buffer')
     def read(self,addr,size):
         require(addr%PAGE==0 and size%PAGE==0,'Read must be page aligned')

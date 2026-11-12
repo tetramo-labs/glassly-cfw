@@ -81,7 +81,7 @@ If the controller is on factory firmware, this installs the current official app
 
 ### Going back to the official firmware
 
-**Controllers on IINE's current flash layout (VM partition at `0x34000`)**: the only Glassly flash on one so far verified but did not boot (2026-11-13), so `install` and `restore` are refused on them until that is understood. `restore-backup --backup <session>/flash-pass1.bin` puts the application from the unit's own backup back.
+**Only the 2025 production run (flash part `cd7113`, two-slot layout) is flashed.** A newer unit (flash part `cd7013`, IINE's current single-slot layout) took a fully verified Glassly flash on 2026-11-13 and never came up again, so `install` and `restore` are refused on any kind of unit the firmware has not been flashed and seen booting on; such units can only be backed up and have their own backup put back (`restore-backup --backup <session>/flash-pass1.bin`). The way to support a new kind is to send its backup folder for review; the first flash is then done on a developer-owned unit.
 
 Run the same command with `restore` instead of `install` (on Windows, `.venv\Scripts\python -u research\flash_gamebrick.py restore` from an Administrator window). Same update-mode dance; this puts the official IINE application back. On a controller that shipped with a different factory build, that is IINE's published update rather than the exact factory bytes; the exact original is `flash-pass1.bin` in the session folder. `backup` reads the flash without writing anything.
 

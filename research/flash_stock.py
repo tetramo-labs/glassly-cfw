@@ -19,7 +19,7 @@ FLASH_IDS=(0xcd7113,0xcd7013)
 class Transport:
     """Command allowlist and bounds over a platform link (usb_transport). Every CDB is checked here first."""
     def __init__(self,link,sectors):
-        self.link=link;self.sectors=frozenset(sectors);self.writes_enabled=False
+        self.link=link;self.sectors=frozenset(sectors);self.writes_enabled=False;self.flash_id=None
     def execute(self,cdb,out=None,n=0):
         require(0<len(cdb)<=16 and not(out is not None and n),'Invalid command')
         op=int.from_bytes(cdb[:2],'big');addr=int.from_bytes(cdb[2:6],'big')
@@ -63,6 +63,7 @@ class Transport:
         flash_id=int.from_bytes(online[2:6],'little')
         require(online[0]==3 and flash_id in FLASH_IDS,f'Unsupported flash: the loader reports {found}; the supported controllers have 512 KiB SPI NOR flash ID 0xcd7113 or 0xcd7013 (type 0x03). Nothing was written. Report this message so this flash chip can be checked.')
         require(int.from_bytes(fid[:3],'big')==flash_id>>8,f'Flash ID responses disagree ({found})')
+        self.flash_id=flash_id
         require(int.from_bytes(buf[:4],'big')>=PAGE,'Insufficient loader buffer')
     def read(self,addr,size):
         require(addr%PAGE==0 and size%PAGE==0,'Read must be page aligned')

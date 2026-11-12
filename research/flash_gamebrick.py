@@ -64,7 +64,7 @@ def main():
             # program_live reads twice, keeps the live storage and refuses any other difference.
             planned = {}
             def source_and_target(current):
-                planned.update(plan(current, oem, args.mode, custom, backup))
+                planned.update(plan(current, oem, args.mode, custom, backup, device.flash_id))
                 print(f'Controller firmware: {planned["state"]}; {len(planned["changed_sectors"])} sector(s) to write.', flush=True)
                 save('stock.bin', planned['stock']); save('target.bin', planned['target'])
                 return current, planned['target']

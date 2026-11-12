@@ -186,8 +186,9 @@ development units (2025 production layout, flash part `cd7113`); this unit diffe
 flash part and factory build, and none of the applications contains a 3-byte flash ID string,
 so the hypothesis that the Oct 2025 base does not support this hardware revision is unproven.
 
-Consequences: `plan()` now refuses `install` and `restore` on layouts other than the 2025
-production layout (`flash_layout.BOOT_VERIFIED_LAYOUTS`); the new `restore-backup` mode puts
+Consequences: `plan()` now refuses `install` and `restore` unless the unit's flash layout and
+flash part are in `flash_layout.HARDWARE_VERIFIED` (kinds on which the images have been flashed
+and seen booting; today only the 2025 production layout with `cd7113`); the new `restore-backup` mode puts
 back the application from a unit's own earlier `flash-pass1.bin`, which on the tester's dump
 reproduces the exact original image. That is the recovery path if the bootloader is reachable;
 it has not yet been run on the affected unit.

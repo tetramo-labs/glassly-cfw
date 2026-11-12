@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'jl-misctools/firmware'))
 from stock_update import build, digest, require, OEM_SHA
 from custom_image import patch_app
-from flash_layout import APPLICATIONS, BOOT_VERIFIED_LAYOUTS, LAYOUTS, Layout, classify
+from flash_layout import APPLICATIONS, HARDWARE_VERIFIED, LAYOUTS, Layout, classify
 
 SIZE = 0x80000
 
@@ -85,7 +85,7 @@ def custom_application(oem=None):
 KNOWN_STATES = ('factory', 'factory-2025-09', 'stock', 'custom')
 
 
-def plan(current, oem, mode, custom=None, backup=None, allow_unverified=False):
+def plan(current, oem, mode, custom=None, backup=None, flash_id=None, allow_unverified=False):
     """Source and target images for `mode` from the live flash, both carrying its storage.
     `custom` defaults to the committed Glassly application. `restore-backup` puts back the
     application found in `backup`, an earlier full read of this same kind of controller."""
@@ -93,10 +93,12 @@ def plan(current, oem, mode, custom=None, backup=None, allow_unverified=False):
     require(state in KNOWN_STATES, f'Unrecognised flash contents ({state}); refusing to write. Keep the saved backup and ask for help.')
     layout = Layout(current)
     if mode in ('install', 'restore') and not allow_unverified:
-        require(layout.fingerprint in BOOT_VERIFIED_LAYOUTS,
-                'The Glassly and official applications have not been shown to boot on this flash layout: a controller '
-                'of this kind did not start after a verified flash on 2026-11-13. Only restore-backup is allowed on it '
-                'until that is understood. Nothing was written.')
+        require((layout.fingerprint, flash_id) in HARDWARE_VERIFIED,
+                'This is a kind of Gamebrick the Glassly firmware has not been flashed and seen booting on '
+                f'(flash layout: {layout.describe()}; flash part {flash_id:#08x}). It can be backed up and have its own '
+                'backup restored, nothing more. Send the backup folder so this kind can be reviewed; the first flash on a '
+                'new kind of unit is done on a developer-owned controller. Nothing was written.'
+                if flash_id is not None else 'Flash part unknown; nothing was written.')
     sha = digest(current)
     stock = build(current, oem, sha)
     if mode == 'install':

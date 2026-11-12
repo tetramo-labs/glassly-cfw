@@ -42,48 +42,48 @@ class FlasherTests(unittest.TestCase):
         self.assertEqual(len(APPLICATIONS), 5)
 
     def test_plans_from_every_state_reach_the_reviewed_images(self):
-        rebuilt = plan(self.factory, self.oem, 'install', custom_application(self.oem))
-        from_factory = plan(self.factory, self.oem, 'install')
+        rebuilt = plan(self.factory, self.oem, 'install', custom_application(self.oem), flash_id=0xcd7113)
+        from_factory = plan(self.factory, self.oem, 'install', flash_id=0xcd7113)
         self.assertEqual(rebuilt['target'], from_factory['target'], 'committed and rebuilt applications agree')
         self.assertEqual(from_factory['state'], 'factory')
         self.assertEqual(from_factory['target'], self.custom, 'factory straight to the reviewed unit2 custom image')
         self.assertEqual(from_factory['stock'], self.stock)
         self.assertEqual(len(from_factory['changed_sectors']), 50)
-        from_stock = plan(self.stock, self.oem, 'install')
+        from_stock = plan(self.stock, self.oem, 'install', flash_id=0xcd7113)
         self.assertEqual(from_stock['target'], self.custom)
         self.assertEqual([hex(a) for a in from_stock['changed_sectors']], ['0x2000','0x6000','0x7000','0xd000','0x11000','0x12000','0x32000','0x33000'])
-        from_custom = plan(self.custom, self.oem, 'install')
+        from_custom = plan(self.custom, self.oem, 'install', flash_id=0xcd7113)
         self.assertEqual(from_custom['changed_sectors'], [])
-        back = plan(self.custom, self.oem, 'restore')
+        back = plan(self.custom, self.oem, 'restore', flash_id=0xcd7113)
         self.assertEqual(back['target'], self.stock)
-        self.assertEqual(plan(self.factory, self.oem, 'restore')['target'], self.stock)
+        self.assertEqual(plan(self.factory, self.oem, 'restore', flash_id=0xcd7113)['target'], self.stock)
         # Live storage rides along untouched.
         drifted = bytearray(self.factory); drifted[0x7a123] ^= 0xFF
-        live = plan(bytes(drifted), self.oem, 'install')
+        live = plan(bytes(drifted), self.oem, 'install', flash_id=0xcd7113)
         self.assertEqual(live['target'][0x7a000:], bytes(drifted)[0x7a000:])
         self.assertEqual(live['target'][:0x7a000], self.custom[:0x7a000])
         for state in ('withdrawn', 'unknown'):
             image = bytearray((ROOT/'custom-prepared/custom-device-layout-withdrawn-20261025.bin').read_bytes() if state == 'withdrawn' else self.factory)
             if state == 'unknown': image[0x2140] ^= 1
             with self.assertRaisesRegex(RuntimeError, 'Unrecognised'):
-                plan(bytes(image), self.oem, 'install')
+                plan(bytes(image), self.oem, 'install', flash_id=0xcd7113)
 
     def test_programs_factory_to_custom_and_back_with_full_verification(self):
         oem = self.oem
         device = NOR(self.factory, range(0, 0x80000, 4096))
         saved = {}
         with contextlib.redirect_stdout(io.StringIO()):
-            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install')['target']), saved.__setitem__)
+            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), saved.__setitem__)
         self.assertTrue(report['full_readback_verified'])
         self.assertEqual(bytes(device.data), self.custom)
         self.assertEqual(saved['flash-pass1.bin'], self.factory)
         self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last')
         self.assertFalse(device.writes_enabled)
         with contextlib.redirect_stdout(io.StringIO()):
-            again = program_with_plan(device, lambda current: (current, plan(current, oem, 'install')['target']), saved.__setitem__)
+            again = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), saved.__setitem__)
         self.assertEqual(again['writes'], 0)
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore')['target']), saved.__setitem__)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', flash_id=0xcd7113)['target']), saved.__setitem__)
         self.assertEqual(bytes(device.data), self.stock)
 
     def test_unstable_or_unknown_flash_never_enables_writes(self):
@@ -96,12 +96,12 @@ class FlasherTests(unittest.TestCase):
                 return super().read(a, n)
         shaky = Unstable(self.factory, range(0, 0x80000, 4096))
         with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(shaky, lambda current: (current, plan(current, oem, 'install')['target']), lambda n, d: None)
+            program_with_plan(shaky, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), lambda n, d: None)
         self.assertFalse(shaky.erased)
         bad = bytearray(self.factory); bad[0x40000] ^= 1
         unknown = NOR(bytes(bad), range(0, 0x80000, 4096))
         with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(unknown, lambda current: (current, plan(current, oem, 'install')['target']), lambda n, d: None)
+            program_with_plan(unknown, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), lambda n, d: None)
         self.assertFalse(unknown.erased)
 
 TESTER = ROOT/'device-backup-20261113-tester/flash-pass1.bin'
@@ -113,6 +113,7 @@ class IineLayoutTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.image = TESTER.read_bytes(); cls.oem = oem_application()
+        cls.factory_a = (ROOT/'device-backup-20261028-192851/flash-pass1.bin').read_bytes()
 
     def test_tester_unit_is_recognised(self):
         self.assertEqual(classify(self.image), 'factory-2025-09')
@@ -138,8 +139,11 @@ class IineLayoutTests(unittest.TestCase):
 
     def test_install_and_restore_are_refused_on_this_layout_until_boot_is_understood(self):
         for mode in ('install', 'restore'):
-            with self.assertRaisesRegex(RuntimeError, 'not been shown to boot'):
-                plan(self.image, self.oem, mode)
+            with self.assertRaisesRegex(RuntimeError, 'not been flashed and seen booting'):
+                plan(self.image, self.oem, mode, flash_id=0xcd7013)
+        with self.assertRaisesRegex(RuntimeError, 'not been flashed and seen booting'):
+            plan(self.factory_a, self.oem, 'install', flash_id=0xcd7013)
+        self.assertEqual(plan(self.factory_a, self.oem, 'install', flash_id=0xcd7113)['target_state'], 'custom')
         self.assertEqual(plan(self.image, self.oem, 'restore-backup', backup=self.image)['changed_sectors'], [])
 
     def test_programs_the_iine_layout_with_full_verification(self):

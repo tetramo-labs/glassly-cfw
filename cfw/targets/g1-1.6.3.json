@@ -121,6 +121,13 @@
         "cfw_suspend_entry",
         "system suspend detour"
       ]
+    ],
+    "ancs": [
+      [
+        104476,
+        "cfw_ancs_recv",
+        "ANCS consumer: relay the fetched notification to the host or drop it; never the stock popup"
+      ]
     ]
   },
   "raw": {
@@ -144,6 +151,20 @@
         "a8bfc826",
         "00bf00bf",
         "glyph rows may start below row 200 (CFW row table)"
+      ]
+    ],
+    "ancs": [
+      [
+        102616,
+        "102b",
+        "ff2b",
+        "notification source: screen 0x10 (the CFW) no longer discards ANCS events"
+      ],
+      [
+        101906,
+        "102b",
+        "ff2b",
+        "data source: screen 0x10 (the CFW) no longer discards ANCS attributes"
       ]
     ]
   },
@@ -412,6 +433,16 @@
       "name": "__copy_to_frame_buffer row clamp",
       "address": 527370,
       "expected": "c82ea8bfc826"
+    },
+    {
+      "name": "FW_DEQUEUE_ANCS",
+      "address": 102120,
+      "expected": "30b5efb005464ff4"
+    },
+    {
+      "name": "recv_ble_data entry (ancs hook site)",
+      "address": 104476,
+      "expected": "4b2330b5efb00446"
     }
   ],
   "ram_regions": [

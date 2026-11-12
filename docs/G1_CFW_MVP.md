@@ -1181,3 +1181,35 @@ the /44 image and its accepted upgrade history. Offline verified only;
 not flashed or hardware-tested. The review records remaining panel-tail,
 case-link, microphone-lease and wake-latency investigations.
 
+### G1CFW/51: ANCS relay (2026-11-12)
+
+The user saw no iOS notifications on the CFW. The 1.6.3 decomp shows why:
+`bt_ancs_notification_source_handler` (0x19048) and
+`bt_ancs_data_source_handler` (0x18d40) drop every event while the current
+UI task (state+0xd5, the byte the display post copies to state+0xd4) is
+one of 9..0x14 except 0xd, and the CFW posts `FW_SCREEN_CFW = 0x10` (the
+Even AI slot its code is carved over) on every tick. Past the gate the
+request thread (`ble_ancs_data_req_thread`, 0x198d8, on the temple whose
+state byte 0 reads 2) fetched the attributes into the 0x1b4-byte record
+registered in `ancs_c_init` (app id 0x10, display name 0x30, title 0x50,
+subtitle 0x70, message 0x90 [256], date 0x190, event at 0x1b0) and
+`recv_ble_data` (0x1981c) applied the Even whitelist at 0x2001aefb
+(fail-closed for third-party apps; the phone never pushed one) and posted
+the stock popup task 4 through a synthetic `0x4B`.
+
+G1CFW/51 patches the two `cmp r3, #0x10` to `#0xff` (raw group `ancs`) and
+hooks `recv_ble_data` (`b.w cfw_ancs_recv`, hook group `ancs`): the record
+is dequeued with the stock `dequeue_ancs` (0x18ee8, pinned
+`FW_DEQUEUE_ANCS`) and, under a 90 s lease the phone renews with
+`35 01`, sent as `36` records in the G2 relay format so the phone's
+`G2AncsRelay` decoder is reused unchanged; without a lease it is dropped.
+The flags and category live only in the uid-queue entry at 0x20006c8c
+(`dequeue_uid` target), read when its uid matches. Actions are not
+implemented (no `bt_ancs_notification_action` in the image). The open link
+policy means any central subscribed to the UART gets the records, but
+ANCS only flows while the bonded phone is connected and the stock tracks
+one central (`DAT_20007ef4`). Blob 24,316 bytes, 540 left. Host test
+covers lease, drop, chunking and removal. Offline only at the time of
+writing; see the phone-side notes in the Glassly repo (`G1.swift`
+`startAncsRelay`).
+

@@ -67,8 +67,15 @@ static void host_sem_give(void *sem);
 #define FW_KEY_EVENT_SEM ((void *)host_key_sem)
 #define FW_KEY_EVENT_SEM_READY (&host_key_sem_ready)
 #define FW_K_SEM_GIVE host_sem_give
-static uint8_t host_event_pending = 0xFF; static int host_enqueues; static uint8_t host_enqueued[8]; static uint32_t host_enqueued_len;
+static uint8_t host_event_pending = 0xFF; static int host_enqueues; static uint8_t host_enqueued[256]; static uint32_t host_enqueued_len;
+/* Every queued packet in order, for the multi-packet ANCS relay. */
+static uint8_t host_queue[32][256]; static uint32_t host_queue_len[32]; static int host_queued;
 static int host_enqueue(const void *data, uint32_t len);
+static uint8_t host_ancs_record[0x1b4]; static int host_ancs_queued, host_ancs_dequeues;
+static int host_dequeue_ancs(void *record);
+static uint8_t host_ancs_uid_entry[12];
+#define FW_DEQUEUE_ANCS host_dequeue_ancs
+#define FW_ANCS_UID_ENTRY ((const volatile uint8_t *)host_ancs_uid_entry)
 #define FW_EVENT_PENDING (&host_event_pending)
 #define FW_ENQUEUE_BT_DATA host_enqueue
 static int32_t host_imu[3];
@@ -235,7 +242,22 @@ static int malloc_calls; static uint32_t malloc_size;
 static void *host_malloc(uint32_t size) { malloc_calls++; malloc_size = size; return size > 32 * 1024 ? NULL : host_arena + 32; }
 
 static void host_sem_give(void *sem) { host_sem_gives++; host_last_sem = sem; }
-static int host_enqueue(const void *data, uint32_t len) { if (len > sizeof host_enqueued) abort(); memcpy(host_enqueued, data, len); host_enqueued_len = len; host_enqueues++; return 0; }
+static int host_enqueue(const void *data, uint32_t len)
+{
+    if (len > sizeof host_enqueued) abort();
+    memcpy(host_enqueued, data, len); host_enqueued_len = len; host_enqueues++;
+    if (host_queued < 32) { memcpy(host_queue[host_queued], data, len); host_queue_len[host_queued] = len; }
+    host_queued++;
+    return 0;
+}
+static int host_dequeue_ancs(void *record)
+{
+    host_ancs_dequeues++;
+    if (!host_ancs_queued) return 1;
+    host_ancs_queued = 0;
+    memcpy(record, host_ancs_record, sizeof host_ancs_record);
+    return 0;
+}
 static int post_calls, sleep_calls, last_sleep; static uint8_t last_screen;
 static int host_display_post(uint8_t screen, uint32_t p2, uint32_t p3) { (void)p2; (void)p3; post_calls++; last_screen = screen; return 0; }
 static int host_msleep(int ms) { sleep_calls++; last_sleep = ms; host_ticks += (uint32_t)ms * 32768u / 1000u; return 0; }
@@ -457,7 +479,7 @@ int main(int argc, char **argv)
     const uint8_t ping[] = { 0xF0, 0x00 };
     CHECK(send_packet(ping, sizeof ping) == 0 && hook_calls == 3);
     CHECK(last_reply_len == 15 && last_reply[0] == 0xF0 && last_reply[1] == 0 && last_reply[2] == 0);
-    CHECK(memcmp(last_reply + 3, "G1CFW/50", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
+    CHECK(memcmp(last_reply + 3, "G1CFW/51", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
 
     /* Short and unknown commands are answered, never dispatched. */
     const uint8_t only_sid[] = { 0xF0 };
@@ -1689,6 +1711,72 @@ int main(int argc, char **argv)
     uint8_t mic_bad[] = { 0xF0, 0x40, 0x03 };
     CHECK(send_packet(mic_bad, sizeof mic_bad) == 0 && last_reply[2] == CFW_BAD_RECORD);
     CHECK((uint8_t *)cfw_mic_state() + sizeof(cfw_mic) <= FW_CFW_RAM2 + FW_CFW_RAM2_SIZE);
+
+    /* ANCS relay: without a lease a fetched notification is dropped; with one it goes out as
+     * SOURCE, APP and eight ATTR records, the message split at the record ceiling. */
+    CHECK((uint8_t *)cfw_ancs_state() + sizeof(cfw_ancs) <= FW_CFW_RAM2 + FW_CFW_RAM2_SIZE);
+    state[FW_STATE_SIDE] = 2;
+    uint8_t ancs_q[] = { 0xF0, 0x35, 0x03 };
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[2] == CFW_OK && last_reply_len == 14);
+    CHECK(memcmp(last_reply + 3, "AN\x01\x04", 4) == 0 && last_reply[7] == 0 && last_reply[8] == 2);
+    memset(host_ancs_record, 0, sizeof host_ancs_record);
+    const uint32_t uid = 0x11223344u;
+    memcpy(host_ancs_record + FW_ANCS_REC_UID, &uid, 4);
+    strcpy((char *)host_ancs_record + FW_ANCS_REC_APP_ID, "com.apple.MobileSMS");
+    strcpy((char *)host_ancs_record + FW_ANCS_REC_APP_NAME, "Messages");
+    strcpy((char *)host_ancs_record + FW_ANCS_REC_TITLE, "Alice");
+    memset(host_ancs_record + FW_ANCS_REC_MESSAGE, 'm', 200);
+    strcpy((char *)host_ancs_record + FW_ANCS_REC_DATE, "20261112T093000");
+    memcpy(host_ancs_uid_entry, &uid, 4);
+    host_ancs_uid_entry[4] = 0; host_ancs_uid_entry[5] = 0x02; host_ancs_uid_entry[6] = 4; host_ancs_uid_entry[7] = 3;
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_ancs_dequeues == 1 && host_queued == 0 && !host_ancs_queued);
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_ancs_dequeues == 2 && host_queued == 0);   /* empty queue: nothing */
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[9] == 1 && last_reply[10] == 0 && last_reply[11] == 0);
+    uint8_t ancs_on[] = { 0xF0, 0x35, 0x01 };
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && last_reply[2] == CFW_OK && last_reply[7] == 1);
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
+    static const uint8_t ancs_source[] = { 0xF0, 0x36, 0x00, 'A', 'N', 1, 1, 0, 0x02, 4, 3, 0x44, 0x33, 0x22, 0x11 };
+    CHECK(host_queue_len[0] == sizeof ancs_source && memcmp(host_queue[0], ancs_source, sizeof ancs_source) == 0);
+    CHECK(host_queue_len[1] == 7 + 5 + 19 + 8 && host_queue[1][6] == 3 && host_queue[1][7] == 8 && host_queue[1][8] == 0);
+    CHECK(host_queue[1][11] == 19 && memcmp(host_queue[1] + 12, "com.apple.MobileSMSMessages", 27) == 0);
+    for (int i = 2; i < 11; i++) {
+        CHECK(host_queue[i][6] == 2 && memcmp(host_queue[i] + 7, &uid, 4) == 0 && host_queue_len[i] <= 150);
+    }
+    CHECK(host_queue[2][11] == 0 && host_queue[2][12] == 19 && memcmp(host_queue[2] + 16, "com.apple.MobileSMS", 19) == 0);
+    CHECK(host_queue[3][11] == 1 && host_queue[3][12] == 5 && memcmp(host_queue[3] + 16, "Alice", 5) == 0);
+    CHECK(host_queue[4][11] == 2 && host_queue[4][12] == 0 && host_queue_len[4] == 16);
+    CHECK(host_queue[5][11] == 3 && host_queue[5][12] == 200 && host_queue[5][14] == 0 && host_queue_len[5] == 150);
+    CHECK(host_queue[6][11] == 3 && host_queue[6][12] == 200 && host_queue[6][14] == 134 && host_queue_len[6] == 16 + 66);
+    CHECK(host_queue[7][11] == 4 && host_queue_len[7] == 16);
+    CHECK(host_queue[8][11] == 5 && host_queue[8][12] == 15 && memcmp(host_queue[8] + 16, "20261112T093000", 15) == 0);
+    CHECK(host_queue[9][11] == 6 && host_queue[10][11] == 7 && host_queue_len[10] == 16);
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[11] == 11 && last_reply[9] == 1);
+    /* A removal carries only its SOURCE; an entry for another uid lends no flags. */
+    host_ancs_record[FW_ANCS_REC_EVENT] = 2;
+    host_ancs_uid_entry[0] ^= 1;
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 1 && host_queue[0][7] == 2 && host_queue[0][8] == 0 && host_queue[0][9] == 0);
+    /* The lease runs out after 90 s unless renewed; RENEW does not revive a dead one. */
+    host_ancs_record[FW_ANCS_REC_EVENT] = 0;
+    host_ticks += 89u * 32768u;
+    uint8_t ancs_renew[] = { 0xF0, 0x35, 0x05 };
+    CHECK(send_packet(ancs_renew, sizeof ancs_renew) == 0 && last_reply[7] == 1);
+    host_ticks += 89u * 32768u;
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
+    host_ticks += 2u * 32768u;
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 0);
+    CHECK(send_packet(ancs_renew, sizeof ancs_renew) == 0 && last_reply[7] == 0);
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && last_reply[7] == 1);
+    uint8_t ancs_off[] = { 0xF0, 0x35, 0x02 };
+    CHECK(send_packet(ancs_off, sizeof ancs_off) == 0 && last_reply[7] == 0 && last_reply[9] == 2);
+    uint8_t ancs_act[] = { 0xF0, 0x35, 0x04 };
+    CHECK(send_packet(ancs_act, sizeof ancs_act) == 0 && last_reply[2] == CFW_BAD_RECORD);
+    CHECK(send_packet(ancs_q, 2) == 0 && last_reply[2] == CFW_BAD_LENGTH);
+    state[FW_STATE_SIDE] = 0;
 
     /* A corrupt retry must not overwrite the cached execution result. Test
      * success, deferred drawing and a message with a partially applied error. */

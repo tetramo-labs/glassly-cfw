@@ -1,5 +1,5 @@
 /*
- * G1CFW/50: injected handler for the private 0xF0 command on Even G1 1.6.3.
+ * G1CFW/51: injected handler for the private 0xF0 command on Even G1 1.6.3.
  *
  * Compiled by tools/build_blob.py into a position-independent blob that is
  * appended to the stock application image. The stock BLE receive entry calls
@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 50u
+#define CFW_PROTOCOL 51u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,
@@ -25,7 +25,8 @@ enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_
        CFW_OBJ_CONTROL = 0x24, CFW_OBJ_ANIM = 0x25, CFW_ANIM_STATE = 0x26,
        CFW_VIEW = 0x14,
        CFW_INPUT_CONTROL = 0x30, CFW_INPUT_STATE = 0x31, CFW_INPUT_EVENT = 0x32,
-       CFW_IMU_CONTROL = 0x33, CFW_IMU_SAMPLE = 0x34, CFW_MIC_CONTROL = 0x40 };
+       CFW_IMU_CONTROL = 0x33, CFW_IMU_SAMPLE = 0x34, CFW_ANCS_CONTROL = 0x35, CFW_ANCS_RECORD = 0x36,
+       CFW_MIC_CONTROL = 0x40 };
 enum { CFW_OK = 0x00, CFW_BAD_LENGTH = 0x01, CFW_BAD_COMMAND = 0x02, CFW_BAD_RECT = 0x03,
        CFW_PANEL_OFF = 0x04, CFW_BAD_SEQ = 0x05, CFW_BAD_CRC = 0x06, CFW_TOO_BIG = 0x07,
        CFW_BAD_RECORD = 0x08, CFW_BAD_RLE = 0x09, CFW_BAD_FONT = 0x0A, CFW_NO_MEMORY = 0x0B,
@@ -3209,9 +3210,43 @@ typedef struct {
 } cfw_mic;
 #define CFW_MIC_MAGIC 0x3243494du  /* "MIC2" */
 
+/* --- ANCS relay: the iOS notifications the stock client fetches ------------
+ * The stock ANCS client runs on the temple whose state byte 0 reads 2. Its
+ * request thread fetches each notification into a record (fw_abi.h) and
+ * calls recv_ble_data, which applied the Even app's whitelist and posted
+ * the stock popup; both of its GATT handlers also discarded every event
+ * while one of the AI-family screens, the CFW's 0x10 among them, was up.
+ * The CFW replaces that consumer (target hooks "ancs") and compares the
+ * gate against 0xff instead of 0x10 (raw "ancs"): while the host holds the
+ * lease a record goes to the phone as ANCS_RECORD notifications in the G2
+ * relay's record format (SOURCE, APP, then the eight attributes, the ones
+ * the stock never requests sent empty); without one it is dropped, so the
+ * stock popup never draws over the scene. Actions (op 4) are refused. */
+typedef struct {
+    uint32_t magic;
+    uint32_t lease_until;   /* tick the lease ends at; 0 = no lease */
+    uint16_t sent;          /* records handed to the BLE write queue */
+    uint16_t drops;         /* notifications dropped for want of a lease */
+    uint16_t notifications; /* records taken from the stock queue since boot */
+    uint8_t  send_errors;
+    uint8_t  pad;
+} cfw_ancs;
+#define CFW_ANCS_MAGIC 0x31434e41u  /* "ANC1" */
+#define CFW_ANCS_LEASE_TICKS (90u * 32768u)
+#define CFW_ANCS_MSG_MAX 150u       /* one ANCS_RECORD notification, F0 36 00 included */
+#define CFW_ANCS_HEAD 7u            /* F0 36 00 'A' 'N' version kind */
+#define CFW_ANCS_ATTR_FIXED 9u      /* uid, attribute id, total, offset */
+#define CFW_ANCS_CHUNK (CFW_ANCS_MSG_MAX - CFW_ANCS_HEAD - CFW_ANCS_ATTR_FIXED)
+#define CFW_ANCS_APP_FIXED 5u       /* total, offset, id length */
+enum { CFW_ANCS_OP_ENABLE = 1, CFW_ANCS_OP_DISABLE = 2, CFW_ANCS_OP_QUERY = 3, CFW_ANCS_OP_ACTION = 4,
+       CFW_ANCS_OP_RENEW = 5 };
+enum { CFW_ANCS_SOURCE = 1, CFW_ANCS_ATTR = 2, CFW_ANCS_APP = 3, CFW_ANCS_STATUS = 4 };
+_Static_assert(CFW_ANCS_APP_FIXED + 2u * FW_ANCS_SHORT_FIELD <= CFW_ANCS_MSG_MAX - CFW_ANCS_HEAD,
+               "an APP record fits one notification");
+
 _Static_assert(sizeof(cfw_objs) + CFW_OBJ_MAX * sizeof(cfw_obj) + sizeof(cfw_anims) + sizeof(cfw_input) + sizeof(cfw_view)
-               + sizeof(cfw_imu) + sizeof(cfw_mic) <= FW_CFW_RAM2_SIZE,
-               "second CFW RAM region: objects, animations, input, view, IMU and mic state");
+               + sizeof(cfw_imu) + sizeof(cfw_mic) + sizeof(cfw_ancs) <= FW_CFW_RAM2_SIZE,
+               "second CFW RAM region: objects, animations, input, view, IMU, mic and ANCS relay state");
 
 CFW_COLD static cfw_mic *cfw_mic_state(void)
 {
@@ -3252,6 +3287,170 @@ CFW_COLD static void cfw_mic_control(const uint8_t *p, uint32_t n)
                         (uint8_t)m->stops, (uint8_t)(m->stops >> 8), *FW_MIC_MODE,
                         (uint8_t)(state[FW_STATE_MIC_ARM] & 4) };
     cfw_reply(CFW_MIC_CONTROL, CFW_OK, body, sizeof body);
+}
+
+CFW_COLD static cfw_ancs *cfw_ancs_state(void)
+{
+    cfw_ancs *a = (cfw_ancs *)((uint8_t *)cfw_mic_state() + sizeof(cfw_mic));
+    if (a->magic != CFW_ANCS_MAGIC) {
+        uint8_t *p = (uint8_t *)a;
+        for (uint32_t i = 0; i < sizeof *a; i++) {
+            p[i] = 0;
+        }
+        a->magic = CFW_ANCS_MAGIC;
+    }
+    return a;
+}
+
+CFW_COLD static int cfw_ancs_enabled(const cfw_ancs *a, uint32_t now)
+{
+    return a->lease_until != 0 && (int32_t)(a->lease_until - now) > 0;
+}
+
+CFW_COLD static void cfw_ancs_send(cfw_ancs *a, uint8_t kind, const uint8_t *body, uint32_t n)
+{
+    uint8_t buf[CFW_ANCS_MSG_MAX];
+    buf[0] = CFW_SID;
+    buf[1] = CFW_ANCS_RECORD;
+    buf[2] = CFW_OK;
+    buf[3] = 'A';
+    buf[4] = 'N';
+    buf[5] = 1;
+    buf[6] = kind;
+    for (uint32_t i = 0; i < n; i++) {
+        buf[CFW_ANCS_HEAD + i] = body[i];
+    }
+    if (FW_ENQUEUE_BT_DATA(buf, CFW_ANCS_HEAD + n) == 0) {
+        a->sent++;
+    } else {
+        a->send_errors++;
+    }
+}
+
+CFW_COLD static uint32_t cfw_ancs_strlen(const uint8_t *s, uint32_t max)
+{
+    uint32_t n = 0;
+    while (n < max && s[n]) {
+        n++;
+    }
+    return n;
+}
+
+/* ATTR [uid:u32][id][total:u16][offset:u16][chunk]; a long attribute goes out in chunks. */
+CFW_COLD static void cfw_ancs_attr(cfw_ancs *a, const uint8_t *uid, uint8_t id, const uint8_t *text, uint32_t max)
+{
+    uint32_t total = text ? cfw_ancs_strlen(text, max) : 0, offset = 0;
+    do {
+        uint8_t body[CFW_ANCS_ATTR_FIXED + CFW_ANCS_CHUNK];
+        uint32_t chunk = total - offset;
+        if (chunk > CFW_ANCS_CHUNK) {
+            chunk = CFW_ANCS_CHUNK;
+        }
+        for (uint32_t i = 0; i < 4; i++) {
+            body[i] = uid[i];
+        }
+        body[4] = id;
+        body[5] = (uint8_t)total;
+        body[6] = (uint8_t)(total >> 8);
+        body[7] = (uint8_t)offset;
+        body[8] = (uint8_t)(offset >> 8);
+        for (uint32_t i = 0; i < chunk; i++) {
+            body[CFW_ANCS_ATTR_FIXED + i] = text[offset + i];
+        }
+        cfw_ancs_send(a, CFW_ANCS_ATTR, body, CFW_ANCS_ATTR_FIXED + chunk);
+        offset += chunk;
+    } while (offset < total);
+}
+
+/* Runs in place of the stock recv_ble_data on the ANCS request thread, once
+ * a fetched record is queued. */
+CFW_COLD int cfw_ancs_recv(uint8_t *client)
+{
+    (void)client;
+    uint8_t rec[FW_ANCS_RECORD_BYTES];   /* dequeue_ancs fills all of it */
+    if (FW_DEQUEUE_ANCS(rec) != 0) {
+        return 0;
+    }
+    cfw_ancs *a = cfw_ancs_state();
+    a->notifications++;
+    if (!cfw_ancs_enabled(a, FW_TICKS32())) {
+        a->drops++;
+        return 0;
+    }
+    const uint8_t *uid = rec + FW_ANCS_REC_UID;
+    const volatile uint8_t *entry = FW_ANCS_UID_ENTRY;
+    uint8_t source[8] = { rec[FW_ANCS_REC_EVENT], 0, 0, 0, uid[0], uid[1], uid[2], uid[3] };
+    /* The flags and category only live in the uid-queue entry the thread is working on. */
+    if (entry[0] == uid[0] && entry[1] == uid[1] && entry[2] == uid[2] && entry[3] == uid[3]) {
+        source[1] = entry[5];
+        source[2] = entry[6];
+        source[3] = entry[7];
+    }
+    cfw_ancs_send(a, CFW_ANCS_SOURCE, source, sizeof source);
+    if (source[0] >= 2) {
+        return 0;   /* removed: the uid is all there is */
+    }
+    const uint8_t *id = rec + FW_ANCS_REC_APP_ID, *name = rec + FW_ANCS_REC_APP_NAME;
+    uint32_t id_len = cfw_ancs_strlen(id, FW_ANCS_SHORT_FIELD), name_len = cfw_ancs_strlen(name, FW_ANCS_SHORT_FIELD);
+    if (name_len) {
+        /* APP [total:u16][offset:u16][id_len][id][name], ahead of the attributes so the phone
+         * knows the name by the time they complete the notification. */
+        uint8_t body[CFW_ANCS_APP_FIXED + 2 * FW_ANCS_SHORT_FIELD];
+        body[0] = (uint8_t)name_len;
+        body[1] = 0;
+        body[2] = 0;
+        body[3] = 0;
+        body[4] = (uint8_t)id_len;
+        for (uint32_t i = 0; i < id_len; i++) {
+            body[CFW_ANCS_APP_FIXED + i] = id[i];
+        }
+        for (uint32_t i = 0; i < name_len; i++) {
+            body[CFW_ANCS_APP_FIXED + id_len + i] = name[i];
+        }
+        cfw_ancs_send(a, CFW_ANCS_APP, body, CFW_ANCS_APP_FIXED + id_len + name_len);
+    }
+    for (uint8_t attr = 0; attr < 8; attr++) {
+        const uint8_t *text = 0;
+        uint32_t max = FW_ANCS_SHORT_FIELD;
+        switch (attr) {
+        case 0: text = id; break;
+        case 1: text = rec + FW_ANCS_REC_TITLE; break;
+        case 2: text = rec + FW_ANCS_REC_SUBTITLE; break;
+        case 3: text = rec + FW_ANCS_REC_MESSAGE; max = FW_ANCS_MESSAGE_FIELD; break;
+        case 5: text = rec + FW_ANCS_REC_DATE; break;
+        default: break;
+        }
+        cfw_ancs_attr(a, uid, attr, text, max);
+    }
+    return 0;
+}
+
+/* [op] -> reply body: the STATUS record ['A','N',1,4][enabled][side][drops:u16][sent:u16][send_errors].
+ * ENABLE arms or extends the lease, RENEW extends a live one, DISABLE drops it, QUERY only answers. */
+CFW_COLD static void cfw_ancs_control(const uint8_t *p, uint32_t n)
+{
+    cfw_ancs *a = cfw_ancs_state();
+    uint32_t now = FW_TICKS32();
+    if (n != 1) {
+        cfw_reply(CFW_ANCS_CONTROL, CFW_BAD_LENGTH, 0, 0);
+        return;
+    }
+    if (p[0] < CFW_ANCS_OP_ENABLE || p[0] > CFW_ANCS_OP_RENEW || p[0] == CFW_ANCS_OP_ACTION) {
+        cfw_reply(CFW_ANCS_CONTROL, CFW_BAD_RECORD, 0, 0);
+        return;
+    }
+    if (p[0] == CFW_ANCS_OP_ENABLE || (p[0] == CFW_ANCS_OP_RENEW && cfw_ancs_enabled(a, now))) {
+        a->lease_until = now + CFW_ANCS_LEASE_TICKS;
+        if (!a->lease_until) {
+            a->lease_until = 1;
+        }
+    } else if (p[0] == CFW_ANCS_OP_DISABLE) {
+        a->lease_until = 0;
+    }
+    uint8_t body[11] = { 'A', 'N', 1, CFW_ANCS_STATUS, (uint8_t)cfw_ancs_enabled(a, now), FW_GET_STATE()[FW_STATE_SIDE],
+                         (uint8_t)a->drops, (uint8_t)(a->drops >> 8), (uint8_t)a->sent, (uint8_t)(a->sent >> 8),
+                         a->send_errors };
+    cfw_reply(CFW_ANCS_CONTROL, CFW_OK, body, sizeof body);
 }
 
 /* Called on the display thread in place of the stock refresh handler. One
@@ -3792,6 +3991,9 @@ CFW_COLD int cfw_rx(const uint8_t *data, uint32_t len)
         break;
     case CFW_MIC_CONTROL:
         cfw_mic_control(data + 2, len - 2);
+        break;
+    case CFW_ANCS_CONTROL:
+        cfw_ancs_control(data + 2, len - 2);
         break;
     default:
         cfw_reply(data[1], CFW_BAD_COMMAND, 0, 0);

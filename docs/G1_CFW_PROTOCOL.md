@@ -421,6 +421,43 @@ file.lc3` starts, captures, stops and writes the raw concatenated chunks;
 (`brew install liblc3`): each 200-byte chunk is ten 10 ms LC3 frames of
 20 bytes (16 kbit/s) at 16 kHz, so one chunk arrives every 100 ms.
 
+## ANCS relay (`35`-`36`, G1CFW/51 and later)
+
+The stock firmware's ANCS client, on the temple whose state byte 0 reads 2,
+fetches every notification iOS shares with the bonded phone into a record
+(app id, display name, title, subtitle, 256-byte message, date; see
+`fw_abi.h`) and handed it to `recv_ble_data`, which applied the Even app's
+whitelist and posted the stock popup. Both GATT handlers also discarded
+every event while one of the AI-family screens was up, and the CFW's screen
+`0x10` is one of them, so nothing ever got through while the phone drove
+the display. G1CFW/51 patches the two gates (the `cmp #0x10` at `0x190d8`
+and `0x18e12` compares against `0xff`) and replaces the consumer with
+`cfw_ancs_recv` (`b.w` at `0x1981c`).
+
+- `35` ANCS_CONTROL `[op]`: 1 ENABLE arms or extends a 90 s lease, 5 RENEW
+  extends a live one, 2 DISABLE drops it, 3 QUERY only answers; 4 ACTION
+  is refused (`08`). Reply body: the STATUS record
+  `['A','N',1,4][enabled][side][drops:u16][sent:u16][send_errors]`, where
+  `side` is state byte 0 (2 on the temple with the client).
+- `36` ANCS_RECORD: unsolicited `F0 36 00 ['A','N',1,kind][body]`, one
+  record per notification, at most 150 bytes each, in the G2 relay's
+  format (g2flash `patches/ancs_relay.c`): kind 1 SOURCE
+  `[event][flags][category][count][uid:u32]`, kind 3 APP
+  `[total:u16][offset:u16][id_len][app id][display name]`, kind 2 ATTR
+  `[uid:u32][attr][total:u16][offset:u16][chunk]` for attributes 0-7 in
+  order (4, 6 and 7, which the stock never requests, go out with total 0;
+  the message is chunked at 134 bytes). A removed notification (event 2)
+  sends its SOURCE only. The flags and category come from the stock
+  uid-queue entry at `0x20006c8c` when it names the same uid.
+
+Without a lease a fetched record is dropped and counted, so the stock popup
+never draws over the scene; the phone renews every 45 s. The stock gate's
+other conditions stay: nothing is fetched in the first 10 s of a
+connection or in work modes 1 and 8, a second event for the uid the client
+last fetched is not re-fetched, and ANCS is only discovered on the bonded
+phone at security level 2. Records go through the stock BLE write queue
+(96 entries of 256 bytes) to every subscribed central.
+
 ## Input events (`30`-`32`, G1CFW/21 and later)
 
 Two stock paths are redirected into the CFW so the host can observe what

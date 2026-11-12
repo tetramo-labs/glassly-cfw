@@ -234,3 +234,31 @@ typedef void (*fw_panel_wait_fn)(uint32_t ms);
 #ifndef FW_PANEL_WAIT_MS
 #define FW_PANEL_WAIT_MS ((fw_panel_wait_fn)0x00080ec5)
 #endif
+
+/* Stock ANCS client, on the temple whose state byte 0 reads 2. Its request
+ * thread fetches one notification into a 0x1b4-byte record: [time:u32]
+ * [incall:u32][uid:u32][u32], NUL-terminated strings (app id 0x10, display
+ * name 0x30, title 0x50, subtitle 0x70: 32 bytes each; message 0x90: 256;
+ * ANCS date 0x190: 32) and the event id as the u32 at 0x1b0. dequeue_ancs
+ * copies the next queued record out and returns 0. The uid-queue entry the
+ * thread last took, [uid:u32][event][flags][category][count], sits at
+ * 0x20006c8c. */
+typedef int (*fw_dequeue_fn)(void *record);
+#ifndef FW_DEQUEUE_ANCS
+#define FW_DEQUEUE_ANCS ((fw_dequeue_fn)0x00018ee9)
+#endif
+#define FW_ANCS_RECORD_BYTES  0x1b4u
+#define FW_ANCS_REC_UID       0x08u
+#define FW_ANCS_REC_APP_ID    0x10u
+#define FW_ANCS_REC_APP_NAME  0x30u
+#define FW_ANCS_REC_TITLE     0x50u
+#define FW_ANCS_REC_SUBTITLE  0x70u
+#define FW_ANCS_REC_MESSAGE   0x90u
+#define FW_ANCS_REC_DATE      0x190u
+#define FW_ANCS_REC_EVENT     0x1b0u
+#define FW_ANCS_SHORT_FIELD   32u
+#define FW_ANCS_MESSAGE_FIELD 256u
+#ifndef FW_ANCS_UID_ENTRY
+#define FW_ANCS_UID_ENTRY ((const volatile uint8_t *)0x20006c8cu)
+#endif
+#define FW_STATE_SIDE 0x0

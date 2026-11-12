@@ -179,8 +179,9 @@ flashed from Windows. A first attempt stopped during the pre-write flash read wi
 attempt classified the unit as `factory-2025-09`, wrote 50 sectors (`0x3000`-`0x33000`, header
 sector `0x2000` last), verified each, and verified the full flash: SHA256
 `af4af1e63273fe2240deddd0cb57589e1cea27ddda45952e2da8bb17fbbdc8a7`. The tester then reports
-**no lights and no restart on the pairing button**, and that USB update mode can still be
-entered while plugged in (not yet confirmed by a capture). Cause unknown. The Glassly
+**no lights and no restart on the pairing button**; the unit is considered bricked. Cause found
+offline the same day: see [no-boot-investigation.md](no-boot-investigation.md) (USERIF settings
+record format 0x38 vs 0x40, divide by zero in the input/LED initialiser, reset loop). The Glassly
 application is the Oct 2025 official update plus the reviewed hooks, which boots on both
 development units (2025 production layout, flash part `cd7113`); this unit differs in layout,
 flash part and factory build, and none of the applications contains a 3-byte flash ID string,

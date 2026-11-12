@@ -33,7 +33,7 @@ The **stock** Oct 2025 application would fail in exactly the same way on this un
 | Glassly app, 199,232 B | `495ce913…f432` |
 | Image written to the tester (rebuilt offline) | `af4af1e6…c8a7`, matching the flasher's verified readback |
 
-The audit rebuilds the written image with `plan(tester_dump, oem_application(), 'install', allow_unverified=True)`. It checks that the image carries the Glassly app and that USERIF (`0x7d000..0x7f000`) is byte-identical to the pre-flash dump.
+The audit rebuilds the written image with `stock_update.build(tester_dump, glassly_app)`, which is what that install's `plan()` did; `plan()` has since gained the USERIF migration ([userif-migration.md](userif-migration.md)). It checks that the image carries the Glassly app and that USERIF (`0x7d000..0x7f000`) is byte-identical to the pre-flash dump.
 
 ## The fault
 
@@ -193,4 +193,4 @@ The GATT handles (AE42 `0x54`, CCC `0x55`) are identical. Work: a second payload
 
 ## Limits
 
-The disassembly comes from the extended SLEIGH via pypcode, with linear sweeps. The P-code run covers only the seven instructions around the division; `sb` there decodes as a 4-byte store, but that path isn't taken on the tester's data. Function boundaries come from the earlier Ghidra export of the Oct app. No live trace, reset-cause register or UART log exists for this unit; UART TX would be PA5 at 1 Mbaud per `isd_config.ini`, the same pin as one LED channel.
+The disassembly comes from the extended SLEIGH via pypcode, with linear sweeps. The P-code run here covers only the seven instructions around the division; `research/userif_migration_audit.py` runs the whole initialiser (see `userif-migration.md`). Every `sb`/`sh`/`sw` in the Oct app decodes to a STORE of the right size. Function boundaries come from the earlier Ghidra export of the Oct app. No live trace, reset-cause register or UART log exists for this unit; UART TX would be PA5 at 1 Mbaud per `isd_config.ini`, the same pin as one LED channel.

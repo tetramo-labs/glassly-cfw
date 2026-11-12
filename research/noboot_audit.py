@@ -9,7 +9,8 @@ import pypcode
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'jl-misctools/firmware'))
 from flash_layout import Layout
-from gamebrick_flasher import plan, oem_application
+from gamebrick_flasher import oem_application
+from stock_update import build
 
 BASE = 0x1e00120
 USERIF = 0x7d000
@@ -147,8 +148,9 @@ apps = {'sep2025': Layout(images['tester']).application(), 'may2026': Layout(ima
         'oct2025': oem_application(), 'glassly': (ROOT.parent/'firmware/dist/glassly-gamebrick-app.bin').read_bytes()}
 for name, sha in APPS.items(): check(digest(apps[name]) == sha, f'{name} application hash')
 
-result = plan(images['tester'], apps['oct2025'], 'install', allow_unverified=True)
-target, stock = result['target'], result['stock']
+# The 2026-11-13 install wrote only the application area; plan() has since gained the USERIF migration.
+tester_sha = digest(images['tester'])
+target, stock = build(images['tester'], apps['glassly'], tester_sha), build(images['tester'], apps['oct2025'], tester_sha)
 check(digest(target) == WRITTEN_SHA, 'rebuilt written image differs from the verified flash')
 check(Layout(target).application() == apps['glassly'], 'written image does not carry the Glassly application')
 check(target[USERIF:USERIF+0x2000] == images['tester'][USERIF:USERIF+0x2000], 'USERIF was not preserved')

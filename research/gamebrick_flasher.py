@@ -1,10 +1,11 @@
 """One-shot Gamebrick flasher: take any known Gamebrick Mini straight to the Glassly firmware.
 
 Everything is derived from the connected unit's own flash. The flash is read twice and kept
-as a backup; its storage-independent fingerprint must match the factory image, the official
-update or the Glassly image. The Glassly and official applications ship in firmware/dist and
-are hash-pinned; the official update archive is only needed to rebuild them. VM/BTIF/USERIF
-and the key/MAC sector are never written.
+as a backup; its partition tables must be one of the known layouts and its application one of
+the known builds (flash_layout.py). The Glassly and official applications ship in firmware/dist
+and are hash-pinned; the official update archive is only needed to rebuild them. Only the
+application area is written: the storage partitions the tables declare, the key/MAC sector
+and everything else stay as read.
 """
 import hashlib, io, json, subprocess, sys, tempfile, urllib.request, zipfile
 from pathlib import Path
@@ -12,17 +13,9 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'jl-misctools/firmware'))
 from stock_update import build, digest, require, OEM_SHA
 from custom_image import patch_app
+from flash_layout import APPLICATIONS, LAYOUTS, Layout, classify
 
-STORAGE_START, SIZE = 0x7a000, 0x80000  # VM, BTIF, USERIF, then the (blank) key/MAC sector
-
-# SHA256 of a flash image with its runtime storage and key/MAC sector zeroed: the same for every
-# unit seen so far (unit1 and unit2), because only those regions differ between controllers.
-FINGERPRINTS = {
-    '62153ccb490b114cc604501526a72c505c27796b1778b07761fab156985a45d9': 'factory',
-    'dc16ee8a3dba5468cc7ad3b0af4e7a714d018a4b9eda929d877d233ec9b4958c': 'stock',
-    'c482ad55d3fab1086d889673fd8dd9a832ba1ccc6188bad71bf4f90597a0c5bc': 'custom',
-    'acc50d0b7b83e3e02480ff3ec87c8c0ee474489f59f4eb33bd22eeb6f5cd2099': 'withdrawn',  # 2026-10-25 image; reset loop
-}
+SIZE = 0x80000
 
 OEM_ZIP_URL = 'https://media.iine.top/legacy-assets/6dd5d46599c6e1eeb8bd2623c15d14c7a3aee61163f46da0df38953c690dac61-zip'
 OEM_ZIP_SHA = '6dd5d46599c6e1eeb8bd2623c15d14c7a3aee61163f46da0df38953c690dac61'
@@ -33,17 +26,6 @@ PAYLOAD = DIST/'vendor-payload.bin'
 GLASSLY_APP = DIST/'glassly-gamebrick-app.bin'
 OFFICIAL_APP = DIST/'iine-official-app.bin'
 MANIFEST = ROOT.parent/'docs/evidence/q32s-payload.json'
-
-
-def fingerprint(image):
-    require(len(image) == SIZE, 'Incorrect image size')
-    masked = bytearray(image)
-    masked[STORAGE_START:SIZE] = bytes(SIZE - STORAGE_START)
-    return hashlib.sha256(masked).hexdigest()
-
-
-def classify(image):
-    return FINGERPRINTS.get(fingerprint(image), 'unknown')
 
 
 def oem_archive(path=None, log=print):
@@ -104,7 +86,8 @@ def plan(current, oem, mode, custom=None):
     """Source and target images for `mode` from the live flash, both carrying its storage.
     `custom` defaults to the committed Glassly application."""
     state = classify(current)
-    require(state in ('factory', 'stock', 'custom'), f'Unrecognised flash contents ({state}); refusing to write. Keep the saved backup and ask for help.')
+    require(state in ('factory', 'factory-2025-09', 'stock', 'custom'), f'Unrecognised flash contents ({state}); refusing to write. Keep the saved backup and ask for help.')
+    layout = Layout(current)
     sha = digest(current)
     stock = build(current, oem, sha)
     if mode == 'install':
@@ -113,9 +96,9 @@ def plan(current, oem, mode, custom=None):
         target = stock
     else:
         raise RuntimeError('Invalid operation')
-    require(fingerprint(target) in FINGERPRINTS and FINGERPRINTS[fingerprint(target)] == ('custom' if mode == 'install' else 'stock'),
-            'Derived image does not match the reviewed fingerprint')
-    require(target[STORAGE_START:] == current[STORAGE_START:], 'Plan would alter runtime storage or key/MAC')
+    require(classify(target) == ('custom' if mode == 'install' else 'stock'), 'Derived image does not carry the reviewed application')
+    require(target[:layout.base] == current[:layout.base] and target[layout.limit:] == current[layout.limit:],
+            'Plan would alter bytes outside the application area')
     sectors = [a for a in range(0, SIZE, 4096) if current[a:a+4096] != target[a:a+4096]]
-    return {'state': state, 'target': target, 'stock': stock, 'changed_sectors': sectors,
-            'current_sha256': sha, 'target_sha256': digest(target), 'stock_sha256': digest(stock)}
+    return {'state': state, 'layout': layout.describe(), 'chip_key': f'{layout.key:#06x}', 'target': target, 'stock': stock,
+            'changed_sectors': sectors, 'current_sha256': sha, 'target_sha256': digest(target), 'stock_sha256': digest(stock)}

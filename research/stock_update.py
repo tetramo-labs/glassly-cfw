@@ -5,12 +5,13 @@ ROOT=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT/'jl-misctools/firmware'))
 from jltech.cipher import jl_sfc_cipher
 from jltech.crc import jl_crc16
+from flash_layout import Layout,LAYOUTS
 from device_profile import NAME, BACKUP, ORIGINAL_SHA, STOCK_SHA, STOCK_OUT as OUT
 OEM_SHA='2fb44f4235bd4ed7183439f31ee2a31fb0052d19dd736e20d1d251fd5e1ff259'
 FACTORY_APP_SHA='902aedc30a84c9ae777e3cbdd12ff5737ac17b7ee3f5288f76c7aa86fe267c97'
-BASE=0x2020
+BASE=0x2020   # application area of the 2025 production layout; build() reads each image's own tables
 LIMIT=0x3e020
-KNOWN_APP_SIZES=(196224,198824,199232)
+KNOWN_APP_SIZES=(196224,198760,198824,199232)
 
 def require(ok,message):
     if not ok: raise RuntimeError(message)
@@ -24,22 +25,25 @@ def header_crc(data,off):struct.pack_into('<H',data,off,jl_crc16(data[off+2:off+
 
 def build(original,replacement,original_sha=None):
     require(len(original)==0x80000 and digest(original)==(original_sha or ORIGINAL_SHA),'Wrong original backup')
+    layout=Layout(original)
+    require(layout.fingerprint in LAYOUTS,'Unknown flash layout')
+    base,limit,key=layout.base,layout.limit,layout.key
     plain=bytearray(original)
-    jl_sfc_cipher(plain,BASE,LIMIT-BASE,BASE,0x190d)
-    area=entry(plain,BASE);app=entry(plain,BASE+32);cfg=entry(plain,BASE+64)
-    # Factory (196224), official update (198824) or Glassly custom (199232) application.
+    jl_sfc_cipher(plain,base,limit-base,base,key)
+    area=entry(plain,base);app=entry(plain,base+32);cfg=entry(plain,base+64)
+    # Factory (196224 or 198760), official update (198824) or Glassly custom (199232) application.
     require(area[2]==0x1e00120 and app[2]==0x120 and app[3] in KNOWN_APP_SIZES,'Unexpected application layout')
     require(app[-1].startswith(b'app.bin\0') and cfg[-1].startswith(b'cfg_tool.bin\0'),'Unexpected file table')
-    p11=entry(plain,BASE+area[3]);used=area[3]+p11[3]
+    p11=entry(plain,base+area[3]);used=area[3]+p11[3]
     require(p11[-1].startswith(b'p11_code.bin\0'),'Unexpected resource')
-    region=plain[BASE:BASE+used]
+    region=plain[base:base+used]
     require(jl_crc16(region[32:area[3]])==area[1],'Application area CRC mismatch')
     require(jl_crc16(region[app[2]:app[2]+app[3]])==app[1],'Application CRC mismatch')
     require(cfg[2]==app[2]+app[3] and cfg[2]+cfg[3]==area[3],'Unexpected file gaps')
     require(jl_crc16(region[cfg[2]:cfg[2]+cfg[3]])==cfg[1],'Configuration CRC mismatch')
     require(jl_crc16(region[area[3]+32:used])==p11[1],'P11 CRC mismatch')
     growth=len(replacement)-app[3]
-    require(BASE+used+growth<LIMIT,'Update exceeds active area')
+    require(base+used+growth<limit,'Update exceeds active area')
     updated=region[:app[2]]+replacement+region[app[2]+app[3]:]
     struct.pack_into('<H',updated,34,jl_crc16(replacement))
     struct.pack_into('<I',updated,40,len(replacement));header_crc(updated,32)
@@ -48,13 +52,13 @@ def build(original,replacement,original_sha=None):
     struct.pack_into('<H',updated,2,jl_crc16(updated[32:area[3]+growth]));header_crc(updated,0)
     require(updated[96:app[2]]==region[96:app[2]],'Partition entries changed')
     require(updated[cfg[2]+growth:]==region[cfg[2]:],'Config or P11 changed')
-    output=bytearray(original);output[BASE:BASE+len(updated)]=updated
-    jl_sfc_cipher(output,BASE,len(updated),BASE,0x190d)
+    output=bytearray(original);output[base:base+len(updated)]=updated
+    jl_sfc_cipher(output,base,len(updated),base,key)
     # A smaller application frees the tail of the active area; leave it erased, as the factory image does.
     if growth<0:
-        output[BASE+len(updated):BASE+used]=b'\xff'*-growth
-    end=BASE+max(len(updated),used)
-    require(output[:BASE]==original[:BASE] and output[end:]==original[end:],'Unrelated bytes changed')
+        output[base+len(updated):base+used]=b'\xff'*-growth
+    end=base+max(len(updated),used)
+    require(output[:base]==original[:base] and output[end:]==original[end:],'Unrelated bytes changed')
     return bytes(output)
 
 def prepare():

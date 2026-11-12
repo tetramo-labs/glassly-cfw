@@ -137,3 +137,35 @@ end, so an incompatible part stops before the header sector is committed. No fla
 attempt on the same machine failed mid-loader-upload with Windows `WinError 31` (device not
 functioning); the following attempt loaded and verified the loader normally. Its cause is
 not established.
+
+## A second factory layout and application build: 2026-11-13
+
+The same Windows tester's unit (flash part `cd7013`) was refused after two matching full
+reads: its contents matched none of the known images. Decoding the dump with the pinned
+unpacker shows the same chip key (`190D`), bootloader, `isd_config.ini`, `cfg_tool.bin` and
+`p11_code.bin` as both development units, but a different partition layout and application:
+
+| | 2025 production units | Tester's unit |
+| --- | --- | --- |
+| `app_dir_head` | `0x2020`, 8 KiB, second slot `app_dir_head2` at `0x3e020` | `0x2000`, single slot |
+| VM | `0x7a000`, 8 KiB | `0x34000`, 284 KiB |
+| BTIF / EXIF / USERIF | `0x7c000` / none / `0x7d000` | `0x7b000` / `0x7c000` / `0x7d000` |
+| Application | factory `902aedc3…` (196,224 B, built May 26 2026) | `e8584016…` (198,760 B, built Sep 4 2025) |
+
+The tester's layout is byte-for-byte the layout inside IINE's `stock.ufw`, so it is what IINE
+ships now; the development units were an earlier production run. Their Sep 2025 application is
+a different compiled build from the Oct 29 2025 official update (7.6% of bytes equal at the same
+offset), so the Glassly hooks cannot be applied to it; the target remains the official update
+plus the reviewed hooks, as IINE's own updater would install. No application contains the
+partition addresses that moved, so the layout is table-driven.
+
+`research/flash_layout.py` now reads each image's own tables: application area, chip key from
+`isd_config.ini`, and the storage partitions (flags `0x12`/`0x92`, plus `key_mac`) to preserve.
+`stock_update.build` and `gamebrick_flasher.plan` use it instead of the fixed `0x2020`/`0x3e020`/
+`0x7a000` constants, and classification pins the two layouts (bootloader and tables outside the
+application area and storage) plus five application builds. Both development units produce the
+same images as before (unit2's pinned stock/custom hashes are unchanged). On the tester's dump,
+the install plan replaces only the application area (`0x2000`-`0x34000`), keeps `0x34000` onward
+byte-identical, and the fake-NOR programming test verifies the full result. No controller on this
+layout has been flashed yet; `restore` on such a unit installs the official update application,
+not the Sep 2025 factory build, whose exact bytes stay in the session's `flash-pass1.bin`.

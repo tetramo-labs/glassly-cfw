@@ -70,18 +70,18 @@ The flasher has been run on macOS. The Windows and Linux paths use the operating
 4. Put the controller in update mode when the flasher asks: with it **switched on and plugged in**, hold **Pairing + B** for about two seconds until the light goes out, then release. If your desktop auto-mounts the new disk, unmount it first; a mounted drive can hold the device busy. It ends with `FLASH VERIFIED`.
 5. Unplug, power-cycle, and pair it in the Glassly App under Controllers.
 
-If the controller was never updated by IINE's Windows tool, this installs the current official application and the Glassly patch in one pass. If it already runs the official update, only eight sectors change. Running it again on a flashed controller does nothing.
+If the controller is on factory firmware, this installs the current official application and the Glassly patch in one pass. If it already runs the official update, only eight sectors change. Running it again on a flashed controller does nothing. Two factory flash layouts are known (the 2025 production units, and IINE's current update layout with the VM partition at `0x34000`) and three factory application builds; the flasher reads the controller's own partition tables, so either layout works.
 
 ### What the flasher does and never does
 
-- Reads the entire flash twice, keeps both reads as a backup next to the log (`research/gamebrick-install-*/`), and refuses to continue unless the contents match one of the three known images (factory, official update, Glassly) outside the controller's own storage.
+- Reads the entire flash twice, keeps both reads as a backup next to the log (`research/gamebrick-install-*/`), and refuses to continue unless the partition tables are a known layout and the application is a known build (factory, official update or Glassly); see `research/flash_layout.py`.
 - Builds the new image from the controller's own flash and the committed, hash-pinned applications. Bluetooth pairing data, settings and the key/MAC sector are never written.
 - Writes only the application area, commits the header sector last, and verifies every byte of the flash afterwards.
 - Never erases the whole chip, never touches fuses or chip keys, and never sends a command outside its allowlist.
 
 ### Going back to the official firmware
 
-Run the same command with `restore` instead of `install` (on Windows, `.venv\Scripts\python -u research\flash_gamebrick.py restore` from an Administrator window). Same update-mode dance; this puts the official IINE application back. `backup` reads the flash without writing anything.
+Run the same command with `restore` instead of `install` (on Windows, `.venv\Scripts\python -u research\flash_gamebrick.py restore` from an Administrator window). Same update-mode dance; this puts the official IINE application back. On a controller that shipped with a different factory build, that is IINE's published update rather than the exact factory bytes; the exact original is `flash-pass1.bin` in the session folder. `backup` reads the flash without writing anything.
 
 ### Buttons in Glassly
 

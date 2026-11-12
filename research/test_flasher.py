@@ -2,7 +2,8 @@
 import contextlib, io, os, unittest
 os.environ.setdefault('GB_DEVICE', 'unit2')
 from pathlib import Path
-from gamebrick_flasher import FINGERPRINTS, CUSTOM_APP_SHA, classify, custom_application, fingerprint, oem_application, oem_archive, plan
+from gamebrick_flasher import CUSTOM_APP_SHA, classify, custom_application, oem_application, oem_archive, plan
+from flash_layout import APPLICATIONS, LAYOUTS, Layout
 from flash_gamebrick import program_with_plan
 from stock_update import digest, OEM_SHA
 from test_custom_image import NOR
@@ -26,18 +27,19 @@ class FlasherTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             custom_application(b'\0' + self.oem[1:])
 
-    def test_fingerprints_ignore_storage_and_classify_every_known_state(self):
+    def test_layouts_and_applications_classify_every_known_state(self):
         self.assertEqual(classify(self.factory), 'factory')
         self.assertEqual(classify(self.stock), 'stock')
         self.assertEqual(classify(self.custom), 'custom')
         self.assertEqual(classify((ROOT/'custom-flash-unit2-20261028-193401/target.bin').read_bytes()), 'custom')
-        self.assertEqual(classify((ROOT/'device-backup-20261022-233350/flash-pass1.bin').read_bytes()), 'factory', 'unit1 shares the fingerprint')
+        self.assertEqual(classify((ROOT/'device-backup-20261022-233350/flash-pass1.bin').read_bytes()), 'factory', 'unit1 shares the layout')
         drifted = bytearray(self.factory); drifted[0x7a123] ^= 0xFF; drifted[0x7f000] = 0x12
-        self.assertEqual(fingerprint(bytes(drifted)), fingerprint(self.factory))
+        self.assertEqual(classify(bytes(drifted)), 'factory', 'live storage does not change the classification')
         for address in (0, 0x2140, 0x79fff):
             bad = bytearray(self.factory); bad[address] ^= 1
             self.assertEqual(classify(bytes(bad)), 'unknown')
-        self.assertEqual(len(FINGERPRINTS), 4)
+        self.assertEqual(len(LAYOUTS), 2)
+        self.assertEqual(len(APPLICATIONS), 5)
 
     def test_plans_from_every_state_reach_the_reviewed_images(self):
         rebuilt = plan(self.factory, self.oem, 'install', custom_application(self.oem))
@@ -101,5 +103,53 @@ class FlasherTests(unittest.TestCase):
         with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
             program_with_plan(unknown, lambda current: (current, plan(current, oem, 'install')['target']), lambda n, d: None)
         self.assertFalse(unknown.erased)
+
+TESTER = ROOT/'device-backup-20261113-tester/flash-pass1.bin'
+
+
+@unittest.skipUnless(TESTER.exists(), 'tester backup unavailable')
+class IineLayoutTests(unittest.TestCase):
+    """A user's unit on IINE's current layout with the Sep 2025 factory build."""
+    @classmethod
+    def setUpClass(cls):
+        cls.image = TESTER.read_bytes(); cls.oem = oem_application()
+
+    def test_tester_unit_is_recognised(self):
+        self.assertEqual(classify(self.image), 'factory-2025-09')
+        layout = Layout(self.image)
+        self.assertEqual((layout.base, layout.limit, layout.key), (0x2000, 0x34000, 0x190d))
+        self.assertEqual(layout.storage, [(0x34000, 0x7b000), (0x7b000, 0x7c000), (0x7c000, 0x7d000), (0x7d000, 0x7f000), (0x7f000, 0x80000)])
+
+    def test_plans_keep_everything_outside_the_application_area(self):
+        install = plan(self.image, self.oem, 'install')
+        self.assertEqual(install['state'], 'factory-2025-09')
+        target = install['target']
+        self.assertEqual(classify(target), 'custom')
+        self.assertEqual(Layout(target).application(), custom_application())
+        self.assertEqual(target[:0x2000], self.image[:0x2000])
+        self.assertEqual(target[0x34000:], self.image[0x34000:])
+        self.assertTrue(install['changed_sectors'] and all(0x2000 <= a < 0x34000 for a in install['changed_sectors']))
+        self.assertEqual(plan(target, self.oem, 'install')['changed_sectors'], [])
+        restore = plan(target, self.oem, 'restore')
+        self.assertEqual(classify(restore['target']), 'stock')
+        self.assertEqual(Layout(restore['target']).application(), self.oem)
+        self.assertEqual(restore['target'], install['stock'])
+        self.assertEqual(restore['target'][0x34000:], self.image[0x34000:])
+
+    def test_programs_the_iine_layout_with_full_verification(self):
+        oem = self.oem
+        device = NOR(self.image, range(0, 0x80000, 4096))
+        with contextlib.redirect_stdout(io.StringIO()):
+            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install')['target']), lambda n, d: None)
+        self.assertTrue(report['full_readback_verified'])
+        self.assertEqual(classify(bytes(device.data)), 'custom')
+        self.assertEqual(bytes(device.data[0x34000:]), self.image[0x34000:])
+        self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last')
+        self.assertLessEqual(max(device.erased) + 4096, 0x34000)
+        with contextlib.redirect_stdout(io.StringIO()):
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore')['target']), lambda n, d: None)
+        self.assertEqual(classify(bytes(device.data)), 'stock')
+        self.assertEqual(bytes(device.data[0x34000:]), self.image[0x34000:])
+
 
 if __name__ == '__main__': unittest.main()

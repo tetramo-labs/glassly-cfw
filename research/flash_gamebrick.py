@@ -19,10 +19,14 @@ from usb_transport import open_link, wait_for_controller, update_mode_instructio
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('mode', choices=['install', 'restore', 'backup', 'restore-backup'])
+    parser.add_argument('--unverified-kind-developer-only', action='store_true',
+                        help='developer use: write to a kind of unit not yet on the hardware-verified allowlist; only on a unit you own with USB_KEY recovery at hand')
     parser.add_argument('--backup', help='flash-pass1.bin from an earlier session of this controller; restore-backup puts its application back')
     parser.add_argument('--oem-zip', help='rebuild the applications from this official IINE update archive instead of using the committed copies')
     args = parser.parse_args()
     require_privileges()
+    if args.unverified_kind_developer_only:
+        print('DEVELOPER MODE: the hardware-verified allowlist is bypassed for this unit. A failed boot needs the Jieli USB_KEY route to recover.', flush=True)
     output = ROOT/('gamebrick-'+args.mode+'-'+time.strftime('%Y%m%d-%H%M%S'))
     output.mkdir(); give_back_ownership(output, ROOT)
     log = (output/'operation.log').open('w', buffering=1)
@@ -64,10 +68,12 @@ def main():
             # program_live reads twice, keeps the live storage and refuses any other difference.
             planned = {}
             def source_and_target(current):
-                planned.update(plan(current, oem, args.mode, custom, backup, device.flash_id))
+                planned.update(plan(current, oem, args.mode, custom, backup, device.flash_id, args.unverified_kind_developer_only))
                 print(f'Controller firmware: {planned["state"]}; {len(planned["changed_sectors"])} sector(s) to write.', flush=True)
+                if planned['settings_sectors']:
+                    print('Settings record will be rewritten: erased before the application changes, written after its header is committed.', flush=True)
                 save('stock.bin', planned['stock']); save('target.bin', planned['target'])
-                return current, planned['target']
+                return current, planned['target'], planned['settings_sectors']
             report = program_with_plan(device, source_and_target, save)
             report.update({k: v for k, v in planned.items() if k not in ('target', 'stock')})
             report['changed_sectors'] = [hex(a) for a in report['changed_sectors']]
@@ -92,13 +98,13 @@ def program_with_plan(device, source_and_target, save):
     save('flash-pass1.bin', first)
     second = device.read(0, SIZE); require(second == first, 'Flash changed between preflight reads; no writes allowed')
     save('flash-pass2.bin', second)
-    source, target = source_and_target(first)
+    source, target, settings = source_and_target(first)
     if first == target:
         print('Already running the requested firmware; nothing to write.', flush=True)
         return {'writes': 0, 'sha256': digest(first), 'full_readback_verified': True}
     device.sectors = frozenset(a for a in range(0, SIZE, 4096) if source[a:a+4096] != target[a:a+4096])
     try:
-        return dict(program_image(device, source, target, 'install', before=first), matching_full_reads=2)
+        return dict(program_image(device, source, target, 'install', before=first, settings_sectors=settings), matching_full_reads=2)
     finally:
         device.writes_enabled = False
 

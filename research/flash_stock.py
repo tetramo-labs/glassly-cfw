@@ -72,10 +72,11 @@ class Transport:
     def program(self,addr,data):self.command(0xfb04,struct.pack('>IH',addr,len(data))+b'\0'+jl_crc16(data).to_bytes(2,'little'),out=data)
 
 
-def program_image(device,original,target,mode,before=None,save_before=None):
+def program_image(device,original,target,mode,before=None,save_before=None,settings_sectors=()):
     require(len(original)==len(target)==SIZE,'Incorrect image size')
     sectors=[a for a in range(0,SIZE,SECTOR) if original[a:a+SECTOR]!=target[a:a+SECTOR]]
-    require(sectors and min(sectors)>=0x2000 and max(sectors)+SECTOR<=0x34000,'Unexpected update extent')
+    app=[a for a in sectors if a not in settings_sectors];settings=[a for a in sectors if a in settings_sectors]
+    require((app or settings) and all(0x2000<=a and a+SECTOR<=0x34000 for a in app),'Unexpected update extent')
     print('Reading all flash before allowing writes.',flush=True)
     current=device.read(0,SIZE) if before is None else before
     require(len(current)==SIZE,'Incomplete pre-write read')
@@ -88,8 +89,15 @@ def program_image(device,original,target,mode,before=None,save_before=None):
         for a in range(0,SIZE,SECTOR):
             if a not in sectors:require(current[a:a+SECTOR]==original[a:a+SECTOR],f'Protected sector {a:#x} changed; refusing recovery on unidentified state')
     device.writes_enabled=True
+    # Erased settings boot either application on its defaults, so they are cleared before the application
+    # changes and rewritten only after its header is committed (docs/userif-migration.md).
+    for a in settings:
+        require(device.read(a,SECTOR)==current[a:a+SECTOR],f'Sector {a:#x} changed since preflight')
+        device.erase(a)
+        require(device.read(a,SECTOR)==b'\xff'*SECTOR,f'Sector erase failed at {a:#x}')
+        print(f'Erased settings sector {a:#07x}',flush=True)
     # Commit the active application header last. This is not atomic across power loss.
-    ordered=sectors[1:]+sectors[:1];count=0
+    ordered=app[1:]+app[:1];count=0
     for a in ordered:
         block=desired[a:a+SECTOR]
         if current[a:a+SECTOR]==block:continue
@@ -101,6 +109,13 @@ def program_image(device,original,target,mode,before=None,save_before=None):
             if page!=b'\xff'*PAGE:device.program(a+off,page)
         require(device.read(a,SECTOR)==block,f'Sector verification failed at {a:#x}')
         count+=1;print(f'Verified sector {a:#07x} ({count}/{len(sectors)})',flush=True)
+    for a in settings:
+        block=desired[a:a+SECTOR]
+        for off in range(0,SECTOR,PAGE):
+            page=block[off:off+PAGE]
+            if page!=b'\xff'*PAGE:device.program(a+off,page)
+        require(device.read(a,SECTOR)==block,f'Settings verification failed at {a:#x}')
+        count+=1;print(f'Verified settings sector {a:#07x} ({count}/{len(sectors)})',flush=True)
     final=device.read(0,SIZE)
     require(final==desired,'Full flash readback differs from intended image')
     return {'writes':count,'sha256':digest(final),'full_readback_verified':True}

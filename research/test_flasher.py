@@ -3,7 +3,7 @@ import contextlib, io, os, unittest
 os.environ.setdefault('GB_DEVICE', 'unit2')
 from pathlib import Path
 from gamebrick_flasher import CUSTOM_APP_SHA, classify, custom_application, oem_application, oem_archive, plan
-from flash_layout import APPLICATIONS, LAYOUTS, Layout, userif_record_size
+from flash_layout import APPLICATIONS, LAYOUTS, Layout, migrate_userif, record_size_of, userif_record_size
 from flash_gamebrick import program_with_plan
 from stock_update import digest, OEM_SHA
 from test_custom_image import NOR
@@ -73,17 +73,17 @@ class FlasherTests(unittest.TestCase):
         device = NOR(self.factory, range(0, 0x80000, 4096))
         saved = {}
         with contextlib.redirect_stdout(io.StringIO()):
-            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), saved.__setitem__)
+            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target'], ()), saved.__setitem__)
         self.assertTrue(report['full_readback_verified'])
         self.assertEqual(bytes(device.data), self.custom)
         self.assertEqual(saved['flash-pass1.bin'], self.factory)
         self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last')
         self.assertFalse(device.writes_enabled)
         with contextlib.redirect_stdout(io.StringIO()):
-            again = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), saved.__setitem__)
+            again = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target'], ()), saved.__setitem__)
         self.assertEqual(again['writes'], 0)
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', flash_id=0xcd7113)['target']), saved.__setitem__)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', flash_id=0xcd7113)['target'], ()), saved.__setitem__)
         self.assertEqual(bytes(device.data), self.stock)
 
     def test_unstable_or_unknown_flash_never_enables_writes(self):
@@ -96,12 +96,12 @@ class FlasherTests(unittest.TestCase):
                 return super().read(a, n)
         shaky = Unstable(self.factory, range(0, 0x80000, 4096))
         with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(shaky, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), lambda n, d: None)
+            program_with_plan(shaky, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target'], ()), lambda n, d: None)
         self.assertFalse(shaky.erased)
         bad = bytearray(self.factory); bad[0x40000] ^= 1
         unknown = NOR(bytes(bad), range(0, 0x80000, 4096))
         with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(unknown, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target']), lambda n, d: None)
+            program_with_plan(unknown, lambda current: (current, plan(current, oem, 'install', flash_id=0xcd7113)['target'], ()), lambda n, d: None)
         self.assertFalse(unknown.erased)
 
 TESTER = ROOT/'device-backup-20261113-tester/flash-pass1.bin'
@@ -139,21 +139,66 @@ class IineLayoutTests(unittest.TestCase):
         self.assertEqual(restore['target'], install['stock'])
         self.assertEqual(restore['target'][0x34000:], self.blank[0x34000:])
 
-    def test_settings_record_format_refuses_the_application_that_bricked_the_tester(self):
+    def test_settings_record_is_migrated_for_a_0x40_application(self):
         self.assertEqual(userif_record_size(Layout(self.image)), 0x38)
         self.assertEqual(userif_record_size(Layout(self.factory_a)), 0x40)
         self.assertEqual(userif_record_size(Layout(self.blank)), 'blank')
+        old = self.image[0x7d000:0x7f000]
+        migrated = migrate_userif(Layout(self.image))
+        self.assertEqual(migrated[:0x20], old[:0x20])
+        self.assertEqual(migrated[0x20:0x28], b'\xff' * 8)
+        self.assertEqual(migrated[0x28:0x1000], old[0x20:0x1000 - 8])
+        self.assertEqual(migrated[0x1000:], old[0x1000:])
+        self.assertEqual(record_size_of(migrated), 0x40)
         for mode in ('install', 'restore'):
-            with self.assertRaisesRegex(RuntimeError, 'different settings layout.*record size 0x38.*expects 0x40'):
-                plan(self.image, self.oem, mode, flash_id=0xcd7013, allow_unverified=True)
-        flashed = plan(self.blank, self.oem, 'install', allow_unverified=True)['target']
-        with_old_settings = flashed[:0x7d000] + self.image[0x7d000:0x7f000] + flashed[0x7f000:]
-        back = plan(with_old_settings, self.oem, 'restore-backup', backup=self.image)
-        self.assertEqual(back['target_state'], 'factory-2025-09')
-        self.assertEqual(back['target'], self.image, 'the Sep application goes back over its own settings')
+            planned = plan(self.image, self.oem, mode, flash_id=0xcd7013, allow_unverified=True)
+            self.assertEqual(planned['settings_sectors'], (0x7d000, 0x7e000))
+            self.assertEqual(planned['target'][0x7d000:0x7f000], migrated)
+            self.assertIn(0x7d000, planned['changed_sectors'])
+            self.assertNotIn(0x7e000, planned['changed_sectors'])
+            self.assertEqual(classify(planned['target']), 'custom' if mode == 'install' else 'stock')
         mixed = self.factory_a[:0x7d000] + self.image[0x7d000:0x7f000] + self.factory_a[0x7f000:]
-        with self.assertRaisesRegex(RuntimeError, 'different settings layout'):
-            plan(mixed, self.oem, 'install', flash_id=0xcd7113)
+        self.assertEqual(plan(mixed, self.oem, 'install', flash_id=0xcd7113)['settings_sectors'], (0x7d000, 0x7e000))
+        corrupt = bytearray(self.image); corrupt[0x7d010] = 0x12
+        with self.assertRaisesRegex(RuntimeError, 'reserved span'):
+            plan(bytes(corrupt), self.oem, 'install', flash_id=0xcd7013, allow_unverified=True)
+
+    def test_migration_erases_settings_first_and_writes_them_after_the_header(self):
+        oem = self.oem
+        class Recording(NOR):
+            def __init__(self, *a, **k): super().__init__(*a, **k); self.programmed = []
+            def program(self, a, b): self.programmed.append(a); super().program(a, b)
+        device = Recording(self.image, range(0, 0x80000, 4096))
+        planned = {}
+        def source_and_target(current):
+            planned.update(plan(current, oem, 'install', flash_id=0xcd7013, allow_unverified=True))
+            return current, planned['target'], planned['settings_sectors']
+        with contextlib.redirect_stdout(io.StringIO()):
+            report = program_with_plan(device, source_and_target, lambda n, d: None)
+        self.assertTrue(report['full_readback_verified'])
+        self.assertEqual(bytes(device.data), planned['target'])
+        self.assertEqual(device.erased[0], 0x7d000, 'settings are erased before anything else')
+        self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last among the application sectors')
+        self.assertGreaterEqual(device.programmed[-1], 0x7d000, 'the settings record is written after the header')
+        self.assertEqual(userif_record_size(Layout(bytes(device.data))), 0x40)
+        self.assertEqual(classify(bytes(device.data)), 'custom')
+        # Interrupted right after the settings erase: the old application boots on erased defaults.
+        class LostAfterSettings(Recording):
+            def erase(self, a):
+                if a != 0x7d000: raise RuntimeError('Injected disconnect')
+                super().erase(a)
+        interrupted = LostAfterSettings(self.image, range(0, 0x80000, 4096))
+        with self.assertRaises(RuntimeError), contextlib.redirect_stdout(io.StringIO()):
+            program_with_plan(interrupted, source_and_target, lambda n, d: None)
+        self.assertEqual(interrupted.erased, [0x7d000])
+        self.assertEqual(classify(bytes(interrupted.data)), 'factory-2025-09')
+        self.assertEqual(userif_record_size(Layout(bytes(interrupted.data))), 'blank')
+        # Restore-backup returns the exact original from both states, settings included.
+        for state in (device, Recording(bytes(interrupted.data), range(0, 0x80000, 4096))):
+            with contextlib.redirect_stdout(io.StringIO()):
+                program_with_plan(state, lambda current: (lambda p: (current, p['target'], p['settings_sectors']))(
+                    plan(current, oem, 'restore-backup', backup=self.image)), lambda n, d: None)
+            self.assertEqual(bytes(state.data), self.image)
 
     def test_install_and_restore_are_refused_on_this_layout_until_boot_is_understood(self):
         for mode in ('install', 'restore'):
@@ -168,14 +213,14 @@ class IineLayoutTests(unittest.TestCase):
         oem = self.oem
         device = NOR(self.blank, range(0, 0x80000, 4096))
         with contextlib.redirect_stdout(io.StringIO()):
-            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target']), lambda n, d: None)
+            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target'], ()), lambda n, d: None)
         self.assertTrue(report['full_readback_verified'])
         self.assertEqual(classify(bytes(device.data)), 'custom')
         self.assertEqual(bytes(device.data[0x34000:]), self.blank[0x34000:])
         self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last')
         self.assertLessEqual(max(device.erased) + 4096, 0x34000)
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', allow_unverified=True)['target']), lambda n, d: None)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', allow_unverified=True)['target'], ()), lambda n, d: None)
         self.assertEqual(classify(bytes(device.data)), 'stock')
         self.assertEqual(bytes(device.data[0x34000:]), self.blank[0x34000:])
 
@@ -183,7 +228,7 @@ class IineLayoutTests(unittest.TestCase):
         oem = self.oem
         device = NOR(self.blank, range(0, 0x80000, 4096))
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target']), lambda n, d: None)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target'], ()), lambda n, d: None)
         self.assertEqual(classify(bytes(device.data)), 'custom')
         flashed = bytes(device.data)
         back = plan(flashed, oem, 'restore-backup', backup=self.blank)
@@ -191,7 +236,7 @@ class IineLayoutTests(unittest.TestCase):
         self.assertEqual(Layout(back['target']).application(), Layout(self.blank).application())
         self.assertEqual(back['target'][0x34000:], flashed[0x34000:])
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore-backup', backup=self.blank)['target']), lambda n, d: None)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore-backup', backup=self.blank)['target'], ()), lambda n, d: None)
         self.assertEqual(classify(bytes(device.data)), 'factory-2025-09')
         self.assertEqual(bytes(device.data), self.blank, 'storage was untouched, so the exact original returns')
         with self.assertRaisesRegex(RuntimeError, 'not a known image'):

@@ -56,8 +56,10 @@ class Transport:
             require(self.command(0xfd07,struct.pack('>IH',addr,len(block)),n=len(block))==block,'RAM loader readback mismatch')
         self.reply(0xfb08,bytes.fromhex('000020000001'))
         online=self.reply(0xfc0a);fid=self.reply(0xfc0b);buf=self.reply(0xfc14)
-        require(online[0]==3 and int.from_bytes(online[2:6],'little')==0xcd7113,'Wrong flash device')
-        require(int.from_bytes(fid[:3],'big')==0xcd71,'Flash ID responses disagree')
+        found=f'device type {online[0]:#04x}, flash ID {int.from_bytes(online[2:6],"little"):#08x}, read-ID {fid[:3].hex()}, buffer {int.from_bytes(buf[:4],"big")} bytes'
+        print(f'Loader reports {found}.',flush=True)
+        require(online[0]==3 and int.from_bytes(online[2:6],'little')==0xcd7113,f'Unsupported flash: the loader reports {found}; the supported controllers have SPI NOR flash ID 0xcd7113 (type 0x03). Nothing was written. Report this message so this flash chip can be checked.')
+        require(int.from_bytes(fid[:3],'big')==0xcd71,f'Flash ID responses disagree ({found})')
         require(int.from_bytes(buf[:4],'big')>=PAGE,'Insufficient loader buffer')
     def read(self,addr,size):
         require(addr%PAGE==0 and size%PAGE==0,'Read must be page aligned')

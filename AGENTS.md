@@ -13,3 +13,5 @@ Run the flash tools from an interactive terminal; background administrator proce
 Keep device dumps, OEM firmware and downloaded dependencies local and ignored by Git. Record hashes and pinned source revisions. Do not publish these artifacts or create a remote unless requested.
 
 After a successful flash, verify normal HID operation, vendor BLE button notifications, and iOS background/locked behavior separately. Do not claim background support from a Mac BLE test.
+
+On 2026-11-13 a third unit (IINE update layout, flash part `cd7013`, Sep 2025 factory build) showed no lights after a verified Glassly flash from Windows; see the last section of `docs/findings.md`. `install`/`restore` are refused outside `flash_layout.BOOT_VERIFIED_LAYOUTS`; `restore-backup` is the recovery path. Do not re-enable install on that layout without understanding the failure.

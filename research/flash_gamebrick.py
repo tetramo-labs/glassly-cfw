@@ -3,6 +3,7 @@
 
     sudo .venv/bin/python -u research/flash_gamebrick.py install
     sudo .venv/bin/python -u research/flash_gamebrick.py restore
+    sudo .venv/bin/python -u research/flash_gamebrick.py restore-backup --backup research/gamebrick-install-.../flash-pass1.bin
 
 Reads the whole flash twice and saves it, derives the image from that read, writes only the
 application area, and verifies the entire flash afterwards. Runtime storage and key/MAC are
@@ -12,12 +13,13 @@ with USB connected) and the pinned IINE update archive, downloaded automatically
 import argparse, json, os, sys, time
 from pathlib import Path
 from flash_stock import Transport, program_image, SIZE, require, digest
-from gamebrick_flasher import ROOT, classify, custom_application, oem_application, oem_archive, plan
+from gamebrick_flasher import ROOT, SIZE, classify, custom_application, oem_application, oem_archive, plan
 from usb_transport import open_link, wait_for_controller, update_mode_instructions, require_privileges, start_watchdog, give_back_ownership
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('mode', choices=['install', 'restore', 'backup'])
+    parser.add_argument('mode', choices=['install', 'restore', 'backup', 'restore-backup'])
+    parser.add_argument('--backup', help='flash-pass1.bin from an earlier session of this controller; restore-backup puts its application back')
     parser.add_argument('--oem-zip', help='rebuild the applications from this official IINE update archive instead of using the committed copies')
     args = parser.parse_args()
     require_privileges()
@@ -30,7 +32,12 @@ def main():
         def flush(self): self.stream.flush(); log.flush()
     sys.stdout = Tee(sys.stdout); sys.stderr = Tee(sys.stderr)
     print('Output:', output, flush=True)
-    oem = custom = None
+    oem = custom = backup = None
+    if args.mode == 'restore-backup':
+        require(args.backup, 'restore-backup needs --backup flash-pass1.bin')
+        backup = Path(args.backup).read_bytes()
+        require(len(backup) == SIZE and classify(backup) != 'unknown', 'The backup is not a complete read of a known Gamebrick image')
+        print(f'Backup carries the {classify(backup)} application.', flush=True)
     if args.mode != 'backup':
         # Verify both applications before touching the controller.
         oem = oem_application(oem_archive(args.oem_zip)) if args.oem_zip else oem_application()
@@ -57,7 +64,7 @@ def main():
             # program_live reads twice, keeps the live storage and refuses any other difference.
             planned = {}
             def source_and_target(current):
-                planned.update(plan(current, oem, args.mode, custom))
+                planned.update(plan(current, oem, args.mode, custom, backup))
                 print(f'Controller firmware: {planned["state"]}; {len(planned["changed_sectors"])} sector(s) to write.', flush=True)
                 save('stock.bin', planned['stock']); save('target.bin', planned['target'])
                 return current, planned['target']
@@ -70,8 +77,9 @@ def main():
             print('BACKUP COMPLETE:', report['sha256'], f'({report["state"]} firmware)', flush=True)
         else:
             print('FLASH VERIFIED:', report['sha256'], flush=True)
-            print('Unplug the controller, power-cycle it, then pair it in the Glassly App.' if args.mode == 'install'
-                  else 'Unplug the controller and power-cycle it; it is back on the official firmware.', flush=True)
+            print({'install': 'Unplug the controller, power-cycle it, then pair it in the Glassly App.',
+                   'restore': 'Unplug the controller and power-cycle it; it is back on the official firmware.',
+                   'restore-backup': 'Unplug the controller and power-cycle it; it is back on the application from the backup.'}[args.mode], flush=True)
     finally:
         link.close()
         give_back_ownership(output, ROOT)

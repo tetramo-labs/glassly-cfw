@@ -169,3 +169,25 @@ the install plan replaces only the application area (`0x2000`-`0x34000`), keeps 
 byte-identical, and the fake-NOR programming test verifies the full result. No controller on this
 layout has been flashed yet; `restore` on such a unit installs the official update application,
 not the Sep 2025 factory build, whose exact bytes stay in the session's `flash-pass1.bin`.
+
+## Verified flash, no boot, on the IINE-layout unit: 2026-11-13
+
+With the layout-aware flasher (flasher app 0.1.3; same code as `flash_gamebrick.py`), the
+tester's unit (IINE update layout, flash part `cd7013`, Sep 2025 factory application) was
+flashed from Windows. A first attempt stopped during the pre-write flash read with Windows
+`WinError 31` (second occurrence of that error on this machine; nothing written). The second
+attempt classified the unit as `factory-2025-09`, wrote 50 sectors (`0x3000`-`0x33000`, header
+sector `0x2000` last), verified each, and verified the full flash: SHA256
+`af4af1e63273fe2240deddd0cb57589e1cea27ddda45952e2da8bb17fbbdc8a7`. The tester then reports
+**no lights and no restart on the pairing button**, and that USB update mode can still be
+entered while plugged in (not yet confirmed by a capture). Cause unknown. The Glassly
+application is the Oct 2025 official update plus the reviewed hooks, which boots on both
+development units (2025 production layout, flash part `cd7113`); this unit differs in layout,
+flash part and factory build, and none of the applications contains a 3-byte flash ID string,
+so the hypothesis that the Oct 2025 base does not support this hardware revision is unproven.
+
+Consequences: `plan()` now refuses `install` and `restore` on layouts other than the 2025
+production layout (`flash_layout.BOOT_VERIFIED_LAYOUTS`); the new `restore-backup` mode puts
+back the application from a unit's own earlier `flash-pass1.bin`, which on the tester's dump
+reproduces the exact original image. That is the recovery path if the bootloader is reachable;
+it has not yet been run on the affected unit.

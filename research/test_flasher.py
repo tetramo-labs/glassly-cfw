@@ -121,7 +121,7 @@ class IineLayoutTests(unittest.TestCase):
         self.assertEqual(layout.storage, [(0x34000, 0x7b000), (0x7b000, 0x7c000), (0x7c000, 0x7d000), (0x7d000, 0x7f000), (0x7f000, 0x80000)])
 
     def test_plans_keep_everything_outside_the_application_area(self):
-        install = plan(self.image, self.oem, 'install')
+        install = plan(self.image, self.oem, 'install', allow_unverified=True)
         self.assertEqual(install['state'], 'factory-2025-09')
         target = install['target']
         self.assertEqual(classify(target), 'custom')
@@ -129,27 +129,53 @@ class IineLayoutTests(unittest.TestCase):
         self.assertEqual(target[:0x2000], self.image[:0x2000])
         self.assertEqual(target[0x34000:], self.image[0x34000:])
         self.assertTrue(install['changed_sectors'] and all(0x2000 <= a < 0x34000 for a in install['changed_sectors']))
-        self.assertEqual(plan(target, self.oem, 'install')['changed_sectors'], [])
-        restore = plan(target, self.oem, 'restore')
+        self.assertEqual(plan(target, self.oem, 'install', allow_unverified=True)['changed_sectors'], [])
+        restore = plan(target, self.oem, 'restore', allow_unverified=True)
         self.assertEqual(classify(restore['target']), 'stock')
         self.assertEqual(Layout(restore['target']).application(), self.oem)
         self.assertEqual(restore['target'], install['stock'])
         self.assertEqual(restore['target'][0x34000:], self.image[0x34000:])
 
+    def test_install_and_restore_are_refused_on_this_layout_until_boot_is_understood(self):
+        for mode in ('install', 'restore'):
+            with self.assertRaisesRegex(RuntimeError, 'not been shown to boot'):
+                plan(self.image, self.oem, mode)
+        self.assertEqual(plan(self.image, self.oem, 'restore-backup', backup=self.image)['changed_sectors'], [])
+
     def test_programs_the_iine_layout_with_full_verification(self):
         oem = self.oem
         device = NOR(self.image, range(0, 0x80000, 4096))
         with contextlib.redirect_stdout(io.StringIO()):
-            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install')['target']), lambda n, d: None)
+            report = program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target']), lambda n, d: None)
         self.assertTrue(report['full_readback_verified'])
         self.assertEqual(classify(bytes(device.data)), 'custom')
         self.assertEqual(bytes(device.data[0x34000:]), self.image[0x34000:])
         self.assertEqual(device.erased[-1], 0x2000, 'the header sector is committed last')
         self.assertLessEqual(max(device.erased) + 4096, 0x34000)
         with contextlib.redirect_stdout(io.StringIO()):
-            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore')['target']), lambda n, d: None)
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore', allow_unverified=True)['target']), lambda n, d: None)
         self.assertEqual(classify(bytes(device.data)), 'stock')
         self.assertEqual(bytes(device.data[0x34000:]), self.image[0x34000:])
+
+    def test_restore_backup_puts_the_factory_application_back(self):
+        oem = self.oem
+        device = NOR(self.image, range(0, 0x80000, 4096))
+        with contextlib.redirect_stdout(io.StringIO()):
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'install', allow_unverified=True)['target']), lambda n, d: None)
+        self.assertEqual(classify(bytes(device.data)), 'custom')
+        flashed = bytes(device.data)
+        back = plan(flashed, oem, 'restore-backup', backup=self.image)
+        self.assertEqual(back['target_state'], 'factory-2025-09')
+        self.assertEqual(Layout(back['target']).application(), Layout(self.image).application())
+        self.assertEqual(back['target'][0x34000:], flashed[0x34000:])
+        with contextlib.redirect_stdout(io.StringIO()):
+            program_with_plan(device, lambda current: (current, plan(current, oem, 'restore-backup', backup=self.image)['target']), lambda n, d: None)
+        self.assertEqual(classify(bytes(device.data)), 'factory-2025-09')
+        self.assertEqual(bytes(device.data), self.image, 'storage was untouched, so the exact original returns')
+        with self.assertRaisesRegex(RuntimeError, 'not a known image'):
+            plan(flashed, oem, 'restore-backup', backup=bytes(0x80000))
+        with self.assertRaisesRegex(RuntimeError, 'not a known image'):
+            plan(flashed, oem, 'restore-backup', backup=(ROOT/'device-backup-20261022-233350/flash-pass1.bin').read_bytes())
 
 
 if __name__ == '__main__': unittest.main()

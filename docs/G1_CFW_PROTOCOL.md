@@ -434,6 +434,14 @@ the display. G1CFW/51 patches the two gates (the `cmp #0x10` at `0x190d8`
 and `0x18e12` compares against `0xff`) and replaces the consumer with
 `cfw_ancs_recv` (`b.w` at `0x1981c`).
 
+The client is only subscribed in the first place after the stock
+notify-enable command `14 01` (`BLE_REQ_PUT_NOTIFY_EN`, `FUN_00019c80`):
+it runs `discover_gattp` on the phone link and persists user-setting byte
+`0x1088`, which `ancs_security_changed` checks (with the bonded MAC at
+`0x1081`) on later connections. `14 00` and a user-settings reset clear it.
+The host must send `14 01` once per connection before expecting records;
+nothing else starts discovery.
+
 - `35` ANCS_CONTROL `[op]`: 1 ENABLE arms or extends a 90 s lease, 5 RENEW
   extends a live one, 2 DISABLE drops it, 3 QUERY only answers; 4 ACTION
   is refused (`08`). Reply body: the STATUS record

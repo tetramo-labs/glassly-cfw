@@ -434,19 +434,32 @@ the display. G1CFW/51 patches the two gates (the `cmp #0x10` at `0x190d8`
 and `0x18e12` compares against `0xff`) and replaces the consumer with
 `cfw_ancs_recv` (`b.w` at `0x1981c`).
 
-The client is only subscribed in the first place after the stock
-notify-enable command `14 01` (`BLE_REQ_PUT_NOTIFY_EN`, `FUN_00019c80`):
-it runs `discover_gattp` on the phone link and persists user-setting byte
-`0x1088`, which `ancs_security_changed` checks (with the bonded MAC at
-`0x1081`) on later connections. `14 00` and a user-settings reset clear it.
-The host must send `14 01` once per connection before expecting records;
-nothing else starts discovery.
+The client is only subscribed in the first place after `discover_gattp`
+runs on the phone link at security level 2: iOS hides ANCS from an
+unencrypted link. The stock reaches that from `ancs_security_changed`
+(needs the persisted notify-enable byte `0x1088` and the bonded MAC at
+`0x1081`) and from the Even app's notify-enable command `14 01`
+(`BLE_REQ_PUT_NOTIFY_EN`, `FUN_00019c80`, which also persists `0x1088`),
+and it asks for level 2 itself only from `low_speed_peripheral_dispatch_thread`
+behind state flags the Even app sets. Since G1CFW/52 every ENABLE and RENEW
+on the temple with the client does the missing step: a connection below
+level 2 gets `bt_conn_set_security(conn, 2)` (iOS pairs and asks the wearer
+to share notifications if it has not), one at level 2 with no discovery
+running or finished (`ancs_discovery_flags` bits 0 and 1) gets
+`discover_gattp`. The host still sends `14 01` once per connection so the
+stock's own path works on later connections.
 
 - `35` ANCS_CONTROL `[op]`: 1 ENABLE arms or extends a 90 s lease, 5 RENEW
   extends a live one, 2 DISABLE drops it, 3 QUERY only answers; 4 ACTION
   is refused (`08`). Reply body: the STATUS record
   `['A','N',1,4][enabled][side][drops:u16][sent:u16][send_errors]`, where
-  `side` is state byte 0 (2 on the temple with the client).
+  `side` is state byte 0 (2 on the temple with the client). G1CFW/52
+  appends `[security][discovery][notify_enabled][force_bind][connected]
+  [notifications:u16][kicks]`: the phone link's security level (`ff` while
+  the client has no connection), the stock discovery flags, user-setting
+  bytes `0x1088` and `0x1089`, whether the client has a connection, records
+  taken from the stock queue since boot, and which steps the CFW has taken
+  since boot (bit 0 security requested, bit 1 discovery started).
 - `36` ANCS_RECORD: unsolicited `F0 36 00 ['A','N',1,kind][body]`, one
   record per notification, at most 150 bytes each, in the G2 relay's
   format (g2flash `patches/ancs_relay.c`): kind 1 SOURCE

@@ -1,5 +1,5 @@
 /*
- * G1CFW/51: injected handler for the private 0xF0 command on Even G1 1.6.3.
+ * G1CFW/52: injected handler for the private 0xF0 command on Even G1 1.6.3.
  *
  * Compiled by tools/build_blob.py into a position-independent blob that is
  * appended to the stock application image. The stock BLE receive entry calls
@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 51u
+#define CFW_PROTOCOL 52u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,
@@ -575,7 +575,7 @@ CFW_COLD static uint8_t cfw_flush_cmd(const uint8_t *p, uint32_t n)
 
 CFW_COLD static void cfw_reply(uint8_t sub, uint8_t status, const uint8_t *body, uint32_t n)
 {
-    uint8_t buf[20];
+    uint8_t buf[24];
     uint32_t i;
     if (n > sizeof buf - 3) {
         n = sizeof buf - 3;
@@ -3229,7 +3229,7 @@ typedef struct {
     uint16_t drops;         /* notifications dropped for want of a lease */
     uint16_t notifications; /* records taken from the stock queue since boot */
     uint8_t  send_errors;
-    uint8_t  pad;
+    uint8_t  kicks;         /* bit 0 security requested, bit 1 discovery started, since boot */
 } cfw_ancs;
 #define CFW_ANCS_MAGIC 0x31434e41u  /* "ANC1" */
 #define CFW_ANCS_LEASE_TICKS (90u * 32768u)
@@ -3427,6 +3427,26 @@ CFW_COLD int cfw_ancs_recv(uint8_t *client)
 
 /* [op] -> reply body: the STATUS record ['A','N',1,4][enabled][side][drops:u16][sent:u16][send_errors].
  * ENABLE arms or extends the lease, RENEW extends a live one, DISABLE drops it, QUERY only answers. */
+/* The stock client is subscribed only after discover_gattp on a link at
+ * security level 2, and the stock asks for that level only from its
+ * dispatch thread behind flags the Even app sets (fw_abi.h). Each lease arm
+ * does whichever step is missing on the temple that runs the client; the
+ * host re-arms every 45 s, so a refused request is retried. */
+CFW_COLD static void cfw_ancs_kick(cfw_ancs *a)
+{
+    void *conn = FW_ANCS_CONN();
+    if (!conn || FW_GET_STATE()[FW_STATE_SIDE] != 2) {
+        return;
+    }
+    if (FW_CONN_GET_SECURITY(conn) < 2) {
+        a->kicks |= 1;
+        FW_CONN_SET_SECURITY(conn, 2);
+    } else if (!(*FW_ANCS_DISCOVERY_FLAGS & 3u)) {
+        a->kicks |= 2;
+        FW_DISCOVER_GATTP(conn, 0, 0);
+    }
+}
+
 CFW_COLD static void cfw_ancs_control(const uint8_t *p, uint32_t n)
 {
     cfw_ancs *a = cfw_ancs_state();
@@ -3444,12 +3464,18 @@ CFW_COLD static void cfw_ancs_control(const uint8_t *p, uint32_t n)
         if (!a->lease_until) {
             a->lease_until = 1;
         }
+        cfw_ancs_kick(a);
     } else if (p[0] == CFW_ANCS_OP_DISABLE) {
         a->lease_until = 0;
     }
-    uint8_t body[11] = { 'A', 'N', 1, CFW_ANCS_STATUS, (uint8_t)cfw_ancs_enabled(a, now), FW_GET_STATE()[FW_STATE_SIDE],
+    const uint8_t *state = FW_GET_STATE();
+    void *conn = FW_ANCS_CONN();
+    uint8_t body[19] = { 'A', 'N', 1, CFW_ANCS_STATUS, (uint8_t)cfw_ancs_enabled(a, now), state[FW_STATE_SIDE],
                          (uint8_t)a->drops, (uint8_t)(a->drops >> 8), (uint8_t)a->sent, (uint8_t)(a->sent >> 8),
-                         a->send_errors };
+                         a->send_errors,
+                         conn ? (uint8_t)FW_CONN_GET_SECURITY(conn) : 0xff, (uint8_t)*FW_ANCS_DISCOVERY_FLAGS,
+                         state[FW_STATE_NOTIFY_ENABLED], state[FW_STATE_FORCE_BIND], conn != 0,
+                         (uint8_t)a->notifications, (uint8_t)(a->notifications >> 8), a->kicks };
     cfw_reply(CFW_ANCS_CONTROL, CFW_OK, body, sizeof body);
 }
 

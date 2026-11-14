@@ -1213,3 +1213,30 @@ covers lease, drop, chunking and removal. Offline only at the time of
 writing; see the phone-side notes in the Glassly repo (`G1.swift`
 `startAncsRelay`).
 
+### G1CFW/52: the relay drives security and discovery itself (2026-11-14)
+
+A dev report on /51 showed both temples answering STATUS with the lease
+held and `sent=0 drops=0` for two minutes: the stock client had fetched
+nothing, so the hook was never reached. The decomp explains the gap. iOS
+exposes ANCS only on an encrypted link, and the stock subscribes from
+`ancs_security_changed` (0x185f4: level >= 2, `0x1088` set, bonded MAC at
+`0x1081` matching) or from the Even app's `14 01` (0x19c80, `discover_gattp`
+at once, no security check). The glasses raise the link to level 2 on their
+own only in `low_speed_peripheral_dispatch_thread` (0x2cd70,
+`bt_conn_set_security` 0x84c52) when state bytes 0xae2 and 0xae3 and the
+word at 0x9b4 are set, which nothing the Glassly phone sends is known to
+do; and the phone's `14 01` reply (`14 c9`) was not recognised as an ack,
+so it was retried four times per side. Nothing reported the link's
+security level or `ancs_discovery_flags` (0x20006c94: bit 0 running, bit 1
+handles assigned).
+
+G1CFW/52 pins `FUN_00019cec` (0x19cec, the client's connection),
+`bt_conn_get_security` (0x84cde), `bt_conn_set_security`, `discover_gattp`
+(0x183ec) and the flags in `fw_abi.h`. On ENABLE and RENEW, on the temple
+whose state byte 0 reads 2, `cfw_ancs_kick` requests level 2 when the
+connection is below it, else starts `discover_gattp` when neither flag bit
+is set; the phone re-arms every 45 s, so each step is retried. STATUS grows
+by eight bytes of diagnostics (protocol doc). Blob 24,504 bytes, 352 left.
+Host test covers the kick's three outcomes, the temple gate and QUERY.
+Offline only at the time of writing.
+

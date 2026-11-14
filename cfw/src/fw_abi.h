@@ -261,4 +261,37 @@ typedef int (*fw_dequeue_fn)(void *record);
 #ifndef FW_ANCS_UID_ENTRY
 #define FW_ANCS_UID_ENTRY ((const volatile uint8_t *)0x20006c8cu)
 #endif
+
+/* The stock client subscribes to ANCS only after discover_gattp on a link
+ * at security level 2 (ancs_security_changed, 0x185f4), and the stock asks
+ * for that level itself only from low_speed_peripheral_dispatch_thread
+ * (0x2cd70) behind state flags the Even app sets. The CFW does both when
+ * the host arms the lease. FUN_00019cec returns the phone connection the
+ * ANCS client works on (DAT_20007ef4), NULL while none. discover_gattp's
+ * second argument supplies the uuid type in its high byte: pass 0. */
+typedef void *(*fw_ancs_conn_fn)(void);
+#ifndef FW_ANCS_CONN
+#define FW_ANCS_CONN ((fw_ancs_conn_fn)0x00019ced)
+#endif
+typedef int (*fw_conn_get_security_fn)(void *conn);
+#ifndef FW_CONN_GET_SECURITY
+#define FW_CONN_GET_SECURITY ((fw_conn_get_security_fn)0x00084cdf)
+#endif
+typedef int (*fw_conn_set_security_fn)(void *conn, int level);
+#ifndef FW_CONN_SET_SECURITY
+#define FW_CONN_SET_SECURITY ((fw_conn_set_security_fn)0x00084c53)
+#endif
+typedef void (*fw_discover_gattp_fn)(void *conn, uint32_t uuid_type, uint32_t unused);
+#ifndef FW_DISCOVER_GATTP
+#define FW_DISCOVER_GATTP ((fw_discover_gattp_fn)0x000183ed)
+#endif
+/* ancs_discovery_flags: bit 0 a discovery is running, bit 1 the ANCS
+ * handles are assigned (discover_ancs_completed_cb). */
+#ifndef FW_ANCS_DISCOVERY_FLAGS
+#define FW_ANCS_DISCOVERY_FLAGS ((volatile uint32_t *)0x20006c94u)
+#endif
+/* Persisted user settings in GlassesState: 0x1088 is the Even app's
+ * notify-enable (14 01), 0x1089 the force-bind mode. */
+#define FW_STATE_NOTIFY_ENABLED 0x1088u
+#define FW_STATE_FORCE_BIND     0x1089u
 #define FW_STATE_SIDE 0x0

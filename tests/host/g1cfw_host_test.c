@@ -76,6 +76,17 @@ static int host_dequeue_ancs(void *record);
 static uint8_t host_ancs_uid_entry[12];
 #define FW_DEQUEUE_ANCS host_dequeue_ancs
 #define FW_ANCS_UID_ENTRY ((const volatile uint8_t *)host_ancs_uid_entry)
+static uint8_t host_ancs_conn_object; static void *host_ancs_conn; static int host_ancs_security = 1;
+static int host_security_requests, host_discoveries; static uint32_t host_ancs_discovery_flags;
+static void *host_get_ancs_conn(void) { return host_ancs_conn; }
+static int host_get_security(void *conn) { return conn == host_ancs_conn ? host_ancs_security : 0; }
+static int host_set_security(void *conn, int level) { if (conn != host_ancs_conn || level != 2) abort(); host_security_requests++; return 0; }
+static void host_discover_gattp(void *conn, uint32_t uuid_type, uint32_t unused) { (void)unused; if (conn != host_ancs_conn || uuid_type) abort(); host_discoveries++; }
+#define FW_ANCS_CONN host_get_ancs_conn
+#define FW_CONN_GET_SECURITY host_get_security
+#define FW_CONN_SET_SECURITY host_set_security
+#define FW_DISCOVER_GATTP host_discover_gattp
+#define FW_ANCS_DISCOVERY_FLAGS (&host_ancs_discovery_flags)
 #define FW_EVENT_PENDING (&host_event_pending)
 #define FW_ENQUEUE_BT_DATA host_enqueue
 static int32_t host_imu[3];
@@ -479,7 +490,7 @@ int main(int argc, char **argv)
     const uint8_t ping[] = { 0xF0, 0x00 };
     CHECK(send_packet(ping, sizeof ping) == 0 && hook_calls == 3);
     CHECK(last_reply_len == 15 && last_reply[0] == 0xF0 && last_reply[1] == 0 && last_reply[2] == 0);
-    CHECK(memcmp(last_reply + 3, "G1CFW/51", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
+    CHECK(memcmp(last_reply + 3, "G1CFW/52", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
 
     /* Short and unknown commands are answered, never dispatched. */
     const uint8_t only_sid[] = { 0xF0 };
@@ -1717,8 +1728,10 @@ int main(int argc, char **argv)
     CHECK((uint8_t *)cfw_ancs_state() + sizeof(cfw_ancs) <= FW_CFW_RAM2 + FW_CFW_RAM2_SIZE);
     state[FW_STATE_SIDE] = 2;
     uint8_t ancs_q[] = { 0xF0, 0x35, 0x03 };
-    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[2] == CFW_OK && last_reply_len == 14);
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[2] == CFW_OK && last_reply_len == 22);
     CHECK(memcmp(last_reply + 3, "AN\x01\x04", 4) == 0 && last_reply[7] == 0 && last_reply[8] == 2);
+    /* No phone connection on the client's temple: nothing to kick, and STATUS says so. */
+    CHECK(last_reply[14] == 0xff && last_reply[18] == 0 && last_reply[21] == 0);
     memset(host_ancs_record, 0, sizeof host_ancs_record);
     const uint32_t uid = 0x11223344u;
     memcpy(host_ancs_record + FW_ANCS_REC_UID, &uid, 4);
@@ -1735,6 +1748,24 @@ int main(int argc, char **argv)
     CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[9] == 1 && last_reply[10] == 0 && last_reply[11] == 0);
     uint8_t ancs_on[] = { 0xF0, 0x35, 0x01 };
     CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && last_reply[2] == CFW_OK && last_reply[7] == 1);
+    CHECK(host_security_requests == 0 && host_discoveries == 0 && last_reply[21] == 0);
+    /* With the phone connected at security 1, arming the lease asks for level 2; at level 2 with
+     * nothing discovered it starts discovery; a running or finished discovery is left alone. */
+    host_ancs_conn = &host_ancs_conn_object;
+    state[FW_STATE_NOTIFY_ENABLED] = 1; state[FW_STATE_FORCE_BIND] = 0;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_security_requests == 1 && host_discoveries == 0);
+    CHECK(last_reply[14] == 1 && last_reply[15] == 0 && last_reply[16] == 1 && last_reply[17] == 0 && last_reply[18] == 1 && last_reply[21] == 1);
+    host_ancs_security = 2;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_security_requests == 1 && host_discoveries == 1 && last_reply[21] == 3);
+    host_ancs_discovery_flags = 1;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_discoveries == 1 && last_reply[15] == 1);
+    host_ancs_discovery_flags = 2;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_discoveries == 1 && last_reply[15] == 2);
+    host_ancs_discovery_flags = 0;
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && host_discoveries == 1);   /* QUERY never kicks */
+    state[FW_STATE_SIDE] = 1;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_discoveries == 1);   /* not the client's temple */
+    state[FW_STATE_SIDE] = 2;
     host_queued = 0; host_ancs_queued = 1;
     CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
     static const uint8_t ancs_source[] = { 0xF0, 0x36, 0x00, 'A', 'N', 1, 1, 0, 0x02, 4, 3, 0x44, 0x33, 0x22, 0x11 };
@@ -1753,6 +1784,7 @@ int main(int argc, char **argv)
     CHECK(host_queue[8][11] == 5 && host_queue[8][12] == 15 && memcmp(host_queue[8] + 16, "20261112T093000", 15) == 0);
     CHECK(host_queue[9][11] == 6 && host_queue[10][11] == 7 && host_queue_len[10] == 16);
     CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[11] == 11 && last_reply[9] == 1);
+    CHECK(last_reply[19] == 2 && last_reply[20] == 0);   /* two records taken from the stock queue so far */
     /* A removal carries only its SOURCE; an entry for another uid lends no flags. */
     host_ancs_record[FW_ANCS_REC_EVENT] = 2;
     host_ancs_uid_entry[0] ^= 1;

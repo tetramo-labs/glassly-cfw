@@ -268,14 +268,18 @@ typedef int (*fw_dequeue_fn)(void *record);
  * (0x2cd70) behind state flags the Even app sets. The CFW does both when
  * the host arms the lease. FUN_00019cec returns the phone connection the
  * ANCS client works on (DAT_20007ef4), NULL while none. discover_gattp's
- * second argument supplies the uuid type in its high byte: pass 0. */
+ * second argument supplies the uuid type in its high byte: pass 0.
+ * bt_conn_get_security is the two-instruction reader of conn->sec_level
+ * (byte 9: ldrb r0,[r0,#9]; bx lr) that ancs_security_changed calls; the
+ * neighbouring 0x84cde (adds r0,#0x90) is bt_conn_get_dst and returns a
+ * pointer, which G1CFW/52 mistook for a level and so never asked for 2. */
 typedef void *(*fw_ancs_conn_fn)(void);
 #ifndef FW_ANCS_CONN
 #define FW_ANCS_CONN ((fw_ancs_conn_fn)0x00019ced)
 #endif
 typedef int (*fw_conn_get_security_fn)(void *conn);
 #ifndef FW_CONN_GET_SECURITY
-#define FW_CONN_GET_SECURITY ((fw_conn_get_security_fn)0x00084cdf)
+#define FW_CONN_GET_SECURITY ((fw_conn_get_security_fn)0x00084c9b)
 #endif
 typedef int (*fw_conn_set_security_fn)(void *conn, int level);
 #ifndef FW_CONN_SET_SECURITY

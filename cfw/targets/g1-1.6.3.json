@@ -443,6 +443,26 @@
       "name": "recv_ble_data entry (ancs hook site)",
       "address": 104476,
       "expected": "4b2330b5efb00446"
+    },
+    {
+      "name": "FW_ANCS_CONN",
+      "address": 105708,
+      "expected": "014b1868704700bf"
+    },
+    {
+      "name": "FW_CONN_GET_SECURITY",
+      "address": 543898,
+      "expected": "407a704738b5037a"
+    },
+    {
+      "name": "FW_CONN_SET_SECURITY",
+      "address": 543826,
+      "expected": "38b5437b0446072b"
+    },
+    {
+      "name": "FW_DISCOVER_GATTP",
+      "address": 99308,
+      "expected": "002307b58df80430"
     }
   ],
   "ram_regions": [

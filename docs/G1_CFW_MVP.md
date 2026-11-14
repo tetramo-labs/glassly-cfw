@@ -1240,3 +1240,27 @@ by eight bytes of diagnostics (protocol doc). Blob 24,504 bytes, 352 left.
 Host test covers the kick's three outcomes, the temple gate and QUERY.
 Offline only at the time of writing.
 
+### G1CFW/53: the security kick read a pointer, not a level (2026-11-14)
+
+The first /52 report (glasses flashed /51 -> /52 mid-session, iOS 27.2)
+answered STATUS with `security=168 discovery=2 notifyEnabled=1 connected=1
+notifications=0 kicks=0` on both temples: no notification ever reached the
+stock queue and the CFW never requested anything. 168 is not a level. The
+address /52 pinned as `bt_conn_get_security`, 0x84cde, is `adds r0,#0x90;
+bx lr`, i.e. `bt_conn_get_dst` returning a pointer into the connection
+(the same low byte on both temples). Being >= 2 it skipped the security
+request, and the `14 01` discovery then ran on the unencrypted link that a
+reboot leaves behind, so iOS never delivered a thing. The reader
+`ancs_security_changed` itself calls is 0x84c9a (`ldrb r0,[r0,#9]; bx lr`,
+`conn->sec_level`; `bt_conn_set_security` 0x84c52 writes the required level
+at byte 0xa and compares byte 0xd against 7, connected). None of the four
+ANCS entry points had a stock-byte guard, which is how the wrong address
+slipped through; `cfw/targets/g1-1.6.3.json` now guards all four.
+
+G1CFW/53 changes only `FW_CONN_GET_SECURITY`. With a real level the kick
+requests 2 on the first ENABLE after a reconnect; iOS re-encrypts the bonded
+link, `ancs_security_changed` clears the discovery flags and (with `0x1088`
+set and the bonded MAC matching) runs `discover_gattp`, or the next RENEW
+starts it. Expect `security=2 kicks=1|3` and a rising `notifications` count
+in STATUS. Offline only at the time of writing.
+

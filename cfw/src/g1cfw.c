@@ -1,5 +1,5 @@
 /*
- * G1CFW/52: injected handler for the private 0xF0 command on Even G1 1.6.3.
+ * G1CFW/53: injected handler for the private 0xF0 command on Even G1 1.6.3.
  *
  * Compiled by tools/build_blob.py into a position-independent blob that is
  * appended to the stock application image. The stock BLE receive entry calls
@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 52u
+#define CFW_PROTOCOL 53u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,

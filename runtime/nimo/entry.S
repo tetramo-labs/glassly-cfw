@@ -121,3 +121,52 @@ glassly_input_gate:
     sw      s3, 108(sp)
     li      t1, 0x04208dda
     jr      t1
+
+/* Notification intake gate. The stock ANCS attribute handler (0x04273e38)
+ * calls ancs_intake at 0x04274006 with `auipc ra; jalr ra` in place of
+ * `jal ra,0x0428c846; li a2,0x1ca`, so a0 = the intake struct and ra =
+ * 0x0427400e. While the phone holds the relay lease the notification goes
+ * to it and the stock intake never runs; otherwise the stock intake is
+ * called as before. Either way the displaced `li a2,0x1ca` is replayed. */
+    .balign 4
+    .globl glassly_ancs_intake_gate
+glassly_ancs_intake_gate:
+    addi    sp, sp, -16
+    sw      ra, 12(sp)
+    sw      a0, 8(sp)
+    call    glassly_ancs_intake
+    bnez    a0, 9f
+    lw      a0, 8(sp)
+    li      t1, 0x0428c846
+    jalr    ra, t1, 0
+9:  lw      ra, 12(sp)
+    addi    sp, sp, 16
+    li      a2, 0x1ca
+    ret
+
+/* Whitelist gate. The stock ANCS app whitelist check (0x042767d0, a0 = app
+ * id) jumps here from its entry with `auipc t1; jalr x0` in place of
+ * `c.addi sp,-16; c.swsp s0,8(sp); c.swsp s1,4(sp); c.swsp ra,12(sp)`.
+ * Under the relay lease every app is allowed, so the phone's own filter
+ * decides; otherwise the four instructions are replayed and the stock check
+ * continues at 0x042767d8. */
+    .balign 4
+    .globl glassly_ancs_whitelist_gate
+glassly_ancs_whitelist_gate:
+    addi    sp, sp, -32
+    sw      ra, 28(sp)
+    sw      a0, 24(sp)
+    call    glassly_ancs_leased
+    mv      t0, a0
+    lw      a0, 24(sp)
+    lw      ra, 28(sp)
+    addi    sp, sp, 32
+    beqz    t0, 10f
+    li      a0, 1
+    ret
+10: addi    sp, sp, -16
+    sw      s0, 8(sp)
+    sw      s1, 4(sp)
+    sw      ra, 12(sp)
+    li      t1, 0x042767d8
+    jr      t1

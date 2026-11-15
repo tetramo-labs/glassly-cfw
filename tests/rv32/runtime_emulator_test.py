@@ -61,6 +61,8 @@ ROUTER_UNROUTED, ROUTER_EPILOGUE = 0x0426E036, 0x0426E112
 KICK_REJOIN, KICK_TAIL = 0x041F7044, 0x041F705C   # the frame kick after the hooked bytes; its frame-task tail call
 KICK_FLAG = 0x02011FA5                             # 1157(gp): the byte the kick tests first
 UI_DISPATCH_REJOIN = 0x04208DDA                    # the stock UI dispatcher after the hooked prologue
+ANCS_WHITELIST_REJOIN = 0x042767D8                 # the stock whitelist check after the hooked prologue
+ANCS_INTAKE_RETURN = 0x0427400E                    # the ANCS attribute handler after the hooked call
 GP = 0x02011B20
 # The stock framebuffers and their index bytes (runtime/nimo/stock.h). The
 # machine starts flipped (front 0, back 1), so the lease's canvas is buffer 0.
@@ -73,7 +75,7 @@ STOCK = {
     "panel_flush": 0x04200DB2, "set_brightness": 0x041FEC90, "repaint_all": 0x041FE71A,
     "cancel_auto_off": 0x04268164, "lv_screen_active": 0x0424143C, "lv_obj_invalidate": 0x04233F3A,
     "lv_timer_create": 0x0423F7F8, "lv_timer_delete": 0x0423F89E,
-    "critical_enter": 0x041FA74E, "critical_exit": 0x041FA760,
+    "critical_enter": 0x041FA74E, "critical_exit": 0x041FA760, "ancs_intake": 0x0428C846,
 }
 MUTEX, SCREEN, TIMER = 0x02090000, 0x02090100, 0x02090200
 W, H, STRIDE = 540, 280, 270
@@ -117,7 +119,8 @@ class Machine:
         base = origin & ~0xFFF
         self.uc.mem_map(base, (origin + len(blob) - base + 0xFFF) & ~0xFFF, u.UC_PROT_READ | u.UC_PROT_EXEC)
         self.uc.mem_write(origin, blob)
-        stops = [ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN]
+        stops = [ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN, ANCS_WHITELIST_REJOIN,
+                 ANCS_INTAKE_RETURN]
         pages = sorted({a & ~0xFFF for a in [*STOCK.values(), *stops]} - {RAM & ~0xFFF})
         for page in pages:
             if not RAM <= page < RAM + RAM_SIZE:
@@ -347,7 +350,8 @@ class Machine:
         self.stopped_at = None
         self.uc.emu_start(function, until, count=50_000_000)
         pc = self.pc()
-        if pc in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN):
+        if pc in (RETURN, ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN,
+                  ANCS_WHITELIST_REJOIN, ANCS_INTAKE_RETURN):
             self.stopped_at = pc
         check(self.stopped_at is not None, f"call to {function:#x} did not return (pc {pc:#x})")
         check(self.critical == 0, "returned inside a critical section")
@@ -633,6 +637,58 @@ def demo_session(build, left):
     return m
 
 
+@test("notification gates: the whitelist and the intake follow the relay lease")
+def test_ancs_gates(build):
+    m = Machine(build)
+    saved = {x: 0x4000 + x for x in (8, 9, 18, 19, 20, 21)}
+    appid, strings, intake = PAYLOAD, PAYLOAD + 0x100, PAYLOAD + 0x400
+    m.uc.mem_write(appid, b"com.example.chat\0")
+    fields = [b"com.example.chat", b"Title", b"", b"x" * 200, b"20261114T153000"]
+    pointers, at = [], strings
+    for text in fields:
+        m.uc.mem_write(at, text + b"\0")
+        pointers.append(at)
+        at += len(text) + 1
+    m.uc.mem_write(intake, struct.pack("<10I", 0x11223344, 7, 0, pointers[0], pointers[1], pointers[2], pointers[3],
+                                       0, 0, pointers[4]))
+
+    def whitelist(until):
+        m.call(m.symbols["glassly_ancs_whitelist_gate"], regs={10: appid, **saved}, until=until)
+        return m.stopped_at
+
+    check(whitelist(ANCS_WHITELIST_REJOIN) == ANCS_WHITELIST_REJOIN and m.reg(10) == appid, "no lease: stock check runs")
+    check(m.reg(2) == STACK_TOP - 16 and m.u32(STACK_TOP - 16 + 8) == saved[8] and m.u32(STACK_TOP - 16 + 4) == saved[9]
+          and m.u32(STACK_TOP - 16 + 12) == RETURN, "replayed whitelist prologue")
+
+    def intake_gate():
+        before = len(m.replies), m.calls.count("ancs_intake")
+        m.call(m.symbols["glassly_ancs_intake_gate"], regs={10: intake, **saved})
+        check(m.stopped_at == RETURN and m.reg(12) == 0x1CA and m.reg(2) == STACK_TOP, "intake gate returns to its caller")
+        check(all(m.reg(x) == v for x, v in saved.items()), "callee-saved registers through the intake gate")
+        return m.replies[before[0]:], m.calls.count("ancs_intake") - before[1]
+
+    sent, stock = intake_gate()
+    check(not sent and stock == 1, "no lease: the stock intake runs")
+    status = m.command(0x27, b"\x01")[2]
+    check(status[:7] == bytes([0, 0x41, 0x4E, 1, 4, 1, 1]) and status[7:9] == b"\x01\x00", f"lease status {status.hex()}")
+    check(whitelist(RETURN) == RETURN and m.reg(10) == 1 and m.reg(2) == STACK_TOP, "leased: every app allowed")
+    sent, stock = intake_gate()
+    check(stock == 0 and len(sent) == 1 + 7 + 2 and all(r[:2] == (0x7E, 0x28) for r in sent), f"leased: {len(sent)} records")
+    check(sent[0][2] == bytes([0, 0x41, 0x4E, 1, 1, 0, 0, 7, 0]) + struct.pack("<I", 0x11223344), "SOURCE record")
+    check(sent[1][2][9:14] == bytes([0, 16, 0, 0, 0]) and sent[1][2][14:] == b"com.example.chat", "app id attribute")
+    check(sent[4][2][9:14] == bytes([3, 200, 0, 0, 0]) and len(sent[4][2]) == 14 + 128, "first message chunk")
+    check(sent[5][2][11:14] == bytes([0, 128, 0]) and len(sent[5][2]) == 14 + 72, "second message chunk")
+    check(sent[6][2][9:14] == bytes([4, 0, 0, 0, 0]) and len(sent[6][2]) == 14, "empty message-size attribute")
+    check(sent[7][2][9:14] == bytes([5, 15, 0, 0, 0]) and sent[7][2][14:] == b"20261114T153000", "date attribute")
+    check(max(len(r[2]) for r in sent) <= 590, "records fit build_response")
+    status = m.command(0x27, b"\x03")[2]
+    check(status[5] == 1 and status[7:11] == bytes([1, 0, 10, 0]), f"status counters {status.hex()}")
+    m.now += 90_001
+    sent, stock = intake_gate()
+    check(not sent and stock == 1, "expired lease: the stock intake runs again")
+    check(m.command(0x27, b"\x04")[2] == b"\x05" and m.command(0x27, b"\x01\x01")[2] == b"\x01", "refused ops")
+
+
 @test("left arm: acquire, demo scenes, pump, per-eye SHOW, brightness, release")
 def test_left(build):
     m = demo_session(build, True)
@@ -814,7 +870,7 @@ def main():
         path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(got, indent=2))
         return
-    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_left, test_right,
+    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_left, test_right,
              test_steps_to_geometry, test_all_steps, test_canvas_timing, test_odd_payload, test_breadcrumbs]
     for fn in tests:
         fn(args.build)

@@ -10,7 +10,7 @@ enum {
     GLASSLY_CMD = 0x7E,
     KEY_IDENTITY = 0x01, KEY_ECHO = 0x02, KEY_CHECKSUM = 0x03, KEY_STATUS = 0x04, KEY_DRAW_TEST = 0x10,
     KEY_SCENE = 0x20, KEY_ACQUIRE = 0x21, KEY_RELEASE = 0x22, KEY_BRIGHTNESS = 0x23,
-    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26,
+    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26, KEY_ANCS_CONTROL = 0x27, KEY_ANCS_RECORD = 0x28,
 };
 enum {
     STATUS_OK = 0, STATUS_INVALID = 1, STATUS_NO_MEMORY = 2, STATUS_NOT_OWNED = 3,
@@ -55,6 +55,13 @@ typedef struct {
 
 /* Breadcrumbs (ram.h): a lane starts a stage with its command's identity and
  * moves through the later stages; each lane has a single writer. */
+/* Notification relay (ancs.c): the router answers 0x27 with the STATUS record;
+ * the stock ANCS client's completed notifications reach glassly_ancs_intake
+ * through the call hook at 0x04274006 and its whitelist check asks
+ * glassly_ancs_leased through the hook at 0x042767d0. */
+uint32_t glassly_ancs_control(const uint8_t *payload, uint32_t len, uint8_t *reply);
+int glassly_ancs_intake(const uintptr_t *intake);
+int glassly_ancs_leased(void);
 void nimo_crumb_start(uint32_t lane, uint32_t stage, uint32_t seq, uint32_t key, uint32_t mode, uint32_t len);
 void nimo_crumb_stage(uint32_t lane, uint32_t stage);
 /* One scene job fewer waiting (the UI task ran or dropped it). */

@@ -644,6 +644,72 @@ static void test_demo_scenes(const char *dir, int left)
            left ? "left" : "right");
 }
 
+
+/* Notification relay: the lease, the whitelist answer, the records a completed
+ * notification becomes and the drop without a lease. */
+static void test_ancs_relay(void)
+{
+    host_reset(0);
+    uint8_t op[1] = { 3 };
+    host_reply *r = command(KEY_ANCS_CONTROL, op, 1);
+    assert(r->len == 12 && r->data[0] == STATUS_OK && r->data[1] == 'A' && r->data[2] == 'N' && r->data[3] == 1 &&
+           r->data[4] == 4 && r->data[5] == 0 && r->data[6] == 1);
+    assert(glassly_ancs_leased() == 0);
+    static char message[300];
+    for (unsigned i = 0; i < sizeof message - 1; i++) message[i] = (char)('a' + i % 26);
+    message[sizeof message - 1] = 0;
+    uintptr_t intake[10] = { 0x11223344u, 7, 0, (uintptr_t)"com.example.chat", (uintptr_t)"Title", (uintptr_t)"",
+                             (uintptr_t)message, 0, 0, (uintptr_t)"20261114T153000" };
+    unsigned before = host.reply_count;
+    assert(glassly_ancs_intake(intake) == 0 && host.reply_count == before);
+    assert(NIMO_RAM->ancs_notifications == 1 && NIMO_RAM->ancs_drops == 1);
+    op[0] = 1;
+    r = command(KEY_ANCS_CONTROL, op, 1);
+    assert(r->data[5] == 1 && NIMO_RAM->ancs_lease_until == host.now + 90000u);
+    assert(glassly_ancs_leased() == 1 && NIMO_RAM->ancs_allowed == 1);
+    before = host.reply_count;
+    assert(glassly_ancs_intake(intake) == 1);
+    /* SOURCE, then eight attributes; the 260-byte message cap makes three chunks of it. */
+    assert(host.reply_count - before == 1 + 7 + 3);
+    host_reply *src = &host.replies[before];
+    assert(src->cmd == GLASSLY_CMD && src->key == KEY_ANCS_RECORD && src->len == 13);
+    assert(src->data[0] == 0 && src->data[1] == 'A' && src->data[2] == 'N' && src->data[3] == 1 && src->data[4] == 1);
+    assert(src->data[5] == 0 && src->data[7] == 7 && src->data[9] == 0x44 && src->data[12] == 0x11);
+    host_reply *app = &host.replies[before + 1];
+    assert(app->data[4] == 2 && app->data[9] == 0 && app->data[10] == 16 && app->data[11] == 0 && app->data[12] == 0 &&
+           app->data[13] == 0 && !memcmp(app->data + 14, "com.example.chat", 16) && app->len == 14 + 16);
+    host_reply *sub = &host.replies[before + 3];
+    assert(sub->data[9] == 2 && sub->data[10] == 0 && sub->data[11] == 0 && sub->len == 14);
+    host_reply *msg1 = &host.replies[before + 4], *msg3 = &host.replies[before + 6];
+    assert(msg1->data[9] == 3 && msg1->data[10] == 260 % 256 && msg1->data[11] == 260 / 256 && msg1->len == 14 + 128);
+    assert(msg3->data[12] == 0 && msg3->data[13] == 1 && msg3->len == 14 + 4);
+    host_reply *size = &host.replies[before + 7];
+    assert(size->data[9] == 4 && size->data[10] == 0 && size->len == 14);
+    host_reply *date = &host.replies[before + 8];
+    assert(date->data[9] == 5 && date->data[10] == 15 && !memcmp(date->data + 14, "20261114T153000", 15));
+    assert(host.replies[before + 10].data[9] == 7);
+    assert(NIMO_RAM->ancs_sent == 11 && NIMO_RAM->ancs_notifications == 2 && NIMO_RAM->ancs_drops == 1);
+    op[0] = 3;
+    r = command(KEY_ANCS_CONTROL, op, 1);
+    assert(r->data[5] == 1 && r->data[7] == 1 && r->data[8] == 0 && r->data[9] == 11 && r->data[10] == 0);
+    host.now += 90001u;
+    assert(glassly_ancs_leased() == 0);
+    op[0] = 5;
+    r = command(KEY_ANCS_CONTROL, op, 1);
+    assert(r->data[5] == 0);
+    op[0] = 1;
+    command(KEY_ANCS_CONTROL, op, 1);
+    op[0] = 2;
+    r = command(KEY_ANCS_CONTROL, op, 1);
+    assert(r->data[5] == 0 && NIMO_RAM->ancs_lease_until == 0);
+    op[0] = 4;
+    assert(command(KEY_ANCS_CONTROL, op, 1)->data[0] == STATUS_UNSUPPORTED);
+    uint8_t two[2] = { 1, 1 };
+    assert(command(KEY_ANCS_CONTROL, two, 2)->data[0] == STATUS_INVALID);
+    assert(host.allocations == 0);
+    printf("notification relay: lease, whitelist, 11 records, drop passed\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc == 3 && !strcmp(argv[1], "--scenes")) {
@@ -666,6 +732,7 @@ int main(int argc, char **argv)
     test_input_and_brightness();
     test_slave_and_draw();
     test_breadcrumbs();
+    test_ancs_relay();
     printf("PASS: NIMO session host tests\n");
     return 0;
 }

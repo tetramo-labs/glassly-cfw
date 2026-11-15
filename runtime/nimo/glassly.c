@@ -291,6 +291,9 @@ int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t
         if (status == STATUS_OK) goto posted;
         reply[n++] = (uint8_t)status;
         break;
+    case KEY_ANCS_CONTROL:
+        n = glassly_ancs_control(payload, len, reply);
+        break;
     case KEY_BRIGHTNESS:
         if (len != 1 || payload[0] > 32u) {
             reply[n++] = STATUS_INVALID;

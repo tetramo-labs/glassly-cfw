@@ -1,0 +1,144 @@
+{
+  "format": "nimo-offline-tests-v1",
+  "revision": 10,
+  "started_utc": "2026-11-15T00:53:40.976044+00:00",
+  "finished_utc": "2026-11-15T00:55:16.139412+00:00",
+  "stages": [
+    {
+      "stage": "01_container",
+      "required": true,
+      "scope": "Container parse/repack/replace_body",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-I",
+            "scripts/test_nimo_ota.py"
+          ],
+          "returncode": 0,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "passed",
+      "seconds": 1.89
+    },
+    {
+      "stage": "02_cfw_string_builds",
+      "required": false,
+      "scope": "String-edit manifests rebuilt from the stock images",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-I",
+            "tests/check_cfw_builds.py",
+            "--output",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/02_cfw_string_builds/images"
+          ],
+          "returncode": 0,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "passed",
+      "seconds": 1.748
+    },
+    {
+      "stage": "03_runtime_build",
+      "required": true,
+      "scope": "GLASSLYCFW/10 runtime image built and checked",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-I",
+            "scripts/build_runtime.py",
+            "/Users/fosse/dev/glassly-nimo-cfw/captures/firmware/ota-1.1.5.1-20261027111705-8e6f7a-vendor-app.bin",
+            "10",
+            "--out",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/03_runtime_build/build",
+            "--image",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/03_runtime_build/ota-1.1.5.1-glasslycfw-10.bin"
+          ],
+          "returncode": 0,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "passed",
+      "seconds": 9.96
+    },
+    {
+      "stage": "04_portable_host",
+      "required": true,
+      "scope": "Portable scene core vs the pinned G2 reference (ASan/UBSan)",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-I",
+            "runtime/portable/tests/run_tests.py",
+            "--output",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host/geometry"
+          ],
+          "returncode": 1,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "failed",
+      "seconds": 0.075
+    },
+    {
+      "stage": "05_session_host",
+      "required": true,
+      "scope": "NIMO adapter, scene session, demo scenes and breadcrumbs (ASan/UBSan)",
+      "commands": [
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-I",
+            "runtime/nimo/tests/run_session_tests.py",
+            "--revision",
+            "10",
+            "--output",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/05_session_host/session"
+          ],
+          "returncode": 0,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "passed",
+      "seconds": 2.479
+    },
+    {
+      "stage": "06_rv32_emulator",
+      "required": false,
+      "scope": "Linked RV32 blob, gates and hardware steps under a strict Unicorn core",
+      "commands": [
+        {
+          "argv": [
+            "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+            "-I",
+            "tests/rv32/runtime_emulator_test.py",
+            "--build",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/03_runtime_build/build/glasslycfw-10",
+            "--report",
+            "/Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/06_rv32_emulator/report.json"
+          ],
+          "returncode": 0,
+          "log": "00.stdout/.stderr"
+        }
+      ],
+      "result": "passed",
+      "seconds": 78.971
+    }
+  ],
+  "all_required_passed": false,
+  "sources_changed_during_run": [],
+  "hardware_tested": false,
+  "device_actions": 0,
+  "runtime": {
+    "output_sha256": "b548f100dec940b7ad809446f5698a54ead6c82bd6ec0608cd87c273ff90b602",
+    "runtime_bytes": 43063,
+    "runtime_room": 83488,
+    "runtime_free": 40425
+  }
+}

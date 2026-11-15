@@ -98,6 +98,11 @@ typedef struct {
     uint8_t brightness_changed;   /* 0x89 1 once 0x7E/0x23 set a level during this lease */
     uint8_t acquired;             /* 0x8a 1 from a lease's first acquire to its release */
     uint8_t reserved4;
+    uint32_t ancs_lease_until;    /* 0x8c ms tick the notification relay lease ends at; 0 = none */
+    uint32_t ancs_notifications;  /* 0x90 notifications the stock ANCS client completed */
+    uint16_t ancs_sent;           /* 0x94 relay records handed to send_response */
+    uint16_t ancs_drops;          /* 0x96 completed notifications left to the stock for want of a lease */
+    uint32_t ancs_allowed;        /* 0x98 whitelist checks answered "allowed" by the lease */
 } nimo_ram;
 
 _Static_assert(sizeof(nimo_ram) <= NIMO_RAM_BYTES, "RAM block layout exceeds the carve");
@@ -108,7 +113,8 @@ _Static_assert(sizeof(nimo_crumbs) <= NIMO_CRUMB_BYTES - 16, "breadcrumbs exceed
 _Static_assert(offsetof(nimo_ram, owned) == NIMO_RAM_OWNED, "flush gate reads the owned flag here");
 _Static_assert(offsetof(nimo_ram, gate_skips) == NIMO_RAM_GATE_SKIPS, "flush gate counts here");
 _Static_assert(offsetof(nimo_ram, last) == 0x58 && offsetof(nimo_ram, repins) == 0x80 &&
-               offsetof(nimo_ram, inputs) == 0x84 && sizeof(nimo_ram) == 0x8c, "layout offsets documented above");
+               offsetof(nimo_ram, inputs) == 0x84 && offsetof(nimo_ram, ancs_lease_until) == 0x8c &&
+               sizeof(nimo_ram) == 0x9c, "layout offsets documented above");
 _Static_assert(NIMO_RAM_BASE + NIMO_RAM_BYTES == NIMO_CRUMB_BASE, "breadcrumbs follow the block");
 #endif
 

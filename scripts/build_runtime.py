@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / ".tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin"
 RUNTIME = ROOT / "runtime/nimo"
 PORTABLE = ROOT / "runtime/portable"
-SOURCES = [RUNTIME / n for n in ("entry.S", "glassly.c", "display.c", "scene_session.c", "freestanding.c")] + \
+SOURCES = [RUNTIME / n for n in ("entry.S", "glassly.c", "display.c", "scene_session.c", "ancs.c", "freestanding.c")] + \
           [PORTABLE / n for n in ("scene.c", "geometry.c", "vector.c", "rle.c", "raster_commands.c",
                                   "rect_copy_commands.c")]
 APP_TYPE = 0x20
@@ -51,6 +51,12 @@ HOOKS = [
     {"name": "ui-dispatch", "kind": "jump", "address": 0x04208DD2, "witness": "1971a2dca6daced6",
      "target": "glassly_input_gate", "function": [0x04208DD2, 7686], "listing": 40,
      "replay": ["c.addi16sp\tsp,-128", "c.swsp\ts0,120(sp)", "c.swsp\ts1,116(sp)", "c.swsp\ts3,108(sp)"]},
+    {"name": "ancs-intake", "kind": "call", "address": 0x04274006, "witness": "ef8011041306a01c",
+     "target": "glassly_ancs_intake_gate", "function": [0x04273E38, 532],
+     "replay": ["addi\ta2,zero,458"]},
+    {"name": "ancs-whitelist", "kind": "jump", "address": 0x042767D0, "witness": "411122c426c206c6",
+     "target": "glassly_ancs_whitelist_gate", "function": [0x042767D0, 102],
+     "replay": ["c.addi\tsp,-16", "c.swsp\ts0,8(sp)", "c.swsp\ts1,4(sp)", "c.swsp\tra,12(sp)"]},
 ]
 # The lease borrows one of the two stock framebuffers (runtime/nimo/stock.h).
 # Every stock function that forms an address inside them, and what it does

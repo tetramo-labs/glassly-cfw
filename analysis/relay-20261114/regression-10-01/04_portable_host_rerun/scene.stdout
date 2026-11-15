@@ -1,0 +1,47 @@
+{
+  "format": "memomind-portable-scene-tests-v1",
+  "result": "passed",
+  "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
+  "hardware_tested": false,
+  "scope": "Production portable scene/cache/assets + portable geometry/vector, original full host assertion bodies",
+  "pending_boundary": "Native built-in font uses explicit callback; host retains unchanged upstream box-font stub",
+  "source_hashes_verified": 45,
+  "original_check_sites": {
+    "shapes_host_test.c": 357,
+    "vector_host_test.c": 90
+  },
+  "original_suite_result": "wrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/immediate.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/cache_f00.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/cache_f10.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/cache_reopen.pgm\nOK (0 failures)\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/path_evenodd.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/path_curves.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/rotation_halfway.pgm\nwrote /Users/fosse/dev/glassly-nimo-cfw/analysis/relay-20261114/regression-10-01/04_portable_host_rerun/scene/path_transform.pgm\nvector suite: OK (0 failures), 0 live allocations\nportable original CHECK evaluations: 42495",
+  "public_api_result": "public scene API: independent600x350/601x175 stride320 owners,64/128KiB store limits, zero leaks; peak core bytes 171200/236736",
+  "fixture_replays": {
+    "result": "not-run",
+    "reason": "Optional existing generated media corpus not supplied; not counted as pass"
+  },
+  "host_layout": {
+    "context": 1112,
+    "platform": 120,
+    "cache": 45792,
+    "transaction": 1904,
+    "object": 124,
+    "asset": 32,
+    "undo_base": 47840,
+    "undo_granule": 20,
+    "vector_workspace": 10752
+  },
+  "rv32_layout": {
+    "context": 1016,
+    "platform": 60,
+    "cache": 45488,
+    "transaction": 1636,
+    "object": 124,
+    "asset": 32,
+    "undo_base": 47536,
+    "undo_granule": 20,
+    "vector_workspace": 10752
+  },
+  "rv32_small_transaction_core_bytes": 170592,
+  "rv32_undefined_symbols": [],
+  "tools": {
+    "clang": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "riscv_gcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  }
+}

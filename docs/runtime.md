@@ -129,6 +129,8 @@ reply once the work is done; a busy refusal is answered at once.
 | 0x24 | — (notification) | unsolicited `[0][tag u16 LE]` when a SHOW with the TAG flag has settled; follows the 0x20 reply that started it |
 | 0x26 | — (notification) | while owned, every stock touch message: `[0][message id][stock length][up to 16 parameter bytes]`. Ids 0x88 tap, 0x89 double, 0x8a triple, 0x8b long, 0x8c very long, 0x98 press, 0x99 release; tap gestures carry `[side (1 left)][1][source u16][gesture sequence u32]`. The master keeps them from the stock screens; the slave hands them to its stock dispatcher (the stock code may forward them to the master from there) |
 | 0x25 | — | *UI* `[status][crc32 u32 LE][eye 1/2]`: zlib CRC-32 of this arm's 75,600-byte canvas (status 3 when not owned). Only the master (right arm) answers, so hardware steps compare the right canvas with the emulator's render |
+| 0x27 | `[op]` | notification relay control (GLASSLYCFW/10): 1 ENABLE arms or extends a 90 s lease, 5 RENEW extends a live one, 2 DISABLE drops it, 3 QUERY only answers, 4 ACTION is refused (status 5). Reply `[0]['A','N',1,4][enabled][side 1 master / 2 slave][drops u16][sent u16][0]` |
+| 0x28 | — (notification) | while the lease is held, every notification the stock ANCS client completes, as G2 relay records `[0]['A','N',1,kind][body]`: kind 1 SOURCE `[event 0][flags 0][category][count 0][uid u32]`, then kind 2 ATTR `[uid u32][attr][total u16][offset u16][chunk ≤ 128]` for attributes 0 app id, 1 title, 2 subtitle, 3 message (260-byte cap), 5 date and empty 4, 6, 7. The stock popup is skipped and its app whitelist answers "allowed" while leased |
 | other | — | status 5 |
 
 Scene modes (the MemoMind 0x7d channel's raw messages, minus built-in text,
@@ -309,6 +311,34 @@ lease and the 40 s hold with one auto step held, and release set the lease's
 starting level (11) again. Every display, scene and checksum step passed. The
 touch steps received no touch in that run (`inputs` 0); the /8 runs had.
 
+## Notification relay (GLASSLYCFW/10, 2026-11-14)
+
+The stock 1.1.5.1 application runs an ANCS client against the bonded iPhone
+(`[ANCS] ANCS_RX / ANCS_ATTR / ANCS_MSG / ANCS_SHOW` logging). Its notification
+source handler (`0x04274be2`) fetches the attributes of each new notification
+(pre-existing ones, flag bit 2, are only counted) into the record at
+`0x02084328`: uid at +0, category at +5, app id +6, title +0x26, subtitle +0x66,
+date +0xa6, message +0xc6. The attribute handler (`0x04273e38`) then asks the
+app whitelist (`0x042767d0(appid)`: 1 when the hashed id is in the table at
+`0x02086c38`, else the default-policy byte `0x02012c10`) and calls
+`ancs_intake(&intake)` at `0x04274006` with a ten-word struct {uid, category,
+0, appid*, title*, subtitle*, message*, 0, 0, date*}; `ancs_intake`
+(`0x0428c846`) maps the category to a priority and `dispatch_show`
+(`0x04275960`) queues the stock popup.
+
+`runtime/nimo/ancs.c` hooks both: under the lease the phone holds with 0x27
+the intake call is diverted and the notification leaves as 0x28 records in
+the G2 relay format (`G2AncsRelay` on the phone), and the whitelist answers
+"allowed" so the phone's own filter decides. Without a lease nothing changes.
+The relay runs on the stock ANCS task through `send_response`, with no heap
+and no UI work; counters live in the RAM block (`ancs_lease_until`,
+`ancs_notifications`, `ancs_sent`, `ancs_drops`, `ancs_allowed`). Only the
+master arm's `send_response` reaches the phone; if the ANCS client turns out
+to run on the slave arm the status counters will show notifications without
+sent records and a forward to the master is the next step. Host tests cover
+the lease, the whitelist answer, the eleven records of a 300-byte message and
+the drop; the RV32 emulator runs both gates.
+
 ## Breadcrumbs (GLASSLYCFW/6)
 
 The heap region starts 256 bytes past the RAM block (`0x0209cf74`, size
@@ -392,6 +422,8 @@ becomes a CAPACITY reply, not a crash). A full retained scene (128 objects,
 | frame-flush | call (`auipc ra; jalr ra`) | `0x041fd63c` | `4a8781499c4b8297` | `97a02100e780403d` | `glassly_flush_gate` `0x4417a10`, returns to `0x041fd644` |
 | frame-kick | jump (`auipc t1; jalr x0`) | `0x041f703c` | `83c7514891cf0111` | `17132200670043a1` | `glassly_kick_gate` `0x4417a50`, rejoins at `0x041f7044` / `0x041f705c` |
 | ui-dispatch | jump (`auipc t1; jalr x0`) | `0x04208dd2` | `1971a2dca6daced6` | `17f320006700a3cb` | `glassly_input_gate` `0x4417a8c`, rejoins at `0x04208dda` |
+| ancs-intake | call (`auipc ra; jalr ra`) | `0x04274006` | `ef8011041306a01c` | revision 10 build | `glassly_ancs_intake_gate`: leased → records to the phone, else the stock `ancs_intake` (0x0428c846); replays `li a2,0x1ca`, returns to `0x0427400e` |
+| ancs-whitelist | jump (`auipc t1; jalr x0`) | `0x042767d0` | `411122c426c206c6` | revision 10 build | `glassly_ancs_whitelist_gate`: leased → returns 1, else rejoins at `0x042767d8` |
 
 (Patched bytes and gate addresses are those of the revision 8 build; the build
 recomputes and checks them, and scans the whole stock body so that no direct

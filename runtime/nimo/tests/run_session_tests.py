@@ -21,7 +21,7 @@ DEFINES = ["-DNIMO_HOST", "-DMM_SCENE_STEREO_EYES", "-DMM_SCENE_FIXED_EYE", "-DM
            "-DMM_COMMAND_BUNDLES", "-DMM_RECT_COPY", "-DCFW_CACHE_OBJECTS=128u", "-DCFW_CACHE_ASSETS=128u",
            "-DCFW_TEXTURE_CACHE_SIZE=65536u"]
 SOURCES = [NIMO / "tests/test_session.c", NIMO / "tests/host_stock.c", NIMO / "glassly.c", NIMO / "display.c",
-           NIMO / "scene_session.c"] + [PORTABLE / f"{n}.c" for n in
+           NIMO / "scene_session.c", NIMO / "ancs.c"] + [PORTABLE / f"{n}.c" for n in
                                         ("scene", "geometry", "vector", "rle", "raster_commands", "rect_copy_commands")]
 
 

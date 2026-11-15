@@ -4,11 +4,12 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import tkinter as tk
 from tkinter import filedialog, font, messagebox, ttk
 
-from . import __version__, elevate, paths
+from . import __version__, elevate, paths, upload
 from .devices import DEVICES
 from .devices.base import FlashError
 
@@ -80,6 +81,10 @@ class App:
         self.cancel_button.pack(side='left', padx=(8, 0))
         self.folder_button = ttk.Button(buttons, text='Open backup folder', command=self.open_folder, state='disabled')
         self.folder_button.pack(side='right')
+        self.upload_button = ttk.Button(buttons, text='Upload logs', command=self.upload_logs, state='disabled')
+        self.upload_button.pack(side='right', padx=(0, 8))
+        self.transcript = []
+        self.uploading = False
 
         ttk.Label(frame, textvariable=self.status, font=bold).pack(anchor='w', pady=(12, 0))
         self.bar = ttk.Progressbar(frame, mode='determinate', maximum=1000)
@@ -114,7 +119,9 @@ class App:
         writes = self.mode.get() != 'backup'
         self.risk.configure(state='normal' if writes and not self.running() else 'disabled')
         ready = not self.running() and (self.accept.get() or not writes)
-        self.start_button.configure(state='normal' if ready else 'disabled')
+        self.start_button.configure(state='normal' if ready and not self.uploading else 'disabled')
+        self.upload_button.configure(state='normal' if self.output is not None and not self.running() and not self.uploading
+                                     else 'disabled')
 
     def append(self, text):
         self.log.configure(state='normal')
@@ -137,6 +144,8 @@ class App:
                                                 filetypes=[('Flash backup', 'flash-pass1.bin'), ('All files', '*')])
             if not chosen:
                 self.output.rmdir()
+                self.output = None
+                self.refresh()
                 return
             args += ['--backup', chosen]
         if sys.platform != 'win32':
@@ -144,6 +153,7 @@ class App:
         self.log.configure(state='normal')
         self.log.delete('1.0', 'end')
         self.log.configure(state='disabled')
+        self.transcript = [(upload.now_ms(), 'status', f'{device.name}: {mode} with Glassly CFW Flasher {__version__}')]
         self.result.set('')
         self.status.set('Starting')
         self.bar.configure(mode='indeterminate')
@@ -178,6 +188,8 @@ class App:
 
     def handle(self, event):
         kind = event.get('type')
+        if kind in ('log', 'status'):
+            self.transcript.append((upload.now_ms(), kind, event['text']))
         if kind == 'log':
             self.append(event['text'])
         elif kind == 'status':
@@ -235,6 +247,47 @@ class App:
             os.startfile(self.output)
         else:
             subprocess.Popen(['xdg-open', str(self.output)])
+
+    def upload_logs(self):
+        if self.output is None or self.running() or self.uploading:
+            return
+        if not messagebox.askokcancel('Upload logs', 'Send this session\'s log to Glassly for support? It holds the lines '
+                                      'shown below, the session\'s records and the end of its Bluetooth or USB trace, '
+                                      'including the names and addresses of devices this computer saw. No firmware '
+                                      'backup is sent.'):
+            return
+        device, mode, output, transcript = self.selected(), self.mode.get(), self.output, list(self.transcript)
+        self.uploading = True
+        self.status.set('Uploading logs')
+        self.refresh()
+
+        def work():
+            try:
+                entries = upload.collect(output, transcript)
+                report_id = upload.submit(entries, upload.context(device.key, mode, output),
+                                          f'{device.name} {mode}: log upload from the flasher')
+            except upload.UploadError as e:
+                self.root.after(0, self.uploaded, None, e.args[1] if len(e.args) > 1 else str(e))
+            except Exception as e:  # the upload must never take the GUI down
+                self.root.after(0, self.uploaded, None, f'The upload failed: {e}')
+            else:
+                self.root.after(0, self.uploaded, report_id, None)
+
+        threading.Thread(target=work, daemon=True).start()
+
+    def uploaded(self, report_id, error):
+        self.uploading = False
+        if report_id:
+            self.status.set('Logs uploaded')
+            self.result.set(f'Report {report_id} (copied to the clipboard). Quote it when you ask for help.')
+            self.append(f'Logs uploaded as report {report_id}.')
+            self.root.clipboard_clear()
+            self.root.clipboard_append(report_id)
+        else:
+            self.status.set('Upload failed')
+            self.result.set(error)
+            self.append(f'Upload failed: {error}')
+        self.refresh()
 
     def close(self):
         if self.running():

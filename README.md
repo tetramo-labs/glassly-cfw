@@ -129,6 +129,13 @@ Revision 27 has passed the firmware repository's offline regression (147 stages,
 and has not yet been flashed on glasses. The newest revision that has been installed and seen booting is 26, on the
 developer's pair on 2026-11-15.
 
+### Getting help
+
+**Upload logs** sends the session's log to Glassly's support system and shows a report id (also copied to the
+clipboard); quote it on Discord or in an issue. The upload holds the lines shown under the progress bar, the
+session's JSON records and the end of its protocol trace, which include the names and addresses of Bluetooth or USB
+devices this computer saw. Firmware backups are never sent. `GLASSLY_CORE_URL` points the upload at another backend.
+
 ### Pair the glasses with the computer first
 
 Charge the glasses and switch them on. Disconnect them from the MemoMind app and switch Bluetooth off on the phone

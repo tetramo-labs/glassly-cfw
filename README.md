@@ -17,8 +17,9 @@ against a pinned SHA256 before it goes near a controller.
 | MemoMind One glasses (H001Y, hardware 2.1.2) | Official 1.0.3.127, or a Glassly revision it has installed over before. Restore sends the official 1.0.3.127 image through the same updater; this app has not yet run that on glasses | Identity only; the firmware cannot be read out |
 
 This is experimental firmware. Each controller has been flashed and verified from macOS with the research
-flasher this app is ported from. The app itself, and every Windows and Linux path, has not yet been run
-against a real controller. A failed flash can leave a controller unusable.
+flasher this app is ported from, except the MemoMind One image: Glassly revision 27 has passed the firmware's
+offline regression and emulator suites and has not yet been flashed on glasses. The app itself, and every Windows
+and Linux path, has not yet been run against a real controller. A failed flash can leave a controller unusable.
 
 ## Download
 
@@ -120,9 +121,13 @@ keys and pairing data; keep them private.
 
 ## MemoMind One glasses
 
-The flasher installs Glassly firmware revision 25 (`GLASSLYCFW/25`), the build the Glassly App connects to,
+The flasher installs Glassly firmware revision 27 (`GLASSLYCFW/27`), the build the Glassly App connects to,
 including from an iPhone over Bluetooth LE. It goes through the glasses' own Bluetooth Classic updater, so it needs a computer with
 Bluetooth and no cable.
+
+Revision 27 has passed the firmware repository's offline regression (147 stages, including its RV32 emulator suites)
+and has not yet been flashed on glasses. The newest revision that has been installed and seen booting is 26, on the
+developer's pair on 2026-11-15.
 
 ### Pair the glasses with the computer first
 
@@ -145,11 +150,12 @@ waits up to ten minutes for them to be paired.
    (`device-info.json`, `capabilities.json`). It writes only to glasses that report model H001Y, hardware 2.1.2,
    front 1.3 and official firmware 1.0.3.127, with the MAC address they are paired under: the research flasher's
    check, minus 1.0.2.151, which no Glassly firmware has ever been flashed from. Glasses already on Glassly firmware are accepted only on a revision the
-   firmware has been installed over before (1, 3 to 6, 10, 11, 14, 16 to 20 and 22); revision 25 is left alone.
+   firmware has been installed over before (1, 3 to 6, 10, 11, 14, 16 to 20, 22 and 25); revision 27 is left alone.
+   Revision 26 is refused: nothing has been installed over it yet.
 2. Eight seconds later, on a second connection, it checks the identity again, tells the glasses an update is coming,
    opens their update service and sends the image in the blocks the glasses ask for (about 550 blocks; a few
    minutes), then asks them to restart. Nothing is resent: any unexpected reply stops the transfer.
-3. It waits up to five minutes for the glasses to come back as `GLASSLYCFW/25`. Wake them if their display stays
+3. It waits up to five minutes for the glasses to come back as `GLASSLYCFW/27`. Wake them if their display stays
    dark.
 
 Then remove the glasses from the computer's Bluetooth settings, pair them in your phone's Bluetooth settings and add
@@ -165,16 +171,19 @@ the last block, while they check and switch to the new firmware, has not been se
 **Back up only** reads the identity and installed firmware and writes nothing. The glasses' firmware has no command
 that reads their flash back, so no firmware image is saved. **Put the official firmware back** sends the official
 1.0.3.127 image, the vendor's own release that the MemoMind app installed on the development glasses, through the
-same updater, from revision 25 or any revision Install accepts, and waits for the glasses to answer as official
+same updater, from revision 27 or any revision Install accepts, and waits for the glasses to answer as official
 firmware again. This app has not yet run that path on real glasses; the first restore is done on the developer's pair.
 
 ### What has been tested
 
 The install sequence was run from macOS by the research tool this code is ported from: revision 25 was installed and
-booted on one pair of glasses on 2026-11-11, after many earlier revisions on the same glasses. This app's own
-Bluetooth code has not yet been run against glasses on any computer; its macOS helper uses the same IOBluetooth calls
-as the research tool, and its tests replay the recorded revision 25 install, an interrupted and continued install and
-the MemoMind app's own update, byte for byte. Windows and Linux Bluetooth have not been tried on glasses.
+booted on one pair of glasses on 2026-11-11 and revision 26 on 2026-11-15, after many earlier revisions on the same
+glasses. Revision 27, the one this app installs, has not been flashed on glasses yet; it has passed the firmware's
+offline regression and emulator suites only. This app's own Bluetooth code has not yet been run against glasses on
+any computer; its macOS helper uses the same IOBluetooth calls as the research tool, and its tests replay the
+recorded revision 25 install (with the revision 25 image from the firmware repository), an interrupted and continued
+install and the MemoMind app's own update, byte for byte. No recorded exchange exists for revision 27: its transfer
+is tested against scripted glasses only. Windows and Linux Bluetooth have not been tried on glasses.
 
 ## Command line
 

@@ -1,8 +1,9 @@
 """MemoMind One install and backup against scripted glasses, plus byte-for-byte replays of real exchanges.
 No Bluetooth access.
 
-The replays use the research repository's local captures and the revision 25 install trace in
-~/Library/Logs/Glassly, and skip when those are absent."""
+The replays use the research repository's git-ignored captures and build outputs and skip when those are absent. The
+revision 25 install replay runs against the revision 25 image, which is no longer bundled: no hardware exchange has
+been recorded for the bundled revision 27, so its transfer is checked against the scripted glasses only."""
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +25,8 @@ from glassly_flasher.devices.memomind.rfcomm import LinkError, PairedDevice
 RESEARCH = Path('/Users/fosse/dev/glassly-memomind-one-cfw')
 INSTALL_25 = RESEARCH / 'captures/mac-install-25-20261111/trace.jsonl'
 INSTALL_25_SHA = 'd42cba52a0989b4ad0e048edd214e1611f1aa8274654a5e7f83c2e303934271c'
+IMAGE_25 = RESEARCH / 'analysis/ble-link-20261110/image-25-01/firmware.bin'
+IMAGE_25_SHA = '9cdd04786fceee283c30dafc20a01d680894d60026fdc78dbb7a8195fe54fae1'
 RESUME_18 = RESEARCH / 'captures/v18-flash-20261108-08/trace.jsonl'
 IMAGE_18 = RESEARCH / 'analysis/ble-probe-20261108b/image-18-01/firmware.bin'
 VENDOR_TSV = RESEARCH / 'analysis/protocol/ota-final/rfcomm.tsv'
@@ -62,10 +65,10 @@ def capabilities_tlvs(revision):
 
 class FakeGlasses:
     """H001Y control and OTA services: stages e5 chunks, keeps a resume cursor keyed on the e2 file header, and comes
-    back as revision 25 after a reboot when the stage equals the bundled image."""
+    back as revision 27 after a reboot when the stage equals the bundled image."""
 
     def __init__(self, image, revision=None, identity=None, capabilities=None, cursor=0, entry=None,
-                 pacing_after=None, pacing_value=2000, bad_ack_at=None, boot_unreachable=0, boots_as=25):
+                 pacing_after=None, pacing_value=2000, bad_ack_at=None, boot_unreachable=0, boots_as=27):
         self.image = image
         self.boots_as = boots_as
         self.revision = revision
@@ -314,7 +317,7 @@ class IdentityTests(unittest.TestCase):
     def test_research_allowlist_exactly(self):
         check_identity(IDENTITY, ADDRESS.lower())
         for field, value in (('model', 'H002Y'), ('hver', '2.1.3'), ('fver', '1.4'), ('ver', '1.0.3.128'), ('ver', '1.0.2.151'),
-                             ('ver', 'GLASSLYCFW/25'), ('mac', '00:11:22:33:44:55'), ('mac', None)):
+                             ('ver', 'GLASSLYCFW/27'), ('mac', '00:11:22:33:44:55'), ('mac', None)):
             with self.subTest(field=field, value=value):
                 with self.assertRaisesRegex(FlashError, f'{value!r}.*Nothing was written'):
                     check_identity({**IDENTITY, field: value}, ADDRESS)
@@ -355,7 +358,7 @@ class InstallTests(unittest.TestCase):
         result, files = run_in('install', radio, reporter)
         self.assertEqual(bytes(glasses.stage), self.image[18:])
         self.assertEqual((result['state'], result['booted_version'], result['installed_before']),
-                         ('installed', 'GLASSLYCFW/25', 'official firmware 1.0.3.127'))
+                         ('installed', 'GLASSLYCFW/27', 'official firmware 1.0.3.127'))
         self.assertEqual(result['transferred_range'], [18, len(self.image)])
         self.assertIsNone(result['resumed_from'])
         self.assertEqual(result['blocks'], -(-(len(self.image) - 18) // 4096))
@@ -371,12 +374,14 @@ class InstallTests(unittest.TestCase):
         self.assertEqual({row['session'] for row in trace}, {'inspect', 'control', 'ota', 'boot-check'})
 
     def test_install_over_a_glassly_revision_it_was_installed_from(self):
-        glasses = self.glasses(revision=22)
-        result, _ = run_in('install', FakeRadio(glasses))
-        self.assertEqual((result['installed_before'], glasses.revision), ('GLASSLYCFW/22', 25))
+        for revision in (22, 25):
+            with self.subTest(revision=revision):
+                glasses = self.glasses(revision=revision)
+                result, _ = run_in('install', FakeRadio(glasses))
+                self.assertEqual((result['installed_before'], glasses.revision), (f'GLASSLYCFW/{revision}', 27))
 
     def test_already_installed_writes_nothing(self):
-        glasses = self.glasses(revision=25)
+        glasses = self.glasses(revision=27)
         radio = FakeRadio(glasses)
         result, files = run_in('install', radio)
         self.assertEqual((result['state'], result['flash_modified']), ('already installed', False))
@@ -417,7 +422,7 @@ class InstallTests(unittest.TestCase):
         self.assertEqual(result['resumed_from'], 18 + cursor)
         self.assertEqual(glasses.chunk_offsets[0], 18 + cursor)
         self.assertEqual(bytes(glasses.stage), self.image[18:])
-        self.assertEqual(result['booted_version'], 'GLASSLYCFW/25')
+        self.assertEqual(result['booted_version'], 'GLASSLYCFW/27')
         self.assertTrue(any('continuing from byte' in line for line in reporter.lines))
 
     def test_cursor_of_another_image_is_dropped_by_the_glasses(self):
@@ -463,7 +468,7 @@ class InstallTests(unittest.TestCase):
         result, _ = run_in('install', radio)
         self.assertEqual(result['paced_acks'], 1)
         self.assertEqual(sum(1 for e in radio.log if e == ('sleep', 0.1)), 20)
-        self.assertEqual(glasses.revision, 25)
+        self.assertEqual(glasses.revision, 27)
 
     def test_unknown_pacing_or_sequence_stops(self):
         for kwargs, reason in (({'pacing_after': 2, 'pacing_value': 1000}, 'pacing field 1000'),
@@ -479,7 +484,7 @@ class InstallTests(unittest.TestCase):
         radio = FakeRadio(glasses)
         radio.refuse_connects = 2
         result, _ = run_in('install', radio)
-        self.assertEqual(result['booted_version'], 'GLASSLYCFW/25')
+        self.assertEqual(result['booted_version'], 'GLASSLYCFW/27')
 
     def test_glasses_that_never_come_back_are_reported(self):
         radio = FakeRadio(self.glasses(boot_unreachable=10 ** 6))
@@ -514,14 +519,14 @@ class RestoreTests(unittest.TestCase):
     def glasses(self, **kwargs):
         return FakeGlasses(self.stock, boots_as=None, **kwargs)
 
-    def test_restore_from_revision_25(self):
-        glasses = self.glasses(revision=25)
+    def test_restore_from_revision_27(self):
+        glasses = self.glasses(revision=27)
         radio = FakeRadio(glasses)
         reporter = Recorder()
         result, files = run_in('restore', radio, reporter)
         self.assertEqual(bytes(glasses.stage), self.stock[18:])
         self.assertEqual((result['state'], result['booted_version'], result['installed_before'], result['image_sha256']),
-                         ('restored', 'official firmware 1.0.3.127', 'GLASSLYCFW/25', STOCK_SHA256))
+                         ('restored', 'official firmware 1.0.3.127', 'GLASSLYCFW/27', STOCK_SHA256))
         self.assertEqual(result['transferred_range'], [18, len(self.stock)])
         self.assertEqual(radio.ota_commands()[:4], [0x02, 0xe1, 0xe2, 0xe3])
         self.assertEqual(radio.ota_commands()[-2:], [0xe6, 0x03])
@@ -529,9 +534,12 @@ class RestoreTests(unittest.TestCase):
         self.assertEqual(sorted(files), ['capabilities.json', 'device-info.json', 'trace.jsonl'])
 
     def test_restore_from_an_earlier_revision(self):
-        glasses = self.glasses(revision=22)
-        result, _ = run_in('restore', FakeRadio(glasses))
-        self.assertEqual((result['state'], result['booted_version']), ('restored', 'official firmware 1.0.3.127'))
+        for revision in (22, 25):
+            with self.subTest(revision=revision):
+                glasses = self.glasses(revision=revision)
+                result, _ = run_in('restore', FakeRadio(glasses))
+                self.assertEqual((result['state'], result['booted_version']),
+                                 ('restored', 'official firmware 1.0.3.127'))
 
     def test_official_firmware_writes_nothing(self):
         glasses = self.glasses()
@@ -542,7 +550,7 @@ class RestoreTests(unittest.TestCase):
         self.assertFalse(glasses.notified)
 
     def test_unknown_revision_and_identity_refusals_write_nothing(self):
-        for kwargs in ({'revision': 23}, {'revision': 25, 'identity': {**IDENTITY, 'hver': '2.1.3'}}):
+        for kwargs in ({'revision': 23}, {'revision': 26}, {'revision': 27, 'identity': {**IDENTITY, 'hver': '2.1.3'}}):
             with self.subTest(**kwargs):
                 glasses = self.glasses(**kwargs)
                 radio = FakeRadio(glasses)
@@ -552,7 +560,7 @@ class RestoreTests(unittest.TestCase):
                 self.assertFalse(glasses.notified)
 
     def test_glasses_that_come_back_on_the_wrong_firmware_are_reported(self):
-        glasses = FakeGlasses(self.stock, revision=25, boots_as=22)
+        glasses = FakeGlasses(self.stock, revision=27, boots_as=22)
         with self.assertRaisesRegex(FlashError, 'restarted on GLASSLYCFW/22 instead of official firmware 1.0.3.127'):
             run_in('restore', FakeRadio(glasses))
 
@@ -685,12 +693,15 @@ def device_info(events):
 
 
 class HardwareReplayTests(unittest.TestCase):
-    @unittest.skipUnless(INSTALL_25.exists(), 'revision 25 install trace unavailable')
+    @unittest.skipUnless(INSTALL_25.exists() and IMAGE_25.exists(), 'revision 25 install capture unavailable')
     def test_revision_25_install_byte_for_byte(self):
         self.assertEqual(hashlib.sha256(INSTALL_25.read_bytes()).hexdigest(), INSTALL_25_SHA)
+        image = IMAGE_25.read_bytes()
+        self.assertEqual(hashlib.sha256(image).hexdigest(), IMAGE_25_SHA)
+        check_container(image)
         sessions = native_trace(INSTALL_25)
         identity = device_info(sessions['control'])
-        glasses = FakeGlasses(load_cfw(), revision=22, identity=identity)
+        glasses = FakeGlasses(image, revision=22, identity=identity)
         control, ota = ReplayChannel(sessions['control'], 'control'), ReplayChannel(sessions['ota'], 'ota')
 
         def booted():
@@ -700,8 +711,9 @@ class HardwareReplayTests(unittest.TestCase):
         radio = ScriptRadio(glasses, identity['mac'], [('normal', lambda: FakeChannel(radio, 'normal')),
                                                        ('normal', lambda: control), ('ota', lambda: ota),
                                                        ('normal', booted)])
-        with tempfile.TemporaryDirectory() as folder:
-            result = run('install', Path(folder), Recorder(), link=radio)
+        # The recording is of the revision 25 image; run() would send the bundled revision 27, which no capture covers.
+        with tempfile.TemporaryDirectory() as folder, (Path(folder) / 'trace.jsonl').open('x') as trace:
+            result = Session(radio, Path(folder), Recorder(), trace).update('install', image, 25, IMAGE_25_SHA)
         self.assertTrue(ota.finished())
         self.assertFalse([e for e in control.events[control.position:] if e[0] == 'tx'])
         self.assertEqual((result['blocks'], result['chunks'], result['transferred_range']), (548, 3834, [18, 2243544]))

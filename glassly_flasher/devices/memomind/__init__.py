@@ -1,11 +1,12 @@
-"""MemoMind One (H001Y): install Glassly CFW revision 25 or put the official 1.0.3.127 firmware back through the
+"""MemoMind One (H001Y): install Glassly CFW revision 27 or put the official 1.0.3.127 firmware back through the
 stock Bluetooth Classic updater, or record the glasses' identity.
 
 Ported from glassly-memomind-one-cfw at e56172a3: `memomind install` (swift/MemoMindKit/Sources/memomind/
 Install.swift and runLive in main.swift), which flashed revision 25 on 2026-11-11
 (analysis/ble-link-20261110/flash-25-01). The sequence is the same: a read-only session for identity and installed
 version, eight seconds apart a second session that repeats the identity check, sends the pre-update notice and runs
-the updater on the OTA service, then read-only sessions until the expected firmware answers.
+the updater on the OTA service, then read-only sessions until the expected firmware answers. The bundled revision 27
+(glassly-memomind-one-cfw@ddc670f2) has passed that repo's offline regression and has not yet been flashed on glasses.
 
 There is no firmware backup: the stock firmware cannot read its flash back. Restore sends the vendor's own
 1.0.3.127 image, the one the MemoMind app installed on the development glasses through this updater; this tool
@@ -29,8 +30,9 @@ IDENTITY_KEYS = ('model', 'hver', 'fver', 'ver', 'mac', 'sn')
 # Glassly CFW revisions a later flash through this updater completed from: each answered the capabilities query in
 # a research capture (captures/*-boot-*, *-after-*, v22-verify-102850) before the next completed flash in
 # captures/*/trace.jsonl (1 -> 3 -> 4 -> 5 -> 6 -> 10 -> 11 -> 14 -> 16 -> 17 -> 18 -> 19 -> 20 -> 22 -> 20 -> 22,
-# 2026-11-02 to 2026-11-09), then 22 -> 25 (analysis/ble-link-20261110/flash-25-01).
-CFW_SOURCES = frozenset({1, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 19, 20, 22})
+# 2026-11-02 to 2026-11-09), then 22 -> 25 (analysis/ble-link-20261110/flash-25-01, boot verified as 25 on
+# 2026-11-11) -> 26 (analysis/ble-conn-20261114/flash-26-01, 2026-11-15, the next completed flash on those glasses).
+CFW_SOURCES = frozenset({1, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 19, 20, 22, 25})
 NO_FLASH_READ = ('The MemoMind One firmware has no command that reads its flash back, so this backup holds the '
                  "glasses' identity and capabilities only, not a firmware image.")
 

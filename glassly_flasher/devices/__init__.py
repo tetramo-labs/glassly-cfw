@@ -82,8 +82,10 @@ DEVICES = {d.key: d for d in [
         after_backup='Nothing was written. The glasses\' identity was recorded in the backup folder.',
         module='glassly_flasher.devices.memomind',
         elevate=frozenset(),
-        tested='Installed on one pair of glasses from macOS with the research tool this app is ported from; the '
-               'official image was put on those glasses by the MemoMind app, not yet by this tool. Windows and Linux '
-               'Bluetooth have not been tried on glasses yet.',
+        tested='The bundled Glassly revision 27 has passed the firmware\'s offline regression and emulator suites '
+               'but has not yet been flashed on glasses. Earlier revisions, up to 26, were installed on one pair of '
+               'glasses from macOS with the research tool this app is ported from; the official image was put on '
+               'those glasses by the MemoMind app, not yet by this tool. Windows and Linux Bluetooth have not been '
+               'tried on glasses yet.',
     ),
 ]}

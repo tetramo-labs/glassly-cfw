@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 55u
+#define CFW_PROTOCOL 56u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,
@@ -266,6 +266,7 @@ CFW_COLD static uint8_t cfw_rle_next(cfw_rle *r)
 /* BLIT flags */
 #define CFW_BLIT_1BPP   0x01u   /* input is 1 bit per pixel, MSB first, rows padded to bytes */
 #define CFW_FLAG_FLUSH  0x02u   /* push the rectangle to the panel after writing */
+#define CFW_FLAG_DIRTY  0x04u   /* OBJ_SHOW / OBJ_HIDE: push only what changed */
 #define CFW_BLIT_RLE    0x04u   /* pixel bytes are PackBits-encoded */
 #define CFW_BLIT_LEVEL(f) (((f) >> 4) ? ((f) >> 4) : 0xFu)  /* nibble for set 1bpp pixels */
 
@@ -1617,7 +1618,7 @@ static int cv_edge(cfw_vwork *w, uint32_t *n, int32_t x0, int32_t y0, int32_t x1
 
 /* De Casteljau subdivision of a cubic (p0, c0, c1, p1 in Q4), at most 8 levels
  * and half a pixel of flatness. */
-static int cv_curve(cfw_vwork *w, uint32_t *n, const int32_t *p, uint32_t depth)
+CFW_COLD static int cv_curve(cfw_vwork *w, uint32_t *n, const int32_t *p, uint32_t depth)
 {
     int32_t ux = 3 * p[2] - 2 * p[0] - p[6], uy = 3 * p[3] - 2 * p[1] - p[7];
     int32_t vx = 3 * p[4] - 2 * p[6] - p[0], vy = 3 * p[5] - 2 * p[7] - p[1];
@@ -1819,7 +1820,7 @@ static void cv_path_draw(const cfw_raster *r, cfw_vwork *w, const uint8_t *asset
 /* Arc contour in Q4 about (cx, cy): optional pie spokes, closed for a full
  * turn. 8 degrees per segment keeps a ring (two contours) and its stroke
  * within the 128-edge workspace; returns 0 when it would not fit. */
-static int cv_ellipse(cfw_vwork *w, uint32_t *n, int32_t cx, int32_t cy, int32_t rad, int32_t a0, int32_t span, int pie)
+CFW_COLD static int cv_ellipse(cfw_vwork *w, uint32_t *n, int32_t cx, int32_t cy, int32_t rad, int32_t a0, int32_t span, int pie)
 {
     int32_t px = cx + ((rad * cv_sin((a0 + 90) * 16)) >> 15);
     int32_t py = cy + ((rad * cv_sin(a0 * 16)) >> 15);
@@ -1840,7 +1841,7 @@ static int cv_ellipse(cfw_vwork *w, uint32_t *n, int32_t cx, int32_t cy, int32_t
 }
 
 /* Rounded rectangle contour, eight segments per corner. */
-static int cv_roundrect(cfw_vwork *w, uint32_t *n, int32_t x, int32_t y, int32_t ww, int32_t hh, int32_t rad)
+CFW_COLD static int cv_roundrect(cfw_vwork *w, uint32_t *n, int32_t x, int32_t y, int32_t ww, int32_t hh, int32_t rad)
 {
     if (ww <= 0 || hh <= 0) return 1;
     rad = cfw_clamp(rad, 0, (ww < hh ? ww : hh) / 2);
@@ -1934,7 +1935,7 @@ static void cv_shape_draw(const cfw_raster *r, cfw_vwork *w, const cfw_shape *s,
  * assets, the font engine or shape records. SHOW composes an ordered list of
  * object ids into a cleared frame and pushes it. */
 #define CFW_OBJ_MAX    96u
-#define CFW_OBJ_MAGIC  0x344a424fu  /* "OBJ4" */
+#define CFW_OBJ_MAGIC  0x354a424fu  /* "OBJ5" */
 enum { CFW_OBJ_IMAGE = 0, CFW_OBJ_TEXT = 1, CFW_OBJ_RECT = 2, CFW_OBJ_SHAPES = 3, CFW_OBJ_SHAPE = 4, CFW_OBJ_PATH = 5 };
 
 typedef struct {
@@ -1954,8 +1955,10 @@ typedef struct {
     uint16_t revision;         /* bumps on every mutation */
     uint16_t shown[CFW_OBJ_MAX];  /* current SHOW list */
     uint16_t shown_count;
-    uint16_t pad;
-} cfw_objs;                    /* 8 + 192 + 4 = 204 bytes, then the objects */
+    uint8_t  direct;           /* a direct draw since the last SHOW or HIDE */
+    uint8_t  dirty_full;
+    cfw_rect dirty;            /* canvas the scene changed in since the last SHOW or HIDE */
+} cfw_objs;                    /* 8 + 192 + 4 + 16 = 220 bytes, then the objects */
 
 __attribute__((noinline)) static cfw_objs *cfw_objects(void)
 {
@@ -2013,7 +2016,7 @@ static cfw_anim *cfw_anim_find(cfw_anims *a, uint16_t id)
     return 0;
 }
 
-static void cfw_anim_cancel(uint16_t id)
+CFW_COLD static void cfw_anim_cancel(uint16_t id)
 {
     cfw_anim *g = cfw_anim_find(cfw_animation(), id);
     if (g) {
@@ -2021,7 +2024,7 @@ static void cfw_anim_cancel(uint16_t id)
     }
 }
 
-static void cfw_anim_clear(void)
+CFW_COLD static void cfw_anim_clear(void)
 {
     cfw_anims *a = cfw_animation();
     a->count = 0;
@@ -2081,6 +2084,18 @@ static void cfw_obj_shape(const cfw_obj *obj, cfw_shape *s)
  * [x:i16][y:i16][w:u16][h:u16][asset:u16][level][font][lines] (19 bytes in
  * all; kind 5: w is the Q8 scale) or, for kind 4, one 20-byte SHAPES record
  * (26 bytes in all). A PUT resets the rotation. */
+static void cfw_scene_touch(cfw_objs *o, const cfw_obj *obj);
+
+CFW_COLD static int cfw_obj_shown(const cfw_objs *o, uint16_t id)
+{
+    for (uint32_t i = 0; i < o->shown_count; i++) {
+        if (o->shown[i] == id) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 CFW_COLD static uint8_t cfw_obj_put(const uint8_t *p, uint32_t n)
 {
     cfw_objs *o = cfw_objects();
@@ -2099,7 +2114,10 @@ CFW_COLD static uint8_t cfw_obj_put(const uint8_t *p, uint32_t n)
         return CFW_BAD_RECORD;
     }
     cfw_obj *obj = cfw_obj_find(o, id);
-    if (!obj) {
+    int shown = obj && cfw_obj_shown(o, id);
+    if (shown) {
+        cfw_scene_touch(o, obj);
+    } else if (!obj) {
         if (o->count >= CFW_OBJ_MAX) {
             return CFW_NO_MEMORY;
         }
@@ -2135,6 +2153,9 @@ CFW_COLD static uint8_t cfw_obj_put(const uint8_t *p, uint32_t n)
         obj->lines = p[18];
     }
     cfw_anim_cancel(id);
+    if (shown) {
+        cfw_scene_touch(o, obj);
+    }
     o->revision++;
     cfw_journal_note(CFW_JOURNAL_OBJ_PUT, id, obj->version);
     return CFW_OK;
@@ -2196,6 +2217,19 @@ static void cfw_rect_union(cfw_rect *acc, const cfw_rect *r)
     acc->w = x1 - acc->x0;
     acc->h = y1 - acc->y0;
 }
+
+/* Add where `obj` draws now to the scene's pending change; an unknown box
+ * (or no object) makes the next dirty SHOW push the whole canvas. */
+CFW_COLD static void cfw_scene_touch(cfw_objs *o, const cfw_obj *obj)
+{
+    cfw_rect box;
+    if (obj && cfw_obj_bbox(obj, &box)) {
+        cfw_rect_union(&o->dirty, &box);
+    } else {
+        o->dirty_full = 1;
+    }
+}
+
 
 /* Draw one object into the band being composed (no flush): every renderer
  * writes only canvas rows [clip_y0, clip_y1). */
@@ -2375,9 +2409,25 @@ CFW_COLD static uint8_t cfw_push(const cfw_rect *r)
     return status;
 }
 
+/* What a SHOW or HIDE pushes: with CFW_FLAG_DIRTY only the pending change,
+ * otherwise the whole canvas. Either way the pending change is spent. */
+CFW_COLD static uint8_t cfw_scene_present(cfw_objs *o, uint8_t flags)
+{
+    cfw_rect r = o->dirty;
+    int part = (flags & CFW_FLAG_DIRTY) && !o->dirty_full && !o->direct;
+    o->dirty.w = 0;
+    o->dirty_full = 0;
+    o->direct = 0;
+    if (!(flags & CFW_FLAG_FLUSH)) {
+        return cfw_compose(0, 0, FW_FRAME_HEIGHT, 0);
+    }
+    return cfw_obj_present(part ? &r : 0);
+}
+
 /* [flags][count][ids:u16...]: the listed objects, in order, become the
- * scene. flags bit 1 composes and pushes the whole canvas; without it only
- * the window is composed, for direct draws and a FLUSH to follow. The
+ * scene. flags bit 1 composes and pushes the whole canvas, or with bit 2
+ * only the boxes of what changed since the last SHOW or HIDE; without bit 1
+ * only the window is composed, for direct draws and a FLUSH to follow. The
  * canvas is always composed from cleared rows (flags bit 0 is implied). */
 CFW_COLD static uint8_t cfw_obj_show(const uint8_t *p, uint32_t n)
 {
@@ -2395,24 +2445,41 @@ CFW_COLD static uint8_t cfw_obj_show(const uint8_t *p, uint32_t n)
             return CFW_NO_OBJECT;
         }
     }
+    /* A slot whose id changed (arrival, departure or a move in the paint
+     * order) changes both objects' pixels. */
+    for (uint32_t i = 0; i < count || i < o->shown_count; i++) {
+        uint16_t id = i < count ? rd16(p + 2 + 2 * i) : 0;
+        if (i < o->shown_count && (i >= count || o->shown[i] != id)) {
+            cfw_scene_touch(o, cfw_obj_find(o, o->shown[i]));
+            if (i < count) {
+                cfw_scene_touch(o, cfw_obj_find(o, id));
+            }
+        } else if (i >= o->shown_count) {
+            cfw_scene_touch(o, cfw_obj_find(o, id));
+        }
+    }
     for (uint32_t i = 0; i < count; i++) {
         o->shown[i] = rd16(p + 2 + 2 * i);
     }
     o->shown_count = (uint16_t)count;
     o->revision++;
-    return (flags & CFW_FLAG_FLUSH) ? cfw_obj_present(0) : cfw_compose(0, 0, FW_FRAME_HEIGHT, 0);
+    return cfw_scene_present(o, flags);
 }
 
 /* Blank the canvas, forget the SHOW list and stop every tween (objects
- * stay). flags bit 1 (the default) pushes the blank canvas. */
+ * stay). flags bit 1 (the default) pushes the blank canvas, with bit 2 only
+ * where something was shown. */
 CFW_COLD static uint8_t cfw_obj_hide(const uint8_t *p, uint32_t n)
 {
     cfw_objs *o = cfw_objects();
     uint8_t flags = n ? p[0] : CFW_FLAG_FLUSH;
+    for (uint32_t i = 0; i < o->shown_count; i++) {
+        cfw_scene_touch(o, cfw_obj_find(o, o->shown[i]));
+    }
     o->shown_count = 0;
     o->revision++;
     cfw_anim_clear();
-    return (flags & CFW_FLAG_FLUSH) ? cfw_obj_present(0) : cfw_compose(0, 0, FW_FRAME_HEIGHT, 0);
+    return cfw_scene_present(o, flags);
 }
 
 /* Reply body: [revision:u16][count][shown][id,version pairs of the first 4 shown]. */
@@ -2518,6 +2585,7 @@ CFW_COLD static uint8_t cfw_obj_control(const uint8_t *p, uint32_t n)
         return CFW_OK;
     }
     if (p[0] == 0) {
+        o->dirty_full = 1;
         o->count = 0;
         o->shown_count = 0;
         o->revision++;
@@ -2530,6 +2598,9 @@ CFW_COLD static uint8_t cfw_obj_control(const uint8_t *p, uint32_t n)
         cfw_obj *obj = cfw_obj_find(o, id);
         if (!obj) {
             return CFW_NO_OBJECT;
+        }
+        if (cfw_obj_shown(o, id)) {
+            cfw_scene_touch(o, obj);
         }
         cfw_anim_cancel(id);
         uint32_t kept = 0;
@@ -2630,7 +2701,7 @@ static uint8_t cfw_obj_present(const cfw_rect *dirty)
 }
 
 /* Union an object's box into `dirty`, or flag a whole-frame push. */
-static void cfw_anim_touch(const cfw_obj *obj, cfw_rect *dirty, int *full)
+CFW_COLD static void cfw_anim_touch(const cfw_obj *obj, cfw_rect *dirty, int *full)
 {
     cfw_rect box;
     if (cfw_obj_bbox(obj, &box)) {
@@ -2701,13 +2772,20 @@ typedef struct {
     uint8_t  wear_off;      /* wear word at or below this: not worn, panel off */
     uint8_t  push_ticks;    /* 200 ms passes left until the frame is pushed again after power-up */
     uint8_t  off_ticks;     /* consecutive 200 ms passes that said taken off */
+    uint8_t  idle_ticks;    /* consecutive 200 ms passes with a blank canvas or no phone */
+    uint8_t  blanked;       /* the panel is off for that, not for the wearer */
 } cfw_input;
 #define CFW_PUSH_TICKS 6u       /* pushes again 600 ms and 1.2 s after power-up */
 /* Taken off needs 20 s of unbroken passes before the panel goes off: the
  * wear word dips under wear_off on a head now and then. Case and deep
  * sleep switch it off at once. */
 #define CFW_OFF_TICKS 100u
-#define CFW_INPUT_MAGIC 0x37504e49u  /* "INP7" */
+/* With INPUT_CONTROL bit 5 a worn panel also goes off once the canvas has
+ * been blank for CFW_BLANK_TICKS passes, and any panel once the phone has
+ * been gone for CFW_LINK_TICKS; the scene is dropped then too. */
+#define CFW_BLANK_TICKS 8u
+#define CFW_LINK_TICKS 150u
+#define CFW_INPUT_MAGIC 0x38504e49u  /* "INP8" */
 /* The stock classification (>= 0x33 worn, < 0x28 not worn) leaves a pair
  * lying unfolded on a table (47-50 here) in its dead band for ever; on a
  * head the word read 62-74, folded in the case 25. Defaults sit between
@@ -2719,7 +2797,10 @@ typedef struct {
 #define CFW_INPUT_NOTIFY_EVENT  0x04u
 #define CFW_INPUT_SWALLOW_EVENT 0x08u
 #define CFW_INPUT_NO_AUTO_PANEL 0x10u   /* set: leave panel power to the host */
-#define CFW_INPUT_FLAGS (CFW_INPUT_NOTIFY | CFW_INPUT_SWALLOW | CFW_INPUT_NOTIFY_EVENT | CFW_INPUT_SWALLOW_EVENT | CFW_INPUT_NO_AUTO_PANEL)
+#define CFW_INPUT_BLANK_OFF     0x20u
+#define CFW_INPUT_WAKE_ONCE     0x40u   /* no repeat pushes 600 ms and 1.2 s after power-up */
+#define CFW_INPUT_FLAGS (CFW_INPUT_NOTIFY | CFW_INPUT_SWALLOW | CFW_INPUT_NOTIFY_EVENT | CFW_INPUT_SWALLOW_EVENT | \
+                         CFW_INPUT_NO_AUTO_PANEL | CFW_INPUT_BLANK_OFF | CFW_INPUT_WAKE_ONCE)
 enum { CFW_EVENT_TOUCH = 0, CFW_EVENT_STOCK = 1 };
 enum { CFW_STOCK_WORN = 6, CFW_STOCK_TAKEN_OFF = 7, CFW_STOCK_IN_CASE_OPEN = 8, CFW_STOCK_IN_CASE_CLOSED = 0x0b };
 
@@ -2835,7 +2916,8 @@ CFW_COLD static void cfw_panel_up(uint8_t *panel, int now)
     } else {
         cfw_repush_later();
     }
-    cfw_input_state()->push_ticks = CFW_PUSH_TICKS;
+    cfw_input *in = cfw_input_state();
+    in->push_ticks = (in->flags & CFW_INPUT_WAKE_ONCE) ? 0 : CFW_PUSH_TICKS;
 }
 
 CFW_COLD static void cfw_auto_panel(cfw_input *in, int on)
@@ -2988,6 +3070,17 @@ CFW_COLD static void cfw_input_report(void)
  * word, off at once for 5 and 6 (in the case) and 8 (deep sleep). 0, 1, 7
  * and 9 are left to the stock body. Only the passes count towards the
  * wait; anything but taken off starts it over. */
+CFW_COLD static int cfw_blank(cfw_input *in)
+{
+    cfw_objs *o = cfw_objects();
+    return (in->flags & CFW_INPUT_BLANK_OFF) && !o->shown_count && !o->direct;
+}
+
+CFW_COLD static int cfw_idle(cfw_input *in)
+{
+    return in->idle_ticks >= (cfw_blank(in) ? CFW_BLANK_TICKS : CFW_LINK_TICKS);
+}
+
 CFW_COLD static void cfw_panel_for_mode(cfw_input *in, uint32_t mode, int tick)
 {
     if (in->flags & CFW_INPUT_NO_AUTO_PANEL) {
@@ -2998,19 +3091,28 @@ CFW_COLD static void cfw_panel_for_mode(cfw_input *in, uint32_t mode, int tick)
     if (mode == 2 || mode == 3) {
         /* Stock says worn, but its dead band is wide (fw_abi.h): classify
          * the radio-link word with the CFW thresholds. 0 means no
-         * statistics yet (first seconds after boot): trust the mode. */
+         * statistics yet (first seconds after boot): trust the mode. A
+         * panel the idle switch turned off comes back in the dead band. */
         uint32_t word = FW_WEAR_WORD();
         off = word != 0 && word <= in->wear_off;
-        if (word == 0 || word >= in->wear_on) {
+        if (cfw_idle(in)) {
+            if (*(int *)(cfw_panel() + FW_PANEL_POWERED)) {
+                in->blanked = 1;
+                cfw_auto_panel(in, 0);
+            }
+        } else if (word == 0 || word >= in->wear_on || (in->blanked && !off)) {
+            in->blanked = 0;
             cfw_auto_panel(in, 1);
         }
     } else if (mode == 5 || mode == 6 || mode == 8) {
+        in->blanked = 0;
         cfw_auto_panel(in, 0);
     }
     if (!off) {
         in->off_ticks = 0;
     } else if (tick && ++in->off_ticks >= CFW_OFF_TICKS) {
         in->off_ticks = CFW_OFF_TICKS;
+        in->blanked = 0;
         cfw_auto_panel(in, 0);
     }
 }
@@ -3029,11 +3131,14 @@ CFW_COLD int cfw_work_mode(uint32_t mode)
  * panel power with the current mode: the stock firmware also switches the
  * panel without a mode change (its display-off path suspends it in normal
  * standby), and this puts it back. */
+static void cfw_link_tick(cfw_input *in);
+
 CFW_COLD int cfw_work_mode_tick(void)
 {
     cfw_input *in = cfw_input_state();
     uint8_t *state = FW_GET_STATE();
     in->checks++;
+    cfw_link_tick(in);
     if (!(in->flags & CFW_INPUT_NO_AUTO_PANEL)) {
         /* With the wear-detection setting off the IPC handler reports
          * "worn" regardless of the radio link (fw_abi.h): the panel can
@@ -3249,8 +3354,7 @@ CFW_COLD static void cfw_imu_control(const uint8_t *p, uint32_t n)
  * [op]: 1 start, 0 stop, 2 query. Start arms a capture session on the main
  * thread the way the phone's open-mic command does; the session streams
  * [F1][seq][200 bytes LC3] notifications to the connected central until
- * stopped. Nothing stops it on disconnect, so the host must send 0 (or the
- * glasses reboot). Reply body [recording][starts:u16][stops:u16][mode][armed]. */
+ * stopped, or until the 200 ms pass finds no central. Reply body [recording][starts:u16][stops:u16][mode][armed]. */
 typedef struct {
     uint32_t magic;
     uint8_t  recording;
@@ -3270,8 +3374,8 @@ typedef struct {
  * The CFW replaces that consumer (target hooks "ancs") and compares the
  * gate against 0xff instead of 0x10 (raw "ancs"): while the host holds the
  * lease a record goes to the phone as ANCS_RECORD notifications in the G2
- * relay's record format (SOURCE, APP, then the eight attributes, the ones
- * the stock never requests sent empty); without one it is dropped, so the
+ * relay's record format (SOURCE, APP, then the attributes the stock
+ * requests; the phone fills in 4, 6 and 7 empty); without one it is dropped, so the
  * stock popup never draws over the scene. Actions (op 4) are refused. */
 typedef struct {
     uint32_t magic;
@@ -3312,6 +3416,42 @@ CFW_COLD static cfw_mic *cfw_mic_state(void)
     return m;
 }
 
+CFW_COLD static void cfw_mic_stop(cfw_mic *m)
+{
+    *FW_MIC_MODE = 1;          /* the session loop exits on its next block */
+    m->stops++;
+    m->recording = 0;
+}
+
+/* Each 200 ms pass: a capture without a phone stops at once; the idle count
+ * runs while the canvas is blank or the phone is gone, and a phone gone for
+ * CFW_LINK_TICKS also drops the scene, which the phone defines again when it
+ * reconnects. */
+CFW_COLD static void cfw_link_tick(cfw_input *in)
+{
+    cfw_mic *m = cfw_mic_state();
+    int link = FW_ANCS_CONN() != 0;
+    if (!link && m->recording) {
+        cfw_mic_stop(m);
+    }
+    if (link && !cfw_blank(in)) {
+        in->idle_ticks = 0;
+        return;
+    }
+    if (in->idle_ticks < 255) {
+        in->idle_ticks++;
+    }
+    if (!link && in->idle_ticks == CFW_LINK_TICKS) {
+        cfw_objs *o = cfw_objects();
+        FW_LCD_LOCK(-1);
+        o->shown_count = 0;
+        o->direct = 0;
+        o->revision++;
+        cfw_anim_clear();
+        FW_LCD_UNLOCK();
+    }
+}
+
 CFW_COLD static void cfw_mic_control(const uint8_t *p, uint32_t n)
 {
     cfw_mic *m = cfw_mic_state();
@@ -3330,9 +3470,7 @@ CFW_COLD static void cfw_mic_control(const uint8_t *p, uint32_t n)
         m->starts++;
         m->recording = 1;
     } else if (p[0] == 0) {
-        *FW_MIC_MODE = 1;          /* the session loop exits on its next block */
-        m->stops++;
-        m->recording = 0;
+        cfw_mic_stop(m);
     }
     uint8_t body[7] = { m->recording, (uint8_t)m->starts, (uint8_t)(m->starts >> 8),
                         (uint8_t)m->stops, (uint8_t)(m->stops >> 8), *FW_MIC_MODE,
@@ -3478,7 +3616,7 @@ CFW_COLD int cfw_ancs_recv(uint8_t *client)
         case 2: text = rec + FW_ANCS_REC_SUBTITLE; break;
         case 3: text = rec + FW_ANCS_REC_MESSAGE; max = FW_ANCS_MESSAGE_FIELD; break;
         case 5: text = rec + FW_ANCS_REC_DATE; break;
-        default: break;
+        default: continue;
         }
         cfw_ancs_attr(a, source + 4, attr, text, max);
     }
@@ -3550,7 +3688,7 @@ CFW_COLD static void cfw_ancs_control(const uint8_t *p, uint32_t n)
  * and queues the next one; a slow frame skips ahead instead of slowing the
  * glide. */
 #define CFW_TICK_REST 2u
-int cfw_display_tick(uint8_t *state, uint32_t screen, uint32_t p3, uint32_t mode)
+CFW_COLD int cfw_display_tick(uint8_t *state, uint32_t screen, uint32_t p3, uint32_t mode)
 {
     (void)state; (void)p3; (void)mode;
     if (screen != FW_SCREEN_CFW) {
@@ -3757,17 +3895,38 @@ CFW_COLD static uint8_t cfw_obj_anim(const uint8_t *p, uint32_t n)
 
 /* Run one command record (same bodies as the packet commands). Callers hold
  * the LCD lock, which keeps the display-thread tick out of the scene. */
+/* An asset's bytes are part of every shown object drawn from it. */
+CFW_COLD static void cfw_scene_touch_asset(cfw_objs *o, const uint8_t *p, uint32_t n)
+{
+    for (uint32_t i = 0; n >= 2 && i < o->shown_count; i++) {
+        cfw_obj *obj = cfw_obj_find(o, o->shown[i]);
+        if (obj && obj->kind != CFW_OBJ_SHAPE && obj->asset == rd16(p)) {
+            cfw_scene_touch(o, obj);
+        }
+    }
+}
+
 CFW_COLD static uint8_t cfw_run_record(uint8_t cmd, const uint8_t *p, uint32_t n)
 {
+    cfw_objs *o = cfw_objects();
     if (cmd < 32 && ((CFW_DIRECT_CMDS >> cmd) & 1u)) {
         cfw_window();
+        o->direct = 1;
+    }
+    if (cmd == CFW_ASSET_PUT) {
+        cfw_scene_touch_asset(o, p, n);
+        uint8_t status = cfw_asset_put(p, n);
+        cfw_scene_touch_asset(o, p, n);
+        return status;
+    }
+    if (cmd == CFW_ASSET_CLEAR) {
+        o->dirty_full = 1;
     }
     switch (cmd) {
     case CFW_BLIT:  return cfw_blit(p, n);
     case CFW_FILL:  return cfw_fill(p, n);
     case CFW_FLUSH: return cfw_flush_cmd(p, n);
     case CFW_TEXT:  return cfw_text(p, n);
-    case CFW_ASSET_PUT:   return cfw_asset_put(p, n);
     case CFW_ASSET_DRAW:  return cfw_asset_draw(p, n);
     case CFW_ASSET_TEXT:  return cfw_asset_text(p, n);
     case CFW_ASSET_CLEAR: return cfw_asset_clear();

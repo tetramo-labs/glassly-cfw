@@ -257,9 +257,15 @@ engine or shape records, so showing a scene again costs one SHOW.
   the window is composed (for direct draws and a FLUSH to follow). From
   G1CFW/49 the canvas is always composed from cleared rows (bit 0 is
   implied), every object is drawn, and the reply is the first object's render
-  status. An unknown id refuses the whole SHOW before drawing.
-- `22` OBJ_HIDE `[flags]`: blank the canvas (bit 1 pushes) and stop every
-  animation; objects stay.
+  status. An unknown id refuses the whole SHOW before drawing. From
+  G1CFW/56 bit 2 (with bit 1) composes and pushes only the union of the
+  boxes of what changed since the last SHOW or HIDE: objects that arrived,
+  left or moved in the paint order, shown objects PUT again or dropped (old
+  and new box), and shown objects drawn from an asset that was PUT. An
+  object without a box (shapes lists, a missing image asset), a DROP_ALL,
+  an ASSET_CLEAR or a direct draw since the last SHOW push the whole canvas.
+- `22` OBJ_HIDE `[flags]`: blank the canvas (bit 1 pushes; with bit 2 only
+  where shown objects were, G1CFW/56) and stop every animation; objects stay.
 - `23` OBJ_STATE: reply `[revision:u16][count][shown][id,version x up to 4]`
   of the shown list; with a `[page]` byte (G1CFW/40) the reply is
   `[page][id,version x up to 4]` for object-table entries `page*4` onward,
@@ -478,8 +484,9 @@ installed and nothing was relayed.
   `[event][flags][category][count][uid:u32]`, kind 3 APP
   `[total:u16][offset:u16][id_len][app id][display name]`, kind 2 ATTR
   `[uid:u32][attr][total:u16][offset:u16][chunk]` for attributes 0-7 in
-  order (4, 6 and 7, which the stock never requests, go out with total 0;
-  the message is chunked at 134 bytes). A removed notification (event 2)
+  order (4, 6 and 7, which the stock never requests, went out with total 0
+  until G1CFW/56, which leaves them out for the phone to fill in; the
+  message is chunked at 134 bytes). A removed notification (event 2)
   sends its SOURCE only. The uid of an added or modified notification, and
   every notification's flags, category and count, come from the stock
   uid-queue entry at `0x20006c8c` (the stock leaves the record's uid field
@@ -525,7 +532,10 @@ the glasses sense:
 - `30` INPUT_CONTROL `[flags]`: bit 0 report gestures, bit 1 keep gestures
   from the stock handler (no dashboard, mic or temple sync), bit 2 report
   stock events, bit 3 keep stock events from the phone path, bit 4 leave
-  panel power to the host. All off at boot, so a bare host sees no
+  panel power to the host, bit 5 (G1CFW/56) switch a worn panel off once the
+  canvas has been blank (no shown object, no direct draw) for 8 checker
+  passes (1.6 s), bit 6 (G1CFW/56) skip the repeat pushes 600 ms and 1.2 s
+  after a power-up. All off at boot, so a bare host sees no
   unsolicited traffic and the panel follows wear. Since G1CFW/31 the body
   may be `[flags][wear_on][wear_off]`: the CFW's own wear thresholds on the
   radio-link word (worn at or above `wear_on`, not worn at or below
@@ -587,6 +597,12 @@ themselves. Case open/closed (events 8, `0b`; modes 5, 6) and deep sleep
 immediate. The wait is fixed; INPUT_CONTROL is unchanged.
 With bit 4 set everything stands down (the wait is dropped) and the stock
 suspend works again.
+From G1CFW/56 the checker pass also watches the phone link (the stock
+connection pointer at `0x20007ef4`, cleared by the disconnect callback): a
+microphone capture stops on the first pass without a central, and after
+150 passes (30 s) the SHOW list and tweens are dropped and a worn panel goes
+off. With bit 5, the panel bit 5 switched off comes back on the pass after
+content arrives, also in the wear dead band.
 PANEL (`05`) still works for manual control.
 - `32` INPUT_EVENT: unsolicited `F0 32 00 [class][code][count:u16]`, class 0
   gesture, class 1 stock event, from the temple that produced it. The host

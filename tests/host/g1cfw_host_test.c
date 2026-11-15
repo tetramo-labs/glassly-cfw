@@ -468,6 +468,7 @@ int main(int argc, char **argv)
     *(int *)(panel + FW_PANEL_COL_OFFSET) = 7;
     *(int *)(panel + FW_PANEL_ROW_OFFSET) = 35;
     *(int *)(panel + FW_PANEL_POWERED) = 1;
+    host_ancs_conn = &host_ancs_conn_object;   /* a phone is connected unless a test says otherwise */
     if (argc >= 3 && strcmp(argv[1], "--replay") == 0) {
         return replay(argv[2], argc > 3 ? argv[3] : NULL);
     }
@@ -502,7 +503,7 @@ int main(int argc, char **argv)
     const uint8_t ping[] = { 0xF0, 0x00 };
     CHECK(send_packet(ping, sizeof ping) == 0 && hook_calls == 3);
     CHECK(last_reply_len == 15 && last_reply[0] == 0xF0 && last_reply[1] == 0 && last_reply[2] == 0);
-    CHECK(memcmp(last_reply + 3, "G1CFW/55", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
+    CHECK(memcmp(last_reply + 3, "G1CFW/56", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
 
     /* Short and unknown commands are answered, never dispatched. */
     const uint8_t only_sid[] = { 0xF0 };
@@ -903,7 +904,7 @@ int main(int argc, char **argv)
     CHECK(send_packet(o1, sizeof o1) == 0 && last_reply[2] == CFW_OK);
     CHECK(send_packet(o2, sizeof o2) == 0 && last_reply[2] == CFW_OK);
     CHECK(send_packet(o3, sizeof o3) == 0 && last_reply[2] == CFW_OK);
-    CHECK(memcmp(host_ram2 + 32, "OBJ4", 4) == 0 && host_ram2[0] == 0 && host_ram2[sizeof host_ram2 - 1] == 0);
+    CHECK(memcmp(host_ram2 + 32, "OBJ5", 4) == 0 && host_ram2[0] == 0 && host_ram2[sizeof host_ram2 - 1] == 0);
     memset(frame, 0x33, 200 * 320);
     utf_calls = 0; reflash_calls = 0;
     uint8_t show[] = { 0xF0, 0x21, 0x03, 3, 1, 0, 2, 0, 3, 0 };
@@ -1403,7 +1404,7 @@ int main(int argc, char **argv)
     cfw_touch_event();
     CHECK(host_sem_gives == 2 && last_reply[3] == 0 && last_reply[4] == 4 && last_reply[5] == 4);
     CHECK(send_packet(in_state, sizeof in_state) == 0 && last_reply[3] == 0x03 && last_reply[4] == 4 && last_reply[5] == 4 && last_reply[7] == 2);
-    uint8_t in_bad[] = { 0xF0, 0x30, 0x20 };
+    uint8_t in_bad[] = { 0xF0, 0x30, 0x80 };
     CHECK(send_packet(in_bad, sizeof in_bad) == 0 && last_reply[2] == CFW_BAD_RECORD);
     uint8_t in_short[] = { 0xF0, 0x30 };
     CHECK(send_packet(in_short, sizeof in_short) == 0 && last_reply[2] == CFW_BAD_LENGTH);
@@ -1891,9 +1892,10 @@ int main(int argc, char **argv)
     CHECK((uint8_t *)cfw_mic_state() + sizeof(cfw_mic) <= FW_CFW_RAM2 + FW_CFW_RAM2_SIZE);
 
     /* ANCS relay: without a lease a fetched notification is dropped; with one it goes out as
-     * SOURCE, APP and eight ATTR records, the message split at the record ceiling. */
+     * SOURCE, APP and the five ATTR records the stock fills, the message split at the record ceiling. */
     CHECK((uint8_t *)cfw_ancs_state() + sizeof(cfw_ancs) <= FW_CFW_RAM2 + FW_CFW_RAM2_SIZE);
     state[FW_STATE_SIDE] = 2;
+    host_ancs_conn = 0;
     uint8_t ancs_q[] = { 0xF0, 0x35, 0x03 };
     CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[2] == CFW_OK && last_reply_len == 22);
     CHECK(memcmp(last_reply + 3, "AN\x01\x04", 4) == 0 && last_reply[7] == 0 && last_reply[8] == 2);
@@ -1940,7 +1942,7 @@ int main(int argc, char **argv)
     CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_discoveries == 1);   /* not the client's temple */
     state[FW_STATE_SIDE] = 2;
     host_queued = 0; host_ancs_queued = 1;
-    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 8);
     static const uint8_t ancs_source[] = { 0xF0, 0x36, 0x00, 'A', 'N', 1, 1, 0, 0x02, 4, 3, 0x44, 0x33, 0x22, 0x11 };
     CHECK(host_queue_len[0] == sizeof ancs_source && memcmp(host_queue[0], ancs_source, sizeof ancs_source) == 0);
     /* The queue feeds this dispatcher, not the link: a record coming back in is sent to the phone verbatim. */
@@ -1948,7 +1950,7 @@ int main(int argc, char **argv)
           && memcmp(last_reply, ancs_source, sizeof ancs_source) == 0);
     CHECK(host_queue_len[1] == 7 + 5 + 19 + 8 && host_queue[1][6] == 3 && host_queue[1][7] == 8 && host_queue[1][8] == 0);
     CHECK(host_queue[1][11] == 19 && memcmp(host_queue[1] + 12, "com.apple.MobileSMSMessages", 27) == 0);
-    for (int i = 2; i < 11; i++) {
+    for (int i = 2; i < 8; i++) {
         CHECK(host_queue[i][6] == 2 && memcmp(host_queue[i] + 7, &uid, 4) == 0 && host_queue_len[i] <= 150);
     }
     CHECK(host_queue[2][11] == 0 && host_queue[2][12] == 19 && memcmp(host_queue[2] + 16, "com.apple.MobileSMS", 19) == 0);
@@ -1956,10 +1958,8 @@ int main(int argc, char **argv)
     CHECK(host_queue[4][11] == 2 && host_queue[4][12] == 0 && host_queue_len[4] == 16);
     CHECK(host_queue[5][11] == 3 && host_queue[5][12] == 200 && host_queue[5][14] == 0 && host_queue_len[5] == 150);
     CHECK(host_queue[6][11] == 3 && host_queue[6][12] == 200 && host_queue[6][14] == 134 && host_queue_len[6] == 16 + 66);
-    CHECK(host_queue[7][11] == 4 && host_queue_len[7] == 16);
-    CHECK(host_queue[8][11] == 5 && host_queue[8][12] == 15 && memcmp(host_queue[8] + 16, "20261112T093000", 15) == 0);
-    CHECK(host_queue[9][11] == 6 && host_queue[10][11] == 7 && host_queue_len[10] == 16);
-    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[11] == 11 && last_reply[9] == 1);
+    CHECK(host_queue[7][11] == 5 && host_queue[7][12] == 15 && memcmp(host_queue[7] + 16, "20261112T093000", 15) == 0);
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[11] == 8 && last_reply[9] == 1);
     CHECK(last_reply[19] == 2 && last_reply[20] == 0);   /* two records taken from the stock queue so far */
     /* A removal carries only its SOURCE, with the uid the stock wrote into the
      * record; an entry for another uid lends no flags. */
@@ -1978,7 +1978,7 @@ int main(int argc, char **argv)
     CHECK(send_packet(ancs_renew, sizeof ancs_renew) == 0 && last_reply[7] == 1);
     host_ticks += 89u * 32768u;
     host_queued = 0; host_ancs_queued = 1;
-    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 8);
     host_ticks += 2u * 32768u;
     host_queued = 0; host_ancs_queued = 1;
     CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 0);
@@ -2048,6 +2048,96 @@ int main(int argc, char **argv)
         }
         CHECK(memcmp(frame, snapshot, sizeof snapshot) == 0);
     }
+    /* G1CFW/56 dirty SHOW (flags bit 2): only the boxes of what arrived, left, moved in the
+     * paint order or was PUT again are composed and pushed; a direct draw forces the whole canvas. */
+    cfw_view_state()->dy = 0;
+    cfw_view_state()->dx = 0;
+    CHECK(send_packet(clear_all, sizeof clear_all) == 0 && last_reply[2] == CFW_OK);
+    uint8_t da[] = { 0xF0, 0x20, 1, 0, 1, 0, 2, 0x01, 10, 0, 10, 0, 8, 0, 4, 0, 0, 0, 0x0C, 0, 0 };     /* rect 8x4 at (10,10) */
+    uint8_t db[] = { 0xF0, 0x20, 4, 0, 1, 0, 2, 0x01, 0x2C, 0x01, 0xFA, 0, 20, 0, 10, 0, 0, 0, 0x0F, 0, 0 };  /* 20x10 at (300,250) */
+    CHECK(send_packet(da, sizeof da) == 0 && send_packet(db, sizeof db) == 0 && last_reply[2] == CFW_OK);
+    uint8_t dshow[] = { 0xF0, 0x21, 0x07, 2, 1, 0, 4, 0 };
+    uint8_t dhide_quiet[] = { 0xF0, 0x22, 0x00 };
+    reflash_calls = 0;
+    CHECK(send_packet(dshow, sizeof dshow) == 0 && last_reply[2] == CFW_OK && reflash_calls == 2 && last_rect[4] == 640);   /* after DROP_ALL */
+    CHECK(send_packet(dhide_quiet, sizeof dhide_quiet) == 0 && send_packet(dshow, sizeof dshow) == 0 && reflash_calls == 4);
+    CHECK(last_rect[2] == 10 && last_rect[3] == 10 && last_rect[4] == 320 && last_rect[5] == 199);   /* arrivals: the window part */
+    CHECK(frame[10 * 320 + 5] == 0xCC);
+    CHECK(send_packet(dshow, sizeof dshow) == 0 && last_reply[2] == CFW_OK && reflash_calls == 4);   /* nothing changed */
+    da[4] = 2; da[8] = 40; da[10] = 12;                                                              /* version 2 at (40,12) */
+    CHECK(send_packet(da, sizeof da) == 0 && send_packet(dshow, sizeof dshow) == 0 && last_reply[2] == CFW_OK);
+    CHECK(reflash_calls == 5 && last_rect[2] == 10 && last_rect[3] == 10 && last_rect[4] == 48 && last_rect[5] == 15);
+    CHECK(frame[10 * 320 + 5] == 0 && frame[12 * 320 + 20] == 0xCC && frame[12 * 320 + 24] == 0);
+    uint8_t dshow4[] = { 0xF0, 0x21, 0x07, 1, 4, 0 };                                                 /* 1 leaves */
+    CHECK(send_packet(dshow4, sizeof dshow4) == 0 && last_reply[2] == CFW_OK && reflash_calls == 7 && frame[12 * 320 + 20] == 0);
+    CHECK(send_packet(da, sizeof da) == 0 && send_packet(dshow4, sizeof dshow4) == 0 && reflash_calls == 7);   /* PUT of a hidden object */
+    uint8_t dfill[] = { 0xF0, 0x02, 0x00, 0, 0, 0, 0, 4, 0, 1, 0, 0x03 };
+    CHECK(send_packet(dfill, sizeof dfill) == 0 && last_reply[2] == CFW_OK && cfw_objects()->direct == 1);
+    CHECK(send_packet(dshow4, sizeof dshow4) == 0 && reflash_calls == 9 && last_rect[2] == 0 && last_rect[4] == 640);
+    CHECK(cfw_objects()->direct == 0);
+    uint8_t dclear[] = { 0xF0, 0x0B };
+    CHECK(send_packet(dclear, sizeof dclear) == 0 && send_packet(dshow4, sizeof dshow4) == 0 && reflash_calls == 11);   /* assets gone: whole canvas */
+    uint8_t dhide[] = { 0xF0, 0x22, 0x06 };
+    CHECK(send_packet(dhide, sizeof dhide) == 0 && last_reply[2] == CFW_OK && reflash_calls == 12 && cfw_objects()->shown_count == 0);
+    uint8_t dshow0[] = { 0xF0, 0x21, 0x03, 2, 1, 0, 4, 0 };
+    CHECK(send_packet(dshow0, sizeof dshow0) == 0 && reflash_calls == 14 && last_rect[4] == 640);   /* bit 2 clear: whole canvas */
+
+    /* Bit 5: a worn panel goes off 1.6 s after the canvas went blank and is back on the
+     * pass after content arrives, the dead band included; bit 6 drops the repeat pushes. */
+    uint8_t in_blank[] = { 0xF0, 0x30, 0x60 };
+    CHECK(send_packet(in_blank, sizeof in_blank) == 0 && last_reply[2] == CFW_OK && last_reply[3] == 0x60);
+    state[FW_STATE_WORK_MODE] = 3;
+    host_wear_word = 66;
+    *(int *)(panel + FW_PANEL_POWERED) = 1;
+    cfw_work_mode_tick();
+    CHECK(cfw_input_state()->idle_ticks == 0 && *(int *)(panel + FW_PANEL_POWERED) == 1);
+    CHECK(send_packet(dhide, sizeof dhide) == 0);
+    for (unsigned i = 1; i < CFW_BLANK_TICKS; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1);
+    cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 0 && cfw_input_state()->blanked == 1);
+    for (unsigned i = 0; i < 20; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 0);
+    host_wear_word = 55;                    /* between the thresholds */
+    CHECK(send_packet(dshow0, sizeof dshow0) == 0);
+    cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1 && cfw_input_state()->blanked == 0 && cfw_input_state()->push_ticks == 0);
+    cfw_display_tick(state, 0x10, 0, 2);
+    CHECK(send_packet(in_release, sizeof in_release) == 0 && send_packet(dhide, sizeof dhide) == 0);
+    for (unsigned i = 0; i < 2 * CFW_BLANK_TICKS; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1);   /* without bit 5 a blank canvas stays lit */
+    uint8_t in_blank_retry[] = { 0xF0, 0x30, 0x20 };
+    CHECK(send_packet(in_blank_retry, sizeof in_blank_retry) == 0);
+    for (unsigned i = 0; i < CFW_BLANK_TICKS; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 0);
+    CHECK(send_packet(dshow0, sizeof dshow0) == 0);
+    cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1 && cfw_input_state()->push_ticks == CFW_PUSH_TICKS - 1);
+    cfw_display_tick(state, 0x10, 0, 2);
+
+    /* Without a phone a capture stops at the next pass, and after 30 s the scene is dropped
+     * and the panel goes off; the reconnect brings it back. */
+    CHECK(send_packet(in_release, sizeof in_release) == 0);
+    host_wear_word = 66;
+    cfw_mic *mic = cfw_mic_state();
+    uint16_t mic_stops = mic->stops;
+    mic->recording = 1; host_mic_mode = 0;
+    host_ancs_conn = 0;
+    cfw_work_mode_tick();
+    CHECK(mic->recording == 0 && host_mic_mode == 1 && mic->stops == mic_stops + 1);
+    mic->stops = mic_stops;
+    for (unsigned i = 2; i < CFW_LINK_TICKS; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1 && cfw_objects()->shown_count == 2);
+    cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 0 && cfw_objects()->shown_count == 0);
+    for (unsigned i = 0; i < 200; i++) cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 0 && cfw_input_state()->idle_ticks == 255);
+    host_ancs_conn = &host_ancs_conn_object;
+    cfw_work_mode_tick();
+    CHECK(*(int *)(panel + FW_PANEL_POWERED) == 1 && cfw_input_state()->idle_ticks == 0);
+    for (int i = 0; i < 8; i++) { cfw_work_mode_tick(); cfw_display_tick(state, 0x10, 0, 2); }
+    CHECK(send_packet(clear_all, sizeof clear_all) == 0);
+
     guards_intact();
     CHECK(host_unlocked_pushes == 0 && host_lcd_depth == 0);
     printf(failures ? "FAILED (%d)\n" : "OK\n", failures);

@@ -1344,3 +1344,22 @@ the phone verbatim; the phone never sends 0x36, so anything arriving with it
 is the relay's own. Host test covers the loopback. Verified on hardware
 2026-11-14: rep_01M7EJVD6YEG226857M6A3A9VD relayed three notifications to the
 phone and the dashboard showed them.
+
+
+### G1CFW/56: power savings (2026-11-15)
+
+- **Changed boxes only.** OBJ_SHOW and OBJ_HIDE bit 2 push the union of the
+  boxes of what changed (see the protocol). The phone sets it from /56, so a
+  caption update recomposes and pushes its own rows instead of 380 rows of
+  121,600 bytes on each temple, and a frame that only glides sends no SHOW.
+- **Blank canvas.** INPUT_CONTROL bit 5 switches a worn panel off 1.6 s
+  after the canvas goes blank and back on the pass after content arrives;
+  bit 6 drops the two repeat pushes after a power-up. The repeats date from
+  /35, before /36 found that the buffer wipe, not the push, lost the frame.
+- **Phone gone.** The checker pass stops a capture as soon as no central is
+  connected and, after 30 s, drops the scene and switches the panel off.
+- **ANCS.** Attributes 4, 6 and 7 are no longer sent; the phone fills them in.
+
+`cfw_display_tick`, the contour builders and the tween helpers are now
+`CFW_COLD` to make room. Blob 24,652 bytes with the relocated helper, 204
+left. Offline only at the time of writing.

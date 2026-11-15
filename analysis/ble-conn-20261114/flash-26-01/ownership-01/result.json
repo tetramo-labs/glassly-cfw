@@ -1,0 +1,14 @@
+{
+  "automaticRetries" : 0,
+  "buttonEvents" : 0,
+  "capture" : "\/Users\/fosse\/dev\/glassly-memomind-one-cfw\/analysis\/ble-conn-20261114\/flash-26-01\/ownership-01",
+  "cleanupVerified" : true,
+  "command" : "ownership",
+  "complete" : true,
+  "flashMutations" : 0,
+  "framePreservedPast35Seconds" : false,
+  "leasesExpired" : false,
+  "mode" : "native macOS IOBluetooth RFCOMM",
+  "physicalOutputConfirmed" : false,
+  "wakeHandshakes" : 0
+}

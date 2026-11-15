@@ -17,7 +17,12 @@ detail = BT core return code), and the v2 status block grows to 136 bytes with
 the peer's address type and kind, the bonded flag and both return codes. 21
 emulator tests pass; runtime 84,352 B (13,952 B free). Analysis in
 `analysis/ghidra/ble-conn-20261114/`, records in `analysis/ble-conn-20261114/`.
-Not yet flashed at the time of writing.
+Flashed 2026-11-15 ([checkpoint](analysis/ble-conn-20261114/flash-26-01/checkpoint.json)):
+boots as GLASSLYCFW/26; the Mac's hello is accepted at once (the stock
+current-phone check matches it after an RFCOMM session) and GM heartbeats answer
+over BLE. `80 03` is accepted by the BT core, but the link-up request and `80 02`
+come back rc 0x0b for every parameter set, so the connection interval is still
+the central's default; the LE-unbonded Mac is still dropped 8.5 s in.
 
 Revision 25 (`ble-link-001`) makes BLE the iPhone's only link, because App
 Review refuses the vendor's `ql.iap2.*` protocols without its MFi plan ID. The

@@ -1,5 +1,5 @@
 /*
- * G1CFW/53: injected handler for the private 0xF0 command on Even G1 1.6.3.
+ * G1CFW/54: injected handler for the private 0xF0 command on Even G1 1.6.3.
  *
  * Compiled by tools/build_blob.py into a position-independent blob that is
  * appended to the stock application image. The stock BLE receive entry calls
@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 53u
+#define CFW_PROTOCOL 54u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,
@@ -179,7 +179,7 @@ static uint32_t cfw_asset_expected(const cfw_asset *a)
     return a->bytes;  /* strings: whatever was uploaded */
 }
 
-static cfw_ctx *cfw_context(void)
+__attribute__((noinline)) static cfw_ctx *cfw_context(void)
 {
     cfw_ctx *c = (cfw_ctx *)FW_CFW_RAM;
     if (c->magic != CFW_CTX_MAGIC) {
@@ -197,17 +197,18 @@ static uint8_t *cfw_msg_buf(void)
     return FW_CFW_RAM + sizeof(cfw_ctx);
 }
 
-/* CRC-16/CCITT-FALSE: poly 0x1021, init 0xFFFF, no reflection. */
-CFW_COLD static uint16_t cfw_crc16(const uint8_t *p, uint32_t n)
+/* CRC-16/CCITT-FALSE: poly 0x1021, init 0xFFFF, no reflection. `crc` gathers
+ * bits above 15 that the index masks and the final cast drop. */
+static uint16_t cfw_crc16(const uint8_t *p, uint32_t n)
 {
-    uint16_t crc = 0xFFFF;
+    static const uint16_t nibble[16] = { 0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7,
+                                         0x8108, 0x9129, 0xa14a, 0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef };
+    uint32_t crc = 0xFFFF;
     for (uint32_t i = 0; i < n; i++) {
-        crc ^= (uint16_t)(p[i] << 8);
-        for (int b = 0; b < 8; b++) {
-            crc = (uint16_t)((crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1);
-        }
+        crc = (crc << 4) ^ nibble[((crc >> 12) ^ (p[i] >> 4)) & 15u];
+        crc = (crc << 4) ^ nibble[((crc >> 12) ^ p[i]) & 15u];
     }
-    return crc;
+    return (uint16_t)crc;
 }
 
 /* --- PackBits reader: n in 0..127 = n+1 literal bytes follow; n in
@@ -271,6 +272,8 @@ CFW_COLD static uint8_t cfw_rle_next(cfw_rle *r)
 typedef struct {
     uint32_t x0, y0, w, h;
 } cfw_rect;
+
+typedef uint32_t __attribute__((may_alias)) cfw_word;
 
 static uint16_t rd16(const uint8_t *p)
 {
@@ -359,6 +362,12 @@ static int32_t cfw_band(void)
 static uint32_t cfw_clock(void)
 {
     return FW_TICKS32() >> 5;
+}
+
+/* The clock is 27 bits wide: its differences are taken modulo 2^27. */
+static uint32_t cfw_clock_since(uint32_t now, uint32_t since)
+{
+    return (now - since) & 0x7FFFFFFu;
 }
 
 static uint8_t *cfw_row(uint8_t *panel, uint32_t y, uint32_t x)
@@ -483,8 +492,10 @@ static uint8_t cfw_flush(uint8_t *panel, const cfw_rect *r)
     return rc < 0 ? CFW_PANEL_OFF : CFW_OK;
 }
 
-/* [flags][rect] header plus a separate pixel buffer (packet or asset). */
-static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_len)
+/* [flags][rect] header plus a separate pixel buffer (packet or asset) whose
+ * rows are `stride` bytes (0: just the rectangle's width) and start `skip`
+ * (even) pixels left of the rectangle. */
+static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_len, uint32_t stride, uint32_t skip)
 {
     cfw_rect r;
     cfw_rle rle;
@@ -493,7 +504,9 @@ static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_
     if (!cfw_parse_rect(hdr + 1, &r, an->clip_y0, an->clip_y1)) {
         return CFW_BAD_RECT;
     }
-    uint32_t stride = (flags & CFW_BLIT_1BPP) ? (r.w + 7) / 8 : r.w / 2;
+    if (!stride) {
+        stride = (flags & CFW_BLIT_1BPP) ? (r.w + 7) / 8 : r.w / 2;
+    }
     if (!(flags & CFW_BLIT_RLE) && px_len < stride * r.h) {
         return CFW_BAD_LENGTH;
     }
@@ -515,12 +528,13 @@ static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_
         uint8_t *dst = cfw_row(panel, r.y0 + y, r.x0);
         if (flags & CFW_BLIT_1BPP) {
             for (uint32_t x = 0; x < r.w; x += 2) {
-                uint8_t bits = src[x / 8] >> (6 - (x & 7));
+                uint32_t sx = x + skip;
+                uint8_t bits = src[sx / 8] >> (6 - (sx & 7));
                 dst[x / 2] = (uint8_t)(((bits & 2) ? level << 4 : 0) | ((bits & 1) ? level : 0));
             }
         } else {
             for (uint32_t i = 0; i < r.w / 2; i++) {
-                dst[i] = src[i];
+                dst[i] = src[skip / 2 + i];
             }
         }
     }
@@ -533,7 +547,7 @@ CFW_COLD static uint8_t cfw_blit(const uint8_t *p, uint32_t n)
     if (n < 9) {
         return CFW_BAD_LENGTH;
     }
-    return cfw_blit_from(p, p + 9, n - 9);
+    return cfw_blit_from(p, p + 9, n - 9, 0, 0);
 }
 
 /* [flags][rect][nibble]: fill a rectangle with one grey level. */
@@ -893,7 +907,7 @@ CFW_COLD static uint8_t cfw_asset_draw(const uint8_t *p, uint32_t n)
     hdr[1] = p[3]; hdr[2] = p[4]; hdr[3] = p[5]; hdr[4] = p[6];
     hdr[5] = (uint8_t)a->w; hdr[6] = (uint8_t)(a->w >> 8);
     hdr[7] = (uint8_t)a->h; hdr[8] = (uint8_t)(a->h >> 8);
-    return cfw_blit_from(hdr, cfw_asset_bytes(c, a), a->bytes);
+    return cfw_blit_from(hdr, cfw_asset_bytes(c, a), a->bytes, 0, 0);
 }
 
 /* [id:u16][font][flags][box][max_lines]: TEXT with a string asset. */
@@ -1001,10 +1015,11 @@ static uint32_t cfw_shape_mask(uint8_t type)
 
 static uint8_t *cfw_asset_bytes(cfw_ctx *c, const cfw_asset *a);
 static uint32_t cfw_asset_expected(const cfw_asset *a);
-static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_len);
+static uint8_t cfw_blit_from(const uint8_t *hdr, const uint8_t *px, uint32_t px_len, uint32_t stride, uint32_t skip);
 static uint8_t cfw_asset_text(const uint8_t *p, uint32_t n);
 
-/* Blit a complete image asset at (x, y), limited to the rows the renderers
+/* Blit a complete image asset at (x, y), x taken down to a pixel pair like
+ * text boxes, clipped to the frame's columns and to the rows the renderers
  * may write (the band being composed); `level` is the 1bpp grey. */
 static uint8_t cfw_draw_image(cfw_ctx *c, const cfw_asset *a, int32_t x, int32_t y, uint8_t level)
 {
@@ -1013,22 +1028,22 @@ static uint8_t cfw_draw_image(cfw_ctx *c, const cfw_asset *a, int32_t x, int32_t
     if (a->kind > CFW_ASSET_4BPP || a->bytes != cfw_asset_expected(a)) {
         return CFW_BAD_ASSET;
     }
-    if (x < 0 || y < 0) {
-        return CFW_BAD_RECT;
-    }
+    x &= ~1;
     int32_t r0 = an->clip_y0 > y ? an->clip_y0 - y : 0;
     int32_t r1 = an->clip_y1 < y + a->h ? an->clip_y1 - y : a->h;
-    if (r0 >= r1) {
+    int32_t c0 = x < 0 ? -x : 0;
+    int32_t c1 = x + a->w > FW_FRAME_WIDTH ? FW_FRAME_WIDTH - x : a->w;
+    if (r0 >= r1 || c0 >= c1) {
         return CFW_OK;
     }
     uint32_t stride = a->kind == CFW_ASSET_1BPP ? (a->w + 7u) / 8u : a->w / 2u;
-    int32_t top = y + r0, rows = r1 - r0;
+    int32_t left = x + c0, top = y + r0, cols = c1 - c0, rows = r1 - r0;
     buf[0] = (uint8_t)(((level & 0xF) << 4) | (a->kind == CFW_ASSET_1BPP ? CFW_BLIT_1BPP : 0));
-    buf[1] = (uint8_t)x; buf[2] = (uint8_t)(x >> 8);
+    buf[1] = (uint8_t)left; buf[2] = (uint8_t)(left >> 8);
     buf[3] = (uint8_t)top; buf[4] = (uint8_t)(top >> 8);
-    buf[5] = (uint8_t)a->w; buf[6] = (uint8_t)(a->w >> 8);
+    buf[5] = (uint8_t)cols; buf[6] = (uint8_t)(cols >> 8);
     buf[7] = (uint8_t)rows; buf[8] = (uint8_t)(rows >> 8);
-    return cfw_blit_from(buf, cfw_asset_bytes(c, a) + (uint32_t)r0 * stride, (uint32_t)rows * stride);
+    return cfw_blit_from(buf, cfw_asset_bytes(c, a) + (uint32_t)r0 * stride, (uint32_t)rows * stride, stride, (uint32_t)c0);
 }
 
 /* Image (14) and text (15) records draw assets by id, like the asset
@@ -1490,13 +1505,35 @@ static void cfw_shape_draw(const cfw_raster *r, const cfw_shape *s)
     }
 }
 
+CFW_COLD __attribute__((noinline)) static int cfw_box_set(cfw_rect *r, int32_t x0, int32_t y0, int32_t x1, int32_t y1)
+{
+    if (x0 < 0) x0 = 0;
+    if (y0 < 0) y0 = 0;
+    if (x1 > FW_FRAME_WIDTH) x1 = FW_FRAME_WIDTH;
+    if (y1 > (int32_t)CFW_CANVAS_H) y1 = CFW_CANVAS_H;
+    r->w = 0;
+    if (x0 < x1 && y0 < y1) {
+        x0 &= ~1;
+        x1 = (x1 + 1) & ~1;
+        r->x0 = (uint32_t)x0; r->y0 = (uint32_t)y0; r->w = (uint32_t)(x1 - x0); r->h = (uint32_t)(y1 - y0);
+    }
+    return 1;
+}
+
+/* rs_line_q4's square caps reach a whole width past the end of a short curve
+ * or arc segment, whose length its integer square root rounds down. */
+static int32_t cfw_stroke_margin(int32_t width)
+{
+    return width + 2;
+}
+
 /* Frame box a record can touch (stroke, caps and rounding included), for
  * dirty-rect pushes. Returns 0 for an unknown type; w = 0 when off screen. */
 static int cfw_shape_box(const cfw_shape *s, cfw_rect *r)
 {
     uint32_t mask = cfw_shape_mask(s->type);
     int32_t x0, y0, x1, y1;
-    int32_t m = s->width / 2 + 2;
+    int32_t m = cfw_stroke_margin(s->width);
     if (!mask) {
         return 0;
     }
@@ -1525,19 +1562,7 @@ static int cfw_shape_box(const cfw_shape *s, cfw_rect *r)
             if (s->p[i + 1] + 1 > y1) y1 = s->p[i + 1] + 1;
         }
     }
-    x0 -= m; y0 -= m; x1 += m; y1 += m;
-    if (x0 < 0) x0 = 0;
-    if (y0 < 0) y0 = 0;
-    if (x1 > FW_FRAME_WIDTH) x1 = FW_FRAME_WIDTH;
-    if (y1 > (int32_t)CFW_CANVAS_H) y1 = CFW_CANVAS_H;
-    if (x0 >= x1 || y0 >= y1) {
-        r->w = 0;
-        return 1;
-    }
-    x0 &= ~1;
-    x1 = (x1 + 1) & ~1;
-    r->x0 = (uint32_t)x0; r->y0 = (uint32_t)y0; r->w = (uint32_t)(x1 - x0); r->h = (uint32_t)(y1 - y0);
-    return 1;
+    return cfw_box_set(r, x0 - m, y0 - m, x1 + m, y1 + m);
 }
 
 /* SHAPES payload: [flags][count][records]. Every type is checked before a
@@ -1753,10 +1778,23 @@ static void cv_fill(const cfw_raster *r, cfw_vwork *w, uint32_t n, uint8_t rule,
     }
 }
 
+/* The drawers' +-1024 px clamp only moves edges further off the clipped canvas. */
+CFW_COLD static void cv_box(const cfw_vwork *w, int n, int32_t m, cfw_rect *r)
+{
+    int32_t lo[2] = { 0x7FFFFFFF, 0x7FFFFFFF }, hi[2] = { -0x7FFFFFFF, -0x7FFFFFFF };
+    const int32_t *c = (const int32_t *)w->edges;
+    for (int i = 0; i < 4 * n; i++) {
+        if (c[i] < lo[i & 1]) lo[i & 1] = c[i];
+        if (c[i] > hi[i & 1]) hi[i & 1] = c[i];
+    }
+    cfw_box_set(r, (lo[0] >> 4) - m, (lo[1] >> 4) - m, (hi[0] >> 4) + 1 + m, (hi[1] >> 4) + 1 + m);
+}
+
 /* Draw a compiled path asset: [count:u16][rule][pad][edges], scaled by p[2]
- * (Q8) about its origin, moved by (p[0], p[1]) pixels, rotated. */
+ * (Q8) about its origin, moved by (p[0], p[1]) pixels, rotated. With `box`
+ * set, the box it would cover instead. */
 static void cv_path_draw(const cfw_raster *r, cfw_vwork *w, const uint8_t *asset, const int16_t *p,
-                         int32_t angle, int32_t px, int32_t py, uint8_t color)
+                         int32_t angle, int32_t px, int32_t py, uint8_t color, cfw_rect *box)
 {
     uint32_t count = rd16(asset);
     int32_t scale = cfw_clamp(p[2], 0, 2048);
@@ -1771,7 +1809,11 @@ static void cv_path_draw(const cfw_raster *r, cfw_vwork *w, const uint8_t *asset
         src += 16;
     }
     cv_transform(w, count, angle, px, py);
-    cv_fill(r, w, count, asset[2], color);
+    if (box) {
+        cv_box(w, (int)count, 0, box);
+    } else {
+        cv_fill(r, w, count, asset[2], color);
+    }
 }
 
 /* Arc contour in Q4 about (cx, cy): optional pie spokes, closed for a full
@@ -1819,8 +1861,10 @@ static int cv_roundrect(cfw_vwork *w, uint32_t *n, int32_t x, int32_t y, int32_t
 }
 
 /* A rotated primitive: contours filled even-odd, or stroked edge by edge.
- * A shape whose contours would not fit the workspace draws nothing. */
-static void cv_shape_draw(const cfw_raster *r, cfw_vwork *w, const cfw_shape *s, int32_t angle, int32_t px, int32_t py)
+ * A shape whose contours would not fit the workspace draws nothing. With
+ * `box` set, the box it would cover instead. */
+static void cv_shape_draw(const cfw_raster *r, cfw_vwork *w, const cfw_shape *s, int32_t angle, int32_t px, int32_t py,
+                          cfw_rect *box)
 {
     uint32_t n = 0;
     int fill = 0, ok = 1;
@@ -1867,8 +1911,12 @@ static void cv_shape_draw(const cfw_raster *r, cfw_vwork *w, const cfw_shape *s,
         break;
     }
     }
-    if (!ok) return;
+    if (!ok) n = 0;
     cv_transform(w, n, angle, px, py);
+    if (box) {
+        cv_box(w, (int)n, fill ? 0 : cfw_stroke_margin(s->width), box);
+        return;
+    }
     if (fill) {
         cv_fill(r, w, n, 1, s->color);
         return;
@@ -1879,7 +1927,6 @@ static void cv_shape_draw(const cfw_raster *r, cfw_vwork *w, const cfw_shape *s,
                    cfw_clamp(e->x1, -16384, 16384), cfw_clamp(e->y1, -16384, 16384), wd, s->color);
     }
 }
-
 
 
 /* --- retained objects (g2flash modes 37-41, G1-sized) --------------------
@@ -1910,7 +1957,7 @@ typedef struct {
     uint16_t pad;
 } cfw_objs;                    /* 8 + 192 + 4 = 204 bytes, then the objects */
 
-static cfw_objs *cfw_objects(void)
+__attribute__((noinline)) static cfw_objs *cfw_objects(void)
 {
     cfw_objs *o = (cfw_objs *)FW_CFW_RAM2;
     if (o->magic != CFW_OBJ_MAGIC) {
@@ -2093,24 +2140,32 @@ CFW_COLD static uint8_t cfw_obj_put(const uint8_t *p, uint32_t n)
     return CFW_OK;
 }
 
-/* Bounding box of an object for dirty-rect flushes; returns 0 when unknown. */
+/* Bounding box of an object for dirty-rect flushes; returns 0 when unknown.
+ * Rotated shapes and paths are measured on the edges they are drawn from, so
+ * this runs under the LCD lock like the renderers that share the workspace. */
 static int cfw_obj_bbox(const cfw_obj *obj, cfw_rect *r)
 {
     int x0 = obj->p[0], y0 = obj->p[1], w = obj->p[2], h = obj->p[3];
+    cfw_ctx *c = cfw_context();
+    cfw_asset *a = c->arena ? cfw_asset_find(c, obj->asset) : 0;
+    int32_t px = obj->px * 16 + 8, py = obj->py * 16 + 8;
     if (obj->kind == CFW_OBJ_SHAPE) {
         cfw_shape s;
-        if (obj->angle % CFW_ANGLE_TURN) {
-            return 0;
-        }
         cfw_obj_shape(obj, &s);
-        return cfw_shape_box(&s, r);
+        if (!(obj->angle % CFW_ANGLE_TURN)) {
+            return cfw_shape_box(&s, r);
+        }
+        cv_shape_draw(0, cfw_vector_work(), &s, obj->angle, px, py, r);
+        return 1;
     }
     if (obj->kind == CFW_OBJ_PATH) {
-        return 0;
+        if (!a || a->kind != CFW_ASSET_PATH || a->bytes < CFW_PATH_HDR) {
+            return 0;
+        }
+        cv_path_draw(0, cfw_vector_work(), cfw_asset_bytes(c, a), obj->p, obj->angle, px, py, 0, r);
+        return 1;
     }
     if (obj->kind == CFW_OBJ_IMAGE) {
-        cfw_ctx *c = cfw_context();
-        cfw_asset *a = c->arena ? cfw_asset_find(c, obj->asset) : 0;
         if (!a) {
             return 0;
         }
@@ -2122,19 +2177,7 @@ static int cfw_obj_bbox(const cfw_obj *obj, cfw_rect *r)
     if (w <= 0 || h <= 0) {
         return 0;
     }
-    int x1 = x0 + w, y1 = y0 + h;             /* exclusive */
-    if (x0 < 0) x0 = 0;
-    if (y0 < 0) y0 = 0;
-    if (x1 > FW_FRAME_WIDTH) x1 = FW_FRAME_WIDTH;
-    if (y1 > (int)CFW_CANVAS_H) y1 = CFW_CANVAS_H;
-    if (x0 >= x1 || y0 >= y1) {
-        r->w = 0;
-        return 1;                             /* off screen: nothing to push */
-    }
-    x0 &= ~1;
-    x1 = (x1 + 1) & ~1;
-    r->x0 = (uint32_t)x0; r->y0 = (uint32_t)y0; r->w = (uint32_t)(x1 - x0); r->h = (uint32_t)(y1 - y0);
-    return 1;
+    return cfw_box_set(r, x0, y0, x0 + w, y0 + h);
 }
 
 static void cfw_rect_union(cfw_rect *acc, const cfw_rect *r)
@@ -2219,7 +2262,7 @@ static uint8_t cfw_obj_render(const cfw_obj *obj)
         cfw_shape s;
         cfw_obj_shape(obj, &s);
         if (obj->angle % CFW_ANGLE_TURN) {
-            cv_shape_draw(&r, cfw_vector_work(), &s, obj->angle, obj->px * 16 + 8, obj->py * 16 + 8);
+            cv_shape_draw(&r, cfw_vector_work(), &s, obj->angle, obj->px * 16 + 8, obj->py * 16 + 8, 0);
         } else {
             cfw_shape_draw(&r, &s);
         }
@@ -2236,7 +2279,7 @@ static uint8_t cfw_obj_render(const cfw_obj *obj)
         }
         cfw_raster r = { cfw_row(cfw_panel(), 0, 0), cy0, cy1 };
         cv_path_draw(&r, cfw_vector_work(), cfw_asset_bytes(c, a), obj->p, obj->angle, obj->px * 16 + 8, obj->py * 16 + 8,
-                     (uint8_t)(obj->level & 0xF));
+                     (uint8_t)(obj->level & 0xF), 0);
         return CFW_OK;
     }
     case CFW_OBJ_SHAPES: {
@@ -2275,12 +2318,13 @@ static uint8_t cfw_compose(int32_t base, int32_t y0, int32_t y1, const cfw_rect 
     an->band = (uint16_t)base;
     an->clip_y0 = (uint16_t)y0;
     an->clip_y1 = (uint16_t)y1;
-    uint8_t *rows = cfw_row(panel, (uint32_t)y0, 0);
-    for (uint32_t i = 0; i < (uint32_t)(y1 - y0) * FW_FRAME_STRIDE; i++) {
-        rows[i] = 0;
-    }
+    uint8_t *rows = cfw_row(panel, (uint32_t)y0, 0), *end = rows + (uint32_t)(y1 - y0) * FW_FRAME_STRIDE;
+    /* The stock buffer starts 5 bytes into its heap block: align before the word stores. */
+    while (((uintptr_t)rows & 3u) && rows < end) *rows++ = 0;
+    for (; end - rows >= 4; rows += 4) *(cfw_word *)rows = 0;
+    while (rows < end) *rows++ = 0;
     for (uint32_t i = 0; i < o->shown_count; i++) {
-        cfw_obj *obj = cfw_obj_find(o, o->shown[i]);   /* a dropped object is skipped */
+        cfw_obj *obj = cfw_obj_find(o, o->shown[i]);
         uint8_t s = obj ? cfw_obj_render(obj) : CFW_OK;
         if (s != CFW_OK) {
             an->render_errors++;
@@ -2482,11 +2526,19 @@ CFW_COLD static uint8_t cfw_obj_control(const uint8_t *p, uint32_t n)
         return CFW_OK;
     }
     if (p[0] == 1 && n >= 3) {
-        cfw_obj *obj = cfw_obj_find(o, rd16(p + 1));
+        uint16_t id = rd16(p + 1);
+        cfw_obj *obj = cfw_obj_find(o, id);
         if (!obj) {
             return CFW_NO_OBJECT;
         }
-        cfw_anim_cancel(obj->id);
+        cfw_anim_cancel(id);
+        uint32_t kept = 0;
+        for (uint32_t i = 0; i < o->shown_count; i++) {
+            if (o->shown[i] != id) {
+                o->shown[kept++] = o->shown[i];
+            }
+        }
+        o->shown_count = (uint16_t)kept;
         cfw_obj *last = &cfw_obj_table()[o->count - 1];
         for (cfw_obj *q = obj; q < last; q++) {
             uint8_t *d = (uint8_t *)q;
@@ -2497,7 +2549,7 @@ CFW_COLD static uint8_t cfw_obj_control(const uint8_t *p, uint32_t n)
         }
         o->count--;
         o->revision++;
-        cfw_journal_note(CFW_JOURNAL_OBJ_DROP, rd16(p + 1), 0);
+        cfw_journal_note(CFW_JOURNAL_OBJ_DROP, id, 0);
         return CFW_OK;
     }
     return CFW_BAD_COMMAND;
@@ -2602,8 +2654,7 @@ static uint32_t cfw_anim_step(cfw_anims *a, uint32_t now, cfw_rect *dirty, int *
         if (!g->dur) {
             continue;
         }
-        int32_t el = (int32_t)(now - g->start);
-        if (el < 0) el = 0;
+        int32_t el = (int32_t)cfw_clock_since(now, g->start);
         int32_t k = el >= g->dur ? 1024 : cfw_ease(g, el * 1024 / g->dur);
         cfw_obj *obj = cfw_obj_find(o, g->id);
         if (obj) {
@@ -2757,7 +2808,7 @@ CFW_COLD static uint8_t cfw_repush(uint8_t *panel)
 CFW_COLD static void cfw_kick(cfw_anims *a)
 {
     uint32_t now = cfw_clock();
-    if (!a->ticking || now - a->ticked > 1024u) {
+    if (!a->ticking || cfw_clock_since(now, a->ticked) > 1024u) {
         a->ticking = 1;
         a->ticked = now;
         FW_DISPLAY_POST(FW_SCREEN_CFW, 0, 0);
@@ -3302,9 +3353,16 @@ CFW_COLD static cfw_ancs *cfw_ancs_state(void)
     return a;
 }
 
-CFW_COLD static int cfw_ancs_enabled(const cfw_ancs *a, uint32_t now)
+/* An expired lease must be cleared (2^31 ticks on it reads live again), but
+ * not over one the BLE worker re-armed meanwhile. */
+CFW_COLD __attribute__((noinline)) static int cfw_ancs_enabled(cfw_ancs *a, uint32_t now)
 {
-    return a->lease_until != 0 && (int32_t)(a->lease_until - now) > 0;
+    uint32_t until = a->lease_until;
+    if (until != 0 && (int32_t)(until - now) > 0) {
+        return 1;
+    }
+    __atomic_compare_exchange_n(&a->lease_until, &until, 0u, 0, __ATOMIC_RELAXED, __ATOMIC_RELAXED);
+    return 0;
 }
 
 CFW_COLD static void cfw_ancs_send(cfw_ancs *a, uint8_t kind, const uint8_t *body, uint32_t n)
@@ -3377,17 +3435,19 @@ CFW_COLD int cfw_ancs_recv(uint8_t *client)
         a->drops++;
         return 0;
     }
-    const uint8_t *uid = rec + FW_ANCS_REC_UID;
     const volatile uint8_t *entry = FW_ANCS_UID_ENTRY;
-    uint8_t source[8] = { rec[FW_ANCS_REC_EVENT], 0, 0, 0, uid[0], uid[1], uid[2], uid[3] };
-    /* The flags and category only live in the uid-queue entry the thread is working on. */
-    if (entry[0] == uid[0] && entry[1] == uid[1] && entry[2] == uid[2] && entry[3] == uid[3]) {
+    uint8_t event = rec[FW_ANCS_REC_EVENT];
+    /* The stock producer zeroes the record and writes its uid only for a removal;
+     * the uid, flags and category live in the uid-queue entry the thread is working on. */
+    const volatile uint8_t *uid = event < 2 ? entry : rec + FW_ANCS_REC_UID;
+    uint8_t source[8] = { event, 0, 0, 0, uid[0], uid[1], uid[2], uid[3] };
+    if (entry[0] == source[4] && entry[1] == source[5] && entry[2] == source[6] && entry[3] == source[7]) {
         source[1] = entry[5];
         source[2] = entry[6];
         source[3] = entry[7];
     }
     cfw_ancs_send(a, CFW_ANCS_SOURCE, source, sizeof source);
-    if (source[0] >= 2) {
+    if (event >= 2) {
         return 0;   /* removed: the uid is all there is */
     }
     const uint8_t *id = rec + FW_ANCS_REC_APP_ID, *name = rec + FW_ANCS_REC_APP_NAME;
@@ -3420,7 +3480,7 @@ CFW_COLD int cfw_ancs_recv(uint8_t *client)
         case 5: text = rec + FW_ANCS_REC_DATE; break;
         default: break;
         }
-        cfw_ancs_attr(a, uid, attr, text, max);
+        cfw_ancs_attr(a, source + 4, attr, text, max);
     }
     return 0;
 }
@@ -3439,8 +3499,12 @@ CFW_COLD static void cfw_ancs_kick(cfw_ancs *a)
         return;
     }
     if (FW_CONN_GET_SECURITY(conn) < 2) {
-        a->kicks |= 1;
-        FW_CONN_SET_SECURITY(conn, 2);
+        /* ancs_security_changed re-requests after a failure on its own and
+         * reboots after ten in a row: never add a request to that run. */
+        if (!*FW_ANCS_SECURITY_FAILS) {
+            a->kicks |= 1;
+            FW_CONN_SET_SECURITY(conn, 2);
+        }
     } else if (!(*FW_ANCS_DISCOVERY_FLAGS & 3u)) {
         a->kicks |= 2;
         FW_DISCOVER_GATTP(conn, 0, 0);
@@ -3514,13 +3578,13 @@ int cfw_display_tick(uint8_t *state, uint32_t screen, uint32_t p3, uint32_t mode
         }
         cfw_obj_present(full ? 0 : &dirty);
         a->ticks++;
-        a->frame_ms = (uint16_t)((cfw_clock() - t0) * 125u / 128u);
+        a->frame_ms = (uint16_t)(cfw_clock_since(cfw_clock(), t0) * 125u / 128u);
         if (left == 0) {
             a->active = 0;
         }
         period = a->period_ms;
     }
-    uint32_t spent = (cfw_clock() - t0) * 125u / 128u;
+    uint32_t spent = cfw_clock_since(cfw_clock(), t0) * 125u / 128u;
     int more = a->active || m->active || a->repush;
     if (!more) {
         a->ticking = 0;

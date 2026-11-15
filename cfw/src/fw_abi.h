@@ -237,9 +237,10 @@ typedef void (*fw_panel_wait_fn)(uint32_t ms);
 
 /* Stock ANCS client, on the temple whose state byte 0 reads 2. Its request
  * thread fetches one notification into a 0x1b4-byte record: [time:u32]
- * [incall:u32][uid:u32][u32], NUL-terminated strings (app id 0x10, display
- * name 0x30, title 0x50, subtitle 0x70: 32 bytes each; message 0x90: 256;
- * ANCS date 0x190: 32) and the event id as the u32 at 0x1b0. dequeue_ancs
+ * [incall:u32][uid:u32, set only for a removal][u32], NUL-terminated
+ * strings (app id 0x10, display name 0x30, title 0x50, subtitle 0x70: 32
+ * bytes each; message 0x90: 256; ANCS date 0x190: 32) and the event id as
+ * the u32 at 0x1b0. dequeue_ancs
  * copies the next queued record out and returns 0. The uid-queue entry the
  * thread last took, [uid:u32][event][flags][category][count], sits at
  * 0x20006c8c. */
@@ -293,6 +294,13 @@ typedef void (*fw_discover_gattp_fn)(void *conn, uint32_t uuid_type, uint32_t un
  * handles are assigned (discover_ancs_completed_cb). */
 #ifndef FW_ANCS_DISCOVERY_FLAGS
 #define FW_ANCS_DISCOVERY_FLAGS ((volatile uint32_t *)0x20006c94u)
+#endif
+/* ancs_security_changed's count of failed security changes in a row: it
+ * re-requests level 2 after each failure, reboots once the count reaches 10
+ * and clears it on any successful change (its only reference, literal at
+ * 0x1871c; increment and compare at 0x186ae). Not cleared on disconnect. */
+#ifndef FW_ANCS_SECURITY_FAILS
+#define FW_ANCS_SECURITY_FAILS ((volatile uint32_t *)0x20006c14u)
 #endif
 /* Persisted user settings in GlassesState: 0x1088 is the Even app's
  * notify-enable (14 01), 0x1089 the force-bind mode. */

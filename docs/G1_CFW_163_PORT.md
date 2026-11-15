@@ -53,17 +53,23 @@ require `--stock`. Historical 1.5.60 profiles remain available with explicit
 For developers regenerating the injected code and signature:
 
 ```sh
-.venv/bin/python tools/gen_profile.py --carve dashboard \
-  --stub display --stub link --stub input \
-  --upgrade-from profiles/g1-1.5.6-cfw.json
+.venv/bin/python tools/gen_profile.py --carve dashboard --protocol 54 \
+  --stub display --stub link --stub input --stub ancs \
+  --upgrade-from profiles/g1-1.6.3-cfw.json --upgrade-from profiles/g1-1.5.6-cfw.json
 ```
+
+`--protocol` must match `CFW_PROTOCOL` in the source. Every group the
+current build uses must be named: leaving out `--stub ancs` drops the ANCS
+gate patches and the `cfw_ancs_recv` hook without any error (G1CFW/52 and
+/53 shipped that way). The profile being replaced goes first in
+`--upgrade-from`, so the new image may be installed over it.
 
 This requires clang and the pinned development private key. Regeneration uses
 RSA-PSS randomness; the committed profile provides deterministic replay.
 
 ## ABI and control flow
 
-`cfw/targets/g1-1.6.3.json` records the input hashes, 47 instruction/literal
+`cfw/targets/g1-1.6.3.json` records the input hashes, 61 instruction/literal
 guards, carve boundaries, call sites, hooks and RAM regions. The generator
 checks these against the stock bytes before compiling. `cfw/src/fw_abi.h`
 contains the corresponding callable addresses and structure offsets. Addresses

@@ -87,6 +87,8 @@ static void host_discover_gattp(void *conn, uint32_t uuid_type, uint32_t unused)
 #define FW_CONN_SET_SECURITY host_set_security
 #define FW_DISCOVER_GATTP host_discover_gattp
 #define FW_ANCS_DISCOVERY_FLAGS (&host_ancs_discovery_flags)
+static uint32_t host_ancs_security_fails;
+#define FW_ANCS_SECURITY_FAILS (&host_ancs_security_fails)
 #define FW_EVENT_PENDING (&host_event_pending)
 #define FW_ENQUEUE_BT_DATA host_enqueue
 static int32_t host_imu[3];
@@ -311,6 +313,16 @@ static int count_level(int x0, int y0, int x1, int y1, int level)
     return n;
 }
 
+/* After a tween frame's dirty push, a whole-canvas push must leave the panel
+ * as it was: a box smaller than what was drawn leaves stale pixels there. */
+static int dirty_matches_full(void)
+{
+    static uint8_t seen[sizeof panel_cache];
+    memcpy(seen, panel_cache, sizeof seen);
+    cfw_obj_present(0);
+    return memcmp(seen, panel_cache, sizeof seen) == 0;
+}
+
 static void write_pgm(const char *dir, int index, const char *label)
 {
     char path[512];
@@ -490,7 +502,7 @@ int main(int argc, char **argv)
     const uint8_t ping[] = { 0xF0, 0x00 };
     CHECK(send_packet(ping, sizeof ping) == 0 && hook_calls == 3);
     CHECK(last_reply_len == 15 && last_reply[0] == 0xF0 && last_reply[1] == 0 && last_reply[2] == 0);
-    CHECK(memcmp(last_reply + 3, "G1CFW/53", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
+    CHECK(memcmp(last_reply + 3, "G1CFW/54", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
 
     /* Short and unknown commands are answered, never dispatched. */
     const uint8_t only_sid[] = { 0xF0 };
@@ -909,12 +921,30 @@ int main(int argc, char **argv)
     CHECK(send_packet(show_bad, sizeof show_bad) == 0 && last_reply[2] == CFW_NO_OBJECT && frame[0] == 0x33);
     const uint8_t hide[] = { 0xF0, 0x22 };
     CHECK(send_packet(hide, sizeof hide) == 0 && last_reply[2] == CFW_OK && frame[0] == 0 && frame[64000 - 1] == 0 && reflash_calls == 4);
+    /* Composition clears exactly its band's rows with word stores; like the stock
+     * buffer (malloc + 5) the host frame is not word aligned. */
+    CHECK(((uintptr_t)frame & 3u) == 1u);
+    memset(frame, 0x33, 200 * 320);
+    FW_LCD_LOCK(-1);
+    cfw_compose(0, 3, 7, 0);
+    FW_LCD_UNLOCK();
+    CHECK(frame[3 * 320 - 1] == 0x33 && frame[3 * 320] == 0 && frame[7 * 320 - 1] == 0 && frame[7 * 320] == 0x33);
+    CHECK(count_level(0, 3, 640, 7, 0) == 4 * 640 && count_level(0, 0, 640, 3, 3) == 3 * 640 && count_level(0, 7, 640, 200, 3) == 193 * 640);
     uint8_t drop[] = { 0xF0, 0x24, 1, 2, 0 };
     CHECK(send_packet(drop, sizeof drop) == 0 && last_reply[2] == CFW_OK);
     CHECK(send_packet(ostate, sizeof ostate) == 0 && last_reply[5] == 2 && last_reply[6] == 0);
     uint8_t show2[] = { 0xF0, 0x21, 0x00, 2, 1, 0, 3, 0 };
     CHECK(send_packet(show2, sizeof show2) == 0 && last_reply[2] == CFW_OK && reflash_calls == 4);   /* no push: the window only */
     CHECK(send_packet(show, sizeof show) == 0 && last_reply[2] == CFW_NO_OBJECT);
+    /* A dropped object leaves the SHOW list: STATE lists the rest, and a later
+     * PUT under its id does not bring it back into the scene. */
+    CHECK(send_packet(o2, sizeof o2) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(show, sizeof show) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(drop, sizeof drop) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(ostate, sizeof ostate) == 0 && last_reply[2] == CFW_OK && last_reply_len == 15);
+    CHECK(last_reply[5] == 2 && last_reply[6] == 2 && last_reply[7] == 1 && last_reply[11] == 3);
+    CHECK(send_packet(o2, sizeof o2) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(ostate, sizeof ostate) == 0 && last_reply[5] == 3 && last_reply[6] == 2 && last_reply[11] == 3);
     uint8_t clear_all[] = { 0xF0, 0x24, 0 };
     CHECK(send_packet(clear_all, sizeof clear_all) == 0 && last_reply[2] == CFW_OK);
     CHECK(send_packet(ostate, sizeof ostate) == 0 && last_reply[5] == 0);
@@ -981,6 +1011,50 @@ int main(int argc, char **argv)
     CHECK(utf_calls == 1 && utf_font == 1 && utf_lines == 2 && utf_box[0] == 100 && utf_box[2] == 164 && utf_box[3] == 39);
     uint8_t shapes_no_asset[24] = { 0xF0, 0x0D, 0x00, 1, 14, 0, 15, 0, 0, 0, 0, 0, 77, 0 };
     CHECK(send_packet(shapes_no_asset, sizeof shapes_no_asset) == 0 && last_reply[2] == CFW_OK);   /* unknown asset: draws nothing */
+
+    /* Image objects take x down to a pixel pair, as text boxes do, and clip at
+     * every canvas edge, so a glide may pass odd or off-canvas positions. Asset 5
+     * is 16x2 1bpp: row 0 lights pixels 0-7, row 1 pixels 8-15. */
+    uint16_t img_errors = cfw_animation()->render_errors;
+    uint8_t oimg[] = { 0xF0, 0x20, 7, 0, 1, 0, 0, 0x01, 0, 0, 50, 0, 0, 0, 0, 0, 5, 0, 0x09, 0, 0 };
+    uint8_t show_img[] = { 0xF0, 0x21, 0x03, 1, 7, 0 };
+    const int16_t img_at[][2] = { { -10, 50 }, { -5, 50 }, { 631, 50 }, { 101, -1 } };
+    for (int i = 0; i < 4; i++) {
+        oimg[8] = (uint8_t)img_at[i][0]; oimg[9] = (uint8_t)(img_at[i][0] >> 8);
+        oimg[10] = (uint8_t)img_at[i][1]; oimg[11] = (uint8_t)(img_at[i][1] >> 8);
+        CHECK(send_packet(oimg, sizeof oimg) == 0 && last_reply[2] == CFW_OK);
+        CHECK(send_packet(show_img, sizeof show_img) == 0 && last_reply[2] == CFW_OK);
+        if (i == 0) {        /* source columns 10-15 at 0-5 */
+            CHECK(count_level(0, 50, 640, 51, 9) == 0 && count_level(0, 51, 6, 52, 9) == 6 && px(6, 51) == 0);
+        } else if (i == 1) { /* x -6: source 6-15 at 0-9 */
+            CHECK(px(0, 50) == 9 && px(1, 50) == 9 && px(2, 50) == 0 && px(1, 51) == 0 && count_level(2, 51, 10, 52, 9) == 8 && px(10, 51) == 0);
+        } else if (i == 2) { /* x 630: source 0-9 at 630-639 */
+            CHECK(count_level(630, 50, 638, 51, 9) == 8 && px(629, 50) == 0 && px(638, 50) == 0 && px(637, 51) == 0 && px(638, 51) == 9 && px(639, 51) == 9);
+        } else {             /* x 100, y -1: source row 1 on canvas row 0 */
+            CHECK(px(107, 0) == 0 && count_level(108, 0, 116, 1, 9) == 8 && px(116, 0) == 0 && count_level(0, 1, 640, 2, 9) == 0);
+        }
+    }
+    uint8_t put4[] = { 0xF0, 0x08, 13, 0, 0x01, 0x00, 8, 0, 1, 0, 0x12, 0x34, 0x56, 0x78 };   /* 4bpp 8x1: levels 1-8 */
+    CHECK(send_packet(put4, sizeof put4) == 0 && last_reply[2] == CFW_OK);
+    oimg[16] = 13; oimg[8] = 0xFD; oimg[9] = 0xFF; oimg[10] = 50; oimg[11] = 0;                 /* x -3: source 4-7 at 0-3 */
+    CHECK(send_packet(oimg, sizeof oimg) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(show_img, sizeof show_img) == 0 && last_reply[2] == CFW_OK);
+    CHECK(px(0, 50) == 5 && px(1, 50) == 6 && px(3, 50) == 8 && px(4, 50) == 0);
+    oimg[8] = 0x7B; oimg[9] = 0x02;                                                              /* x 635: source 0-5 at 634-639 */
+    CHECK(send_packet(oimg, sizeof oimg) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(show_img, sizeof show_img) == 0 && last_reply[2] == CFW_OK);
+    CHECK(px(633, 50) == 0 && px(634, 50) == 1 && px(639, 50) == 6);
+    /* A glide through odd columns renders every frame. */
+    oimg[16] = 5; oimg[8] = 20; oimg[9] = 0;
+    CHECK(send_packet(oimg, sizeof oimg) == 0 && last_reply[2] == CFW_OK);
+    CHECK(send_packet(show_img, sizeof show_img) == 0 && last_reply[2] == CFW_OK);
+    uint8_t img_glide[] = { 0xF0, 0x25, 40, 1, 7, 0, 0x01, 0x00, 4, 0, 33, 0 };                /* x 20 -> 33: 23, 26, 29, 33 */
+    CHECK(send_packet(img_glide, sizeof img_glide) == 0 && last_reply[2] == CFW_OK);
+    for (int i = 0; i < 4; i++) cfw_display_tick(state, 0x10, 0, 2);
+    CHECK(!cfw_animation()->active && cfw_animation()->render_errors == img_errors);
+    CHECK(px(31, 50) == 0 && count_level(32, 50, 40, 51, 9) == 8 && px(40, 50) == 0 && count_level(0, 50, 32, 51, 9) == 0);
+    uint8_t drop7[] = { 0xF0, 0x24, 1, 7, 0 };
+    CHECK(send_packet(drop7, sizeof drop7) == 0 && last_reply[2] == CFW_OK);
 
     /* Kind 4: one shape record per object, animated by parameter tweens. */
     uint8_t o6[] = { 0xF0, 0x20, 6, 0, 1, 0, 4, 0x01, 5, 1, 15, 0, 100, 0, 100, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };  /* disc r 20 at (100,100) */
@@ -1204,7 +1278,9 @@ int main(int argc, char **argv)
     CHECK(send_packet(show10, sizeof show10) == 0 && last_reply[2] == CFW_OK && px(310, 90) == 15 && px(350, 50) == 0);
     uint8_t rot90[] = { 0xF0, 0x25, 0, 1, 10, 0, 0x00, 0x1C, 0, 0, 0xA0, 0x05, 0x5E, 0x01, 90, 0 };   /* angle 1440 (90 deg), pivot (350,90), snap */
     reflash_calls = 0;
-    CHECK(send_packet(rot90, sizeof rot90) == 0 && last_reply[2] == CFW_OK && reflash_calls == 2 && last_rect[4] == 640);
+    /* One push of the lying bar's box (298..401, rows 79..100) united with the standing one's (340..360, rows 40..140). */
+    CHECK(send_packet(rot90, sizeof rot90) == 0 && last_reply[2] == CFW_OK && reflash_calls == 1);
+    CHECK(last_rect[2] == 298 && last_rect[3] == 40 && last_rect[4] == 402 && last_rect[5] == 140);
     CHECK(px(350, 50) == 15 && px(350, 130) == 15 && px(350, 30) == 0 && px(310, 90) == 0 && px(380, 90) == 0 && px(345, 90) == 15);
     uint8_t rot_back[] = { 0xF0, 0x25, 0, 1, 10, 0, 0x00, 0x04, 2, 0, 0, 0 };                      /* angle back to 0 over 2 frames */
     CHECK(send_packet(rot_back, sizeof rot_back) == 0 && last_reply[2] == CFW_OK);
@@ -1237,6 +1313,69 @@ int main(int argc, char **argv)
     CHECK(send_packet(show9, sizeof show9) == 0 && last_reply[2] == CFW_OK);
     CHECK(send_packet(rot_path_ok, sizeof rot_path_ok) == 0 && last_reply[2] == CFW_OK);
     CHECK(px(160, 20) == 15 && px(190, 50) == 0 && px(229, 89) == 15);
+    /* Every tween frame pushes only the boxes of what moved, rotated shapes and
+     * paths included, and those boxes hold everything drawn: a thick diagonal
+     * line (its square caps reach 0.71 * width past the ends) glides and then
+     * turns, while the path moves and turns. */
+    uint8_t o13[] = { 0xF0, 0x20, 13, 0, 1, 0, 4, 0x01, 1, 1, 15, 20, 100, 0, 100, 0, 160, 0, 160, 0, 0, 0, 0, 0, 0, 0, 0, 0 };  /* line (100,100)-(160,160), width 20 */
+    CHECK(send_packet(o13, sizeof o13) == 0 && last_reply[2] == CFW_OK);
+    uint8_t show13[] = { 0xF0, 0x21, 0x03, 2, 9, 0, 13, 0 };
+    CHECK(send_packet(show13, sizeof show13) == 0 && last_reply[2] == CFW_OK && px(87, 100) == 15 && px(100, 87) == 15);
+    uint32_t full_before = cfw_animation()->full_pushes;
+    uint8_t glide13[] = { 0xF0, 0x25, 40, 1, 13, 0, 0x0F, 0x00, 4, 0, 140, 0, 100, 0, 200, 0, 160, 0 };   /* the line 40 px right */
+    CHECK(send_packet(glide13, sizeof glide13) == 0 && last_reply[2] == CFW_OK);
+    for (int i = 0; i < 4; i++) {
+        cfw_display_tick(state, 0x10, 0, 2);
+        CHECK(dirty_matches_full());
+    }
+    uint8_t glide9[] = { 0xF0, 0x25, 40, 1, 9, 0, 0x01, 0x04, 4, 0, 140, 0, 0x40, 0x0B };              /* the path 40 px right, turning on to 180 degrees */
+    CHECK(send_packet(glide9, sizeof glide9) == 0 && last_reply[2] == CFW_OK);
+    for (int i = 0; i < 4; i++) {
+        cfw_display_tick(state, 0x10, 0, 2);
+        CHECK(dirty_matches_full());
+    }
+    uint8_t turn13[] = { 0xF0, 0x25, 40, 1, 13, 0, 0x00, 0x1C, 4, 0, 0xA0, 0x05, 170, 0, 130, 0 };   /* the line a quarter turn about its centre */
+    CHECK(send_packet(turn13, sizeof turn13) == 0 && last_reply[2] == CFW_OK);
+    for (int i = 0; i < 4; i++) {
+        cfw_display_tick(state, 0x10, 0, 2);
+        CHECK(dirty_matches_full());
+    }
+    CHECK(!cfw_animation()->active && cfw_animation()->full_pushes == full_before);
+    CHECK(px(170, 130) == 15 && px(150, 150) == 15 && px(190, 110) == 15 && px(140, 100) == 0 && px(200, 160) == 0);
+    /* The same holds for every primitive snapped through odd angles: strokes,
+     * curves, arcs, sectors, rounded and filled outlines. */
+    static const int16_t sweep[][12] = {
+        /* type width p0..p7 */
+        { 1, 13, 300, 60, 380, 120, 0, 0, 0, 0 },
+        { 6, 9, 300, 60, 390, 80, 330, 140, 0, 0 },
+        { 9, 0, 300, 60, 380, 50, 390, 130, 310, 140 },
+        { 11, 7, 300, 100, 320, 20, 380, 180, 400, 100 },
+        { 12, 11, 340, 100, 40, 20, 250, 0, 0, 0 },
+        { 13, 0, 340, 100, 45, -30, 200, 0, 0, 0 },
+        { 2, 5, 300, 60, 90, 60, 12, 0, 0, 0 },
+        { 4, 4, 340, 100, 38, 0, 0, 0, 0, 0 },
+        /* short segments: rs_line_q4's normal from an integer square root reaches a whole width out */
+        { 10, 30, 340, 100, 341, 101, 342, 100, 0, 0 },
+        { 12, 25, 340, 100, 1, 0, 300, 0, 0, 0 },
+    };
+    uint8_t o14[28] = { 0xF0, 0x20, 14, 0, 1, 0, 4, 0x01 };
+    uint8_t show14[] = { 0xF0, 0x21, 0x03, 1, 14, 0 };
+    for (unsigned k = 0; k < sizeof sweep / sizeof sweep[0]; k++) {
+        o14[8] = (uint8_t)sweep[k][0]; o14[9] = 1; o14[10] = 15; o14[11] = (uint8_t)sweep[k][1];
+        for (int i = 0; i < 8; i++) { o14[12 + 2 * i] = (uint8_t)sweep[k][2 + i]; o14[13 + 2 * i] = (uint8_t)(sweep[k][2 + i] >> 8); }
+        CHECK(send_packet(o14, sizeof o14) == 0 && last_reply[2] == CFW_OK);
+        CHECK(send_packet(show14, sizeof show14) == 0 && last_reply[2] == CFW_OK);
+        static const int deg[] = { 7, 33, 61, 95, 140, 200, 300, 0 };
+        for (int a = 0; a < 8; a++) {
+            uint8_t snap14[] = { 0xF0, 0x25, 0, 1, 14, 0, 0x00, 0x1C, 0, 0, (uint8_t)(deg[a] * 16), (uint8_t)((deg[a] * 16) >> 8), 0x59, 0x01, 95, 0 };
+            CHECK(send_packet(snap14, sizeof snap14) == 0 && last_reply[2] == CFW_OK);
+            if (!dirty_matches_full()) {
+                printf("type %d snapped to %d degrees left pixels outside its boxes\n", sweep[k][0], deg[a]);
+                failures++;
+            }
+        }
+    }
+    CHECK(cfw_animation()->full_pushes == full_before);
     CHECK(send_packet(clear_all, sizeof clear_all) == 0 && last_reply[2] == CFW_OK);
     guards_intact();
     CHECK(host_ram3[0] == 0 && host_ram3[31] == 0 && host_ram3[sizeof host_ram3 - 1] == 0);
@@ -1662,6 +1801,34 @@ int main(int argc, char **argv)
     CHECK(send_packet(glide_low, sizeof glide_low) == 0 && last_reply[2] == CFW_OK && post_calls == 1);
     for (int i = 0; i < 4; i++) cfw_display_tick(state, 0x10, 0, 2);
     CHECK(!cfw_animation()->active && !cfw_animation()->ticking);
+    /* So is one lost 20 hours ago, more than half the clock's 36-hour period. */
+    cfw_animation()->ticking = 1;
+    cfw_animation()->ticked = cfw_clock() - 20u * 3600u * 1024u;
+    post_calls = 0;
+    CHECK(send_packet(glide_low, sizeof glide_low) == 0 && last_reply[2] == CFW_OK && post_calls == 1);
+    for (int i = 0; i < 4; i++) cfw_display_tick(state, 0x10, 0, 2);
+    CHECK(!cfw_animation()->active && !cfw_animation()->ticking);
+    /* The clock is the 32-bit tick counter >> 5, so it wraps with it: a glide
+     * started before the wrap keeps its frame times and ends on time after it,
+     * and a tween that lands just after the wrap joins the running tick instead
+     * of posting a second one. */
+    host_ticks = 0u - 1400u;                           /* 43 ms before the wrap */
+    post_calls = 0;
+    CHECK(send_packet(glide_slow, sizeof glide_slow) == 0 && last_reply[2] == CFW_OK && post_calls == 1);
+    cfw_display_tick(state, 0x10, 0, 2);               /* sleeps 33 ms: 10 ms before the wrap */
+    reflash_cost_ticks = 10u * 32768u / 1000u;         /* this frame's push carries the clock past it */
+    cfw_display_tick(state, 0x10, 0, 2);
+    reflash_cost_ticks = 0;
+    CHECK(host_ticks < 0x10000u && post_calls == 3 && (last_sleep == 23 || last_sleep == 24));
+    CHECK(cfw_animation()->frame_ms >= 9 && cfw_animation()->frame_ms <= 10);
+    uint8_t level50[] = { 0xF0, 0x25, 0, 1, 50, 0, 0x00, 0x01, 1, 0, 5, 0 };   /* the mark's level 5 -> 5 in one frame */
+    CHECK(send_packet(level50, sizeof level50) == 0 && last_reply[2] == CFW_OK && post_calls == 3);
+    int wrap_ticks = 0;
+    while (cfw_animation()->active && wrap_ticks < 40) {
+        cfw_display_tick(state, 0x10, 0, 2);
+        wrap_ticks++;
+    }
+    CHECK(wrap_ticks >= 7 && wrap_ticks <= 9 && panel_cache[350 * 320 + 10] == 0x99 && !cfw_animation()->ticking);
     /* An object that cannot draw still leaves the rest of the canvas lit after a wake. */
     uint8_t lost[] = { 0xF0, 0x20, 53, 0, 1, 0, 0, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0, 0x0F, 0, 0 };   /* image of asset 99 */
     CHECK(send_packet(lost, sizeof lost) == 0 && last_reply[2] == CFW_OK);
@@ -1732,9 +1899,10 @@ int main(int argc, char **argv)
     CHECK(memcmp(last_reply + 3, "AN\x01\x04", 4) == 0 && last_reply[7] == 0 && last_reply[8] == 2);
     /* No phone connection on the client's temple: nothing to kick, and STATUS says so. */
     CHECK(last_reply[14] == 0xff && last_reply[18] == 0 && last_reply[21] == 0);
+    /* Like the stock producer, an added or modified notification's record keeps
+     * its uid field zero; the uid-queue entry the thread works on holds it. */
     memset(host_ancs_record, 0, sizeof host_ancs_record);
     const uint32_t uid = 0x11223344u;
-    memcpy(host_ancs_record + FW_ANCS_REC_UID, &uid, 4);
     strcpy((char *)host_ancs_record + FW_ANCS_REC_APP_ID, "com.apple.MobileSMS");
     strcpy((char *)host_ancs_record + FW_ANCS_REC_APP_NAME, "Messages");
     strcpy((char *)host_ancs_record + FW_ANCS_REC_TITLE, "Alice");
@@ -1755,6 +1923,11 @@ int main(int argc, char **argv)
     state[FW_STATE_NOTIFY_ENABLED] = 1; state[FW_STATE_FORCE_BIND] = 0;
     CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_security_requests == 1 && host_discoveries == 0);
     CHECK(last_reply[14] == 1 && last_reply[15] == 0 && last_reply[16] == 1 && last_reply[17] == 0 && last_reply[18] == 1 && last_reply[21] == 1);
+    /* While ancs_security_changed is retrying a failed change (its count is not
+     * zero) the CFW asks for nothing: ten failures in a row reboot the temple. */
+    host_ancs_security_fails = 3;
+    CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_security_requests == 1 && host_discoveries == 0);
+    host_ancs_security_fails = 0;
     host_ancs_security = 2;
     CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && host_security_requests == 1 && host_discoveries == 1 && last_reply[21] == 3);
     host_ancs_discovery_flags = 1;
@@ -1785,13 +1958,18 @@ int main(int argc, char **argv)
     CHECK(host_queue[9][11] == 6 && host_queue[10][11] == 7 && host_queue_len[10] == 16);
     CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[11] == 11 && last_reply[9] == 1);
     CHECK(last_reply[19] == 2 && last_reply[20] == 0);   /* two records taken from the stock queue so far */
-    /* A removal carries only its SOURCE; an entry for another uid lends no flags. */
+    /* A removal carries only its SOURCE, with the uid the stock wrote into the
+     * record; an entry for another uid lends no flags. */
     host_ancs_record[FW_ANCS_REC_EVENT] = 2;
+    memcpy(host_ancs_record + FW_ANCS_REC_UID, &uid, 4);
     host_ancs_uid_entry[0] ^= 1;
     host_queued = 0; host_ancs_queued = 1;
     CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 1 && host_queue[0][7] == 2 && host_queue[0][8] == 0 && host_queue[0][9] == 0);
+    CHECK(memcmp(host_queue[0] + 11, &uid, 4) == 0);
     /* The lease runs out after 90 s unless renewed; RENEW does not revive a dead one. */
     host_ancs_record[FW_ANCS_REC_EVENT] = 0;
+    memset(host_ancs_record + FW_ANCS_REC_UID, 0, 4);
+    host_ancs_uid_entry[0] ^= 1;
     host_ticks += 89u * 32768u;
     uint8_t ancs_renew[] = { 0xF0, 0x35, 0x05 };
     CHECK(send_packet(ancs_renew, sizeof ancs_renew) == 0 && last_reply[7] == 1);
@@ -1801,10 +1979,16 @@ int main(int argc, char **argv)
     host_ticks += 2u * 32768u;
     host_queued = 0; host_ancs_queued = 1;
     CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 0);
+    /* An expired lease stays expired: half a tick-counter period (18 h) later
+     * the tick difference would read as a live lease again. */
+    host_ticks += 0x80000000u;
+    host_queued = 0; host_ancs_queued = 1;
+    CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 0);
+    CHECK(send_packet(ancs_q, sizeof ancs_q) == 0 && last_reply[7] == 0);
     CHECK(send_packet(ancs_renew, sizeof ancs_renew) == 0 && last_reply[7] == 0);
     CHECK(send_packet(ancs_on, sizeof ancs_on) == 0 && last_reply[7] == 1);
     uint8_t ancs_off[] = { 0xF0, 0x35, 0x02 };
-    CHECK(send_packet(ancs_off, sizeof ancs_off) == 0 && last_reply[7] == 0 && last_reply[9] == 2);
+    CHECK(send_packet(ancs_off, sizeof ancs_off) == 0 && last_reply[7] == 0 && last_reply[9] == 3);
     uint8_t ancs_act[] = { 0xF0, 0x35, 0x04 };
     CHECK(send_packet(ancs_act, sizeof ancs_act) == 0 && last_reply[2] == CFW_BAD_RECORD);
     CHECK(send_packet(ancs_q, 2) == 0 && last_reply[2] == CFW_BAD_LENGTH);

@@ -1264,3 +1264,62 @@ set and the bonded MAC matching) runs `discover_gattp`, or the next RENEW
 starts it. Expect `security=2 kicks=1|3` and a rising `notifications` count
 in STATUS. Offline only at the time of writing.
 
+### G1CFW/54: the ANCS hooks back, and an audit's fixes (2026-11-14)
+
+The /52 and /53 profiles were generated without `--stub ancs`, so neither
+carried the two gate patches (0x190d8, 0x18e12) nor the `b.w cfw_ancs_recv`
+at 0x1981c that /51 had (29 patches then, 26 since). On those builds the
+stock consumer ran, the stock gate dropped every event while screen 0x10 was
+up, and the STATUS `notifications` count, kept in `cfw_ancs_recv`, could not
+move whatever the security level. /54 is generated with `--stub ancs` again;
+the regeneration command in the port doc now names every group.
+
+A read-only audit of `g1cfw.c` found the rest; each has a host test:
+
+- **ANCS uid.** `bt_ancs_notification_source_handler` (0x19048) zeroes the
+  record and writes the uid at +8 only for a removal, and the data-source
+  handler (0x18d40) queues added and modified records without one;
+  `recv_ble_data` takes it from the uid-queue entry at 0x20006c8c. /51 read
+  +8, so every added or modified notification went out with uid 0 and no
+  flags, category or count. /54 takes the uid from the entry for events 0 and
+  1 and keeps +8 for removals.
+- **ANCS lease.** An expired lease is cleared when the relay or ANCS_CONTROL
+  finds it expired (a compare-and-swap, so a lease the BLE worker re-arms at
+  that moment survives); before, the signed tick difference read it as live
+  again 2^31 ticks (18.2 h) later. It can still revive if nothing checks it
+  in the 18 h after it expires (no notification fetched, no ANCS_CONTROL).
+- **Security kick.** `ancs_security_changed` counts failed security changes
+  in a row at 0x20006c14 (its only reference; literal 0x1871c, increment
+  and `cmp #9` at 0x186ae, both now guarded in the target), re-requests level
+  2 after each failure itself and reboots at ten; it clears the count on any
+  successful change, not on disconnect. The kick no longer requests security
+  while that count is non-zero.
+- **OBJ_CONTROL drop** left the id in the SHOW list, and OBJ_STATE then
+  dereferenced the missing object. A dropped object now leaves the list, so
+  a later PUT under its id does not bring it back into the scene either.
+- **Clock wrap.** The tween clock is `FW_TICKS32 >> 5`, 27 bits wide, but
+  differences were taken in 32 bits: at the 36-hour wrap a running glide
+  clamped to its start and never ended, frame times went wild and `cfw_kick`
+  posted a second tick chain. Differences are now taken modulo 2^27.
+- **Image objects** (kind 0 and image records) take x down to an even
+  column as text does and clip at every canvas edge, 1bpp left edges by a bit
+  offset; before, odd x failed BLIT's rectangle check (the image vanished on
+  about half the frames of an x glide) and x < 0, y < 0 or x + w > 640 drew
+  nothing. ASSET_DRAW keeps its strict rectangle.
+- **Dirty boxes.** A stroke's margin is `width + 2`: the square caps of
+  `rs_line_q4` reach 0.71 x width past the end of a long diagonal and up to a
+  whole width past the short segments of curves and arcs, where its integer
+  square root rounds the length down; `width / 2 + 2` left pixels behind.
+  Paths and rotated kind-4 shapes, which forced a whole-canvas compose and a
+  121,600-byte push on every frame, are now measured on the edges they are
+  drawn from. The host test checks every frame of a thick line, a moving and
+  turning path and ten primitives snapped through odd angles against a
+  whole-canvas push.
+- **Speed.** The band clear uses word stores after aligning (the stock
+  buffer is `malloc(64008) + 5`, `register_jdb_panel_context` at 0x4aab8, so
+  it is never word aligned) and the STREAM CRC-16 a 16-entry nibble table.
+
+To fit, `cfw_context` and `cfw_objects` are no longer inlined (112 bytes).
+Blob 24,788 bytes with the relocated helper, 68 left. Offline only at the
+time of writing.
+

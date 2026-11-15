@@ -1,6 +1,6 @@
 # G1CFW private protocol (command byte `0xF0`)
 
-G1CFW/50 is injected by `cfw/src/g1cfw.c` on Even G1 application **1.6.3**;
+G1CFW/54 is injected by `cfw/src/g1cfw.c` on Even G1 application **1.6.3**;
 revisions through 45 used 1.5.60. See the [port evidence](G1_CFW_163_PORT.md)
 and, for the 640x380 canvas and timed tweens, [G1CFW/49](G1_CFW_49_CANVAS_AND_TIMING.md).
 The stock BLE receive hook call at `0x23d4e` calls `spec_ble_command_hook(data, len)` and only
@@ -249,6 +249,9 @@ engine or shape records, so showing a scene again costs one SHOW.
   and clipped to the frame (G1CFW/43): a glide interpolates the box on the
   glasses, so between frames it can sit on an odd column or partly off the
   canvas; what is clipped away draws nothing, as the G2 clips its text.
+  Image objects (kind 0, and image records in a shape list) likewise take x
+  down to an even column and clip at every canvas edge from G1CFW/54; before,
+  an odd x or one partly off the canvas drew nothing for that frame.
 - `21` OBJ_SHOW `[flags][count][ids:u16...]`: the listed objects, in order,
   are the scene. Bit 1 composes and pushes the whole canvas; without it only
   the window is composed (for direct draws and a FLUSH to follow). From
@@ -269,9 +272,11 @@ engine or shape records, so showing a scene again costs one SHOW.
   journal keeps, so read the inventory pages instead. The revision here is
   the journal's own, bumped on every definition change.
 - `24` OBJ_CONTROL `[op][id:u16]`: op 0 drops all objects (and animations),
-  op 1 drops one object (and its animation); op 2 freezes and op 3 finishes
-  (jumps to the targets and pushes the frame) the tweens of object `id`, or
-  of every object when `id` is `FFFF` or absent (G1CFW/39).
+  op 1 drops one object (and its animation) and, from G1CFW/54, takes it out
+  of the SHOW list (earlier builds kept the id there, so a later PUT under it
+  reappeared in the scene and OBJ_STATE read a missing object); op 2 freezes
+  and op 3 finishes (jumps to the targets and pushes the frame) the tweens of
+  object `id`, or of every object when `id` is `FFFF` or absent (G1CFW/39).
 - `25` OBJ_ANIM `[period_ms][count][entries...]` (tween form from G1CFW/38):
   each entry is `[id:u16][mask:u16][frames][easing]` followed by one `i16`
   target value per set mask bit, low bit first. Mask bits 0-7 name the
@@ -289,7 +294,7 @@ engine or shape records, so showing a scene again costs one SHOW.
   5 only; the pivot moves at once when its entry applies, only the angle
   glides). A rotated primitive is drawn as a contour (rounded rectangles,
   rings and arcs become polylines of 8-degree segments, strokes stay
-  `width` wide) and pushes the whole frame. Each entry interpolates its object from its current
+  `width` wide); through G1CFW/53 it pushed the whole frame. Each entry interpolates its object from its current
   values (mid-flight if it was already animating) to the targets over
   `frames` frames, `period_ms` apart (10-250; 0 keeps the current period);
   `frames` 0 applies the targets at once. From G1CFW/49 progress is elapsed
@@ -308,8 +313,10 @@ engine or shape records, so showing a scene again costs one SHOW.
   re-composes the SHOW list, pushes the frame, sleeps the period and
   re-posts the stock refresh message until every tween has settled. Each
   frame pushes only the union of the animated objects' old and new boxes
-  (kind-4 shapes have a type-aware box); a kind-3 shapes object has no box
-  and forces a whole-frame push. (G1CFW/17 to /37 took fixed 8-byte glide
+  (kind-4 shapes have a type-aware box with a stroke margin of `width + 2`;
+  from G1CFW/54 paths and rotated shapes are boxed by the edges they are
+  drawn from instead of forcing a whole-canvas push); a kind-3 shapes object
+  has no box and forces a whole-frame push. (G1CFW/17 to /37 took fixed 8-byte glide
   entries `id, tx, ty, frames, easing`.)
 - `26` ANIM_STATE: reply `[active][period_ms][ticks:u32][full_pushes:u32][frame_ms:u16]`
   (`frame_ms`, G1CFW/49: compose and push time of the last tween frame).
@@ -447,7 +454,12 @@ level 2 gets `bt_conn_set_security(conn, 2)` (iOS pairs and asks the wearer
 to share notifications if it has not), one at level 2 with no discovery
 running or finished (`ancs_discovery_flags` bits 0 and 1) gets
 `discover_gattp`. The host still sends `14 01` once per connection so the
-stock's own path works on later connections.
+stock's own path works on later connections. From G1CFW/54 no security
+request is made while `ancs_security_changed`'s count of failed changes in a
+row (`0x20006c14`) is non-zero: the stock re-requests after each failure on
+its own and reboots the temple after ten. G1CFW/52 and /53 were built without
+the `ancs` patch groups, so on them the gates and `cfw_ancs_recv` were not
+installed and nothing was relayed.
 
 - `35` ANCS_CONTROL `[op]`: 1 ENABLE arms or extends a 90 s lease, 5 RENEW
   extends a live one, 2 DISABLE drops it, 3 QUERY only answers; 4 ACTION
@@ -468,11 +480,17 @@ stock's own path works on later connections.
   `[uid:u32][attr][total:u16][offset:u16][chunk]` for attributes 0-7 in
   order (4, 6 and 7, which the stock never requests, go out with total 0;
   the message is chunked at 134 bytes). A removed notification (event 2)
-  sends its SOURCE only. The flags and category come from the stock
-  uid-queue entry at `0x20006c8c` when it names the same uid.
+  sends its SOURCE only. The uid of an added or modified notification, and
+  every notification's flags, category and count, come from the stock
+  uid-queue entry at `0x20006c8c` (the stock leaves the record's uid field
+  zero except for a removal; G1CFW/51 to /53 sent uid 0 for those); a removal's
+  uid comes from its record and borrows the entry's flags only when the entry
+  names the same uid.
 
 Without a lease a fetched record is dropped and counted, so the stock popup
-never draws over the scene; the phone renews every 45 s. The stock gate's
+never draws over the scene; the phone renews every 45 s. From G1CFW/54 a
+lease found expired is cleared, so it does not read as live again 2^31
+ticks (18.2 h) later. The stock gate's
 other conditions stay: nothing is fetched in the first 10 s of a
 connection or in work modes 1 and 8, a second event for the uid the client
 last fetched is not re-fetched, and ANCS is only discovered on the bonded

@@ -463,6 +463,16 @@
       "name": "FW_DISCOVER_GATTP",
       "address": 99308,
       "expected": "002307b58df80430"
+    },
+    {
+      "name": "ancs_security_changed literal: FW_ANCS_SECURITY_FAILS 0x20006c14",
+      "address": 100124,
+      "expected": "146c0020"
+    },
+    {
+      "name": "ancs_security_changed failure count: ldr.w r3,[r8]; adds #1; cmp #9; str.w",
+      "address": 100014,
+      "expected": "d8f800300133092bc8f80030"
     }
   ],
   "ram_regions": [

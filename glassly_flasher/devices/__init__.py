@@ -74,7 +74,8 @@ DEVICES = {d.key: d for d in [
                     'Bluetooth on the phone they use. Then pair them with this computer: on a Mac in System Settings '
                     '> Bluetooth, on Windows in Settings > Bluetooth & devices > Add device > Bluetooth, on Linux in '
                     'your desktop\'s Bluetooth settings or with bluetoothctl. Pair only one pair of MemoMind glasses, '
-                    'and keep them close to the computer until the flasher finishes.',
+                    'and keep them close to the computer until the flasher finishes. If connecting keeps failing, '
+                    'the log below says why.',
         after_install='Remove the glasses from this computer\'s Bluetooth settings, pair them in your phone\'s '
                       'Bluetooth settings, then add MemoMind One in the Glassly App.',
         after_restore='Remove the glasses from this computer\'s Bluetooth settings and pair them with the MemoMind '

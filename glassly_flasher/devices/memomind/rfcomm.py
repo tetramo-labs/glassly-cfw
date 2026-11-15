@@ -50,6 +50,9 @@ class LinkError(FlashError):
 class PairedDevice:
     address: str
     name: str
+    # None when the backend does not say; False when the record carries no Classic class of device, which on macOS
+    # is a Bluetooth LE pairing: its address may not reach the glasses' RFCOMM services.
+    classic: bool | None = None
 
 
 def normalize(address):
@@ -63,9 +66,16 @@ def describe(paired):
     return ', '.join(f'{d.name or "unnamed"} ({d.address})' for d in paired) or 'none'
 
 
+def is_glasses(device):
+    return device.name.strip().lower().startswith(NAME_PREFIX)
+
+
 def select_glasses(paired):
-    """The one paired device named MemoMind..., None when there is none."""
-    glasses = [d for d in paired if d.name.strip().lower().startswith(NAME_PREFIX)]
+    """The one paired device named MemoMind..., None when there is none. A Classic record wins over an LE one."""
+    glasses = [d for d in paired if is_glasses(d)]
+    classic = [d for d in glasses if d.classic is not False]
+    if len(glasses) > 1 and len(classic) == 1:
+        return classic[0]
     if len(glasses) > 1:
         raise FlashError(f'More than one pair of MemoMind glasses is paired with this computer: {describe(glasses)}. '
                          'Remove all but the pair to flash in Bluetooth settings. Nothing was written.')
@@ -78,6 +88,10 @@ class Radio:
 
     def connect(self, address, service):
         raise NotImplementedError
+
+    def discover(self, seconds):
+        """Bluetooth Classic inquiry: the devices answering, named when they say so. Backends without one find nothing."""
+        return []
 
     def sleep(self, seconds):
         time.sleep(seconds)
@@ -121,11 +135,12 @@ class TracedChannel:
 # macOS
 
 def parse_mac_paired(text):
+    """Lines of address, name and, when the helper gives it, the class of device in hex (0 for an LE pairing)."""
     devices = []
     for line in text.splitlines():
-        address, _, name = line.partition('\t')
+        address, name, cod = (line.split('\t') + ['', ''])[:3]
         if address:
-            devices.append(PairedDevice(normalize(address), name.strip()))
+            devices.append(PairedDevice(normalize(address), name.strip(), int(cod, 16) != 0 if cod.strip() else None))
     return devices
 
 
@@ -171,6 +186,7 @@ class MacRadio(Radio):
         lib.mm_source.restype = ctypes.c_char_p
         lib.mm_source.argtypes = [ctypes.c_int]
         lib.mm_paired.argtypes = [ctypes.c_char_p, ctypes.c_int]
+        lib.mm_inquiry.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_int]
         lib.mm_open.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_int, ctypes.c_int]
         lib.mm_channel.argtypes = [ctypes.c_int]
         lib.mm_write.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_int]
@@ -186,6 +202,13 @@ class MacRadio(Radio):
         count = self.lib.mm_paired(buffer, len(buffer))
         if count < 0:
             raise LinkError(f'Cannot list paired Bluetooth devices: {self.error()}')
+        return parse_mac_paired(buffer.raw[:count].decode('utf-8', 'replace'))
+
+    def discover(self, seconds):
+        buffer = ctypes.create_string_buffer(1 << 16)
+        count = self.lib.mm_inquiry(buffer, len(buffer), int(seconds))
+        if count < 0:
+            raise LinkError(f'Bluetooth search failed: {self.error()}')
         return parse_mac_paired(buffer.raw[:count].decode('utf-8', 'replace'))
 
     def connect(self, address, service):

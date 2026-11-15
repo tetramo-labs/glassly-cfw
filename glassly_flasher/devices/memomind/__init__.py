@@ -26,6 +26,7 @@ WAIT_SECONDS = 600
 FLASH_CONNECT_SECONDS = 120
 BOOT_SECONDS = 300
 SESSION_SPACING = 8
+INQUIRY_SECONDS = 10
 IDENTITY_KEYS = ('model', 'hver', 'fver', 'ver', 'mac', 'sn')
 # Glassly CFW revisions a later flash through this updater completed from: each answered the capabilities query in
 # a research capture (captures/*-boot-*, *-after-*, v22-verify-102850) before the next completed flash in
@@ -75,6 +76,9 @@ class Session:
             glasses = rfcomm.select_glasses(paired)
             if glasses is not None:
                 self.reporter.log(f'Paired glasses: {glasses.name} ({glasses.address}).')
+                if glasses.classic is False:
+                    self.reporter.log('That pairing is the glasses\' Bluetooth LE side, which may not carry their '
+                                      'Classic address; if it does not answer, the flasher searches for them itself.')
                 return glasses
             if self.radio.monotonic() > deadline:
                 raise FlashError('No MemoMind glasses are paired with this computer (paired devices: '
@@ -96,9 +100,29 @@ class Session:
         finally:
             channel.close()
 
+    def search(self, glasses):
+        """A Classic inquiry for the glasses, for when the paired record's address does not answer."""
+        self.reporter.log('Searching for the glasses over Bluetooth Classic.')
+        try:
+            found = [d for d in self.radio.discover(INQUIRY_SECONDS) if rfcomm.is_glasses(d)]
+        except rfcomm.LinkError as e:
+            self.reporter.log(f'The search failed: {e}')
+            return glasses
+        self.record(event='inquiry', devices=[[d.address, d.name] for d in found])
+        if not found:
+            self.reporter.log('No MemoMind glasses answered the search.')
+            return glasses
+        if any(d.address == glasses.address for d in found) or len(found) > 1:
+            self.reporter.log(f'The search found {rfcomm.describe(found)}.')
+            return glasses
+        self.reporter.log(f'The search found {found[0].name} ({found[0].address}); connecting to that address '
+                          f'instead of the paired {glasses.address}.')
+        return found[0]
+
     def inspect(self, glasses):
         self.reporter.status('Connecting to the glasses (switch them on and keep them close)')
         deadline = self.radio.monotonic() + WAIT_SECONDS
+        failures = 0
         while True:
             self.reporter.check_cancel()
             try:
@@ -108,7 +132,11 @@ class Session:
                 if self.radio.monotonic() > deadline:
                     raise FlashError(f'Could not read the glasses: {e}. Check that they are switched on, charged and '
                                      'close to this computer. Nothing was written.') from e
-                self.reporter.log(f'Could not read the glasses yet ({e}); trying again.')
+                failures += 1
+                self.reporter.status(f'Connecting to the glasses again: {e}')
+                self.reporter.log('Are the glasses switched on and close, and is Bluetooth off on their phone?')
+                if failures % 4 == 1:
+                    glasses = self.search(glasses)
             self.radio.sleep(SESSION_SPACING)
         self.reporter.log(f'Glasses report {describe_identity(device)}.')
         self.save('device-info.json', device)
@@ -123,11 +151,11 @@ class Session:
                     capabilities = None
                 capabilities = capabilities or {'tlvs': [[k, v.hex()] for k, v in tlvs]}
             self.save('capabilities.json', capabilities)
-        return device, tlvs
+        return device, tlvs, glasses
 
     def backup(self):
         glasses = self.find_glasses()
-        device, tlvs = self.inspect(glasses)
+        device, tlvs, glasses = self.inspect(glasses)
         try:
             installed = describe_installed(device, installed_revision(tlvs)) if tlvs is not None else 'not queried'
         except FlashError:
@@ -215,7 +243,7 @@ class Session:
     def update(self, mode, image, target, image_sha256):
         """Takes the glasses to `target`: CFW_REVISION for install, None (official firmware) for restore."""
         glasses = self.find_glasses()
-        device, tlvs = self.inspect(glasses)
+        device, tlvs, glasses = self.inspect(glasses)
         check_identity(device, glasses.address)
         revision = installed_revision(tlvs)
         installed, goal = describe_installed(device, revision), describe_installed(device, target)

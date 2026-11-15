@@ -211,13 +211,19 @@ class FakeRadio(rfcomm.Radio):
         self.fail_drain = None
         self.drains = 0
         self.refuse_connects = 0
+        self.discoverable = []
 
     def paired(self):
         return list(self.paired_devices)
 
+    def discover(self, seconds):
+        self.log.append(('inquiry', seconds))
+        return list(self.discoverable)
+
     def connect(self, address, service):
-        assert address == ADDRESS
         self.log.append(('connect', service))
+        if address != ADDRESS:
+            raise LinkError('SDP query timed out; are the glasses switched on and close?')
         if self.refuse_connects:
             self.refuse_connects -= 1
             raise LinkError('RFCOMM open timed out')
@@ -490,6 +496,48 @@ class InstallTests(unittest.TestCase):
         radio = FakeRadio(self.glasses(boot_unreachable=10 ** 6))
         error, _ = attempt('install', radio)
         self.assertRegex(str(error), 'acknowledged the restart, but they did not answer within 5 minutes')
+
+    def test_connection_retries_name_the_reason(self):
+        radio = FakeRadio(self.glasses())
+        radio.refuse_connects = 1
+        recorder = Recorder()
+        run_in('backup', radio, recorder)
+        self.assertIn('Connecting to the glasses again: RFCOMM open timed out', recorder.lines)
+        self.assertIn(('inquiry', 10), radio.log)
+
+    def test_an_le_pairing_falls_back_to_a_classic_search(self):
+        radio = FakeRadio(self.glasses(), paired=[PairedDevice('C0:FF:EE:00:00:01', 'MemoMind One', classic=False)])
+        radio.discoverable = [PairedDevice(ADDRESS, 'MemoMind One', classic=True),
+                              PairedDevice('11:22:33:44:55:66', 'Keyboard', classic=True)]
+        recorder = Recorder()
+        result, _ = run_in('backup', radio, recorder)
+        self.assertEqual(result['address'], ADDRESS)
+        self.assertEqual([e for e in radio.log if e[0] in ('connect', 'inquiry')][:3],
+                         [('connect', 'normal'), ('inquiry', 10), ('connect', 'normal')])
+        self.assertTrue(any(line.startswith("That pairing is the glasses' Bluetooth LE side") for line in recorder.lines))
+        self.assertIn(f'The search found MemoMind One ({ADDRESS}); connecting to that address instead of the paired '
+                      'C0:FF:EE:00:00:01.', recorder.lines)
+
+    def test_a_search_without_the_glasses_keeps_the_paired_address(self):
+        radio = FakeRadio(self.glasses())
+        radio.refuse_connects = 1
+        radio.discoverable = [PairedDevice('11:22:33:44:55:66', 'Keyboard', classic=True)]
+        recorder = Recorder()
+        result, _ = run_in('backup', radio, recorder)
+        self.assertEqual(result['address'], ADDRESS)
+        self.assertIn('No MemoMind glasses answered the search.', recorder.lines)
+        self.assertEqual(radio.log.count(('inquiry', 10)), 1)
+
+    def test_mac_device_lines_carry_the_class_of_device(self):
+        parsed = rfcomm.parse_mac_paired('AA:BB:CC:DD:EE:FF\tMemoMind One\t000000\n'
+                                         '11:22:33:44:55:66\tKeyboard\t002540\n'
+                                         '22:33:44:55:66:77\tOld helper\n')
+        self.assertEqual([d.classic for d in parsed], [False, True, None])
+        both = [PairedDevice('AA:BB:CC:DD:EE:FF', 'MemoMind One', classic=False),
+                PairedDevice(ADDRESS, 'MemoMind One', classic=True)]
+        self.assertEqual(rfcomm.select_glasses(both).address, ADDRESS)
+        with self.assertRaises(FlashError):
+            rfcomm.select_glasses([PairedDevice('AA:BB:CC:DD:EE:FF', 'MemoMind One'), PairedDevice(ADDRESS, 'MemoMind')])
 
     def test_paired_glasses_are_required_once(self):
         radio = FakeRadio(self.glasses(), paired=[PairedDevice('11:22:33:44:55:66', 'Keyboard')])

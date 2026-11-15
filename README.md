@@ -144,6 +144,11 @@ they use, then pair them with this computer. They appear as **MemoMind One**.
 Pair only one pair of MemoMind glasses with the computer. The flasher refuses if it finds none or more than one, and
 waits up to ten minutes for them to be paired.
 
+If "Connecting to the glasses" keeps failing, the log under the progress bar says why for each attempt (the same
+lines are in `operation.log` in the backup folder). The usual causes are glasses that went to sleep or are still held
+by the phone. macOS can also pair the glasses' Bluetooth LE side, whose address need not reach the Classic updater;
+after the first failed attempt the flasher searches for the glasses over Bluetooth Classic itself.
+
 ### What Install does
 
 1. Reads the glasses' identity and installed firmware over one connection and saves them to the session folder

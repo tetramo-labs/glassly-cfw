@@ -112,7 +112,25 @@ static MMSession *lookup(int handle) {
   return sessions[handle - 1];
 }
 
-// Lines of "address<TAB>name\n" for the paired-device cache. Reads local records only; no scan, no connection.
+static int writeDevices(NSArray *devices, char *out, int capacity) {
+  NSMutableString *text = [NSMutableString string];
+  NSCharacterSet *breaks = [NSCharacterSet characterSetWithCharactersInString:@"\t\r\n"];
+  for (IOBluetoothDevice *device in devices) {
+    NSString *address = device.addressString;
+    if (!address) continue;
+    NSArray *parts = [(device.name ?: @"") componentsSeparatedByCharactersInSet:breaks];
+    NSString *name = [parts componentsJoinedByString:@" "];
+    [text appendFormat:@"%@\t%@\t%06x\n", address, name, (unsigned)device.classOfDevice];
+  }
+  NSData *bytes = [text dataUsingEncoding:NSUTF8StringEncoding];
+  if ((long)bytes.length >= capacity) return fail(@"Too many Bluetooth devices to list");
+  memcpy(out, bytes.bytes, bytes.length);
+  out[bytes.length] = 0;
+  return (int)bytes.length;
+}
+
+// Lines of "address<TAB>name<TAB>class-of-device\n" for the paired-device cache. Reads local records only; no scan,
+// no connection. A Bluetooth LE pairing has class 0.
 int mm_paired(char *out, int capacity) {
   @autoreleasepool {
     errorText[0] = 0;
@@ -122,20 +140,54 @@ int mm_paired(char *out, int capacity) {
       return fail(@"macOS does not allow this app to use Bluetooth. Turn it on for Glassly CFW Flasher in System "
                   @"Settings > Privacy & Security > Bluetooth, then start again.");
     }
-    NSMutableString *text = [NSMutableString string];
-    NSCharacterSet *breaks = [NSCharacterSet characterSetWithCharactersInString:@"\t\r\n"];
-    for (IOBluetoothDevice *device in [IOBluetoothDevice pairedDevices]) {
-      NSString *address = device.addressString;
-      if (!address) continue;
-      NSArray *parts = [(device.name ?: @"") componentsSeparatedByCharactersInSet:breaks];
-      NSString *name = [parts componentsJoinedByString:@" "];
-      [text appendFormat:@"%@\t%@\n", address, name];
+    return writeDevices([IOBluetoothDevice pairedDevices], out, capacity);
+  }
+}
+
+@interface MMInquiry : NSObject <IOBluetoothDeviceInquiryDelegate>
+@property(nonatomic) BOOL complete;
+@property(nonatomic, strong) NSMutableArray *devices;
+@end
+
+@implementation MMInquiry
+- (instancetype)init {
+  if ((self = [super init])) _devices = [NSMutableArray array];
+  return self;
+}
+
+- (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry *)sender device:(IOBluetoothDevice *)device {
+  if (device && ![self.devices containsObject:device]) [self.devices addObject:device];
+}
+
+- (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry *)sender error:(IOReturn)error aborted:(BOOL)aborted {
+  self.complete = YES;
+}
+@end
+
+// Never released either: IOBluetooth does not retain inquiry delegates.
+static NSMutableArray *inquiries;
+
+// A Bluetooth Classic inquiry of `seconds` with name requests, in the same lines as mm_paired. No connection
+// is made and nothing is paired.
+int mm_inquiry(char *out, int capacity, int seconds) {
+  @autoreleasepool {
+    errorText[0] = 0;
+    if (!NSThread.isMainThread) return fail(@"IOBluetooth calls must come from the main thread");
+    if (!inquiries) inquiries = [NSMutableArray array];
+    MMInquiry *delegate = [MMInquiry new];
+    [inquiries addObject:delegate];
+    IOBluetoothDeviceInquiry *inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate:delegate];
+    inquiry.inquiryLength = (uint8_t)MAX(1, MIN(seconds, 60));
+    inquiry.updateNewDeviceNames = YES;
+    IOReturn status = [inquiry start];
+    if (status != kIOReturnSuccess) return fail([NSString stringWithFormat:@"Bluetooth search could not start (0x%08x)", status]);
+    // With name requests the inquiry keeps running until every name is resolved or given up, so stop it
+    // ourselves once the inquiry length has passed and report what it found.
+    if (!pump(now() + inquiry.inquiryLength + 8, ^{ return delegate.complete; })) {
+      [inquiry stop];
+      pump(now() + 5, ^{ return delegate.complete; });
     }
-    NSData *bytes = [text dataUsingEncoding:NSUTF8StringEncoding];
-    if ((long)bytes.length >= capacity) return fail(@"Too many paired devices to list");
-    memcpy(out, bytes.bytes, bytes.length);
-    out[bytes.length] = 0;
-    return (int)bytes.length;
+    return writeDevices(delegate.devices, out, capacity);
   }
 }
 

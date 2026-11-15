@@ -1,5 +1,24 @@
 # MemoMind One firmware investigation
 
+Revision 26 (`ble-link-002`) speeds up the iPhone link of revision 25. The
+stock LE policy classifies the bonded phone when its link comes up
+(`0421465e`, current phone peer at 0x020128b6 checked by `042133e2`, bonded
+address 0x0201132c by `04212eec`), so the hello of a bonded central is accepted
+at once instead of after the 10 s window; other centrals still wait it out.
+As any phone link comes up the glasses ask the central for a 15-30 ms
+connection interval (BT core `bt_service_le_conn_update_param_req`, opcode
+0x27a through `043199d2`, payload peer, interval min/max, latency, timeout and
+two zero CE words), and two control writes on 0x9401 let the phone redo that
+with its own parameters (`80 02` + four u16) or repeat the stock security
+request that starts the ANCS client (`80 03`, opcode 0x2bc with the link's
+address type and kind). Control replies grow to `80 <op> <status> <revision>
+<flags> <detail>` (bit 0 bonded, bit 1 update requested, bit 2 accepted;
+detail = BT core return code), and the v2 status block grows to 136 bytes with
+the peer's address type and kind, the bonded flag and both return codes. 21
+emulator tests pass; runtime 84,352 B (13,952 B free). Analysis in
+`analysis/ghidra/ble-conn-20261114/`, records in `analysis/ble-conn-20261114/`.
+Not yet flashed at the time of writing.
+
 Revision 25 (`ble-link-001`) makes BLE the iPhone's only link, because App
 Review refuses the vendor's `ql.iap2.*` protocols without its MFi plan ID. The
 stock firmware already models BLE as phone link type 4 (`042d9aa6`: flag

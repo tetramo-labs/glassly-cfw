@@ -20,6 +20,8 @@ typedef uint32_t (*post_fn)(uint32_t,uint32_t,const void *,uint32_t);
 typedef void (*ota_rx_fn)(uint32_t,const uint8_t *,uint32_t);
 typedef void (*ota_drop_fn)(uint32_t);
 typedef int (*ring_fn)(const uint8_t *);
+typedef uint32_t (*bt_send_fn)(uint32_t,const void *,uint32_t);
+typedef uint32_t (*peer_fn)(const uint8_t *);
 #define REGISTER_SERVICE FN(0x0431a7feu,register_service_fn)
 #define REGISTER_CHARA FN(0x0431a93au,register_chara_fn)
 #define RUN_REGISTRATION FN(0x0431a42eu,run_registration_fn)
@@ -35,6 +37,15 @@ typedef int (*ring_fn)(const uint8_t *);
 #define OTA_RX FN(0x0423cc32u,ota_rx_fn)
 #define OTA_DROP FN(0x042388e0u,ota_drop_fn)
 #define KNOWN_RING FN(0x0424eef2u,ring_fn)
+#define BT_SEND FN(0x043199d2u,bt_send_fn)
+#define IS_PHONE FN(0x042133e2u,peer_fn)
+#define IS_BONDED_ADDR FN(0x04212eecu,peer_fn)
+#define BT_CONN_UPDATE 0x27au
+#define BT_SECURITY_REQUEST 0x2bcu
+#define CONN_INTERVAL_MIN 12u
+#define CONN_INTERVAL_MAX 24u
+#define CONN_LATENCY 0u
+#define CONN_TIMEOUT 400u
 #define CURSOR_CHARA (*(volatile uint8_t **)(uintptr_t)0x02012228u)
 #define CURSOR_SERVICE (*(volatile uint8_t **)(uintptr_t)0x0201222cu)
 #define SERVICE_LIST (*(uint8_t **)(uintptr_t)0x0201223cu)
@@ -56,6 +67,8 @@ typedef int (*ring_fn)(const uint8_t *);
 #define FLAG_LAST 2u
 #define FLAG_CONTROL 0x80u
 #define CONTROL_HELLO 1u
+#define CONTROL_PARAMS 2u
+#define CONTROL_SECURITY 3u
 #define LINK_NONE 0u
 #define LINK_PENDING 1u
 #define LINK_ACCEPTED 2u
@@ -65,8 +78,11 @@ typedef struct {
     uint8_t peer[6];uint8_t cccd,link;
     uint16_t notify_max,frag_len,frag_total,rejected;
     uint8_t *frag;
+    uint8_t peer_type,peer_kind,bonded,param_rc,security_rc,requests;
 } state;
 _Static_assert(sizeof(state)<=0x34,"Link state fits the spare descriptor bytes");
+static void put16(uint8_t *p,uint32_t v);
+static uint32_t conn_update(state *g,uint32_t min,uint32_t max,uint32_t latency,uint32_t timeout);
 static uint8_t *find_service(void){
     for(uint8_t *s=SERVICE_LIST;s;s=*(uint8_t **)s)
         if(*(uint16_t *)(s+8)==BLE_SERVICE_UUID)return s;
@@ -136,7 +152,10 @@ void glassly_ble_on_link(const uint8_t *conn,uint32_t peripheral,uint32_t connec
         if(g){
             release_link(g);
             for(unsigned i=0;i<6;i++)g->peer[i]=conn[i];
+            g->peer_type=conn[6];g->peer_kind=conn[7];
             g->link=LINK_PENDING;g->connected_at=P.now();g->notify_max=NOTIFY_MIN;
+            g->bonded=0;g->param_rc=0xff;g->security_rc=0xff;g->requests=0;
+            conn_update(g,CONN_INTERVAL_MIN,CONN_INTERVAL_MAX,CONN_LATENCY,CONN_TIMEOUT);
         }
         if(o){o->cccd=0;o->link=LINK_NONE;drop_fragment(o);}
         return;
@@ -149,21 +168,56 @@ void glassly_ble_on_link(const uint8_t *conn,uint32_t peripheral,uint32_t connec
     }
     ADV_START();
 }
+static uint32_t conn_update(state *g,uint32_t min,uint32_t max,uint32_t latency,uint32_t timeout){
+    uint8_t req[18];
+    for(unsigned i=0;i<6;i++)req[i]=g->peer[i];
+    put16(req+6,min);put16(req+8,max);put16(req+10,latency);put16(req+12,timeout);put16(req+14,0);put16(req+16,0);
+    g->requests++;
+    return g->param_rc=(uint8_t)BT_SEND(BT_CONN_UPDATE,req,sizeof req);
+}
+static uint32_t security_request(state *g){
+    uint8_t req[8];
+    for(unsigned i=0;i<6;i++)req[i]=g->peer[i];
+    req[6]=g->peer_type;req[7]=g->peer_kind;
+    return g->security_rc=(uint8_t)BT_SEND(BT_SECURITY_REQUEST,req,sizeof req);
+}
+static void reply_control(const uint8_t *msg,uint8_t *chr,state *g,uint8_t op,uint8_t status,uint8_t detail){
+    if(!g->cccd)return;
+    uint8_t reply[6]={FLAG_CONTROL,op,status,(uint8_t)MM_CFW_REVISION,
+        (uint8_t)((g->bonded?1:0)|(g->requests?2:0)|(g->param_rc==0?4:0)),detail};
+    (void)notify_bytes(msg,chr,g,g->notify_max,reply,sizeof(reply));
+}
+/* The stock classifies the bonded phone when the link comes up, so its peer
+ * is accepted at the first hello; anyone else waits out the window the stock
+ * uses to drop unbonded centrals. */
 static void hello(const uint8_t *msg,uint8_t *chr,state *g,const uint8_t *data,uint32_t len){
-    if(len<4 || data[1]!=CONTROL_HELLO)return;
+    if(len<4)return;
     uint32_t limit=data[2]|((uint32_t)data[3]<<8);
     g->notify_max=(uint16_t)(limit<NOTIFY_MIN?NOTIFY_MIN:limit>NOTIFY_MAX?NOTIFY_MAX:limit);
     uint8_t status=0;
     if(g->link==LINK_PENDING){
-        if(P.now()-g->connected_at>=ACCEPT_AFTER_MS){
+        int bonded=IS_PHONE(g->peer) || IS_BONDED_ADDR(g->peer);
+        if(bonded || P.now()-g->connected_at>=ACCEPT_AFTER_MS){
             for(unsigned i=0;i<6;i++)GM_PHONE[i]=g->peer[i];
-            g->link=LINK_ACCEPTED;GM_BLE_LINK=1;
+            g->link=LINK_ACCEPTED;GM_BLE_LINK=1;g->bonded=bonded?1:0;
         } else status=1;
     }
-    if(g->cccd){
-        uint8_t reply[4]={FLAG_CONTROL,CONTROL_HELLO,status,(uint8_t)MM_CFW_REVISION};
-        (void)notify_bytes(msg,chr,g,g->notify_max,reply,sizeof(reply));
+    reply_control(msg,chr,g,CONTROL_HELLO,status,g->param_rc);
+}
+static void control(const uint8_t *msg,uint8_t *chr,state *g,const uint8_t *data,uint32_t len){
+    if(len<2)return;
+    if(data[1]==CONTROL_HELLO){hello(msg,chr,g,data,len);return;}
+    if(data[1]!=CONTROL_PARAMS && data[1]!=CONTROL_SECURITY)return;
+    uint8_t status=1,detail=0xff;
+    if(g->link==LINK_ACCEPTED){
+        if(data[1]==CONTROL_PARAMS){
+            if(len!=10)return;
+            detail=(uint8_t)conn_update(g,data[2]|((uint32_t)data[3]<<8),data[4]|((uint32_t)data[5]<<8),
+                                        data[6]|((uint32_t)data[7]<<8),data[8]|((uint32_t)data[9]<<8));
+        } else detail=(uint8_t)security_request(g);
+        status=detail?2:0;
     }
+    reply_control(msg,chr,g,data[1],status,detail);
 }
 static uint8_t *assemble(state *s,const uint8_t *data,uint32_t len,uint32_t *out){
     unsigned flags=data[0];const uint8_t *p=data+1;uint32_t n=len-1;
@@ -188,7 +242,7 @@ void glassly_ble_on_write(const uint8_t *msg,void *desc,const uint8_t *data,uint
     if(!s || !g || !msg || !data || !len || g->link==LINK_NONE || !same_peer(msg,g->peer))return;
     uint8_t *node=(uint8_t *)desc-4;int gm=*(uint16_t *)(node+8)==BLE_GM_UUID;
     s->writes++;
-    if(data[0]&FLAG_CONTROL){if(gm)hello(msg,node,g,data,len);return;}
+    if(data[0]&FLAG_CONTROL){if(gm)control(msg,node,g,data,len);return;}
     if(g->link!=LINK_ACCEPTED){s->rejected++;return;}
     uint32_t n=0;uint8_t *whole=assemble(s,data,len,&n);
     if(!whole)return;
@@ -222,7 +276,7 @@ static void *json_hex(const char *result,const uint8_t *b,unsigned n){
     *p++='"';*p++='}';*p=0;void *r=P.json(out);P.free(out);return r;
 }
 static void *status(const char *result,uint32_t rc){
-    uint8_t b[128]={'B','P',2};uint8_t *svc=find_service(),*gc=find_chara(BLE_GM_UUID),*oc=find_chara(BLE_OTA_UUID);
+    uint8_t b[136]={'B','P',2};uint8_t *svc=find_service(),*gc=find_chara(BLE_GM_UUID),*oc=find_chara(BLE_OTA_UUID);
     b[3]=svc?1:0;b[4]=gc?1:0;b[5]=REGISTERING;b[6]=PENDING;b[7]=ADV_SLOTS;
     put16(b+8,svc?*(uint16_t *)(svc+0x1c):0xffffu);
     put16(b+10,gc?*(uint16_t *)(gc+0x18):0xffffu);put16(b+12,gc?*(uint16_t *)(gc+0x1a):0xffffu);
@@ -242,6 +296,7 @@ static void *status(const char *result,uint32_t rc){
     for(unsigned i=0;i<0x38;i++)b[64+i]=slot?slot[i]:0;
     for(unsigned i=0;i<4;i++)b[120+i]=LINK_FLAGS[i];
     b[124]=ADVERTISING;b[125]=LE_CONNECTED;
+    if(g){b[126]=g->peer_type;b[127]=g->peer_kind;b[128]=g->bonded;b[129]=g->param_rc;b[130]=g->security_rc;b[131]=g->requests;}
     return json_hex(result,b,sizeof(b));
 }
 static void chara_desc(uint8_t *chr,uint16_t uuid){

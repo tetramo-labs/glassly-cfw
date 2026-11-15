@@ -18,7 +18,8 @@ GATT_NATIVES = {0x0431a7fe: "gatt_register_service", 0x0431a93a: "gatt_register_
                 0x04317164: "adv_enable", 0x0431a712: "gatt_notify", 0x04316df8: "adv_find_slot",
                 0x04319adc: "gatt_add_listener", 0x042d52bc: "adv_start", 0x042d556a: "adv_stop",
                 0x042361b8: "bt_post", 0x0423cc32: "ota_rx", 0x042388e0: "ota_drop", 0x0424eef2: "known_ring",
-                0x042db00e: "gm_writer_stock"}
+                0x042db00e: "gm_writer_stock", 0x043199d2: "bt_send", 0x042133e2: "is_phone",
+                0x04212eec: "is_bonded_addr"}
 G.NATIVES.update(GATT_NATIVES)
 GLOBALS = (0x02011f00, 0x02012300)
 SERVICE_LIST, PENDING, REGISTERING, ADV_SLOTS = 0x0201223c, 0x02012230, 0x02012231, 0x0201220a
@@ -47,6 +48,7 @@ class BleMachine(SensorMachine):
         self.listeners, self.posts, self.ota_frames, self.ota_drops, self.stock_writes = [], [], [], [], []
         self.fail_register = self.fail_run = self.fail_notify = False
         self.rings = set()
+        self.bt_sends, self.phones, self.bonded_addr, self.bt_send_rc = [], set(), None, 0
 
     def region(self, address, size, writing=False):
         if GLOBALS[0] <= address and address+size <= GLOBALS[1]:
@@ -121,6 +123,12 @@ class BleMachine(SensorMachine):
             self.ota_drops.append(a0); return 0
         if name == "known_ring":
             return 1 if self.read(a0, 6) in self.rings else 0
+        if name == "bt_send":
+            self.bt_sends.append((a0, self.read(a1, a2))); return self.bt_send_rc
+        if name == "is_phone":
+            return 1 if self.read(a0, 6) in self.phones else 0
+        if name == "is_bonded_addr":
+            return 1 if self.bonded_addr is not None and self.read(a0, 6) == self.bonded_addr else 0
         if name == "gm_writer_stock":
             sp = self.reg(2)
             assert self.word(sp+0x38) == self.reg(8) and self.word(sp+0x30) == self.reg(18) and self.word(sp+0x28) == self.reg(20)
@@ -138,14 +146,16 @@ class BleMachine(SensorMachine):
 
     def status(self):
         b = bytes.fromhex(self.probe(b"BP\x01\x03")["stateHex"])
-        assert b[:3] == b"BP\x02" and len(b) == 128
+        assert b[:3] == b"BP\x02" and len(b) == 136
         u16 = lambda o: struct.unpack_from("<H", b, o)[0]
         u32 = lambda o: struct.unpack_from("<I", b, o)[0]
         return {"service": b[3], "gm": b[4], "ota": b[19], "serviceHandle": u16(8), "gmValue": u16(10), "gmCccd": u16(12),
                 "otaValue": u16(14), "otaCccd": u16(16), "gmWrites": u32(20), "gmNotified": u32(24), "gmFailed": u32(28),
                 "notifyMax": u16(32), "gmCccdOn": b[34], "link": b[35], "peer": b[36:42], "otaWrites": u32(42),
                 "otaNotified": u32(46), "otaCccdOn": b[54], "bleLink": b[55], "age": u32(56), "rejected": u16(60),
-                "rc": u16(62), "slot": b[64:120], "linkFlags": b[120:124], "advertising": b[124], "leConnected": b[125]}
+                "rc": u16(62), "slot": b[64:120], "linkFlags": b[120:124], "advertising": b[124], "leConnected": b[125],
+                "peerType": b[126], "peerKind": b[127], "bonded": b[128], "paramRc": b[129], "securityRc": b[130],
+                "requests": b[131]}
 
     def bytes_at(self, data, tag="data"):
         return self.allocate(len(data), tag, data, writable=False)
@@ -155,7 +165,16 @@ class BleMachine(SensorMachine):
         return self.chara(0x9401), self.chara(0x9402)
 
     def link(self, peer=PEER, connected=1, peripheral=1):
-        self.call("glassly_ble_on_link", self.bytes_at(peer, "conn"), peripheral, connected)
+        self.call("glassly_ble_on_link", self.bytes_at(peer + bytes([1, 2]), "conn"), peripheral, connected)
+
+    @staticmethod
+    def control_reply(op, status, bonded=False, requested=True, rc=0, detail=0):
+        flags = (1 if bonded else 0) | (2 if requested else 0) | (4 if rc == 0 else 0)
+        return bytes([0x80, op, status, REVISION, flags, detail])
+
+    @staticmethod
+    def conn_request(peer=PEER, params=(12, 24, 0, 400)):
+        return (0x27a, peer + struct.pack("<6H", *params, 0, 0))
 
     def write(self, node, data, peer=PEER):
         self.call("glassly_ble_on_write", self.bytes_at(peer, "peer"), node+4, self.bytes_at(data), len(data))
@@ -169,7 +188,7 @@ class BleMachine(SensorMachine):
     def accepted(self):
         gm, ota = self.registered()
         self.now = 1000; self.link(); self.cccd(gm); self.now = 11000; self.hello(gm)
-        assert self.notifies[-1][2] == bytes([0x80, 1, 0, REVISION])
+        assert self.notifies[-1][2] == self.control_reply(1, 0)
         self.notifies.clear()
         return gm, ota
 
@@ -210,18 +229,59 @@ class BleLinkTests(unittest.TestCase):
     def test_the_bonded_window_gates_acceptance(self):
         m = BleMachine(); gm, _ = m.registered()
         m.now = 1000; m.link(); m.cccd(gm)
+        self.assertEqual(m.bt_sends, [m.conn_request()], "a faster connection interval is asked for as the link comes up")
         m.now = 5000; m.hello(gm, 244)
-        self.assertEqual(m.notifies[-1], (PEER, gm, bytes([0x80, 1, 1, REVISION])), "too early: wait")
+        self.assertEqual(m.notifies[-1], (PEER, gm, m.control_reply(1, 1)), "too early: wait")
         self.assertEqual(m.read(GM_BLE_LINK, 1), b"\x00")
         m.write(gm, bytes([3]) + struct.pack("<H", 4) + b"\xfa\x00\x00\x09")
         self.assertEqual(m.posts, [], "GM traffic before acceptance is dropped")
         self.assertEqual(m.status()["rejected"], 1)
         m.now = 11000; m.hello(gm, 244)
-        self.assertEqual(m.notifies[-1], (PEER, gm, bytes([0x80, 1, 0, REVISION])))
+        self.assertEqual(m.notifies[-1], (PEER, gm, m.control_reply(1, 0)))
         self.assertEqual(m.read(GM_BLE_LINK, 1), b"\x01")
         self.assertEqual(m.read(GM_PHONE, 6), PEER)
         s = m.status(); self.assertEqual((s["link"], s["notifyMax"], s["peer"], s["bleLink"]), (2, 244, PEER, 1))
         self.assertEqual(s["age"], 10000)
+        self.assertEqual((s["peerType"], s["peerKind"], s["bonded"], s["paramRc"], s["securityRc"], s["requests"]), (1, 2, 0, 0, 0xff, 1))
+
+    def test_the_bonded_phone_is_accepted_at_the_first_hello(self):
+        for bond in ("phone", "address"):
+            m = BleMachine(); gm, _ = m.registered()
+            if bond == "phone": m.phones.add(PEER)
+            else: m.bonded_addr = PEER
+            m.now = 1000; m.link(); m.cccd(gm); m.now = 1600; m.hello(gm, 244)
+            self.assertEqual(m.notifies[-1], (PEER, gm, m.control_reply(1, 0, bonded=True)), bond)
+            self.assertEqual(m.read(GM_BLE_LINK, 1), b"\x01")
+            self.assertEqual(m.status()["bonded"], 1)
+        m = BleMachine(); gm, _ = m.registered(); m.phones.add(OTHER)
+        m.now = 1000; m.link(); m.cccd(gm); m.now = 1600; m.hello(gm, 244)
+        self.assertEqual(m.notifies[-1][2], m.control_reply(1, 1), "another phone's bond does not count")
+
+    def test_refused_connection_update_is_reported_in_the_hello(self):
+        m = BleMachine(); gm, _ = m.registered(); m.bt_send_rc = 0xb
+        m.now = 1000; m.link(); m.cccd(gm); m.now = 11000; m.hello(gm, 244)
+        self.assertEqual(m.notifies[-1][2], m.control_reply(1, 0, rc=0xb, detail=0xb))
+        self.assertEqual(m.status()["paramRc"], 0xb)
+
+    def test_control_ops_request_parameters_and_security(self):
+        m = BleMachine(); gm, _ = m.registered()
+        m.now = 1000; m.link(); m.cccd(gm); m.bt_sends.clear()
+        m.write(gm, bytes([0x80, 2]) + struct.pack("<4H", 12, 12, 0, 400))
+        self.assertEqual((m.bt_sends, m.notifies[-1][2]), ([], m.control_reply(2, 1, detail=0xff)), "not before acceptance")
+        m.now = 11000; m.hello(gm); m.notifies.clear()
+        m.write(gm, bytes([0x80, 2]) + struct.pack("<4H", 12, 12, 0, 400))
+        self.assertEqual(m.bt_sends, [m.conn_request(params=(12, 12, 0, 400))])
+        self.assertEqual(m.notifies[-1][2], m.control_reply(2, 0))
+        m.write(gm, bytes([0x80, 2, 12, 0, 12]))
+        self.assertEqual(len(m.notifies), 1, "a short parameter request gets no reply")
+        m.write(gm, bytes([0x80, 3]))
+        self.assertEqual(m.bt_sends[-1], (0x2bc, PEER + bytes([1, 2])))
+        self.assertEqual(m.notifies[-1][2], m.control_reply(3, 0))
+        m.bt_send_rc = 0xb; m.write(gm, bytes([0x80, 3]))
+        self.assertEqual(m.notifies[-1][2], m.control_reply(3, 2, detail=0xb))
+        s = m.status(); self.assertEqual((s["requests"], s["paramRc"], s["securityRc"]), (2, 0, 0xb))
+        m.write(gm, bytes([0x80, 9]))
+        self.assertEqual(m.notifies[-1][2], m.control_reply(3, 2, detail=0xb), "unknown control ops are ignored")
 
     def test_other_peers_and_rings_are_ignored(self):
         m = BleMachine(); gm, _ = m.registered()

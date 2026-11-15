@@ -1238,7 +1238,8 @@ connection is below it, else starts `discover_gattp` when neither flag bit
 is set; the phone re-arms every 45 s, so each step is retried. STATUS grows
 by eight bytes of diagnostics (protocol doc). Blob 24,504 bytes, 352 left.
 Host test covers the kick's three outcomes, the temple gate and QUERY.
-Offline only at the time of writing.
+On hardware 2026-11-14 (dev report rep_01M7E35KG9HFYHECZ1927E2DRJ) the
+image lacked the ancs group (see /54) and the getter read a pointer (/53).
 
 ### G1CFW/53: the security kick read a pointer, not a level (2026-11-14)
 
@@ -1262,7 +1263,8 @@ requests 2 on the first ENABLE after a reconnect; iOS re-encrypts the bonded
 link, `ancs_security_changed` clears the discovery flags and (with `0x1088`
 set and the bonded MAC matching) runs `discover_gattp`, or the next RENEW
 starts it. Expect `security=2 kicks=1|3` and a rising `notifications` count
-in STATUS. Offline only at the time of writing.
+in STATUS. Verified on hardware 2026-11-14 (rep_01M7EB9MAYABXE9P7HYVK7KW6N:
+`security=2`), though the image still lacked the ancs group (see /54).
 
 ### G1CFW/54: the ANCS hooks back, and an audit's fixes (2026-11-14)
 
@@ -1339,5 +1341,6 @@ the problem because `cfw_reply` sends through the context's send function.
 
 G1CFW/55 adds a `CFW_ANCS_RECORD` case to `cfw_rx` that sends the packet to
 the phone verbatim; the phone never sends 0x36, so anything arriving with it
-is the relay's own. Host test covers the loopback. Offline only at the time
-of writing.
+is the relay's own. Host test covers the loopback. Verified on hardware
+2026-11-14: rep_01M7EJVD6YEG226857M6A3A9VD relayed three notifications to the
+phone and the dashboard showed them.

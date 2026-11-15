@@ -41,7 +41,7 @@ def main():
   run('reader-build',[a.cc,*host,ROOT/'tests/scene_store/test_reader.c',ROOT/'scene_store.c','-o',out/'test_reader'])
   report['reader_result']=run('reader-run',[out/'test_reader']).strip()
   report['host_result']=run('host-run',[out/'test_scene_store',*fixtures]).strip()
-  for required in ('reader-owner-aliases=8 initializer-backend-aliases=2 unchanged-on-rejection=yes','messages=24 probes=21','messages=302 probes=7200','fullcapacity=262144 fullmessage=65535 callback_faults=528','asset_faults=35 render_faults=13','paths=512edges/8196bytes scene_edges=4096','PASS scene-store differential and transaction failures'):
+  for required in ('reader-owner-aliases=8 initializer-backend-aliases=2 unchanged-on-rejection=yes','messages=24 probes=21','messages=302 probes=7200','fullcapacity=262144 fullmessage=65535 callback_faults=528','asset_faults=33 render_faults=13','external-render cases=4000','paths=512edges/8196bytes scene_edges=4096','PASS scene-store differential and transaction failures'):
    if required not in report['host_result']:raise RuntimeError('Missing coverage: '+required)
   common=['-march=rv32imafc','-mabi=ilp32f','-mstrict-align','-mno-relax','-msmall-data-limit=0','-std=c11','-O2','-ffreestanding','-fno-builtin','-fno-common','-fno-pic','-fno-pie','-ffunction-sections','-fdata-sections','-fstack-usage','-Wall','-Wextra','-Werror','-Wno-unused-function','-DMM_SCENE_EXTERNAL_STORE=1','-I'+str(ROOT)]
   prefix=str(a.rvcc).removesuffix('gcc')

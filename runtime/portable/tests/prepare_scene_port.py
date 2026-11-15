@@ -7,9 +7,43 @@ import re
 import sys
 ROOT=Path(__file__).resolve().parents[1]
 SRC=ROOT.parents[1]/'tests/g2_compat/upstream/patches'
-NOTICE='/* Derived from pinned G2 commite889569fe77775ed5822af6f7e47210f2984f15d.\n * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */\n'
+NOTICE='/* Derived from pinned G2 commitf12072270a866746266d5399ea03c966011cad61.\n * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */\n'
+
+def native_opt_ins(path,text):
+    # Native scratch policy is a separate opt-in adaptation. Keep the external
+    # backend overlay and every upstream assertion untouched. These run before
+    # the overlay, which update_overlay.py records against the same text.
+    if path.name == 'scene_cache.inc':
+        anchor = 'static int cfw_txn_snapshot(cfw_txn *t) {\n    cfw_undo *undo = t->sc->undo;\n'
+        if text.count(anchor) != 1:
+            raise RuntimeError('RESET undo policy anchor drift')
+        text = text.replace(anchor, anchor + "#ifdef MM_SCENE_RESET_UNDO_TRIM\n    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n     * before pinning/evicting/staging instead of entering revision50's no-undo\n     * fallback. The default portable G2 policy remains unchanged. */\n    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n#endif\n", 1)
+    # Per-eye rendering is a separate native opt-in: an object id with bit 31
+    # belongs to one eye (bit 30: 0 left, 1 right) and a render with ctx->eye
+    # set skips the other eye's objects. Ids without bit 31 draw in both.
+    if path.name == 'scene_cache.inc':
+        anchor = '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n        cfw_box box;\n'
+        if text.count(anchor) != 1:
+            raise RuntimeError('Stereo eye filter anchor drift')
+        text = text.replace(anchor, '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n#ifdef MM_SCENE_STEREO_EYES\n        if ((o->id >> 31) && ctx->eye && ((o->id >> 30) & 1u) + 1u != ctx->eye) continue;\n#endif\n        cfw_box box;\n', 1)
+    # A presented frame of a scene with eye-tagged objects paints as its left
+    # pass and scene.c adds the right one. Per-eye panels keep presenting a SHOW
+    # that changed nothing: a panel that missed a one-eye frame still catches up,
+    # and the panel adapter treats the empty list as nothing new.
+    if path.name == 'scene_cache.inc':
+        for anchor, replacement in (
+            ('    if (fb == 0) return -1;\n    cfw_scene_render(ctx, sc, fb, rl);\n',
+             '    if (fb == 0) return -1;\n#ifdef MM_SCENE_STEREO_EYES\n    mm_scene_stereo_render(ctx, sc, fb, rl, present);\n#else\n    cfw_scene_render(ctx, sc, fb, rl);\n#endif\n'),
+            ('    } else if (rl->n) {                         /* an empty list would refresh the whole panel */\n',
+             '#ifdef MM_SCENE_STEREO_EYES\n    } else {\n#else\n    } else if (rl->n) {                         /* an empty list would refresh the whole panel */\n#endif\n')):
+            if text.count(anchor) != 1:
+                raise RuntimeError('Stereo present anchor drift')
+            text = text.replace(anchor, replacement, 1)
+    return text
+
 
 def emit(path,text):
+    text=native_opt_ins(path,text)
     # Explicit optional-backend overlay: original upstream generation remains
     # pinned and reproducible; no original test predicate is rewritten.
     overlay=ROOT/'tests/scene_store/generated-overlay.json'
@@ -25,21 +59,6 @@ def emit(path,text):
         text=''.join(lines)
         if hashlib.sha256(text.encode()).hexdigest()!=entry['result_sha256']:
             raise RuntimeError('External-store overlay result drift: '+path.name)
-    # Native scratch policy is a separate opt-in adaptation. Keep the external
-    # backend overlay and every upstream assertion untouched.
-    if path.name == 'scene_cache.inc':
-        anchor = 'static int cfw_txn_snapshot(cfw_txn *t) {\n    cfw_undo *undo = t->sc->undo;\n'
-        if text.count(anchor) != 1:
-            raise RuntimeError('RESET undo policy anchor drift')
-        text = text.replace(anchor, anchor + "#ifdef MM_SCENE_RESET_UNDO_TRIM\n    /* Native opt-in: RESET releases scratch, so reacquisition can fail. Refuse\n     * before pinning/evicting/staging instead of entering revision50's no-undo\n     * fallback. The default portable G2 policy remains unchanged. */\n    if (!undo) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);\n#endif\n", 1)
-    # Per-eye rendering is a separate native opt-in: an object id with bit 31
-    # belongs to one eye (bit 30: 0 left, 1 right) and a render with ctx->eye
-    # set skips the other eye's objects. Ids without bit 31 draw in both.
-    if path.name == 'scene_cache.inc':
-        anchor = '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n        cfw_box box;\n'
-        if text.count(anchor) != 1:
-            raise RuntimeError('Stereo eye filter anchor drift')
-        text = text.replace(anchor, '        if (o->id == 0 || !(o->flags & CFW_SHAPE_FLAG_VISIBLE)) continue;\n#ifdef MM_SCENE_STEREO_EYES\n        if ((o->id >> 31) && ctx->eye && ((o->id >> 30) & 1u) + 1u != ctx->eye) continue;\n#endif\n        cfw_box box;\n', 1)
     if '--check' in sys.argv:
         if path.read_text()!=text:raise RuntimeError('Generated scene source drift: '+str(path))
     else:path.write_text(text)

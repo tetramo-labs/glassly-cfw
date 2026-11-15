@@ -66,13 +66,9 @@ static void timer_stop(void *user,uintptr_t timer) {
 static void present(void *user,mm_scene_context *ctx,const mm_raster *raster,
                     mm_scene_dirty *dirty) {
     mm_scene_session *s=user;
-    /* The original timer deferred rendering to a second display task. Here
+    /* The original timer deferred painting to a second display task. Here
      * we already own that task: finish the pending frame before LVGL borrows it. */
-#ifdef MM_RAW_PRESENT
-    mm_scene_render_if_due_rects(ctx,raster->pixels,dirty);
-#else
     mm_scene_render_if_due(ctx,raster->pixels);
-#endif
 #ifdef MM_FLASH_SCENE
     if(ctx->shadow_invalid){dirty->direct_failed=1;return;}
 #endif
@@ -205,7 +201,7 @@ static int bundle(mm_scene_session *s,const uint8_t *data,size_t size) {
     }
     /* Even count0 presents once. Trailing bytes are ignored as upstream. */
 #ifdef MM_RAW_PRESENT
-    mm_scene_render_if_due_rects(&s->core,s->raster.pixels,&s->bundle_dirty);
+    mm_scene_render_if_due(&s->core,s->raster.pixels);
     s->hooks.present(s->hooks.user,&s->raster,
                      s->bundle_full || s->bundle_dirty.n>=MM_SCENE_RECT_MAX ? 0:&s->bundle_dirty);
 #else

@@ -262,7 +262,9 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
         microphone_flags = (["-Oz"] if source.name == "microphone_native.c" else
                             ["-Os"] if microphone_control and source.name in ("geometry.c", "vector.c") else [])
         sensor_flags = ["-Os"] if sensor_capture and source.suffix==".c" and source.parent.name=="graphics" else []
-        run("gcc", *flags, *portable_flags, *diagnostic_flags, *trim_flags, *record_flags, *microphone_flags, *sensor_flags, "-c", source, "-o", obj)
+        text_flags = ["-Os"] if text_commands and source.name == "native_text.c" else []
+        relay_flags = ["-Os"] if notification_relay and source.name in ("notifications.c", "ancs_ingress.c") else []
+        run("gcc", *flags, *portable_flags, *diagnostic_flags, *trim_flags, *record_flags, *microphone_flags, *sensor_flags, *text_flags, *relay_flags, "-c", source, "-o", obj)
         objects.append(obj)
     elf = out/"graphics.elf"
     retain = ["-Wl,--undefined="+name for name in SCENE_ENTRIES] if scene_session else []
@@ -340,6 +342,8 @@ def compile_graphics(output, *, gate_fixture=False, scene_session=False, input_o
               "minimal_launcher": minimal_launcher,
               "flash_scene": flash_scene, "wake_control": wake_control, "notification_relay": notification_relay, "record_transport": record_transport, "microphone_control": microphone_control, "sensor_capture": sensor_capture, "cfw_revision": cfw_revision,
               "sensor_size_flags": "graphics C sources -Os" if sensor_capture else None,
+              "text_size_flags": {"native_text.c": "-Os"} if text_commands else {},
+              "relay_size_flags": {"notifications.c": "-Os", "ancs_ingress.c": "-Os"} if notification_relay else {},
               "scene_extra_flags": ["-Os"] if reset_undo_trim or diagnostic_commands else [],
               "microphone_size_flags": {"microphone_native.c": "-Oz", "geometry.c": "-Os", "vector.c": "-Os"} if microphone_control else {},
               "diagnostics_extra_flags": ["-Oz"] if diagnostic_commands else [],

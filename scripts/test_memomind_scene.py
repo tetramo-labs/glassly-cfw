@@ -12,6 +12,11 @@ from probe_memomind_scene import smoke
 CAPS={'glassly':'graphics-runtime','abi':1,'profile':'H001Y-1.0.3.127',
       'width':600,'height':350,'modes':[11,19,20,36,37,38,39,40,41],
       'maxMessageBytes':8192,'storeKiB':64,'builtinText':False,'emptyGeometry':'lease-only'}
+# A lean revision 23+ build: no profile, modes or emptyGeometry; 8192-byte requests, 65535 assembled.
+LEAN_CAPS={'glassly':'graphics-runtime','abi':1,'width':600,'height':350,'version':'GLASSLYCFW/27',
+           'displayOwner':'minimal','maxMessageBytes':65535,'maxWireMessageBytes':8192,
+           'largeMessage':{'mode':127,'chunkBytes':1024,'crc':'crc32-ieee'},'storeKiB':256,
+           'freeBytesHex':'00050000','lowWaterBytesHex':'00040000'}
 
 
 def json_frames(event,value,command=0x7d):
@@ -202,6 +207,20 @@ class SceneClientTests(unittest.TestCase):
             fake=NativeFake()
             with self.assertRaises(SceneProtocolError):SceneClient(fake,capabilities={**CAPS,**update})
             self.assertFalse(fake.writes)
+        for caps in [{k:v for k,v in CAPS.items() if k!='modes'},{k:v for k,v in CAPS.items() if k!='profile'},
+                     {**LEAN_CAPS,'version':'GLASSLYCFW/22'},{**LEAN_CAPS,'profile':'H001Y-other'},{**LEAN_CAPS,'modes':[11,36]},
+                     {**LEAN_CAPS,'maxWireMessageBytes':70000},{k:v for k,v in LEAN_CAPS.items() if k!='storeKiB'}]:
+            fake=NativeFake()
+            with self.assertRaises(SceneProtocolError):SceneClient(fake,capabilities=caps)
+            self.assertFalse(fake.writes)
+    def test_lean_builds_are_accepted_and_bounded_by_the_wire_limit(self):
+        fake=NativeFake();client=SceneClient(fake,capabilities=LEAN_CAPS)
+        self.assertEqual(client.message_limit,8192)
+        client.keepalive();self.assertEqual(fake.messages,[b'\x24\0'],'lean scene builds keep lease-only empty geometry')
+        with self.assertRaises(ValueError):client.transact(bytes((37,))+bytes(8192))
+        self.assertEqual(len(fake.messages),1,'a request over the wire limit is refused before sending')
+        self.assertEqual(SceneClient(NativeFake(),capabilities={**CAPS,'maxWireMessageBytes':4096}).message_limit,4096)
+        self.assertEqual(SceneClient(NativeFake(),capabilities=CAPS).message_limit,8192)
 
 
 class ReplyAndFixtureTests(unittest.TestCase):

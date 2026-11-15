@@ -1,0 +1,2188 @@
+{
+ "build": "/Users/fosse/dev/glassly-memomind-one-cfw/build/latency-27",
+ "blob_sha256": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+ "cfw_revision": 27,
+ "commands": "tests/rv32/fixtures/dashboard-scene-commands.json",
+ "steps": [
+  {
+   "step": "cold-open[0] mode 41 (6 B)",
+   "instructions": 1655174,
+   "top": [
+    {
+     "function": "raw_submit",
+     "instructions": 950332,
+     "share": 0.574
+    },
+    {
+     "function": "bzero",
+     "instructions": 368217,
+     "share": 0.222
+    },
+    {
+     "function": "create",
+     "instructions": 322034,
+     "share": 0.195
+    },
+    {
+     "function": "mm_flash_store_init",
+     "instructions": 9165,
+     "share": 0.006
+    },
+    {
+     "function": "memcpy",
+     "instructions": 1079,
+     "share": 0.001
+    },
+    {
+     "function": "cache_response",
+     "instructions": 546,
+     "share": 0.0
+    },
+    {
+     "function": "?",
+     "instructions": 419,
+     "share": 0.0
+    },
+    {
+     "function": "find_owner",
+     "instructions": 261,
+     "share": 0.0
+    },
+    {
+     "function": "box_join",
+     "instructions": 237,
+     "share": 0.0
+    },
+    {
+     "function": "mm_scene_input_valid",
+     "instructions": 177,
+     "share": 0.0
+    },
+    {
+     "function": "execute_inner.constprop.0.isra.0",
+     "instructions": 164,
+     "share": 0.0
+    },
+    {
+     "function": "word",
+     "instructions": 144,
+     "share": 0.0
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 10
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 9
+    },
+    {
+     "caller": "scene_present",
+     "callee": "box_join",
+     "entries": 5
+    },
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 4
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 4
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 4
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_session_init",
+     "callee": "memcpy",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "aliases",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_lease",
+     "callee": "active",
+     "entries": 3
+    },
+    {
+     "caller": "create",
+     "callee": "try_alloc",
+     "entries": 2
+    },
+    {
+     "caller": "allocate",
+     "callee": "scene_free_bytes",
+     "entries": 2
+    },
+    {
+     "caller": "allocate",
+     "callee": "scene_allocate",
+     "entries": 2
+    },
+    {
+     "caller": "scene_allocate",
+     "callee": "try_alloc",
+     "entries": 2
+    },
+    {
+     "caller": "mm_scene_init_with_store",
+     "callee": "memcpy",
+     "entries": 2
+    },
+    {
+     "caller": "diagnostic_find",
+     "callee": "find_owner",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_cache_prepare",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    },
+    {
+     "caller": "reset",
+     "callee": "mm_flash_store_init",
+     "entries": 2
+    },
+    {
+     "caller": "?",
+     "callee": "service_entry",
+     "entries": 1
+    },
+    {
+     "caller": "service_entry",
+     "callee": "glassly_graphics_command",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "request_bytes",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "valid_message",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "try_alloc",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "post",
+     "entries": 1
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[1] mode 37 (387 B)",
+   "instructions": 169035,
+   "top": [
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79634,
+     "share": 0.471
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 18724,
+     "share": 0.111
+    },
+    {
+     "function": "read_map",
+     "instructions": 14601,
+     "share": 0.086
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 13738,
+     "share": 0.081
+    },
+    {
+     "function": "bzero",
+     "instructions": 8457,
+     "share": 0.05
+    },
+    {
+     "function": "cfw_asset_supersede",
+     "instructions": 7764,
+     "share": 0.046
+    },
+    {
+     "function": "cfw_asset_find",
+     "instructions": 7740,
+     "share": 0.046
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 5438,
+     "share": 0.032
+    },
+    {
+     "function": "glassly_graphics_command",
+     "instructions": 3556,
+     "share": 0.021
+    },
+    {
+     "function": "mm_flash_store_write",
+     "instructions": 1849,
+     "share": 0.011
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 1439,
+     "share": 0.009
+    },
+    {
+     "function": "cfw_txn_new_asset",
+     "instructions": 891,
+     "share": 0.005
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_external_token",
+     "callee": "mm_scene_cursor_read",
+     "entries": 338
+    },
+    {
+     "caller": "mm_external_image_in",
+     "callee": "mm_external_token",
+     "entries": 334
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 14
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 8
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "rd32",
+     "entries": 8
+    },
+    {
+     "caller": "data_alias",
+     "callee": "aliases",
+     "entries": 8
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "cfw_asset_find",
+     "entries": 6
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 4
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_put_entry_len",
+     "entries": 4
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "valid.part.0",
+     "entries": 4
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "data_alias",
+     "entries": 4
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "read_bytes",
+     "entries": 4
+    },
+    {
+     "caller": "read_bytes",
+     "callee": "mm_flash_store_read",
+     "entries": 4
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "buffer.part.0",
+     "entries": 4
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "aliases",
+     "entries": 3
+    },
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 3
+    },
+    {
+     "caller": "allocate",
+     "callee": "scene_free_bytes",
+     "entries": 2
+    },
+    {
+     "caller": "allocate",
+     "callee": "scene_allocate",
+     "entries": 2
+    },
+    {
+     "caller": "scene_allocate",
+     "callee": "try_alloc",
+     "entries": 2
+    },
+    {
+     "caller": "mm_scene_lease",
+     "callee": "active",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_cache_prepare",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[2] mode 37 (8185 B)",
+   "instructions": 251796,
+   "top": [
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79634,
+     "share": 0.316
+    },
+    {
+     "function": "glassly_graphics_command",
+     "instructions": 73738,
+     "share": 0.293
+    },
+    {
+     "function": "mm_flash_store_write",
+     "instructions": 40960,
+     "share": 0.163
+    },
+    {
+     "function": "read_map",
+     "instructions": 25867,
+     "share": 0.103
+    },
+    {
+     "function": "cfw_txn_new_asset",
+     "instructions": 12957,
+     "share": 0.051
+    },
+    {
+     "function": "bzero",
+     "instructions": 8326,
+     "share": 0.033
+    },
+    {
+     "function": "cfw_asset_find",
+     "instructions": 3870,
+     "share": 0.015
+    },
+    {
+     "function": "flush",
+     "instructions": 1790,
+     "share": 0.007
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 1420,
+     "share": 0.006
+    },
+    {
+     "function": "cache_response",
+     "instructions": 518,
+     "share": 0.002
+    },
+    {
+     "function": "mm_flash_store_commit",
+     "instructions": 280,
+     "share": 0.001
+    },
+    {
+     "function": "mm_flash_store_begin",
+     "instructions": 273,
+     "share": 0.001
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 18
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 8
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "rd32",
+     "entries": 4
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "aliases",
+     "entries": 3
+    },
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 3
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "cfw_asset_find",
+     "entries": 3
+    },
+    {
+     "caller": "mm_flash_store_write",
+     "callee": "flush",
+     "entries": 3
+    },
+    {
+     "caller": "mm_flash_store_write",
+     "callee": "read_map",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_lease",
+     "callee": "active",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_cache_prepare",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_put_entry_len",
+     "entries": 2
+    },
+    {
+     "caller": "service_entry",
+     "callee": "glassly_graphics_command",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "request_bytes",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "valid_message",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "try_alloc",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "post",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "glassly_graphics_display",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_display",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_display",
+     "callee": "find_owner",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_display",
+     "callee": "execute_inner.constprop.0.isra.0",
+     "entries": 1
+    },
+    {
+     "caller": "execute_inner.constprop.0.isra.0",
+     "callee": "valid_message",
+     "entries": 1
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[3] mode 37 (288 B)",
+   "instructions": 1086073,
+   "top": [
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 435936,
+     "share": 0.401
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 314444,
+     "share": 0.29
+    },
+    {
+     "function": "mm_external_image_in",
+     "instructions": 126369,
+     "share": 0.116
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79634,
+     "share": 0.073
+    },
+    {
+     "function": "read_map",
+     "instructions": 34481,
+     "share": 0.032
+    },
+    {
+     "function": "mm_scene_bytes_read",
+     "instructions": 16168,
+     "share": 0.015
+    },
+    {
+     "function": "mm_flash_store_read",
+     "instructions": 12341,
+     "share": 0.011
+    },
+    {
+     "function": "bzero",
+     "instructions": 8326,
+     "share": 0.008
+    },
+    {
+     "function": "cfw_asset_supersede",
+     "instructions": 7764,
+     "share": 0.007
+    },
+    {
+     "function": "valid.part.0",
+     "instructions": 7640,
+     "share": 0.007
+    },
+    {
+     "function": "data_alias",
+     "instructions": 7632,
+     "share": 0.007
+    },
+    {
+     "function": "aliases",
+     "instructions": 5766,
+     "share": 0.005
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_external_token",
+     "callee": "mm_scene_cursor_read",
+     "entries": 7807
+    },
+    {
+     "caller": "mm_external_image_in",
+     "callee": "mm_external_token",
+     "entries": 7619
+    },
+    {
+     "caller": "data_alias",
+     "callee": "aliases",
+     "entries": 477
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 287
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "valid.part.0",
+     "entries": 287
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "data_alias",
+     "entries": 287
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "read_bytes",
+     "entries": 287
+    },
+    {
+     "caller": "read_bytes",
+     "callee": "mm_flash_store_read",
+     "entries": 287
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "buffer.part.0",
+     "entries": 287
+    },
+    {
+     "caller": "mm_external_read",
+     "callee": "mm_scene_bytes_read",
+     "entries": 192
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "rd32",
+     "entries": 104
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "mm_external_read",
+     "entries": 97
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "mm_external_image_in",
+     "entries": 95
+    },
+    {
+     "caller": "mm_external_image_in",
+     "callee": "mm_external_read",
+     "entries": 95
+    },
+    {
+     "caller": "mm_external_image_in",
+     "callee": "mm_scene_cursor_init",
+     "entries": 95
+    },
+    {
+     "caller": "mm_scene_cursor_init",
+     "callee": "valid.part.0",
+     "entries": 95
+    },
+    {
+     "caller": "mm_scene_cursor_init",
+     "callee": "data_alias",
+     "entries": 95
+    },
+    {
+     "caller": "mm_scene_cursor_read",
+     "callee": "data_alias",
+     "entries": 95
+    },
+    {
+     "caller": "mm_scene_cursor_read",
+     "callee": "mm_scene_bytes_read",
+     "entries": 95
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 18
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 8
+    },
+    {
+     "caller": "cfw_txn_put_asset",
+     "callee": "cfw_asset_find",
+     "entries": 5
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_put_entry_len",
+     "entries": 4
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "cold-open[4] mode 38 (608 B)",
+   "instructions": 5099583,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 2878460,
+     "share": 0.564
+    },
+    {
+     "function": "raw_submit",
+     "instructions": 950332,
+     "share": 0.186
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 547266,
+     "share": 0.107
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 216768,
+     "share": 0.043
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 97108,
+     "share": 0.019
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79736,
+     "share": 0.016
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 69817,
+     "share": 0.014
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 55468,
+     "share": 0.011
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.005
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 16824,
+     "share": 0.003
+    },
+    {
+     "function": "bzero",
+     "instructions": 16360,
+     "share": 0.003
+    },
+    {
+     "function": "read_map",
+     "instructions": 12085,
+     "share": 0.002
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_external_token",
+     "callee": "mm_scene_cursor_read",
+     "entries": 1736
+    },
+    {
+     "caller": "mm_external_render",
+     "callee": "mm_external_token",
+     "entries": 1691
+    },
+    {
+     "caller": "native_info",
+     "callee": "native_word",
+     "entries": 1005
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_rrect_row",
+     "entries": 400
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_hspan",
+     "entries": 396
+    },
+    {
+     "caller": "mm_raster_clear",
+     "callee": "rs_hspan",
+     "entries": 350
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "glyph",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_metrics",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_info",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_bitmap",
+     "entries": 326
+    },
+    {
+     "caller": "data_alias",
+     "callee": "aliases",
+     "entries": 189
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "valid.part.0",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "data_alias",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "read_bytes",
+     "entries": 143
+    },
+    {
+     "caller": "read_bytes",
+     "callee": "mm_flash_store_read",
+     "entries": 143
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "buffer.part.0",
+     "entries": 143
+    },
+    {
+     "caller": "rs_span_pixels",
+     "callee": "cfw_div_floor",
+     "entries": 120
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "overlap",
+     "entries": 90
+    },
+    {
+     "caller": "mm_external_read",
+     "callee": "mm_scene_bytes_read",
+     "entries": 75
+    },
+    {
+     "caller": "cfw_box_store",
+     "callee": "cfw_sat16",
+     "entries": 60
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_chord_half",
+     "entries": 60
+    },
+    {
+     "caller": "rs_chord_half",
+     "callee": "cfw_isqrt",
+     "entries": 60
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_span_pixels",
+     "entries": 60
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "clock-tick[0] mode 38 (149 B)",
+   "instructions": 388175,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 116721,
+     "share": 0.301
+    },
+    {
+     "function": "raw_submit",
+     "instructions": 87442,
+     "share": 0.225
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79736,
+     "share": 0.205
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 49700,
+     "share": 0.128
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 20271,
+     "share": 0.052
+    },
+    {
+     "function": "bzero",
+     "instructions": 9455,
+     "share": 0.024
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 5228,
+     "share": 0.013
+    },
+    {
+     "function": "glyph",
+     "instructions": 2580,
+     "share": 0.007
+    },
+    {
+     "function": "cfw_scene_plan",
+     "instructions": 1893,
+     "share": 0.005
+    },
+    {
+     "function": "glassly_graphics_command",
+     "instructions": 1414,
+     "share": 0.004
+    },
+    {
+     "function": "cfw_scene_paint",
+     "instructions": 1269,
+     "share": 0.003
+    },
+    {
+     "function": "native_word",
+     "instructions": 1152,
+     "share": 0.003
+    }
+   ],
+   "calls": [
+    {
+     "caller": "native_info",
+     "callee": "native_word",
+     "entries": 96
+    },
+    {
+     "caller": "mm_raster_clear",
+     "callee": "rs_hspan",
+     "entries": 70
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "rd32",
+     "entries": 56
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_object_find",
+     "entries": 55
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "glyph",
+     "entries": 30
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_metrics",
+     "entries": 30
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_info",
+     "entries": 30
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_bitmap",
+     "entries": 30
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "overlap",
+     "entries": 20
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 18
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 14
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "mm_external_path_count.isra.0",
+     "entries": 14
+    },
+    {
+     "caller": "cfw_box_store",
+     "callee": "cfw_sat16",
+     "entries": 12
+    },
+    {
+     "caller": "cfw_scene_paint",
+     "callee": "cfw_sat16",
+     "entries": 8
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "aliases",
+     "entries": 3
+    },
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 3
+    },
+    {
+     "caller": "scene_present",
+     "callee": "box_join",
+     "entries": 3
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 2
+    },
+    {
+     "caller": "mm_scene_lease",
+     "callee": "active",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_cache_prepare",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_put_entry_len",
+     "entries": 2
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "tween[0] mode 38 (165 B)",
+   "instructions": 640271,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 349517,
+     "share": 0.546
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79787,
+     "share": 0.125
+    },
+    {
+     "function": "raw_submit",
+     "instructions": 66724,
+     "share": 0.104
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 39276,
+     "share": 0.061
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 21715,
+     "share": 0.034
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 18220,
+     "share": 0.028
+    },
+    {
+     "function": "bzero",
+     "instructions": 9193,
+     "share": 0.014
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 9032,
+     "share": 0.014
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 6623,
+     "share": 0.01
+    },
+    {
+     "function": "glyph",
+     "instructions": 5504,
+     "share": 0.009
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 5283,
+     "share": 0.008
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 3090,
+     "share": 0.005
+    }
+   ],
+   "calls": [
+    {
+     "caller": "native_info",
+     "callee": "native_word",
+     "entries": 198
+    },
+    {
+     "caller": "mm_external_token",
+     "callee": "mm_scene_cursor_read",
+     "entries": 163
+    },
+    {
+     "caller": "mm_external_render",
+     "callee": "mm_external_token",
+     "entries": 161
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_rrect_row",
+     "entries": 72
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_hspan",
+     "entries": 71
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "glyph",
+     "entries": 64
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_metrics",
+     "entries": 64
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_info",
+     "entries": 64
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_bitmap",
+     "entries": 64
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "rd32",
+     "entries": 58
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_object_find",
+     "entries": 58
+    },
+    {
+     "caller": "mm_raster_clear",
+     "callee": "rs_hspan",
+     "entries": 58
+    },
+    {
+     "caller": "rs_span_pixels",
+     "callee": "cfw_div_floor",
+     "entries": 30
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "overlap",
+     "entries": 20
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 18
+    },
+    {
+     "caller": "cfw_box_store",
+     "callee": "cfw_sat16",
+     "entries": 16
+    },
+    {
+     "caller": "cfw_scene_paint",
+     "callee": "cfw_sat16",
+     "entries": 16
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_chord_half",
+     "entries": 15
+    },
+    {
+     "caller": "rs_chord_half",
+     "callee": "cfw_isqrt",
+     "entries": 15
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_span_pixels",
+     "entries": 15
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 14
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "mm_external_path_count.isra.0",
+     "entries": 14
+    },
+    {
+     "caller": "data_alias",
+     "callee": "aliases",
+     "entries": 7
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 5
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "hide[0] mode 39 (7 B)",
+   "instructions": 1494202,
+   "top": [
+    {
+     "function": "raw_submit",
+     "instructions": 950332,
+     "share": 0.636
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 533750,
+     "share": 0.357
+    },
+    {
+     "function": "mm_raster_clear",
+     "instructions": 3881,
+     "share": 0.003
+    },
+    {
+     "function": "mm_scene_dispatch",
+     "instructions": 1694,
+     "share": 0.001
+    },
+    {
+     "function": "cache_response",
+     "instructions": 518,
+     "share": 0.0
+    },
+    {
+     "function": "?",
+     "instructions": 410,
+     "share": 0.0
+    },
+    {
+     "function": "cfw_object_freeze",
+     "instructions": 295,
+     "share": 0.0
+    },
+    {
+     "function": "mm_scene_input_valid",
+     "instructions": 252,
+     "share": 0.0
+    },
+    {
+     "function": "cfw_object_advance",
+     "instructions": 251,
+     "share": 0.0
+    },
+    {
+     "function": "find_owner",
+     "instructions": 246,
+     "share": 0.0
+    },
+    {
+     "function": "word",
+     "instructions": 204,
+     "share": 0.0
+    },
+    {
+     "function": "memcpy",
+     "instructions": 143,
+     "share": 0.0
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_raster_clear",
+     "callee": "rs_hspan",
+     "entries": 350
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "mm_scene_overlap",
+     "entries": 18
+    },
+    {
+     "caller": "find_owner",
+     "callee": "word",
+     "entries": 14
+    },
+    {
+     "caller": "mm_scene_now",
+     "callee": "now",
+     "entries": 14
+    },
+    {
+     "caller": "now",
+     "callee": "scene_now",
+     "entries": 14
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "mm_scene_now",
+     "entries": 14
+    },
+    {
+     "caller": "mm_scene_dispatch",
+     "callee": "cfw_object_freeze",
+     "entries": 14
+    },
+    {
+     "caller": "cfw_object_freeze",
+     "callee": "cfw_object_advance",
+     "entries": 14
+    },
+    {
+     "caller": "cfw_object_freeze",
+     "callee": "cfw_rotation_advance",
+     "entries": 14
+    },
+    {
+     "caller": "cfw_object_advance",
+     "callee": "cfw_sat16",
+     "entries": 8
+    },
+    {
+     "caller": "request_bytes",
+     "callee": "word",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_input_valid",
+     "callee": "aliases",
+     "entries": 3
+    },
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 3
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 3
+    },
+    {
+     "caller": "scene_present",
+     "callee": "box_join",
+     "entries": 3
+    },
+    {
+     "caller": "mm_scene_lease",
+     "callee": "active",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_cache_prepare",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    },
+    {
+     "caller": "cfw_scene_render_if_due",
+     "callee": "cfw_cache_peek",
+     "entries": 2
+    },
+    {
+     "caller": "service_entry",
+     "callee": "glassly_graphics_command",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "request_bytes",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "valid_message",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "try_alloc",
+     "entries": 1
+    },
+    {
+     "caller": "glassly_graphics_command",
+     "callee": "post",
+     "entries": 1
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "reopen[0] mode 38 (171 B)",
+   "instructions": 4898885,
+   "top": [
+    {
+     "function": "mm_native_builtin_text",
+     "instructions": 2857430,
+     "share": 0.583
+    },
+    {
+     "function": "raw_submit",
+     "instructions": 876370,
+     "share": 0.179
+    },
+    {
+     "function": "rs_hspan",
+     "instructions": 505776,
+     "share": 0.103
+    },
+    {
+     "function": "mm_external_render",
+     "instructions": 216768,
+     "share": 0.044
+    },
+    {
+     "function": "mm_scene_cursor_read",
+     "instructions": 97108,
+     "share": 0.02
+    },
+    {
+     "function": "mm_scene_memcpy.isra.0",
+     "instructions": 79736,
+     "share": 0.016
+    },
+    {
+     "function": "mm_external_token",
+     "instructions": 69817,
+     "share": 0.014
+    },
+    {
+     "function": "glyph",
+     "instructions": 28036,
+     "share": 0.006
+    },
+    {
+     "function": "cfw_object_find",
+     "instructions": 21645,
+     "share": 0.004
+    },
+    {
+     "function": "rs_rrect_row",
+     "instructions": 16824,
+     "share": 0.003
+    },
+    {
+     "function": "read_map",
+     "instructions": 12085,
+     "share": 0.002
+    },
+    {
+     "function": "native_word",
+     "instructions": 12060,
+     "share": 0.002
+    }
+   ],
+   "calls": [
+    {
+     "caller": "mm_external_token",
+     "callee": "mm_scene_cursor_read",
+     "entries": 1736
+    },
+    {
+     "caller": "mm_external_render",
+     "callee": "mm_external_token",
+     "entries": 1691
+    },
+    {
+     "caller": "native_info",
+     "callee": "native_word",
+     "entries": 1005
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_rrect_row",
+     "entries": 400
+    },
+    {
+     "caller": "mm_geometry_mode36",
+     "callee": "rs_hspan",
+     "entries": 396
+    },
+    {
+     "caller": "mm_raster_clear",
+     "callee": "rs_hspan",
+     "entries": 326
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "glyph",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_metrics",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_info",
+     "entries": 326
+    },
+    {
+     "caller": "glyph",
+     "callee": "native_bitmap",
+     "entries": 326
+    },
+    {
+     "caller": "data_alias",
+     "callee": "aliases",
+     "entries": 189
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "read_map",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "valid.part.0",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "data_alias",
+     "entries": 143
+    },
+    {
+     "caller": "mm_scene_bytes_read",
+     "callee": "read_bytes",
+     "entries": 143
+    },
+    {
+     "caller": "read_bytes",
+     "callee": "mm_flash_store_read",
+     "entries": 143
+    },
+    {
+     "caller": "mm_flash_store_read",
+     "callee": "buffer.part.0",
+     "entries": 143
+    },
+    {
+     "caller": "rs_span_pixels",
+     "callee": "cfw_div_floor",
+     "entries": 120
+    },
+    {
+     "caller": "mm_native_builtin_text",
+     "callee": "overlap",
+     "entries": 90
+    },
+    {
+     "caller": "mm_external_read",
+     "callee": "mm_scene_bytes_read",
+     "entries": 75
+    },
+    {
+     "caller": "cfw_box_store",
+     "callee": "cfw_sat16",
+     "entries": 60
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_chord_half",
+     "entries": 60
+    },
+    {
+     "caller": "rs_chord_half",
+     "callee": "cfw_isqrt",
+     "entries": 60
+    },
+    {
+     "caller": "rs_rrect_row",
+     "callee": "rs_span_pixels",
+     "entries": 60
+    }
+   ],
+   "status": 0,
+   "result": [
+    "ok"
+   ]
+  },
+  {
+   "step": "tick 1 (+33 ms)",
+   "instructions": 224,
+   "top": [
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.201
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.179
+    },
+    {
+     "function": "tick",
+     "instructions": 38,
+     "share": 0.17
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.138
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.089
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 15,
+     "share": 0.067
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.054
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.049
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.045
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 2,
+     "share": 0.009
+    }
+   ],
+   "calls": [
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "execute_inner.constprop.0.isra.0",
+     "callee": "tick",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "timer_userdata",
+     "entries": 1
+    },
+    {
+     "caller": "timer_userdata",
+     "callee": "word",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "mm_scene_session_pump",
+     "entries": 1
+    },
+    {
+     "caller": "mm_scene_session_pump",
+     "callee": "active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "flush_settled",
+     "entries": 1
+    }
+   ]
+  },
+  {
+   "step": "tick 2 (+33 ms)",
+   "instructions": 224,
+   "top": [
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.201
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.179
+    },
+    {
+     "function": "tick",
+     "instructions": 38,
+     "share": 0.17
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.138
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.089
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 15,
+     "share": 0.067
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.054
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.049
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.045
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 2,
+     "share": 0.009
+    }
+   ],
+   "calls": [
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "timer_userdata",
+     "entries": 1
+    },
+    {
+     "caller": "timer_userdata",
+     "callee": "word",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "mm_scene_session_pump",
+     "entries": 1
+    },
+    {
+     "caller": "mm_scene_session_pump",
+     "callee": "active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "flush_settled",
+     "entries": 1
+    },
+    {
+     "caller": "flush_settled",
+     "callee": "tick",
+     "entries": 1
+    }
+   ]
+  },
+  {
+   "step": "tick 3 (+33 ms)",
+   "instructions": 224,
+   "top": [
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.201
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.179
+    },
+    {
+     "function": "tick",
+     "instructions": 38,
+     "share": 0.17
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.138
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.089
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 15,
+     "share": 0.067
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.054
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.049
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.045
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 2,
+     "share": 0.009
+    }
+   ],
+   "calls": [
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "timer_userdata",
+     "entries": 1
+    },
+    {
+     "caller": "timer_userdata",
+     "callee": "word",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "mm_scene_session_pump",
+     "entries": 1
+    },
+    {
+     "caller": "mm_scene_session_pump",
+     "callee": "active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "flush_settled",
+     "entries": 1
+    },
+    {
+     "caller": "flush_settled",
+     "callee": "tick",
+     "entries": 1
+    }
+   ]
+  },
+  {
+   "step": "tick 4 (+33 ms)",
+   "instructions": 224,
+   "top": [
+    {
+     "function": "flush_settled",
+     "instructions": 45,
+     "share": 0.201
+    },
+    {
+     "function": "launcher_active",
+     "instructions": 40,
+     "share": 0.179
+    },
+    {
+     "function": "tick",
+     "instructions": 38,
+     "share": 0.17
+    },
+    {
+     "function": "scene_active",
+     "instructions": 31,
+     "share": 0.138
+    },
+    {
+     "function": "screen",
+     "instructions": 20,
+     "share": 0.089
+    },
+    {
+     "function": "mm_scene_session_pump",
+     "instructions": 15,
+     "share": 0.067
+    },
+    {
+     "function": "word",
+     "instructions": 12,
+     "share": 0.054
+    },
+    {
+     "function": "active",
+     "instructions": 11,
+     "share": 0.049
+    },
+    {
+     "function": "?",
+     "instructions": 10,
+     "share": 0.045
+    },
+    {
+     "function": "timer_userdata",
+     "instructions": 2,
+     "share": 0.009
+    }
+   ],
+   "calls": [
+    {
+     "caller": "active",
+     "callee": "scene_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "scene_active",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "timer_userdata",
+     "entries": 1
+    },
+    {
+     "caller": "timer_userdata",
+     "callee": "word",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "launcher_active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "screen",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "mm_scene_session_pump",
+     "entries": 1
+    },
+    {
+     "caller": "mm_scene_session_pump",
+     "callee": "active",
+     "entries": 1
+    },
+    {
+     "caller": "tick",
+     "callee": "flush_settled",
+     "entries": 1
+    },
+    {
+     "caller": "flush_settled",
+     "callee": "tick",
+     "entries": 1
+    }
+   ]
+  }
+ ]
+}

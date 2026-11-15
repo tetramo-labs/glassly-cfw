@@ -48,7 +48,7 @@ static fixture *create(const uint8_t bad[32]){
 static void destroy(fixture *f){free(f->flash);free(f);}
 static uint8_t *pattern(unsigned seed){uint8_t *p=malloc(262144);assert(p);for(unsigned i=0;i<262144;i++)p[i]=(uint8_t)((i*17u+(i>>8)*31u+seed)%251u);return p;}
 static void verify(fixture *f,const uint8_t *expected){uint8_t *out=malloc(262144);assert(out);CHECK(mm_flash_store_read(&f->store,0,out,262144)==0);CHECK(!memcmp(out,expected,262144));free(out);}
-static void commit_data(fixture *f,const uint8_t *p){CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,0,p,262144)==0);size_t calls=f->calls;CHECK(mm_flash_store_commit(&f->store)==0);CHECK(calls==f->calls);}
+static void commit_data(fixture *f,const uint8_t *p){CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,0,p,262144)==0);size_t calls=f->calls;CHECK(mm_flash_store_commit(&f->store)==0);CHECK(f->calls==calls+17);}
 static void test_init_ranges_aliases(void){
  fixture *f=create(NULL);uint8_t *zero=calloc(1,262144);assert(zero);verify(f,zero);CHECK(!f->calls);for(unsigned i=0;i<4096;i++)CHECK(f->scratch[i]==0xa5);
  for(unsigned i=0;i<1048576;i++)CHECK(f->flash[i]==0x5a);
@@ -102,11 +102,13 @@ static void test_every_callback_failure(void){
  fixture *f=create(NULL);uint8_t *a=pattern(7),*b=pattern(23);commit_data(f,a);
  uint8_t *snapshot=malloc(1048576),*flags=malloc(4096);assert(snapshot&&flags);memcpy(snapshot,f->flash,1048576);memcpy(flags,f->programmed,4096);mm_flash_store state=f->store;
  f->calls=f->reads=f->erases=f->programs=0;CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,0,b,262144)==0);
+ CHECK(f->calls==64*16+63*17);CHECK(mm_flash_store_commit(&f->store)==0);
  size_t total=f->calls;CHECK(total==64*(16+1+16));CHECK(f->reads==1024&&f->erases==64&&f->programs==1024);
  unsigned failures[3]={0};
  for(int partial=0;partial<=1;partial++)for(size_t at=1;at<=total;at++){
   memcpy(f->flash,snapshot,1048576);memcpy(f->programmed,flags,4096);f->store=state;f->calls=0;f->fail_at=at;f->partial=partial;f->failed_kind=0;
-  CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,0,b,262144)==MM_FLASH_IO);CHECK(f->calls==at);
+  CHECK(mm_flash_store_begin(&f->store)==0);int rc=mm_flash_store_write(&f->store,0,b,262144);if(!rc)rc=mm_flash_store_commit(&f->store);
+  CHECK(rc==MM_FLASH_IO);CHECK(f->calls==at);
   unsigned kind=f->failed_kind=='r'?0:f->failed_kind=='e'?1:2;failures[kind]++;
   CHECK(f->store.poisoned);CHECK(mm_flash_store_commit(&f->store)==MM_FLASH_POISONED);
   CHECK(mm_flash_store_read(&f->store,0,f->scratch,1)==MM_FLASH_POISONED);CHECK(mm_flash_store_write(&f->store,0,b,1)==MM_FLASH_POISONED);CHECK(f->calls==at);
@@ -145,9 +147,59 @@ static void test_unavailable_and_minimum_capacity(void){
  g=geometry(0xffe00000);CHECK(mm_flash_store_init(&f->store,&g,&io,f->bad,f->scratch,4096)==0);commit_data(f,b);verify(f,b);
  free(a);free(b);destroy(f);
 }
+static int maps_equal(const uint16_t *a,const uint16_t *b){for(unsigned i=0;i<64;i++)if(a[i]!=b[i])return 0;return 1;}
+static void test_open_sector_write_back(void){
+ fixture *f=create(NULL);uint8_t *a=pattern(3),*b=pattern(41),*expected=malloc(262144),*out=malloc(8192);assert(expected&&out);
+ memcpy(expected,a,262144);commit_data(f,a);uint16_t active[64];memcpy(active,f->store.active,sizeof(active));
+ // Line-sized writes into one sector load it once and touch flash no further.
+ f->reads=f->erases=f->programs=0;CHECK(mm_flash_store_begin(&f->store)==0);
+ for(unsigned i=0;i<64;i++){unsigned off=8192+i*61;CHECK(mm_flash_store_write(&f->store,off,b+off,7)==0);memcpy(expected+off,b+off,7);}
+ CHECK(f->reads==16&&!f->erases&&!f->programs);
+ // Its bytes are read from the workspace; neighbours from flash.
+ size_t calls=f->calls;
+ CHECK(mm_flash_store_read(&f->store,8192,out,4096)==0);CHECK(!memcmp(out,expected+8192,4096));CHECK(f->calls==calls);
+ CHECK(mm_flash_store_read(&f->store,8092,out,4296)==0);CHECK(!memcmp(out,expected+8092,4296));CHECK(f->calls==calls+2);
+ const uint8_t *view;size_t n;
+ CHECK(mm_flash_store_view(&f->store,8197,100,&view,&n)==0);CHECK(view==f->scratch+5&&n==100&&!memcmp(view,expected+8197,100));CHECK(f->calls==calls+2);
+ // Another sector writes the open one back once; the active map waits for commit.
+ CHECK(mm_flash_store_write(&f->store,12289,b,3)==0);memcpy(expected+12289,b,3);
+ CHECK(f->erases==1&&f->programs==16&&f->reads==34);CHECK(maps_equal(active,f->store.active));
+ CHECK(mm_flash_store_write(&f->store,8192,b+1,1)==0);expected[8192]=b[1];
+ CHECK(f->erases==2&&f->programs==32&&f->reads==50);CHECK(maps_equal(active,f->store.active));
+ verify(f,expected);CHECK(maps_equal(active,f->store.active));
+ size_t erases=f->erases;CHECK(mm_flash_store_commit(&f->store)==0);CHECK(f->erases==erases+1);verify(f,expected);
+ // A view of another sector writes the open one back before borrowing the workspace.
+ CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,70000,b,9)==0);memcpy(expected+70000,b,9);
+ erases=f->erases;CHECK(mm_flash_store_view(&f->store,100,50,&view,&n)==0);CHECK(view==f->scratch&&n==50&&!memcmp(view,expected+100,50));
+ CHECK(f->erases==erases+1);calls=f->calls;CHECK(mm_flash_store_commit(&f->store)==0);CHECK(f->calls==calls);verify(f,expected);
+ // Abort drops the open sector without flash operations.
+ memcpy(active,f->store.active,sizeof(active));
+ CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,100,b,10)==0);calls=f->calls;
+ CHECK(mm_flash_store_abort(&f->store)==0);CHECK(f->calls==calls);CHECK(maps_equal(active,f->store.active));verify(f,expected);
+ // A failed write-back at commit, at a sector switch, or a failed load leaves the committed bytes.
+ for(unsigned step=0;step<17;step++){
+  CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,20000,b,50)==0);
+  f->fail_at=f->calls+1+step;f->partial=step&1;
+  CHECK(mm_flash_store_commit(&f->store)==MM_FLASH_IO);CHECK(f->failed_kind==(step?'p':'e'));CHECK(f->store.poisoned);
+  CHECK(mm_flash_store_commit(&f->store)==MM_FLASH_POISONED);CHECK(maps_equal(active,f->store.active));
+  CHECK(mm_flash_store_abort(&f->store)==0);f->fail_at=0;verify(f,expected);
+ }
+ CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,30000,b,10)==0);f->fail_at=f->calls+3;
+ CHECK(mm_flash_store_write(&f->store,40000,b,10)==MM_FLASH_IO);CHECK(f->failed_kind=='p');
+ CHECK(mm_flash_store_read(&f->store,30000,out,10)==MM_FLASH_POISONED);CHECK(mm_flash_store_abort(&f->store)==0);f->fail_at=0;verify(f,expected);
+ CHECK(mm_flash_store_begin(&f->store)==0);f->fail_at=f->calls+5;
+ CHECK(mm_flash_store_write(&f->store,50000,b,10)==MM_FLASH_IO);CHECK(f->failed_kind=='r');
+ CHECK(mm_flash_store_commit(&f->store)==MM_FLASH_POISONED);CHECK(mm_flash_store_abort(&f->store)==0);f->fail_at=0;verify(f,expected);
+ // An unmapped sector opens without a read.
+ mm_flash_geometry g=geometry(BASE);mm_flash_callbacks io=callbacks(f);CHECK(mm_flash_store_init(&f->store,&g,&io,f->bad,f->scratch,4096)==0);
+ calls=f->calls;CHECK(mm_flash_store_begin(&f->store)==0);CHECK(mm_flash_store_write(&f->store,5,b,3)==0);CHECK(f->calls==calls);
+ CHECK(mm_flash_store_read(&f->store,0,out,16)==0);CHECK(!out[0]&&!memcmp(out+5,b,3)&&!out[8]);
+ CHECK(mm_flash_store_commit(&f->store)==0);CHECK(f->calls==calls+17);
+ free(a);free(b);free(expected);free(out);destroy(f);
+}
 static uint32_t random_step(uint32_t *state){*state=*state*UINT32_C(1664525)+UINT32_C(1013904223);return *state;}
 static void test_reference_model(void){
- fixture *f=create(NULL);uint8_t *active=calloc(1,262144),*staged=malloc(262144),*bytes=pattern(5);assert(active&&staged);
+ fixture *f=create(NULL);uint8_t *active=calloc(1,262144),*staged=malloc(262144),*bytes=pattern(5),*probe=malloc(9000);assert(active&&staged&&probe);
  uint32_t random=12345;
  for(unsigned turn=0;turn<240;turn++){
   memcpy(staged,active,262144);CHECK(mm_flash_store_begin(&f->store)==0);
@@ -157,11 +209,14 @@ static void test_reference_model(void){
    CHECK(mm_flash_store_write(&f->store,off,bytes+turn,n)==0);memcpy(staged+off,bytes+turn,n);
    const uint8_t *view;size_t length;
    CHECK(mm_flash_store_view(&f->store,off,n,&view,&length)==0);CHECK(length&&length<=n&&!memcmp(view,staged+off,length));
+   unsigned at=random_step(&random)%262144,count=1+random_step(&random)%9000;if(count>262144-at)count=262144-at;
+   CHECK(mm_flash_store_read(&f->store,at,probe,count)==0);CHECK(!memcmp(probe,staged+at,count));
   }
   verify(f,staged);size_t calls=f->calls;
-  if(turn%3){CHECK(mm_flash_store_commit(&f->store)==0);memcpy(active,staged,262144);}else CHECK(mm_flash_store_abort(&f->store)==0);
-  CHECK(f->calls==calls);verify(f,active);
+  if(turn%3){CHECK(mm_flash_store_commit(&f->store)==0);memcpy(active,staged,262144);CHECK(f->calls==calls||f->calls==calls+17);}
+  else{CHECK(mm_flash_store_abort(&f->store)==0);CHECK(f->calls==calls);}
+  verify(f,active);
  }
- free(active);free(staged);free(bytes);destroy(f);
+ free(active);free(staged);free(bytes);free(probe);destroy(f);
 }
-int main(void){test_init_ranges_aliases();test_message_capacity_view_and_churn();test_every_callback_failure();test_unavailable_and_minimum_capacity();test_reference_model();printf("PASS checks=%u context_bytes=%zu workspace_bytes=4096\n",checks,sizeof(mm_flash_store));return 0;}
+int main(void){test_init_ranges_aliases();test_message_capacity_view_and_churn();test_every_callback_failure();test_unavailable_and_minimum_capacity();test_open_sector_write_back();test_reference_model();printf("PASS checks=%u context_bytes=%zu workspace_bytes=4096\n",checks,sizeof(mm_flash_store));return 0;}

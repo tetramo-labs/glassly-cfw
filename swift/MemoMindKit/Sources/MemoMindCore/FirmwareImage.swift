@@ -238,6 +238,10 @@ private struct FirmwareRelease {
                         sha256: "17a69ad20d7e364f0185eb0d6ec61e34dd08ed2c057a76648d67c8c554b3d0a8", byteCount: 2_242_788, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "841c961e21bfc0b11c33c70101889ebe7e4bb614e5b88cd203b6cd972f1cd009",
                         streams: streamPins(.bleFrames24)),
+        FirmwareRelease(name: "latency-001",
+                        sha256: "d2a11d71346511988c6e05adb1ab5fed9fcc89d8cb18f642cac12964eaf77206", byteCount: 2_244_038, modified: true,
+                        profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "87691c979384307040dcd149bd40c14b8e62c6f1e04fb1bf33617879da264662",
+                        streams: streamPins(.latency27)),
         FirmwareRelease(name: "ble-link-002",
                         sha256: "e5b09e22634f2d2f996e4117b867809753e62adedac954845dd5b323149a5027", byteCount: 2_243_927, modified: true,
                         profile: "H001Y-1.0.3.127-flash-canary-v1", headerSHA256: "47a13db4278143edfa84234c38d11391d7662d50c1e02cd995320f42e05058a6",
@@ -365,12 +369,16 @@ private struct FirmwareRelease {
                         streams: streamPins(.minimalOwnerFlash)),
     ]
 
-    private enum StreamVariant { case bleLink26, bleLink25, bleFrames24, stereo23, stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
+    private enum StreamVariant { case latency27, bleLink26, bleLink25, bleFrames24, stereo23, stereo22, bleProbe21, bleProbe20, bleProbe19, bleProbe18, bleProbe17, bleProbe16, rawPresent15, activeAls14, textScale13, partialRender12, firstRunOwner11, sensorDrain10, sensorBuffer9, sensorCapture8, microphoneOwner7, recordMemory6, commandFlags5, recordTransport4, notificationsSettings3, notificationsSettings, stock, reader, canary, raster, rectCopy, bundle, text, diagnostic, dashboardRAM, resetUndoTrim, minimalOwnerFlash, wakeControl, wakeBackground }
 
     private static func streamPins(_ variant: StreamVariant) -> [FirmwareStreamPin] {
         let metadata: Int, appPacked: Int, appRaw: UInt32
         let metadataHash: String, appHash: String
         switch variant {
+        case .latency27:
+            metadata = 171; appPacked = 972_936; appRaw = 1_857_920
+            metadataHash = "e49dfe8d7374c9e13878765366613acca87e0ae16aee21ad631ca18a05c06e31"
+            appHash = "a06d90683fba3f687a94ac0da62536ce35c4317d4259dbf17902ed49dc3002a4"
         case .bleLink26:
             metadata = 171; appPacked = 972_825; appRaw = 1_857_568
             metadataHash = "88d8cb39499c4897ace971196799640e7a8994709fcfdbdd12094e72a59e49e9"

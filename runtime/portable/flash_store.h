@@ -37,8 +37,7 @@ typedef struct {
     uint32_t base,magic;
     uint16_t active[MM_FLASH_LOGICAL_SECTORS],staged[MM_FLASH_LOGICAL_SECTORS];
     uint8_t unavailable[MM_FLASH_UNAVAILABLE_BYTES];
-    uint16_t next_sector;
-    uint8_t transaction,poisoned;
+    uint8_t next_sector,open_sector,transaction,poisoned;
 } mm_flash_store;
 
 /* Exactly4096 bytes of nonaliasing workspace. Init never calls flash callbacks;
@@ -54,7 +53,9 @@ int mm_flash_store_read(mm_flash_store *,uint32_t offset,void *out,size_t length
 int mm_flash_store_write(mm_flash_store *,uint32_t offset,const void *data,size_t length);
 int mm_flash_store_commit(mm_flash_store *);
 int mm_flash_store_abort(mm_flash_store *);
-/* Returns a borrowed const scratch view, up to one logical sector boundary,
+/* Writes collect one logical sector in the workspace; touching another sector,
+ * commit, or a view of another sector inside a transaction copies it to flash.
+ * Returns a borrowed const scratch view, up to one logical sector boundary,
  * <=max_length. Invalid after any next store operation. No writable XIP alias. */
 int mm_flash_store_view(mm_flash_store *,uint32_t offset,size_t max_length,
                         const uint8_t **view,size_t *length);

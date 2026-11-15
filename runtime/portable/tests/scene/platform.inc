@@ -9,7 +9,14 @@ static void test_timer_start(void *u,uintptr_t timer,uint32_t ms) {(void)u;(void
 static void test_timer_stop(void *u,uintptr_t timer) {(void)u;(void)stub_timer_stop((uint32_t)timer);}
 static void test_wait(void *u) {(void)u;stub_gate_wait();}
 static void test_signal(void *u) {(void)u;stub_gate_signal();}
-static void test_present(void *u,mm_scene_context *ctx,const mm_raster *r,mm_scene_dirty *dirty) {(void)u;(void)ctx;(void)r;g_presented++;if(dirty)dirty->direct_submitted=1;}
+static int g_present_fail,g_present_n;
+static mm_scene_rect g_present_rect;
+static void test_present(void *u,mm_scene_context *ctx,const mm_raster *r,mm_scene_dirty *dirty) {
+    (void)u;(void)ctx;(void)r;g_presented++;
+    g_present_n=dirty?(int)dirty->n:0;
+    if(dirty && dirty->n)g_present_rect=dirty->r[0];
+    if(dirty && !g_present_fail)dirty->direct_submitted=1;
+}
 static void test_settled(void *u,uint16_t tag) {(void)u;g_settled++;g_settled_tag=tag;}
 static void test_hint(void *u,uint8_t capacity) {(void)u;g_hint=capacity;}
 static int test_builtin(void *u,const mm_raster *r,const uint8_t *src,size_t len,mm_scene_dirty *dirty,uint32_t *tokens,size_t cap) {

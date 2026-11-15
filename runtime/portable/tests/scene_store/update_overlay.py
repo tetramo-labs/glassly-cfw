@@ -15,7 +15,7 @@ spec=importlib.util.spec_from_file_location('scene_generator',ROOT/'tests/prepar
 module=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 base={}
-module.emit=lambda path,text:base.__setitem__(path.name,text)
+module.emit=lambda path,text:base.__setitem__(path.name,module.native_opt_ins(path,text))
 module.main()
 result={}
 for name in ('scene_internal.h','scene_shapes.inc','scene_cache.inc'):

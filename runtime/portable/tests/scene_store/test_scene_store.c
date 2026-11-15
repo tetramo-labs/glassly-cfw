@@ -161,4 +161,49 @@ static void reader_owner_aliases(void){
  free(saved);destroy(o);free(work);free(pixels);free(saved_work);free(saved_pixels);
  puts("reader-owner-aliases=8 initializer-backend-aliases=2 unchanged-on-rejection=yes");
 }
-int main(int argc,char **argv){reader_owner_aliases();for(int i=1;i<argc;i++)replay(argv[i]);full_capacity_and_faults();cached_assets_and_io();maximum_paths_and_header_fault();puts("PASS scene-store differential and transaction failures");return 0;}
+/* The external image renderer as it was through revision 26: every pixel's
+ * position divided out of its index, every token read. */
+static int old_external_render(mm_scene_context *ctx,const cfw_raster *r,const mm_scene_bytes *b,const mm_external_image *img,int32_t x0,int32_t y0,const uint8_t *lut,int transparent){
+ mm_scene_cursor c;if(mm_scene_cursor_init(&c,b))return -1;uint32_t pos=0,pixel=0,total=img->width*img->height;
+ while(pixel<total){
+  uint32_t used,count;uint8_t color;
+  if(pos>=img->length||!mm_external_token(ctx,&c,img->offset+pos,&used,&count,&color)||used>img->length-pos||count>total-pixel)return -1;
+  pos+=used;int skip=transparent&&!color;uint8_t mapped=lut[color];
+  for(uint32_t i=0;i<count;i++,pixel++){
+   int32_t x=x0+(int32_t)(pixel%img->width),y=y0+(int32_t)(pixel/img->width);
+   if(!skip&&x>=0&&y>=0&&x<r->w&&y<r->h){uint8_t *q=r->buf+(uint32_t)y*r->stride+((uint32_t)x>>1);if(x&1)*q=(uint8_t)((*q&240)|mapped);else *q=(uint8_t)((*q&15)|(mapped<<4));}
+  }
+ }
+ return 0;
+}
+/* Random stored images, every token form, views narrower than their stride and
+ * positions on and off each edge: the same pixels as the old renderer, with
+ * fewer reads once the view ends above the image's last row. */
+static void external_render_matches_old_loop(void){
+ owner *o=create(1);static uint8_t want[320*100],got[320*100],img[8192];uint32_t seed=0x2468ace1u;size_t fewer=0;
+#define RND() (seed=seed*1664525u+1013904223u,seed>>8)
+ for(unsigned k=0;k<4000;k++){
+  uint32_t w=1+RND()%40,h=1+RND()%40,left=w*h,n=2;img[0]=(uint8_t)w;img[1]=(uint8_t)h;
+  while(left){
+   uint8_t color=(uint8_t)(RND()%16);uint32_t form=RND()%3,count;
+   if(form==0){count=1+RND()%15;if(count>left)count=left;img[n++]=(uint8_t)((count<<4)|color);}
+   else if(form==1){count=1+RND()%255;if(count>left)count=left;img[n++]=color;img[n++]=(uint8_t)count;}
+   else{count=1+RND()%400;if(count>left)count=left;img[n++]=color;img[n++]=0;img[n++]=(uint8_t)count;img[n++]=(uint8_t)(count>>8);}
+   left-=count;
+  }
+  uint32_t off=RND()%(262144-n);
+  assert(!mm_flash_store_begin(&o->flash)&&!mm_flash_store_write(&o->flash,off,img,n)&&!mm_flash_store_commit(&o->flash));
+  mm_scene_bytes b=mm_asset_bytes(&o->ctx,off,n);mm_external_image im;assert(mm_external_image_head(&o->ctx,&b,0,&im));
+  uint32_t skew=RND()%8,vw=1+RND()%600,vh=1+RND()%90;int32_t x=(int32_t)(RND()%800)-150,y=(int32_t)(RND()%200)-60;
+  uint8_t options=(uint8_t)RND(),lut[16];cfw_texture_make_lut(options,lut);int transparent=(int)(RND()&1u);
+  for(unsigned i=0;i<sizeof(want);i++)want[i]=got[i]=(uint8_t)RND();
+  cfw_raster rw={want+skew,320,(int32_t)vw,(int32_t)vh},rg={got+skew,320,(int32_t)vw,(int32_t)vh};
+  size_t reads=o->reads;assert(!old_external_render(&o->ctx,&rw,&b,&im,x,y,lut,transparent));size_t old_reads=o->reads-reads;
+  reads=o->reads;assert(!mm_external_render(&o->ctx,&rg,&b,&im,x,y,lut,transparent));
+  assert(o->reads-reads<=old_reads);if(o->reads-reads<old_reads)fewer++;
+  assert(!memcmp(want,got,sizeof(want)));
+ }
+#undef RND
+ assert(fewer);printf("external-render cases=4000 fewer-reads=%zu identical=yes\n",fewer);destroy(o);
+}
+int main(int argc,char **argv){reader_owner_aliases();external_render_matches_old_loop();for(int i=1;i<argc;i++)replay(argv[i]);full_capacity_and_faults();cached_assets_and_io();maximum_paths_and_header_fault();puts("PASS scene-store differential and transaction failures");return 0;}

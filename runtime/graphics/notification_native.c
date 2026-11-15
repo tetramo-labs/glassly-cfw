@@ -13,6 +13,11 @@ extern void *mm_notification_registry(void);
 #define MAGIC UINT32_C(0x414e4331)
 #define ACTION_EVENT 0x280u
 #define REPLY_BYTES 1536u
+/* A relay tick takes up to two queued records before it knows whether they
+ * fit, each at most 150 bytes hex encoded, and the closing fields must follow. */
+#define RECORD_CHARS (2u*150u+4u)
+#define CLOSE_CHARS 176u
+#define TICK_CHARS (2u*RECORD_CHARS+CLOSE_CHARS)
 typedef struct {
     mm_notifications relay;
     mm_ancs_ingress ingress;
@@ -101,7 +106,10 @@ void glassly_notification_command(uint32_t command,void *request,const uint8_t *
     if(control[3]==2){mm_ancs_ingress_reset(&o->ingress);o->action_pending=0;o->action_result=0;}
     uint8_t was_pending=o->action_pending;
     mm_notifications_control(&o->relay,control,n);
-    mm_notifications_tick(&o->relay);
+    uint8_t errors=o->relay.ancs_send_errs;uint16_t tail;
+    do{tail=o->relay.ancs_tail;mm_notifications_tick(&o->relay);}
+    while(o->relay.ancs_tail!=tail && o->relay.ancs_head!=o->relay.ancs_tail &&
+          o->relay.ancs_send_errs==errors && o->used+TICK_CHARS<REPLY_BYTES);
     if(!was_pending && o->action_pending)serial=o->action_serial;
     text(o,"],\"generation\":");number(o,o->ingress.generation);
     text(o,",\"session\":");number(o,o->ingress.session);

@@ -1,5 +1,37 @@
 # MemoMind One firmware investigation
 
+Revision 27 (`latency-001`) takes work off the scene path. The flash store
+keeps the logical sector a transaction is writing in its 4 KiB workspace: the
+per-line TEXT_INLINE, PATH and PUT_ASSET chunk writes into one sector cost one
+16-page load, and the sector is erased and programmed once, when a write moves
+to another sector or at commit, instead of once per write. Reads of it come
+from the workspace, abort drops it, and the active map still changes only at
+commit. Replaying the captured media through a flash-backed scene erases 40%
+fewer sectors (GIF 710 → 427, SVG 1,320 → 831). The retained scene core is now
+G2 CFW revision 52 (g2flash `f120722`): an animation tick plans its box and
+presents only those rows, a staged asset chunk is no longer evicted by its own
+transaction, FREEZE and FINISH redraw the object, a same-version re-PUT keeps an
+inline string's length, a full turn keeps a bounded box and cached images draw
+by runs; the generator no longer absorbs another copy of the RESET-undo opt-in
+on each overlay refresh. A stereo frame's own paint is its left pass and one
+right pass follows over the same box (three passes before); a synced frame that
+changed nothing paints and submits nothing, and an empty dirty list no longer
+resubmits the whole 600×350 panel to both eyes. Resource text samples without
+divisions (byte-identical to the old loop on 20,000 random glyphs),
+flash-backed images stop at the view's last row, a notification poll keeps
+draining the relay while a worst-case tick still fits its reply (two records per
+poll before), a new ANCS UID takes a free slot before evicting a live one, and a
+failed BLE notify ends the frame instead of sending the rest around a hole. On
+the dashboard fixture (`tests/rv32/scene_render_benchmark.py`, natives mocked,
+so flash and native font cost nothing) the cold-open SHOW runs 5.10M
+instructions instead of 8.64M, a clock tick 388K instead of 528K, a tween 640K
+instead of 1.06M and a reopen 4.90M instead of 8.40M. `memomind_scene.py`
+accepts lean builds and sizes requests by `maxWireMessageBytes`. Runtime
+84,704 B (13,600 B free). The record-transport profile fits with 160 B to spare
+after the notification relay is compiled -Os, and the 64 KiB text rung compiles
+native text -Os as production builds do. Records in
+`analysis/latency-20261114/`. Not flashed.
+
 Revision 26 (`ble-link-002`) speeds up the iPhone link of revision 25. The
 stock LE policy classifies the bonded phone when its link comes up
 (`0421465e`, current phone peer at 0x020128b6 checked by `042133e2`, bonded

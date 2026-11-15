@@ -11,6 +11,7 @@ typedef struct {
     uint32_t last_next,a_next;
     uint16_t w,h,advance;
     int16_t dx,dy;
+    const uint8_t *custom;
 } fixture;
 static int ready(void *v){return ((fixture *)v)->ready;}
 static int info(void *v,uint32_t font,int32_t *h,int32_t *base,uint8_t *flags){
@@ -30,6 +31,7 @@ static int metrics(void *v,uint32_t font,mm_native_text_glyph *g,uint32_t cp,uin
 static const uint8_t *bitmap(void *v,uint32_t font,uint32_t cp){
     fixture *f=v;f->bitmap_calls++;
     if((int)cp==f->fail_bitmap)return 0;
+    if(f->custom)return f->custom;
     return font==MM_NATIVE_TEXT_EMOJI_FONT?bits1:bits2;
 }
 static fixture fresh(void){fixture f={0};f.ready=1;f.w=3;f.h=2;f.advance=3;return f;}
@@ -153,4 +155,89 @@ static void scaled(void){
     a.scale_num=1;a.scale_den=1;memset(pixels,0xcc,sizeof(pixels));d.n=0;n=message(msg,0,-1,15,(const uint8_t *)"A",1);
     assert(!mm_native_builtin_text(&a,&r,msg,n,&d,tokens,128));assert(pixel(&r,0,1)==15 && pixel(&r,2,0)==10 && d.r[0].w==3);
 }
-int main(void){packing_clipping();options_and_controls();failures();edges();scaled();puts("native text tests passed");return 0;}
+/* The drawing loop as it was through revision 26: four divided samples per
+ * output pixel and a division per level. */
+static uint32_t old_scaled_u(uint32_t v,unsigned num,unsigned den){return (v*num+den/2u)/den;}
+static int32_t old_scaled_s(int32_t v,unsigned num,unsigned den){
+    return v<0?-(int32_t)old_scaled_u((uint32_t)-v,num,den):(int32_t)old_scaled_u((uint32_t)v,num,den);
+}
+static int32_t old_floor_div(int32_t v,unsigned den){
+    return v<0?-(int32_t)(((uint32_t)-v+den-1u)/den):(int32_t)((uint32_t)v/den);
+}
+static void old_text(const mm_native_text_api *api,const mm_raster *target,int x,int y,unsigned options,const uint32_t *cps,size_t count){
+    int32_t height,root_baseline;uint8_t flags;
+    assert(api->font_info(api->context,api->root_font,&height,&root_baseline,&flags));
+    unsigned num=api->scale_num?api->scale_num:1u,den=api->scale_den?api->scale_den:1u,top=options&15u;
+    int32_t xf=x*(int32_t)den;
+    for(size_t i=0;i<count;i++){
+        mm_native_text_glyph g={0};int32_t font_height,baseline;
+        assert(api->metrics(api->context,api->root_font,&g,cps[i],i+1<count?cps[i+1]:0));
+        assert(api->font_info(api->context,g.font,&font_height,&baseline,&flags));
+        const uint8_t *bits=g.box_w && g.box_h?api->bitmap(api->context,g.font,cps[i]):0;
+        if(bits){
+            uint32_t w=old_scaled_u(g.box_w,num,den),h=old_scaled_u(g.box_h,num,den);
+            if(!w)w=1u;
+            if(!h)h=1u;
+            int32_t gx=old_floor_div(xf,den)+old_scaled_s(g.ofs_x,num,den);
+            int32_t gy=y+old_scaled_s(height-baseline-g.ofs_y,num,den)-(int32_t)h;
+            int32_t l=gx<0?0:gx,t=gy<0?0:gy,r=gx+(int32_t)w,b=gy+(int32_t)h;
+            if(r>(int32_t)target->width)r=(int32_t)target->width;
+            if(b>(int32_t)target->height)b=(int32_t)target->height;
+            unsigned bpp=g.bpp_flags&15u,mask=(1u<<bpp)-1u;
+            for(int32_t py=t;py<b;py++)for(int32_t px=l;px<r;px++){
+                uint32_t ox=(uint32_t)(px-gx),oy=(uint32_t)(py-gy);unsigned sum=0;
+                for(unsigned k=0;k<4;k++){
+                    uint32_t sx=((4u*ox+((k&1u)?3u:1u))*g.box_w)/(4u*w);
+                    uint32_t sy=((4u*oy+((k&2u)?3u:1u))*g.box_h)/(4u*h);
+                    uint32_t bit=(sy*g.box_w+sx)*bpp;
+                    unsigned value=(bits[bit>>3]>>(8u-bpp-(bit&7u)))&mask;
+                    sum+=bpp==1?value*15u:value*5u;
+                }
+                unsigned value=(sum+2u)/4u;
+                if(!value && (options&16u))continue;
+                if(options&32u)value=15u-value;
+                value=value*top/15u;
+                size_t at=(size_t)py*target->stride+(uint32_t)px/2u;
+                unsigned shift=(px&1)?0:4;
+                target->pixels[at]=(uint8_t)((target->pixels[at]&~(15u<<shift))|(value<<shift));
+            }
+        }
+        xf+=(int32_t)((uint32_t)g.advance*num);
+    }
+}
+/* Random boxes, scales up and down, both depths, every option, positions on
+ * and off each edge: the same bytes as the old loop. */
+static void division_free_sampling(void){
+    static uint8_t want[64*96],got[64*96],glyph_bits[1000];
+    uint32_t seed=0x2468ace1u,cases=0;
+#define RND() (seed=seed*1664525u+1013904223u,seed>>8)
+    for(unsigned k=0;k<20000;k++){
+        fixture f=fresh();mm_native_text_api a=api(&f);
+        int star=(int)(RND()&1u);unsigned bpp=star?1u:2u,limit=8000u/bpp;
+        f.w=(uint16_t)(1u+RND()%(star?120u:80u));if(f.w>limit)f.w=(uint16_t)limit;
+        unsigned rows=limit/f.w;if(rows>255u)rows=255u;
+        f.h=(uint16_t)(1u+RND()%rows);
+        for(unsigned i=0;i<sizeof(glyph_bits);i++)glyph_bits[i]=(uint8_t)RND();
+        f.custom=glyph_bits;f.dx=(int16_t)((int)(RND()%41u)-20);f.dy=(int16_t)((int)(RND()%41u)-20);f.advance=(uint16_t)(RND()%40u);
+        switch(RND()%4u){
+        case 0:a.scale_num=0;a.scale_den=0;break;
+        case 1:a.scale_num=MM_NATIVE_TEXT_SCALE_NUM;a.scale_den=MM_NATIVE_TEXT_SCALE_DEN;break;
+        default:a.scale_num=(uint8_t)(1u+RND()%12u);a.scale_den=(uint8_t)(1u+RND()%12u);break;
+        }
+        uint32_t width=1u+RND()%128u,height=1u+RND()%96u;
+        mm_raster rw={want,sizeof(want),width,height,64},rg=rw;rg.pixels=got;
+        int x=(int)(RND()%220u)-60,y=(int)(RND()%220u)-40;unsigned options=RND()&63u;
+        uint32_t cps[3];size_t count=star?1u:1u+RND()%3u;uint8_t text[3];
+        if(star){cps[0]=0x2605;text[0]=0xe2;text[1]=0x98;text[2]=0x85;}
+        else for(size_t i=0;i<count;i++){cps[i]='A';text[i]='A';}
+        for(unsigned i=0;i<sizeof(want);i++)want[i]=got[i]=(uint8_t)RND();
+        uint8_t msg[16];uint32_t tokens[8];mm_scene_dirty d={0};
+        size_t n=message(msg,x,y,options,text,star?3u:count);
+        assert(!mm_native_builtin_text(&a,&rg,msg,n,&d,tokens,8));
+        old_text(&a,&rw,x,y,options,cps,count);
+        assert(!memcmp(want,got,sizeof(want)));cases++;
+    }
+#undef RND
+    printf("division-free sampling matches the old loop in %u cases\n",(unsigned)cases);
+}
+int main(void){packing_clipping();options_and_controls();failures();edges();scaled();division_free_sampling();puts("native text tests passed");return 0;}

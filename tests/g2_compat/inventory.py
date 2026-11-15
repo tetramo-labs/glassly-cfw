@@ -84,7 +84,7 @@ def main():
                 row['scope']='partially ported: geometric test_immediate predicates and easing; retained scenes/assets unimplemented'
                 ported=predicates((ROOT/'ported_shapes.c').read_text())
                 preserved={p['expression'].replace('memo_immediate(', 'cfw_shapes_immediate(') for p in ported}
-                geometric_lines={377,383,384,385,386,387,389,391,393,395,404,407,409,416}
+                geometric_lines={383,389,390,391,392,393,395,397,399,401,410,413,415,422}
                 selected=[p for p in row['assertions'] if p['line'] in geometric_lines and p['expression'] in preserved]
                 # Header CHECK macro must not count; exactly fourteen original sites are retained.
                 if len(selected)!=14:raise RuntimeError('Geometric predicate identity changed')

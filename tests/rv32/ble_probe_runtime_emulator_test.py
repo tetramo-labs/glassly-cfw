@@ -47,6 +47,7 @@ class BleMachine(SensorMachine):
         self.gatt_services, self.gatt_charas, self.gatt_calls, self.notifies = [], [], [], []
         self.listeners, self.posts, self.ota_frames, self.ota_drops, self.stock_writes = [], [], [], [], []
         self.fail_register = self.fail_run = self.fail_notify = False
+        self.fail_notify_at = None
         self.rings = set()
         self.bt_sends, self.phones, self.bonded_addr, self.bt_send_rc = [], set(), None, 0
 
@@ -107,7 +108,7 @@ class BleMachine(SensorMachine):
             self.gatt_calls.append(name); return 0 if a0 < 2 else 0xb
         if name == "gatt_notify":
             peer = self.read(a0, 6); assert a1 in self.gatt_charas
-            if self.fail_notify: return 0
+            if self.fail_notify or len(self.notifies) == self.fail_notify_at: self.fail_notify_at = None; return 0
             self.notifies.append((peer, a1, self.read(a2, a3 & 0xffff))); return 1
         if name == "gatt_add_listener":
             self.gatt_calls.append(name)
@@ -325,6 +326,17 @@ class BleLinkTests(unittest.TestCase):
         self.assertTrue(all(n[0] == PEER and n[1] == gm for n in m.notifies))
         m.fail_notify = True
         m.call("glassly_gm_write", m.bytes_at(b"x"), 1); self.assertEqual(m.reg(10), 2)
+
+    def test_a_failed_chunk_ends_the_frame(self):
+        m = BleMachine(); gm, _ = m.accepted()
+        sent, failed = m.status()["gmNotified"], m.status()["gmFailed"]
+        m.fail_notify_at = len(m.notifies) + 1
+        frame = bytes(range(250)) + bytes(200)
+        m.call("glassly_gm_write", m.bytes_at(frame), len(frame)); self.assertEqual(m.reg(10), 2)
+        self.assertEqual([len(n[2]) for n in m.notifies[-1:]], [180], "only the chunk before the failure went out")
+        status = m.status()
+        self.assertEqual((status["gmNotified"] - sent, status["gmFailed"] - failed), (1, 1),
+                         "no chunk after the failed one, so the phone never sees a frame with a hole")
 
     def test_gm_writer_entry_falls_through_to_stock_without_a_link(self):
         m = BleMachine(); m.registered()

@@ -1,4 +1,4 @@
-/* Derived from pinned G2 commite889569fe77775ed5822af6f7e47210f2984f15d.
+/* Derived from pinned G2 commitf12072270a866746266d5399ea03c966011cad61.
  * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */
 /* Revision-21 paths and rotation on the revision-38 object cache: pixels,
  * lifecycle and adversarial input. Reuses the firmware stubs, message builders

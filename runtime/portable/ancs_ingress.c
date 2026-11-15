@@ -23,6 +23,11 @@ static mm_ancs_uid *find(mm_ancs_ingress *s,uint32_t uid){
     for(unsigned i=0;i<MM_ANCS_UIDS;i++)if(s->uids[i].valid && s->uids[i].uid==uid)return &s->uids[i];
     return 0;
 }
+static mm_ancs_uid *slot(mm_ancs_ingress *s){
+    for(unsigned i=0;i<MM_ANCS_UIDS;i++)if(!s->uids[i].valid)return &s->uids[i];
+    mm_ancs_uid *evicted=&s->uids[s->next];s->next=(uint8_t)((s->next+1)%MM_ANCS_UIDS);
+    return evicted;
+}
 static int attributes_valid(const uint8_t *b,size_t n){
     if(!b || n<7 || n>MM_ANCS_BODY_MAX)return 0;
     size_t at=4;unsigned count=0,seen=0;
@@ -55,7 +60,7 @@ int mm_ancs_ingress_event(mm_ancs_ingress *s,uint16_t event,const uint8_t *p,siz
         peer(s,p);s->generation++;uint32_t uid=u32(p+10);mm_ancs_uid *item=find(s,uid);
         if(p[6]==2){if(item)item->valid=0;}
         else {
-            if(!item){item=&s->uids[s->next];s->next=(uint8_t)((s->next+1)%MM_ANCS_UIDS);}
+            if(!item)item=slot(s);
             *item=(mm_ancs_uid){uid,p[7],1};
         }
         mm_notifications_source(s->relay,p+6,8);return 1;

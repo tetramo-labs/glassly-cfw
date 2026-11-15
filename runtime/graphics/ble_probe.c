@@ -118,13 +118,12 @@ static void drop_fragment(state *s){
     s->frag=0;s->frag_len=s->frag_total=0;
 }
 static int notify_bytes(const uint8_t *peer,uint8_t *chr,state *s,uint16_t limit,const uint8_t *data,uint32_t n){
-    int ok=1;
     while(n){
         uint32_t c=n<limit?n:limit;
-        if(NOTIFY(peer,chr,data,(uint16_t)c))s->notified++;else {s->notify_failed++;ok=0;}
-        data+=c;n-=c;
+        if(!NOTIFY(peer,chr,data,(uint16_t)c)){s->notify_failed++;return 0;}
+        s->notified++;data+=c;n-=c;
     }
-    return ok;
+    return 1;
 }
 static state *accepted(void){
     state *g=chara_state(BLE_GM_UUID);

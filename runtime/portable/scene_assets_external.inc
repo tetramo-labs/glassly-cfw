@@ -41,16 +41,22 @@ static int mm_external_content(mm_scene_context *ctx,const mm_scene_bytes *b,uin
     if(kind==CFW_ASSET_STRING){uint8_t s[128];return b->length<=128&&!mm_external_read(ctx,b,0,s,b->length)&&cfw_texture_string_valid(s,b->length);}
     return 0;
 }
+/* Content was validated at commit, so rows below the view are not read. */
 static int mm_external_render(mm_scene_context *ctx,const cfw_raster *r,const mm_scene_bytes *b,const mm_external_image *img,
                               int32_t x0,int32_t y0,const uint8_t *lut,int transparent) {
-    mm_scene_cursor c;if(mm_scene_cursor_init(&c,b))return -1;uint32_t pos=0,pixel=0,total=img->width*img->height;
-    while(pixel<total){
+    mm_scene_cursor c;if(mm_scene_cursor_init(&c,b))return -1;uint32_t pos=0,pixel=0,total=img->width*img->height,col=0;int32_t y=y0;
+    while(pixel<total&&y<r->h){
         uint32_t used,count;uint8_t color;
         if(pos>=img->length||!mm_external_token(ctx,&c,img->offset+pos,&used,&count,&color)||used>img->length-pos||count>total-pixel)return -1;
-        pos+=used;int skip=transparent&&!color;uint8_t mapped=lut[color];
-        for(uint32_t i=0;i<count;i++,pixel++){
-            int32_t x=x0+(int32_t)(pixel%img->width),y=y0+(int32_t)(pixel/img->width);
-            if(!skip&&x>=0&&y>=0&&x<r->w&&y<r->h){uint8_t *p=r->buf+(uint32_t)y*r->stride+((uint32_t)x>>1);if(x&1)*p=(uint8_t)((*p&240)|mapped);else *p=(uint8_t)((*p&15)|(mapped<<4));}
+        pos+=used;pixel+=count;int skip=transparent&&!color;uint8_t mapped=lut[color];
+        while(count){
+            uint32_t run=img->width-col;if(run>count)run=count;
+            if(!skip&&y>=0){
+                int32_t x=x0+(int32_t)col,end=x+(int32_t)run;if(x<0)x=0;if(end>r->w)end=r->w;
+                for(;x<end;x++){uint8_t *p=r->buf+(uint32_t)y*r->stride+((uint32_t)x>>1);if(x&1)*p=(uint8_t)((*p&240)|mapped);else *p=(uint8_t)((*p&15)|(mapped<<4));}
+            }
+            count-=run;col+=run;
+            if(col==img->width){col=0;if(++y>=r->h)return 0;}
         }
     }
     return 0;

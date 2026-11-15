@@ -44,6 +44,10 @@ static char *command(uint8_t op){
 }
 static void expect(uint8_t op,const char *expected){char *r=command(op);assert(strstr(r,expected));free(r);}
 static void source(uint8_t event){uint8_t p[14]={1,2,3,4,5,6,event,0x18,1,1,42};glassly_notification_observe(0x25a,p,14);}
+static void source_uid(uint8_t uid){uint8_t p[14]={1,2,3,4,5,6,0,0x18,1,1,uid};glassly_notification_observe(0x25a,p,14);}
+static void removed_uid(uint8_t uid){uint8_t p[14]={1,2,3,4,5,6,2,0x18,1,1,uid};glassly_notification_observe(0x25a,p,14);}
+static int live(const owner *o,uint32_t uid){for(unsigned i=0;i<MM_ANCS_UIDS;i++)if(o->ingress.uids[i].valid && o->ingress.uids[i].uid==uid)return 1;return 0;}
+static unsigned records_in(const char *r){unsigned n=0;for(const char *s=r;(s=strstr(s,"\"414e01"));s++)n++;return n;}
 int main(void){
     expect(3,"unavailable");expect(1,"\"active\":1");
     unsigned before=allocations;source(0);assert(allocations==before);
@@ -86,5 +90,25 @@ int main(void){
     ticks+=90001;source(0);expect(0,"\"active\":0");expect(4,"\"actionResult\":4");
     expect(1,"\"active\":1");source(0);glassly_notification_cleanup();assert(!o->relay.ancs_lease_deadline && !o->ingress.connected);
     expect(1,"\"active\":1");source(0);expect(0,"414e0101");
+    /* One poll drains a notification: ticks continue while a worst-case tick and the closing fields still fit. */
+    for(uint8_t uid=60;uid<66;uid++)source_uid(uid);
+    char *r=command(0);assert(records_in(r)==6 && o->relay.ancs_tail==o->relay.ancs_head);free(r);
+    uint8_t attribute[1024];memset(attribute,'z',sizeof(attribute));uint8_t errors=o->relay.ancs_send_errs;
+    mm_notifications_attribute(&o->relay,42,1,attribute,sizeof(attribute));
+    unsigned total=0,polls=0;
+    while(o->relay.ancs_tail!=o->relay.ancs_head){
+        r=command(0);size_t n=strlen(r);assert(n<REPLY_BYTES && r[n-1]=='}' && strstr(r,"\"actionResult\":"));
+        unsigned k=records_in(r);assert(k);total+=k;polls++;free(r);
+    }
+    assert(total==8 && polls==2 && o->relay.ancs_send_errs==errors);
+    /* A new UID takes a free slot; only a full table evicts, round-robin. */
+    mm_ancs_ingress_reset(&o->ingress);source_uid(1);
+    for(uint8_t uid=100;uid<160;uid++){source_uid(uid);removed_uid(uid);}
+    assert(live(o,1));
+    for(uint8_t uid=200;uid<231;uid++)source_uid(uid);
+    assert(live(o,1) && live(o,200) && live(o,230));
+    source_uid(231);assert(live(o,231) && !live(o,1) && live(o,200));
+    source_uid(232);assert(live(o,232) && !live(o,200) && live(o,201));
+    mm_ancs_ingress_reset(&o->ingress);
     free(registry_memory.context);puts("Native ANCS adapter: delivery, borrowed data, malformed atomicity, actions, busy, stale UID, disconnect, overflow, lease and cleanup passed");
 }

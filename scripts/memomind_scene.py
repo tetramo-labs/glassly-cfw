@@ -17,6 +17,9 @@ from memomind_transport import GmStream, request_gm
 SERVICE = 15
 COMMAND = 0x7d
 STATUS_NAMES = ('applied','stale','missing','capacity','refused','unchanged','delta','snapshot','reset')
+SCENE_MODES = {11,36,37,38,39,40,41}
+# GLASSLYCFW/23 and later leave out the profile, modes and emptyGeometry keys.
+LEAN_REVISION = 23
 
 
 class SceneError(RuntimeError):
@@ -191,21 +194,29 @@ class SceneClient:
         self.revision=None
         self.failed=False
         self.capabilities=None
+        self.message_limit=None
         if capabilities is not None:self.set_capabilities(capabilities)
 
     def set_capabilities(self,value):
-        required={'glassly':'graphics-runtime','abi':1,'profile':'H001Y-1.0.3.127','width':600,'height':350}
+        required={'glassly':'graphics-runtime','abi':1,'width':600,'height':350}
         if any(value.get(k)!=v for k,v in required.items()) or type(value.get('abi')) is not int:
             raise SceneProtocolError('Unexpected scene runtime identity')
+        version=value.get('version')
+        lean=isinstance(version,str) and re.fullmatch('GLASSLYCFW/[0-9]{1,5}',version) is not None and int(version[11:])>=LEAN_REVISION
+        if value.get('profile','H001Y-1.0.3.127' if lean else None)!='H001Y-1.0.3.127':
+            raise SceneProtocolError('Unexpected scene runtime identity')
         modes=value.get('modes')
-        if not isinstance(modes,list) or not all(type(m) is int for m in modes) or not {11,36,37,38,39,40,41}.issubset(modes):
+        if not (lean and modes is None) and (not isinstance(modes,list) or not all(type(m) is int for m in modes) or not SCENE_MODES.issubset(modes)):
             raise SceneProtocolError('Runtime does not advertise scene modes')
-        maximum=value.get('maxMessageBytes')
+        # One request carries at most the wire limit; maxMessageBytes counts mode-127 assembly.
+        maximum=value.get('maxWireMessageBytes',value.get('maxMessageBytes'))
         if type(maximum) is not int or not 9<=maximum<=65535:
-            raise SceneProtocolError('Missing bounded maxMessageBytes capability')
+            raise SceneProtocolError('Missing bounded message size capability')
         if type(value.get('storeKiB')) is not int or not 64<=value['storeKiB']<=256:
             raise SceneProtocolError('Missing bounded scene store capacity')
         self.capabilities=dict(value)
+        if lean:self.capabilities.setdefault('emptyGeometry','lease-only')
+        self.message_limit=maximum
 
     def _json_request(self,command,body=b''):
         if self.failed:raise SceneError('Client stopped after prior failure; no automatic recovery')
@@ -244,7 +255,7 @@ class SceneClient:
     def transact(self,message,*,allowed=(0,)):
         self._ready()
         message=bytes(message)
-        if not 5<=len(message)<=self.capabilities['maxMessageBytes'] or message[0] not in range(37,42):
+        if not 5<=len(message)<=self.message_limit or message[0] not in range(37,42):
             raise ValueError('Scene packet outside supported mode/advertised size')
         mode=message[0]
         if mode==40 and len(message)!=9:raise ValueError('STATE packet must be9 bytes')

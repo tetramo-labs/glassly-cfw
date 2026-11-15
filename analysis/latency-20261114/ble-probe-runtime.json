@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "groups": 22,
+  "runtimeSHA256": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+  "hardwareTested": false,
+  "gattNativesMocked": true
+}

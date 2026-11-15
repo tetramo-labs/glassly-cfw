@@ -311,8 +311,9 @@ static int raw_present(owner *o,const mm_raster *raster,const mm_scene_dirty *di
     uint32_t l=0,t=0,r=MM_GRAPHICS_WIDTH,b=MM_GRAPHICS_HEIGHT;
     /* direct_failed is not initialized by every producer (the generated tick
      * sets only n/direct_submitted) and the session already drops presents of
-     * an invalid shadow, so only the box list is consulted here. */
-    if(dirty && dirty->n && dirty->n<MM_SCENE_RECT_MAX){
+     * an invalid shadow, so only the box list is consulted here. A whole-panel
+     * present passes no list; an empty one adds nothing to either eye. */
+    if(dirty && dirty->n<MM_SCENE_RECT_MAX){
         l=MM_GRAPHICS_WIDTH;t=MM_GRAPHICS_HEIGHT;r=0;b=0;
         for(uint32_t i=0;i<dirty->n;i++){
             const mm_scene_rect *q=&dirty->r[i];

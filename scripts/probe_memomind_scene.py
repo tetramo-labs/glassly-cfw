@@ -44,8 +44,8 @@ def verify(transport,address,*,run_smoke=False,fixture_data=None,clip_fixture=Fa
         result['smoke']=smoke(client,hold_ms)
     elif records is not None:
         # Revalidate against advertised capacity, without modifying coordinates.
-        records=parse_fixture(fixture_data,max_message=before['maxMessageBytes'],allow_clip=clip_fixture)
-        if any(r['kind']=='delay' and r['milliseconds']>=400 for r in records) and before.get('emptyGeometry')!='lease-only':
+        records=parse_fixture(fixture_data,max_message=client.message_limit,allow_clip=clip_fixture)
+        if any(r['kind']=='delay' and r['milliseconds']>=400 for r in records) and client.capabilities.get('emptyGeometry')!='lease-only':
             raise SceneProtocolError('Fixture delays require advertised lease-only keepalive')
         result['operations']='fixture-replay-clear'
         result['fixture']={'sha256':hashlib.sha256(fixture_data).hexdigest(),

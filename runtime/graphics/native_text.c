@@ -120,6 +120,8 @@ int mm_native_builtin_text(void *user,const mm_raster *target,const uint8_t *src
     unsigned num=api->scale_num?api->scale_num:1u,den=api->scale_den?api->scale_den:1u;
     /* The cursor keeps 1/den px so scaled advances do not drift along a line. */
     int32_t xf=s16(src)*(int32_t)den,y=s16(src+2);unsigned options=src[4],top=options&15u;
+    uint8_t level[16];
+    for(unsigned v=0;v<16;v++)level[v]=(uint8_t)(v*top/15u);
     for(size_t i=0;i<count;i++){
         if(tokens[i]&CONTROL){xf+=((int32_t)(tokens[i]&31u)-11)*(int32_t)den;continue;}
         /* Stable synchronous resource callbacks make this identical to preflight. */
@@ -134,23 +136,30 @@ int mm_native_builtin_text(void *user,const mm_raster *target,const uint8_t *src
             int32_t l=gx<0?0:gx,t=gy<0?0:gy,r=gx+(int32_t)w,b=gy+(int32_t)h;
             if(r>(int32_t)target->width)r=(int32_t)target->width;
             if(b>(int32_t)target->height)b=(int32_t)target->height;
-            unsigned bpp=g.bpp_flags&15u,mask=(1u<<bpp)-1u;
-            for(int32_t py=t;py<b;py++)for(int32_t px=l;px<r;px++){
-                uint32_t ox=(uint32_t)(px-gx),oy=(uint32_t)(py-gy);unsigned sum=0;
-                for(unsigned k=0;k<4;k++){
-                    uint32_t sx=((4u*ox+((k&1u)?3u:1u))*g.box_w)/(4u*w);
-                    uint32_t sy=((4u*oy+((k&2u)?3u:1u))*g.box_h)/(4u*h);
-                    uint32_t bit=(sy*g.box_w+sx)*bpp;
-                    unsigned value=(bits[bit>>3]>>(8u-bpp-(bit&7u)))&mask;
-                    sum+=bpp==1?value*15u:value*5u;
+            unsigned bpp=g.bpp_flags&15u,mask=(1u<<bpp)-1u,weight=bpp==1?15u:5u;
+            if(l<r && t<b){
+                /* The 2x2 sample of output pixel o stays ((4o+1)*box)/(4*size) and
+                 * ((4o+3)*box)/(4*size) on each axis; columns are stepped, not divided. */
+                uint32_t xd=4u*w,yd=4u*h,xq=g.box_w/w,xr=4u*(g.box_w%w),n0=(4u*(uint32_t)(l-gx)+1u)*g.box_w,n1=n0+2u*g.box_w;
+                uint32_t q0s=n0/xd,r0s=n0%xd,q1s=n1/xd,r1s=n1%xd;
+                for(int32_t py=t;py<b;py++){
+                    uint32_t oy=(uint32_t)(py-gy),row0=((4u*oy+1u)*g.box_h)/yd*g.box_w,row1=((4u*oy+3u)*g.box_h)/yd*g.box_w;
+                    uint32_t q0=q0s,r0=r0s,q1=q1s,r1=r1s;
+                    for(int32_t px=l;px<r;px++){
+                        uint32_t s00=(row0+q0)*bpp,s01=(row0+q1)*bpp,s10=(row1+q0)*bpp,s11=(row1+q1)*bpp;
+                        unsigned sum=(((bits[s00>>3]>>(8u-bpp-(s00&7u)))&mask)+((bits[s01>>3]>>(8u-bpp-(s01&7u)))&mask)+
+                                      ((bits[s10>>3]>>(8u-bpp-(s10&7u)))&mask)+((bits[s11>>3]>>(8u-bpp-(s11&7u)))&mask))*weight;
+                        q0+=xq;r0+=xr;if(r0>=xd){r0-=xd;q0++;}
+                        q1+=xq;r1+=xr;if(r1>=xd){r1-=xd;q1++;}
+                        unsigned value=(sum+2u)>>2;
+                        if(!value && (options&16u))continue;
+                        if(options&32u)value=15u-value;
+                        value=level[value];
+                        size_t at=(size_t)py*target->stride+(uint32_t)px/2u;
+                        unsigned shift=(px&1)?0:4;
+                        target->pixels[at]=(uint8_t)((target->pixels[at]&~(15u<<shift))|(value<<shift));
+                    }
                 }
-                unsigned value=(sum+2u)/4u;
-                if(!value && (options&16u))continue;
-                if(options&32u)value=15u-value;
-                value=value*top/15u;
-                size_t at=(size_t)py*target->stride+(uint32_t)px/2u;
-                unsigned shift=(px&1)?0:4;
-                target->pixels[at]=(uint8_t)((target->pixels[at]&~(15u<<shift))|(value<<shift));
             }
             dirty_rect(dirty,l,t,r,b);
         }

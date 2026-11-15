@@ -52,57 +52,74 @@ static void cfw_scene_notify_settled(mm_scene_context *ctx,uint16_t tag) {
 }
 static cfw_cache *cfw_cache_peek(customCfwContext *ctx);
 static void cfw_scene_render(customCfwContext *ctx,cfw_cache *sc,uint8_t *fb,cfw_rectlist *rl);
-/* A due deferred render draws into fb and reports its box on rl (a null rl
- * discards it, as the generated cfw_scene_render_if_due does). */
-static void render_due_into(mm_scene_context *ctx,uint8_t *fb,cfw_rectlist *rl) {
-    cfw_cache *sc=cfw_cache_peek(ctx);
-    if(sc==0 || !sc->render_due || fb==0 || fb!=sc->fb)return;
-    sc->render_due=0;
-    cfw_rectlist scratch;
-    if(!rl){rl=&scratch;rl->n=0;rl->direct_submitted=0;rl->direct_failed=0;}
-    cfw_scene_render(ctx,sc,fb,rl);
-}
+static void cfw_scene_render_if_due(customCfwContext *ctx,uint8_t *fb);
 #ifdef MM_SCENE_STEREO_EYES
-/* A scene holding eye-tagged objects is presented once per eye with the other
- * eye's objects skipped and ctx->eye naming the panel. Synced panels redraw
- * only what this render changed; otherwise the box of every tagged object is
- * redrawn too. The shared raster ends holding the right eye. */
+static void cfw_scene_plan(customCfwContext *ctx,cfw_cache *sc,uint8_t *fb,cfw_rectlist *rl);
+static void cfw_scene_paint(customCfwContext *ctx,cfw_cache *sc,uint8_t *fb);
+/* A presented frame of a scene holding eye-tagged objects is painted once per
+ * eye with the other eye's objects skipped and ctx->eye naming the panel: the
+ * frame's own paint is the left pass and stereo_present adds the right one over
+ * the same box. Synced panels redraw only what the frame changed, and nothing
+ * when it changed nothing; otherwise the box of every tagged object joins it.
+ * The shared raster ends holding the right eye. */
 static void eye_join(int16_t *box,const int16_t *r) {
+    if(r[2]<=r[0] || r[3]<=r[1])return;
     for(unsigned k=0;k<4;k++)if(k<2 ? r[k]<box[k]:r[k]>box[k])box[k]=r[k];
 }
-static int stereo_present(mm_scene_context *ctx,uint8_t *fb,const mm_raster *target,cfw_rectlist *rl) {
-    cfw_cache *sc=cfw_cache_peek(ctx);
-    if(!sc || !ctx->platform.present)return 0;
+static void stereo_plan(mm_scene_context *ctx,cfw_cache *sc,cfw_rectlist *rl) {
     int16_t tag[4]={32767,32767,-32768,-32768},box[4]={32767,32767,-32768,-32768};unsigned tagged=0;
     for(uint32_t i=0;i<sc->active_count;i++){
         const cfw_object *o=&sc->objects[sc->active[i]];
         if(!(o->id>>31) || !(o->draw&CFW_DRAW_VALID))continue;
         tagged=1;eye_join(tag,o->drawn);
     }
-    if(!tagged)return 0;
-    for(uint32_t i=0;rl && i<rl->n && i<CFW_RECT_MAX;i++){
-        if(!rl->r[i].w || !rl->r[i].h)continue;
-        int16_t r[4]={(int16_t)rl->r[i].l,(int16_t)rl->r[i].t,(int16_t)(rl->r[i].l+rl->r[i].w),(int16_t)(rl->r[i].t+rl->r[i].h)};
-        eye_join(box,r);
-    }
-    if(!ctx->eye_synced || !rl || !rl->n || rl->n>=CFW_RECT_MAX || box[2]<=box[0] || box[3]<=box[1])eye_join(box,tag);
+    if(!tagged)return;
+    eye_join(box,sc->due);
+    if(!ctx->eye_synced)eye_join(box,tag);
+    if(box[2]<=box[0] || box[3]<=box[1])return;
+    box[0]=(int16_t)(box[0]&~1);box[2]=(int16_t)((box[2]+1)&~1);
+    if(box[2]>(int32_t)ctx->raster.width)box[2]=(int16_t)ctx->raster.width;
+    for(unsigned k=0;k<4;k++)sc->due[k]=box[k];
+    rl_add(rl,(uint32_t)box[0],(uint32_t)box[1],(uint32_t)(box[2]-box[0]),(uint32_t)(box[3]-box[1]));
+    ctx->eye=1;
+}
+static void mm_scene_stereo_render(mm_scene_context *ctx,cfw_cache *sc,uint8_t *fb,cfw_rectlist *rl,int present) {
+    cfw_scene_plan(ctx,sc,fb,rl);
+    if(present && rl)stereo_plan(ctx,sc,rl);
+    cfw_scene_paint(ctx,sc,fb);
+#ifdef MM_SCENE_EXTERNAL_STORE
+    if(ctx->shadow_invalid)ctx->eye=0;
+#endif
+}
+static int stereo_present(mm_scene_context *ctx,uint8_t *fb,const mm_raster *target,cfw_rectlist *rl) {
+    if(ctx->eye!=1)return 0;
+    cfw_cache *sc=cfw_cache_peek(ctx);
+    if(!sc || !rl || !ctx->platform.present){ctx->eye=0;return 0;}
     ctx->eye_synced=1;
-    for(uint8_t eye=1;eye<=2;eye++){
-        for(unsigned k=0;k<4;k++)sc->stale[k]=box[k];
-        cfw_rectlist pass;pass.n=0;pass.direct_submitted=0;pass.direct_failed=0;
-        ctx->eye=eye;cfw_scene_render(ctx,sc,fb,&pass);
-        ctx->platform.present(ctx->platform.user,ctx,target,&pass);
-    }
+    ctx->platform.present(ctx->platform.user,ctx,target,rl);
+    for(unsigned k=0;k<4;k++)sc->stale[k]=sc->due[k];
+    cfw_rectlist pass;pass.n=0;pass.direct_submitted=0;pass.direct_failed=0;
+    ctx->eye=2;cfw_scene_render(ctx,sc,fb,&pass);
+    ctx->platform.present(ctx->platform.user,ctx,target,&pass);
     ctx->eye=0;
-    if(rl)rl->direct_submitted=1;
+    rl->direct_submitted=1;
     return 1;
 }
 #endif
 static void present_buffer(mm_scene_context *ctx,const uint8_t *fb,cfw_rectlist *rl) {
+#ifdef MM_SCENE_STEREO_EYES
+    cfw_cache *sc=cfw_cache_peek(ctx);
+    if(sc && sc->render_due && fb && fb==sc->fb && rl)stereo_plan(ctx,sc,rl);
+#endif
 #ifdef MM_SCENE_EXTERNAL_STORE
     if(ctx->external_ready){
-        render_due_into(ctx,(uint8_t *)(uintptr_t)fb,rl);
-        if(ctx->shadow_invalid){cfw_scene_stop(ctx);return;}
+        cfw_scene_render_if_due(ctx,(uint8_t *)(uintptr_t)fb);
+        if(ctx->shadow_invalid){
+#ifdef MM_SCENE_STEREO_EYES
+            ctx->eye=0;
+#endif
+            cfw_scene_stop(ctx);return;
+        }
     }
 #endif
     mm_raster target;mm_scene_memcpy(&target,&ctx->raster,sizeof(target));target.pixels=(uint8_t *)(uintptr_t)fb;
@@ -315,13 +332,6 @@ int mm_scene_immediate(mm_scene_context *ctx,const mm_raster *target,const uint8
 #endif
 void mm_scene_tick(void *ctx) {scene_tick(ctx);}
 void mm_scene_render_if_due(mm_scene_context *ctx,uint8_t *fb) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_scene_render_if_due(ctx,fb);}
-void mm_scene_render_if_due_rects(mm_scene_context *ctx,uint8_t *fb,mm_scene_dirty *dirty) {
-    if(!ctx || ctx->magic!=MM_SCENE_MAGIC)return;
-    uint32_t before=dirty?dirty->n:0;
-    render_due_into(ctx,fb,dirty);
-    /* rl_add drops boxes past capacity: a full list means "everything" to callers. */
-    if(dirty && dirty->n>=CFW_RECT_MAX && before<CFW_RECT_MAX)dirty->n=CFW_RECT_MAX;
-}
 void mm_scene_takeover(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_scene_takeover(ctx);}
 void mm_scene_lose(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_cache_lose(ctx);}
 void mm_scene_reap(mm_scene_context *ctx) {if(ctx && ctx->magic==MM_SCENE_MAGIC)cfw_cache_reap(ctx);}

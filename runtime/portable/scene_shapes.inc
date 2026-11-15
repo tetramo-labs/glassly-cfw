@@ -1,4 +1,4 @@
-/* Derived from pinned G2 commite889569fe77775ed5822af6f7e47210f2984f15d.
+/* Derived from pinned G2 commitf12072270a866746266d5399ea03c966011cad61.
  * Explicit MemoMind platform adaptation; MIT, see PROVENANCE.md. */
 /* Which parameters are x / y coordinates, per type (used for clamping and for
  * glides, which translate exactly these). PATH: p0/p1 translate the asset. */

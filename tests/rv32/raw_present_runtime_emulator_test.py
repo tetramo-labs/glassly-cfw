@@ -57,6 +57,19 @@ class RawMachine(SensorMachine):
         return [entry for entry in self.slices if entry[0] == "submit"]
 
 
+class PaintCounter(RawMachine):
+    """Counts rasterized boxes: every paint that draws clears its box first."""
+    def __init__(self):
+        self.paints, self.clear_entry = 0, None
+        super().__init__()
+        self.clear_entry = self.symbols["mm_raster_clear"]
+
+    def instruction(self, uc, address, size, userdata):
+        if address == self.clear_entry:
+            self.paints += 1
+        super().instruction(uc, address, size, userdata)
+
+
 class RawPresentTests(unittest.TestCase):
     def test_first_present_sources_the_fallback_once_and_copies_the_box(self):
         m = RawMachine(); m.establish()
@@ -210,6 +223,47 @@ class RawPresentTests(unittest.TestCase):
         for _, _, (x1, y1, x2, y2), _ in m.submits()[before:]:
             self.assertLessEqual(x1, 100, f"the resync covers the left object again: {(x1, y1, x2, y2)}")
             self.assertGreaterEqual(x2, 279, f"and the moved right object: {(x1, y1, x2, y2)}")
+        m.assert_clear()
+
+    def test_a_stereo_frame_rasterizes_once_per_eye_and_an_unchanged_one_not_at_all(self):
+        m = PaintCounter(); m.establish()
+        left, right = 0x80000010, 0xC0000011
+        for packet in (tagged_put(left, 100, 100), tagged_put(right, 200, 100)):
+            reply, _ = m.send_scene(packet); self.assertEqual(reply[3], 0)
+        m.paints, before = 0, len(m.submits())
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.paints, 2, "the frame's own paint is the left pass; one more paints the right eye")
+        self.assertEqual(m.panel_enables[before:], [0x20, 0x10])
+        reply, _ = m.send_scene(tagged_put(right, 260, 100)); self.assertEqual(reply[3], 0)
+        m.paints, before = 0, len(m.submits())
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.paints, 2, "a synced change is painted once per eye")
+        self.assertEqual(m.panel_enables[before:], [0x20, 0x10])
+        m.paints, before = 0, len(m.submits())
+        reply, _ = m.send_scene(refs_show([1, left, right])); self.assertEqual(reply[3], 0)
+        self.assertEqual(m.paints, 0, "an unchanged synced frame paints nothing")
+        self.assertEqual(len(m.submits()), before, "and submits nothing")
+        m.assert_clear()
+
+    def test_an_unchanged_show_or_a_put_only_bundle_submits_nothing(self):
+        m = RawMachine(); m.establish()
+        before = len(m.submits())
+        reply, _ = m.send_scene(S.show_packet()); self.assertEqual(reply[3], 0)
+        self.assertEqual(len(m.submits()), before, "a SHOW that changed nothing resubmits no panel")
+        inner = bytearray(tagged_put(0x20, 300, 200))
+        S.w16(inner, 1, m.epoch); m.request_number += 1; S.w16(inner, 3, m.request_number)
+        bundle = bytes([8, 1]) + struct.pack("<H", len(inner)) + bytes(inner)
+        m.sequence_number = (m.sequence_number+1) & 255
+        immediate, _ = m.service(0x7d, m.request(bundle), m.sequence_number)
+        assert immediate is None and m.queue
+        job = m.queue.pop(0)
+        raw = bytes([0, 63, 0, 0])+struct.pack("<HH", 0x474c, len(job))+job
+        m.call("glassly_graphics_display", m.allocate(len(raw), "native-envelope", raw), display=True)
+        self.assertEqual(len(m.submits()), before, "a PUT-only bundle resubmits no panel")
+        reply, _ = m.send_scene(moved_show_packet()); self.assertEqual(reply[3], 0)
+        self.assertEqual(len(m.submits()), before+1)
+        x1, y1, x2, y2 = m.submits()[-1][2]
+        self.assertLessEqual(y2 - y1, 40, f"the next change still presents only its box: {(x1, y1, x2, y2)}")
         m.assert_clear()
 
     def test_refused_slice_lock_falls_back_to_the_image_object(self):

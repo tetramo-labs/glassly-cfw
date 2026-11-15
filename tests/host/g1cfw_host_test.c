@@ -502,7 +502,7 @@ int main(int argc, char **argv)
     const uint8_t ping[] = { 0xF0, 0x00 };
     CHECK(send_packet(ping, sizeof ping) == 0 && hook_calls == 3);
     CHECK(last_reply_len == 15 && last_reply[0] == 0xF0 && last_reply[1] == 0 && last_reply[2] == 0);
-    CHECK(memcmp(last_reply + 3, "G1CFW/54", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
+    CHECK(memcmp(last_reply + 3, "G1CFW/55", 9) == 0 && last_reply[12] == 1 && last_reply[13] == 6 && last_reply[14] == 3);
 
     /* Short and unknown commands are answered, never dispatched. */
     const uint8_t only_sid[] = { 0xF0 };
@@ -1943,6 +1943,9 @@ int main(int argc, char **argv)
     CHECK(cfw_ancs_recv(ctx) == 0 && host_queued == 11);
     static const uint8_t ancs_source[] = { 0xF0, 0x36, 0x00, 'A', 'N', 1, 1, 0, 0x02, 4, 3, 0x44, 0x33, 0x22, 0x11 };
     CHECK(host_queue_len[0] == sizeof ancs_source && memcmp(host_queue[0], ancs_source, sizeof ancs_source) == 0);
+    /* The queue feeds this dispatcher, not the link: a record coming back in is sent to the phone verbatim. */
+    CHECK(send_packet(ancs_source, sizeof ancs_source) == 0 && last_reply_len == sizeof ancs_source
+          && memcmp(last_reply, ancs_source, sizeof ancs_source) == 0);
     CHECK(host_queue_len[1] == 7 + 5 + 19 + 8 && host_queue[1][6] == 3 && host_queue[1][7] == 8 && host_queue[1][8] == 0);
     CHECK(host_queue[1][11] == 19 && memcmp(host_queue[1] + 12, "com.apple.MobileSMSMessages", 27) == 0);
     for (int i = 2; i < 11; i++) {

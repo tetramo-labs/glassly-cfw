@@ -53,7 +53,7 @@ require `--stock`. Historical 1.5.60 profiles remain available with explicit
 For developers regenerating the injected code and signature:
 
 ```sh
-.venv/bin/python tools/gen_profile.py --carve dashboard --protocol 54 \
+.venv/bin/python tools/gen_profile.py --carve dashboard --protocol 55 \
   --stub display --stub link --stub input --stub ancs \
   --upgrade-from profiles/g1-1.6.3-cfw.json --upgrade-from profiles/g1-1.5.6-cfw.json
 ```

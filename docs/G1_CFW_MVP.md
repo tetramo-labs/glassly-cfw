@@ -1323,3 +1323,21 @@ To fit, `cfw_context` and `cfw_objects` are no longer inlined (112 bytes).
 Blob 24,788 bytes with the relocated helper, 68 left. Offline only at the
 time of writing.
 
+
+### G1CFW/55: relay records reached the dispatcher, not the phone (2026-11-14)
+
+With /54 installed, the first report in which a notification was sent showed
+STATUS `notifications 3 -> 4, sent 10 -> 20` while the phone logged no record
+at all. `enqueue_bt_data` (0x17fec) is the stock *inbound* queue:
+`bt_receive_cb` puts every packet the phone writes on it, `ble_work_thread`
+drains it into `FUN_00023d38` -> `spec_ble_command_hook` -> the stock
+dispatcher, which also forwards the stock's own event packets (F1/F4/F5) to
+the phone. The relay's `F0 36` records therefore came back into the CFW's own
+`cfw_rx`, whose default branch answered the phone `F0 36 <bad command>` with an
+empty body, which the phone's reassembler ignores. The STATUS reply never had
+the problem because `cfw_reply` sends through the context's send function.
+
+G1CFW/55 adds a `CFW_ANCS_RECORD` case to `cfw_rx` that sends the packet to
+the phone verbatim; the phone never sends 0x36, so anything arriving with it
+is the relay's own. Host test covers the loopback. Offline only at the time
+of writing.

@@ -1,5 +1,5 @@
 /*
- * G1CFW/54: injected handler for the private 0xF0 command on Even G1 1.6.3.
+ * G1CFW/55: injected handler for the private 0xF0 command on Even G1 1.6.3.
  *
  * Compiled by tools/build_blob.py into a position-independent blob that is
  * appended to the stock application image. The stock BLE receive entry calls
@@ -15,7 +15,7 @@
 /* Command, panel and input handlers are built for size; the per-frame
  * paths (composition, rasterizers, text, push, tweens) stay at -Os. */
 #define CFW_COLD __attribute__((minsize))
-#define CFW_PROTOCOL 54u
+#define CFW_PROTOCOL 55u
 
 enum { CFW_PING = 0x00, CFW_BLIT = 0x01, CFW_FILL = 0x02, CFW_FLUSH = 0x03, CFW_INFO = 0x04,
        CFW_PANEL = 0x05, CFW_TEXT = 0x06, CFW_COPY = 0x07, CFW_ASSET_PUT = 0x08,
@@ -3276,7 +3276,7 @@ typedef struct {
 typedef struct {
     uint32_t magic;
     uint32_t lease_until;   /* tick the lease ends at; 0 = no lease */
-    uint16_t sent;          /* records handed to the BLE write queue */
+    uint16_t sent;          /* records queued for the BLE work thread, which forwards them (cfw_rx) */
     uint16_t drops;         /* notifications dropped for want of a lease */
     uint16_t notifications; /* records taken from the stock queue since boot */
     uint8_t  send_errors;
@@ -4085,6 +4085,14 @@ CFW_COLD int cfw_rx(const uint8_t *data, uint32_t len)
     case CFW_ANCS_CONTROL:
         cfw_ancs_control(data + 2, len - 2);
         break;
+    case CFW_ANCS_RECORD: {
+        /* The phone never sends records: these are the relay's own, queued by
+         * the ANCS thread on the stock inbound queue (enqueue_bt_data feeds
+         * this dispatcher, not the link). Hand them to the phone as they are. */
+        fw_send_fn send = FW_SEND_OF(FW_GET_CTX());
+        send(data, len);
+        break;
+    }
     default:
         cfw_reply(data[1], CFW_BAD_COMMAND, 0, 0);
         break;

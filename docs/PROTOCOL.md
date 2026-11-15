@@ -69,7 +69,8 @@ Shape records (coords signed px on 540×180, clipped; `width` = stroke, byte 3):
 QUAD(8) QUAD_FILL(9) BEZIER2(10) BEZIER3(11) ARC(12) PIE(13)` are 20 B
 (`[type][flags][gray][width]` + eight i16 params, the G2 shapes.h layouts,
 rasterized by `geom.c`); `IMAGE(14)` 12 B, `TEXT_CACHED(16)` 16 B,
-`TEXT_INLINE(17)` 13+len. The `[gray]` byte of IMAGE/TEXT/TEXT_CACHED/TEXT_INLINE
+`TEXT_INLINE(17)` 13+len (`[17][flags][gray][0][x][y][clipW][clipH][len][bytes]`; glyph pixels clip at
+`x + clipW` / `y + clipH` where those are > 0, the canvas otherwise, never left or top: the G2 rule, revision 15). The `[gray]` byte of IMAGE/TEXT/TEXT_CACHED/TEXT_INLINE
 records is the G2 texture options byte `[inverse 0x20][transparent 0x10][ink 0..15]`
 (revision 6): source grays scale into 0..ink, inverse reverses the ramp,
 transparent skips source 0; a colour TWEEN (bit 0x100) on these records fades
@@ -93,7 +94,7 @@ ACK   [01][stream][ordinal u16][lens=1][size u16][crc u16]
 NACK  [03][stream][ordinal u16][lens][size u16][crc u16]
 REPLY [05][stream][ordinal u16][lens][mode][request u16][status u8][epoch u16][revision u32]   (before the ACK)
 GESTURE [07][eventType u8][source u8][tick u32 LE]
-IDENT [11][ver u8][w u16 LE][h u16 LE][maxChunk u16 LE][storeKiB u16 LE][revision u16 LE][flags u8]"GLASSLYCFW-IO/13"[00][lineHeight u8]   (w,h = 540x220 since revision 5; flags bit 3 = stereo: two lens scenes, bit 4 = raster family, bit 5 = remote mic stream, bit 6 = head gestures + angle control; the NUL and the builtin font's line pitch in px follow the name since revision 8)
+IDENT [11][ver u8][w u16 LE][h u16 LE][maxChunk u16 LE][storeKiB u16 LE][revision u16 LE][flags u8]"GLASSLYCFW-IO/15"[00][lineHeight u8]   (w,h = 540x220 since revision 5; flags bit 3 = stereo: two lens scenes, bit 4 = raster family, bit 5 = remote mic stream, bit 6 = head gestures + angle control; the NUL and the builtin font's line pitch in px follow the name since revision 8)
 PAGE  [13][state u8][reason u8]
 DIAG  [15][source u8][entry u32][ctx u32][uiModule u8][regRc i8][sendRc i8][timer u32][tick u32][arena u32][free u32][largest u32][inuse u32][storeKiB u16]   (the heap fields since revision 10: mallinfo of the stock heap; storeKiB = the store the heap granted)
        [sceneRenders u32][sceneCopies u32][sceneLastMs u16][sceneMaxMs u16] (revision 11; appended at byte 39)
@@ -109,7 +110,7 @@ DISP  [19][mode u8][rc i8][disp u32][drv u32][fd i32][fmt u8][xres u16][yres u16
   frame's left and right SHOWs into one stream (ordinals 0 and 1) so both
   lenses apply them in the same handler call; each lens acks and replies to
   the record addressed to it.
-* IDENT: `ver=13`, `w=540`, `h=220`, `maxChunk=240`, `storeKiB` = 64..256 (revision 10 takes the largest of 256/192/128/96/64 KiB the heap grants; before it was a fixed 64), `revision=13`,
+* IDENT: `ver=15`, `w=540`, `h=220`, `maxChunk=240`, `storeKiB` = 64..256 (revision 10 takes the largest of 256/192/128/96/64 KiB the heap grants; before it was a fixed 64), `revision=15`,
   `flags = 0x7F` normally. Flag bits: **bit0** = zlib COMPRESSED records
   accepted (the stock inflater is used); **bit1** = raw packets accepted on
   business 0xF0; **bit2** = the heap context existed when IDENT was built
@@ -195,7 +196,8 @@ DISP  [19][mode u8][rc i8][disp u32][drv u32][fd i32][fmt u8][xres u16][yres u16
   valid detector messages dropped by the uplink reserve. The relay now precedes
   the stock re-pairing gate; the original handler still runs.
 * PAGE `state` 1 open/0 closed; `reason` 0 ok, 1 launcher busy, 2 not paired (no longer sent),
-  3 lease expired, 4 user backed out.
+  3 lease expired, 4 user backed out, 5 phone link lost (revision 15; never reaches the phone: the
+  uplink queue of the lost connection is dropped).
 
 ## Control / session rules the firmware enforces
 
@@ -208,8 +210,14 @@ DISP  [19][mode u8][rc i8][disp u32][drv u32][fd i32][fmt u8][xres u16][yres u16
 * **PAGE_OPEN** gates on `isBussinessIdle()` (the paired() gate was dropped: a guest-authenticated phone never reaches pair state 2). Failure replies
   `PAGE [0][reason]` (reason 1/2 are retried by the phone at 2/5/10 s); success
   replies `PAGE [1][0]`, arms the 120 s lease, and reports display activity.
-* **KEEPALIVE** renews the 120 s lease (`PAGE [1][0]`). The lease expiring, a
-  PAGE_CLOSE, or a >2 s long press close the page (`PAGE [0][reason]`).
+  On an open page (revision 15) it only renews the lease and replies `PAGE [1][0]`.
+* **KEEPALIVE** renews the 120 s lease (`PAGE [1][0]`). The lease expiring or a
+  PAGE_CLOSE close the page (`PAGE [0][reason]`); the >2 s long press no longer does
+  (revision 14). Since revision 15 the launcher's LinkMonitor reporting the phone
+  link down, once it has read up since the session's QUERY, closes the page and ends
+  the session: no gesture, head or ANCS relay until the next QUERY, no wake takeover.
+  The wake takeover and the renewal of a lease that ran out during sleep need the
+  link up.
 * With IDENT `flags bit0 = 0` the phone would send every record uncompressed with
   RESET_CONTEXT only on the first; this build advertises bit0 = 1.
 
@@ -227,7 +235,9 @@ is not involved. Revision 1's named-file downlink no longer exists.
 
 Replies: business 0xF0 via `rnlink_if_send_payload`, ≤ 192 B, queued in order
 and drained right after the packet that produced them and on every 25 ms page
-tick (revision 8; revisions 5-7 spaced them 25 ms apart, earlier ones 100 ms). IDENT and the first DIAG bypass the queue: they are
+tick (revision 8; revisions 5-7 spaced them 25 ms apart, earlier ones 100 ms).
+Revision 15 queues up to 15 (7 before), drains a full queue before dropping,
+and drains again at the end of each page tick. IDENT and the first DIAG bypass the queue: they are
 sent from the RX callback itself (the stock RX path sends its own
 acknowledgements from that context through the same protocol layer).
 

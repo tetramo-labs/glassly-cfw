@@ -74,6 +74,11 @@ void cfw_page_ensure_timer(customCfwContext *ctx) {
 }
 
 int cfw_page_open(customCfwContext *ctx, uint8_t *reason) {
+    *reason = PAGE_OK;
+    if (ctx->page_open) {
+        ctx->lease_deadline = fw_tick() + PAGE_LEASE_MS;
+        return 1;
+    }
     /* No paired() gate: real_get_rnlink_paired_status is true only for a
      * device-info pair state of 2, which a guest-authenticated phone never
      * reaches (every PAGE_OPEN was refused with reason 2 on hardware,
@@ -92,10 +97,10 @@ int cfw_page_open(customCfwContext *ctx, uint8_t *reason) {
     /* take the panel: park the stock flush, present our (black) canvases */
     cfw_disp_pass(1);
     ctx->disp_pattern = 0;
+    ctx->disp_clear = 1;
     ctx->disp_own = 1;
     ctx->disp_pan_pending = 0;
     cfw_page_present(ctx);
-    *reason = PAGE_OK;
     return 1;
 }
 
@@ -128,17 +133,19 @@ void cfw_page_close(customCfwContext *ctx, uint8_t reason) {
 
 /* Screen on: an open page is presented again (the stock's power-on sequence
  * may have left its own frame on the panel); a page the lease closed during
- * sleep is reopened on its retained scene and announced to the phone, whose
- * session resumes keepalives or replaces the scene, and the lease closes it
- * again if nobody comes. */
+ * sleep is reopened on its retained scene, while the phone link is still up,
+ * and announced to the phone, whose session resumes keepalives or replaces the
+ * scene, and the lease closes it again if nobody comes. */
 static void cfw_page_wake(customCfwContext *ctx) {
     if (ctx->page_open) {
+        ctx->disp_clear = 1;
         ctx->disp_dirty = 1;
         cfw_page_present(ctx);
         return;
     }
     if (!ctx->wake_takeover) return;
     ctx->wake_takeover = 0;
+    if (!cfw_link_up()) return;
     uint8_t reason;
     if (!cfw_page_open(ctx, &reason)) return;
     ctx->page_by_takeover = 1;
@@ -155,17 +162,31 @@ static void cfw_page_wake(customCfwContext *ctx) {
  * more lease, once per phone session. */
 #define LEASE_SLEPT_MS 5000u
 
-void cfw_page_tick(customCfwContext *ctx) {
-    if (ctx->wake_pending) { ctx->wake_pending = 0; cfw_page_wake(ctx); }
-    cfw_compass_tick(ctx);
-    cfw_uplink_flush(ctx);
-    if (!ctx->page_open) return;
+/* The phone link going down (LinkMonitor's connection state, launcher.c)
+ * ends the phone's session: the page closes and nothing is relayed or taken
+ * over for a phone that is gone. A dozing link stays connected and is not
+ * this. Only a link seen up since the session's QUERY counts, so a reconnect's
+ * QUERY handled before the launcher applies its connect cannot close the new
+ * session. */
+static void cfw_page_link_check(customCfwContext *ctx) {
+    if (cfw_link_up()) { ctx->link_seen = 1; return; }
+    if (!ctx->link_seen) return;
+    ctx->link_seen = 0;
+    ctx->queried = 0;
+    if (ctx->page_open) cfw_page_close(ctx, PAGE_LINK);
+    ctx->wake_takeover = 0;
+    ctx->page_by_takeover = 0;
+    cfw_compass_stop(ctx);
+    ctx->uplink_head = ctx->uplink_tail;       /* replies of the lost connection */
+}
+
+static void cfw_page_service(customCfwContext *ctx) {
     cfw_input_poll(ctx);
     cfw_anim_tick(ctx);
     uint32_t now = fw_tick();
     if ((int32_t)(now - ctx->lease_deadline) >= 0) {
         int scene = ctx->lens[0].last_show_valid || ctx->lens[1].last_show_valid;
-        if (now - ctx->lease_deadline > LEASE_SLEPT_MS && scene && !ctx->page_by_takeover) {
+        if (now - ctx->lease_deadline > LEASE_SLEPT_MS && scene && !ctx->page_by_takeover && cfw_link_up()) {
             ctx->page_by_takeover = 1;
             ctx->lease_deadline = now + PAGE_LEASE_MS;
             ctx->disp_dirty = 1;
@@ -183,4 +204,13 @@ void cfw_page_tick(customCfwContext *ctx) {
      * presented once the panel reports power again */
     if (ctx->page_open && ctx->disp_own && ctx->disp_dirty && !ctx->disp_pan_pending && fw_fb_get_power()) cfw_page_present(ctx);
     if (ctx->disp_dirty && !ctx->disp_pan_pending) cfw_page_present(ctx);
+}
+
+void cfw_page_tick(customCfwContext *ctx) {
+    cfw_page_link_check(ctx);
+    if (ctx->wake_pending) { ctx->wake_pending = 0; cfw_page_wake(ctx); }
+    cfw_compass_tick(ctx);
+    cfw_uplink_flush(ctx);
+    if (ctx->page_open) cfw_page_service(ctx);
+    cfw_uplink_flush(ctx);   /* gestures, SETTLED and lease replies of this tick */
 }

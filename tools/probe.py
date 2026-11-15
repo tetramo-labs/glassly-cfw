@@ -146,7 +146,7 @@ async def run(args):
 
         if args.text:
             print(f"opening page + sending test text {args.text!r}")
-            await client.write_gatt_char(TX, f.build(BIZ_GLASSLY, bytes([0x10, CTRL_PAGE_OPEN])), response=False)
+            await client.write_gatt_char(TX, f.build(BIZ_GLASSLY, bytes([0x10, 0x00, CTRL_PAGE_OPEN])), response=False)
             await asyncio.sleep(0.3)
             # A real text frame would be the encoded record stream; left to the SGC.
         await client.stop_notify(RX)

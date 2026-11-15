@@ -11,7 +11,6 @@
 #include "cfw.h"
 
 #include "mem.c"
-#include "rle.c"
 #include "ctx.c"
 #include "geom.c"
 #include "vector.c"

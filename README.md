@@ -7,7 +7,13 @@ application image `nuttx_ap.bin` to add one thing: a Glassly link on BLE busines
 forwards touch/crown gestures back. It is the firmware counterpart of the
 phone-side RayNeo iO support in the Glassly repo.
 
-**Revision: `GLASSLYCFW-IO/14`** (host-tested and built; v14 has not been flashed or hardware-validated).
+**Revision: `GLASSLYCFW-IO/15`** (host-tested and built; v15 has not been flashed or hardware-validated).
+
+Revision 15 draws cached-font text from its font, decodes images straight into
+the canvas, ends the session when the phone link goes down, clips inline text
+to its box, keeps a bundle inside its packet's presentation hold, and trims
+per-frame work (uplink, static-layer cache, eye-buffer compose, path fills).
+See [v15 changes and validation](docs/V15.md).
 
 Revision 14 hides the stock launcher (the app carousel and the board) while a
 phone is linked and drops the local long-press close. See
@@ -131,6 +137,7 @@ no verified recovery path.
 ./venv/bin/python -m pytest tools/            # protocol codecs + state machine
 bash tools/host/run_cache_tests.sh           # uploads, transactions, animation, flat-eye reuse
 bash tools/host/run_memory_tests.sh          # aligned memory ops + LCDC pixel packing
+bash tools/host/run_session_tests.sh         # link loss, wake takeover, PAGE_OPEN renewal, uplink ring
 ./venv/bin/python patches/apply_patches.py --verify   # patch replay round-trip
 cd tools/suite && swift run rayneo-io-suite   # on the glasses: link, cfw, page, scene (after every flash)
 ```
@@ -148,7 +155,7 @@ requirements.txt        deps for the tests + on-device probe (bleak, pytest)
 patches/
   patches_main.c        single translation unit; includes the modules below
   cfw.h                 shared types, verified firmware-call wrappers, forward decls
-  mem.c rle.c rle.h     freestanding mem*, 4bpp RLE (from the G2 Glassly CFW)
+  mem.c                 freestanding mem*
   ctx.c                 heap singleton; pointer kept in the module's RNLink registry entry
   geom.c scene.c        geometry rasterizer (G2 port); object cache + shape records + L8 render
   link.c                business 0xF0: RX callback, records, zlib, control, uplink; registration shim

@@ -123,7 +123,7 @@ static void g4_rect(uint8_t *buf, uint32_t x0, uint32_t y0, uint32_t w, uint32_t
         for (uint32_t x = x0; x < x0 + w; x++) g4_set(buf, x, y, level);
 }
 
-static void disp_fill_dual_pattern(void) {
+static void disp_fill_dual_pattern(customCfwContext *ctx) {
     uint8_t *eye[2] = {(uint8_t *)G4_LEFT, (uint8_t *)G4_RIGHT};
     for (unsigned e = 0; e < 2; e++) {
         uint8_t *buf = eye[e];
@@ -145,10 +145,11 @@ static void disp_fill_dual_pattern(void) {
     }
     fw_lcdc_cache_sync((void *)G4_LEFT, G4_SIZE);
     fw_lcdc_cache_sync((void *)G4_RIGHT, G4_SIZE);
+    ctx->disp_clear = 1;
 }
 
-static int disp_dual_pattern(void) {
-    disp_fill_dual_pattern();
+static int disp_dual_pattern(customCfwContext *ctx) {
+    disp_fill_dual_pattern(ctx);
     fw_lcdc_dual_update_full((void *)G4_LEFT);
     return 0;
 }
@@ -156,20 +157,23 @@ static int disp_dual_pattern(void) {
 /* L8 lens canvases -> the LCDC pair (4 bpp, HIGH nibble = left pixel, as the
  * stock rgb565_to_g4_align_mve packs: `(p0 >> 3) & 0xf0 | p1 >> 7 & 0xf`): a lens
  * without a canvas shows the other one's, so a failed allocation degrades to
- * flat rather than one blind eye. */
+ * flat rather than one blind eye. A present rewrites only the canvas rows'
+ * pixels; the margins (the parallax shift reads into them) and rows 220..279
+ * are zeroed only when disp_clear is set, so it must be set whenever anything
+ * else may have written the eye buffers: the page's open (the stock composed
+ * until then) and wake, and the probe's patterns. */
 static void disp_compose_scene(customCfwContext *ctx) {
     uint8_t *eye[2] = {(uint8_t *)G4_LEFT, (uint8_t *)G4_RIGHT};
+    if (ctx->disp_clear) {
+        ctx->disp_clear = 0;
+        cfw_zero(eye[0], G4_SIZE);
+        cfw_zero(eye[1], G4_SIZE);
+    }
     for (unsigned e = 0; e < 2; e++) {
         const uint8_t *src = ctx->lens[e].canvas ? ctx->lens[e].canvas : ctx->lens[e ^ 1].canvas;
         uint8_t *buf = eye[e];
-        for (uint32_t y = 0; y < G4_ROWS; y++) {
-            uint8_t *row = buf + y * G4_STRIDE;
-            if (y >= CFW_H || !src) { cfw_zero(row, G4_STRIDE); continue; }
-            const uint8_t *s = src + y * CFW_W;
-            cfw_zero(row, G4_MARGIN);
-            cfw_pack_l8_row(row + G4_MARGIN, s);
-            cfw_zero(row + G4_MARGIN + G4_PX_BYTES, G4_STRIDE - G4_MARGIN - G4_PX_BYTES);
-        }
+        if (!src) { cfw_zero(buf, G4_SIZE); continue; }
+        for (uint32_t y = 0; y < CFW_H; y++) cfw_pack_l8_row(buf + y * G4_STRIDE + G4_MARGIN, src + y * CFW_W);
     }
     fw_lcdc_cache_sync((void *)G4_LEFT, G4_SIZE);
     fw_lcdc_cache_sync((void *)G4_RIGHT, G4_SIZE);
@@ -231,7 +235,7 @@ void cfw_lcdc_hook(void *src, void *area, uint32_t c, uint32_t flag, void *depth
         uint32_t t0 = fw_tick();
         if (ctx->disp_dirty && !ctx->disp_hold) {
             ctx->disp_dirty = 0;
-            if (ctx->disp_pattern) disp_fill_dual_pattern(); else disp_compose_scene(ctx);
+            if (ctx->disp_pattern) disp_fill_dual_pattern(ctx); else disp_compose_scene(ctx);
         }
         uint32_t t1 = fw_tick();
         if (t1 - t0 > ctx->hook_compose_max_ms) ctx->hook_compose_max_ms = t1 - t0 > 255u ? 255u : (uint8_t)(t1 - t0);
@@ -271,7 +275,7 @@ void cfw_display_probe(customCfwContext *ctx, uint8_t mode) {
         case DISP_REPORT: break;
         case DISP_FB_PATTERN:   rc = ctx->page_open ? disp_fb_pattern(d, 1) : -3; break;
         case DISP_FB_KEEP_BOUNDS: rc = ctx->page_open ? disp_fb_pattern(d, 0) : -3; break;
-        case DISP_DUAL_PATTERN: rc = ctx->page_open ? disp_dual_pattern() : -3; break;
+        case DISP_DUAL_PATTERN: rc = ctx->page_open ? disp_dual_pattern(ctx) : -3; break;
         case DISP_OWN:                 /* the diagnostic images instead of the scenes */
             if (!ctx->page_open) { rc = -3; break; }
             ctx->disp_pattern = 1;

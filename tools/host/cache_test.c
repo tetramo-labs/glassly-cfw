@@ -26,7 +26,6 @@ void cfw_page_present(customCfwContext *ctx) {
     if (!ctx->disp_hold) { presents++; ctx->disp_pan_pending = 1; }
 }
 int cfw_uplink_push(customCfwContext *ctx, const uint8_t *d, uint8_t n) { (void)ctx; (void)d; (void)n; return 1; }
-#include "rle.c"
 #define cfw_geom_draw raw_geom_draw
 #include "geom.c"
 #undef cfw_geom_draw
@@ -227,4 +226,33 @@ static void text_reuse(void) {
     puts("text: matching strings at distinct store offsets copy; different strings render");
 }
 
-int main(void) { uploads(); rollback(); asset_validation(); motion(); flat_render(); static_prefix_cache(); text_reuse(); free(ctx.store); assert(!allocations); puts("cache/animation regression tests passed"); }
+static void serials(void) {
+    reset(2048);
+    uint32_t s0 = ctx.lens[0].scene_serial, s1 = ctx.lens[1].scene_serial;
+    assert(asset(5, 1, 16, 0, 8, 'A') == ST_APPLIED);
+    assert(ctx.lens[0].scene_serial == s0 && ctx.lens[1].scene_serial == s1); // an upload in progress draws nothing new
+    assert(asset(5, 1, 16, 0, 8, 'A') == ST_APPLIED);
+    assert(ctx.lens[0].scene_serial == s0 && ctx.lens[1].scene_serial == s1); // nor does a repeated chunk
+    assert(asset(5, 1, 16, 8, 8, 'B') == ST_APPLIED);
+    assert(ctx.lens[0].scene_serial == s0 + 1 && ctx.lens[1].scene_serial == s1 + 1); // a completed asset is both eyes'
+    uint8_t put[34] = {MSG_PUT}; object_entry(put + 5, 7, 1, 15); cfw_put16(put + 3, ++request_id);
+    assert(message(1, put, sizeof put) == ST_APPLIED);
+    assert(ctx.lens[0].scene_serial == s0 + 1 && ctx.lens[1].scene_serial == s1 + 2); // a definition is its lens's
+    uint8_t m[64]; uint32_t n = show_start(m, 0); n = refs(m, n, 7, 1);
+    assert(message(1, m, n) == ST_APPLIED); assert(ctx.lens[1].scene_serial == s1 + 3);
+    puts("scene serials: only journaled PUT changes invalidate a lens's caches");
+}
+
+static void empty_inline_text(void) {
+    reset(1024);
+    uint8_t m[27] = {MSG_PUT};
+    uint8_t *e = m + 5; e[0] = PUT_OBJECT; cfw_put32(e + 1, 1); cfw_put32(e + 5, 1);
+    e[9] = SH_TEXT_INLINE; e[11] = 15; e[21] = 0;
+    cfw_put16(m + 3, ++request_id); assert(message(0, m, sizeof m) == ST_APPLIED);
+    assert(ctx.store_used == 0 && object_find(&ctx.lens[0], 1)->text_len == 0);
+    cfw_put32(e + 5, 2); cfw_put16(m + 3, ++request_id); assert(message(0, m, sizeof m) == ST_APPLIED);
+    assert(ctx.store_used == 0);
+    puts("empty TEXT_INLINE: no store granule taken or leaked");
+}
+
+int main(void) { uploads(); rollback(); asset_validation(); motion(); flat_render(); static_prefix_cache(); text_reuse(); serials(); empty_inline_text(); free(ctx.store); assert(!allocations); puts("cache/animation regression tests passed"); }

@@ -175,6 +175,7 @@ static int raster_apply(customCfwContext *ctx, cfw_lens *L, const uint8_t *msg, 
          * once; a failing segment NACKs the bundle (earlier ones stay applied) */
         if (!present || len < 2) return 0;
         uint32_t count = msg[1], pos = 2;
+        uint8_t hold = ctx->disp_hold;
         ctx->disp_hold = 1;
         int ok = 1;
         for (uint32_t i = 0; ok && i < count; i++) {
@@ -192,8 +193,8 @@ static int raster_apply(customCfwContext *ctx, cfw_lens *L, const uint8_t *msg, 
             } else ok = 0;
             pos += seglen;
         }
-        ctx->disp_hold = 0;
-        cfw_page_present(ctx);
+        ctx->disp_hold = hold;
+        cfw_page_present(ctx);          /* deferred while the packet's hold stands */
         return ok;
     }
     default:

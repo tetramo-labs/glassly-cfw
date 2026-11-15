@@ -1,5 +1,6 @@
 /* Host check of raster.c: every direct-framebuffer mode applied to a lens
- * canvas through the real decoder, draw and bundle code.
+ * canvas through the real decoder, draw and bundle code, including a font
+ * asset's first glyph, TEXT_INLINE clip boxes and a bundle inside a packet.
  *
  *   clang -std=c11 -Ipatches -Ipatches/generated -o raster_test tools/host/raster_test.c
  */
@@ -29,7 +30,6 @@ void cfw_op_apply(cfw_lens *L, const uint8_t *p) { (void)L; (void)p; }
 void cfw_anim_freeze_all(cfw_lens *L) { (void)L; }
 int cfw_anim_any(const cfw_lens *L) { (void)L; return 0; }
 
-#include "rle.c"
 #include "geom.c"
 #include "scene.c"
 #include "raster.c"
@@ -139,6 +139,19 @@ int main(void) {
         expect("string with font 0 (builtin) applied", send(0, s20, sizeof s20), 1);
         uint8_t s20bad[] = { 20, 9, 0, 0, 0, 10, 0, 10, 0, 0x0f, 1, 'I' };
         expect("string with an unknown font refused", send(0, s20bad, sizeof s20bad), 0);
+        /* font asset 11: [96 x u32 offsets]['A' 2x2 of 15]['B' 3x1 of 5], glyphs back to back */
+        uint8_t font[384 + 6];
+        memset(font, 0, sizeof font);
+        cfw_put32(font + ('A' - 32) * 4, 384); font[384] = 2; font[385] = 2; font[386] = 0x4f;
+        cfw_put32(font + ('B' - 32) * 4, 387); font[387] = 3; font[388] = 1; font[389] = 0x35;
+        uint32_t foff = store_alloc(&ctx, sizeof font);
+        memcpy(store + foff, font, sizeof font);
+        ctx.assets[1].id = 11; ctx.assets[1].version = 1; ctx.assets[1].offset = foff; ctx.assets[1].length = sizeof font; ctx.assets[1].kind = ASSET_FONT; ctx.assets[1].state = 1;
+        uint8_t sf[] = { 20, 11, 0, 0, 0, 200, 0, 80, 0, 0x0f, 2, 'A', 'B' };
+        expect("string with a font asset applied", send(0, sf, sizeof sf), 1);
+        expect("'A' (the font's first glyph) at (201,81)", px(0, 201, 81), 15);
+        expect("'B' at (202,80)", px(0, 202, 80), 5);
+        expect("(205,80) after 'B' keeps the mode-6 gray", px(0, 205, 80), 2);
     }
     puts("mode 36: a filled rect and an inline text");
     {
@@ -155,6 +168,22 @@ int main(void) {
         expect("trailing bytes refused", send(0, m, sizeof m - 1), 0);
         uint8_t path[14] = { 36, 1, SH_PATH, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 };
         expect("PATH record refused", send(0, path, sizeof path), 0);
+        /* the same text clipped by its box (left lens) and unclipped (w = h = 0, right lens) */
+        uint8_t clip[2 + 17] = { 36, 1, SH_TEXT_INLINE, 0, 0x0f, 0, 50, 0, 190, 0, 15, 0, 8, 0, 4, 'M', 'M', 'M', 'M' };
+        uint8_t wide[2 + 17];
+        memcpy(wide, clip, sizeof clip); wide[10] = wide[12] = 0;
+        memset(canvas, 0, sizeof canvas);
+        expect("clipped text applied", send(0, clip, sizeof clip), 1);
+        expect("unclipped text applied", send(1, wide, sizeof wide), 1);
+        int outside = 0, beyond = 0, differ = 0;
+        for (int y = 180; y < CFW_H; y++) for (int x = 40; x < 140; x++) {
+            int in = x < 65 && y < 198;
+            if (!in) { outside += px(0, x, y) != 0; beyond += px(1, x, y) != 0; }
+            else differ += px(0, x, y) != px(1, x, y);
+        }
+        expect("unclipped ink right of / below the box", beyond > 0, 1);
+        expect("clipped: no ink outside the box", outside, 0);
+        expect("clipped: inside the box as unclipped", differ, 0);
     }
     puts("mode 8: bundle = full black + text, presented once");
     {
@@ -172,6 +201,13 @@ int main(void) {
         expect("text on top of the blank", ink > 10, 1);
         uint8_t nested[2 + 2 + 2] = { 8, 1, 2, 0, 8, 0 };
         expect("nested bundle refused", send(0, nested, sizeof nested), 0);
+        /* inside a packet (link.c holds presents across its records) the bundle leaves the hold */
+        presents = 0; ctx.disp_hold = 1; ctx.disp_dirty = 0;
+        expect("bundle applied under the packet's hold", send(0, m, 6 + fl + 8), 1);
+        expect("no present mid-packet", presents, 0);
+        expect("the packet's hold restored", ctx.disp_hold, 1);
+        expect("canvas marked dirty for the packet's present", ctx.disp_dirty, 1);
+        ctx.disp_hold = 0;
     }
     puts("takeover: an active scene empties when a raster lands; HIDE takes the canvas back");
     {

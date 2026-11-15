@@ -43,6 +43,7 @@ static uint32_t cfw_uplink_free(const customCfwContext *ctx) {
 
 static void cfw_ancs_relay(customCfwContext *ctx, const uint8_t *json, uint32_t n) {
     uint32_t chunks = (n + ANCS_CHUNK - 1u) / ANCS_CHUNK;
+    if (chunks > cfw_uplink_free(ctx)) cfw_uplink_flush(ctx);
     if (n == 0 || n > ANCS_MAX_JSON || chunks > cfw_uplink_free(ctx)) {
         if (ctx->ancs_drops != 255u) ctx->ancs_drops++;
         return;

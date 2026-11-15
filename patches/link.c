@@ -77,10 +77,14 @@ static int inflate_record(customCfwContext *ctx, const uint8_t *in, uint32_t n,
 }
 
 /* ---- uplink queue (drained in order after each packet and each page tick) ---- */
+/* A full ring is drained right here: every caller but cfw_gesture runs on the
+ * UI thread, and gestures (the wheel listener's thread is unverified) keep two
+ * slots free, so they never reach the flush. */
 int cfw_uplink_push(customCfwContext *ctx, const uint8_t *data, uint8_t len) {
     if (len > UPLINK_MAX) return 0;
     uint8_t nxt = (uint8_t)((ctx->uplink_tail + 1) % UPLINK_QUEUE);
-    if (nxt == ctx->uplink_head) return 0;  /* full: drop (phone retries) */
+    if (nxt == ctx->uplink_head) cfw_uplink_flush(ctx);
+    if (nxt == ctx->uplink_head) return 0;  /* the link is busy: drop (phone retries) */
     ctx->uplink[ctx->uplink_tail].len = len;
     memcpy(ctx->uplink[ctx->uplink_tail].data, data, len);
     ctx->uplink_tail = nxt;
@@ -229,6 +233,7 @@ void cfw_control(customCfwContext *ctx, uint8_t ctrl, uint8_t arg) {
     case CTRL_QUERY:
         /* IDENT already went out from the RX callback; the queued DIAG proves the hop. */
         ctx->queried = 1;
+        ctx->link_seen = (uint8_t)cfw_link_up();
         cfw_send_diag(ctx);
         break;
     case CTRL_PAGE_OPEN:
@@ -368,6 +373,7 @@ __attribute__((used)) void cfw_boot_register(void) {
  * that clears the launcher table's slot 0x18 and stores its stock callback:
  * registers the 0xF0 table first, then reproduces the displaced instructions
  * (r0 and r4 are live afterwards). Byte-verified by build.py. */
+#if defined(__arm__)   /* Thumb only: the host suites compile the rest of this file */
 __attribute__((naked, used)) void cfw_register_shim(void) {
     __asm volatile(
         "push {r4, lr}\n"
@@ -382,3 +388,4 @@ __attribute__((naked, used)) void cfw_register_shim(void) {
         ".ltorg\n"
     );
 }
+#endif

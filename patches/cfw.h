@@ -210,9 +210,9 @@ static inline int fw_inflate_end(cfw_zstream *z) { return FW(int (*)(void *), FW
 
 /* ---- CFW link wire protocol (business 0xF0) -------------------------------- */
 #define BIZ_GLASSLY 0xF0u
-#define REV_MAJOR 14u
-#define REV_TEXT  "14"                /* keep with REV_MAJOR: shown on the connect screen (hint.c) */
-#define REV_STRING "GLASSLYCFW-IO/14"
+#define REV_MAJOR 15u
+#define REV_TEXT  "15"                /* keep with REV_MAJOR: shown on the connect screen (hint.c) */
+#define REV_STRING "GLASSLYCFW-IO/15"
 #define MAX_CHUNK 240u
 /* The store is the largest of 256/192/128/96/64 KiB the heap grants at context
  * creation (ctx.c); IDENT, STATE and DIAG report the size obtained. */
@@ -359,6 +359,9 @@ typedef struct {
     cfw_edge edges[PATH_MAX_EDGES];
     int32_t xs[PATH_MAX_EDGES];
     int8_t winds[PATH_MAX_EDGES];
+    int8_t edge_winds[PATH_MAX_EDGES];
+    uint16_t order[PATH_MAX_EDGES];    /* cv_fill: edges by top y */
+    uint16_t active[PATH_MAX_EDGES];   /* cv_fill: edges spanning the current pixel row */
 } cfw_vector_work;
 #define SH_TEXT        15u         /* builtin-font string asset: [15][1][gray][0][x][y][asset u32] */
 #define SH_TEXT_CACHED 16u
@@ -410,6 +413,7 @@ typedef struct {
 #define PAGE_UNPAIRED 2u
 #define PAGE_LEASE 3u
 #define PAGE_USER 4u
+#define PAGE_LINK 5u               /* the phone link went down (dropped with the rest of the uplink queue) */
 
 #define PAGE_LEASE_MS 120000u
 /* message_processor module ids are 1..15; PHONE (3) and MUSIC (5) have no stock
@@ -498,8 +502,9 @@ typedef struct {
     uint16_t ordinal;              /* per-stream message counter, echoed in replies */
 } cfw_stream;
 
-/* queued uplink payload (<=192 B), drained in order (link.c cfw_uplink_flush) */
-#define UPLINK_QUEUE 8u
+/* queued uplink payload (<=192 B), drained in order (link.c cfw_uplink_flush);
+ * the ring holds UPLINK_QUEUE - 1 */
+#define UPLINK_QUEUE 16u
 typedef struct { uint8_t len; uint8_t data[UPLINK_MAX]; } cfw_uplink;
 
 /* One lens scene (G2 parity: the phone keeps a left and a right mirror and
@@ -543,8 +548,10 @@ typedef struct {
 
     /* classification / session */
     uint8_t queried;               /* phone sent QUERY this connection */
+    uint8_t link_seen;             /* the phone link read up since that QUERY (page.c link loss) */
     volatile uint8_t disp_own;     /* display thread: present the module's eye buffers (disp.c) */
     volatile uint8_t disp_dirty;   /* eye buffers need (re)composing on the display thread */
+    volatile uint8_t disp_clear;   /* eye buffers' margins and rows below the canvas need zeroing (disp.c) */
     volatile uint8_t disp_pattern; /* compose the probe's diagnostic images instead of the scenes */
     volatile uint8_t disp_pan_pending; /* a present request is queued at the display thread */
     volatile uint8_t disp_hold;             /* presents deferred (a bundle in progress): the canvas stays dirty */

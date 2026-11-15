@@ -12,7 +12,6 @@
  * anywhere here.
  */
 #include "cfw.h"
-#include "rle.h"
 #include "font_builtin.h"
 
 uint16_t rd16(const uint8_t *p) { return (uint16_t)(p[0] | (p[1] << 8)); }
@@ -252,11 +251,13 @@ static int shape_into(customCfwContext *ctx, cfw_object *o, const uint8_t *rec, 
         o->w = rds16(rec + 8); o->h = rds16(rec + 10);
         uint8_t slen = rec[12];
         if ((uint32_t)13 + slen > len) return 0;
-        uint32_t off = store_reserve(ctx, slen + 1u);
-        if (off == 0xffffffffu) return -1;         /* store full even after eviction */
-        memcpy(ctx->store + off, rec + 13, slen);
-        ctx->store[off + slen] = 0;
-        o->text_off = off; o->text_len = slen;
+        if (slen) {
+            uint32_t off = store_reserve(ctx, slen + 1u);
+            if (off == 0xffffffffu) return -1;     /* store full even after eviction */
+            memcpy(ctx->store + off, rec + 13, slen);
+            ctx->store[off + slen] = 0;
+            o->text_off = off; o->text_len = slen;
+        }
         o->p[0] = o->x; o->p[1] = o->y; o->p[2] = o->w; o->p[3] = o->h;
     } else if (type == SH_PATH) {
         /* [18][flags][gray][rule][x][y][scale Q8][len][commands]: compile the
@@ -521,8 +522,9 @@ int cfw_scene_message(customCfwContext *ctx, cfw_lens *L, const uint8_t *msg, ui
         if (!applied && *status == ST_CAPACITY && *extra_len) extra[0] = 0; /* evictions rolled back */
     }
     if (applied && msg[0] != MSG_STATE && !duplicate) {
-        L->scene_serial++;
-        /* Shared asset changes invalidate the other eye's cached text/images. */
+        if (msg[0] != MSG_PUT) L->scene_serial++;
+        /* A PUT changes what a lens draws only through what it journals (a
+         * definition, a completed or evicted asset, in both lenses for assets). */
         for (unsigned e = 0; e < 2; e++) if (ctx->lens[e].mutated) ctx->lens[e].scene_serial++;
     }
     if (handled && *status == ST_REFUSED && *extra_len == 0 && ctx->refuse_reason) { extra[0] = ctx->refuse_reason; *extra_len = 1; }
@@ -767,20 +769,29 @@ static void make_lut(uint8_t options, uint8_t *lut) {
     }
 }
 
-/* Blit a 4bpp pixel stream of iw*ih pixels, rows unpadded, through the LUT.
- * `hi_first`: the first pixel of each byte is the high nibble (the RLE
- * decoder's layout, rle.c); the builtin font's raw rows are low nibble first
- * (gen_font.py; even glyph widths keep rows byte-aligned). Until revision 7 this
- * read every stream low nibble first and padded rows: cached images drew with
- * each pixel pair swapped and odd widths drifted a pixel per row. */
+/* Right and bottom drawing limits (exclusive): the canvas, narrowed by a
+ * TEXT_INLINE box [x][y][w][h] on each axis whose size is > 0. The box never
+ * clips left or top (the G2's shapes.c rule). */
+static void text_clip(int x, int y, int w, int h, int *right, int *bottom) {
+    *right = w > 0 && x + w < CFW_W ? x + w : CFW_W;
+    *bottom = h > 0 && y + h < CFW_H ? y + h : CFW_H;
+}
+
+/* Blit a 4bpp pixel stream of iw*ih pixels, rows unpadded, through the LUT,
+ * clipped to [0, right) x [0, bottom) (right <= CFW_W, bottom <= CFW_H).
+ * `hi_first`: the first pixel of each byte is the high nibble; the builtin
+ * font's raw rows are low nibble first (gen_font.py; even glyph widths keep
+ * rows byte-aligned). Until revision 7 this read every stream low nibble first
+ * and padded rows: cached images drew with each pixel pair swapped and odd
+ * widths drifted a pixel per row. */
 static void blit_rows(customCfwContext *ctx, const uint8_t *px, uint32_t iw, uint32_t ih, int hi_first,
-                      int x, int y, const uint8_t *lut, int transparent) {
+                      int x, int y, const uint8_t *lut, int transparent, int right, int bottom) {
     if (!ctx->canvas_buf || !iw || !ih) return;
-    /* clip once: rows [j0, j1) and columns [i0, i1) of the image land on the canvas */
+    /* clip once: rows [j0, j1) and columns [i0, i1) of the image land inside the limits */
     int j0 = y < 0 ? -y : 0, j1 = (int)ih;
-    if (y + j1 > CFW_H) j1 = CFW_H - y;
+    if (y + j1 > bottom) j1 = bottom - y;
     int i0 = x < 0 ? -x : 0, i1 = (int)iw;
-    if (x + i1 > CFW_W) i1 = CFW_W - x;
+    if (x + i1 > right) i1 = right - x;
     if (j0 >= j1 || i0 >= i1) return;
     uint8_t ink[16];
     for (uint32_t g = 0; g < 16; g++) ink[g] = (uint8_t)(lut[g] * 17u);
@@ -808,26 +819,50 @@ static void blit_rows(customCfwContext *ctx, const uint8_t *px, uint32_t iw, uin
     }
 }
 
-/* Blit one cached image `[w u8][h u8][4bpp RLE]` (len bytes) at (x, y): the
- * RLE covers exactly w*h pixels with no row padding (G2CfwTextureCache), so it
- * is decoded as one row into a scratch region at the store tail (not
- * persisted). Returns the image width, 0 when it did not decode. */
-static uint32_t blit_image(customCfwContext *ctx, const uint8_t *img, uint32_t len, int x, int y, const uint8_t *lut, int transparent) {
-    if (len < 2) return 0;
+/* Blit one cached image `[w u8][h u8][4bpp RLE]` of exactly `len` bytes at
+ * (x, y), clipped as blit_rows: the RLE covers w*h pixels, runs crossing rows
+ * with no row padding (G2CfwTextureCache), and each run is written straight
+ * into the canvas through the LUT. Returns the image width, 0 when the stream
+ * is not exactly one image; it may have drawn part of it by then, so callers
+ * pass only assets asset_content_valid accepted or a glyph asset_image_bytes
+ * measured. */
+static uint32_t blit_image(customCfwContext *ctx, const uint8_t *img, uint32_t len, int x, int y,
+                           const uint8_t *lut, int transparent, int right, int bottom) {
+    if (len < 3 || !ctx->canvas_buf) return 0;
     uint32_t iw = img[0], ih = img[1];
     if (!iw || !ih) return 0;
-    uint32_t need = (iw * ih + 1u) / 2u;
-    uint32_t scratch = store_alloc(ctx, need);       /* transient decode buffer */
-    if (scratch == 0xffffffffu) return 0;
-    uint8_t *dst = ctx->store + scratch;
-    cfw_zero(dst, need);
-    rle_state rs;
-    rle_init(&rs, dst, need, need, 1);
-    rle_feed(&rs, img + 2, len - 2);
-    uint32_t out = 0;
-    if (!rs.err) { blit_rows(ctx, dst, iw, ih, 1, x, y, lut, transparent); out = iw; }
-    store_free(ctx, scratch, need);
-    return out;
+    /* visible columns [i0, i1) and rows [j0, j1) of the image */
+    int i0 = x < 0 ? -x : 0, i1 = right - x, j0 = y < 0 ? -y : 0, j1 = bottom - y;
+    if (i1 > (int)iw) i1 = (int)iw;
+    if (j1 > (int)ih) j1 = (int)ih;
+    uint8_t ink[16];
+    for (uint32_t g = 0; g < 16; g++) ink[g] = (uint8_t)(lut[g] * 17u);
+    uint32_t left = iw * ih, pos = 2, col = 0;
+    int row = 0;
+    while (left) {
+        if (pos >= len) return 0;
+        uint8_t g = (uint8_t)(img[pos] & 0x0fu);
+        uint32_t run = img[pos++] >> 4;
+        if (!run) {
+            if (pos >= len) return 0;
+            run = img[pos++];
+            if (!run) { if (len - pos < 2) return 0; run = rd16(img + pos); pos += 2; }
+        }
+        if (!run || run > left) return 0;
+        left -= run;
+        int skip = transparent && !g;
+        while (run) {
+            uint32_t n = iw - col;
+            if (n > run) n = run;
+            if (!skip && row >= j0 && row < j1) {
+                int a = (int)col > i0 ? (int)col : i0, b = (int)(col + n) < i1 ? (int)(col + n) : i1;
+                if (a < b) memset(ctx->canvas_buf + (uint32_t)(y + row) * CFW_W + (uint32_t)(x + a), ink[g], (uint32_t)(b - a));
+            }
+            col += n; run -= n;
+            if (col == iw) { col = 0; row++; }
+        }
+    }
+    return pos == len ? iw : 0;
 }
 
 static void draw_image(customCfwContext *ctx, cfw_object *o) {
@@ -835,17 +870,19 @@ static void draw_image(customCfwContext *ctx, cfw_object *o) {
     if (!a || !(a->state & 1) || a->length < 2) return;
     uint8_t lut[16];
     make_lut(o->color, lut);
-    blit_image(ctx, ctx->store + a->offset, a->length, o->p[0], o->p[1], lut, (o->color & TEX_OPT_TRANSPARENT) != 0);
+    blit_image(ctx, ctx->store + a->offset, a->length, o->p[0], o->p[1], lut, (o->color & TEX_OPT_TRANSPARENT) != 0, CFW_W, CFW_H);
 }
 
 /* Draw `n` bytes of `str` glyph by glyph with a font table. A cached font
  * (G2 texture_cache.h) is `[96 x u32 offsets][RLE glyph images]` for ASCII
- * 32..127, x advancing by the image width. The builtin font (font_builtin.h,
- * `raw`) is `[224 x u32 offsets][kerning pairs][glyph [w][h][adv][raw rows]]`
+ * 32..127, the glyphs back to back, x advancing by the image width. The
+ * builtin font (font_builtin.h, `raw`) is
+ * `[224 x u32 offsets][kerning pairs][glyph [w][h][adv][raw rows]]`
  * for Latin-1 0x20..0xFF: the string's UTF-8 two-byte sequences decode to
  * Latin-1, any other non-ASCII character draws '?', x advances by the glyph's
  * advance plus the face's pair kerning, as the G2's stock font does. Bytes
- * 1..31 are explicit kerning (x += byte - 11). 1 when drawn, 0 on a bad table. */
+ * 1..31 are explicit kerning (x += byte - 11). Pixels are clipped to
+ * [0, right) x [0, bottom). 1 when drawn, 0 on a bad table. */
 #define FONT_TABLE_CHARS 96u
 
 uint8_t cfw_font_line_height(void) { return (uint8_t)FONT_BUILTIN_HEIGHT; }
@@ -884,7 +921,8 @@ static uint32_t builtin_next(const uint8_t *str, uint32_t n, uint32_t *i) {
 }
 
 static int draw_font_text(customCfwContext *ctx, const uint8_t *font, uint32_t flen, int raw,
-                          const uint8_t *str, uint32_t n, int x, int y, const uint8_t *lut, int transparent) {
+                          const uint8_t *str, uint32_t n, int x, int y, const uint8_t *lut, int transparent,
+                          int right, int bottom) {
     uint32_t chars = raw ? (uint32_t)FONT_BUILTIN_CHARS : FONT_TABLE_CHARS;
     if (flen < chars * 4u) return 0;
     uint32_t prev = 0;
@@ -901,11 +939,12 @@ static int draw_font_text(customCfwContext *ctx, const uint8_t *font, uint32_t f
             uint32_t rowbytes = (w + 1u) / 2u;
             if (off + 3u + rowbytes * h > flen || (w & 1u)) return 0;   /* raw rows: byte-aligned, low nibble first */
             if (prev) x += builtin_kern(prev, ch);
-            blit_rows(ctx, font + off + 3, w, h, 0, x, y, lut, transparent);
+            blit_rows(ctx, font + off + 3, w, h, 0, x, y, lut, transparent, right, bottom);
             x += (int)font[off + 2];
             prev = ch;
         } else {
-            w = blit_image(ctx, font + off, flen - off, x, y, lut, transparent);
+            uint32_t glen = asset_image_bytes(font + off, flen - off);
+            w = glen ? blit_image(ctx, font + off, glen, x, y, lut, transparent, right, bottom) : 0;
             if (!w) return 0;
             x += (int)w;
         }
@@ -918,8 +957,10 @@ static void draw_text(customCfwContext *ctx, cfw_object *o) {
     make_lut(o->color, lut);
     int transparent = (o->color & TEX_OPT_TRANSPARENT) != 0;
     if (o->type == SH_TEXT_INLINE) {
+        int right, bottom;
+        text_clip(o->p[0], o->p[1], o->p[2], o->p[3], &right, &bottom);
         if (o->text_len)
-            draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, ctx->store + o->text_off, o->text_len, o->p[0], o->p[1], lut, transparent);
+            draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, ctx->store + o->text_off, o->text_len, o->p[0], o->p[1], lut, transparent, right, bottom);
         return;
     }
     cfw_asset *s = asset_find(ctx, o->asset_id);
@@ -927,10 +968,10 @@ static void draw_text(customCfwContext *ctx, cfw_object *o) {
     if (o->type == SH_TEXT_CACHED && o->font_id) {
         cfw_asset *f = asset_find(ctx, o->font_id);
         if (f && (f->state & 1) &&
-            draw_font_text(ctx, ctx->store + f->offset, f->length, 0, ctx->store + s->offset, s->length, o->p[0], o->p[1], lut, transparent))
+            draw_font_text(ctx, ctx->store + f->offset, f->length, 0, ctx->store + s->offset, s->length, o->p[0], o->p[1], lut, transparent, CFW_W, CFW_H))
             return;
     }
-    draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, ctx->store + s->offset, s->length, o->p[0], o->p[1], lut, transparent);
+    draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, ctx->store + s->offset, s->length, o->p[0], o->p[1], lut, transparent, CFW_W, CFW_H);
 }
 
 void cfw_scene_hide(customCfwContext *ctx, cfw_lens *L) {
@@ -1090,8 +1131,10 @@ void cfw_scene_record_draw(customCfwContext *ctx, cfw_lens *L, const uint8_t *re
     if (rec[0] == SH_TEXT_INLINE) {
         /* straight from the record: no store round trip */
         uint8_t lut[16];
+        int x = rds16(rec + 4), y = rds16(rec + 6), right, bottom;
         make_lut(rec[2], lut);
-        draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, rec + 13, rec[12], rds16(rec + 4), rds16(rec + 6), lut, (rec[2] & TEX_OPT_TRANSPARENT) != 0);
+        text_clip(x, y, rds16(rec + 8), rds16(rec + 10), &right, &bottom);
+        draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, rec + 13, rec[12], x, y, lut, (rec[2] & TEX_OPT_TRANSPARENT) != 0, right, bottom);
     } else {
         cfw_object o;
         cfw_zero(&o, sizeof o);
@@ -1108,7 +1151,7 @@ int cfw_scene_draw_image_asset(customCfwContext *ctx, cfw_lens *L, uint32_t asse
     uint8_t lut[16];
     make_lut(opt, lut);
     ctx->canvas_buf = L->canvas;
-    uint32_t w = blit_image(ctx, ctx->store + a->offset, a->length, x, y, lut, (opt & TEX_OPT_TRANSPARENT) != 0);
+    uint32_t w = blit_image(ctx, ctx->store + a->offset, a->length, x, y, lut, (opt & TEX_OPT_TRANSPARENT) != 0, CFW_W, CFW_H);
     ctx->canvas_buf = 0;
     a->last_use = ++ctx->use_clock;
     return w != 0;
@@ -1126,10 +1169,10 @@ int cfw_scene_draw_string(customCfwContext *ctx, cfw_lens *L, uint32_t font, int
     if (font) {
         cfw_asset *f = asset_find(ctx, font);
         if (!f || !(f->state & 1) || f->kind != ASSET_FONT) { ctx->canvas_buf = 0; return 0; }
-        ok = draw_font_text(ctx, ctx->store + f->offset, f->length, 0, str, n, x, y, lut, transparent);
+        ok = draw_font_text(ctx, ctx->store + f->offset, f->length, 0, str, n, x, y, lut, transparent, CFW_W, CFW_H);
         f->last_use = ++ctx->use_clock;
     } else {
-        ok = draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, str, n, x, y, lut, transparent);
+        ok = draw_font_text(ctx, font_builtin, FONT_BUILTIN_BYTES, 1, str, n, x, y, lut, transparent, CFW_W, CFW_H);
     }
     ctx->canvas_buf = 0;
     return ok;

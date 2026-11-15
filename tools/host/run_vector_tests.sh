@@ -24,4 +24,5 @@ run rotation-quarter-turn       shape 3 1 100 100 80 40 0 0 0 0 $((90*256)) 140 
 run rotation-ring-outline       shape 2 3 100 100 80 40 0 0 0 0 $((45*256)) 140 120   140,120,0
 run rotation-circle-outline     shape 4 2 140 120 30 0 0 0 0 0 $((30*256)) 140 120    140,120,0 140,91,15
 run rotation-line               shape 1 2 100 120 180 120 0 0 0 0 $((90*256)) 140 120 139,100,15 137,100,0 100,120,0
+echo "== fill-equivalence"; "$OUT/vector_test" fill-equivalence 400 || fail=1
 exit $fail

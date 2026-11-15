@@ -153,35 +153,71 @@ static void cv_sort(cfw_vector_work *w, uint32_t count) {
     for (uint32_t i = count; i > 1; i--) { cv_swap(w, 0, i - 1); cv_sift(w, 0, i - 1); }
 }
 
+/* Heap sort of w->order[0..count) by the top y of the edges they index. */
+static void cv_sift_top(cfw_vector_work *w, uint32_t root, uint32_t count) {
+    while (root * 2 + 1 < count) {
+        uint32_t child = root * 2 + 1;
+        if (child + 1 < count && w->edges[w->order[child + 1]].y0 > w->edges[w->order[child]].y0) child++;
+        if (w->edges[w->order[root]].y0 >= w->edges[w->order[child]].y0) break;
+        uint16_t t = w->order[root]; w->order[root] = w->order[child]; w->order[child] = t;
+        root = child;
+    }
+}
+static void cv_sort_tops(cfw_vector_work *w, uint32_t count) {
+    for (uint32_t i = count / 2; i > 0; i--) cv_sift_top(w, i - 1, count);
+    for (uint32_t i = count; i > 1; i--) {
+        uint16_t t = w->order[0]; w->order[0] = w->order[i - 1]; w->order[i - 1] = t;
+        cv_sift_top(w, 0, i - 1);
+    }
+}
+
 /* Fill w->edges[0..n) into the canvas with ctx->draw_gray: each pixel row's
- * four sub-rows contribute their inside spans to one coverage row. */
+ * four sub-rows contribute their inside spans to one coverage row. The edges
+ * are rewritten in place pointing down (winding kept, horizontal ones
+ * dropped) and taken in order of their tops, so a row tests only the edges
+ * that span it. */
 static void cv_fill(customCfwContext *ctx, cfw_vector_work *w, uint32_t n, uint8_t rule) {
     if (!n || !ctx->canvas_buf) return;
-    int32_t ymin = w->edges[0].y0, ymax = ymin;
+    uint32_t m = 0;
+    int32_t ymax = 0;
     for (uint32_t i = 0; i < n; i++) {
-        const cfw_edge *e = &w->edges[i];
-        if (e->y0 < ymin) ymin = e->y0;
-        if (e->y1 < ymin) ymin = e->y1;
-        if (e->y0 > ymax) ymax = e->y0;
-        if (e->y1 > ymax) ymax = e->y1;
+        cfw_edge e = w->edges[i];
+        int8_t winding = 1;
+        if (e.y0 == e.y1) continue;
+        if (e.y0 > e.y1) { int32_t v = e.x0; e.x0 = e.x1; e.x1 = v; v = e.y0; e.y0 = e.y1; e.y1 = v; winding = -1; }
+        if (!m || e.y1 > ymax) ymax = e.y1;
+        w->edges[m] = e;
+        w->edge_winds[m] = winding;
+        w->order[m] = (uint16_t)m;
+        m++;
     }
-    int32_t row0 = g_div_floor(ymin, GQ4), row1 = g_div_floor(ymax, GQ4);
+    if (!m) return;
+    cv_sort_tops(w, m);
+    int32_t row0 = g_div_floor(w->edges[w->order[0]].y0, GQ4), row1 = g_div_floor(ymax, GQ4);
     if (row0 < 0) row0 = 0;
     if (row1 >= CFW_H) row1 = CFW_H - 1;
     g_row r;
+    uint32_t next = 0, live = 0;
     for (int32_t row = row0; row <= row1; row++) {
+        int32_t top = g_sub_y(row, 0), bottom = g_sub_y(row, GSUB - 1);
+        uint32_t kept = 0;
+        for (uint32_t a = 0; a < live; a++)
+            if (w->edges[w->active[a]].y1 > top) w->active[kept++] = w->active[a];
+        live = kept;
+        while (next < m && w->edges[w->order[next]].y0 <= bottom) {
+            uint16_t i = w->order[next++];
+            if (w->edges[i].y1 > top) w->active[live++] = i;
+        }
+        if (!live) continue;
         g_row_begin(&r);
         for (int32_t s = 0; s < GSUB; s++) {
             int32_t yc = g_sub_y(row, s);
             uint32_t k = 0;
-            for (uint32_t i = 0; i < n; i++) {
-                cfw_edge e = w->edges[i];
-                int8_t winding = 1;
-                if (e.y0 == e.y1) continue;
-                if (e.y0 > e.y1) { int32_t v = e.x0; e.x0 = e.x1; e.x1 = v; v = e.y0; e.y0 = e.y1; e.y1 = v; winding = -1; }
-                if (yc < e.y0 || yc >= e.y1) continue;
-                w->xs[k] = e.x0 + cv_muldiv(yc - e.y0, e.x1 - e.x0, e.y1 - e.y0);
-                w->winds[k++] = winding;
+            for (uint32_t a = 0; a < live; a++) {
+                const cfw_edge *e = &w->edges[w->active[a]];
+                if (yc < e->y0 || yc >= e->y1) continue;
+                w->xs[k] = e->x0 + cv_muldiv(yc - e->y0, e->x1 - e->x0, e->y1 - e->y0);
+                w->winds[k++] = w->edge_winds[w->active[a]];
             }
             cv_sort(w, k);
             int32_t winding = 0, start = 0;

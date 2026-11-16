@@ -36,5 +36,10 @@ be relaxed to get past a refusal.
 - **Refusals name what was seen.** Identity refusals print the values the controller reported
   (flash part, layout, application build) so a new kind can be reviewed from the message alone.
 
+- **Rokid Glasses** install an app over adb rather than firmware. `devices/rokid` gates install on
+  `INSTALL_VERIFIED` build fingerprints and the launcher takeover on `TAKEOVER_VERIFIED`; both start empty. The
+  `GLASSLY_FLASHER_DEVELOPER=1` override exists only for the first install on the developer's own glasses and must
+  never be set by the app or documented as a user step.
+
 Do not commit AI attribution. Keep `.gitattributes` (`firmware/** -text`): Windows checkouts
 once rewrote a bundled JSON and broke its pinned hash.

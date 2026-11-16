@@ -78,4 +78,23 @@ DEVICES = {d.key: d for d in [
         elevate=frozenset(),
         tested='',
     ),
+    Device(
+        key='rokid',
+        name='Rokid Glasses',
+        supported='Rokid Glasses (RG). Installs the Glassly app on the glasses over Android debugging; nothing is '
+                  'reflashed.',
+        update_mode='In the Hi Rokid app on your phone, open the glasses\' developer settings and turn on USB debugging. '
+                    'Connect the glasses to this computer with a USB data cable and accept the debugging prompt if '
+                    'the glasses show one. Without a data cable, put the glasses and this computer on the same '
+                    'Wi-Fi, open Wireless debugging on the glasses, choose Pair device with pairing code, and type '
+                    'the code below before pressing Start.',
+        after_install='Unfold the glasses: they show the Glassly screen. In the Glassly App, add Rokid Glasses and '
+                      'choose the Glassly glasses it finds.',
+        after_restore='Glassly is removed from the glasses and the Rokid setup this computer recorded is back.',
+        after_backup='Nothing was written. The glasses\' state was recorded in the backup folder.',
+        module='glassly_flasher.devices.rokid',
+        elevate=frozenset(),
+        tested='Not yet run on glasses.',
+        asks_pairing_code=True,
+    ),
 ]}

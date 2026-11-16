@@ -26,6 +26,7 @@ def main(argv):
     parser.add_argument('--events', type=Path, required=True)
     parser.add_argument('--cancel', type=Path)
     parser.add_argument('--owner', type=int)
+    parser.add_argument('--pairing-code')
     args = parser.parse_args(argv)
     device = DEVICES[args.device]
     reporter = EventReporter(args.events, args.output / 'operation.log', args.cancel)
@@ -40,7 +41,7 @@ def main(argv):
             if args.backup is None or not args.backup.is_file():
                 raise FlashError('Choose the flash-pass1.bin from an earlier session of this controller')
             backup = args.backup.read_bytes()
-        summary = device.run(args.mode, args.output, reporter, backup=backup)
+        summary = device.run(args.mode, args.output, reporter, backup=backup, pairing_code=args.pairing_code)
         (args.output / 'result.json').write_text(json.dumps(summary, indent=2) + '\n')
         reporter.emit(type='result', ok=True, summary=summary)
         code = 0

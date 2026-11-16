@@ -39,6 +39,7 @@ class App:
         self.mode = tk.StringVar(value='install')
         self.accept = tk.BooleanVar(value=False)
         self.status = tk.StringVar(value='')
+        self.pairing_code = tk.StringVar(value='')
         self.result = tk.StringVar(value='')
 
         frame = ttk.Frame(root, padding=16)
@@ -68,6 +69,9 @@ class App:
         self.instructions.pack(anchor='w')
         ttk.Label(box, text='Connect only the device you are flashing. You can start the flasher first; it waits '
                             'for the device.', wraplength=WRAP, foreground='#555').pack(anchor='w', pady=(6, 0))
+        self.pairing_row = ttk.Frame(box)
+        ttk.Label(self.pairing_row, text='Wireless debugging pairing code (optional):').pack(side='left')
+        ttk.Entry(self.pairing_row, textvariable=self.pairing_code, width=10).pack(side='left', padx=(6, 0))
 
         self.risk = ttk.Checkbutton(frame, variable=self.accept, command=self.refresh, text=(
             'I understand this firmware is experimental and a failed flash could leave the controller unusable.'))
@@ -116,6 +120,10 @@ class App:
             button.configure(state='normal' if key in device.modes and not self.running() else 'disabled')
         self.supported.configure(text='\n'.join(part for part in (device.supported, device.tested) if part))
         self.instructions.configure(text=device.update_mode)
+        if device.asks_pairing_code:
+            self.pairing_row.pack(anchor='w', pady=(6, 0))
+        else:
+            self.pairing_row.pack_forget()
         writes = self.mode.get() != 'backup'
         self.risk.configure(state='normal' if writes and not self.running() else 'disabled')
         ready = not self.running() and (self.accept.get() or not writes)
@@ -148,6 +156,9 @@ class App:
                 self.refresh()
                 return
             args += ['--backup', chosen]
+        code = self.pairing_code.get().strip()
+        if device.asks_pairing_code and code:
+            args += ['--pairing-code', code]
         if sys.platform != 'win32':
             args += ['--owner', str(os.getuid())]
         self.log.configure(state='normal')

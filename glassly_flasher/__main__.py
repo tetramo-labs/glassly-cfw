@@ -36,10 +36,13 @@ def cli(argv):
     parser.add_argument('mode', choices=['install', 'restore', 'backup', 'restore-backup'])
     parser.add_argument('--backup', help='flash-pass1.bin from an earlier session, for restore-backup')
     parser.add_argument('--i-accept-the-risk', action='store_true', help='required for install and restore')
+    parser.add_argument('--pairing-code', help='Wireless debugging pairing code, for Rokid Glasses without a cable')
     args = parser.parse_args(argv)
     device = DEVICES[args.device]
     if args.mode not in device.modes:
         parser.error(f'{device.name} supports: {", ".join(device.modes)}')
+    if args.pairing_code and not device.asks_pairing_code:
+        parser.error(f'{device.name} does not use a pairing code')
     if args.mode != 'backup' and not args.i_accept_the_risk:
         parser.error('experimental firmware can leave the controller unusable; pass --i-accept-the-risk')
     output = paths.backups_dir() / f'{device.key}-{args.mode}-{time.strftime("%Y%m%d-%H%M%S")}'
@@ -52,6 +55,7 @@ def cli(argv):
     thread.start()
     try:
         extra = ['--backup', args.backup] if args.backup else []
+        extra += ['--pairing-code', args.pairing_code] if args.pairing_code else []
         return worker([device.key, args.mode, '--output', str(output), '--events', str(events), *extra])
     finally:
         sys.stdout = sys.__stdout__

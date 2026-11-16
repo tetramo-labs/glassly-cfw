@@ -42,7 +42,8 @@ class Device:
     tested: str
     modes: tuple = ('install', 'restore', 'backup')
     after_backup: str = 'Nothing was written. Unplug the controller and switch it off and on.'
+    asks_pairing_code: bool = False
 
-    def run(self, mode, output, reporter, backup=None):
-        extra = {'backup': backup} if backup is not None else {}
+    def run(self, mode, output, reporter, **extra):
+        extra = {key: value for key, value in extra.items() if value is not None}
         return importlib.import_module(self.module).run(mode, output, reporter, **extra)

@@ -43,7 +43,7 @@ class WorkerTests(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in output.iterdir()), ['operation.log'])
 
     def test_registry_is_complete(self):
-        self.assertEqual(set(DEVICES), {'zero2', 'micro', 'gamebrick', 'ananke', 'memomind'})
+        self.assertEqual(set(DEVICES), {'zero2', 'micro', 'gamebrick', 'ananke', 'memomind', 'rokid'})
         for device in DEVICES.values():
             self.assertTrue({'install', 'restore'} <= set(device.modes))
 

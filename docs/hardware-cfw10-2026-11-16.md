@@ -53,3 +53,31 @@ not establish touch forwarding when steps 14–19 are excluded.
 
 Raw logs, the derived subset, the structured flash record and the per-step
 report remain local under `captures/hardware/2026-11-16-cfw10/`.
+
+## Full hardware suite follow-up
+
+At 00:56:26–00:58:39 UTC the unchanged `tests/hardware/steps-10.json` ran with
+`--auto`: **35 passed, zero failed**, with no exclusions and no additional
+flash. The harness waited for physical input at steps 15, 17 and 19; the wearer
+performed each gesture when prompted:
+
+- Right single tap: `88080001100002000000` (reply data, excluding status 0).
+- Left single tap: `88080101100001000000`.
+- Right long press: `8b080001100004000000`.
+
+The wearer also confirmed, "Both eyes look correct," while watching the display
+tests. This provides visual confirmation in addition to the canvas CRC checks;
+it is not a separate per-step visual assessment.
+
+The retained scene checksum passed after the 40-second hold, and the animation
+settled event arrived. Final status remained boot 1 with `last_crash: null`,
+zero flush errors, repins, rejections and allocation failures, and 194,428 free
+heap bytes. The display lease/session and relay were released. The starting
+panel brightness was 4; after release the stock auto-brightness reported 3.
+
+This follow-up verifies the previously excluded touch gestures. Live iPhone
+ANCS delivery, the ANCS client's arm, independent left-arm version querying,
+phone integration and phone OTA checks remain outside this run.
+
+Full raw log and per-step report:
+`captures/hardware/cfw10-full-OE6MCn/{suite.log,report.json}` (local only).

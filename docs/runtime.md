@@ -117,7 +117,7 @@ reply once the work is done; a busy refusal is answered at once.
 
 | Key | Request | Reply |
 |---|---|---|
-| 0x01 | — | identity JSON: `version`, `revision`, `platform`, `base`, `arm` (master/slave), `eye` (left/right), `canvas` `{width 540, height 280, stride 270, format gray4}`, `eyes`, `scene` `{modes, store 65536, objects 128, assets 128, show_eye_bits, eye_objects, text false}`, `max_message` 12284, `owned` |
+| 0x01 | — | identity JSON: `version`, `revision`, `platform`, `base`, `arm` (master/slave), `eye` (left/right), `canvas` `{width 540, height 280, stride 270, format gray4}`, `eyes`, `scene` `{modes, store 65536, objects 128, assets 128, show_eye_bits, eye_objects, text}` (`text` true and mode 15 listed from revision 12), `max_message` 12284, `owned` |
 | 0x02 | bytes (≤ 499) | the same bytes |
 | 0x03 | bytes (≤ 12,284) | `[0][len u32 LE][crc32 u32 LE]` of the payload (zlib CRC-32), to verify multi-packet transfers |
 | 0x04 | — | status JSON: `owned`, `session`, `boot` and `last_crash` (breadcrumbs, below), `heap_free`, `heap_largest`, `display_on`, `panel_brightness` (stock level), `brightness` (last 0x23 level, 255 none), counters `gate_skips` (stock panel writes and frame kicks held off), `repins`, `inputs` (touch messages the input gate handed over), `presents`, `deferred`, `flush_errors`, `scenes`, `rejected`, `settled`, `busy`, `alloc_failures`, `pump_ticks`, `commands`; at most 551 bytes with the status byte (reply buffer 560; `present_rows` left the JSON in revision 8 to make room) |
@@ -136,11 +136,12 @@ reply once the work is done; a busy refusal is answered at once.
 | 0x2B | — (notification) | while the IMU lease is live, every accelerometer FIFO drain: `[0][batch u16][overruns][count][ms tick u32][count × (x, y, z int16 LE)]`, oldest first, 8196 counts per g, about 26 samples a second, right arm only |
 | other | — | status 5 |
 
-Scene modes (the MemoMind 0x7d channel's raw messages, minus built-in text,
-diagnostics and the flash store): 37 PUT, 38 SHOW, 39 HIDE, 40 STATE,
-41 CONTROL (RESET/DROP/period), 8 bundle (segments of 3, 6, 9, 19, 20, 36,
-37–41), 19 image and 20 string immediates, 36 geometry, 3/6 raster (RLE),
-9 rectangle copy. Mode 15 and text shapes draw nothing (no font yet).
+Scene modes (the MemoMind 0x7d channel's raw messages, minus diagnostics and
+the flash store): 37 PUT, 38 SHOW, 39 HIDE, 40 STATE, 41 CONTROL
+(RESET/DROP/period), 8 bundle (segments of 3, 6, 9, 15, 19, 20, 36, 37–41),
+15 built-in text, 19 image and 20 string immediates, 36 geometry, 3/6 raster
+(RLE), 9 rectangle copy. Up to revision 11, mode 15 and text shapes drew
+nothing; revision 12 draws them in the stock face (Built-in text, below).
 
 Per eye. Each arm drives its own panel and both arms run every command, so
 both keep the same retained scene. A standalone SHOW whose flags carry 0x10
@@ -512,6 +513,38 @@ replay path untouched.
   and the applier accepting the new row.
 - Fallbacks: the staging tail above the OTA image (erased by later updates),
   neutralising the WASM interpreter (~75 KB, entry `0x042812dc`).
+
+## Built-in text (GLASSLYCFW/12)
+
+`runtime/nimo/text.c` is the scene core's `builtin_text` platform callback and
+the mode-15 handler. It draws the MemoMind/G2 text record (`[x s16][y s16]
+[options][len][UTF-8]`, y the top of the line; options: low nibble full-ink
+level, 0x10 skip zero pixels, 0x20 invert; bytes 1..31 move the pen by
+byte − 11 px) in LVGL's default face, `lv_font_montserrat_16` as the stock UI
+uses it:
+
+| What | Address | Notes |
+|---|---|---|
+| font (`lv_font_t`) | `0x0431ee44` | line height 18, baseline 3, kerning classes, no fallback |
+| `get_glyph_dsc` | `0x04243e8a` | `lv_font_get_glyph_dsc_fmt_txt`: reads only const tables and fills `lv_font_glyph_dsc_t` (`adv_w` +4, `box_w/h` +6/+8, `ofs_x/y` +10/+12, `format` (bpp) +16, `gid` +28); with `next` 0 no kerning, advance `(adv_w + 8) >> 4` |
+| fmt_txt descriptor | `0x0431b0e8` | bitmaps `0x0431b100` (4 bpp, plain, rows continuous), glyph table `0x0431dc54` (8 bytes each, bitmap offset in the low 20 bits) |
+| cmaps | `0x0431b0b8` | U+0020..U+007E (format-0 tiny), then a sparse list from U+00B0: °, • and 60 LVGL symbol icons |
+
+Each glyph is looked up with the stock `get_glyph_dsc` (its cmap search
+included); the runtime then reads the glyph's bits in place and writes them
+into the canvas, clipped to the target (TEXT_INLINE's box). The whole string
+is checked first, so malformed UTF-8 or a character the face lacks draws
+nothing (mode 15 replies status 1; a shape stays blank). One dirty box per
+string. Other stock faces were considered: the 1 bpp monospace ASCII faces
+`0x043198dc`/`0x0431a3c8`/`0x0431b094` (lines 19/24/30) and the 16 px
+multilingual 1 bpp family behind the range table at `0x0437cbd0`
+(`0x0427ee3a`, ASCII `0x043a5d34` at 8 px pitch, CJK `0x0436fc40`, Hangul,
+kana, Latin-1/Extended, Cyrillic, Thai, Arabic, Devanagari). Montserrat 16 is
+the proportional, anti-aliased one; text it lacks stays a phone raster.
+
+The RV32 emulator maps the stock image and runs `get_glyph_dsc` for real over
+these tables (read-only window `0x0431b0b8`..`0x0431eee4`); the host tests use
+a made-up 4 bpp face with the same metrics.
 
 ## Revision 11
 

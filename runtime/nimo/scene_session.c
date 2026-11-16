@@ -73,6 +73,11 @@ static void settled(void *user,uint16_t tag) {
 static void mark(mm_scene_session *s,unsigned what) {
     if (s->hooks.mark) s->hooks.mark(s->hooks.user,what);
 }
+static int builtin_text(void *user,const mm_raster *raster,const uint8_t *text,size_t size,
+                        mm_scene_dirty *dirty,uint32_t *tokens,size_t count) {
+    mm_scene_session *s=user;(void)tokens;(void)count;
+    return s->hooks.builtin_text(s->hooks.user,raster,text,size,dirty);
+}
 int mm_scene_session_init(mm_scene_session *s,const mm_scene_session_hooks *hooks,
                           const mm_raster *raster,size_t budget,size_t headroom,
                           uint32_t store_limit) {
@@ -85,9 +90,19 @@ int mm_scene_session_init(mm_scene_session *s,const mm_scene_session_hooks *hook
     s->live_bytes=s->peak_bytes=0;s->denied_allocations=0;s->timer_armed=0;
     s->timer_started=s->timer_period=0;s->lens=0;
     mm_scene_platform p={s,allocate,deallocate,now,active,shadow,timer_new,timer_start,
-        timer_stop,0,0,present,settled,0,0};
+        timer_stop,0,0,present,settled,0,hooks->builtin_text ? builtin_text:0};
     if (mm_scene_init(&s->core,&p,store_limit)) return -1;
     s->initialized=1;s->core.cache_reply_cap=250;
+    return 0;
+}
+/* Mode 15 [15][x s16][y s16][options][len][text]: the hook checks the whole
+ * string before it draws, so a refused one leaves the pixels and the animation
+ * alone; a drawn one owns the canvas like a raster command. */
+static int text_command(mm_scene_session *s,const uint8_t *data,size_t size,mm_scene_dirty *dirty) {
+    if(size<7 || size!=7u+data[6] || !s->hooks.builtin_text)return -1;
+    if(s->hooks.builtin_text(s->hooks.user,&s->raster,data+1,size-1,dirty))return -1;
+    mm_scene_takeover(&s->core);
+    s->core.shadow_stale=0;
     return 0;
 }
 /* Called only after full-batch prepare. Raster commands do not clear the final
@@ -104,6 +119,7 @@ static int bundle_segment(mm_scene_session *s,const uint8_t *data,size_t size) {
         return 0;
     }
     if(mode>=37 && mode<=41)return mm_scene_dispatch(&s->core,mode,data+1,size-1,0,&s->bundle_dirty);
+    if(mode==15)return text_command(s,data,size,&s->bundle_dirty);
     s->bundle_full=1;
     if(mode==19 || mode==20 || mode==36){
         mm_scene_dirty dirty;dirty.n=0;dirty.direct_submitted=0;dirty.direct_failed=0;
@@ -111,8 +127,8 @@ static int bundle_segment(mm_scene_session *s,const uint8_t *data,size_t size) {
         if(!rc)mm_scene_takeover(&s->core);
         return rc;
     }
-    /* Mode 15 (built-in text), nested bundles and control commands are
-     * unsupported. Earlier segments are intentionally kept. */
+    /* Nested bundles and control commands are unsupported. Earlier segments
+     * are intentionally kept. */
     return -1;
 }
 static int bundle(mm_scene_session *s,const uint8_t *data,size_t size) {
@@ -146,6 +162,14 @@ int mm_scene_session_dispatch(mm_scene_session *s,const uint8_t *data,size_t siz
     uint8_t mode=data[0]&127u;
     s->lens=mode==38 && size>5 ? (uint8_t)(data[5]>>4&3u):0;
     if (mode==8) return bundle(s,data,size);
+    if (mode==15) {
+        mm_scene_dirty dirty;
+        dirty.n=0;dirty.direct_submitted=0;dirty.direct_failed=0;
+        mark(s,MM_SCENE_MARK_RENDER);
+        if (text_command(s,data,size,&dirty)) return -1;
+        s->hooks.present(s->hooks.user,&s->raster,&dirty);
+        return 0;
+    }
     if (mode==9) {
         if (mm_rect_copy_validate(&s->raster,data,size)) return -1;
         mark(s,MM_SCENE_MARK_RENDER);

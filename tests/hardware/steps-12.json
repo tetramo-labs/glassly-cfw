@@ -6,7 +6,8 @@
   "prepare": [
     "python3 -I scripts/scene_packets.py demo captures/scenes/demo-geometry.bin",
     "python3 -I scripts/scene_packets.py retained captures/scenes",
-    "python3 -I scripts/scene_packets.py cues captures/scenes"
+    "python3 -I scripts/scene_packets.py cues captures/scenes",
+    "python3 -I scripts/scene_packets.py text captures/scenes"
   ],
   "notes": [
     "Every request is [cmd 7e][key][len LE16][payload]; replies are [status][data...].",
@@ -21,6 +22,7 @@
     "GLASSLYCFW/10 adds the notification relay: 0x7E/0x27 [op] answers the STATUS record [00][41 4e 01 04][enabled][side][drops LE16][sent LE16][00]; while the lease is held each notification the stock ANCS client completes arrives as unsolicited key 28 records (do not match them as replies). The relay only matters with an iPhone bonded to the glasses; from the Mac the counters stay 0.",
     "GLASSLYCFW/11 adds input lease key 29, payload 01 enable/renew or 00 disable, expiring after 90 seconds. Head-up 86, head-down 87, touch 88..8c, press 98 and release 99 reach key 26 even with no display lease. Brightness key 23 payload ff restores automatic control without releasing the scene.",
     "With the v11 Glassly App and iPhone, check idle right double-tap opens dashboard, head-up/down, left index 1 and right index 0 touch_down/tap_start/tap_end, automatic brightness without blanking, dashboard labels, and a new ANCS notification after sharing is authorized. These require physical checks outside the Mac replay.",
+    "Steps with payload_file captures/scenes/scene-text.bin, text-line.bin and text-refused.bin exercise built-in text (GLASSLYCFW/12): TEXT_INLINE objects and mode 15 drawn with the stock LVGL default face (Montserrat 16 at 0x0431ee44, glyph boxes from its get_glyph_dsc 0x04243e8a).",
     "Revision 12: head-up/down arrive as key 26 [00][86|87][00] straight from the accelerometer detector under the input or display lease; key 2a [01|00] leases IMU samples, which arrive as key 2b."
   ],
   "steps": [
@@ -55,7 +57,23 @@
         "scene": {
           "store": 65536,
           "objects": 128,
-          "assets": 128
+          "assets": 128,
+          "text": true,
+          "modes": [
+            3,
+            6,
+            8,
+            9,
+            15,
+            19,
+            20,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ]
         }
       },
       "hold_seconds": 0,
@@ -409,7 +427,90 @@
       "look_for": "Record heap_free with the retained scene resident and gate_skips (stock frames held off)."
     },
     {
-      "step": 31,
+      "title": "Built-in text scene",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-text.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00260a0000354e",
+      "hold_seconds": 6,
+      "look_for": "Both eyes: a thin frame around four lines of text drawn by the glasses in the stock UI's font (LVGL Montserrat 16, about the size of the stock menus): 'GLASSLYCFW/12 built-in text', the quick brown fox, the digits and ASCII punctuation, and a dimmer fourth line '21\u00b0C \u2022 level 8 \u2022 gjpqy'. Check that descenders (g j p q y) are not cut off, letters are not clipped at the right, and both eyes show the same text at the same height.",
+      "step": 31
+    },
+    {
+      "title": "Canvas checksum: built-in text scene",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0099d1e00402",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right canvas matches the emulator's render with the stock font tables.",
+      "step": 32
+    },
+    {
+      "title": "Mode-15 text line",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/text-line.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: 'Mode 15 draws over the scene' appears below the frame; the four lines stay.",
+      "step": 33
+    },
+    {
+      "title": "Canvas checksum: mode-15 line",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0019347da002",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes.",
+      "step": 34
+    },
+    {
+      "title": "Refused text: a character the font lacks",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/text-refused.bin",
+      "expect_status": 1,
+      "expect_reply_hex": "01",
+      "hold_seconds": 2,
+      "look_for": "Nothing changes on either eye: 'caf\u00e9' needs a glyph (\u00e9) the stock face does not have, so the whole string is refused before anything is drawn. The glasses keep running.",
+      "step": 35
+    },
+    {
+      "title": "Canvas checksum: unchanged after the refusal",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0019347da002",
+      "hold_seconds": 0,
+      "look_for": "The same checksum as the mode-15 step.",
+      "step": 36
+    },
+    {
+      "title": "Status after the text",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 1,
+        "flush_errors": 0,
+        "repins": 0,
+        "alloc_failures": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "rejected is 1 (the refused string) and nothing else failed.",
+      "step": 37
+    },
+    {
+      "step": 38,
       "title": "Brightness low",
       "cmd": "7e",
       "key": "23",
@@ -420,7 +521,7 @@
       "look_for": "Both eyes dim to the lowest level. The release step puts the wearer's level back."
     },
     {
-      "step": 32,
+      "step": 39,
       "title": "Release the display",
       "cmd": "7e",
       "key": "22",
@@ -431,7 +532,7 @@
       "look_for": "The stock UI repaints on both eyes within about a second, at the wearer's brightness again; nothing from the scene remains."
     },
     {
-      "step": 33,
+      "step": 40,
       "title": "Status after release",
       "cmd": "7e",
       "key": "04",
@@ -455,10 +556,10 @@
       "expect_reply_prefix_hex": "00414e01040001",
       "hold_seconds": 0,
       "look_for": "enabled = 0 again; drops and sent report what the lease saw.",
-      "step": 34
+      "step": 41
     },
     {
-      "step": 35,
+      "step": 42,
       "title": "Canvas checksum after release",
       "cmd": "7e",
       "key": "25",
@@ -469,7 +570,7 @@
       "look_for": "Not owned: the stock screen is back and the canvas is stock's again."
     },
     {
-      "step": 36,
+      "step": 43,
       "title": "Enable idle input lease",
       "cmd": "7e",
       "key": "29",
@@ -478,7 +579,7 @@
       "hold_seconds": 0
     },
     {
-      "step": 37,
+      "step": 44,
       "title": "Disable idle input lease",
       "cmd": "7e",
       "key": "29",
@@ -493,7 +594,7 @@
       "payload_hex": "01",
       "expect_reply_hex": "00",
       "hold_seconds": 0,
-      "step": 38
+      "step": 45
     },
     {
       "title": "Head-up from the detector",
@@ -508,7 +609,7 @@
       "emulate_head": {
         "up": 1
       },
-      "step": 39
+      "step": 46
     },
     {
       "title": "Head-down from the detector",
@@ -523,7 +624,7 @@
       "emulate_head": {
         "up": 0
       },
-      "step": 40
+      "step": 47
     },
     {
       "title": "IMU lease on",
@@ -533,7 +634,7 @@
       "expect_status": 0,
       "expect_reply_prefix_hex": "0001",
       "hold_seconds": 0,
-      "step": 41
+      "step": 48
     },
     {
       "title": "Accelerometer samples",
@@ -548,7 +649,7 @@
       "emulate_imu": {
         "count": 8
       },
-      "step": 42
+      "step": 49
     },
     {
       "title": "IMU lease renew and counters",
@@ -558,7 +659,7 @@
       "expect_status": 0,
       "expect_reply_prefix_hex": "0001",
       "hold_seconds": 0,
-      "step": 43
+      "step": 50
     },
     {
       "title": "IMU lease off",
@@ -568,7 +669,7 @@
       "expect_status": 0,
       "expect_reply_prefix_hex": "0000",
       "hold_seconds": 0,
-      "step": 44
+      "step": 51
     },
     {
       "title": "Disable the idle input lease",
@@ -577,7 +678,7 @@
       "payload_hex": "00",
       "expect_reply_hex": "00",
       "hold_seconds": 0,
-      "step": 45
+      "step": 52
     }
   ]
 }

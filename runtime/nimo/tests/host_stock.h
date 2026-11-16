@@ -34,6 +34,7 @@ typedef struct {
     unsigned timers_created, timers_deleted, timer_live;
     unsigned critical, criticals;
     unsigned still_resets;
+    unsigned glyph_lookups;
     jmp_buf *reset_in_flush; /* a panel flush jumps here: the device reset mid-present */
 } host_state;
 

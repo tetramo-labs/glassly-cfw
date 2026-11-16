@@ -17,6 +17,8 @@ evidence from the two vendor OTA images.
 
 GLASSLYCFW/11 is prepared and verified offline, with matching app fixes; see
 [the v11 release record](docs/release-cfw11.md). It has not been flashed.
+GLASSLYCFW/12 adds built-in text in the stock font
+([release record](docs/release-cfw12.md)); also offline only.
 
 ## Established (2026-11-08)
 

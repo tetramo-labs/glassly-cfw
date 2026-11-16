@@ -218,3 +218,52 @@ void nimo_lv_timer_delete(void *timer)
     host.timer_live = 0;
     host.timers_deleted++;
 }
+
+/* Stand-in for the stock face: line 18, baseline 3 like Montserrat 16, made-up
+ * 4 bpp glyphs for U+0020..U+007E and U+00B0 (gid = code - 0x1f, 96 for the
+ * degree sign), packed the way lv_font_fmt_txt stores them. */
+static uint8_t host_font_bitmap[8192];
+static nimo_glyph_record host_font_glyphs[97];
+static const nimo_font_dsc host_font_dsc = { host_font_bitmap, host_font_glyphs };
+const nimo_font nimo_host_text_font = { 0, 0, 0, 18, 3, 0, -1, 1, &host_font_dsc };
+
+static void host_font_build(void)
+{
+    if (host_font_glyphs[1].index_adv != 0) return;
+    uint32_t at = 1;
+    for (uint32_t gid = 1; gid <= 96; gid++) {
+        uint32_t cp = gid == 96 ? 0xB0u : gid + 0x1Fu;
+        nimo_glyph_record *g = &host_font_glyphs[gid];
+        uint32_t w = cp == ' ' ? 0 : 4 + cp % 5, h = cp == ' ' ? 0 : 8 + cp % 6;
+        g->box_w = (uint8_t)w;
+        g->box_h = (uint8_t)h;
+        g->ofs_x = (int8_t)(cp % 2);
+        g->ofs_y = (int8_t)(cp < 0x80 && strchr("gjpqy", (int)cp) ? -3 : 0);
+        g->index_adv = at | ((w ? (w + 2) * 16 - 3 : 64) << 20);
+        for (uint32_t i = 0; i < w * h; i++) {
+            uint32_t v = (i * 7 + cp) % 16;
+            host_font_bitmap[at + i / 2] |= (uint8_t)(i & 1 ? v : v << 4);
+        }
+        at += (w * h + 1) / 2;
+        assert(at < sizeof host_font_bitmap);
+    }
+}
+
+int nimo_font_glyph(const nimo_font *font, nimo_glyph_dsc *dsc, uint32_t letter, uint32_t next)
+{
+    no_critical();
+    assert(font == &nimo_host_text_font && next == 0);
+    host_font_build();
+    uint32_t gid = letter >= 0x20 && letter <= 0x7E ? letter - 0x1F : letter == 0xB0 ? 96 : 0;
+    if (gid == 0) return 0;
+    const nimo_glyph_record *g = &host_font_glyphs[gid];
+    host.glyph_lookups++;
+    dsc->adv_w = (uint16_t)(((g->index_adv >> 20) + 8) >> 4);
+    dsc->box_w = g->box_w;
+    dsc->box_h = g->box_h;
+    dsc->ofs_x = g->ofs_x;
+    dsc->ofs_y = g->ofs_y;
+    dsc->format = 4;
+    dsc->gid = gid;
+    return 1;
+}

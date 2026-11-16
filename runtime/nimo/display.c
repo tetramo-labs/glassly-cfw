@@ -3,6 +3,7 @@
  * needs no lock of its own; the display mutex serializes the panel against
  * the stock frame task. All state lives in the RAM block or the heap. MIT. */
 #include "glassly.h"
+#include "text.h"
 
 static void zero(void *to, uint32_t n)
 {
@@ -249,7 +250,8 @@ static nimo_session *session_create(uint8_t *canvas)
     s->shadow = canvas;
     zero(s->shadow, NIMO_FRAME_BYTES);
     mm_raster raster = { s->shadow, NIMO_FRAME_BYTES, NIMO_PANEL_W, NIMO_PANEL_H, NIMO_PANEL_STRIDE };
-    mm_scene_session_hooks hooks = { s, allocate, deallocate, free_bytes, now_ms, active, present, settled, mark };
+    mm_scene_session_hooks hooks = { s, allocate, deallocate, free_bytes, now_ms, active, present, settled, mark,
+                                      nimo_builtin_text };
     if (mm_scene_session_init(&s->scene, &hooks, &raster, MM_SCENE_SESSION_BUDGET,
                               MM_SCENE_SESSION_HEADROOM, MM_SCENE_MIN_STORE) != 0) {
         nimo_free(s);

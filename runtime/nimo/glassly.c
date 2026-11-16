@@ -118,9 +118,9 @@ static uint32_t identity(uint8_t *out)
     n = append(out, n, "\",\"eye\":\"");
     n = append(out, n, NIMO_IS_LEFT ? "left" : "right");
     n = append(out, n, "\",\"canvas\":{\"width\":540,\"height\":280,\"stride\":270,\"format\":\"gray4\"},"
-                       "\"eyes\":[\"left\",\"right\"],\"scene\":{\"modes\":[3,6,8,9,19,20,36,37,38,39,40,41],"
+                       "\"eyes\":[\"left\",\"right\"],\"scene\":{\"modes\":[3,6,8,9,15,19,20,36,37,38,39,40,41],"
                        "\"store\":65536,\"objects\":128,\"assets\":128,\"show_eye_bits\":true,"
-                       "\"eye_objects\":true,\"text\":false},"
+                       "\"eye_objects\":true,\"text\":true},"
                        "\"max_message\":");
     n = append_u32(out, n, NIMO_MAX_PAYLOAD);
     n = append(out, n, ",\"owned\":");

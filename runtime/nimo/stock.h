@@ -15,6 +15,37 @@
 typedef void (*nimo_ui_fn)(void *arg);
 typedef void (*nimo_timer_fn)(void *timer);
 
+/* LVGL 9.3 font records as far as the runtime reads them: lv_font_t,
+ * lv_font_fmt_txt_dsc_t (its first two fields), lv_font_fmt_txt_glyph_dsc_t
+ * and the lv_font_glyph_dsc_t the font's get_glyph_dsc fills in. */
+typedef struct {
+    uint32_t index_adv;  /* glyph_bitmap byte offset (20 bits), advance in 1/16 px (12 bits) */
+    uint8_t box_w, box_h;
+    int8_t ofs_x, ofs_y;
+} nimo_glyph_record;
+typedef struct {
+    const uint8_t *glyph_bitmap;
+    const nimo_glyph_record *glyph_dsc;
+} nimo_font_dsc;
+typedef struct {
+    const void *get_glyph_dsc, *get_glyph_bitmap, *release_glyph;
+    int32_t line_height, base_line;
+    uint8_t flags;
+    int8_t underline_position, underline_thickness;
+    const nimo_font_dsc *dsc;
+} nimo_font;
+typedef struct {
+    const void *resolved_font;
+    uint16_t adv_w, box_w, box_h;
+    int16_t ofs_x, ofs_y;
+    uint16_t stride;
+    uint32_t format;     /* bits per pixel for a plain bitmap font */
+    uint8_t flags;
+    int32_t outline_stroke_width;
+    uint32_t gid;
+    const void *entry, *spare[3];
+} nimo_glyph_dsc;
+
 #ifdef NIMO_HOST
 int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t len);
 int nimo_is_master(void);
@@ -39,6 +70,9 @@ void *nimo_lv_timer_create(nimo_timer_fn fn, uint32_t period_ms, void *user);
 void nimo_lv_timer_delete(void *timer);
 void nimo_critical_enter(void);
 void nimo_critical_exit(void);
+int nimo_font_glyph(const nimo_font *font, nimo_glyph_dsc *dsc, uint32_t letter, uint32_t next);
+extern const nimo_font nimo_host_text_font;
+#define NIMO_TEXT_FONT (&nimo_host_text_font)
 extern volatile uint8_t nimo_host_panel_up, nimo_host_left, nimo_host_display_on, nimo_host_lit;
 extern volatile uint16_t nimo_host_panel_brightness;
 extern volatile uint32_t nimo_host_blank_ticks;
@@ -140,6 +174,20 @@ typedef void *(*nimo_timer_create_fn)(nimo_timer_fn fn, uint32_t period_ms, void
  * sections a few instructions long, with no call inside. */
 #define nimo_critical_enter ((nimo_void_fn)0x041fa74eu)
 #define nimo_critical_exit ((nimo_void_fn)0x041fa760u)
+
+/* LVGL's default face, Montserrat 16 (lv_font_montserrat_16 layout): 4 bpp,
+ * 18 px line, baseline 3, U+0020..U+007E, U+00B0, U+2022 and the LVGL symbol
+ * icons; no fallback. Its get_glyph_dsc (lv_font_get_glyph_dsc_fmt_txt) only
+ * reads the font's const tables and writes dsc; with next = 0 it skips kerning
+ * and the advance is the glyph's own, rounded to whole pixels. */
+typedef int (*nimo_font_glyph_fn)(const nimo_font *font, nimo_glyph_dsc *dsc, uint32_t letter, uint32_t next);
+#define nimo_font_glyph ((nimo_font_glyph_fn)0x04243e8au)
+#define NIMO_TEXT_FONT ((const nimo_font *)0x0431ee44u)
+_Static_assert(__builtin_offsetof(nimo_font, line_height) == 12 && __builtin_offsetof(nimo_font, dsc) == 24,
+               "lv_font_t layout");
+_Static_assert(__builtin_offsetof(nimo_glyph_dsc, adv_w) == 4 && __builtin_offsetof(nimo_glyph_dsc, format) == 16 &&
+               __builtin_offsetof(nimo_glyph_dsc, gid) == 28, "lv_font_glyph_dsc_t layout");
+_Static_assert(sizeof(nimo_glyph_record) == 8, "lv_font_fmt_txt_glyph_dsc_t layout");
 
 #define NIMO_PANEL_UP (*(volatile const uint8_t *)0x020121beu)
 #define NIMO_IS_LEFT (*(volatile const uint8_t *)0x02011b18u)

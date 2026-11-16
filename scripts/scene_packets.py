@@ -10,6 +10,11 @@ Immediate geometry (mode 36): [36][count][records], each record
   cues DIR        mode-36 frames that ask the wearer for a touch, for the input
                   steps (no text yet): a filled circle on the side to tap, a
                   bar for a long press
+  text DIR        built-in text (GLASSLYCFW/12+), replayed after the retained
+                  files with the same epoch:
+    scene-text.bin        bundle: PUT four TEXT_INLINE lines and a frame, SHOW them
+    text-line.bin         mode 15: one line drawn over the scene
+    text-refused.bin      mode 15 with a character the stock face lacks: refused
   retained DIR    retained-scene messages that replay in order after an acquire,
                   using a fixed epoch (adopted by the RESET in the first file)
                   and distinct request ids, so no reply has to be read:
@@ -106,6 +111,36 @@ EYES = [
 ]
 
 
+TEXT_INLINE, TEXT_OPTIONS = 17, 0x1F    # options: level 15, zero pixels left alone
+
+
+def inline_text(x, y, w, h, text, options=TEXT_OPTIONS):
+    data = text.encode()
+    return struct.pack("<BBBBhhhhB", TEXT_INLINE, VISIBLE, options, 0, x, y, w, h, len(data)) + data
+
+
+def text_line(x, y, text, options=TEXT_OPTIONS):
+    data = text.encode()
+    return struct.pack("<BhhBB", 15, x, y, options, len(data)) + data
+
+
+TEXT = [
+    (0x20, record(RECT, 15, 1, 10, 20, W - 20, 140, 8, flags=VISIBLE)),
+    (0x21, inline_text(22, 32, W - 44, 18, "GLASSLYCFW/12 built-in text")),
+    (0x22, inline_text(22, 62, W - 44, 18, "The quick brown fox jumps over the lazy dog.")),
+    (0x23, inline_text(22, 92, W - 44, 18, "0123456789 !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")),
+    (0x24, inline_text(22, 122, W - 44, 18, "21\u00b0C \u2022 level 8 \u2022 gjpqy", options=0x18)),
+]
+
+
+def text():
+    return {
+        "scene-text.bin": bundle(put_objects(9, TEXT), show(10, [oid for oid, _ in TEXT], PRESENT)),
+        "text-line.bin": text_line(22, 200, "Mode 15 draws over the scene"),
+        "text-refused.bin": text_line(22, 230, "caf\u00e9"),
+    }
+
+
 def retained():
     ids = [oid for oid, _ in SCENE]
     return {
@@ -120,7 +155,7 @@ def retained():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("scene", choices=["demo", "retained", "cues"])
+    parser.add_argument("scene", choices=["demo", "retained", "cues", "text"])
     parser.add_argument("output", type=Path, help="file for demo, directory for retained")
     args = parser.parse_args()
     if args.scene == "demo":
@@ -131,7 +166,7 @@ def main():
         return
     args.output.mkdir(parents=True, exist_ok=True)
     files = {}
-    for name, data in (retained() if args.scene == "retained" else cues()).items():
+    for name, data in {"retained": retained, "cues": cues, "text": text}[args.scene]().items():
         (args.output / name).write_bytes(data)
         files[name] = {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
         print(f"{args.output / name}: {len(data)} bytes")

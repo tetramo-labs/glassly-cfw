@@ -6,14 +6,17 @@ the router gate, glassly_command, the UI-task jobs, the scene pump and the
 flush gate. Every stock entry point the runtime binds is a hooked `ret` that a
 Python mock answers: the heap is a real arena, gui_post_async queues the job
 for a separate UI-task stack, the critical section, display mutex, panel,
-clock and LVGL timer are mocks too.
+clock and LVGL timer are mocks too. The stock application body from the
+vendor image is mapped underneath: built-in text calls the stock font's
+get_glyph_dsc, which runs for real over the stock font tables.
 
 Strict like the device (Unicorn itself would accept all of these):
   - instructions outside RV32IMC trap (the NIMO core has no A extension),
   - misaligned halfword/word loads and stores trap,
   - every data access must fall in a region the runtime owns: its RAM block
     and breadcrumbs, the few stock flags it reads or refreshes, a live heap
-    allocation, the current task's stack, the request payload (read-only);
+    allocation, the current task's stack, the request payload and the stock
+    font tables (read-only);
     anything else, including a freed allocation, is an access fault.
 A trap raises DeviceFault: on the glasses it is a reset. The run also records
 the peak stack depth per task and every multi-byte read of packet bytes.
@@ -25,6 +28,7 @@ and the gates' register contracts, not the stock firmware or a device. Run
 with the Unicorn venv (~/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv).
 """
 import argparse
+import functools
 import json
 from pathlib import Path
 import random
@@ -38,10 +42,18 @@ from unicorn import riscv_const as r
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
+import nimo_ota  # noqa: E402
 import runtime_scan  # noqa: E402
 import scene_packets  # noqa: E402
 
 TOOLS = ROOT / ".tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin"
+STOCK_IMAGE = ROOT / "captures/firmware/ota-1.1.5.1-20261027111705-8e6f7a-vendor-app.bin"
+LOAD = 0x041B4020
+# Built-in text runs the stock get_glyph_dsc (0x04243e8a) for real over the
+# stock image's Montserrat 16 tables: cmaps, descriptor, bitmaps, glyph
+# descriptors, the font record and the sparse code list (runtime/nimo/stock.h).
+FONT = 0x0431EE44
+FONT_TABLES = (0x0431B0B8, 0x0431EEE4)
 RAM, RAM_SIZE = 0x02000000, 0x00100000
 LIT, BLANK, LEFT, DISPLAY_ON = 0x02011A3A, 0x02012A38, 0x02011B18, 0x02011FA6
 PANEL_UP, PANEL_BRIGHTNESS = 0x020121BE, 0x0201198E
@@ -96,6 +108,14 @@ def check(condition, message):
         raise AssertionError(message)
 
 
+@functools.lru_cache(maxsize=1)
+def stock_body(path=STOCK_IMAGE):
+    check(path.is_file(), f"{path} is required: built-in text runs the stock glyph code over its font tables")
+    _, streams = nimo_ota.unpack_ota(path.read_bytes())
+    app = next(s for s in streams if s["info"].get("partition_type") == 0x20)
+    return bytes(app["raw"][32:])
+
+
 def readelf(build):
     path = build / "symbols.txt"
     if path.is_file():
@@ -122,12 +142,18 @@ class Machine:
         self.uc = u.Uc(u.UC_ARCH_RISCV, u.UC_MODE_RISCV32)
         base = origin & ~0xFFF
         self.uc.mem_map(base, (origin + len(blob) - base + 0xFFF) & ~0xFFF, u.UC_PROT_READ | u.UC_PROT_EXEC)
+        # The stock application body, executable; the mocked entry points below become `ret`.
+        body = stock_body()
+        body_page = LOAD & ~0xFFF
+        check(LOAD + len(body) <= origin, "stock body overlaps the runtime")
+        self.uc.mem_map(body_page, base - body_page, u.UC_PROT_READ | u.UC_PROT_EXEC)
+        self.uc.mem_write(LOAD, body)
         self.uc.mem_write(origin, blob)
         stops = [ROUTER_UNROUTED, ROUTER_EPILOGUE, KICK_REJOIN, KICK_TAIL, UI_DISPATCH_REJOIN, ANCS_WHITELIST_REJOIN,
                  ANCS_INTAKE_RETURN]
         pages = sorted({a & ~0xFFF for a in [*STOCK.values(), *stops]} - {RAM & ~0xFFF})
         for page in pages:
-            if not RAM <= page < RAM + RAM_SIZE:
+            if not RAM <= page < RAM + RAM_SIZE and not body_page <= page < base:
                 self.uc.mem_map(page, 0x1000, u.UC_PROT_READ | u.UC_PROT_EXEC)
         self.uc.mem_map(RAM, RAM_SIZE, u.UC_PROT_READ | u.UC_PROT_WRITE | u.UC_PROT_EXEC)
         self.uc.mem_map(HEAP, HEAP_SIZE, u.UC_PROT_READ | u.UC_PROT_WRITE)
@@ -249,7 +275,8 @@ class Machine:
                 self.fault("stack", f"{what} outside the {self.context} task's stack")
             if address < self.min_sp:
                 self.min_sp = address
-        elif not (self.blob[0] <= address < self.blob[1] and not write):
+        elif not ((self.blob[0] <= address < self.blob[1] or FONT_TABLES[0] <= address and end <= FONT_TABLES[1])
+                  and not write):
             self.fault("access fault", what)
 
     # --- stock mocks ------------------------------------------------------------
@@ -462,7 +489,7 @@ def step_payload(step):
         return bytes.fromhex(step.get("payload_hex", ""))
     name = Path(step["payload_file"]).name
     generated = scene_packets.demo() if name == "demo-geometry.bin" else \
-        {**scene_packets.retained(), **scene_packets.cues()}[name]
+        {**scene_packets.retained(), **scene_packets.cues(), **scene_packets.text()}[name]
     path = ROOT / step["payload_file"]
     if path.is_file():
         check(path.read_bytes() == generated, f"{path} differs from scripts/scene_packets.py")
@@ -682,6 +709,66 @@ def demo_session(build, left):
     return m
 
 
+def font_advances():
+    """Whole-pixel advances of the stock face's ASCII, degree sign and bullet,
+    read from its tables as get_glyph_dsc rounds them (no kerning)."""
+    body = stock_body()
+
+    def u16(a):
+        return struct.unpack_from("<H", body, a - LOAD)[0]
+
+    def u32(a):
+        return struct.unpack_from("<I", body, a - LOAD)[0]
+    dsc = u32(FONT + 24)
+    glyphs, cmaps = u32(dsc + 4), u32(dsc + 8)
+    check((u32(cmaps), u16(cmaps + 4), u16(cmaps + 6), u32(cmaps + 20)) == (0x20, 95, 1, 2), "ASCII cmap")
+    sparse = cmaps + 24
+    check((u32(sparse), u16(sparse + 6), u32(sparse + 20)) == (0xB0, 96, 3), "sparse cmap")
+    check([u16(u32(sparse + 8) + 2 * i) for i in range(2)] == [0, 0x2022 - 0xB0], "degree sign and bullet")
+
+    def advance(gid):
+        return ((u32(glyphs + 8 * gid) >> 20) + 8) >> 4
+    out = {chr(cp): advance(cp - 0x1F) for cp in range(0x20, 0x7F)}
+    out.update({"\u00b0": advance(96), "\u2022": advance(97)})
+    return out
+
+
+@test("built-in text: TEXT_INLINE and mode 15 in the stock face through its own get_glyph_dsc; refusals draw nothing")
+def test_text(build):
+    m = Machine(build, False)
+    m.command(0x21)
+    check(m.command(0x20, scene_packets.reset(1))[2][0] == 0, "reset")
+    packets = scene_packets.text()
+    reply = m.command(0x20, packets["scene-text.bin"])[2]
+    check(reply.hex().startswith("00260a0000354e"), f"text scene reply {reply.hex()}")
+    frame = bytes(m.uc.mem_read(FB, FB_BYTES))
+    advances = font_advances()
+
+    def lit(x0, x1, y0, y1):
+        return [pixel(frame, 0, x, y) for y in range(y0, y1) for x in range(x0, x1) if pixel(frame, 0, x, y)]
+    widths = {}
+    for _, record in scene_packets.TEXT[1:]:
+        _, _, options, _, x, y, w, h, n = struct.unpack_from("<BBBBhhhhB", record)
+        text = record[13:13 + n].decode()
+        width = sum(advances[c] for c in text)
+        widths[text] = width
+        ink = lit(x, x + width + 1, y, y + 18)
+        check(ink and max(ink) == options & 15, f"{text!r}: ink levels {sorted(set(ink))}")
+        check(not lit(x + width + 2, 520, y, y + 18), f"{text!r}: ink right of its {width} px advance")
+        check(not lit(15, 520, y + 18, y + 30), f"{text!r}: ink below its 18 px line")
+    flushes = len(m.flushes)
+    check(m.command(0x20, packets["text-line.bin"])[2] == b"\0", "mode-15 reply")
+    row0, nrows = m.flushes[-1][:2]
+    check(len(m.flushes) == flushes + 1 and 200 <= row0 and row0 + nrows <= 218, f"mode-15 rows {row0}+{nrows}")
+    frame = bytes(m.uc.mem_read(FB, FB_BYTES))
+    check(m.command(0x20, packets["text-refused.bin"])[2] == b"\x01", "refused text reply")
+    check(len(m.flushes) == flushes + 1 and bytes(m.uc.mem_read(FB, FB_BYTES)) == frame, "refused text drew")
+    status = m.status()
+    check(status["rejected"] == 1 and status["scenes"] == 3, status)
+    check(m.command(0x22)[2] == b"\0" and not m.allocations, "release")
+    EVIDENCE["text"] = {"advances": advances, "line_widths": widths, "stack_depth": m.depth}
+
+
 @test("notification gates: the whitelist and the intake follow the relay lease")
 def test_ancs_gates(build):
     m = Machine(build)
@@ -864,7 +951,9 @@ def test_canvas_timing(build):
 def test_odd_payload(build):
     m = Machine(build, payload=PAYLOAD + 1)
     m.command(0x21)
-    for packet in [scene_packets.demo(), *scene_packets.retained().values()]:
+    text = scene_packets.text()
+    for packet in [scene_packets.demo(), *scene_packets.retained().values(), text["scene-text.bin"],
+                   text["text-line.bin"]]:
         check(m.command(0x20, packet)[2][0] == 0, "scene message from an odd address")
     m.command(0x03, bytes(range(255)) * 3)
     m.command(0x02, b"odd")
@@ -973,7 +1062,7 @@ def main():
         path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(got, indent=2))
         return
-    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_v11_input_peer, test_left, test_right,
+    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_v11_input_peer, test_text, test_left, test_right,
              test_steps_to_geometry, test_all_steps, test_canvas_timing, test_odd_payload, test_breadcrumbs]
     for fn in tests:
         fn(args.build)

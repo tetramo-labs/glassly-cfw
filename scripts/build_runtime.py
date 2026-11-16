@@ -57,6 +57,10 @@ HOOKS = [
     {"name": "ancs-whitelist", "kind": "jump", "address": 0x042767D0, "witness": "411122c426c206c6",
      "target": "glassly_ancs_whitelist_gate", "function": [0x042767D0, 102],
      "replay": ["c.addi\tsp,-16", "c.swsp\ts0,8(sp)", "c.swsp\ts1,4(sp)", "c.swsp\tra,12(sp)"]},
+    {"name": "head-event", "kind": "call", "address": 0x0422C7C8, "witness": "efe02cf0efb0c434",
+     "target": "glassly_head_gate", "function": [0x0422C52C, 974], "replay": []},
+    {"name": "imu-batch", "kind": "call", "address": 0x0422C5E0, "witness": "eff05fdc835544dd",
+     "target": "glassly_imu_gate", "function": [0x0422C52C, 974], "replay": ["lhu\ta1,-556(s0)"]},
 ]
 # The lease borrows one of the two stock framebuffers (runtime/nimo/stock.h).
 # Every stock function that forms an address inside them, and what it does

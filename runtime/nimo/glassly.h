@@ -11,6 +11,7 @@ enum {
     KEY_IDENTITY = 0x01, KEY_ECHO = 0x02, KEY_CHECKSUM = 0x03, KEY_STATUS = 0x04, KEY_DRAW_TEST = 0x10,
     KEY_SCENE = 0x20, KEY_ACQUIRE = 0x21, KEY_RELEASE = 0x22, KEY_BRIGHTNESS = 0x23,
     KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26, KEY_ANCS_CONTROL = 0x27, KEY_ANCS_RECORD = 0x28, KEY_INPUT_CONTROL = 0x29,
+    KEY_IMU_CONTROL = 0x2A, KEY_IMU = 0x2B,
 };
 enum {
     STATUS_OK = 0, STATUS_INVALID = 1, STATUS_NO_MEMORY = 2, STATUS_NOT_OWNED = 3,
@@ -33,6 +34,9 @@ enum {
 #define NIMO_MSG_AUTO_BRIGHTNESS 0xa8u
 #define NIMO_MSG_ANCS_RELAY 0x7e28u
 #define NIMO_INPUT_LEASE_MS 90000u
+#define NIMO_IMU_LEASE_MS 90000u
+#define NIMO_MSG_HEAD_UP 0x86u
+#define NIMO_MSG_HEAD_DOWN 0x87u
 
 typedef struct nimo_session {
     uint32_t magic;
@@ -85,4 +89,7 @@ int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t
 /* A stock touch or auto-brightness message while owned (UI task, from the
  * input gate); nonzero when the stock dispatcher must not see it. */
 int glassly_input(uint32_t id, const uint8_t *param, uint32_t len);
+void glassly_head_event(uint32_t up);
+void glassly_imu_batch(const int16_t *records, uint32_t count);
+uint32_t glassly_imu_control(const uint8_t *payload, uint32_t len, uint8_t *reply);
 #endif

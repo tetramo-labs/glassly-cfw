@@ -303,6 +303,9 @@ int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t
         if (payload[0] && ram->input_lease_until == 0) ram->input_lease_until = 1;
         reply[n++] = STATUS_OK;
         break;
+    case KEY_IMU_CONTROL:
+        n = glassly_imu_control(payload, len, reply);
+        break;
     case KEY_BRIGHTNESS:
         if (len != 1 || (payload[0] > 32u && payload[0] != 255u)) {
             reply[n++] = STATUS_INVALID;

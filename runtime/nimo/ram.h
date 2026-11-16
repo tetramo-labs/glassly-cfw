@@ -15,6 +15,7 @@
 #define NIMO_RAM_GATE_SKIPS 12   /* u32: bumped by the flush and kick gates */
 #define NIMO_CRUMB_BASE 0x0209ce74
 #define NIMO_CRUMB_BYTES 0x100
+#define NIMO_IMU_RING 64u
 
 /* Stock auto-off state, refreshed while the runtime owns the panel: the lit
  * flag (u8, 1 = the canvas shows something) and the black-tick counter (u32;
@@ -103,8 +104,18 @@ typedef struct {
     uint16_t ancs_sent;           /* 0x94 relay records handed to send_response */
     uint16_t ancs_drops;          /* 0x96 completed notifications left to the stock for want of a lease */
     uint32_t ancs_allowed;        /* 0x98 whitelist checks answered "allowed" by the lease */
-    uint32_t input_lease_until;
-    uint8_t ancs_send_errors;
+    uint32_t input_lease_until;   /* 0x9c ms tick the input lease ends at; 0 = none */
+    uint8_t ancs_send_errors;     /* 0xa0 relay records the transport refused, modulo 256 */
+    volatile uint8_t imu_posted;  /* 0xa1 1 while an IMU drain job is queued */
+    uint8_t imu_overruns;         /* 0xa2 samples dropped on a full ring, modulo 256 */
+    uint8_t reserved5;
+    uint32_t imu_lease_until;     /* 0xa4 ms tick the IMU lease ends at; 0 = none */
+    volatile uint16_t imu_write;  /* 0xa8 samples written (sensor task only) */
+    volatile uint16_t imu_read;   /* 0xaa samples sent (UI task only) */
+    uint32_t imu_time;            /* 0xac ms tick of the newest batch */
+    uint16_t imu_batches;         /* 0xb0 IMU notifications sent */
+    uint16_t heads;               /* 0xb2 head events forwarded from the detector */
+    int16_t imu_ring[NIMO_IMU_RING][3]; /* 0xb4 accelerometer x, y, z */
 } nimo_ram;
 
 _Static_assert(sizeof(nimo_ram) <= NIMO_RAM_BYTES, "RAM block layout exceeds the carve");
@@ -117,7 +128,8 @@ _Static_assert(offsetof(nimo_ram, gate_skips) == NIMO_RAM_GATE_SKIPS, "flush gat
 _Static_assert(offsetof(nimo_ram, last) == 0x58 && offsetof(nimo_ram, repins) == 0x80 &&
                offsetof(nimo_ram, inputs) == 0x84 && offsetof(nimo_ram, ancs_lease_until) == 0x8c &&
                offsetof(nimo_ram, input_lease_until) == 0x9c &&
-               offsetof(nimo_ram, ancs_send_errors) == 0xa0 && sizeof(nimo_ram) == 0xa4, "layout offsets documented above");
+               offsetof(nimo_ram, ancs_send_errors) == 0xa0 && offsetof(nimo_ram, imu_lease_until) == 0xa4 &&
+               offsetof(nimo_ram, imu_ring) == 0xb4 && sizeof(nimo_ram) == 0x234, "layout offsets documented above");
 _Static_assert(NIMO_RAM_BASE + NIMO_RAM_BYTES == NIMO_CRUMB_BASE, "breadcrumbs follow the block");
 #endif
 

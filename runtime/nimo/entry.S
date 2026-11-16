@@ -170,3 +170,46 @@ glassly_ancs_whitelist_gate:
     sw      ra, 12(sp)
     li      t1, 0x042767d8
     jr      t1
+
+/* Head gate. The head detector's result call in the accelerometer drain
+ * (0x0422c7c8: `jal 0x041faeca; jal 0x04277b18`, a0 = 1 for head-up) calls
+ * here instead. The phone hears the event first, then the stock head
+ * callback and stillness reset run as before; returns to 0x0422c7d0. */
+    .balign 4
+    .globl glassly_head_gate
+glassly_head_gate:
+    addi    sp, sp, -16
+    sw      ra, 12(sp)
+    sw      a0, 8(sp)
+    call    glassly_head_event
+    lw      a0, 8(sp)
+    li      t1, 0x041faeca
+    jalr    ra, t1, 0
+    li      t1, 0x04277b18
+    jalr    ra, t1, 0
+    lw      ra, 12(sp)
+    addi    sp, sp, 16
+    ret
+
+/* IMU gate. The drain's batch copy (0x0422c5e0: `jal 0x0422c3a4; lhu
+ * a1,-556(s0)`, a0 = FIFO records, a1 = count, s0 = the drain's frame) calls
+ * here instead. The stock copy runs first, then the batch goes to the IMU
+ * ring; the displaced reload of the count is replayed before returning to
+ * 0x0422c5e8. */
+    .balign 4
+    .globl glassly_imu_gate
+glassly_imu_gate:
+    addi    sp, sp, -16
+    sw      ra, 12(sp)
+    sw      a0, 8(sp)
+    sw      a1, 4(sp)
+    li      t1, 0x0422c3a4
+    jalr    ra, t1, 0
+    lw      a0, 8(sp)
+    lw      a1, 4(sp)
+    call    glassly_imu_batch
+    lw      ra, 12(sp)
+    addi    sp, sp, 16
+    lhu     a1, -556(s0)
+    ret
+

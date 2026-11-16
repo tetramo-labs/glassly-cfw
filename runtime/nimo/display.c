@@ -494,6 +494,9 @@ int glassly_input(uint32_t id, const uint8_t *param, uint32_t len)
     uint32_t now = nimo_now_ms();
     int input_leased = ram->input_lease_until != 0 && (int32_t)(ram->input_lease_until - now) > 0;
     if (!ram->owned && !input_leased) return 0;
+    /* Head messages reach the phone from the detector (glassly_head_event),
+     * so the copies the stock screens produce are only kept from them. */
+    if (id == NIMO_MSG_HEAD_UP || id == NIMO_MSG_HEAD_DOWN) return nimo_is_master();
     /* Once the phone has set a level, the stock ALS steps (both arms get
      * them) wait for the release. */
     if (id == NIMO_MSG_AUTO_BRIGHTNESS) {
@@ -511,4 +514,127 @@ int glassly_input(uint32_t id, const uint8_t *param, uint32_t len)
     for (uint32_t i = 0; i < n; i++) out[3 + i] = param[i];
     reply(KEY_INPUT, out, 3 + n);
     return nimo_is_master();
+}
+
+static int lease_live(uint32_t until, uint32_t now)
+{
+    return until != 0 && (int32_t)(until - now) > 0;
+}
+
+static void head_job(void *arg)
+{
+    uint32_t packed = (uint32_t)(uintptr_t)arg;
+    uint8_t out[3] = {STATUS_OK, (uint8_t)packed, 0};
+    job_start(KEY_INPUT, packed >> 8, packed & 0xFFu, 0);
+    reply(KEY_INPUT, out, sizeof out);
+}
+
+/* Sensor task, once per detector result (up nonzero for head-up, else
+ * head-down), ahead of the stock HUD flag and screen filters that decide
+ * whether a stock 0x86/0x87 is made at all. */
+void glassly_head_event(uint32_t up)
+{
+    nimo_ram *ram = NIMO_RAM;
+    if (!ram->owned && !lease_live(ram->input_lease_until, nimo_now_ms())) return;
+    uint32_t seq = ++ram->heads;
+    uint32_t id = up ? NIMO_MSG_HEAD_UP : NIMO_MSG_HEAD_DOWN;
+    if (!nimo_gui_post_async(head_job, (void *)(uintptr_t)((seq << 8) | id))) ram->busy++;
+}
+
+#define IMU_HEAD 9u
+
+static void put_u32(uint8_t *p, uint32_t v)
+{
+    p[0] = (uint8_t)v;
+    p[1] = (uint8_t)(v >> 8);
+    p[2] = (uint8_t)(v >> 16);
+    p[3] = (uint8_t)(v >> 24);
+}
+
+/* UI task: [status][batch u16][overruns][count][ms tick u32][count x (x, y, z
+ * int16 LE)], oldest sample first, 8196 counts per g. */
+static void imu_job(void *arg)
+{
+    (void)arg;
+    nimo_ram *ram = NIMO_RAM;
+    ram->imu_posted = 0;
+    for (;;) {
+        uint16_t read = ram->imu_read;
+        uint32_t n = (uint16_t)(ram->imu_write - read);
+        if (n == 0) return;
+        if (n > NIMO_IMU_RING) n = NIMO_IMU_RING;
+        uint8_t out[IMU_HEAD + NIMO_IMU_RING * 6u];
+        uint32_t seq = ++ram->imu_batches;
+        job_start(KEY_IMU, seq, 0, n);
+        out[0] = STATUS_OK;
+        out[1] = (uint8_t)seq;
+        out[2] = (uint8_t)(seq >> 8);
+        out[3] = ram->imu_overruns;
+        out[4] = (uint8_t)n;
+        put_u32(out + 5, ram->imu_time);
+        for (uint32_t i = 0; i < n; i++) {
+            const int16_t *sample = ram->imu_ring[(uint16_t)(read + i) % NIMO_IMU_RING];
+            for (uint32_t axis = 0; axis < 3; axis++) {
+                uint16_t v = (uint16_t)sample[axis];
+                out[IMU_HEAD + i * 6u + axis * 2u] = (uint8_t)v;
+                out[IMU_HEAD + i * 6u + axis * 2u + 1u] = (uint8_t)(v >> 8);
+            }
+        }
+        ram->imu_read = (uint16_t)(read + n);
+        reply(KEY_IMU, out, IMU_HEAD + n * 6u);
+    }
+}
+
+/* Sensor task, after every FIFO drain: records are the stock 7 x int16
+ * layout whose first three are the accelerometer. While leased the head
+ * task's stillness time stays at zero, so the FIFO never stops for
+ * wake-on-motion. */
+void glassly_imu_batch(const int16_t *records, uint32_t count)
+{
+    nimo_ram *ram = NIMO_RAM;
+    uint32_t now = nimo_now_ms();
+    if (!lease_live(ram->imu_lease_until, now)) return;
+    nimo_still_reset();
+    uint16_t write = ram->imu_write;
+    for (uint32_t i = 0; i < count; i++, records += 7) {
+        if ((uint16_t)(write - ram->imu_read) >= NIMO_IMU_RING) {
+            ram->imu_overruns++;
+            continue;
+        }
+        int16_t *slot = ram->imu_ring[write % NIMO_IMU_RING];
+        slot[0] = records[0];
+        slot[1] = records[1];
+        slot[2] = records[2];
+        write++;
+    }
+    ram->imu_time = now;
+    ram->imu_write = write;
+    if (ram->imu_posted) return;
+    ram->imu_posted = 1;
+    if (!nimo_gui_post_async(imu_job, 0)) {
+        ram->imu_posted = 0;
+        ram->busy++;
+    }
+}
+
+/* [1] arms or renews a 90 s lease, [0] drops it. Reply [status][leased]
+ * [overruns][batches u16][head events u16]. */
+uint32_t glassly_imu_control(const uint8_t *payload, uint32_t len, uint8_t *out)
+{
+    nimo_ram *ram = NIMO_RAM;
+    if (len != 1 || payload[0] > 1u) {
+        out[0] = STATUS_INVALID;
+        return 1;
+    }
+    uint32_t now = nimo_now_ms();
+    ram->imu_lease_until = payload[0] ? now + NIMO_IMU_LEASE_MS : 0;
+    if (payload[0] && ram->imu_lease_until == 0) ram->imu_lease_until = 1;
+    out[0] = STATUS_OK;
+    out[1] = (uint8_t)lease_live(ram->imu_lease_until, now);
+    out[2] = ram->imu_overruns;
+    out[3] = (uint8_t)ram->imu_batches;
+    out[4] = (uint8_t)(ram->imu_batches >> 8);
+    out[5] = (uint8_t)ram->heads;
+    out[6] = (uint8_t)(ram->heads >> 8);
+    return 7;
 }

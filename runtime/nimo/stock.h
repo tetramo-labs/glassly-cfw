@@ -19,6 +19,7 @@ typedef void (*nimo_timer_fn)(void *timer);
 int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t len);
 int nimo_is_master(void);
 int nimo_peer_ui(uint32_t id, const void *data, uint32_t len);
+void nimo_still_reset(void);
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg);
 void *nimo_malloc(uint32_t size);
 void nimo_free(void *ptr);
@@ -61,6 +62,11 @@ typedef int (*nimo_send_response_fn)(uint32_t cmd, uint32_t key, const void *dat
 /* Copies a UI message (up to 512 bytes) through the stock inter-arm transport. */
 typedef int (*nimo_peer_ui_fn)(uint32_t id, const void *data, uint32_t len);
 #define nimo_peer_ui ((nimo_peer_ui_fn)0x041fc078u)
+
+/* Zeroes the head task's stillness time, which enters wake-on-motion (and
+ * stops the accelerometer FIFO) after 120 s without movement. */
+typedef void (*nimo_still_reset_fn)(void);
+#define nimo_still_reset ((nimo_still_reset_fn)0x04277b18u)
 
 /* Nonzero on the arm that talks to the phone. */
 typedef int (*nimo_is_master_fn)(void);

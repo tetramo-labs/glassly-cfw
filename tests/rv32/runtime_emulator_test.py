@@ -76,6 +76,7 @@ STOCK = {
     "cancel_auto_off": 0x04268164, "lv_screen_active": 0x0424143C, "lv_obj_invalidate": 0x04233F3A,
     "lv_timer_create": 0x0423F7F8, "lv_timer_delete": 0x0423F89E,
     "critical_enter": 0x041FA74E, "critical_exit": 0x041FA760, "ancs_intake": 0x0428C846,
+    "head_callback": 0x041FAECA, "still_reset": 0x04277B18, "imu_copy": 0x0422C3A4,
 }
 MUTEX, SCREEN, TIMER = 0x02090000, 0x02090100, 0x02090200
 W, H, STRIDE = 540, 280, 270
@@ -150,6 +151,7 @@ class Machine:
         if crumbs is not None:
             self.uc.mem_write(self.crumbs[0], crumbs)
         self.replies, self.queue, self.flushes, self.calls = [], [], [], []
+        self.stock_args = []
         self.allocations, self.freed, self.lock_depth, self.now = {}, [], 0, 5000
         self.heap_next, self.heap_base_free, self.largest_gap = HEAP + 4, heap_free, largest_gap
         self.timer_fn, self.fake_flush_calls, self.stopped_at = None, [], None
@@ -338,6 +340,8 @@ class Machine:
         elif name == "lv_timer_delete":
             check(a[0] == TIMER, "deleting an unknown timer")
             self.timer_fn = None
+        elif name in ("head_callback", "imu_copy"):
+            self.stock_args.append((name, a[0], a[1]))
         elif name == "critical_enter":
             self.critical += 1
         elif name == "critical_exit":
@@ -393,6 +397,26 @@ class Machine:
     def hold(self, seconds):
         for _ in range(int(seconds * 1000 / self.tick_ms)):
             self.tick()
+
+    def head(self, up):
+        """The accelerometer drain's detector result reaching the head gate."""
+        before = len(self.replies)
+        self.call(self.symbols["glassly_head_gate"], regs={10: int(up)}, label="head")
+        check(self.stopped_at == RETURN, "head gate returns to the drain")
+        self.run_ui()
+        return self.replies[before:]
+
+    def imu(self, count):
+        """One FIFO drain: count stock 7 x int16 records and the drain's saved count."""
+        records = b"".join(struct.pack("<7h", 100 * i, -50 * i, 8196, 1, 2, 3, 4) for i in range(count))
+        self.uc.mem_write(PAYLOAD, records)
+        frame = PAYLOAD + 0x800
+        self.uc.mem_write(frame - 556, struct.pack("<H", count))
+        before = len(self.replies)
+        self.call(self.symbols["glassly_imu_gate"], regs={10: PAYLOAD, 11: count, 8: frame}, label="imu")
+        check(self.stopped_at == RETURN and self.reg(11) == count, "IMU gate replays the count reload")
+        self.run_ui()
+        return self.replies[before:]
 
     def touch(self, message, param):
         """The stock UI dispatcher receiving a touch message: the input gate's view."""
@@ -453,7 +477,17 @@ def run_steps(m, steps, upto=None, log=None):
             break
         check(step["cmd"] == "7e", "only 0x7E steps replay here")
         key = int(step["key"], 16)
-        if step.get("await"):
+        if step.get("emulate_head") is not None:
+            sent = m.head(step["emulate_head"]["up"])
+            matching = [rep for rep in sent if rep[1] == key]
+            check(matching, f"step {step['step']}: no head notification")
+            cmd, rkey, data = matching[0]
+        elif step.get("emulate_imu") is not None:
+            sent = m.imu(step["emulate_imu"]["count"])
+            matching = [rep for rep in sent if rep[1] == key]
+            check(matching, f"step {step['step']}: no IMU notification")
+            cmd, rkey, data = matching[0]
+        elif step.get("await"):
             touch = step["emulate_input"]
             stopped, sent = m.touch(touch["id"], bytes.fromhex(touch["param_hex"]))
             matching = [rep for rep in sent if rep[1] == key]
@@ -475,7 +509,7 @@ def run_steps(m, steps, upto=None, log=None):
             actual = json.loads(data[1:].decode())
             check(subset(step["expect_json"], actual), f"{where}: JSON {actual}")
         if log is not None:
-            log.append({"step": step["step"], "reply": data.hex() if len(data) < 40 else data[1:].decode(),
+            log.append({"step": step["step"], "reply": data[1:].decode() if data[1:2] == b"{" else data.hex(),
                         "heap_free": m.heap_free()})
         m.hold(step.get("hold_seconds", 0))
     return out
@@ -576,7 +610,10 @@ def test_input_gate(build):
           "replayed frame or changed arguments")
     for slot, x in ((120, 8), (116, 9), (108, 19)):
         check(m.u32(UI_TOP - 128 + slot) == saved[x], f"replayed save of x{x} at {slot}(sp)")
-    for message in (0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x98, 0x99):
+    for message in (0x86, 0x87):
+        stopped, sent = gate(message, 1)
+        check(stopped == RETURN and not sent, f"owned: stock head message {message:#x} is only swallowed")
+    for message in (0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x98, 0x99):
         stopped, sent = gate(message, 1)
         check(stopped == RETURN and sent == [(0x7E, 0x26, bytes([0, message, 8]) + tap)],
               f"owned: message {message:#x} forwarded {sent}")
@@ -584,7 +621,7 @@ def test_input_gate(build):
     for message in (0x8D, 0x97, 0x9A, 0xA7, 0xBB, 0x24):
         stopped, sent = gate(message, 1)
         check(stopped == UI_DISPATCH_REJOIN and not sent, f"owned: message {message:#x} is not a touch")
-    check(m.u32(m.ram_block[0] + 0x84) == 9, "inputs counter")
+    check(m.u32(m.ram_block[0] + 0x84) == 7, "inputs counter")
     # Auto-brightness steps (0xa8) pass until the phone sets a level, then wait.
     skips = m.u32(m.ram_block[0] + 12)
     stopped, sent = gate(0xA8, 1)
@@ -701,8 +738,9 @@ def test_ancs_gates(build):
 def test_v11_input_peer(build):
     m = Machine(build)
     check(m.command(0x29, b"\x01")[2] == b"\0", "input lease")
+    before = len(m.replies)
     m.call(m.symbols["glassly_input_gate"], regs={10: 0x86, 11: 0, 12: 0})
-    check(m.stopped_at == RETURN and m.replies[-1][2] == b"\0\x86\0", "head up while idle")
+    check(m.stopped_at == RETURN and len(m.replies) == before, "stock head-up kept from the screens while idle")
     m.now += 90001
     m.call(m.symbols["glassly_input_gate"], regs={10: 0x87, 11: 0, 12: 0}, until=UI_DISPATCH_REJOIN)
     check(m.stopped_at == UI_DISPATCH_REJOIN, "expired input returns to stock")
@@ -722,6 +760,36 @@ def test_v11_input_peer(build):
     before = m.calls.count("ancs_intake")
     m.call(m.symbols["glassly_ancs_intake_gate"], regs={10: intake})
     check(m.calls.count("ancs_intake") == before + 1, "peer failure falls back to stock")
+
+
+@test("v12 head detector and IMU batch gates")
+def test_v12_head_imu(build):
+    m = Machine(build)
+    saved = {x: 0x4000 + x for x in (9, 18, 19, 20, 21)}
+    m.call(m.symbols["glassly_head_gate"], regs={10: 1, **saved})
+    check(m.stopped_at == RETURN and m.reg(2) == STACK_TOP and not m.queue, "no lease: nothing posted")
+    check(all(m.reg(x) == v for x, v in saved.items()), "callee-saved registers through the head gate")
+    check(m.stock_args[-1][:2] == ("head_callback", 1) and m.calls[-1] == "still_reset",
+          "stock head callback with the flag, then the stillness reset")
+    check(m.command(0x29, b"\x01")[2] == b"\0", "input lease")
+    check([r[2] for r in m.head(1) if r[1] == 0x26] == [b"\0\x86\0"], "head-up forwarded")
+    check([r[2] for r in m.head(0) if r[1] == 0x26] == [b"\0\x87\0"], "head-down forwarded")
+    before = len(m.replies)
+    m.call(m.symbols["glassly_input_gate"], regs={10: 0x86, 11: 0, 12: 0})
+    check(m.stopped_at == RETURN and len(m.replies) == before, "stock head copies are only swallowed")
+    check(not [r for r in m.imu(5) if r[1] == 0x2B] and m.stock_args[-1][0] == "imu_copy", "no IMU lease: stock copy only")
+    status = m.command(0x2A, b"\x01")[2]
+    check(status[:2] == b"\0\x01" and len(status) == 7, f"IMU lease {status.hex()}")
+    resets = m.calls.count("still_reset")
+    sent = [r[2] for r in m.imu(12) if r[1] == 0x2B]
+    check(len(sent) == 1 and sent[0][:5] == bytes([0, 1, 0, 0, 12]) and len(sent[0]) == 9 + 12 * 6, "IMU batch")
+    check(struct.unpack_from("<3h", sent[0], 9 + 11 * 6) == (1100, -550, 8196), "accelerometer samples")
+    check(m.calls.count("still_reset") == resets + 1, "stillness reset while leased")
+    sent = [r[2] for r in m.imu(40) + m.imu(40) if r[1] == 0x2B]
+    check([s[4] for s in sent] == [40, 40], "each drain empties the ring")
+    check(m.command(0x2A, b"\x00")[2][:2] == b"\0\0", "IMU lease off")
+    check(not [r for r in m.imu(3) if r[1] == 0x2B], "no samples after the lease")
+    check(m.command(0x2A, b"\x02")[2] == b"\x01", "bad IMU op")
 
 
 @test("left arm: acquire, demo scenes, pump, per-eye SHOW, brightness, release")

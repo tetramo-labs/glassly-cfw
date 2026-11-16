@@ -715,7 +715,10 @@ static void test_v11_idle_input_and_peer_relay(void)
     host_reset(0);
     uint8_t enable = 1;
     assert(command(KEY_INPUT_CONTROL, &enable, 1)->data[0] == STATUS_OK);
-    assert(!NIMO_RAM->owned && glassly_input(0x86, 0, 0) == 1);
+    unsigned replies = host.reply_count;
+    assert(!NIMO_RAM->owned && glassly_input(0x86, 0, 0) == 1 && host.reply_count == replies);
+    glassly_head_event(1);
+    host_run_ui();
     assert(last()->key == KEY_INPUT && last()->data[1] == 0x86);
     host.now += NIMO_INPUT_LEASE_MS + 1;
     assert(glassly_input(0x87, 0, 0) == 0);
@@ -745,6 +748,74 @@ static void test_v11_idle_input_and_peer_relay(void)
     printf("v11: idle input lease, auto brightness unlock, peer ANCS and fail-open passed\n");
 }
 
+static host_reply *imu_control(uint8_t op)
+{
+    host_reply *r = command(KEY_IMU_CONTROL, &op, 1);
+    assert(r->key == KEY_IMU_CONTROL && r->len == 7 && r->data[0] == STATUS_OK && r->data[1] == op);
+    return r;
+}
+
+static void test_v12_head_and_imu(void)
+{
+    host_reset(0);
+    unsigned before = host.reply_count;
+    glassly_head_event(1);
+    assert(host.queue_count == 0 && host.reply_count == before && NIMO_RAM->heads == 0);
+    uint8_t enable = 1;
+    command(KEY_INPUT_CONTROL, &enable, 1);
+    glassly_head_event(1);
+    glassly_head_event(0);
+    assert(host_run_ui() == 2);
+    host_reply *up = &host.replies[host.reply_count - 2];
+    assert(up->key == KEY_INPUT && up->len == 3 && up->data[0] == STATUS_OK && up->data[1] == 0x86 && up->data[2] == 0);
+    assert(last()->data[1] == 0x87 && NIMO_RAM->heads == 2);
+    assert(glassly_input(0x87, 0, 0) == 1);
+    host.queue_fail = 1;
+    glassly_head_event(1);
+    assert(NIMO_RAM->busy == 1);
+    host.queue_fail = 0;
+
+    int16_t records[40 * 7];
+    for (unsigned i = 0; i < 40; i++)
+        for (unsigned j = 0; j < 7; j++) records[i * 7 + j] = (int16_t)(j < 3 ? (int)(i * 10 + j) - 200 : 0x7777);
+    before = host.reply_count;
+    glassly_imu_batch(records, 40);
+    assert(host.queue_count == 0 && host.still_resets == 0 && NIMO_RAM->imu_write == 0);
+    imu_control(1);
+    glassly_imu_batch(records, 40);
+    glassly_imu_batch(records, 10);
+    assert(host.queue_count == 1 && host.still_resets == 2 && NIMO_RAM->imu_write == 50);
+    host.now += 7;
+    host_run_ui();
+    host_reply *r = last();
+    assert(r->key == KEY_IMU && r->len == 9 + 50 * 6 && r->data[0] == STATUS_OK);
+    assert(r->data[1] == 1 && r->data[2] == 0 && r->data[3] == 0 && r->data[4] == 50);
+    assert(r->data[5] == (uint8_t)(host.now - 7) && r->data[6] == (uint8_t)((host.now - 7) >> 8));
+    assert((int16_t)(r->data[9] | r->data[10] << 8) == -200 && (int16_t)(r->data[13] | r->data[14] << 8) == -198);
+    const uint8_t *s41 = r->data + 9 + 41 * 6;
+    assert((int16_t)(s41[0] | s41[1] << 8) == -190);
+
+    glassly_imu_batch(records, 40);
+    glassly_imu_batch(records, 40);
+    assert(NIMO_RAM->imu_overruns == 16 && host.queue_count == 1);
+    host_run_ui();
+    assert(last()->key == KEY_IMU && last()->data[4] == 64 && last()->data[3] == 16);
+    assert(NIMO_RAM->imu_read == NIMO_RAM->imu_write);
+
+    host_reply *status = imu_control(1);
+    assert(status->data[2] == 16 && status->data[3] == 2 && status->data[5] == 3);
+    host.now += NIMO_IMU_LEASE_MS + 1;
+    glassly_imu_batch(records, 5);
+    assert(host.queue_count == 0 && host.still_resets == 4);
+    imu_control(1);
+    imu_control(0);
+    glassly_imu_batch(records, 5);
+    assert(host.queue_count == 0);
+    uint8_t bad = 2;
+    assert(command(KEY_IMU_CONTROL, &bad, 1)->data[0] == STATUS_INVALID);
+    printf("v12: detector head events, IMU lease, ring, overruns and stillness reset passed\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc == 3 && !strcmp(argv[1], "--scenes")) {
@@ -769,6 +840,7 @@ int main(int argc, char **argv)
     test_breadcrumbs();
     test_ancs_relay();
     test_v11_idle_input_and_peer_relay();
+    test_v12_head_and_imu();
     printf("PASS: NIMO session host tests\n");
     return 0;
 }

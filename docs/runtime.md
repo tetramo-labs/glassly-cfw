@@ -131,6 +131,9 @@ reply once the work is done; a busy refusal is answered at once.
 | 0x25 | — | *UI* `[status][crc32 u32 LE][eye 1/2]`: zlib CRC-32 of this arm's 75,600-byte canvas (status 3 when not owned). Only the master (right arm) answers, so hardware steps compare the right canvas with the emulator's render |
 | 0x27 | `[op]` | notification relay control (GLASSLYCFW/10): 1 ENABLE arms or extends a 90 s lease, 5 RENEW extends a live one, 2 DISABLE drops it, 3 QUERY only answers, 4 ACTION is refused (status 5). Reply `[0]['A','N',1,4][enabled][side 1 master / 2 slave][drops u16][sent u16][0]` |
 | 0x28 | — (notification) | while the lease is held, every notification the stock ANCS client completes, as G2 relay records `[0]['A','N',1,kind][body]`: kind 1 SOURCE `[event 0][flags 0][category][count 0][uid u32]`, then kind 2 ATTR `[uid u32][attr][total u16][offset u16][chunk ≤ 128]` for attributes 0 app id, 1 title, 2 subtitle, 3 message (260-byte cap), 5 date and empty 4, 6, 7. The stock popup is skipped and its app whitelist answers "allowed" while leased |
+| 0x29 | `[1 \| 0]` | input lease (GLASSLYCFW/11): 1 arms or renews 90 s, 0 drops it. `[0]`. While it or the display lease is live, 0x26 carries touch and head messages |
+| 0x2A | `[1 \| 0]` | IMU lease (GLASSLYCFW/12): 1 arms or renews 90 s, 0 drops it. `[0][leased][overruns][batches u16][head events u16]` |
+| 0x2B | — (notification) | while the IMU lease is live, every accelerometer FIFO drain: `[0][batch u16][overruns][count][ms tick u32][count × (x, y, z int16 LE)]`, oldest first, 8196 counts per g, about 26 samples a second, right arm only |
 | other | — | status 5 |
 
 Scene modes (the MemoMind 0x7d channel's raw messages, minus built-in text,
@@ -425,6 +428,9 @@ becomes a CAPACITY reply, not a crash). A full retained scene (128 objects,
 | ancs-intake | call (`auipc ra; jalr ra`) | `0x04274006` | `ef8011041306a01c` | revision 10 build | `glassly_ancs_intake_gate`: leased → records to the phone, else the stock `ancs_intake` (0x0428c846); replays `li a2,0x1ca`, returns to `0x0427400e` |
 | ancs-whitelist | jump (`auipc t1; jalr x0`) | `0x042767d0` | `411122c426c206c6` | revision 10 build | `glassly_ancs_whitelist_gate`: leased → returns 1, else rejoins at `0x042767d8` |
 
+| head-event | call (`auipc ra; jalr ra`) | `0x0422c7c8` | `efe02cf0efb0c434` | revision 12 build | `glassly_head_gate`: posts `0x26 [0][86\|87][0]` under the input or display lease, then the stock head callback `0x041faeca(up)` and stillness reset `0x04277b18()`; returns to `0x0422c7d0` |
+| imu-batch | call (`auipc ra; jalr ra`) | `0x0422c5e0` | `eff05fdc835544dd` | revision 12 build | `glassly_imu_gate`: the stock batch copy `0x0422c3a4(records, count)`, then the IMU ring; replays `lhu a1,-556(s0)`, returns to `0x0422c5e8` |
+
 (Patched bytes and gate addresses are those of the revision 8 build; the build
 recomputes and checks them, and scans the whole stock body so that no direct
 branch lands inside any hook.)
@@ -518,3 +524,34 @@ of the notification STATUS reply is now a send-failure counter.
 
 RAM additions: `input_lease_until` at `0x9c` (u32) and `ancs_send_errors` at
 `0xa0` (u8), total structure size `0xa4`. Existing offsets remain unchanged.
+
+## Revision 12: head events and the accelerometer
+
+The stock head detector (`0x042777f0`, fed by the accelerometer drain
+`0x0422c52c` on the sensor task) returns 1 head-up, 2 head-down or 3 head-down
+because the pitch left its valid range, and the drain hands `result == 1` to
+the registered head callback through `0x041faeca`. Stock only turns that into
+UI message 0x86/0x87 when the HUD flag (set-parameter 0x0D) is on and the stock
+screen is one of {0 dashboard, 5 guide, 13, 14, 16, 21} (mask `0x216021`,
+checked at `0x04278738` and again in the relay `0x04286bb0`), so the
+dispatcher hook never saw head-up on other screens. The head-event hook
+forwards from the detector instead, before both filters; the dispatcher still
+keeps the stock 0x86/0x87 from the screens while a lease is live but no
+longer forwards them, so the phone hears each event once.
+
+The drain reads the LSM6DSO-family accelerometer (WHO_AM_I 0x6C, right arm
+only, ±4 g, 8196 counts per g, 26 Hz) through its FIFO (`0x041ff5f4`) into
+7 × int16 records whose first three are x, y, z, on an interrupt or every
+250 ms. `0x04277a3e` counts still batches and `0x04277b2c(250)` adds 250 ms per
+still batch to `*(u32 *)0x02012c68`; at 120 s the task enters wake-on-motion
+(`0x041ff710(1)`) and the FIFO stops until the wearer moves. `0x04277b18`
+zeroes that time. While the IMU lease is live the batch hook calls it every
+drain, copies the samples into a 64-sample ring in the RAM block and posts one
+UI job, which sends them as 0x2B. The sensor task never calls send_response.
+A lease armed while the task is already in wake-on-motion delivers nothing
+until the wearer moves.
+
+RAM additions: `imu_posted` 0xa1, `imu_overruns` 0xa2, `imu_lease_until`
+0xa4, `imu_write`/`imu_read` 0xa8/0xaa, `imu_time` 0xac, `imu_batches` 0xb0,
+`heads` 0xb2, `imu_ring` 0xb4, total 0x234.
+

@@ -114,6 +114,7 @@ int nimo_peer_ui(uint32_t id, const void *data, uint32_t len)
 }
 
 int nimo_is_master(void) { return host.master; }
+void nimo_still_reset(void) { host.still_resets++; }
 
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg)
 {

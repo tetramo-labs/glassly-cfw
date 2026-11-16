@@ -33,6 +33,7 @@ typedef struct {
     nimo_timer_fn timer_fn;
     unsigned timers_created, timers_deleted, timer_live;
     unsigned critical, criticals;
+    unsigned still_resets;
     jmp_buf *reset_in_flush; /* a panel flush jumps here: the device reset mid-present */
 } host_state;
 

@@ -15,7 +15,9 @@ datas += [(str(p), str(p.parent.relative_to(ROOT))) for p in (ROOT / 'glassly_fl
 binaries = ([(str(ROOT / 'native/libjl_usb.dylib'), 'native'),
              (str(ROOT / 'native/libmemomind_rfcomm.dylib'), 'native')] if sys.platform == 'darwin' else [])
 hidden = ['hidraw' if sys.platform.startswith('linux') else 'hid']
-hidden += ['glassly_flasher.devices.' + m for m in ('eightbitdo.zero2', 'eightbitdo.micro', 'gamebrick', 'ananke', 'memomind')]
+# Device modules are imported by name at run time, so PyInstaller cannot see them; take them from the registry.
+from glassly_flasher.devices import DEVICES  # noqa: E402
+hidden += [device.module for device in DEVICES.values()]
 hidden += ['jltech', 'jltech.cipher', 'jltech.crc', 'jltech.chipkeybin']
 # win32port loads WinDLL at import, so each OS only gets its own scsiio backend.
 if sys.platform == 'win32':

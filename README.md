@@ -7,11 +7,12 @@ smart glasses (BitFantasy, vendor project `focus01`). The sibling projects are
 MemoMind One, so that project's container tooling and appended-runtime
 approach are the starting point here.
 
-Nimo-4026 runs GLASSLYCFW/9 flashed from the Mac (`tools/nimo-mac`); see
-`docs/runtime.md` for what each revision added and how it was verified.
-GLASSLYCFW/10 (notification relay) is built and passes the offline suites but
-has not been flashed yet. The claims below are offline evidence from the two
-vendor OTA images.
+Nimo-4026 runs GLASSLYCFW/10, flashed from the Glassly repo's
+`mobile/modules/bluetooth-sdk/tools/nimo-mac` harness. Boot verification and
+29 automated hardware checks passed; live iPhone notification delivery remains
+unverified. See [the flash record](docs/hardware-cfw10-2026-11-16.md) and
+`docs/runtime.md` for the revision details. The claims below are offline
+evidence from the two vendor OTA images.
 
 ## Established (2026-11-08)
 

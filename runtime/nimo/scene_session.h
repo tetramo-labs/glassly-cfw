@@ -1,7 +1,7 @@
 /* Serialized UI-task adapter for the portable retained scene, ported from the
  * MemoMind runtime (runtime/graphics/scene_session.c there). NIMO keeps its
- * raw-present path, bundles and raster/rect-copy modes and drops the flash
- * store, built-in text and diagnostics. MIT. */
+ * raw-present path, bundles, raster/rect-copy modes and built-in text (mode 15
+ * and text shapes, GLASSLYCFW/12) and drops the flash store and diagnostics. MIT. */
 #ifndef NIMO_SCENE_SESSION_H
 #define NIMO_SCENE_SESSION_H
 #include "scene.h"
@@ -23,6 +23,8 @@ typedef struct {
     void (*settled)(void *, uint16_t);
     /* Optional progress marks for crash breadcrumbs (MM_SCENE_MARK_*). */
     void (*mark)(void *, unsigned);
+    /* Optional built-in text (text.h's record); 0 drawn, -1 nothing drawn. */
+    int (*builtin_text)(void *, const mm_raster *, const uint8_t *, size_t, mm_scene_dirty *);
 } mm_scene_session_hooks;
 
 /* Drawing for a message or an animation frame is about to start. */

@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / ".tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin"
 RUNTIME = ROOT / "runtime/nimo"
 PORTABLE = ROOT / "runtime/portable"
-SOURCES = [RUNTIME / n for n in ("entry.S", "glassly.c", "display.c", "scene_session.c", "ancs.c", "freestanding.c")] + \
+SOURCES = [RUNTIME / n for n in ("entry.S", "glassly.c", "display.c", "scene_session.c", "text.c", "ancs.c", "freestanding.c")] + \
           [PORTABLE / n for n in ("scene.c", "geometry.c", "vector.c", "rle.c", "raster_commands.c",
                                   "rect_copy_commands.c")]
 APP_TYPE = 0x20

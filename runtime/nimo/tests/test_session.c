@@ -588,18 +588,20 @@ static size_t load(const char *dir, const char *name, uint8_t *out, size_t cap)
 
 /* The scripts/scene_packets.py files replay as the hardware steps send them:
  * raw files, fixed epoch, no reply-driven rewriting. */
-static host_reply *replay(const char *dir, const char *name)
+static host_reply *replay_status(const char *dir, const char *name, unsigned status)
 {
     static uint8_t data[NIMO_MAX_PAYLOAD];
     size_t n = load(dir, name, data, sizeof data);
     host_reply *r = command(KEY_SCENE, data, (uint32_t)n);
-    assert(r->key == KEY_SCENE && r->data[0] == STATUS_OK);
+    assert(r->key == KEY_SCENE && r->data[0] == status);
     if (r->len > 1) assert(r->len >= 11 && r->data[4] == 0);
     printf("REPLY %s %s ", NIMO_IS_LEFT ? "left" : "right", name);
     for (unsigned i = 0; i < r->len; i++) printf("%02x", r->data[i]);
     printf("\n");
     return r;
 }
+
+static host_reply *replay(const char *dir, const char *name) { return replay_status(dir, name, STATUS_OK); }
 
 static void pump_until_settled(void)
 {
@@ -639,6 +641,18 @@ static void test_demo_scenes(const char *dir, int left)
     else assert(host.flush_count == flushes && pixel(host.panel, 270, 100) == 11 && pixel(host.panel, 9, 140) == 0);
     replay(dir, "scene-show-both.bin");
     assert(pixel(host.panel, 9, 140) == 15 && pixel(host.panel, 270, 100) == 11 && panel_matches_shadow());
+    /* built-in text in the host face: the frame and the lines replace the scene */
+    replay(dir, "scene-text.bin");
+    unsigned ink = 0;
+    for (unsigned y = 32; y < 50; y++)
+        for (unsigned x = 22; x < 300; x++) ink += pixel(host.panel, x, y) != 0;
+    assert(ink > 100 && pixel(host.panel, 270, 150) == 0 && pixel(host.panel, 300, 20) == 15 && panel_matches_shadow());
+    unsigned rows = host.flush_count;
+    replay(dir, "text-line.bin");
+    assert(host.flush_count == rows + 1 && host.flushes[rows].row0 >= 200 &&
+           host.flushes[rows].row0 + host.flushes[rows].nrows <= 218 && panel_matches_shadow());
+    replay_status(dir, "text-refused.bin", STATUS_INVALID);
+    assert(host.flush_count == rows + 1);
     release();
     printf("demo scenes (%s arm): mode-36 demo, retained scene + glide + settled, eye objects, right/left/both SHOW passed\n",
            left ? "left" : "right");
@@ -745,6 +759,175 @@ static void test_v11_idle_input_and_peer_relay(void)
     printf("v11: idle input lease, auto brightness unlock, peer ANCS and fail-open passed\n");
 }
 
+static void put_pixel(uint8_t *fb, int x, int y, unsigned v)
+{
+    uint8_t *p = fb + y * NIMO_PANEL_STRIDE + x / 2;
+    *p = x & 1 ? (uint8_t)((*p & 0xF0u) | v) : (uint8_t)((*p & 0x0Fu) | (v << 4));
+}
+
+/* Independent render of a built-in text record with the host face: glyph
+ * bottoms sit base_line px above the line's bottom, clipped to [0, right) x
+ * [0, bottom). Handles ASCII, pen bytes and two-byte UTF-8. */
+static void ref_text(uint8_t *fb, int x, int y, unsigned options, const char *s, int right, int bottom)
+{
+    const nimo_font *f = &nimo_host_text_font;
+    for (const unsigned char *p = (const unsigned char *)s; *p; p++) {
+        unsigned cp = *p;
+        if (cp < 32) {
+            x += (int)cp - 11;
+            continue;
+        }
+        if (cp >= 0xC2 && cp <= 0xDF) cp = ((cp & 31u) << 6) | (*++p & 63u);
+        nimo_glyph_dsc d;
+        assert(nimo_font_glyph(f, &d, cp, 0));
+        const uint8_t *bits = f->dsc->glyph_bitmap + (f->dsc->glyph_dsc[d.gid].index_adv & 0xFFFFFu);
+        int gx = x + d.ofs_x, gy = y + f->line_height - f->base_line - d.ofs_y - d.box_h;
+        for (int j = 0; j < d.box_h; j++)
+            for (int i = 0; i < d.box_w; i++) {
+                int px = gx + i, py = gy + j;
+                if (px < 0 || py < 0 || px >= right || py >= bottom) continue;
+                unsigned k = (unsigned)(j * d.box_w + i), v = (bits[k / 2] >> (k & 1 ? 0 : 4)) & 15u;
+                if (v == 0 && (options & 16u)) continue;
+                if (options & 32u) v = 15u - v;
+                put_pixel(fb, px, py, v * (options & 15u) / 15u);
+            }
+        x += d.adv_w;
+    }
+}
+
+static uint32_t text_line(uint8_t *m, int x, int y, unsigned options, const char *s, size_t n)
+{
+    m[0] = 15;
+    w16(m + 1, (unsigned)x);
+    w16(m + 3, (unsigned)y);
+    m[5] = (uint8_t)options;
+    m[6] = (uint8_t)n;
+    memcpy(m + 7, s, n);
+    return (uint32_t)(7 + n);
+}
+
+static host_reply *text(int x, int y, unsigned options, const char *s)
+{
+    uint8_t m[300];
+    return scene(m, text_line(m, x, y, options, s, strlen(s)));
+}
+
+static uint8_t text_ref[NIMO_FRAME_BYTES];
+
+static void expect_canvas_is_ref(void)
+{
+    if (memcmp(session()->shadow, text_ref, NIMO_FRAME_BYTES) == 0) return;
+    for (unsigned i = 0; i < NIMO_FRAME_BYTES; i++)
+        if (session()->shadow[i] != text_ref[i]) {
+            fprintf(stderr, "canvas differs from the reference at byte %u (x %u, y %u)\n", i, i % 270 * 2, i / 270);
+            break;
+        }
+    assert(0);
+}
+
+/* GLASSLYCFW/12: mode 15 and TEXT_INLINE shapes in the stock face (a stand-in
+ * here), all or nothing per string, clipped, presenting only the glyph rows. */
+static void test_builtin_text(void)
+{
+    host_reset(1);
+    request_id = 0;
+    acquire();
+    reset_scene();
+    memset(text_ref, 0, sizeof text_ref);
+    unsigned flushes = host.flush_count;
+    host_reply *r = text(10, 20, 0x1F, "Ag y");
+    assert(r->len == 1 && r->data[0] == STATUS_OK);
+    ref_text(text_ref, 10, 20, 0x1F, "Ag y", NIMO_PANEL_W, NIMO_PANEL_H);
+    expect_canvas_is_ref();
+    assert(host.flush_count == flushes + 1 && host.flushes[flushes].row0 >= 20 &&
+           host.flushes[flushes].row0 + host.flushes[flushes].nrows <= 20 + 18 && panel_matches_shadow());
+    /* 'A' (0x41) is 13 px tall with ofs_x 1, so its box starts at (11, 20 + 18 - 3 - 13);
+     * its first pixels are (0 * 7 + 0x41) % 16 and (1 * 7 + 0x41) % 16. */
+    assert(pixel(session()->shadow, 11, 22) == 1 && pixel(session()->shadow, 12, 22) == 8);
+    assert(pixel(session()->shadow, 10, 22) == 0 && pixel(session()->shadow, 11, 21) == 0);
+
+    text(100, 40, 0x1F, "A\x0d" "B\x05" "C");
+    ref_text(text_ref, 100, 40, 0x1F, "A\x0d" "B\x05" "C", NIMO_PANEL_W, NIMO_PANEL_H);
+    expect_canvas_is_ref();
+    text(100, 40, 0x07, "xyz");
+    ref_text(text_ref, 100, 40, 0x07, "xyz", NIMO_PANEL_W, NIMO_PANEL_H);
+    text(200, 40, 0x2F, "Inv");
+    ref_text(text_ref, 200, 40, 0x2F, "Inv", NIMO_PANEL_W, NIMO_PANEL_H);
+    text(300, 40, 0x1F, "21\xc2\xb0" "C");
+    ref_text(text_ref, 300, 40, 0x1F, "21\xc2\xb0" "C", NIMO_PANEL_W, NIMO_PANEL_H);
+    text(-5, -10, 0x1F, "Wq");
+    ref_text(text_ref, -5, -10, 0x1F, "Wq", NIMO_PANEL_W, NIMO_PANEL_H);
+    text(530, 268, 0x1F, "Mjk");
+    ref_text(text_ref, 530, 268, 0x1F, "Mjk", NIMO_PANEL_W, NIMO_PANEL_H);
+    expect_canvas_is_ref();
+    assert(panel_matches_shadow() && NIMO_RAM->scene_failures == 0);
+
+    /* Refused whole: a character the face lacks, malformed UTF-8, a NUL, a bad length. */
+    static const char *const refused[] = { "caf\xc3\xa9", "ab\xc3", "\xe0\x80\x80", "\xc0\xaf", "\xed\xa0\x80" };
+    flushes = host.flush_count;
+    for (unsigned i = 0; i < sizeof refused / sizeof refused[0]; i++)
+        assert(text(50, 150, 0x1F, refused[i])->data[0] == STATUS_INVALID);
+    uint8_t m[300];
+    uint32_t n = text_line(m, 50, 150, 0x1F, "a\0b", 3);
+    assert(scene(m, n)->data[0] == STATUS_INVALID);
+    n = text_line(m, 50, 150, 0x1F, "abc", 3);
+    assert(scene(m, n - 1)->data[0] == STATUS_INVALID && scene(m, 6)->data[0] == STATUS_INVALID);
+    m[6] = 2;
+    assert(scene(m, n)->data[0] == STATUS_INVALID);
+    expect_canvas_is_ref();
+    assert(host.flush_count == flushes && NIMO_RAM->scene_failures == 9);
+    /* 255 bytes, mostly off the right edge */
+    char longest[256];
+    memset(longest, 'm', 255);
+    longest[255] = 0;
+    assert(text(0, 240, 0x1F, longest)->data[0] == STATUS_OK);
+    ref_text(text_ref, 0, 240, 0x1F, longest, NIMO_PANEL_W, NIMO_PANEL_H);
+    expect_canvas_is_ref();
+
+    /* A bundle segment presents the rows its text touched. */
+    uint8_t b[64] = { 8, 1 };
+    n = text_line(b + 4, 400, 100, 0x1F, "Hi", 2);
+    w16(b + 2, n);
+    flushes = host.flush_count;
+    assert(scene(b, n + 4)->data[0] == STATUS_OK);
+    ref_text(text_ref, 400, 100, 0x1F, "Hi", NIMO_PANEL_W, NIMO_PANEL_H);
+    expect_canvas_is_ref();
+    assert(host.flush_count == flushes + 1 && host.flushes[flushes].row0 >= 100 &&
+           host.flushes[flushes].row0 + host.flushes[flushes].nrows <= 118 && panel_matches_shadow());
+
+    /* Retained TEXT_INLINE objects: [17][flags][options][0][x][y][w][h][len][bytes], clipped to w/h. */
+    reset_scene();
+    uint8_t put[80] = { 37 };
+    uint32_t at = 5;
+    static const struct { uint32_t id; int x, y, w, h; unsigned options; const char *s; } objects[] = {
+        { 0x31, 20, 60, 0, 0, 0x1F, "Retained" },
+        { 0x32, 20, 90, 30, 12, 0x1A, "Clipped text" },
+    };
+    for (unsigned i = 0; i < 2; i++) {
+        size_t len = strlen(objects[i].s);
+        put[at] = 1;
+        w32(put + at + 1, objects[i].id);
+        w32(put + at + 5, 1);
+        uint8_t *rec = put + at + 9;
+        rec[0] = 17; rec[1] = 1; rec[2] = (uint8_t)objects[i].options; rec[3] = 0;
+        w16(rec + 4, (unsigned)objects[i].x); w16(rec + 6, (unsigned)objects[i].y);
+        w16(rec + 8, (unsigned)objects[i].w); w16(rec + 10, (unsigned)objects[i].h);
+        rec[12] = (uint8_t)len;
+        memcpy(rec + 13, objects[i].s, len);
+        at += 9 + 13 + (uint32_t)len;
+    }
+    assert(cache_status(scene(put, at)) == 0);
+    uint32_t ids[2] = { 0x31, 0x32 };
+    show(ids, 2, 0);
+    memset(text_ref, 0, sizeof text_ref);
+    ref_text(text_ref, 20, 60, 0x1F, "Retained", NIMO_PANEL_W, NIMO_PANEL_H);
+    ref_text(text_ref, 20, 90, 0x1A, "Clipped text", 20 + 30, 90 + 12);
+    expect_canvas_is_ref();
+    assert(panel_matches_shadow() && host.glyph_lookups > 0);
+    release();
+    printf("built-in text: mode 15, pen bytes, levels, inversion, UTF-8, clipping, refusals, bundles, TEXT_INLINE passed\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc == 3 && !strcmp(argv[1], "--scenes")) {
@@ -769,6 +952,7 @@ int main(int argc, char **argv)
     test_breadcrumbs();
     test_ancs_relay();
     test_v11_idle_input_and_peer_relay();
+    test_builtin_text();
     printf("PASS: NIMO session host tests\n");
     return 0;
 }

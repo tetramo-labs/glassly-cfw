@@ -3,7 +3,7 @@
     "glassly-rokid-0.1.0-dev.apk": {
       "size": 2549604,
       "sha256": "75917ea7adaf37bd184b801b04f724de235d5a33346650e729e7147eb5485fa8",
-      "source": "tetramo-labs/glassly-rokid-cfw (local, uncommitted, 2026-11-15) app/build/outputs/apk/debug/app-debug.apk: phase 2 of the Glassly launcher route (BLE link, text, touchpad, battery), signed with this Mac's Android debug key; not yet installed on glasses. A release build needs a stable signing key, since Android only updates an app signed with the same key."
+      "source": "tetramo-labs/glassly-rokid-cfw@99d77e2 app/build/outputs/apk/debug/app-debug.apk: phase 2 of the Glassly launcher route (BLE link, text, touchpad, battery), signed with the developer Mac's Android debug key; not yet installed on glasses. A release build needs a stable signing key, since Android only updates an app signed with the same key."
     }
   }
 }

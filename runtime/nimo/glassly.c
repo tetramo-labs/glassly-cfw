@@ -294,8 +294,17 @@ int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t
     case KEY_ANCS_CONTROL:
         n = glassly_ancs_control(payload, len, reply);
         break;
+    case KEY_INPUT_CONTROL:
+        if (len != 1 || payload[0] > 1u) {
+            reply[n++] = STATUS_INVALID;
+            break;
+        }
+        ram->input_lease_until = payload[0] ? nimo_now_ms() + NIMO_INPUT_LEASE_MS : 0;
+        if (payload[0] && ram->input_lease_until == 0) ram->input_lease_until = 1;
+        reply[n++] = STATUS_OK;
+        break;
     case KEY_BRIGHTNESS:
-        if (len != 1 || payload[0] > 32u) {
+        if (len != 1 || (payload[0] > 32u && payload[0] != 255u)) {
             reply[n++] = STATUS_INVALID;
             break;
         }

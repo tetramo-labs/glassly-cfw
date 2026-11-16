@@ -18,6 +18,7 @@ typedef void (*nimo_timer_fn)(void *timer);
 #ifdef NIMO_HOST
 int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t len);
 int nimo_is_master(void);
+int nimo_peer_ui(uint32_t id, const void *data, uint32_t len);
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg);
 void *nimo_malloc(uint32_t size);
 void nimo_free(void *ptr);
@@ -56,6 +57,10 @@ extern volatile uint8_t nimo_host_fb_back, nimo_host_fb_front;
  * 0xBF channel; data[0] is the status byte. The slave arm skips the send. */
 typedef int (*nimo_send_response_fn)(uint32_t cmd, uint32_t key, const void *data, uint32_t len);
 #define nimo_send_response ((nimo_send_response_fn)0x0426e2d6u)
+
+/* Copies a UI message (up to 512 bytes) through the stock inter-arm transport. */
+typedef int (*nimo_peer_ui_fn)(uint32_t id, const void *data, uint32_t len);
+#define nimo_peer_ui ((nimo_peer_ui_fn)0x041fc078u)
 
 /* Nonzero on the arm that talks to the phone. */
 typedef int (*nimo_is_master_fn)(void);

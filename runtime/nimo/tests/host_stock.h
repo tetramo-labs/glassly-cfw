@@ -13,6 +13,9 @@ typedef struct { uint32_t row0, nrows; } host_flush;
 typedef struct {
     host_reply replies[256];
     unsigned reply_count;
+    host_reply peer[256];
+    unsigned peer_count;
+    int peer_error;
     struct { nimo_ui_fn fn; void *arg; } queue[48];
     unsigned queue_count, queue_fail;
     size_t heap_capacity, heap_used, heap_peak;

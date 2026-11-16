@@ -82,17 +82,17 @@ glassly_kick_gate:
  * its entry with `auipc t1; jalr x0` in place of `c.addi16sp sp,-128;
  * c.swsp s0,120(sp); c.swsp s1,116(sp); c.swsp s3,108(sp)`, so a0 = message
  * id, a1 = parameter bytes, a2 = their length and ra = the dispatcher's
- * caller. While the runtime owns the panel, touch messages (0x88..0x8c tap
- * gestures, 0x98 press, 0x99 release) and the auto-brightness step (0xa8) go
- * to glassly_input first; when it returns nonzero the dispatcher never sees
- * them. Everything else, and every
- * message while not owned, replays the four instructions and rejoins. */
+ * caller. Head/touch messages, auto-brightness and private peer relay records
+ * pass through glassly_input, which decides from the relevant lease whether
+ * to consume them. Other messages replay the prologue and rejoin stock. */
     .balign 4
     .globl glassly_input_gate
 glassly_input_gate:
-    li      t0, NIMO_RAM_BASE
-    lbu     t1, NIMO_RAM_OWNED(t0)
-    beqz    t1, 6f
+    li      t2, 0x7e28
+    beq     a0, t2, 5f
+    addi    t1, a0, -0x86
+    sltiu   t2, t1, 2
+    bnez    t2, 5f
     addi    t1, a0, -0x88
     sltiu   t2, t1, 5
     bnez    t2, 5f

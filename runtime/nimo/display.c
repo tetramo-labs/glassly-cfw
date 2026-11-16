@@ -395,6 +395,13 @@ void nimo_ui_brightness(void *arg)
     uint32_t level = NIMO_JOB_ARG(arg);
     job_start(KEY_BRIGHTNESS, NIMO_JOB_SEQ(arg), 0, 1);
     nimo_ram *ram = NIMO_RAM;
+    if (level == 255u) {
+        ram->brightness_changed = 0;
+        ram->brightness_set = 0;
+        uint8_t out[2] = { STATUS_OK, 0 };
+        reply(KEY_BRIGHTNESS, out, sizeof out);
+        return;
+    }
     int rc = nimo_set_brightness(level);
     uint8_t out[2] = { rc == 0 ? STATUS_OK : STATUS_INVALID, (uint8_t)rc };
     if (rc == 0) {
@@ -482,7 +489,11 @@ void nimo_ui_canvas(void *arg)
 int glassly_input(uint32_t id, const uint8_t *param, uint32_t len)
 {
     nimo_ram *ram = NIMO_RAM;
-    if (!ram->owned) return 0;
+    if (id == NIMO_MSG_ANCS_RELAY) return glassly_ancs_forwarded(param, len);
+    if (id == NIMO_MSG_AUTO_BRIGHTNESS && !ram->owned) return 0;
+    uint32_t now = nimo_now_ms();
+    int input_leased = ram->input_lease_until != 0 && (int32_t)(ram->input_lease_until - now) > 0;
+    if (!ram->owned && !input_leased) return 0;
     /* Once the phone has set a level, the stock ALS steps (both arms get
      * them) wait for the release. */
     if (id == NIMO_MSG_AUTO_BRIGHTNESS) {

@@ -57,8 +57,11 @@ static void record(nimo_ram *ram, uint32_t kind, const uint8_t *body, uint32_t n
     out[3] = 1;
     out[4] = (uint8_t)kind;
     for (uint32_t i = 0; i < n; i++) out[ANCS_HEAD + i] = body[i];
-    nimo_send_response(GLASSLY_CMD, KEY_ANCS_RECORD, out, ANCS_HEAD + n);
-    ram->ancs_sent++;
+    int rc = nimo_is_master()
+        ? nimo_send_response(GLASSLY_CMD, KEY_ANCS_RECORD, out, ANCS_HEAD + n)
+        : nimo_peer_ui(NIMO_MSG_ANCS_RELAY, out, ANCS_HEAD + n);
+    if (rc == 0) ram->ancs_sent++;
+    else { ram->ancs_send_errors++; ram->ancs_drops++; }
 }
 
 /* ATTR [uid u32][attr][total u16][offset u16][chunk]; an absent attribute is
@@ -92,6 +95,7 @@ int glassly_ancs_intake(const uintptr_t *intake)
         ram->ancs_drops++;
         return 0;
     }
+    uint8_t errors = ram->ancs_send_errors;
     uint32_t uid = (uint32_t)intake[INTAKE_UID];
     uint8_t source[8] = { 0, 0, (uint8_t)intake[INTAKE_CATEGORY], 0, (uint8_t)uid, (uint8_t)(uid >> 8),
                           (uint8_t)(uid >> 16), (uint8_t)(uid >> 24) };
@@ -104,7 +108,7 @@ int glassly_ancs_intake(const uintptr_t *intake)
     attribute(ram, uid, 5, (const char *)intake[INTAKE_DATE], ANCS_SHORT_FIELD);
     attribute(ram, uid, 6, 0, 0);
     attribute(ram, uid, 7, 0, 0);
-    return 1;
+    return errors == ram->ancs_send_errors;
 }
 
 /* [op] -> [status]['A','N',1,4][enabled][side][drops u16][sent u16][send errors]:
@@ -138,6 +142,18 @@ uint32_t glassly_ancs_control(const uint8_t *payload, uint32_t len, uint8_t *rep
     reply[6] = nimo_is_master() ? 1 : 2;
     put16(reply + 7, ram->ancs_drops);
     put16(reply + 9, ram->ancs_sent);
-    reply[11] = 0;
+    reply[11] = ram->ancs_send_errors;
     return 12;
+}
+
+int glassly_ancs_forwarded(const uint8_t *data, uint32_t len)
+{
+    nimo_ram *ram = NIMO_RAM;
+    if (!nimo_is_master() || !leased(ram, nimo_now_ms())) return 1;
+    if (data == 0 || len < ANCS_HEAD || len > ANCS_HEAD + 9u + ANCS_CHUNK ||
+        data[0] != STATUS_OK || data[1] != 'A' || data[2] != 'N' || data[3] != 1 ||
+        (data[4] != ANCS_SOURCE && data[4] != ANCS_ATTR)) return 1;
+    if (nimo_send_response(GLASSLY_CMD, KEY_ANCS_RECORD, data, len) == 0) ram->ancs_sent++;
+    else { ram->ancs_send_errors++; ram->ancs_drops++; }
+    return 1;
 }

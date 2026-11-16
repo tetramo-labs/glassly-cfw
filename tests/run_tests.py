@@ -51,6 +51,8 @@ def main():
     parser.add_argument("--revision", type=int, default=9)
     parser.add_argument("--rv32-python", type=Path,
                         default=Path.home() / "dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python")
+    parser.add_argument("--g2-source", type=Path,
+                        default=Path.home() / "dev/glassly-memomind-one-cfw/tests/g2_compat/upstream")
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -67,8 +69,8 @@ def main():
          [[py, "-I", "scripts/build_runtime.py", STOCK, str(args.revision), "--out", build / "build",
            "--image", build / f"ota-1.1.5.1-glasslycfw-{args.revision}.bin"]]),
         ("04_portable_host", True, "Portable scene core vs the pinned G2 reference (ASan/UBSan)", None,
-         [[py, "-I", "runtime/portable/tests/run_tests.py", "--output", out / "04_portable_host" / "geometry"],
-          [py, "-I", "runtime/portable/tests/run_scene_tests.py", "--output", out / "04_portable_host" / "scene"]]),
+         [[py, "-I", "runtime/portable/tests/run_tests.py", "--g2-source", args.g2_source, "--output", out / "04_portable_host" / "geometry"],
+          [py, "-I", "runtime/portable/tests/run_scene_tests.py", "--g2-source", args.g2_source, "--output", out / "04_portable_host" / "scene"]]),
         ("05_session_host", True, "NIMO adapter, scene session, demo scenes and breadcrumbs (ASan/UBSan)", None,
          [[py, "-I", "runtime/nimo/tests/run_session_tests.py", "--revision", str(args.revision),
            "--output", out / "05_session_host" / "session"]]),
@@ -110,7 +112,8 @@ def main():
         print(f"{name}: {row['result']} ({row['seconds']} s)", flush=True)
     after = source_snapshot()
     changed = sorted(k for k in before.keys() | after.keys() if before.get(k) != after.get(k))
-    passed = all(r["result"] == "passed" for r in results.values() if r["required"]) and not changed
+    passed = all(r["result"] == "passed" if r["required"] else r["result"] != "failed"
+                 for r in results.values()) and not changed
     summary = {"format": "nimo-offline-tests-v1", "revision": args.revision, "started_utc": started,
                "finished_utc": datetime.now(timezone.utc).isoformat(), "stages": list(results.values()),
                "all_required_passed": passed, "sources_changed_during_run": changed,

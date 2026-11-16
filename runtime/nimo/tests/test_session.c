@@ -710,6 +710,41 @@ static void test_ancs_relay(void)
     printf("notification relay: lease, whitelist, 11 records, drop passed\n");
 }
 
+static void test_v11_idle_input_and_peer_relay(void)
+{
+    host_reset(0);
+    uint8_t enable = 1;
+    assert(command(KEY_INPUT_CONTROL, &enable, 1)->data[0] == STATUS_OK);
+    assert(!NIMO_RAM->owned && glassly_input(0x86, 0, 0) == 1);
+    assert(last()->key == KEY_INPUT && last()->data[1] == 0x86);
+    host.now += NIMO_INPUT_LEASE_MS + 1;
+    assert(glassly_input(0x87, 0, 0) == 0);
+    acquire();
+    uint8_t level = 3;
+    command(KEY_BRIGHTNESS, &level, 1);
+    level = 255;
+    assert(command(KEY_BRIGHTNESS, &level, 1)->data[0] == STATUS_OK);
+    assert(NIMO_RAM->owned && !NIMO_RAM->brightness_changed);
+    assert(glassly_input(NIMO_MSG_AUTO_BRIGHTNESS, 0, 0) == 0);
+    release();
+    command(KEY_ANCS_CONTROL, &enable, 1);
+    uintptr_t intake[10] = { 123, 7, 0, (uintptr_t)"com.example.chat", (uintptr_t)"Title", 0,
+                             (uintptr_t)"Message", 0, 0, 0 };
+    host.master = 0;
+    unsigned before = host.reply_count;
+    assert(glassly_ancs_intake(intake) == 1 && host.peer_count == 9 && host.reply_count == before);
+    host.master = 1;
+    for (unsigned i = 0; i < host.peer_count; i++) {
+        assert(host.peer[i].key == NIMO_MSG_ANCS_RELAY);
+        assert(glassly_input(host.peer[i].key, host.peer[i].data, host.peer[i].len) == 1);
+        assert(last()->key == KEY_ANCS_RECORD && last()->len == host.peer[i].len);
+    }
+    host.master = 0;
+    host.peer_error = -7;
+    assert(glassly_ancs_intake(intake) == 0 && NIMO_RAM->ancs_send_errors == 9);
+    printf("v11: idle input lease, auto brightness unlock, peer ANCS and fail-open passed\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc == 3 && !strcmp(argv[1], "--scenes")) {
@@ -733,6 +768,7 @@ int main(int argc, char **argv)
     test_slave_and_draw();
     test_breadcrumbs();
     test_ancs_relay();
+    test_v11_idle_input_and_peer_relay();
     printf("PASS: NIMO session host tests\n");
     return 0;
 }

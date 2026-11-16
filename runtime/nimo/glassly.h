@@ -10,7 +10,7 @@ enum {
     GLASSLY_CMD = 0x7E,
     KEY_IDENTITY = 0x01, KEY_ECHO = 0x02, KEY_CHECKSUM = 0x03, KEY_STATUS = 0x04, KEY_DRAW_TEST = 0x10,
     KEY_SCENE = 0x20, KEY_ACQUIRE = 0x21, KEY_RELEASE = 0x22, KEY_BRIGHTNESS = 0x23,
-    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26, KEY_ANCS_CONTROL = 0x27, KEY_ANCS_RECORD = 0x28,
+    KEY_SETTLED = 0x24, KEY_CANVAS = 0x25, KEY_INPUT = 0x26, KEY_ANCS_CONTROL = 0x27, KEY_ANCS_RECORD = 0x28, KEY_INPUT_CONTROL = 0x29,
 };
 enum {
     STATUS_OK = 0, STATUS_INVALID = 1, STATUS_NO_MEMORY = 2, STATUS_NOT_OWNED = 3,
@@ -31,6 +31,8 @@ enum {
 /* UI_MSG_ID_DISPLAY_SET_BRIGHTNESS_SYNC: the auto-brightness step from the
  * light sensor, sent to both arms. 0xa7 (a level the wearer chose) passes. */
 #define NIMO_MSG_AUTO_BRIGHTNESS 0xa8u
+#define NIMO_MSG_ANCS_RELAY 0x7e28u
+#define NIMO_INPUT_LEASE_MS 90000u
 
 typedef struct nimo_session {
     uint32_t magic;
@@ -62,6 +64,7 @@ typedef struct {
 uint32_t glassly_ancs_control(const uint8_t *payload, uint32_t len, uint8_t *reply);
 int glassly_ancs_intake(const uintptr_t *intake);
 int glassly_ancs_leased(void);
+int glassly_ancs_forwarded(const uint8_t *data, uint32_t len);
 void nimo_crumb_start(uint32_t lane, uint32_t stage, uint32_t seq, uint32_t key, uint32_t mode, uint32_t len);
 void nimo_crumb_stage(uint32_t lane, uint32_t stage);
 /* One scene job fewer waiting (the UI task ran or dropped it). */

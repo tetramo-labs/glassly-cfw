@@ -103,6 +103,8 @@ typedef struct {
     uint16_t ancs_sent;           /* 0x94 relay records handed to send_response */
     uint16_t ancs_drops;          /* 0x96 completed notifications left to the stock for want of a lease */
     uint32_t ancs_allowed;        /* 0x98 whitelist checks answered "allowed" by the lease */
+    uint32_t input_lease_until;
+    uint8_t ancs_send_errors;
 } nimo_ram;
 
 _Static_assert(sizeof(nimo_ram) <= NIMO_RAM_BYTES, "RAM block layout exceeds the carve");
@@ -114,7 +116,8 @@ _Static_assert(offsetof(nimo_ram, owned) == NIMO_RAM_OWNED, "flush gate reads th
 _Static_assert(offsetof(nimo_ram, gate_skips) == NIMO_RAM_GATE_SKIPS, "flush gate counts here");
 _Static_assert(offsetof(nimo_ram, last) == 0x58 && offsetof(nimo_ram, repins) == 0x80 &&
                offsetof(nimo_ram, inputs) == 0x84 && offsetof(nimo_ram, ancs_lease_until) == 0x8c &&
-               sizeof(nimo_ram) == 0x9c, "layout offsets documented above");
+               offsetof(nimo_ram, input_lease_until) == 0x9c &&
+               offsetof(nimo_ram, ancs_send_errors) == 0xa0 && sizeof(nimo_ram) == 0xa4, "layout offsets documented above");
 _Static_assert(NIMO_RAM_BASE + NIMO_RAM_BYTES == NIMO_CRUMB_BASE, "breadcrumbs follow the block");
 #endif
 

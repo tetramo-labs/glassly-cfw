@@ -101,6 +101,18 @@ int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t le
     return 0;
 }
 
+int nimo_peer_ui(uint32_t id, const void *data, uint32_t len)
+{
+    no_critical();
+    if (host.peer_error) return host.peer_error;
+    assert(len <= sizeof host.peer[0].data && host.peer_count < 256);
+    host_reply *r = &host.peer[host.peer_count++];
+    r->key = id;
+    r->len = len;
+    memcpy(r->data, data, len);
+    return 0;
+}
+
 int nimo_is_master(void) { return host.master; }
 
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg)

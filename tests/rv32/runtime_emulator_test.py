@@ -69,7 +69,7 @@ GP = 0x02011B20
 FB, FB_BYTES = 0x0202F064, 0x12750
 FB_BACK, FB_FRONT = 0x020120FB, 0x0201198A
 STOCK = {
-    "send_response": 0x0426E2D6, "is_master": 0x041FC24E, "gui_post_async": 0x04206CF2,
+    "peer_ui": 0x041FC078, "send_response": 0x0426E2D6, "is_master": 0x041FC24E, "gui_post_async": 0x04206CF2,
     "malloc": 0x041FA772, "free": 0x041FA784, "heap_free": 0x042F7AEA, "heap_largest": 0x042F7A38,
     "now_ms": 0x041FA73C, "display_mutex": 0x041FC706, "os_lock": 0x0200ED06, "os_unlock": 0x0200ED7E,
     "panel_flush": 0x04200DB2, "set_brightness": 0x041FEC90, "repaint_all": 0x041FE71A,
@@ -108,6 +108,9 @@ class Machine:
                  crumbs=None, isa_traps=True):
         report = json.loads((build / "build.json").read_text())
         self.report = report
+        self.master = True
+        self.peer = []
+        self.peer_error = 0
         self.revision = report["revision"]
         self.symbols = {k: int(v, 16) for k, v in report["symbols"].items()}
         self.ram_block = tuple(int(v, 16) for v in report["ram_block"])
@@ -273,8 +276,13 @@ class Machine:
         if name == "send_response":
             check(a[3] <= 590, f"reply of {a[3]} B overflows build_response")
             self.replies.append((a[0], a[1], bytes(self.uc.mem_read(a[2], a[3]))))
+        elif name == "peer_ui":
+            check(a[2] <= 512, "peer UI payload overflow")
+            if not self.peer_error:
+                self.peer.append((a[0], bytes(self.uc.mem_read(a[1], a[2]))))
+            result = self.peer_error
         elif name == "is_master":
-            result = 1
+            result = int(self.master)
         elif name == "gui_post_async":
             self.queue.append((a[0], a[1]))
             if a[0] == self.symbols.get("nimo_ui_scene") and a[1] in self.allocations:
@@ -568,15 +576,15 @@ def test_input_gate(build):
           "replayed frame or changed arguments")
     for slot, x in ((120, 8), (116, 9), (108, 19)):
         check(m.u32(UI_TOP - 128 + slot) == saved[x], f"replayed save of x{x} at {slot}(sp)")
-    for message in (0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x98, 0x99):
+    for message in (0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x98, 0x99):
         stopped, sent = gate(message, 1)
         check(stopped == RETURN and sent == [(0x7E, 0x26, bytes([0, message, 8]) + tap)],
               f"owned: message {message:#x} forwarded {sent}")
         check(m.reg(2) == UI_TOP and all(m.reg(x) == v for x, v in saved.items()), "callee-saved registers")
-    for message in (0x87, 0x8D, 0x97, 0x9A, 0xA7, 0xBB, 0x24):
+    for message in (0x8D, 0x97, 0x9A, 0xA7, 0xBB, 0x24):
         stopped, sent = gate(message, 1)
         check(stopped == UI_DISPATCH_REJOIN and not sent, f"owned: message {message:#x} is not a touch")
-    check(m.u32(m.ram_block[0] + 0x84) == 7, "inputs counter")
+    check(m.u32(m.ram_block[0] + 0x84) == 9, "inputs counter")
     # Auto-brightness steps (0xa8) pass until the phone sets a level, then wait.
     skips = m.u32(m.ram_block[0] + 12)
     stopped, sent = gate(0xA8, 1)
@@ -687,6 +695,33 @@ def test_ancs_gates(build):
     sent, stock = intake_gate()
     check(not sent and stock == 1, "expired lease: the stock intake runs again")
     check(m.command(0x27, b"\x04")[2] == b"\x05" and m.command(0x27, b"\x01\x01")[2] == b"\x01", "refused ops")
+
+
+@test("v11 idle input lease and ANCS peer forwarding")
+def test_v11_input_peer(build):
+    m = Machine(build)
+    check(m.command(0x29, b"\x01")[2] == b"\0", "input lease")
+    m.call(m.symbols["glassly_input_gate"], regs={10: 0x86, 11: 0, 12: 0})
+    check(m.stopped_at == RETURN and m.replies[-1][2] == b"\0\x86\0", "head up while idle")
+    m.now += 90001
+    m.call(m.symbols["glassly_input_gate"], regs={10: 0x87, 11: 0, 12: 0}, until=UI_DISPATCH_REJOIN)
+    check(m.stopped_at == UI_DISPATCH_REJOIN, "expired input returns to stock")
+    m.command(0x27, b"\x01")
+    intake = PAYLOAD + 0x400
+    m.uc.mem_write(intake, struct.pack("<10I", 123, 7, 0, 0, 0, 0, 0, 0, 0, 0))
+    m.master = False
+    m.call(m.symbols["glassly_ancs_intake_gate"], regs={10: intake})
+    check(len(m.peer) == 9, "slave forwards every record")
+    m.master = True
+    for msg, payload in m.peer:
+        m.uc.mem_write(PAYLOAD, payload)
+        m.call(m.symbols["glassly_input_gate"], regs={10: msg, 11: PAYLOAD, 12: len(payload)})
+        check(m.stopped_at == RETURN and m.replies[-1][2] == payload, "master relays peer record")
+    m.master = False
+    m.peer_error = -7
+    before = m.calls.count("ancs_intake")
+    m.call(m.symbols["glassly_ancs_intake_gate"], regs={10: intake})
+    check(m.calls.count("ancs_intake") == before + 1, "peer failure falls back to stock")
 
 
 @test("left arm: acquire, demo scenes, pump, per-eye SHOW, brightness, release")
@@ -870,7 +905,7 @@ def main():
         path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(got, indent=2))
         return
-    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_left, test_right,
+    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_v11_input_peer, test_left, test_right,
              test_steps_to_geometry, test_all_steps, test_canvas_timing, test_odd_payload, test_breadcrumbs]
     for fn in tests:
         fn(args.build)

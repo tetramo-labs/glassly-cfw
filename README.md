@@ -15,6 +15,9 @@ unverified. See [the flash record](docs/hardware-cfw10-2026-11-16.md) and
 `docs/runtime.md` for the revision details. The claims below are offline
 evidence from the two vendor OTA images.
 
+GLASSLYCFW/11 is prepared and verified offline, with matching app fixes; see
+[the v11 release record](docs/release-cfw11.md). It has not been flashed.
+
 ## Established (2026-11-08)
 
 - **Container.** Both vendor images (0.1.0.15 of 2026-07-24 and 0.1.1.1

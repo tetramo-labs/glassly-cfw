@@ -506,3 +506,15 @@ replay path untouched.
   and the applier accepting the new row.
 - Fallbacks: the staging tail above the OTA image (erased by later updates),
   neutralising the WASM interpreter (~75 KB, entry `0x042812dc`).
+
+## Revision 11
+
+See [release-cfw11.md](release-cfw11.md) and the source-hash manifest for the
+verified build. `7e/29 [00|01]` controls a 90-second input lease independent of
+the display lease. `7e/26` also forwards head messages `86` and `87`. Brightness
+`7e/23 [ff]` restores ALS control without releasing the scene. ANCS records can
+travel from slave to master through private UI message `7e28`; the last byte
+of the notification STATUS reply is now a send-failure counter.
+
+RAM additions: `input_lease_until` at `0x9c` (u32) and `ancs_send_errors` at
+`0xa0` (u8), total structure size `0xa4`. Existing offsets remain unchanged.

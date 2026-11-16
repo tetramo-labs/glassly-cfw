@@ -539,12 +539,29 @@ class InstallTests(unittest.TestCase):
         with self.assertRaises(FlashError):
             rfcomm.select_glasses([PairedDevice('AA:BB:CC:DD:EE:FF', 'MemoMind One'), PairedDevice(ADDRESS, 'MemoMind')])
 
-    def test_paired_glasses_are_required_once(self):
+    def test_unpaired_glasses_are_found_by_a_classic_search(self):
+        radio = FakeRadio(self.glasses(), paired=[PairedDevice('11:22:33:44:55:66', 'Keyboard')])
+        radio.discoverable = [PairedDevice(ADDRESS, 'MemoMind One', classic=True)]
+        recorder = Recorder()
+        result, _ = run_in('backup', radio, recorder)
+        self.assertEqual(result['address'], ADDRESS)
+        self.assertEqual(radio.log[:2], [('inquiry', 10), ('connect', 'normal')])
+        self.assertIn(f'Glasses found: MemoMind One ({ADDRESS}).', recorder.lines)
+
+    def test_two_pairs_answering_the_search_are_refused(self):
+        radio = FakeRadio(self.glasses(), paired=[])
+        radio.discoverable = [PairedDevice(ADDRESS, 'MemoMind One'), PairedDevice('AA:BB:CC:DD:EE:01', 'MemoMind One')]
+        error, _ = attempt('install', radio)
+        self.assertRegex(str(error), 'More than one pair of MemoMind glasses answered')
+        self.assertNotIn(('connect', 'normal'), radio.log)
+
+    def test_glasses_that_never_answer_are_reported_without_a_write(self):
         radio = FakeRadio(self.glasses(), paired=[PairedDevice('11:22:33:44:55:66', 'Keyboard')])
         with mock.patch.object(memomind, 'WAIT_SECONDS', 10):
             error, files = attempt('install', radio)
-        self.assertRegex(str(error), r'No MemoMind glasses are paired .*Keyboard \(11:22:33:44:55:66\)')
+        self.assertRegex(str(error), r'No MemoMind glasses answered.*five times')
         self.assertNotIn(('connect', 'normal'), radio.log)
+        self.assertGreaterEqual(radio.log.count(('inquiry', 10)), 2)
         radio = FakeRadio(self.glasses(), paired=[PairedDevice(ADDRESS, 'MemoMind One'),
                                                    PairedDevice('AA:BB:CC:DD:EE:02', 'memomind one')])
         error, _ = attempt('install', radio)
@@ -556,7 +573,7 @@ class InstallTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             with self.assertRaises(Cancelled):
                 run('install', Path(folder), Recorder(cancel_after=3), link=radio)
-        self.assertEqual([e for e in radio.log if e[0] != 'sleep'], [])
+        self.assertEqual([e for e in radio.log if e[0] not in ('sleep', 'inquiry')], [])
 
 
 class RestoreTests(unittest.TestCase):

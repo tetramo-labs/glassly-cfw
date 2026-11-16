@@ -114,7 +114,7 @@ class App:
             self.mode.set('install')
         for key, button in self.mode_buttons.items():
             button.configure(state='normal' if key in device.modes and not self.running() else 'disabled')
-        self.supported.configure(text=f'{device.supported}\n{device.tested}')
+        self.supported.configure(text='\n'.join(part for part in (device.supported, device.tested) if part))
         self.instructions.configure(text=device.update_mode)
         writes = self.mode.get() != 'backup'
         self.risk.configure(state='normal' if writes and not self.running() else 'disabled')

@@ -136,31 +136,32 @@ clipboard); quote it on Discord or in an issue. The upload holds the lines shown
 session's JSON records and the end of its protocol trace, which include the names and addresses of Bluetooth or USB
 devices this computer saw. Firmware backups are never sent. `GLASSLY_CORE_URL` points the upload at another backend.
 
-### Pair the glasses with the computer first
+### Get the glasses ready
 
-Charge the glasses and switch them on. Disconnect them from the MemoMind app and switch Bluetooth off on the phone
-they use, then pair them with this computer. They appear as **MemoMind One**.
+1. Charge the glasses.
+2. Forget them in your phone's Bluetooth settings and in the MemoMind app.
+3. Forget them in this computer's Bluetooth settings too, if they were ever paired here.
+4. Press the button on the glasses five times and hold it: the glasses reset.
+5. Keep them close to the computer and press Start. The flasher searches for them itself over Bluetooth Classic
+   (no pairing is needed on macOS); if a pair of MemoMind glasses is paired with the computer, that pair is used.
+   The first time you press Start on a Mac, macOS asks whether Glassly CFW Flasher may use Bluetooth; allow it.
 
-- **macOS**: System Settings > Bluetooth, then **Connect** next to MemoMind One. The first time you press Start,
-  macOS asks whether Glassly CFW Flasher may use Bluetooth; allow it.
-- **Windows**: Settings > Bluetooth & devices > Add device > Bluetooth, then MemoMind One.
-- **Linux**: your desktop's Bluetooth settings, or `bluetoothctl` with `scan on`, `pair <address>` and
-  `trust <address>`. The flasher needs BlueZ (`bluetoothctl`); `sdptool` is used when installed. No password is
-  asked for: Bluetooth needs no administrator rights.
-
-Pair only one pair of MemoMind glasses with the computer. The flasher refuses if it finds none or more than one, and
-waits up to ten minutes for them to be paired.
+Only one pair of MemoMind glasses should be switched on nearby: the flasher refuses when more than one answers, and
+waits up to ten minutes for one to answer. On Windows and Linux (not yet tried on glasses) the search uses the
+system's Bluetooth inquiry; pair the glasses in Bluetooth settings if the connection is refused there. Linux needs
+BlueZ (`bluetoothctl`); `sdptool` is used when installed. No password is asked for: Bluetooth needs no
+administrator rights.
 
 If "Connecting to the glasses" keeps failing, the log under the progress bar says why for each attempt (the same
 lines are in `operation.log` in the backup folder). The usual causes are glasses that went to sleep or are still held
 by the phone. macOS can also pair the glasses' Bluetooth LE side, whose address need not reach the Classic updater;
-after the first failed attempt the flasher searches for the glasses over Bluetooth Classic itself.
+after a failed attempt the flasher searches for the glasses over Bluetooth Classic itself.
 
 ### What Install does
 
 1. Reads the glasses' identity and installed firmware over one connection and saves them to the session folder
    (`device-info.json`, `capabilities.json`). It writes only to glasses that report model H001Y, hardware 2.1.2,
-   front 1.3 and official firmware 1.0.3.127, with the MAC address they are paired under: the research flasher's
+   front 1.3 and official firmware 1.0.3.127, with the MAC address they answered from: the research flasher's
    check, minus 1.0.2.151, which no Glassly firmware has ever been flashed from. Glasses already on Glassly firmware are accepted only on a revision the
    firmware has been installed over before (1, 3 to 6, 10, 11, 14, 16 to 20, 22 and 25); revision 27 is left alone.
    Revision 26 is refused: nothing has been installed over it yet.

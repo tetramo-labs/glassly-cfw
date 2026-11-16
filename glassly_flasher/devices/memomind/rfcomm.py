@@ -336,6 +336,16 @@ class WindowsRadio(Radio):
     """Hardware-untested: never run against the glasses."""
 
     def paired(self):
+        return self.enumerate(BluetoothSearchParams(ctypes.sizeof(BluetoothSearchParams), 1, 1, 0, 0, 0, 0, None),
+                              lambda info: info.authenticated or info.remembered)
+
+    def discover(self, seconds):
+        # The inquiry timeout counts in 1.28 s units, at most 48.
+        units = max(1, min(48, round(seconds / 1.28)))
+        return self.enumerate(BluetoothSearchParams(ctypes.sizeof(BluetoothSearchParams), 0, 0, 1, 0, 1, units, None),
+                              lambda info: True)
+
+    def enumerate(self, search, keep):
         try:
             api = ctypes.WinDLL('BluetoothAPIs.dll', use_last_error=True)
         except OSError as e:
@@ -346,20 +356,19 @@ class WindowsRadio(Radio):
         api.BluetoothFindNextDevice.restype = ctypes.c_int32
         api.BluetoothFindNextDevice.argtypes = [ctypes.c_void_p, ctypes.POINTER(BluetoothDeviceInfo)]
         api.BluetoothFindDeviceClose.argtypes = [ctypes.c_void_p]
-        search = BluetoothSearchParams(ctypes.sizeof(BluetoothSearchParams), 1, 1, 0, 0, 0, 0, None)
         info = BluetoothDeviceInfo(ctypes.sizeof(BluetoothDeviceInfo))
         found = api.BluetoothFindFirstDevice(ctypes.byref(search), ctypes.byref(info))
         if not found:
             code = ctypes.get_last_error()
             if code == ERROR_NO_MORE_ITEMS:
                 return []
-            raise LinkError(f'Windows could not list paired Bluetooth devices (error {code}). Is Bluetooth on?')
+            raise LinkError(f'Windows could not list Bluetooth devices (error {code}). Is Bluetooth on?')
         devices = []
         try:
             while True:
-                if info.authenticated or info.remembered:
+                if keep(info):
                     name = bytes(info.name).decode('utf-16-le', 'replace').split('\0', 1)[0]
-                    devices.append(PairedDevice(format_address(info.address), name.strip()))
+                    devices.append(PairedDevice(format_address(info.address), name.strip(), info.device_class != 0))
                 info.size = ctypes.sizeof(BluetoothDeviceInfo)
                 if not api.BluetoothFindNextDevice(found, ctypes.byref(info)):
                     break
@@ -430,6 +439,10 @@ class LinuxRadio(Radio):
         if 'Invalid command' in result.stdout + result.stderr:
             result = self.run('bluetoothctl', 'devices', 'Paired')
         return parse_bluetoothctl(result.stdout)
+
+    def discover(self, seconds):
+        self.run('bluetoothctl', '--timeout', str(int(seconds)), 'scan', 'on', timeout=seconds + 15)
+        return parse_bluetoothctl(self.run('bluetoothctl', 'devices').stdout)
 
     def channel(self, address, short):
         if shutil.which('sdptool') is None:

@@ -67,7 +67,9 @@ class Session:
         return rfcomm.TracedChannel(channel, self.trace, name)
 
     def find_glasses(self):
-        self.reporter.status('Looking for MemoMind glasses paired with this computer')
+        """A pair of glasses this computer already knows, else the one pair answering a Bluetooth Classic
+        search; the search repeats until the glasses answer or the wait runs out."""
+        self.reporter.status('Looking for the glasses (switch them on and keep them close)')
         deadline = self.radio.monotonic() + WAIT_SECONDS
         hinted = False
         while True:
@@ -75,18 +77,30 @@ class Session:
             paired = self.radio.paired()
             glasses = rfcomm.select_glasses(paired)
             if glasses is not None:
-                self.reporter.log(f'Paired glasses: {glasses.name} ({glasses.address}).')
+                self.reporter.log(f'Glasses paired with this computer: {glasses.name} ({glasses.address}).')
                 if glasses.classic is False:
                     self.reporter.log('That pairing is the glasses\' Bluetooth LE side, which may not carry their '
                                       'Classic address; if it does not answer, the flasher searches for them itself.')
                 return glasses
+            try:
+                found = [d for d in self.radio.discover(INQUIRY_SECONDS) if rfcomm.is_glasses(d)]
+            except rfcomm.LinkError as e:
+                found = []
+                if not hinted:
+                    self.reporter.log(f'The search failed: {e}')
+            self.record(event='inquiry', devices=[[d.address, d.name] for d in found])
+            if len(found) > 1:
+                raise FlashError(f'More than one pair of MemoMind glasses answered: {rfcomm.describe(found)}. Switch '
+                                 'the others off and start again. Nothing was written.')
+            if found:
+                self.reporter.log(f'Glasses found: {found[0].name} ({found[0].address}).')
+                return found[0]
             if self.radio.monotonic() > deadline:
-                raise FlashError('No MemoMind glasses are paired with this computer (paired devices: '
-                                 f'{rfcomm.describe(paired)}). Pair them in Bluetooth settings and start again. '
-                                 'Nothing was written.')
+                raise FlashError('No MemoMind glasses answered. Switch them on, forget them on their phone, hold the '
+                                 'button after pressing it five times to reset them, and start again. Nothing was '
+                                 'written.')
             if not hinted:
-                self.reporter.log(f'No paired MemoMind glasses yet (paired devices: {rfcomm.describe(paired)}). '
-                                  "Pair them in this computer's Bluetooth settings; the flasher keeps looking.")
+                self.reporter.log('No MemoMind glasses yet; the flasher keeps looking.')
                 hinted = True
             self.radio.sleep(2)
 

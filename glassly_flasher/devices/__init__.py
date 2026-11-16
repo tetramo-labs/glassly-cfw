@@ -66,27 +66,16 @@ DEVICES = {d.key: d for d in [
     Device(
         key='memomind',
         name='MemoMind One',
-        supported='MemoMind One smart glasses (model H001Y, hardware 2.1.2) on official firmware 1.0.3.127 '
-                  'or on a Glassly revision, over this computer\'s Bluetooth. Restore sends the official 1.0.3.127 '
-                  'firmware through the same updater. The backup records the glasses\' identity only: their '
-                  'firmware cannot be read out.',
-        update_mode='Charge the glasses and switch them on. Disconnect them from the MemoMind app and switch off '
-                    'Bluetooth on the phone they use. Then pair them with this computer: on a Mac in System Settings '
-                    '> Bluetooth, on Windows in Settings > Bluetooth & devices > Add device > Bluetooth, on Linux in '
-                    'your desktop\'s Bluetooth settings or with bluetoothctl. Pair only one pair of MemoMind glasses, '
-                    'and keep them close to the computer until the flasher finishes. If connecting keeps failing, '
-                    'the log below says why.',
-        after_install='Remove the glasses from this computer\'s Bluetooth settings, pair them in your phone\'s '
-                      'Bluetooth settings, then add MemoMind One in the Glassly App.',
-        after_restore='Remove the glasses from this computer\'s Bluetooth settings and pair them with the MemoMind '
-                      'app again. They are back on the official firmware.',
+        supported='Windows and Linux support is experimental.',
+        update_mode='Charge the glasses. Forget them in your phone\'s Bluetooth settings and in the MemoMind app, '
+                    'and forget them in this computer\'s Bluetooth settings if they were ever paired here. Then press '
+                    'the button on the glasses five times and hold it to reset them. Keep them close to the computer; '
+                    'the flasher finds them itself. If connecting keeps failing, the log below says why.',
+        after_install='Pair the glasses in your phone\'s Bluetooth settings, then add MemoMind One in the Glassly App.',
+        after_restore='Pair the glasses with the MemoMind app again. They are back on the official firmware.',
         after_backup='Nothing was written. The glasses\' identity was recorded in the backup folder.',
         module='glassly_flasher.devices.memomind',
         elevate=frozenset(),
-        tested='The bundled Glassly revision 27 has passed the firmware\'s offline regression and emulator suites '
-               'but has not yet been flashed on glasses. Earlier revisions, up to 26, were installed on one pair of '
-               'glasses from macOS with the research tool this app is ported from; the official image was put on '
-               'those glasses by the MemoMind app, not yet by this tool. Windows and Linux Bluetooth have not been '
-               'tried on glasses yet.',
+        tested='',
     ),
 ]}

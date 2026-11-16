@@ -197,38 +197,6 @@ recorded revision 25 install (with the revision 25 image from the firmware repos
 install and the MemoMind app's own update, byte for byte. No recorded exchange exists for revision 27: its transfer
 is tested against scripted glasses only. Windows and Linux Bluetooth have not been tried on glasses.
 
-## Rokid Glasses
-
-Rokid Glasses run Android, so the flasher installs nothing at the firmware level. It installs the Glassly app on
-the glasses over Android debugging (adb) and sets the glasses up around it. The Glassly App on your phone then
-connects to that app directly; Hi Rokid can stay installed.
-
-**Status: development only.** Install is refused on every Rokid build until the developers have installed this
-exact app on that build. Back up works on any Rokid glasses, writes nothing, and records what the glasses report.
-On the developer's own glasses, `GLASSLY_FLASHER_DEVELOPER=1` lifts the build check for the first install.
-
-### Get the glasses ready
-
-1. In the Hi Rokid app on your phone, open the glasses' developer settings and turn on USB debugging.
-2. Connect the glasses to the computer with a USB data cable. If they show a debugging prompt, accept it.
-3. Without a data cable: put the glasses and the computer on the same Wi-Fi. On the glasses, open
-   Settings > Developer options > Wireless debugging > Pair device with pairing code, type that code into the
-   flasher's pairing code field, and press Start while the code is on screen.
-
-The flasher uses the `adb` it bundles, or the one on your `PATH` when run from source.
-
-### What each mode does
-
-- **Back up** records the glasses' build, packages, home screen and system state in the session folder, plus a
-  read-only probe (`probe/`). The first backup of a pair of glasses without Glassly is also kept as
-  `rokid/<serial>-before-glassly.json` next to the backups folder; Restore uses it.
-- **Install** takes the same record, installs the Glassly app with its permissions, exempts it from battery
-  optimization and opens it. On builds with a verified launcher takeover it also makes Glassly the home screen and
-  disables the Rokid components that fight that; no build has one yet, so the Rokid launcher stays.
-- **Restore** removes Glassly, hands the home screen back and re-enables what Install disabled, from the record of
-  the glasses before Glassly. If debugging was locked (`persist.vendor.adb=false`), Install unlocks it and Restore
-  leaves it unlocked, so the glasses stay reachable.
-
 ## Command line
 
 The same app runs without a window. On Linux:

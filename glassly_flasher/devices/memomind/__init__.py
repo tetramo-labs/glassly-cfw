@@ -33,7 +33,9 @@ IDENTITY_KEYS = ('model', 'hver', 'fver', 'ver', 'mac', 'sn')
 # captures/*/trace.jsonl (1 -> 3 -> 4 -> 5 -> 6 -> 10 -> 11 -> 14 -> 16 -> 17 -> 18 -> 19 -> 20 -> 22 -> 20 -> 22,
 # 2026-11-02 to 2026-11-09), then 22 -> 25 (analysis/ble-link-20261110/flash-25-01, boot verified as 25 on
 # 2026-11-11) -> 26 (analysis/ble-conn-20261114/flash-26-01, 2026-11-15, the next completed flash on those glasses).
-CFW_SOURCES = frozenset({1, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 19, 20, 22, 25})
+# 26 was added on 2026-11-16 for the developer's pair, where this flasher's install of revision 27 over it is the
+# first flash from 26: the OTA path is the stock updater in every revision, and the official image is the way back.
+CFW_SOURCES = frozenset({1, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 19, 20, 22, 25, 26})
 NO_FLASH_READ = ('The MemoMind One firmware has no command that reads its flash back, so this backup holds the '
                  "glasses' identity and capabilities only, not a firmware image.")
 
@@ -266,9 +268,12 @@ class Session:
         if revision == target:
             self.reporter.log(f'{goal} is already installed. Nothing was written.')
             return {**summary, 'state': 'already installed', 'flash_modified': False}
-        if revision is not None and revision not in CFW_SOURCES | {CFW_REVISION}:
+        # Installing over a Glassly revision is allowed only from revisions a flash has completed from; the
+        # official image is the way back from any of them and goes through the glasses' own updater.
+        if mode == 'install' and revision is not None and revision not in CFW_SOURCES | {CFW_REVISION}:
             raise FlashError(f'These glasses run Glassly firmware revision {revision}, which the flasher has not '
-                             'installed over before. Nothing was written. Keep this folder and open an issue.')
+                             'installed over before. Put the official firmware back first, then install. Nothing '
+                             'was written.')
         self.reporter.log(f'The glasses run {installed}; sending {goal}.')
         self.reporter.status('Preparing the update')
         self.radio.sleep(SESSION_SPACING)

@@ -380,7 +380,7 @@ class InstallTests(unittest.TestCase):
         self.assertEqual({row['session'] for row in trace}, {'inspect', 'control', 'ota', 'boot-check'})
 
     def test_install_over_a_glassly_revision_it_was_installed_from(self):
-        for revision in (22, 25):
+        for revision in (22, 25, 26):
             with self.subTest(revision=revision):
                 glasses = self.glasses(revision=revision)
                 result, _ = run_in('install', FakeRadio(glasses))
@@ -395,12 +395,12 @@ class InstallTests(unittest.TestCase):
         self.assertNotIn(('connect', 'ota'), radio.log)
 
     def test_revisions_never_installed_over_are_refused(self):
-        for revision in (2, 23, 24, 26):
+        for revision in (2, 23, 24):
             with self.subTest(revision=revision):
                 glasses = self.glasses(revision=revision)
                 radio = FakeRadio(glasses)
                 error, files = attempt('install', radio)
-                self.assertRegex(str(error), f'revision {revision}, .*Nothing was written')
+                self.assertRegex(str(error), f'revision {revision}, .*official firmware back first.*Nothing was written')
                 self.assertEqual(glasses.events, [('gm', 1, 1), ('gm', 1, 2), ('gm', 15, 0x7e)])
                 self.assertEqual(files, ['capabilities.json', 'device-info.json', 'trace.jsonl'])
 
@@ -598,8 +598,8 @@ class RestoreTests(unittest.TestCase):
         self.assertEqual(reporter.progressed[-1], (len(self.stock), len(self.stock)))
         self.assertEqual(sorted(files), ['capabilities.json', 'device-info.json', 'trace.jsonl'])
 
-    def test_restore_from_an_earlier_revision(self):
-        for revision in (22, 25):
+    def test_restore_from_any_glassly_revision(self):
+        for revision in (2, 22, 23, 25, 26):
             with self.subTest(revision=revision):
                 glasses = self.glasses(revision=revision)
                 result, _ = run_in('restore', FakeRadio(glasses))
@@ -614,15 +614,13 @@ class RestoreTests(unittest.TestCase):
         self.assertEqual(radio.ota_commands(), [])
         self.assertFalse(glasses.notified)
 
-    def test_unknown_revision_and_identity_refusals_write_nothing(self):
-        for kwargs in ({'revision': 23}, {'revision': 26}, {'revision': 27, 'identity': {**IDENTITY, 'hver': '2.1.3'}}):
-            with self.subTest(**kwargs):
-                glasses = self.glasses(**kwargs)
-                radio = FakeRadio(glasses)
-                with self.assertRaisesRegex(FlashError, 'Nothing was written'):
-                    run_in('restore', radio)
-                self.assertEqual(radio.ota_commands(), [])
-                self.assertFalse(glasses.notified)
+    def test_identity_refusals_write_nothing(self):
+        glasses = self.glasses(revision=27, identity={**IDENTITY, 'hver': '2.1.3'})
+        radio = FakeRadio(glasses)
+        with self.assertRaisesRegex(FlashError, 'Nothing was written'):
+            run_in('restore', radio)
+        self.assertEqual(radio.ota_commands(), [])
+        self.assertFalse(glasses.notified)
 
     def test_glasses_that_come_back_on_the_wrong_firmware_are_reported(self):
         glasses = FakeGlasses(self.stock, revision=27, boots_as=22)

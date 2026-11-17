@@ -18,7 +18,7 @@ import time
 
 from ..base import FlashError
 from . import rfcomm
-from .image import CFW_REVISION, CFW_SHA256, STOCK_SHA256, load_cfw, load_stock
+from .image import CFW_REVISION, CFW_SHA256, STOCK_SHA256, STOCK_VERSION, load_cfw, load_stock
 from .protocol import (GmSession, OtaTransaction, ProtocolError, check_identity, describe_identity,
                        installed_revision, is_known_kind)
 
@@ -28,20 +28,12 @@ BOOT_SECONDS = 300
 SESSION_SPACING = 8
 INQUIRY_SECONDS = 10
 IDENTITY_KEYS = ('model', 'hver', 'fver', 'ver', 'mac', 'sn')
-# Glassly CFW revisions a later flash through this updater completed from: each answered the capabilities query in
-# a research capture (captures/*-boot-*, *-after-*, v22-verify-102850) before the next completed flash in
-# captures/*/trace.jsonl (1 -> 3 -> 4 -> 5 -> 6 -> 10 -> 11 -> 14 -> 16 -> 17 -> 18 -> 19 -> 20 -> 22 -> 20 -> 22,
-# 2026-11-02 to 2026-11-09), then 22 -> 25 (analysis/ble-link-20261110/flash-25-01, boot verified as 25 on
-# 2026-11-11) -> 26 (analysis/ble-conn-20261114/flash-26-01, 2026-11-15, the next completed flash on those glasses).
-# 26 was added on 2026-11-16 for the developer's pair, where this flasher's install of revision 27 over it is the
-# first flash from 26: the OTA path is the stock updater in every revision, and the official image is the way back.
-CFW_SOURCES = frozenset({1, 3, 4, 5, 6, 10, 11, 14, 16, 17, 18, 19, 20, 22, 25, 26})
 NO_FLASH_READ = ('The MemoMind One firmware has no command that reads its flash back, so this backup holds the '
                  "glasses' identity and capabilities only, not a firmware image.")
 
 
-def describe_installed(device, revision):
-    return f'official firmware {device.get("ver")}' if revision is None else f'GLASSLYCFW/{revision}'
+def describe_installed(version, revision):
+    return f'official firmware {version}' if revision is None else f'GLASSLYCFW/{revision}'
 
 
 class Session:
@@ -172,10 +164,8 @@ class Session:
     def backup(self):
         glasses = self.find_glasses()
         device, tlvs, glasses = self.inspect(glasses)
-        try:
-            installed = describe_installed(device, installed_revision(tlvs)) if tlvs is not None else 'not queried'
-        except FlashError:
-            installed = 'unrecognised capabilities reply (see capabilities.json)'
+        installed = describe_installed(device.get('ver'), installed_revision(tlvs)) if tlvs is not None \
+            else 'not queried'
         self.reporter.log(f'Installed: {installed}.')
         self.reporter.log(NO_FLASH_READ)
         self.reporter.log('Nothing was written.')
@@ -254,26 +244,20 @@ class Session:
                 continue
             if tlvs is None:
                 raise FlashError(f'After the restart the glasses reported {describe_identity(device)}.')
-            return installed_revision(tlvs)
+            return describe_installed(device.get('ver'), installed_revision(tlvs))
 
     def update(self, mode, image, target, image_sha256):
         """Takes the glasses to `target`: CFW_REVISION for install, None (official firmware) for restore."""
         glasses = self.find_glasses()
         device, tlvs, glasses = self.inspect(glasses)
         check_identity(device, glasses.address)
-        revision = installed_revision(tlvs)
-        installed, goal = describe_installed(device, revision), describe_installed(device, target)
+        installed = describe_installed(device.get('ver'), installed_revision(tlvs))
+        goal = describe_installed(STOCK_VERSION, target)
         summary = {'mode': mode, 'address': glasses.address, 'name': glasses.name, 'device': device,
                    'installed_before': installed, 'image_sha256': image_sha256}
-        if revision == target:
+        if installed == goal:
             self.reporter.log(f'{goal} is already installed. Nothing was written.')
             return {**summary, 'state': 'already installed', 'flash_modified': False}
-        # Installing over a Glassly revision is allowed only from revisions a flash has completed from; the
-        # official image is the way back from any of them and goes through the glasses' own updater.
-        if mode == 'install' and revision is not None and revision not in CFW_SOURCES | {CFW_REVISION}:
-            raise FlashError(f'These glasses run Glassly firmware revision {revision}, which the flasher has not '
-                             'installed over before. Put the official firmware back first, then install. Nothing '
-                             'was written.')
         self.reporter.log(f'The glasses run {installed}; sending {goal}.')
         self.reporter.status('Preparing the update')
         self.radio.sleep(SESSION_SPACING)
@@ -281,9 +265,8 @@ class Session:
         result = self.flash(glasses.address, image, device, mode, goal)
         self.reporter.log(f'Reboot acknowledged after {result["blocks"]} blocks ({result["chunks"]} chunks).')
         booted = self.wait_for_boot(glasses.address)
-        if booted != target:
-            raise FlashError(f'The glasses restarted on {describe_installed(device, booted)} instead of {goal}. '
-                             'Keep this folder and open an issue.')
+        if booted != goal:
+            raise FlashError(f'The glasses restarted on {booted} instead of {goal}. Keep this folder and open an issue.')
         self.reporter.log(f'The glasses answered as {goal}.')
         return {**summary, **result, 'state': 'installed' if mode == 'install' else 'restored', 'flash_modified': True,
                 'reboot_acknowledged': True, 'booted_version': goal, 'post_reboot_version_verified': True}

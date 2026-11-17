@@ -31,8 +31,9 @@ be relaxed to get past a refusal.
   Back up records identity only. Restore sends the vendor's own 1.0.3.127 image (the one the MemoMind
   app installed on the developer's glasses, replayed byte for byte in the tests) through the same
   staged, CRC-checked OTA; this app has not yet run that path on glasses, so the first restore happens
-  on the developer's pair. The identity gate admits only the exact model, hardware, firmware and
-  Glassly revisions the research captures show were flashed from; do not widen it.
+  on the developer's pair. The identity gate admits model H001Y whose reported MAC is the address
+  connected to, on any hardware, firmware or Glassly revision (the owner's call on 2026-11-16); keep
+  the model and MAC checks.
 - **Refusals name what was seen.** Identity refusals print the values the controller reported
   (flash part, layout, application build) so a new kind can be reviewed from the message alone.
 

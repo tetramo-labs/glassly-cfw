@@ -21,10 +21,6 @@ FRAGMENT = 630
 PACING_FIELD = 2000
 
 MODEL = 'H001Y'
-HARDWARE = '2.1.2'
-FRONT = '1.3'
-# Only 1.0.3.127 has ever been flashed to a Glassly revision; 1.0.2.151 was only updated by the vendor's own app.
-SOURCE_VERSIONS = ('1.0.3.127',)
 
 
 class ProtocolError(FlashError):
@@ -188,23 +184,19 @@ def describe_identity(device):
 
 
 def is_known_kind(device):
-    return device.get('model') == MODEL and device.get('hver') == HARDWARE and device.get('fver') == FRONT
+    return device.get('model') == MODEL
 
 
 def check_identity(device, address):
-    """The research tool's validate_identity, unchanged: the only glasses its OTA path has written to."""
     mac = device.get('mac')
-    if (not is_known_kind(device) or device.get('ver') not in SOURCE_VERSIONS
-            or not isinstance(mac, str) or mac.upper() != address.upper()):
-        raise FlashError(f'These glasses reported {describe_identity(device)} (paired address {address}). The flasher '
-                         f'only writes to model {MODEL}, hardware {HARDWARE}, front {FRONT} on firmware '
-                         f'{" or ".join(SOURCE_VERSIONS)}, whose MAC is the paired address. Nothing was written.')
+    if not is_known_kind(device) or not isinstance(mac, str) or mac.upper() != address.upper():
+        raise FlashError(f'These glasses reported {describe_identity(device)} (address {address}). The flasher only '
+                         f'writes to MemoMind One glasses (model {MODEL}) whose MAC is the address it connected to. '
+                         'Nothing was written.')
 
 
 def installed_revision(tlvs):
-    """None for official firmware, else the Glassly CFW revision number from the capabilities reply."""
-    if tlvs == [(6, b'\x02')]:
-        return None
+    """The Glassly CFW revision number from the capabilities reply, None for any other (vendor) firmware."""
     documents = [v for k, v in tlvs if k == 5]
     version = None
     if len(documents) == 1:
@@ -214,8 +206,7 @@ def installed_revision(tlvs):
             version = None
     prefix, _, number = version.partition('/') if isinstance(version, str) else ('', '', '')
     if prefix != 'GLASSLYCFW' or not number.isdigit() or not number.isascii():
-        raise FlashError(f'The glasses answered the capabilities query with {tlvs!r:.300}, which is neither the '
-                         'official firmware nor a Glassly firmware revision. Nothing was written.')
+        return None
     return int(number)
 
 

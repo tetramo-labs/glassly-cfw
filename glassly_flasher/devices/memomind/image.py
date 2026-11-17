@@ -13,7 +13,8 @@ CFW = 'memomind/glassly-memomind-one-cfw-27.bin'
 CFW_SHA256 = 'd2a11d71346511988c6e05adb1ab5fed9fcc89d8cb18f642cac12964eaf77206'
 CFW_SIZE = 2244038
 CFW_REVISION = 27
-STOCK = 'memomind/official-memomind-one-1.0.3.127.bin'
+STOCK_VERSION = '1.0.3.127'
+STOCK = f'memomind/official-memomind-one-{STOCK_VERSION}.bin'
 STOCK_SHA256 = '08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712'
 STOCK_SIZE = 2185697
 

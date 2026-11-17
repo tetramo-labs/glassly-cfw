@@ -15,7 +15,7 @@ import zlib
 from glassly_flasher.devices import DEVICES
 from glassly_flasher.devices import memomind
 from glassly_flasher.devices.base import Cancelled, FlashError, Reporter
-from glassly_flasher.devices.memomind import Session, protocol, rfcomm, run
+from glassly_flasher.devices.memomind import Session, rfcomm, run
 from glassly_flasher.devices.memomind.image import CFW_SHA256, STOCK_SHA256, check_container, load_cfw, load_stock
 from glassly_flasher.devices.memomind.protocol import (OTA_MAGIC, GmSession, GmStream, OtaStream, OtaTransaction,
                                                        ProtocolError, check_identity, encode_ota, gm_frame,
@@ -157,6 +157,8 @@ class FakeGlasses:
             self.rebooted = True
             if bytes(self.stage) == self.image[18:]:
                 self.revision = self.boots_as
+                self.capabilities = None
+                self.identity['ver'] = '1.0.3.127'
             return ota_reply(3, sequence, b'\x00')
         raise AssertionError(f'Unexpected OTA command {command:#04x}')
 
@@ -312,18 +314,21 @@ class CodecTests(unittest.TestCase):
             GmStream().feed(bytes(wire))
 
     def test_installed_revision(self):
-        self.assertIsNone(installed_revision([(6, b'\x02')]))
         self.assertEqual(installed_revision(capabilities_tlvs(22)), 22)
-        for tlvs in ([(6, b'\x01')], [(5, b'{"version":"GLASSLYCFW/x"}')], [(5, b'{}')], [(5, b'nope')], []):
-            with self.assertRaisesRegex(FlashError, 'Nothing was written'):
-                installed_revision(tlvs)
+        for tlvs in ([(6, b'\x02')], [(6, b'\x01')], [(5, b'{"version":"GLASSLYCFW/x"}')], [(5, b'{}')],
+                     [(5, b'nope')], []):
+            with self.subTest(tlvs=tlvs):
+                self.assertIsNone(installed_revision(tlvs))
 
 
 class IdentityTests(unittest.TestCase):
-    def test_research_allowlist_exactly(self):
+    def test_model_and_mac_are_checked_but_not_versions(self):
         check_identity(IDENTITY, ADDRESS.lower())
-        for field, value in (('model', 'H002Y'), ('hver', '2.1.3'), ('fver', '1.4'), ('ver', '1.0.3.128'), ('ver', '1.0.2.151'),
-                             ('ver', 'GLASSLYCFW/27'), ('mac', '00:11:22:33:44:55'), ('mac', None)):
+        for field, value in (('hver', '2.1.3'), ('fver', '1.4'), ('ver', '1.0.3.128'), ('ver', '1.0.2.151'),
+                             ('ver', None)):
+            with self.subTest(field=field, value=value):
+                check_identity({**IDENTITY, field: value}, ADDRESS)
+        for field, value in (('model', 'H002Y'), ('model', None), ('mac', '00:11:22:33:44:55'), ('mac', None)):
             with self.subTest(field=field, value=value):
                 with self.assertRaisesRegex(FlashError, f'{value!r}.*Nothing was written'):
                     check_identity({**IDENTITY, field: value}, ADDRESS)
@@ -379,8 +384,8 @@ class InstallTests(unittest.TestCase):
         trace = [json.loads(line) for line in files['trace.jsonl'].splitlines()]
         self.assertEqual({row['session'] for row in trace}, {'inspect', 'control', 'ota', 'boot-check'})
 
-    def test_install_over_a_glassly_revision_it_was_installed_from(self):
-        for revision in (22, 25, 26):
+    def test_install_over_any_glassly_revision(self):
+        for revision in (2, 22, 23, 26):
             with self.subTest(revision=revision):
                 glasses = self.glasses(revision=revision)
                 result, _ = run_in('install', FakeRadio(glasses))
@@ -394,18 +399,15 @@ class InstallTests(unittest.TestCase):
         self.assertEqual(glasses.events, [('gm', 1, 1), ('gm', 1, 2), ('gm', 15, 0x7e)])
         self.assertNotIn(('connect', 'ota'), radio.log)
 
-    def test_revisions_never_installed_over_are_refused(self):
-        for revision in (2, 23, 24):
-            with self.subTest(revision=revision):
-                glasses = self.glasses(revision=revision)
-                radio = FakeRadio(glasses)
-                error, files = attempt('install', radio)
-                self.assertRegex(str(error), f'revision {revision}, .*official firmware back first.*Nothing was written')
-                self.assertEqual(glasses.events, [('gm', 1, 1), ('gm', 1, 2), ('gm', 15, 0x7e)])
-                self.assertEqual(files, ['capabilities.json', 'device-info.json', 'trace.jsonl'])
+    def test_install_on_any_hardware_or_firmware_version(self):
+        for field, value in (('hver', '2.2.0'), ('fver', '1.4'), ('ver', '1.0.2.151'), ('ver', '1.0.4.1')):
+            with self.subTest(field=field, value=value):
+                glasses = self.glasses(identity={**IDENTITY, field: value})
+                result, _ = run_in('install', FakeRadio(glasses))
+                self.assertEqual((result['state'], glasses.revision), ('installed', 27))
 
     def test_identity_refusals_send_nothing_but_reads(self):
-        for field, value in (('model', 'H002Y'), ('hver', '2.2.0'), ('ver', '1.0.4.1'), ('mac', '00:11:22:33:44:55')):
+        for field, value in (('model', 'H002Y'), ('mac', '00:11:22:33:44:55')):
             with self.subTest(field=field):
                 glasses = self.glasses(identity={**IDENTITY, field: value})
                 radio = FakeRadio(glasses)
@@ -414,11 +416,10 @@ class InstallTests(unittest.TestCase):
                 self.assertTrue(set(glasses.events) <= {('gm', 1, 1), ('gm', 1, 2), ('gm', 15, 0x7e)})
                 self.assertNotIn(('connect', 'ota'), radio.log)
 
-    def test_unrecognised_capabilities_are_refused(self):
+    def test_unrecognised_capabilities_count_as_vendor_firmware(self):
         glasses = self.glasses(capabilities=[(6, b'\x01')])
-        error, _ = attempt('install', FakeRadio(glasses))
-        self.assertRegex(str(error), r"\(6, b'\\x01'\).*Nothing was written")
-        self.assertFalse(glasses.notified)
+        result, _ = run_in('install', FakeRadio(glasses))
+        self.assertEqual((result['installed_before'], glasses.revision), ('official firmware 1.0.3.127', 27))
 
     def test_interrupted_transfer_of_the_same_image_is_continued(self):
         cursor = 289 * 4096 + 5 * 630
@@ -606,6 +607,12 @@ class RestoreTests(unittest.TestCase):
                 self.assertEqual((result['state'], result['booted_version']),
                                  ('restored', 'official firmware 1.0.3.127'))
 
+    def test_restore_from_another_official_version(self):
+        glasses = self.glasses(identity={**IDENTITY, 'ver': '1.0.2.151'})
+        result, _ = run_in('restore', FakeRadio(glasses))
+        self.assertEqual((result['state'], result['installed_before']), ('restored', 'official firmware 1.0.2.151'))
+        self.assertEqual(bytes(glasses.stage), self.stock[18:])
+
     def test_official_firmware_writes_nothing(self):
         glasses = self.glasses()
         radio = FakeRadio(glasses)
@@ -615,7 +622,7 @@ class RestoreTests(unittest.TestCase):
         self.assertFalse(glasses.notified)
 
     def test_identity_refusals_write_nothing(self):
-        glasses = self.glasses(revision=27, identity={**IDENTITY, 'hver': '2.1.3'})
+        glasses = self.glasses(revision=27, identity={**IDENTITY, 'model': 'H002Y'})
         radio = FakeRadio(glasses)
         with self.assertRaisesRegex(FlashError, 'Nothing was written'):
             run_in('restore', radio)
@@ -814,10 +821,8 @@ class HardwareReplayTests(unittest.TestCase):
         ota = ReplayChannel(ota_events, 'ota', wire)
         GmSession(control).notify_ota()
         image = STOCK.read_bytes()
-        # The vendor updated this pair from 1.0.2.151; the app's gate excludes that version, so the replay widens it.
-        with mock.patch.object(protocol, 'SOURCE_VERSIONS', ('1.0.2.151', '1.0.3.127')):
-            result = OtaTransaction(ota, image, identity, identity['mac'], check_control=control.drain,
-                                    sleep=lambda seconds: None, pace=0).run()
+        result = OtaTransaction(ota, image, identity, identity['mac'], check_control=control.drain,
+                                sleep=lambda seconds: None, pace=0).run()
         self.assertTrue(control.finished() and ota.finished())
         self.assertEqual((result['blocks'], result['chunks'], result['transferred_range'], result['resumed_from']),
                          (494, 3457, [162757, len(image)], 162757))

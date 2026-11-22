@@ -127,17 +127,53 @@ class Layout:
         return LAYOUTS.get(self.fingerprint, 'unknown layout')
 
 
-def classify(image):
-    """Which known application an image carries, or 'unknown' if anything else is unfamiliar."""
+def examine(image):
+    """Every check classify() makes, with what was found, so a refusal can say which check failed.
+    Holds hashes, table names and offsets only, never flash contents."""
+    found = {'image_sha256': digest(image), 'size': len(image)}
     try:
         layout = Layout(image)
-        app = layout.application()
-        if (layout.fingerprint in LAYOUTS and digest(layout.config()) == CFG_SHA
-                and digest(layout.resource()) == P11_SHA and jl_crc16(app) == layout.app[1]):
-            return APPLICATIONS.get(digest(app), 'unknown')
-    except (RuntimeError, ValueError, struct.error):
-        pass
-    return 'unknown'
+    except (RuntimeError, ValueError, struct.error) as e:
+        found.update(tables=f'unreadable: {e}', state='unknown')
+        return found
+    app = layout.application()
+    found.update(
+        tables='ok',
+        top=[[name(e), hex(e[2]), hex(e[3])] for e in layout.top],
+        partitions=[[name(e), hex(e[2]), hex(e[3]), hex(e[4])] for e in layout.partitions],
+        layout_fingerprint=layout.fingerprint,
+        layout=layout.describe(),
+        config_sha256=digest(layout.config()),
+        config_known=digest(layout.config()) == CFG_SHA,
+        resource_sha256=digest(layout.resource()),
+        resource_known=digest(layout.resource()) == P11_SHA,
+        application_sha256=digest(app),
+        application_crc_ok=jl_crc16(app) == layout.app[1],
+        application=APPLICATIONS.get(digest(app), 'unknown'),
+    )
+    known = (layout.fingerprint in LAYOUTS and found['config_known'] and found['resource_known']
+             and found['application_crc_ok'])
+    found['state'] = found['application'] if known else 'unknown'
+    return found
+
+
+def summary(found):
+    """One line naming the checks that failed."""
+    if found.get('tables') != 'ok':
+        return f'partition tables {found.get("tables", "unread")}'
+    failed = [label for label, ok in (
+        (f'layout {found["layout_fingerprint"][:12]} is not a known one', found['layout'] != 'unknown layout'),
+        (f'configuration {found["config_sha256"][:12]} is not the known one', found['config_known']),
+        (f'resources {found["resource_sha256"][:12]} are not the known ones', found['resource_known']),
+        ('application CRC does not match its table', found['application_crc_ok']),
+        (f'application {found["application_sha256"][:12]} is not a known build', found['application'] != 'unknown'),
+    ) if not ok]
+    return '; '.join(failed) or f'{found["application"]} application on the {found["layout"]}'
+
+
+def classify(image):
+    """Which known application an image carries, or 'unknown' if anything else is unfamiliar."""
+    return examine(image)['state']
 
 
 # sizeof(m_storage) of the application that wrote the USERIF settings record, by application build. The

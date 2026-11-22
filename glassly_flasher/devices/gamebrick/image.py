@@ -10,8 +10,8 @@ import struct
 
 from ... import paths
 from ..jieli.vendored import jl_crc16, jl_sfc_cipher
-from .layout import (APPLICATION_RECORD_SIZE, HARDWARE_VERIFIED, LAYOUTS, SECTOR, Layout, classify, migrate_userif,
-                     record_size_of, userif_partition, userif_record_size)
+from .layout import (APPLICATION_RECORD_SIZE, HARDWARE_VERIFIED, LAYOUTS, SECTOR, Layout, classify, examine, migrate_userif,
+                     record_size_of, summary, userif_partition, userif_record_size)
 
 OEM_SHA = '2fb44f4235bd4ed7183439f31ee2a31fb0052d19dd736e20d1d251fd5e1ff259'
 CUSTOM_APP_SHA = '495ce9131d2cadebd558ec6d5ebfd51b6afa1ba957cba5c7f5dd331fcba9f432'
@@ -106,9 +106,11 @@ def plan(current, oem, mode, custom=None, backup=None, flash_id=None, allow_unve
     """Source and target images for `mode` from the live flash, both carrying its storage.
     `restore-backup` puts back the application found in `backup`, an earlier full read of this
     same kind of controller."""
-    state = classify(current)
+    found = examine(current)
+    state = found['state']
     require(state in KNOWN_STATES,
-            f'Unrecognised flash contents ({state}); refusing to write. Keep the saved backup and ask for help.')
+            f'Unrecognised flash contents ({summary(found)}); refusing to write. Nothing was written. Keep the '
+            'saved backup and press Upload logs.')
     layout = Layout(current)
     if mode in ('install', 'restore') and not allow_unverified:
         require((layout.fingerprint, flash_id) in HARDWARE_VERIFIED,

@@ -4,6 +4,7 @@ Tests marked with FIXTURES use the unit backups in a local glassly-gamebrick-min
 skip when it is absent."""
 import contextlib
 import io
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -12,8 +13,8 @@ from glassly_flasher.devices.base import FlashError, Reporter
 from glassly_flasher.devices.gamebrick import run
 from glassly_flasher.devices.gamebrick.image import (CUSTOM_APP_SHA, OEM_SHA, classify, digest, glassly_application,
                                                       official_application, plan)
-from glassly_flasher.devices.gamebrick.layout import (APPLICATIONS, LAYOUTS, Layout, migrate_userif, record_size_of,
-                                                       userif_record_size)
+from glassly_flasher.devices.gamebrick.layout import (APPLICATIONS, LAYOUTS, Layout, examine, migrate_userif, record_size_of,
+                                                       summary, userif_record_size)
 from glassly_flasher.devices.gamebrick.transport import PAGE, SECTOR, SIZE, program_image, program_with_plan
 from glassly_flasher.devices.jieli.link import INQUIRY
 
@@ -148,9 +149,13 @@ class BundledApplicationTests(unittest.TestCase):
     def test_install_on_unknown_flash_is_refused_before_any_write(self):
         device = FakeBD19(bytes(range(256)) * (SIZE // 256))
         with tempfile.TemporaryDirectory() as folder:
-            with self.assertRaisesRegex(FlashError, 'Unrecognised'):
+            with self.assertRaisesRegex(FlashError, r'Unrecognised flash contents \(partition tables unreadable: '):
                 quiet(run, 'install', Path(folder), Recorder(), link=device)
-            self.assertEqual(sorted(p.name for p in Path(folder).iterdir()), ['flash-pass1.bin', 'flash-pass2.bin'])
+            self.assertEqual(sorted(p.name for p in Path(folder).iterdir()),
+                             ['flash-check.json', 'flash-pass1.bin', 'flash-pass2.bin'])
+            check = json.loads((Path(folder)/'flash-check.json').read_text())
+            self.assertEqual(check['state'], 'unknown')
+            self.assertTrue(check['tables'].startswith('unreadable: '))
         self.assertEqual(device.writes(), [])
 
     def test_second_known_flash_part_is_accepted(self):
@@ -227,9 +232,21 @@ class PlanTests(unittest.TestCase):
         live = plan(bytes(drifted), self.oem, 'install', flash_id=0xcd7113)
         self.assertEqual(live['target'][0x7a000:], bytes(drifted)[0x7a000:])
         self.assertEqual(live['target'][:0x7a000], self.custom[:0x7a000])
-        for image in (WITHDRAWN.read_bytes(), bytes(b ^ (i == 0x2140) for i, b in enumerate(self.factory))):
-            with self.assertRaisesRegex(RuntimeError, 'Unrecognised'):
+        for image, reason in ((WITHDRAWN.read_bytes(), 'withdrawn application on the two application slots'),
+                              (bytes(b ^ (i == 0x2140) for i, b in enumerate(self.factory)), 'application CRC does not match its table')):
+            with self.assertRaisesRegex(RuntimeError, f'Unrecognised flash contents \\(.*{reason}.*\\); .*Nothing was written'):
                 plan(image, self.oem, 'install', flash_id=0xcd7113)
+
+    def test_examine_names_each_failed_check(self):
+        known = examine(self.factory)
+        self.assertEqual((known['state'], known['tables'], known['application']), ('factory', 'ok', 'factory'))
+        self.assertTrue(known['config_known'] and known['resource_known'] and known['application_crc_ok'])
+        self.assertEqual(summary(known), 'factory application on the two application slots, VM at 0x7a000 (2025 production units)')
+        withdrawn = examine(WITHDRAWN.read_bytes())
+        self.assertEqual(withdrawn['state'], 'withdrawn')
+        garbage = examine(bytes(range(256)) * (SIZE // 256))
+        self.assertEqual(garbage['state'], 'unknown')
+        self.assertRegex(summary(garbage), r'^partition tables unreadable: ')
 
     def test_programs_factory_to_custom_and_back_with_full_verification(self):
         oem = self.oem
@@ -286,7 +303,7 @@ class PlanTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             report = quiet(run, 'install', Path(folder), Recorder(), link=device)
             names = sorted(p.name for p in Path(folder).iterdir())
-        self.assertEqual(names, ['flash-pass1.bin', 'flash-pass2.bin', 'stock.bin', 'target.bin'])
+        self.assertEqual(names, ['flash-check.json', 'flash-pass1.bin', 'flash-pass2.bin', 'stock.bin', 'target.bin'])
         self.assertEqual(bytes(device.flash), self.custom)
         self.assertTrue(report['full_readback_verified'])
         self.assertEqual(report['state'], 'factory')

@@ -4,13 +4,16 @@ Reads the whole flash twice and saves it, derives the image from that read, writ
 application area and verifies the entire flash afterwards. Runtime storage and key/MAC are
 never written. Ported from glassly-gamebrick-mini-cfw research/flash_gamebrick.py at 9d51cdf93e5b.
 """
+import json
 import os
 import sys
 
 from ..base import Cancelled, FlashError
 from ..jieli import Watchdog, wait_for_device
 from ..jieli.link import AmbiguousTarget, BulkOnlyLink, PassThroughLink
+
 from .image import SIZE, classify, digest, glassly_application, official_application, plan, require
+from .layout import examine, summary
 from .transport import Transport, program_with_plan, read_flash
 
 VENDOR, PRODUCT = 0x4c4a, 0x3442
@@ -53,6 +56,11 @@ def run(mode, output, reporter, link=None, backup=None):
             f.flush()
             os.fsync(f.fileno())
 
+    def record_check(image):
+        found = examine(image)
+        save('flash-check.json', (json.dumps(found, indent=2) + '\n').encode())
+        print(f'Flash check: {summary(found)}.', flush=True)
+
     try:
         wait_for_device(link, reporter)
         with Watchdog(SESSION_SECONDS):
@@ -66,12 +74,14 @@ def run(mode, output, reporter, link=None, backup=None):
                 second = read_flash(device, reporter.progress)
                 save('flash-pass2.bin', second)
                 require(first == second, 'Backups differ; do not flash')
+                record_check(first)
                 report = {'sha256': digest(first), 'state': classify(first), 'passes_match': True, 'flash_modified': False}
                 print('BACKUP COMPLETE:', report['sha256'], f'({report["state"]} firmware)', flush=True)
             else:
                 planned = {}
 
                 def source_and_target(current):
+                    record_check(current)
                     planned.update(plan(current, oem, mode, custom, backup, device.flash_id))
                     print(f'Controller firmware: {planned["state"]}; {len(planned["changed_sectors"])} sector(s) to write.', flush=True)
                     if planned['settings_sectors']:

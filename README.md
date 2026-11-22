@@ -187,12 +187,10 @@ same updater, from any firmware version, and waits for the glasses to answer as 
 
 The install sequence was run from macOS by the research tool this code is ported from: revision 25 was installed and
 booted on one pair of glasses on 2026-11-11 and revision 26 on 2026-11-15, after many earlier revisions on the same
-glasses. Revision 27, the one this app installs, has not been flashed on glasses yet; it has passed the firmware's
-offline regression and emulator suites only. This app's own Bluetooth code has not yet been run against glasses on
-any computer; its macOS helper uses the same IOBluetooth calls as the research tool, and its tests replay the
-recorded revision 25 install (with the revision 25 image from the firmware repository), an interrupted and continued
-install and the MemoMind app's own update, byte for byte. No recorded exchange exists for revision 27: its transfer
-is tested against scripted glasses only. Windows and Linux Bluetooth have not been tried on glasses.
+glasses. This app's own macOS path ran on that pair on 2026-11-16: revision 26 to the official firmware, then to
+revision 27, each confirmed after the restart. Its tests replay the recorded revision 25 install (with the revision
+25 image from the firmware repository), an interrupted and continued install and the MemoMind app's own update,
+byte for byte. Windows and Linux Bluetooth have not been tried on glasses.
 
 ## Command line
 

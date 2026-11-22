@@ -14,7 +14,7 @@ against a pinned SHA256 before it goes near a controller.
 | 8BitDo Micro | Official v1.05 | Yes |
 | IINE Gamebrick Mini (L1161 / L1162) | Factory firmware or the official IINE update, 2025 production run only (flash part `cd7113`, two-slot layout). Newer units (flash part `cd7013`, IINE's current layout) are recognised but only backed up; see below | Yes |
 | IINE Mini Retro Ananke Gen 2, Purple / Gray / Cream Yellow (L1254 / L1255 / L1277) | Official V0900 | Yes |
-| MemoMind One glasses (H001Y) | Any official or Glassly firmware version. Restore sends the official 1.0.3.127 image through the same updater | Identity only; the firmware cannot be read out |
+| MemoMind One glasses (H001Y, H001F) | Any official or Glassly firmware version. Restore sends the official 1.0.3.127 image through the same updater | Identity only; the firmware cannot be read out |
 
 This is experimental firmware. Each controller has been flashed and verified from macOS with the research
 flasher this app is ported from; the MemoMind One's revision 27 and its official image were flashed with this app
@@ -159,7 +159,8 @@ after a failed attempt the flasher searches for the glasses over Bluetooth Class
 ### What Install does
 
 1. Reads the glasses' identity and installed firmware over one connection and saves them to the session folder
-   (`device-info.json`, `capabilities.json`). It writes only to glasses that report model H001Y with the MAC
+   (`device-info.json`, `capabilities.json`). It writes only to glasses that report model H001Y or H001F (the same glasses in
+   another frame) with the MAC
    address they answered from; their hardware and firmware versions, official or Glassly, are not checked. Glasses
    already on revision 27 are left alone.
 2. Eight seconds later, on a second connection, it checks the identity again, tells the glasses an update is coming,

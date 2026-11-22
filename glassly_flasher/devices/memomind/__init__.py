@@ -1,4 +1,4 @@
-"""MemoMind One (H001Y): install Glassly CFW revision 27 or put the official 1.0.3.127 firmware back through the
+"""MemoMind One (H001Y, H001F): install Glassly CFW revision 27 or put the official 1.0.3.127 firmware back through the
 stock Bluetooth Classic updater, or record the glasses' identity.
 
 Ported from glassly-memomind-one-cfw at e56172a3: `memomind install` (swift/MemoMindKit/Sources/memomind/

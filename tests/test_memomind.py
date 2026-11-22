@@ -406,6 +406,11 @@ class InstallTests(unittest.TestCase):
                 result, _ = run_in('install', FakeRadio(glasses))
                 self.assertEqual((result['state'], glasses.revision), ('installed', 27))
 
+    def test_the_other_frame_installs_from_a_newer_official_firmware(self):
+        glasses = self.glasses(identity={**IDENTITY, 'model': 'H001F', 'fver': '1.5', 'ver': '1.0.4.83'})
+        result, _ = run_in('install', FakeRadio(glasses))
+        self.assertEqual((result['installed_before'], result['booted_version']), ('official firmware 1.0.4.83', 'GLASSLYCFW/27'))
+
     def test_identity_refusals_send_nothing_but_reads(self):
         for field, value in (('model', 'H002Y'), ('mac', '00:11:22:33:44:55')):
             with self.subTest(field=field):

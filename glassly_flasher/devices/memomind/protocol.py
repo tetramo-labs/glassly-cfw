@@ -20,7 +20,8 @@ BLOCK_MAX = 4096
 FRAGMENT = 630
 PACING_FIELD = 2000
 
-MODEL = 'H001Y'
+# The same MemoMind One electronics in two frames.
+MODELS = ('H001Y', 'H001F')
 
 
 class ProtocolError(FlashError):
@@ -184,14 +185,14 @@ def describe_identity(device):
 
 
 def is_known_kind(device):
-    return device.get('model') == MODEL
+    return device.get('model') in MODELS
 
 
 def check_identity(device, address):
     mac = device.get('mac')
     if not is_known_kind(device) or not isinstance(mac, str) or mac.upper() != address.upper():
         raise FlashError(f'These glasses reported {describe_identity(device)} (address {address}). The flasher only '
-                         f'writes to MemoMind One glasses (model {MODEL}) whose MAC is the address it connected to. '
+                         f'writes to MemoMind One glasses (model {" or ".join(MODELS)}) whose MAC is the address it connected to. '
                          'Nothing was written.')
 
 

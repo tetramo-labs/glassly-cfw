@@ -14,12 +14,11 @@ against a pinned SHA256 before it goes near a controller.
 | 8BitDo Micro | Official v1.05 | Yes |
 | IINE Gamebrick Mini (L1161 / L1162) | Factory firmware or the official IINE update, 2025 production run only (flash part `cd7113`, two-slot layout). Newer units (flash part `cd7013`, IINE's current layout) are recognised but only backed up; see below | Yes |
 | IINE Mini Retro Ananke Gen 2, Purple / Gray / Cream Yellow (L1254 / L1255 / L1277) | Official V0900 | Yes |
-| MemoMind One glasses (H001Y) | Any official or Glassly firmware version. Restore sends the official 1.0.3.127 image through the same updater; this app has not yet run that on glasses | Identity only; the firmware cannot be read out |
+| MemoMind One glasses (H001Y) | Any official or Glassly firmware version. Restore sends the official 1.0.3.127 image through the same updater | Identity only; the firmware cannot be read out |
 
 This is experimental firmware. Each controller has been flashed and verified from macOS with the research
-flasher this app is ported from, except the MemoMind One image: Glassly revision 27 has passed the firmware's
-offline regression and emulator suites and has not yet been flashed on glasses. The app itself, and every Windows
-and Linux path, has not yet been run against a real controller. A failed flash can leave a controller unusable.
+flasher this app is ported from; the MemoMind One's revision 27 and its official image were flashed with this app
+itself, on macOS. Every Windows and Linux path has not yet been run against a real device. A failed flash can leave a controller unusable.
 
 ## Download
 
@@ -125,9 +124,9 @@ The flasher installs Glassly firmware revision 27 (`GLASSLYCFW/27`), the build t
 including from an iPhone over Bluetooth LE. It goes through the glasses' own Bluetooth Classic updater, so it needs a computer with
 Bluetooth and no cable.
 
-Revision 27 has passed the firmware repository's offline regression (147 stages, including its RV32 emulator suites)
-and has not yet been flashed on glasses. The newest revision that has been installed and seen booting is 26, on the
-developer's pair on 2026-11-15.
+Revision 27 has passed the firmware repository's offline regression (147 stages, including its RV32 emulator suites).
+On 2026-11-16 this app, on macOS, took the developer's pair from revision 26 to the official firmware and then to
+revision 27, and the glasses answered as each after their restart.
 
 ### Getting help
 
@@ -182,7 +181,7 @@ the last block, while they check and switch to the new firmware, has not been se
 **Back up only** reads the identity and installed firmware and writes nothing. The glasses' firmware has no command
 that reads their flash back, so no firmware image is saved. **Put the official firmware back** sends the official
 1.0.3.127 image, the vendor's own release that the MemoMind app installed on the development glasses, through the
-same updater, from any firmware version, and waits for the glasses to answer as official firmware again. This app has not yet run that path on real glasses; the first restore is done on the developer's pair.
+same updater, from any firmware version, and waits for the glasses to answer as official firmware again. It first ran on glasses on 2026-11-16, from revision 26.
 
 ### What has been tested
 

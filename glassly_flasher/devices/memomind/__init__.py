@@ -6,11 +6,10 @@ Install.swift and runLive in main.swift), which flashed revision 25 on 2026-11-1
 (analysis/ble-link-20261110/flash-25-01). The sequence is the same: a read-only session for identity and installed
 version, eight seconds apart a second session that repeats the identity check, sends the pre-update notice and runs
 the updater on the OTA service, then read-only sessions until the expected firmware answers. The bundled revision 27
-(glassly-memomind-one-cfw@ddc670f2) has passed that repo's offline regression and has not yet been flashed on glasses.
+(glassly-memomind-one-cfw@ddc670f2) and the vendor's 1.0.3.127 image were both flashed by this tool on 2026-11-16
+(glassly-memomind-one-cfw analysis/latency-20261114/flash-27-01).
 
-There is no firmware backup: the stock firmware cannot read its flash back. Restore sends the vendor's own
-1.0.3.127 image, the one the MemoMind app installed on the development glasses through this updater; this tool
-has not yet run that path on hardware.
+There is no firmware backup: the stock firmware cannot read its flash back.
 """
 import json
 import os

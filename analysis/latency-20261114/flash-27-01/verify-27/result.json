@@ -1,0 +1,21 @@
+{
+  "mode": "install",
+  "address": "4C:3C:8F:90:CC:C3",
+  "name": "MemoMind One",
+  "device": {
+    "pver": 4,
+    "cap": 1,
+    "model": "H001Y",
+    "sn": "HBYSF7FS2205",
+    "mac": "4C:3C:8F:90:CC:C3",
+    "name": "MemoMind One",
+    "ver": "1.0.3.127",
+    "cver": "0.0.0",
+    "hver": "2.1.2",
+    "fver": "1.3"
+  },
+  "installed_before": "GLASSLYCFW/27",
+  "image_sha256": "d2a11d71346511988c6e05adb1ab5fed9fcc89d8cb18f642cac12964eaf77206",
+  "state": "already installed",
+  "flash_modified": false
+}

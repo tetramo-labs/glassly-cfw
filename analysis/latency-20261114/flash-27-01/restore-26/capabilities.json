@@ -1,0 +1,66 @@
+{
+  "glassly": "graphics-runtime",
+  "abi": 1,
+  "width": 600,
+  "height": 350,
+  "version": "GLASSLYCFW/26",
+  "displayOwner": "minimal",
+  "displaySettings": {
+    "position": 10,
+    "depth": 11,
+    "min": 0,
+    "max": 8
+  },
+  "notifications": {
+    "command": 120,
+    "transport": "poll",
+    "leaseTicks": 90000
+  },
+  "sensors": {
+    "command": 118,
+    "version": 1,
+    "capture": "passive-buffered",
+    "capacity": 32,
+    "batch": 4,
+    "batchVersion": 2,
+    "finish": 5,
+    "release": 6,
+    "drainTicks": 30000,
+    "imu": "icm42670-registers",
+    "als": "native-0-1000",
+    "leaseTicks": 90000,
+    "activeAls": 1,
+    "activeAlsMinMs": 100,
+    "activeAlsMaxMs": 5000
+  },
+  "microphone": {
+    "command": 119,
+    "version": 1,
+    "codec": "opus",
+    "sampleRate": 16000,
+    "channels": 1,
+    "bitrate": 16000,
+    "leaseTicks": 90000
+  },
+  "ownership": {
+    "command": 121,
+    "leaseTicks": 90000,
+    "fallbackTicks": 400,
+    "claimedTicks": 5000
+  },
+  "inputObserver": {
+    "command": 124,
+    "capacity": 32,
+    "leaseTicks": 30000
+  },
+  "maxMessageBytes": 65535,
+  "maxWireMessageBytes": 8192,
+  "largeMessage": {
+    "mode": 127,
+    "chunkBytes": 1024,
+    "crc": "crc32-ieee"
+  },
+  "storeKiB": 256,
+  "freeBytesHex": "00056ee8",
+  "lowWaterBytesHex": "00056ac0"
+}

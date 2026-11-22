@@ -30,7 +30,11 @@ accepts lean builds and sizes requests by `maxWireMessageBytes`. Runtime
 84,704 B (13,600 B free). The record-transport profile fits with 160 B to spare
 after the notification relay is compiled -Os, and the 64 KiB text rung compiles
 native text -Os as production builds do. Records in
-`analysis/latency-20261114/`. Not flashed.
+`analysis/latency-20261114/`. Flashed 2026-11-16 with the Glassly CFW Flasher
+([checkpoint](analysis/latency-20261114/flash-27-01/checkpoint.json)): the developer's
+pair went from 26 back to the official 1.0.3.127 image and then to 27 (549 blocks,
+about 5 minutes), and booted answering `GLASSLYCFW/27`. The scene and latency
+changes have not yet been measured from the Glassly App on glasses.
 
 Revision 26 (`ble-link-002`) speeds up the iPhone link of revision 25. The
 stock LE policy classifies the bonded phone when its link comes up

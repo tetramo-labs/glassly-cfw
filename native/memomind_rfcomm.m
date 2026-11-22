@@ -209,6 +209,14 @@ int mm_open(const char *address, int uuid16, int channelID, int timeoutMs) {
       IOBluetoothSDPUUID *uuid = [IOBluetoothSDPUUID uuid16:(BluetoothSDPUUID16)uuid16];
       IOBluetoothSDPServiceRecord *record = [device getServiceRecordForUUID:uuid];
       session.source = @"cached-sdp";
+      if (!record && !device.isConnected) {
+        IOReturn page = [device openConnection:nil withPageTimeout:(BluetoothHCIPageTimeout)MIN(0xffff, timeoutMs * 16 / 10)
+                        authenticationRequired:NO];
+        if (page != kIOReturnSuccess) {
+          return fail([NSString stringWithFormat:@"The glasses did not answer a Bluetooth connection (page 0x%08x)",
+                                                 page]);
+        }
+      }
       if (!record) {
         session.source = @"fresh-sdp";
         session.sdpPending = YES;

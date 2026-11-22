@@ -212,9 +212,19 @@ class MacRadio(Radio):
         return parse_mac_paired(buffer.raw[:count].decode('utf-8', 'replace'))
 
     def connect(self, address, service):
-        handle = self.lib.mm_open(normalize(address).encode(), SERVICES[service], 0, CONNECT_SECONDS * 1000)
+        """The channel the glasses' SDP record names; when SDP gives no record, the channel every MemoMind One
+        recorded so far lists for the service."""
+        short = SERVICES[service]
+        handle = self.lib.mm_open(normalize(address).encode(), short, 0, CONNECT_SECONDS * 1000)
+        if handle > 0:
+            return MacChannel(self, handle)
+        sdp = self.error()
+        if 'SDP' not in sdp and 'do not list' not in sdp:
+            raise LinkError(f'Could not open the glasses\' {service} Bluetooth service: {sdp}')
+        handle = self.lib.mm_open(normalize(address).encode(), short, RECORDED_CHANNELS[short], CONNECT_SECONDS * 1000)
         if handle <= 0:
-            raise LinkError(f'Could not open the glasses\' {service} Bluetooth service: {self.error()}')
+            raise LinkError(f'Could not open the glasses\' {service} Bluetooth service: {sdp}; on its usual channel '
+                            f'{RECORDED_CHANNELS[short]}: {self.error()}')
         return MacChannel(self, handle)
 
 

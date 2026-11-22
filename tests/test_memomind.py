@@ -831,3 +831,53 @@ class HardwareReplayTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class FakeMacLib:
+    """mm_open answers from a script of (handle, error) per call."""
+
+    def __init__(self, *answers):
+        self.answers = list(answers)
+        self.calls = []
+        self.last_error = b''
+
+    def mm_open(self, address, uuid16, channel, timeout_ms):
+        self.calls.append((address, uuid16, channel))
+        handle, self.last_error = self.answers.pop(0)
+        return handle
+
+    def mm_error(self):
+        return self.last_error
+
+    def mm_channel(self, handle):
+        return 5
+
+    def mm_source(self, handle):
+        return b'channel'
+
+
+class MacRadioTests(unittest.TestCase):
+    def radio(self, lib):
+        radio = object.__new__(rfcomm.MacRadio)
+        radio.lib = lib
+        return radio
+
+    def test_sdp_failure_falls_back_to_the_recorded_channel(self):
+        lib = FakeMacLib((-1, b'SDP query timed out; are the glasses switched on and close?'), (1, b''))
+        channel = self.radio(lib).connect(ADDRESS, 'normal')
+        self.assertEqual([c[1:] for c in lib.calls], [(0x7033, 0), (0x7033, 5)])
+        self.assertEqual((channel.channel_id, channel.source), (5, 'channel'))
+        lib = FakeMacLib((-1, b'The glasses do not list Bluetooth service 7034'), (2, b''))
+        self.radio(lib).connect(ADDRESS, 'ota')
+        self.assertEqual(lib.calls[1][1:], (0x7034, 6))
+
+    def test_both_failures_are_reported(self):
+        lib = FakeMacLib((-1, b'SDP query timed out'), (-1, b'RFCOMM open timed out'))
+        with self.assertRaisesRegex(LinkError, r'SDP query timed out; on its usual channel 5: RFCOMM open timed out'):
+            self.radio(lib).connect(ADDRESS, 'normal')
+
+    def test_an_unanswered_page_is_not_retried_on_another_channel(self):
+        lib = FakeMacLib((-1, b'The glasses did not answer a Bluetooth connection (page 0xe00002d6)'))
+        with self.assertRaisesRegex(LinkError, r'did not answer a Bluetooth connection'):
+            self.radio(lib).connect(ADDRESS, 'normal')
+        self.assertEqual(len(lib.calls), 1)

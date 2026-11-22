@@ -34,6 +34,12 @@ typedef struct {
     unsigned timers_created, timers_deleted, timer_live;
     unsigned critical, criticals;
     unsigned still_resets;
+    nimo_timer_fn light_timer_fn;
+    uint32_t light_timer_period;
+    unsigned light_timers_created, light_timers_deleted, light_timer_live;
+    uint16_t light_lux;
+    int light_read_rc, light_power_rc;
+    unsigned light_reads, light_power_on, light_power_off;
     unsigned glyph_lookups;
     jmp_buf *reset_in_flush; /* a panel flush jumps here: the device reset mid-present */
 } host_state;
@@ -45,4 +51,6 @@ void host_reset(int left);
 void host_reboot(int left);
 unsigned host_run_ui(void);
 void host_timer_tick(void);
+/* The light sampler's timer: any timer whose period is not the pump's. */
+void host_light_tick(void);
 #endif

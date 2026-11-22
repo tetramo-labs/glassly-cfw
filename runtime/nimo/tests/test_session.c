@@ -999,6 +999,146 @@ static void test_builtin_text(void)
     printf("built-in text: mode 15, pen bytes, levels, inversion, UTF-8, clipping, refusals, bundles, TEXT_INLINE passed\n");
 }
 
+static host_reply *light_control(const uint8_t *payload, uint32_t len, unsigned leased, unsigned interval)
+{
+    host_reply *r = command(KEY_LIGHT_CONTROL, payload, len);
+    assert(r->key == KEY_LIGHT_CONTROL && r->len == 9 && r->data[0] == STATUS_OK && r->data[1] == leased);
+    assert((unsigned)(r->data[3] | r->data[4] << 8) == interval);
+    return r;
+}
+
+/* A 0x2C request on an arm whose reply the test does not read (the slave sends none). */
+static void light_request(const uint8_t *payload, uint32_t len)
+{
+    assert(glassly_command(GLASSLY_CMD, KEY_LIGHT_CONTROL, payload, len) == 1);
+}
+
+static void test_v13_light(void)
+{
+    static const uint8_t start500[] = { 1, 0xF4, 0x01 }, start50[] = { 1, 50, 0 }, start9000[] = { 1, 0x28, 0x23 };
+    static const uint8_t stop[] = { 0 }, bad_op[] = { 2 }, short_start[] = { 1, 0xF4 };
+
+    /* The left arm, here the slave: it samples and hands each reading to the master. */
+    host_reset(1);
+    host.master = 0;
+    light_request(start500, sizeof start500);
+    light_request(start500, sizeof start500);
+    assert(NIMO_RAM->light_interval == 500 && host.queue_count == 1);
+    assert(host_run_ui() == 1 && host.light_timer_live && host.light_timer_period == 500);
+    host.light_lux = 321;
+    nimo_host_panel_brightness = 12;
+    host_light_tick();
+    assert(nimo_host_light_powered && host.light_power_on == 1 && host.light_reads == 0 && host.peer_count == 0);
+    host.now += 500;
+    host_light_tick();
+    assert(host.peer_count == 1 && host.reply_count == 0);
+    host_reply *p = &host.peer[0];
+    assert(p->key == NIMO_MSG_LIGHT_RELAY && p->len == 11 && p->data[0] == STATUS_OK);
+    assert(p->data[1] == 1 && p->data[2] == 0 && p->data[3] == 1);
+    assert((p->data[4] | p->data[5] << 8) == 321 && p->data[10] == 12);
+    assert((uint32_t)(p->data[6] | p->data[7] << 8 | p->data[8] << 16 | (uint32_t)p->data[9] << 24) == host.now);
+    uint8_t handed[11];
+    memcpy(handed, p->data, sizeof handed);
+
+    host.light_read_rc = 1;
+    host_light_tick();
+    assert(host.peer_count == 1 && NIMO_RAM->light_failures == 1);
+    host.light_read_rc = 0;
+    host.peer_error = -7;
+    host_light_tick();
+    assert(host.peer_count == 1 && NIMO_RAM->light_failures == 2 && NIMO_RAM->light_samples == 1);
+    host.peer_error = 0;
+
+    /* A new interval replaces the timer; the stock taking the sensor away is undone on the next tick. */
+    light_request(start50, sizeof start50);
+    host_run_ui();
+    assert(host.light_timer_live && host.light_timer_period == 200 && host.light_timers_created == 2 &&
+           host.light_timers_deleted == 1);
+    light_request(start9000, sizeof start9000);
+    host_run_ui();
+    assert(host.light_timer_period == 5000);
+    nimo_host_light_powered = 0;
+    host_light_tick();
+    assert(nimo_host_light_powered && host.light_power_on == 2);
+    nimo_host_light_wanted = 1;
+    host.light_lux = 65000;
+    host_light_tick();
+    assert(host.peer_count == 2 && host.peer[1].data[1] == 2 && host.peer[1].data[3] == 3 &&
+           (host.peer[1].data[4] | host.peer[1].data[5] << 8) == 65000);
+
+    /* An expired lease stops at the next tick; the sensor stays on because the stock wants it. */
+    host.now += NIMO_LIGHT_LEASE_MS + 1;
+    host_light_tick();
+    assert(host.peer_count == 2 && host.queue_count == 1);
+    host_run_ui();
+    assert(!host.light_timer_live && nimo_host_light_powered && host.light_power_off == 0 && !NIMO_RAM->light_forced);
+
+    /* A dropped lease powers off a sensor only the lease had on, unless the factory stream uses it. */
+    nimo_host_light_wanted = 0;
+    nimo_host_light_powered = 0;
+    light_request(start500, sizeof start500);
+    host_run_ui();
+    host_light_tick();
+    assert(nimo_host_light_powered && NIMO_RAM->light_forced);
+    light_request(stop, sizeof stop);
+    host_run_ui();
+    assert(!host.light_timer_live && !nimo_host_light_powered && host.light_power_off == 1);
+    nimo_host_light_factory = 1;
+    light_request(start500, sizeof start500);
+    host_run_ui();
+    host_light_tick();
+    light_request(stop, sizeof stop);
+    host_run_ui();
+    assert(nimo_host_light_powered && host.light_power_off == 1);
+
+    /* A sensor that will not power counts a failure; a full UI queue leaves the timer to the next tick. */
+    host.light_power_rc = 1;
+    nimo_host_light_powered = 0;
+    nimo_host_light_factory = 0;
+    unsigned failures = NIMO_RAM->light_failures;
+    light_request(start500, sizeof start500);
+    host_run_ui();
+    host_light_tick();
+    assert(!nimo_host_light_powered && NIMO_RAM->light_failures == failures + 1 && !NIMO_RAM->light_forced);
+    host.queue_fail = 1;
+    light_request(stop, sizeof stop);
+    assert(NIMO_RAM->busy == 1 && host.light_timer_live && !NIMO_RAM->light_posted);
+    host.queue_fail = 0;
+    host_light_tick();
+    assert(host_run_ui() == 1 && !host.light_timer_live);
+
+    /* The right arm, the master: no timer of its own; it sends what the left arm hands over. */
+    host_reset(0);
+    host_reply *r = light_control(start500, sizeof start500, 1, 500);
+    assert(r->data[2] == 0 && host.queue_count == 0 && !host.light_timer_live);
+    unsigned replies = host.reply_count;
+    assert(glassly_input(NIMO_MSG_LIGHT_RELAY, handed, sizeof handed) == 1);
+    assert(host.reply_count == replies + 1 && last()->key == KEY_LIGHT && last()->len == 11);
+    assert(!memcmp(last()->data, handed, sizeof handed));
+    assert(glassly_input(NIMO_MSG_LIGHT_RELAY, handed, sizeof handed - 1) == 1 && host.reply_count == replies + 1);
+    assert(glassly_input(NIMO_MSG_LIGHT_RELAY, 0, 0) == 1 && host.reply_count == replies + 1);
+    r = light_control(start500, sizeof start500, 1, 500);
+    assert((r->data[5] | r->data[6] << 8) == 1 && (r->data[7] | r->data[8] << 8) == 0);
+    light_control(stop, sizeof stop, 0, 500);
+    assert(glassly_input(NIMO_MSG_LIGHT_RELAY, handed, sizeof handed) == 1 && host.reply_count == replies + 3);
+    assert(command(KEY_LIGHT_CONTROL, bad_op, sizeof bad_op)->data[0] == STATUS_INVALID);
+    assert(command(KEY_LIGHT_CONTROL, short_start, sizeof short_start)->data[0] == STATUS_INVALID);
+    assert(command(KEY_LIGHT_CONTROL, 0, 0)->data[0] == STATUS_INVALID);
+
+    /* A left arm that is the master sends its readings itself. */
+    host_reset(1);
+    r = light_control(start500, sizeof start500, 1, 500);
+    assert(r->data[2] == 1);
+    host_run_ui();
+    nimo_host_light_powered = 1;
+    nimo_host_light_wanted = 1;
+    host.light_lux = 7;
+    host_light_tick();
+    assert(host.peer_count == 0 && last()->key == KEY_LIGHT && last()->data[3] == 2 && last()->data[4] == 7);
+    assert(host.light_power_on == 0);
+    printf("v13: light lease, sampling timer, forced power and its restore, peer hand-over and master send passed\n");
+}
+
 int main(int argc, char **argv)
 {
     if (argc == 3 && !strcmp(argv[1], "--scenes")) {
@@ -1024,6 +1164,7 @@ int main(int argc, char **argv)
     test_ancs_relay();
     test_v11_idle_input_and_peer_relay();
     test_v12_head_and_imu();
+    test_v13_light();
     test_builtin_text();
     printf("PASS: NIMO session host tests\n");
     return 0;

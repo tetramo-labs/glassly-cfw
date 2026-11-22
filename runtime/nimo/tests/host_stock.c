@@ -8,11 +8,12 @@ host_state host;
 _Alignas(16) unsigned char nimo_host_ram[NIMO_RAM_BYTES];
 _Alignas(16) unsigned char nimo_host_crumbs[NIMO_CRUMB_BYTES];
 volatile uint8_t nimo_host_panel_up, nimo_host_left, nimo_host_display_on, nimo_host_lit;
+volatile uint8_t nimo_host_light_powered, nimo_host_light_wanted, nimo_host_light_factory;
 volatile uint16_t nimo_host_panel_brightness;
 volatile uint32_t nimo_host_blank_ticks;
 _Alignas(16) uint8_t nimo_host_fb[2][NIMO_PANEL_STRIDE * NIMO_PANEL_H];
 volatile uint8_t nimo_host_fb_back, nimo_host_fb_front;
-static int mutex_object, screen_object, timer_object;
+static int mutex_object, screen_object, timer_object, light_timer_object;
 
 typedef struct block { struct block *next, *prev; size_t size; } block;
 typedef union { max_align_t align; block b; } heap_header;
@@ -49,6 +50,7 @@ void host_reboot(int left)
     nimo_host_lit = 0;
     nimo_host_blank_ticks = 7;
     nimo_host_panel_brightness = 20;
+    nimo_host_light_powered = nimo_host_light_wanted = nimo_host_light_factory = 0;
     /* The stock frames after a flip: front 0 holds the last frame, back 1 the next. */
     memset(nimo_host_fb[0], 0x3C, sizeof nimo_host_fb[0]);
     memset(nimo_host_fb[1], 0x5A, sizeof nimo_host_fb[1]);
@@ -74,6 +76,12 @@ void host_timer_tick(void)
 {
     assert(host.timer_live && host.timer_fn);
     host.timer_fn(&timer_object);
+}
+
+void host_light_tick(void)
+{
+    assert(host.light_timer_live && host.light_timer_fn);
+    host.light_timer_fn(&light_timer_object);
 }
 
 void nimo_critical_enter(void)
@@ -115,6 +123,29 @@ int nimo_peer_ui(uint32_t id, const void *data, uint32_t len)
 
 int nimo_is_master(void) { return host.master; }
 void nimo_still_reset(void) { host.still_resets++; }
+
+/* The stock driver: a read answers only while the sensor is powered, and the
+ * arm without the sensor accepts a power request and does nothing. */
+int nimo_light_read(uint16_t *lux)
+{
+    no_critical();
+    assert(lux);
+    host.light_reads++;
+    if (!nimo_host_light_powered || host.light_read_rc) return 1;
+    *lux = host.light_lux;
+    return 0;
+}
+
+int nimo_light_power(uint32_t on)
+{
+    no_critical();
+    if (!nimo_host_left) return 0;
+    if (host.light_power_rc) return -1;
+    if (on) host.light_power_on++;
+    else host.light_power_off++;
+    nimo_host_light_powered = on != 0;
+    return 0;
+}
 
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg)
 {
@@ -205,7 +236,16 @@ void nimo_lv_obj_invalidate(void *obj) { assert(obj == &screen_object); host.inv
 
 void *nimo_lv_timer_create(nimo_timer_fn fn, uint32_t period_ms, void *user)
 {
-    assert(fn && period_ms == NIMO_PUMP_MS && !user && !host.timer_live);
+    assert(fn && !user);
+    if (period_ms != NIMO_PUMP_MS) {
+        assert(!host.light_timer_live);
+        host.light_timer_fn = fn;
+        host.light_timer_period = period_ms;
+        host.light_timers_created++;
+        host.light_timer_live = 1;
+        return &light_timer_object;
+    }
+    assert(!host.timer_live);
     host.timer_fn = fn;
     host.timers_created++;
     host.timer_live = 1;
@@ -214,6 +254,12 @@ void *nimo_lv_timer_create(nimo_timer_fn fn, uint32_t period_ms, void *user)
 
 void nimo_lv_timer_delete(void *timer)
 {
+    if (timer == &light_timer_object) {
+        assert(host.light_timer_live);
+        host.light_timer_live = 0;
+        host.light_timers_deleted++;
+        return;
+    }
     assert(timer == &timer_object && host.timer_live);
     host.timer_live = 0;
     host.timers_deleted++;

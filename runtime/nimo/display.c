@@ -492,6 +492,7 @@ int glassly_input(uint32_t id, const uint8_t *param, uint32_t len)
 {
     nimo_ram *ram = NIMO_RAM;
     if (id == NIMO_MSG_ANCS_RELAY) return glassly_ancs_forwarded(param, len);
+    if (id == NIMO_MSG_LIGHT_RELAY) return glassly_light_forwarded(param, len);
     if (id == NIMO_MSG_AUTO_BRIGHTNESS && !ram->owned) return 0;
     uint32_t now = nimo_now_ms();
     int input_leased = ram->input_lease_until != 0 && (int32_t)(ram->input_lease_until - now) > 0;

@@ -306,6 +306,9 @@ int glassly_command(uint32_t cmd, uint32_t key, const uint8_t *payload, uint32_t
     case KEY_IMU_CONTROL:
         n = glassly_imu_control(payload, len, reply);
         break;
+    case KEY_LIGHT_CONTROL:
+        n = glassly_light_control(payload, len, reply);
+        break;
     case KEY_BRIGHTNESS:
         if (len != 1 || (payload[0] > 32u && payload[0] != 255u)) {
             reply[n++] = STATUS_INVALID;

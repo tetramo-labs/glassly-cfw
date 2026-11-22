@@ -51,6 +51,8 @@ int nimo_send_response(uint32_t cmd, uint32_t key, const void *data, uint32_t le
 int nimo_is_master(void);
 int nimo_peer_ui(uint32_t id, const void *data, uint32_t len);
 void nimo_still_reset(void);
+int nimo_light_read(uint16_t *lux);
+int nimo_light_power(uint32_t on);
 int nimo_gui_post_async(nimo_ui_fn fn, void *arg);
 void *nimo_malloc(uint32_t size);
 void nimo_free(void *ptr);
@@ -74,6 +76,10 @@ int nimo_font_glyph(const nimo_font *font, nimo_glyph_dsc *dsc, uint32_t letter,
 extern const nimo_font nimo_host_text_font;
 #define NIMO_TEXT_FONT (&nimo_host_text_font)
 extern volatile uint8_t nimo_host_panel_up, nimo_host_left, nimo_host_display_on, nimo_host_lit;
+extern volatile uint8_t nimo_host_light_powered, nimo_host_light_wanted, nimo_host_light_factory;
+#define NIMO_LIGHT_POWERED nimo_host_light_powered
+#define NIMO_LIGHT_WANTED nimo_host_light_wanted
+#define NIMO_LIGHT_FACTORY nimo_host_light_factory
 extern volatile uint16_t nimo_host_panel_brightness;
 extern volatile uint32_t nimo_host_blank_ticks;
 extern uint8_t nimo_host_fb[2][NIMO_PANEL_STRIDE * NIMO_PANEL_H];
@@ -101,6 +107,16 @@ typedef int (*nimo_peer_ui_fn)(uint32_t id, const void *data, uint32_t len);
  * stops the accelerometer FIFO) after 120 s without movement. */
 typedef void (*nimo_still_reset_fn)(void);
 #define nimo_still_reset ((nimo_still_reset_fn)0x04277b18u)
+
+/* Ambient light sensor: a TI OPT3001 at I2C 0x45, on the left arm only, in
+ * continuous 100 ms conversions while powered. read(&lux): 0 and whole lux
+ * when the sensor is powered and answered, else nonzero; takes the I2C bus
+ * mutex itself. power(on): 0 done (and on the right arm, where it does
+ * nothing), else the bus refused. */
+typedef int (*nimo_light_read_fn)(uint16_t *lux);
+typedef int (*nimo_light_power_fn)(uint32_t on);
+#define nimo_light_read ((nimo_light_read_fn)0x041ff79cu)
+#define nimo_light_power ((nimo_light_power_fn)0x041faf7eu)
 
 /* Nonzero on the arm that talks to the phone. */
 typedef int (*nimo_is_master_fn)(void);
@@ -195,6 +211,11 @@ _Static_assert(sizeof(nimo_glyph_record) == 8, "lv_font_fmt_txt_glyph_dsc_t layo
 #define NIMO_LIT (*(volatile uint8_t *)NIMO_LIT_FLAG)
 #define NIMO_BLANK (*(volatile uint32_t *)NIMO_BLANK_TICKS)
 #define NIMO_PANEL_BRIGHTNESS (*(volatile const uint16_t *)0x0201198eu)
+/* The light sensor's driver flag (1 = configured and converting), the power
+ * the stock auto-brightness last asked for and the factory lux stream flag. */
+#define NIMO_LIGHT_POWERED (*(volatile const uint8_t *)0x0201221fu)
+#define NIMO_LIGHT_WANTED (*(volatile const uint8_t *)0x02012a77u)
+#define NIMO_LIGHT_FACTORY (*(volatile const uint8_t *)0x02012e5au)
 
 /* The two stock framebuffers, 75,600 bytes each (540x280 GRAY4, stride 270).
  * LVGL's flush, the frame task, the scroller and the clear routine write the

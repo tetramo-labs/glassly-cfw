@@ -116,6 +116,15 @@ typedef struct {
     uint16_t imu_batches;         /* 0xb0 IMU notifications sent */
     uint16_t heads;               /* 0xb2 head events forwarded from the detector */
     int16_t imu_ring[NIMO_IMU_RING][3]; /* 0xb4 accelerometer x, y, z */
+    uint32_t light_lease_until;   /* 0x234 ms tick the light lease ends at; 0 = none */
+    void *light_timer;            /* 0x238 lv_timer_t of the light sampler; UI task only */
+    uint16_t light_interval;      /* 0x23c ms between readings the phone asked for */
+    uint16_t light_period;        /* 0x23e ms the live timer runs at */
+    uint16_t light_samples;       /* 0x240 readings sent to the phone or handed to the other arm */
+    uint16_t light_failures;      /* 0x242 readings the sensor or a transport refused */
+    volatile uint8_t light_posted; /* 0x244 1 while a light job is queued */
+    uint8_t light_forced;         /* 0x245 1 once the lease powered a sensor the stock had off */
+    uint8_t reserved6[2];
 } nimo_ram;
 
 _Static_assert(sizeof(nimo_ram) <= NIMO_RAM_BYTES, "RAM block layout exceeds the carve");
@@ -129,7 +138,8 @@ _Static_assert(offsetof(nimo_ram, last) == 0x58 && offsetof(nimo_ram, repins) ==
                offsetof(nimo_ram, inputs) == 0x84 && offsetof(nimo_ram, ancs_lease_until) == 0x8c &&
                offsetof(nimo_ram, input_lease_until) == 0x9c &&
                offsetof(nimo_ram, ancs_send_errors) == 0xa0 && offsetof(nimo_ram, imu_lease_until) == 0xa4 &&
-               offsetof(nimo_ram, imu_ring) == 0xb4 && sizeof(nimo_ram) == 0x234, "layout offsets documented above");
+               offsetof(nimo_ram, imu_ring) == 0xb4 && offsetof(nimo_ram, light_lease_until) == 0x234 &&
+               offsetof(nimo_ram, light_posted) == 0x244 && sizeof(nimo_ram) == 0x248, "layout offsets documented above");
 _Static_assert(NIMO_RAM_BASE + NIMO_RAM_BYTES == NIMO_CRUMB_BASE, "breadcrumbs follow the block");
 #endif
 

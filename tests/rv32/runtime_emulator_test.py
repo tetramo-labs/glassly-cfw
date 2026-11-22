@@ -89,8 +89,12 @@ STOCK = {
     "lv_timer_create": 0x0423F7F8, "lv_timer_delete": 0x0423F89E,
     "critical_enter": 0x041FA74E, "critical_exit": 0x041FA760, "ancs_intake": 0x0428C846,
     "head_callback": 0x041FAECA, "still_reset": 0x04277B18, "imu_copy": 0x0422C3A4,
+    "light_read": 0x041FF79C, "light_power": 0x041FAF7E,
 }
-MUTEX, SCREEN, TIMER = 0x02090000, 0x02090100, 0x02090200
+MUTEX, SCREEN, TIMER, LIGHT_TIMER = 0x02090000, 0x02090100, 0x02090200, 0x02090300
+# The light sensor's driver flag, the stock auto-brightness's power request and the factory stream flag.
+LIGHT_POWERED, LIGHT_WANTED, LIGHT_FACTORY = 0x0201221F, 0x02012A77, 0x02012E5A
+LIGHT_RELAY = 0x7E2D
 W, H, STRIDE = 540, 280, 270
 HW_HEAP_FREE = 194_520                 # step 2 on the glasses, 2026-11-09
 HW_LARGEST_GAP = 194_520 - 190_020
@@ -178,9 +182,11 @@ class Machine:
             self.uc.mem_write(self.crumbs[0], crumbs)
         self.replies, self.queue, self.flushes, self.calls = [], [], [], []
         self.stock_args = []
+        self.left, self.light_timer_fn, self.light_period, self.lux, self.light_error = left, None, 0, 0, 0
         self.allocations, self.freed, self.lock_depth, self.now = {}, [], 0, 5000
         self.heap_next, self.heap_base_free, self.largest_gap = HEAP + 4, heap_free, largest_gap
         self.timer_fn, self.fake_flush_calls, self.stopped_at = None, [], None
+        self.in_light_tick = False
         self.critical, self.payload, self.payload_len, self.jobs = 0, payload, 0, {}
         self.context, self.depth, self.wide_packet_reads = "router", {}, {}
         self.fault_hook = None
@@ -190,6 +196,8 @@ class Machine:
             (DISPLAY_ON, DISPLAY_ON + 1, False), (PANEL_UP, PANEL_UP + 1, False),
             (PANEL_BRIGHTNESS, PANEL_BRIGHTNESS + 2, False), (KICK_FLAG, KICK_FLAG + 1, False),
             (FB_BACK, FB_BACK + 1, True), (FB_FRONT, FB_FRONT + 1, True),
+            (LIGHT_POWERED, LIGHT_POWERED + 1, False), (LIGHT_WANTED, LIGHT_WANTED + 1, False),
+            (LIGHT_FACTORY, LIGHT_FACTORY + 1, False),
             (FB, FB + FB_BYTES, True), (FB + FB_BYTES, FB + 2 * FB_BYTES, False)]
         self.tick_ms = 10
         for address in [*STOCK.values(), RETURN, FAKE_FLUSH, *stops]:
@@ -360,13 +368,35 @@ class Machine:
             result = SCREEN
         elif name == "lv_obj_invalidate":
             check(a[0] == SCREEN, "invalidate of a non-screen object")
+        elif name == "lv_timer_create" and a[0] == self.symbols.get("light_tick"):
+            check(self.context == "ui" and self.light_timer_fn is None and 200 <= a[1] <= 5000 and a[2] == 0,
+                  f"light timer off the UI task, duplicate or period {a[1]}")
+            self.light_timer_fn, self.light_period = a[0], a[1]
+            result = LIGHT_TIMER
         elif name == "lv_timer_create":
             check(a[1] == 10 and self.timer_fn is None, "pump timer period or duplicate")
             self.timer_fn = a[0]
             result = TIMER
+        elif name == "lv_timer_delete" and a[0] == LIGHT_TIMER:
+            check(self.context == "ui" and self.light_timer_fn is not None and not self.in_light_tick,
+                  "light timer deleted off the UI task, twice or from its own callback")
+            self.light_timer_fn = None
         elif name == "lv_timer_delete":
             check(a[0] == TIMER, "deleting an unknown timer")
             self.timer_fn = None
+        elif name == "light_read":
+            lo, hi = self.stack_window()
+            check(a[0] % 2 == 0 and lo <= a[0] < hi, f"lux pointer {a[0]:#x} is not an aligned stack slot")
+            if self.u8(LIGHT_POWERED) and not self.light_error:
+                self.uc.mem_write(a[0], struct.pack("<H", self.lux))
+            else:
+                result = 1
+        elif name == "light_power":
+            if self.left and self.light_error:
+                result = 0xFFFFFFFF
+            elif self.left:
+                self.uc.mem_write(LIGHT_POWERED, bytes([1 if a[0] else 0]))
+            self.stock_args.append((name, a[0], 0))
         elif name in ("head_callback", "imu_copy"):
             self.stock_args.append((name, a[0], a[1]))
         elif name == "critical_enter":
@@ -404,7 +434,9 @@ class Machine:
             fn, arg = self.queue.pop(0)
             self.call(fn, arg, context="ui")
 
-    def command(self, key, payload=b"", run_ui=True):
+    def command(self, key, payload=b"", run_ui=True, silent=False):
+        """One 0x7E request through the router. silent: the caller reads no reply (on the glasses the
+        stock send_response drops a slave's; this mock records every call)."""
         self.payload_len = len(payload)
         self.uc.mem_write(self.payload, payload or b"\0")
         before = len(self.replies)
@@ -413,6 +445,8 @@ class Machine:
         if run_ui:
             self.run_ui()
         replies = [rep for rep in self.replies[before:] if rep[1] == key]
+        if silent:
+            return None
         check(replies, f"no reply to key {key:#x}")
         return replies[0]
 
@@ -424,6 +458,19 @@ class Machine:
     def hold(self, seconds):
         for _ in range(int(seconds * 1000 / self.tick_ms)):
             self.tick()
+
+    def light_tick(self, lux=None):
+        """The light sampler's LVGL timer firing once on the UI task, then the UI queue."""
+        check(self.light_timer_fn is not None, "no light timer to fire")
+        if lux is not None:
+            self.lux = lux
+        self.now += self.light_period
+        before = len(self.replies)
+        self.in_light_tick = True
+        self.call(self.light_timer_fn, LIGHT_TIMER, context="ui", label="light")
+        self.in_light_tick = False
+        self.run_ui()
+        return self.replies[before:]
 
     def head(self, up):
         """The accelerometer drain's detector result reaching the head gate."""
@@ -879,6 +926,72 @@ def test_v12_head_imu(build):
     check(m.command(0x2A, b"\x02")[2] == b"\x01", "bad IMU op")
 
 
+@test("v13 light lease: the left arm samples from its timer, the master sends, power is restored")
+def test_v13_light(build):
+    start = lambda ms: b"\x01" + struct.pack("<H", ms)
+    # Left arm as the slave: readings leave through the inter-arm transport.
+    m = Machine(build, left=True)
+    m.master = False
+    m.command(0x2C, start(500), silent=True)
+    check(m.light_timer_fn == m.symbols["light_tick"] and m.light_period == 500, "500 ms sampler on the left arm")
+    check(not m.light_tick(321) and m.u8(LIGHT_POWERED) == 1 and not m.peer, "first tick powers the sensor, reads nothing")
+    m.uc.mem_write(PANEL_BRIGHTNESS, struct.pack("<H", 12))
+    check(not m.light_tick(321) and len(m.peer) == 1, "second tick hands one reading to the master")
+    message, record = m.peer[0]
+    check(message == LIGHT_RELAY and record == b"\0\x01\0\x01" + struct.pack("<HIB", 321, m.now, 12),
+          f"light record {record.hex()}")
+    m.uc.mem_write(LIGHT_WANTED, b"\x01")
+    m.light_tick(40000)
+    check(m.peer[-1][1][1:6] == b"\x02\0\x03" + struct.pack("<H", 40000), "sample 2: forced and stock auto flags")
+    m.light_error = 1
+    m.light_tick()
+    m.light_error, m.peer_error = 0, -7
+    m.light_tick()
+    m.peer_error = 0
+    check(len(m.peer) == 2, "a failed read or hand-over sends nothing")
+    m.command(0x2C, start(50), silent=True)
+    check(m.light_period == 200, "interval held to 200 ms")
+    m.command(0x2C, start(9000), silent=True)
+    check(m.light_period == 5000, "interval held to 5000 ms")
+    m.now += 90001
+    m.light_tick()
+    check(m.light_timer_fn is None and m.u8(LIGHT_POWERED) == 1, "expired lease: timer gone, sensor left to the stock")
+    m.uc.mem_write(LIGHT_WANTED, b"\0")
+    m.uc.mem_write(LIGHT_POWERED, b"\0")
+    m.command(0x2C, start(500), silent=True)
+    m.light_tick()
+    check(m.u8(LIGHT_POWERED) == 1, "sensor forced on again")
+    m.command(0x2C, b"\0", silent=True)
+    check(m.light_timer_fn is None and m.u8(LIGHT_POWERED) == 0 and m.stock_args[-1] == ("light_power", 0, 0),
+          "dropped lease powers the forced sensor off")
+    depth = m.depth["ui:light"]
+    check(depth <= 256, f"light tick used {depth} B of UI stack")
+    # Right arm as the master: no timer; a handed-over reading leaves as 0x2D.
+    r = Machine(build, left=False)
+    reply = r.command(0x2C, start(500))[2]
+    check(reply == b"\0\x01\0" + struct.pack("<HHH", 500, 0, 0) and r.light_timer_fn is None and not r.queue,
+          f"light lease on the right arm {reply.hex()}")
+    r.uc.mem_write(PAYLOAD, record)
+    before = len(r.replies)
+    r.call(r.symbols["glassly_input_gate"], regs={10: LIGHT_RELAY, 11: PAYLOAD, 12: len(record)}, context="ui")
+    check(r.stopped_at == RETURN and r.replies[before:] == [(0x7E, 0x2D, record)], "master sends the reading as 0x2D")
+    r.call(r.symbols["glassly_input_gate"], regs={10: LIGHT_RELAY, 11: PAYLOAD, 12: len(record) - 1}, context="ui")
+    check(r.stopped_at == RETURN and len(r.replies) == before + 1, "a short record is dropped, never shown to the stock")
+    check(r.command(0x2C, start(500))[2][5:7] == b"\x01\0", "one reading counted")
+    check(r.command(0x2C, b"\0")[2][:2] == b"\0\0", "lease off")
+    r.call(r.symbols["glassly_input_gate"], regs={10: LIGHT_RELAY, 11: PAYLOAD, 12: len(record)}, context="ui")
+    check(r.stopped_at == RETURN and len(r.replies) == before + 3, "no lease: the reading is dropped")
+    check(r.command(0x2C, b"\x02")[2] == b"\x01" and r.command(0x2C, b"\x01\xf4")[2] == b"\x01", "bad requests")
+    # A left arm that is the master sends its own readings.
+    lm = Machine(build, left=True)
+    check(lm.command(0x2C, start(1000))[2][:3] == b"\0\x01\x01", "left master has the sensor")
+    lm.uc.mem_write(LIGHT_POWERED, b"\x01")
+    sent = lm.light_tick(7)
+    check([rep[:2] for rep in sent] == [(0x7E, 0x2D)] and sent[0][2][3:6] == b"\0\x07\0" and not lm.peer,
+          "left master sends directly without forcing")
+    EVIDENCE["light"] = {"ui_stack_bytes": depth}
+
+
 @test("left arm: acquire, demo scenes, pump, per-eye SHOW, brightness, release")
 def test_left(build):
     m = demo_session(build, True)
@@ -1062,7 +1175,7 @@ def main():
         path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
         print(json.dumps(got, indent=2))
         return
-    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_v11_input_peer, test_text, test_left, test_right,
+    tests = [test_plain, test_router_gate, test_flush_gate, test_kick_gate, test_input_gate, test_ancs_gates, test_v11_input_peer, test_v12_head_imu, test_v13_light, test_text, test_left, test_right,
              test_steps_to_geometry, test_all_steps, test_canvas_timing, test_odd_payload, test_breadcrumbs]
     for fn in tests:
         fn(args.build)

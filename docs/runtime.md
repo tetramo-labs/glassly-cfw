@@ -134,6 +134,8 @@ reply once the work is done; a busy refusal is answered at once.
 | 0x29 | `[1 \| 0]` | input lease (GLASSLYCFW/11): 1 arms or renews 90 s, 0 drops it. `[0]`. While it or the display lease is live, 0x26 carries touch and head messages |
 | 0x2A | `[1 \| 0]` | IMU lease (GLASSLYCFW/12): 1 arms or renews 90 s, 0 drops it. `[0][leased][overruns][batches u16][head events u16]` |
 | 0x2B | — (notification) | while the IMU lease is live, every accelerometer FIFO drain: `[0][batch u16][overruns][count][ms tick u32][count × (x, y, z int16 LE)]`, oldest first, 8196 counts per g, about 26 samples a second, right arm only |
+| 0x2C | `[1][interval ms u16 LE]` \| `[0]` | light lease (GLASSLYCFW/13): 1 arms or renews 90 s with a reading every `interval` (held to 200..5000 ms), 0 drops it. `[0][leased][1 when the answering arm has the sensor][interval u16][readings u16][failures u16]` |
+| 0x2D | — (notification) | while the light lease is live, every reading: `[0][sample u16][flags][lux u16][ms tick u32][panel level]`. Flags: 1 the lease powered the sensor (the stock had it off), 2 the stock auto-brightness has it on. Sampled on the left arm, sent by the master |
 | other | — | status 5 |
 
 Scene modes (the MemoMind 0x7d channel's raw messages, minus diagnostics and
@@ -588,3 +590,44 @@ RAM additions: `imu_posted` 0xa1, `imu_overruns` 0xa2, `imu_lease_until`
 0xa4, `imu_write`/`imu_read` 0xa8/0xaa, `imu_time` 0xac, `imu_batches` 0xb0,
 `heads` 0xb2, `imu_ring` 0xb4, total 0x234.
 
+## Revision 13: the light sensor
+
+The ambient light sensor is a TI OPT3001 at I2C address 0x45 (manufacturer id
+`0x5449` read from register 0x7E), on the **left** arm only: the factory test
+`0x041e5ade` reads it when the left flag `0x02011b18` is set and reports "only
+on right device" (a message copied from the IMU test `0x041e5b92`, which
+reads the accelerometer when the flag is clear) otherwise, and the stock
+auto-brightness log names the same flag `left`.
+
+| What | Address | Notes |
+|---|---|---|
+| power | `0x041faf7e(on)` | left arm only (0 and nothing done on the right). On: `0x041ff73a` → `0x0420449a` checks the id and writes configuration `0xC610` (automatic range, 100 ms conversions, continuous). Off: `0x041ff764` → `0x042045ec` writes `0xC010` (shutdown). 0 done, -1 the bus refused |
+| read | `0x041ff79c(u16 *lux)` | → `0x0420467a`: result register 0, `mantissa × 2^exponent × 0.01`, stored as whole lux. 0 read; 1 when the driver flag is clear or the bus refused. The I2C helper `0x04285642` takes the bus mutex itself |
+| driver flag | `*(u8 *)0x0201221f` | 1 while configured and converting |
+| stock request | `*(u8 *)0x02012a77` | the power the auto-brightness manager `0x042693f0` last applied: on only with auto-brightness enabled, the display on and this arm the left one. It calls the power function only when this changes |
+| factory stream | `*(u8 *)0x02012e5a` | 1 while the factory lux stream (`0x0427eac8`, a 1 s timer) holds the sensor on |
+| one-shot | `0x041fb0ce(u16 *lux)` | powers the sensor, waits 150 ms, reads and powers it off again when it was off; not used by the runtime |
+
+The stock loop `0x042695a2` (through `0x041f692c`) reads lux only while the
+auto-brightness has the sensor on, filters a median of three and turns the
+result into the brightness steps the runtime already holds (UI message 0xa8).
+
+`runtime/nimo/light.c`: the phone arms a 90 s lease with `7e/2c [01][interval]`
+and renews it; both arms run the command. On the left arm a UI job creates an
+LVGL timer at the interval (`lv_timer_create`, the UI task; a changed interval
+replaces it). Each tick reads the sensor; a sensor found off is powered and
+read on the next tick, after its first conversion. A reading is the 11-byte
+`7e/2d` record: the left arm sends it itself when it is the master, else hands
+it to the master as private UI message `0x7e2d` through the inter-arm transport
+(`0x041fc078`, as the notification relay's `0x7e28`), and the master's
+dispatcher hook sends it on while its own copy of the lease is live. A lease
+that ends (dropped, or expired and noticed by the next tick) deletes the timer
+from a UI job, never from the timer's own callback, and powers the sensor off
+again only if the lease had powered it and neither the stock auto-brightness
+nor the factory stream asks for it. Lux is the driver's u16: readings above
+65,535 lux wrap, as they do for the stock loop.
+
+RAM additions: `light_lease_until` 0x234, `light_timer` 0x238,
+`light_interval` 0x23c, `light_period` 0x23e, `light_samples` 0x240,
+`light_failures` 0x242, `light_posted` 0x244, `light_forced` 0x245, total
+0x248. No new hook: the input gate passes one more message id (`0x7e2d`).

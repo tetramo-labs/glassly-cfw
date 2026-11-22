@@ -82,13 +82,15 @@ glassly_kick_gate:
  * its entry with `auipc t1; jalr x0` in place of `c.addi16sp sp,-128;
  * c.swsp s0,120(sp); c.swsp s1,116(sp); c.swsp s3,108(sp)`, so a0 = message
  * id, a1 = parameter bytes, a2 = their length and ra = the dispatcher's
- * caller. Head/touch messages, auto-brightness and private peer relay records
- * pass through glassly_input, which decides from the relevant lease whether
+ * caller. Head/touch messages, auto-brightness and the private peer records
+ * (notifications 0x7e28, light readings 0x7e2d) pass through glassly_input, which decides from the relevant lease whether
  * to consume them. Other messages replay the prologue and rejoin stock. */
     .balign 4
     .globl glassly_input_gate
 glassly_input_gate:
     li      t2, 0x7e28
+    beq     a0, t2, 5f
+    li      t2, 0x7e2d
     beq     a0, t2, 5f
     addi    t1, a0, -0x86
     sltiu   t2, t1, 2

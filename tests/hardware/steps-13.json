@@ -1,0 +1,750 @@
+{
+  "format": "nimo-hardware-steps-v1",
+  "revision": 13,
+  "firmware": "GLASSLYCFW/13",
+  "image": "captures/firmware/ota-1.1.5.1-glasslycfw-13.bin",
+  "prepare": [
+    "python3 -I scripts/scene_packets.py demo captures/scenes/demo-geometry.bin",
+    "python3 -I scripts/scene_packets.py retained captures/scenes",
+    "python3 -I scripts/scene_packets.py cues captures/scenes",
+    "python3 -I scripts/scene_packets.py text captures/scenes"
+  ],
+  "notes": [
+    "Every request is [cmd 7e][key][len LE16][payload]; replies are [status][data...].",
+    "expect_reply_hex is the whole reply and expect_reply_prefix_hex its first bytes, status included.",
+    "Unsolicited settled notices arrive as key 24 with [00][tag LE16]; do not match them as replies.",
+    "Only the master arm replies; both arms run every command.",
+    "Step 1 runs first after every boot: the first 0x7E command of a boot reads the breadcrumbs the previous boot left (256 bytes at 0x0209ce74 that the boot clear skips) and the status JSON reports them as boot and last_crash.",
+    "Key 25 replies [status][CRC-32 of the answering arm's canvas LE][eye]; the expected values are the right arm's, from tests/rv32/runtime_emulator_test.py --expected (only the master, the right arm, replies).",
+    "Steps with \"await\": true send nothing: they wait up to reply_timeout_seconds for an unsolicited message with that cmd/key whose bytes start with expect_reply_prefix_hex (the wearer's touch, key 26). emulate_input is what the emulator feeds the input gate instead.",
+    "1.1.5.1 reports every tap as its own 0x88 (no 0x89 double tap seen on 2026-11-10): the phone tells double taps apart by timing.",
+    "From GLASSLYCFW/9 the stock auto-brightness steps (UI message 0xa8) wait while owned once 0x7E/0x23 set a level; gate_skips counts them with the held-off stock frames.",
+    "GLASSLYCFW/10 adds the notification relay: 0x7E/0x27 [op] answers the STATUS record [00][41 4e 01 04][enabled][side][drops LE16][sent LE16][00]; while the lease is held each notification the stock ANCS client completes arrives as unsolicited key 28 records (do not match them as replies). The relay only matters with an iPhone bonded to the glasses; from the Mac the counters stay 0.",
+    "GLASSLYCFW/11 adds input lease key 29, payload 01 enable/renew or 00 disable, expiring after 90 seconds. Head-up 86, head-down 87, touch 88..8c, press 98 and release 99 reach key 26 even with no display lease. Brightness key 23 payload ff restores automatic control without releasing the scene.",
+    "With the v11 Glassly App and iPhone, check idle right double-tap opens dashboard, head-up/down, left index 1 and right index 0 touch_down/tap_start/tap_end, automatic brightness without blanking, dashboard labels, and a new ANCS notification after sharing is authorized. These require physical checks outside the Mac replay.",
+    "Steps with payload_file captures/scenes/scene-text.bin, text-line.bin and text-refused.bin exercise built-in text (GLASSLYCFW/12): TEXT_INLINE objects and mode 15 drawn with the stock LVGL default face (Montserrat 16 at 0x0431ee44, glyph boxes from its get_glyph_dsc 0x04243e8a).",
+    "Revision 12: head-up/down arrive as key 26 [00][86|87][00] straight from the accelerometer detector under the input or display lease; key 2a [01|00] leases IMU samples, which arrive as key 2b.",
+    "Revision 13: key 2c [01][interval ms LE16] arms or renews a 90 s light lease (interval held to 200..5000 ms) and [00] drops it; the reply is [00][leased][01 when the answering arm has the sensor][interval LE16][readings LE16][failures LE16]. The sensor (TI OPT3001) is on the left arm; each reading reaches the phone from the master as key 2d [00][sample LE16][flags: 01 the lease powered the sensor, 02 the stock auto-brightness has it on][lux LE16][ms tick LE32][panel level]. emulate_input on those steps is the left arm's record arriving at the master's UI dispatcher as private message 0x7e2d."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "title": "Breadcrumbs from the previous boot",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 0,
+        "session": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "Record boot and last_crash (they lead the JSON). boot is 1 when the record started fresh (first boot after this flash, or a power cycle cleared RAM) and grows by one after every reset that kept RAM. last_crash is null when the previous boot ended at rest; after a crash it names the lane (router, ui, pump), the stage it never left (router, dispatch, render, present, reply, tick), the command number seq, key, mode (first scene byte) and len, and open lists every unfinished lane as bits (1 router, 2 ui, 4 pump). Run this step again after any reboot during the suite."
+    },
+    {
+      "step": 2,
+      "title": "Identity",
+      "cmd": "7e",
+      "key": "01",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "version": "GLASSLYCFW/13",
+        "revision": 13,
+        "platform": "nimo",
+        "base": "1.1.5.1",
+        "max_message": 12284,
+        "owned": 0,
+        "scene": {
+          "store": 65536,
+          "objects": 128,
+          "assets": 128,
+          "text": true,
+          "modes": [
+            3,
+            6,
+            8,
+            9,
+            15,
+            19,
+            20,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41
+          ]
+        }
+      },
+      "hold_seconds": 0,
+      "look_for": "Nothing changes on the glasses. Note which arm answered (arm, eye)."
+    },
+    {
+      "step": 3,
+      "title": "Status before the lease",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 0,
+        "session": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "Record heap_free and heap_largest (the lease now borrows a stock framebuffer for the canvas; the retained scene takes about 121 KB of heap and keeps 48 KB for the stock firmware) and panel_brightness (the level the restore step sends)."
+    },
+    {
+      "title": "Notification relay: query",
+      "cmd": "7e",
+      "key": "27",
+      "payload_hex": "03",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00414e01040001",
+      "hold_seconds": 0,
+      "look_for": "The STATUS record: not enabled, side 1 (the master answers), drops and sent 0 after a boot.",
+      "step": 4
+    },
+    {
+      "title": "Notification relay: enable",
+      "cmd": "7e",
+      "key": "27",
+      "payload_hex": "01",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00414e01040101",
+      "hold_seconds": 0,
+      "look_for": "enabled = 1. For the next 90 s a notification arriving on a bonded iPhone would come as key 28 records instead of the stock popup; from the Mac nothing arrives.",
+      "step": 5
+    },
+    {
+      "step": 6,
+      "title": "Echo",
+      "cmd": "7e",
+      "key": "02",
+      "payload_hex": "676c6173736c79",
+      "expect_status": 0,
+      "expect_reply_hex": "00676c6173736c79",
+      "hold_seconds": 0,
+      "look_for": "Reply repeats the payload."
+    },
+    {
+      "step": 7,
+      "title": "1200-byte chunk checksum",
+      "cmd": "7e",
+      "key": "03",
+      "payload_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5cc",
+      "expect_status": 0,
+      "expect_reply_hex": "00b00400004d6ecdb7",
+      "hold_seconds": 0,
+      "look_for": "Length 1200 and the zlib CRC-32 of the payload: the multi-chunk transfer arrived intact."
+    },
+    {
+      "step": 8,
+      "title": "Acquire the display",
+      "cmd": "7e",
+      "key": "21",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0000",
+      "hold_seconds": 3,
+      "look_for": "Both eyes go black: the stock UI is gone and stays gone. Reply byte 1 is the flush result (0 sent), byte 2 display on, byte 3 the answering arm's eye."
+    },
+    {
+      "title": "Brightness up for the test",
+      "cmd": "7e",
+      "key": "23",
+      "payload_hex": "0c",
+      "expect_status": 0,
+      "expect_reply_hex": "0000",
+      "hold_seconds": 1,
+      "look_for": "Both eyes brighten to 12 of 32 and stay there: once the phone sets a level, the stock auto-brightness waits for the release, which puts the wearer's level back.",
+      "step": 9
+    },
+    {
+      "step": 10,
+      "title": "Status while owned",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "session": 1,
+        "flush_errors": 0,
+        "repins": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "heap_free drops by only the 1.3 KB session: the canvas is a borrowed stock framebuffer. repins stays 0."
+    },
+    {
+      "step": 11,
+      "title": "Canvas checksum: black",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "00044d8a3c02",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right eye's canvas is 75,600 zero bytes: the borrowed stock framebuffer was cleared."
+    },
+    {
+      "step": 12,
+      "title": "Demo geometry frame (mode 36)",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/demo-geometry.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: a rounded border at the panel edge, two diagonals, a row of eight filled circles from dark to bright across the middle and a large ring around the centre."
+    },
+    {
+      "step": 13,
+      "title": "Canvas checksum: demo frame",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "00da82e4c502",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right canvas matches the emulator's render of the demo frame."
+    },
+    {
+      "step": 14,
+      "title": "Cue: a large filled circle on the right: tap the RIGHT touchpad once",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/cue-tap-right.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 0,
+      "look_for": "Both eyes: a large filled circle on the right: tap the RIGHT touchpad once."
+    },
+    {
+      "step": 15,
+      "title": "Right touchpad: single tap",
+      "cmd": "7e",
+      "key": "26",
+      "await": true,
+      "reply_timeout_seconds": 90,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00880800",
+      "hold_seconds": 1,
+      "emulate_input": {
+        "id": 136,
+        "param_hex": "0001010007000000"
+      },
+      "look_for": "Tap the right touchpad once. Reply [00][message id][stock length][side (1 left)][1][source u16][gesture sequence u32]; the touch reaches no stock screen on the master."
+    },
+    {
+      "step": 16,
+      "title": "Cue: a large filled circle on the left: tap the LEFT touchpad once",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/cue-tap-left.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 0,
+      "look_for": "Both eyes: a large filled circle on the left: tap the LEFT touchpad once."
+    },
+    {
+      "step": 17,
+      "title": "Left touchpad: single tap",
+      "cmd": "7e",
+      "key": "26",
+      "await": true,
+      "reply_timeout_seconds": 90,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00880801",
+      "hold_seconds": 1,
+      "emulate_input": {
+        "id": 136,
+        "param_hex": "0101030008000000"
+      },
+      "look_for": "Tap the left touchpad once. If this times out, the left arm's taps do not reach the master's dispatcher. Reply [00][message id][stock length][side (1 left)][1][source u16][gesture sequence u32]; the touch reaches no stock screen on the master."
+    },
+    {
+      "step": 18,
+      "title": "Cue: a filled bar on the right: HOLD the right touchpad about 2 s",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/cue-long-right.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 0,
+      "look_for": "Both eyes: a filled bar on the right: HOLD the right touchpad about 2 s."
+    },
+    {
+      "step": 19,
+      "title": "Right touchpad: long press",
+      "cmd": "7e",
+      "key": "26",
+      "await": true,
+      "reply_timeout_seconds": 90,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "008b0800",
+      "hold_seconds": 1,
+      "emulate_input": {
+        "id": 139,
+        "param_hex": "000101000a000000"
+      },
+      "look_for": "Hold the right touchpad until the stock long press fires (about 2 s). Reply [00][message id][stock length][side (1 left)][1][source u16][gesture sequence u32]; the touch reaches no stock screen on the master."
+    },
+    {
+      "step": 20,
+      "title": "Status after the touches",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 0,
+        "flush_errors": 0,
+        "panel_brightness": 12
+      },
+      "hold_seconds": 0,
+      "look_for": "inputs counts every touch message the master saw while owned (presses and releases too). panel_brightness still 12 means the stock auto-brightness left the level alone while owned."
+    },
+    {
+      "step": 21,
+      "title": "Retained scene with a glide",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-retained.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026030000354e",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: rounded border, filled circle in the centre, a diagonal line, and a small box that slides from the top left to the top right over about 2 s. A settled notice (key 24, tag 03 00) follows the slide."
+    },
+    {
+      "step": 22,
+      "title": "Scene holds without auto-off",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 0,
+        "flush_errors": 0,
+        "panel_brightness": 12
+      },
+      "hold_seconds": 40,
+      "look_for": "The scene stays up for the whole 40 s on both eyes: no auto-off, no stock UI flashing through, no flicker. panel_brightness stays 12 even if the room light changes."
+    },
+    {
+      "step": 23,
+      "title": "Canvas checksum: retained scene after 40 s",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "009b84adde02",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The settled retained scene is bit-exact after the hold: no stock code drew into the borrowed buffer."
+    },
+    {
+      "step": 24,
+      "title": "Per-eye objects",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-eyes.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026050000354e",
+      "hold_seconds": 5,
+      "look_for": "Close each eye in turn: the left eye has a block at the bottom left, the right eye a block at the bottom right; neither eye sees the other's block. The geometry stays in both."
+    },
+    {
+      "step": 25,
+      "title": "Canvas checksum: per-eye objects",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "00bbe4d4ec02",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right canvas holds the right-only block, not the left one."
+    },
+    {
+      "step": 26,
+      "title": "SHOW for the right eye only",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-right.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026060000354e",
+      "hold_seconds": 5,
+      "look_for": "Right eye: only the circle. Left eye: unchanged (geometry plus its block)."
+    },
+    {
+      "step": 27,
+      "title": "SHOW for the left eye only",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-left.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026070000354e",
+      "hold_seconds": 5,
+      "look_for": "Left eye: only the border. Right eye: still only the circle."
+    },
+    {
+      "step": 28,
+      "title": "SHOW for both eyes",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-both.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026080000354e",
+      "hold_seconds": 4,
+      "look_for": "Both eyes show the geometry scene again (border, circle, line, box at its slid position)."
+    },
+    {
+      "step": 29,
+      "title": "Canvas checksum: SHOW for both eyes",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "009b84adde02",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right canvas matches the emulator after the three SHOWs."
+    },
+    {
+      "step": 30,
+      "title": "Status after the scenes",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 0,
+        "flush_errors": 0,
+        "repins": 0,
+        "alloc_failures": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "Record heap_free with the retained scene resident and gate_skips (stock frames held off)."
+    },
+    {
+      "title": "Built-in text scene",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-text.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00260a0000354e",
+      "hold_seconds": 6,
+      "look_for": "Both eyes: a thin frame around four lines of text drawn by the glasses in the stock UI's font (LVGL Montserrat 16, about the size of the stock menus): 'GLASSLYCFW/12 built-in text', the quick brown fox, the digits and ASCII punctuation, and a dimmer fourth line '21°C • level 8 • gjpqy'. Check that descenders (g j p q y) are not cut off, letters are not clipped at the right, and both eyes show the same text at the same height.",
+      "step": 31
+    },
+    {
+      "title": "Canvas checksum: built-in text scene",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0099d1e00402",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes. The right canvas matches the emulator's render with the stock font tables.",
+      "step": 32
+    },
+    {
+      "title": "Mode-15 text line",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/text-line.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: 'Mode 15 draws over the scene' appears below the frame; the four lines stay.",
+      "step": 33
+    },
+    {
+      "title": "Canvas checksum: mode-15 line",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0019347da002",
+      "hold_seconds": 0,
+      "look_for": "Nothing changes.",
+      "step": 34
+    },
+    {
+      "title": "Refused text: a character the font lacks",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/text-refused.bin",
+      "expect_status": 1,
+      "expect_reply_hex": "01",
+      "hold_seconds": 2,
+      "look_for": "Nothing changes on either eye: 'café' needs a glyph (é) the stock face does not have, so the whole string is refused before anything is drawn. The glasses keep running.",
+      "step": 35
+    },
+    {
+      "title": "Canvas checksum: unchanged after the refusal",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "0019347da002",
+      "hold_seconds": 0,
+      "look_for": "The same checksum as the mode-15 step.",
+      "step": 36
+    },
+    {
+      "title": "Status after the text",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 1,
+        "flush_errors": 0,
+        "repins": 0,
+        "alloc_failures": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "rejected is 1 (the refused string) and nothing else failed.",
+      "step": 37
+    },
+    {
+      "step": 38,
+      "title": "Brightness low",
+      "cmd": "7e",
+      "key": "23",
+      "payload_hex": "01",
+      "expect_status": 0,
+      "expect_reply_hex": "0000",
+      "hold_seconds": 4,
+      "look_for": "Both eyes dim to the lowest level. The release step puts the wearer's level back."
+    },
+    {
+      "step": 39,
+      "title": "Release the display",
+      "cmd": "7e",
+      "key": "22",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 3,
+      "look_for": "The stock UI repaints on both eyes within about a second, at the wearer's brightness again; nothing from the scene remains."
+    },
+    {
+      "step": 40,
+      "title": "Status after release",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 0,
+        "session": 0,
+        "flush_errors": 0,
+        "brightness": 1
+      },
+      "hold_seconds": 0,
+      "look_for": "panel_brightness is the level step 3 reported (the stock auto-brightness sets it, so it varies: 4 and 11 on 2026-11-10); brightness is the last 0x23 level (1)."
+    },
+    {
+      "title": "Notification relay: disable",
+      "cmd": "7e",
+      "key": "27",
+      "payload_hex": "02",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00414e01040001",
+      "hold_seconds": 0,
+      "look_for": "enabled = 0 again; drops and sent report what the lease saw.",
+      "step": 41
+    },
+    {
+      "step": 42,
+      "title": "Canvas checksum after release",
+      "cmd": "7e",
+      "key": "25",
+      "payload_hex": "",
+      "expect_status": 3,
+      "expect_reply_hex": "030000000002",
+      "hold_seconds": 0,
+      "look_for": "Not owned: the stock screen is back and the canvas is stock's again."
+    },
+    {
+      "step": 43,
+      "title": "Enable idle input lease",
+      "cmd": "7e",
+      "key": "29",
+      "payload_hex": "01",
+      "expect_reply_hex": "00",
+      "hold_seconds": 0
+    },
+    {
+      "step": 44,
+      "title": "Disable idle input lease",
+      "cmd": "7e",
+      "key": "29",
+      "payload_hex": "00",
+      "expect_reply_hex": "00",
+      "hold_seconds": 0
+    },
+    {
+      "title": "Enable the idle input lease again",
+      "cmd": "7e",
+      "key": "29",
+      "payload_hex": "01",
+      "expect_reply_hex": "00",
+      "hold_seconds": 0,
+      "step": 45
+    },
+    {
+      "title": "Head-up from the detector",
+      "look_for": "Look down at the floor for a second, then raise your head past the head-up angle and hold it.",
+      "cmd": "7e",
+      "key": "26",
+      "await": true,
+      "reply_timeout_seconds": 90,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0086",
+      "hold_seconds": 1,
+      "emulate_head": {
+        "up": 1
+      },
+      "step": 46
+    },
+    {
+      "title": "Head-down from the detector",
+      "look_for": "Lower your head and look down at the floor.",
+      "cmd": "7e",
+      "key": "26",
+      "await": true,
+      "reply_timeout_seconds": 90,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0087",
+      "hold_seconds": 1,
+      "emulate_head": {
+        "up": 0
+      },
+      "step": 47
+    },
+    {
+      "title": "IMU lease on",
+      "cmd": "7e",
+      "key": "2a",
+      "payload_hex": "01",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0001",
+      "hold_seconds": 0,
+      "step": 48
+    },
+    {
+      "title": "Accelerometer samples",
+      "look_for": "Move your head a little. The reply is [00][batch u16][overruns][count][ms u32] then count x (x, y, z) int16 at 8196 per g; one axis should read near 8196 at rest.",
+      "cmd": "7e",
+      "key": "2b",
+      "await": true,
+      "reply_timeout_seconds": 10,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00",
+      "hold_seconds": 0,
+      "emulate_imu": {
+        "count": 8
+      },
+      "step": 49
+    },
+    {
+      "title": "IMU lease renew and counters",
+      "cmd": "7e",
+      "key": "2a",
+      "payload_hex": "01",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0001",
+      "hold_seconds": 0,
+      "step": 50
+    },
+    {
+      "title": "IMU lease off",
+      "cmd": "7e",
+      "key": "2a",
+      "payload_hex": "00",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0000",
+      "hold_seconds": 0,
+      "step": 51
+    },
+    {
+      "title": "Disable the idle input lease",
+      "cmd": "7e",
+      "key": "29",
+      "payload_hex": "00",
+      "expect_reply_hex": "00",
+      "hold_seconds": 0,
+      "step": 52
+    },
+    {
+      "title": "Light lease on",
+      "cmd": "7e",
+      "key": "2c",
+      "payload_hex": "01f401",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0001",
+      "hold_seconds": 0,
+      "look_for": "Reply [00][leased 01][sensor on the answering arm: 00 when the right arm is the master, 01 when the left is][f401 = 500 ms][readings][failures]. Record byte 2.",
+      "step": 53
+    },
+    {
+      "title": "Light reading",
+      "cmd": "7e",
+      "key": "2d",
+      "await": true,
+      "reply_timeout_seconds": 10,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00",
+      "hold_seconds": 0,
+      "look_for": "In room light. The reply is [00][sample u16][flags][lux u16][ms u32][panel level]; note the lux and whether flag 01 (sensor forced on) or 02 (stock auto-brightness) is set.",
+      "emulate_input": {
+        "id": 32301,
+        "param_hex": "000100014101881300000c"
+      },
+      "step": 54
+    },
+    {
+      "title": "Light reading, sensor covered",
+      "cmd": "7e",
+      "key": "2d",
+      "await": true,
+      "reply_timeout_seconds": 10,
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "00",
+      "hold_seconds": 0,
+      "look_for": "Cover the front of the left arm with a finger: the lux in this reading should be far lower than in the last one.",
+      "emulate_input": {
+        "id": 32301,
+        "param_hex": "0002000103007c1500000c"
+      },
+      "step": 55
+    },
+    {
+      "title": "Light lease renew and counters",
+      "cmd": "7e",
+      "key": "2c",
+      "payload_hex": "01f401",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0001",
+      "hold_seconds": 0,
+      "look_for": "Bytes 5-6 count the readings the master sent (about two a second since the lease began), bytes 7-8 the failures (expected 0).",
+      "step": 56
+    },
+    {
+      "title": "Light lease off",
+      "cmd": "7e",
+      "key": "2c",
+      "payload_hex": "00",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0000",
+      "hold_seconds": 3,
+      "look_for": "No key 2d message arrives after this. With the app's auto-brightness off, the sensor goes back off.",
+      "step": 57
+    }
+  ]
+}

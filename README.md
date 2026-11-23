@@ -1,6 +1,6 @@
 # Glassly Flash Tool
 
-Glassly Flash Tool installs firmware that lets you use a supported controller or pair of smart glasses with the Glassly App on iOS and Android. You can also use it to restore the official firmware. The desktop download includes the firmware for each supported device.
+Glassly Flash Tool installs firmware that lets you use a supported controller or pair of smart glasses with the Glassly App on iOS and Android. You can also use it to restore the official firmware.
 
 ## Supported devices
 

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "swift/MemoMindKit/.build/debug/memomind",
+    "probe",
+    "--address",
+    "4C:3C:8F:90:CC:C3",
+    "--output",
+    "captures/sensor-read-20261103-probe-01"
+  ],
+  "elapsedSeconds": 45.01585820806213,
+  "exitCode": -15,
+  "externalDeadlineExpired": true,
+  "otaStarted": false,
+  "bootVerified": false,
+  "bluetoothSettingsChanged": false,
+  "traces": [
+    {
+      "path": "captures/sensor-read-20261103-probe-01/trace.jsonl",
+      "bytes": 505,
+      "sha256": "b68b6c9a3b507b306ac401a98bc02f642a0ae5968fd45fcefc8062c88faa33ac"
+    }
+  ]
+}

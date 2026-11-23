@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "sources": [
+    {
+      "source": "analysis/flash-canary/host-009/report.json",
+      "counts": {
+        "success": 7,
+        "native_error": 0,
+        "status_error": 0
+      }
+    },
+    {
+      "source": "analysis/flash-canary/runtime-004.json",
+      "counts": {
+        "success": 228,
+        "native_error": 16,
+        "status_error": 0
+      }
+    }
+  ],
+  "hardware_tested": false,
+  "scope": "Production C/RV32 replies via actual GM framing and strict canary client; native APIs mocked"
+}

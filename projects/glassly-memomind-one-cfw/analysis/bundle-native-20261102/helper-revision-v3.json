@@ -1,0 +1,33 @@
+{
+  "utc": "2026-11-02T05:54:39.178314+00:00",
+  "production_firmware_changes": false,
+  "production_swift_library_changes": false,
+  "supersedes": "helper-revision-v2.json",
+  "reason": "Further unsolicited native telemetry service1 command45 interrupted attempt03 after nine scene notifications and the visual bundle were accepted. An exact single-status allowlist was insufficient.",
+  "revision": "During custom tests, log all independently framed unsolicited messages outside service15 with event/service/command/exact body. Do not interpret or act on them. All private service15 messages remain strictly checked. The verifier correlates every logged native body to raw RX frames. Exact startup notices before custom requests remain separately recognized.",
+  "helper": "analysis/bundle-native-20261102/smoke-v3.swift",
+  "verifier": "analysis/bundle-native-20261102/verify-smoke-v3.py",
+  "verifier_tests": {
+    "cases": 28,
+    "passed": true,
+    "report": "analysis/bundle-swift-20261102/verifier-review/run-006/report.json"
+  },
+  "source_files": [
+    {
+      "path": "analysis/bundle-native-20261102/smoke-v3.swift",
+      "bytes": 12475,
+      "sha256": "672a8fca40faa9778239eb68c280cbf49bfbfbd5d9bc199bc5d5584bd9e1402f"
+    },
+    {
+      "path": "analysis/bundle-native-20261102/verify-smoke-v3.py",
+      "bytes": 10937,
+      "sha256": "0c711af884bfab2bec4b6cf3f6e5353557c660690650e372a94e6a73ff9d232a"
+    }
+  ],
+  "hardware_capture": "captures/swift-mac-bundle-smoke-20261102-04",
+  "hardware_result": "pending final clear and visual observation",
+  "limits": [
+    "Captured native telemetry meaning is not inferred.",
+    "Application traffic capture, not independent HCI/radio capture."
+  ]
+}

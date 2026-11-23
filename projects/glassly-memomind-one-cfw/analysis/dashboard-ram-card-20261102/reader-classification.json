@@ -1,0 +1,122 @@
+[
+  {
+    "address": "042642ca",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "042644c4",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04264616",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04264f26",
+    "classification": "initializer (suppress at cold boot)"
+  },
+  {
+    "address": "0426502a",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04265042",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04265060",
+    "classification": "unsafe without initializer; gate"
+  },
+  {
+    "address": "04265184",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "0426522c",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "042652e8",
+    "classification": "unsafe without initializer; gate"
+  },
+  {
+    "address": "04265338",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "042653c2",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04265800",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04265b8c",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04265e4e",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "0426609e",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "042662d8",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04266452",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "0426663e",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "042669a8",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04266a8e",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04266b06",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04266bd8",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04266c5a",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04266d54",
+    "classification": "calls NULL-safe destructive reset042642ca before use"
+  },
+  {
+    "address": "04267144",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "042671a6",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04267394",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "0426746c",
+    "classification": "explicit state-NULL guard"
+  },
+  {
+    "address": "04267550",
+    "classification": "explicit state-NULL guard"
+  }
+]

@@ -1,0 +1,458 @@
+[
+  {
+    "upstream_line": 115,
+    "ported_line": 156,
+    "expression": "h_memcmp(sent[i], frame_hdr, 6) == 0",
+    "sha256": "0750ee744d6411cb98209bfaecf8e987286a188cc31ec2adc91477abfbc399c0"
+  },
+  {
+    "upstream_line": 120,
+    "ported_line": 161,
+    "expression": "body == sent_len[i] - hdr",
+    "sha256": "5e49229d1c569828b38ac7ed0fc0c0e3906df92088175bac5aa3915d772fe8be"
+  },
+  {
+    "upstream_line": 121,
+    "ported_line": 162,
+    "expression": "body < 0x80 ? hdr == 7 : hdr == 8",
+    "sha256": "b9f02cc33a32401a9bb5cc159fabe3f0ab6c98d63f3e0540e1ad49fcf8056513"
+  },
+  {
+    "upstream_line": 122,
+    "ported_line": 163,
+    "expression": "sent[i][hdr] == 'A' && sent[i][hdr + 1] == 'N' && sent[i][hdr + 2] == ANCS_PROTO_VERSION",
+    "sha256": "6029e201054e8fc90d809ce0205803b0c79f0dc935ed7791ce7b603dc6c477d4"
+  },
+  {
+    "upstream_line": 160,
+    "ported_line": 202,
+    "expression": "ctx_storage.ancs_ring == 0 && sent_n == 0",
+    "sha256": "49073a02942e90e180180a9b0164cf053e0159e5ac9c0adf7caeca5639de5ca1"
+  },
+  {
+    "upstream_line": 163,
+    "ported_line": 205,
+    "expression": "ancs_hook_source(notif) == 1",
+    "sha256": "0af61efd1d48cb9412294d9f71836956fe1d1cb00654e9e485820232a7776d8e"
+  },
+  {
+    "upstream_line": 164,
+    "ported_line": 206,
+    "expression": "stock_push_calls == 1 && ctx_storage.ancs_head == 0",
+    "sha256": "44bd55fd3b9eec7045be6b54fbb5d657eff1c95afd0cc13bb132d75650da4a8e"
+  },
+  {
+    "upstream_line": 166,
+    "ported_line": 208,
+    "expression": "stock_attr_calls == 1 && ctx_storage.ancs_head == 0",
+    "sha256": "1fd5d25a3ce3eabe992431cc6b699e9c1812ade4449fe28a16562270c071b1fe"
+  },
+  {
+    "upstream_line": 167,
+    "ported_line": 209,
+    "expression": "ancs_hook_app() == 1 && stock_parse_calls == 1",
+    "sha256": "a7de7fb99441b65cb32c0cdab6e32085b396d5bfc8770a6966dbc893bbc36f66"
+  },
+  {
+    "upstream_line": 173,
+    "ported_line": 215,
+    "expression": "ctx_storage.ancs_ring != 0 && ctx_storage.ancs_timer == 0x1234",
+    "sha256": "64974483aa6ec84e04a5f37a7e598fc30b066a1a042664bd46eb78d59c7f362d"
+  },
+  {
+    "upstream_line": 174,
+    "ported_line": 216,
+    "expression": "ctx_storage.ancs_lease_deadline == now_ms + ANCS_LEASE_MS",
+    "sha256": "50831605db75742928947d50c6d1cc8cd61e754d90a976b60b0fb1c809355945"
+  },
+  {
+    "upstream_line": 175,
+    "ported_line": 217,
+    "expression": "ctx_storage.ancs_epoch == 1",
+    "sha256": "f1fc2e2b4feeb1c62a2ace0cd9d849a64fa91df9d3ed9c2b983049616a80d375"
+  },
+  {
+    "upstream_line": 176,
+    "ported_line": 218,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 178,
+    "ported_line": 220,
+    "expression": "n == 11 && p[3] == ANCS_KIND_STATUS && p[4] == 1 && p[5] == 1",
+    "sha256": "2f98f6d4e202de8fc577fcbeae3f434225516344190eca6380c345e921725f15"
+  },
+  {
+    "upstream_line": 182,
+    "ported_line": 224,
+    "expression": "ancs_hook_source(notif) == 1",
+    "sha256": "0af61efd1d48cb9412294d9f71836956fe1d1cb00654e9e485820232a7776d8e"
+  },
+  {
+    "upstream_line": 183,
+    "ported_line": 225,
+    "expression": "stock_push_calls == 1",
+    "sha256": "d2243c4f130ea505cee6a273a101469f32b9aa592629906d37f950bd44356856"
+  },
+  {
+    "upstream_line": 184,
+    "ported_line": 226,
+    "expression": "timer_pending && timer_ms == ANCS_TICK_MS && ctx_storage.ancs_idle == 0",
+    "sha256": "5c0a5bb4adc7a2f18143a34d94000ca82161aa8b450bc18b85a5ab3999c3804b"
+  },
+  {
+    "upstream_line": 186,
+    "ported_line": 228,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 188,
+    "ported_line": 230,
+    "expression": "n == 12 && p[3] == ANCS_KIND_SOURCE && h_memcmp(p + 4, notif, 8) == 0",
+    "sha256": "d8d7ecec429201dd6a8b95d19c77880bb4053d25ca8c8e6280a541cc2128c75a"
+  },
+  {
+    "upstream_line": 189,
+    "ported_line": 231,
+    "expression": "ctx_storage.ancs_idle == 1 && ctx_storage.ancs_seq == 1",
+    "sha256": "c2cd6fc3d054e35457e8e83666b7a28613a00686c461d6c8cdfb3672127ac4af"
+  },
+  {
+    "upstream_line": 194,
+    "ported_line": 236,
+    "expression": "stock_remove_calls == 1",
+    "sha256": "f7d0b984b820a54440f76e46a4f3029233400bc449b5215c3da40b0844e67379"
+  },
+  {
+    "upstream_line": 196,
+    "ported_line": 238,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 198,
+    "ported_line": 240,
+    "expression": "n == 12 && p[3] == ANCS_KIND_SOURCE && p[4] == 2",
+    "sha256": "aed7d20e49144e261ae2fa4cf6ba95a2bf28c8aaec436561969c9060d92c5d25"
+  },
+  {
+    "upstream_line": 204,
+    "ported_line": 246,
+    "expression": "ctx_storage.ancs_epoch == 1 && ctx_storage.ancs_lease_deadline == now_ms + ANCS_LEASE_MS",
+    "sha256": "a37fbac101ae057ded2e34669b64251065ce5110ddd8ef1b8b9cf81178e8cbe9"
+  },
+  {
+    "upstream_line": 207,
+    "ported_line": 249,
+    "expression": "sent_n == 2",
+    "sha256": "adf47b75d1e3f83fb7b7927607e2b3edf6879983994ea06428fd1ed3b7ac180f"
+  },
+  {
+    "upstream_line": 218,
+    "ported_line": 260,
+    "expression": "stock_attr_calls == 1",
+    "sha256": "db5c4fab1885910650c6450451b0589162c7006742761a87d924162a802c1a0f"
+  },
+  {
+    "upstream_line": 220,
+    "ported_line": 262,
+    "expression": "sent_n == 3",
+    "sha256": "f84b04380782610441a1bde8fae94b382d1c04e8b8e480a2d96ea116bee8355c"
+  },
+  {
+    "upstream_line": 225,
+    "ported_line": 267,
+    "expression": "p[3] == ANCS_KIND_ATTR",
+    "sha256": "5a72e4afa9a792d46dbf031c399ebb69447b4055f93af338d451d615c2d4b4af"
+  },
+  {
+    "upstream_line": 226,
+    "ported_line": 268,
+    "expression": "rd32(p + 4) == 0xdeadbeef && p[8] == 3",
+    "sha256": "8418fda12ae33aec8380f879f4e4c14f99ea8ae7944759a5788324f0f96628c5"
+  },
+  {
+    "upstream_line": 227,
+    "ported_line": 269,
+    "expression": "rd16(p + 9) == 300 && rd16(p + 11) == off",
+    "sha256": "5862b237aec543d904a5d53bb282da7073a189bf94fed218936a2c27bb66c894"
+  },
+  {
+    "upstream_line": 229,
+    "ported_line": 271,
+    "expression": "chunk == (300 - off < chunk_max ? 300 - off : chunk_max)",
+    "sha256": "a50956b462a7ebd2798b8e61b9d9e725215b45f7657839b2c3668084ad1c4b42"
+  },
+  {
+    "upstream_line": 230,
+    "ported_line": 272,
+    "expression": "h_memcmp(p + ANCS_ATTR_FIXED, body + off, chunk) == 0",
+    "sha256": "1c2a83fbfbd224235da7a5caadd4feb0deb15efe994ddb85945850f503101b1b"
+  },
+  {
+    "upstream_line": 233,
+    "ported_line": 275,
+    "expression": "off == 300",
+    "sha256": "07c32f8a49950b87317664df2ccf5d9078d87a0689d7e5c265f89f8cf4166a91"
+  },
+  {
+    "upstream_line": 240,
+    "ported_line": 282,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 242,
+    "ported_line": 284,
+    "expression": "n == ANCS_ATTR_FIXED && p[8] == 2 && rd16(p + 9) == 0",
+    "sha256": "f5598a1a9bad24fbeced4fb4830f17ef30d1731c83b669fb1a1c7b7c9a38616d"
+  },
+  {
+    "upstream_line": 249,
+    "ported_line": 291,
+    "expression": "sent_n == 0 && stock_attr_calls == 3",
+    "sha256": "cef523edbdd9c413468052fa9903918c0874825428c6f0521077ea5102900aba"
+  },
+  {
+    "upstream_line": 269,
+    "ported_line": 311,
+    "expression": "ancs_hook_app() == 1 && stock_parse_calls == 1",
+    "sha256": "a7de7fb99441b65cb32c0cdab6e32085b396d5bfc8770a6966dbc893bbc36f66"
+  },
+  {
+    "upstream_line": 271,
+    "ported_line": 313,
+    "expression": "sent_n == 0",
+    "sha256": "d8ab345e33693ab7907d159d44d562fb3199185ae759299b48bdf7fc7c035bcc"
+  },
+  {
+    "upstream_line": 274,
+    "ported_line": 316,
+    "expression": "ancs_hook_app() == 1 && stock_parse_calls == 2",
+    "sha256": "a1cd767ca11aec150a6c8b300989c60a1ac010ef6f91d907e286dfd73b358c60"
+  },
+  {
+    "upstream_line": 276,
+    "ported_line": 318,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 278,
+    "ported_line": 320,
+    "expression": "p[3] == ANCS_KIND_APP",
+    "sha256": "d38e1bf497d77ba78249a870fddcf8e647698a786c469247b5d32a994b513018"
+  },
+  {
+    "upstream_line": 279,
+    "ported_line": 321,
+    "expression": "rd16(p + 4) == h_strlen(name) && rd16(p + 6) == 0 && p[8] == h_strlen(id)",
+    "sha256": "1b81c4d131bcfd4cef5d616f09b5d3b2136db7d19acd692fafd300d31df19ecf"
+  },
+  {
+    "upstream_line": 280,
+    "ported_line": 322,
+    "expression": "h_memcmp(p + 9, id, h_strlen(id)) == 0",
+    "sha256": "18c7f36e40f22a26fe5b31f5dd9970a2407334c1ba3d081484f0d62a8da32bbc"
+  },
+  {
+    "upstream_line": 281,
+    "ported_line": 323,
+    "expression": "len == ANCS_APP_FIXED + h_strlen(id) + h_strlen(name)",
+    "sha256": "adcac520992fe229307c4c1be817af9960decaa686ec4fb597c756648c5ca427"
+  },
+  {
+    "upstream_line": 282,
+    "ported_line": 324,
+    "expression": "h_memcmp(p + 9 + h_strlen(id), name, h_strlen(name)) == 0",
+    "sha256": "00d3ebebcb3d54472f181b33b7c72a286d725e2f556e12bc1a85a68a20aa79a5"
+  },
+  {
+    "upstream_line": 287,
+    "ported_line": 329,
+    "expression": "ancs_hook_app() == 1",
+    "sha256": "eb674ed3864c33a6140cd12e7260ac34b4c34001f600b9dba0e10673fbd9de05"
+  },
+  {
+    "upstream_line": 289,
+    "ported_line": 331,
+    "expression": "sent_n == 0",
+    "sha256": "d8ab345e33693ab7907d159d44d562fb3199185ae759299b48bdf7fc7c035bcc"
+  },
+  {
+    "upstream_line": 304,
+    "ported_line": 346,
+    "expression": "pushed == (int)((ANCS_RING_BYTES) / 14u)",
+    "sha256": "d73f54d65f6afe79ae928093981a882aed328fa682f09fd81e8b6341b0040b79"
+  },
+  {
+    "upstream_line": 305,
+    "ported_line": 347,
+    "expression": "ctx_storage.ancs_drops == 400 - pushed",
+    "sha256": "98c2c747789969d2911a3fcdcd8b9fa16ecf63a67069c658398131296b8b55e3"
+  },
+  {
+    "upstream_line": 310,
+    "ported_line": 352,
+    "expression": "timer_ms == ANCS_TICK_MS",
+    "sha256": "9c432a15ac02105ca30c9fa582ca7adcc911cc0884750d7d8b44fe60c9bfc3a2"
+  },
+  {
+    "upstream_line": 312,
+    "ported_line": 354,
+    "expression": "sent_n == pushed",
+    "sha256": "8f8335d3fac1e0601f4d6db9acfa04db23531a732f11e449d6e41116be2936a1"
+  },
+  {
+    "upstream_line": 313,
+    "ported_line": 355,
+    "expression": "ticks == (pushed + (int)ANCS_BURST - 1) / (int)ANCS_BURST",
+    "sha256": "d11f6b1c52a72e9e82ec00afcefe6ecbaf8702664033eede51e79e79f4aa2fbe"
+  },
+  {
+    "upstream_line": 314,
+    "ported_line": 356,
+    "expression": "ctx_storage.ancs_head == ctx_storage.ancs_tail && ctx_storage.ancs_idle == 1",
+    "sha256": "2b38cb1e0fe1e5f93f156069662b9eb5fcfc9780f007ebceb2443bb4cd41474d"
+  },
+  {
+    "upstream_line": 319,
+    "ported_line": 361,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 330,
+    "ported_line": 372,
+    "expression": "ctx_storage.ancs_drops == 0",
+    "sha256": "548653bb3209849af5e217a7fce04a649cae4bbbaa04ffd13b59d147ac31feb5"
+  },
+  {
+    "upstream_line": 332,
+    "ported_line": 374,
+    "expression": "sent_n == 0 && ctx_storage.ancs_lease_deadline == 0",
+    "sha256": "6056256c27c5685f96ded260f42a5af5d02b2fe37ec86d4a26f044fcb973e317"
+  },
+  {
+    "upstream_line": 333,
+    "ported_line": 375,
+    "expression": "ctx_storage.ancs_head == ctx_storage.ancs_tail && ctx_storage.ancs_idle == 1",
+    "sha256": "2b38cb1e0fe1e5f93f156069662b9eb5fcfc9780f007ebceb2443bb4cd41474d"
+  },
+  {
+    "upstream_line": 341,
+    "ported_line": 383,
+    "expression": "ctx_storage.ancs_lease_deadline == 0 && timer_pending",
+    "sha256": "d3e503db2c81b2b84d18503c132d09f4c633385a0c7a3983e37df6715d8a8f5a"
+  },
+  {
+    "upstream_line": 344,
+    "ported_line": 386,
+    "expression": "ctx_storage.ancs_epoch == 3",
+    "sha256": "14113675bdfc4d1b777a3f110320d3f80721c8f8720067d59af0946d34fd8cd7"
+  },
+  {
+    "upstream_line": 349,
+    "ported_line": 391,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  },
+  {
+    "upstream_line": 351,
+    "ported_line": 393,
+    "expression": "p[4 + 4] == 10",
+    "sha256": "aa24961fa0788e886df6fd64a00695432918f1a6fc29abef9d2e6ae04ff37a8c"
+  },
+  {
+    "upstream_line": 363,
+    "ported_line": 405,
+    "expression": "ctx_storage.ancs_send_errs == 1 && timer_pending && timer_ms == ANCS_RETRY_MS",
+    "sha256": "8f19d2986c2ac57c9fa8993f7a1ca2c3626f2e80ca9c4b4b4af76739299ef6d4"
+  },
+  {
+    "upstream_line": 366,
+    "ported_line": 408,
+    "expression": "sent_n == 1 && ctx_storage.ancs_seq == 1",
+    "sha256": "4e4cffbe2afbcfa1e1673c7768203aea1667f0a8bcfa8758bce02de7d8c8d2f3"
+  },
+  {
+    "upstream_line": 369,
+    "ported_line": 411,
+    "expression": "p[3] == ANCS_KIND_STATUS && rd16(p + 6) == 0 && rd16(p + 8) == 1 && p[10] == 1",
+    "sha256": "6559ec5d87d623299a254c210e5a4b6656a291a21d020b4a1616d3b997e633a1"
+  },
+  {
+    "upstream_line": 377,
+    "ported_line": 419,
+    "expression": "perform_calls == 0",
+    "sha256": "7ce526b9da7d3ebb05605b426ca896c6d60748f63c2ee9b876c69c1996b3e40b"
+  },
+  {
+    "upstream_line": 382,
+    "ported_line": 424,
+    "expression": "perform_calls == 0",
+    "sha256": "7ce526b9da7d3ebb05605b426ca896c6d60748f63c2ee9b876c69c1996b3e40b"
+  },
+  {
+    "upstream_line": 386,
+    "ported_line": 428,
+    "expression": "perform_calls == 1 && perform_uid == 0x12345678 && perform_action == 1",
+    "sha256": "84a2b15798d6e01f05d321aeddc9a6e8fa1fa568d63c053ada086604f559df9f"
+  },
+  {
+    "upstream_line": 387,
+    "ported_line": 429,
+    "expression": "(uintptr_t)perform_hdl == fake_ptr",
+    "sha256": "5fa91c705190927f8f6888cd9d1e106320d3b07ea601d46002f29445a94ef406"
+  },
+  {
+    "upstream_line": 391,
+    "ported_line": 433,
+    "expression": "perform_calls == 1",
+    "sha256": "59bb3d856a9332ca7e819e6ca7a2d8e8c61fbcbe7e0e55a3fa14c2d405b3380a"
+  },
+  {
+    "upstream_line": 393,
+    "ported_line": 435,
+    "expression": "perform_calls == 1",
+    "sha256": "59bb3d856a9332ca7e819e6ca7a2d8e8c61fbcbe7e0e55a3fa14c2d405b3380a"
+  },
+  {
+    "upstream_line": 402,
+    "ported_line": 444,
+    "expression": "ctx_storage.ancs_lease_deadline == 0 && ctx_storage.ancs_timer == 0",
+    "sha256": "dcabd1fc38f4a2ea994d4cb88ec016037881c5eacc8bdce9c44751fc7572aef8"
+  },
+  {
+    "upstream_line": 403,
+    "ported_line": 445,
+    "expression": "ctx_storage.ancs_ring != 0 && ctx_storage.ancs_idle == 1",
+    "sha256": "415a645467970701ca6e6f52869cb4f2eb941109f23b15a81654d3b076067e28"
+  },
+  {
+    "upstream_line": 404,
+    "ported_line": 446,
+    "expression": "timer_stop_calls == 1 && timer_delete_calls == 1",
+    "sha256": "fd767499d7c81fc86bce8e70e1151893ce2d79f098c8a85f1168d493e556c83a"
+  },
+  {
+    "upstream_line": 406,
+    "ported_line": 448,
+    "expression": "stock_push_calls == 2",
+    "sha256": "430f5e9692d2c94f52725db5ff1e68f2749b086d1b86f6e04456759f97e56533"
+  },
+  {
+    "upstream_line": 409,
+    "ported_line": 451,
+    "expression": "ctx_storage.ancs_timer == 0x1234 && ctx_storage.ancs_epoch == 2",
+    "sha256": "879802898aa50b39841c8e0794896b1913118eac47ed808cc272e05a071ef58e"
+  },
+  {
+    "upstream_line": 413,
+    "ported_line": 455,
+    "expression": "sent_n == 1",
+    "sha256": "5861ab5c7e666a26ddab62aa1d7183f09782789bfca50f64d054823e449d648f"
+  }
+]

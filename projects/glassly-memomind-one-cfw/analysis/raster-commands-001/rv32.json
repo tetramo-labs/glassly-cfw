@@ -1,0 +1,2073 @@
+{
+  "format": "memomind-raster-commands-rv32-v1",
+  "build": "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/build/raster-commands-001",
+  "blob_sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328",
+  "passed": true,
+  "test_groups": 4,
+  "calls": [
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 125,
+      "native_calls": [
+        "free_bytes",
+        "release",
+        "json"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11373,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 98,
+      "native_calls": [
+        "release",
+        "json"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 219,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 528,
+      "instructions": 584396,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "base_app",
+        "top_app",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "image_create",
+        "on_delete",
+        "timer_create",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 443,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 560,
+      "instructions": 229370,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "free_bytes",
+        "try_alloc",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 315,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 325419,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11373,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 683617,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_raster_command_draw",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 112,
+      "instructions": 102,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_raster_command_draw",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 112,
+      "instructions": 96,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_raster_command_draw",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 112,
+      "instructions": 92,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_scene_session_dispatch",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 24,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_scene_session_dispatch",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 81,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_scene_session_dispatch",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 65,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_scene_session_dispatch",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 90,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "mm_scene_session_dispatch",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 107,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 80,
+      "instructions": 272,
+      "native_calls": [
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "image_delete",
+        "event_userdata",
+        "timer_delete",
+        "free",
+        "free",
+        "free",
+        "free",
+        "cache_invalidate",
+        "free",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 219,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 528,
+      "instructions": 584396,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "base_app",
+        "top_app",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "image_create",
+        "on_delete",
+        "timer_create",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 443,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 560,
+      "instructions": 229370,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "free_bytes",
+        "try_alloc",
+        "free_bytes",
+        "try_alloc",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 315,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 325419,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 363,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 325032,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 321679,
+      "native_calls": [
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "now"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 227,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 616,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 321679,
+      "native_calls": [
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "now"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 283,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 3445,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 128,
+      "instructions": 176,
+      "native_calls": [
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 128,
+      "instructions": 176,
+      "native_calls": [
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 315,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 1120,
+      "instructions": 325437,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "try_alloc",
+        "json",
+        "free",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 174,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 428,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "image_delete",
+        "event_userdata",
+        "timer_delete",
+        "free",
+        "free",
+        "free",
+        "free",
+        "cache_invalidate",
+        "free",
+        "free",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11373,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 1005681,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "base_app",
+        "top_app",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "image_create",
+        "on_delete",
+        "timer_create",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 227,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 572,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 227,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 563,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 251,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 620,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 189,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 597,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 259,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 560,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11381,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 400,
+      "instructions": 7239,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 174,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 351,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "image_delete",
+        "event_userdata",
+        "timer_delete",
+        "now",
+        "cache_invalidate",
+        "free",
+        "free",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 64,
+      "instructions": 6560,
+      "native_calls": [
+        "try_alloc",
+        "free_bytes",
+        "low_water",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11373,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 1005681,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "base_app",
+        "top_app",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "image_create",
+        "on_delete",
+        "timer_create",
+        "free_bytes",
+        "try_alloc",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 283,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 1671,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 283,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 1671,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 11373,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 683483,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 259,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 496,
+      "instructions": 1182,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "base_app",
+        "top_app",
+        "now",
+        "base_app",
+        "top_app",
+        "default_display",
+        "active_screen",
+        "now",
+        "cache_invalidate",
+        "image_source",
+        "position",
+        "size",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 174,
+      "native_calls": [
+        "free_bytes",
+        "try_alloc",
+        "release",
+        "post",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 192,
+      "instructions": 351,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child",
+        "image_delete",
+        "event_userdata",
+        "timer_delete",
+        "now",
+        "cache_invalidate",
+        "free",
+        "free",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    }
+  ],
+  "steps": [
+    {
+      "mode": 41,
+      "request": 1,
+      "event": 49,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "29010000650000000000004000"
+        }
+      ],
+      "core_live_bytes": 108972,
+      "core_peak_bytes": 108972
+    },
+    {
+      "mode": 37,
+      "request": 2,
+      "event": 50,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2502000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 38,
+      "request": 3,
+      "event": 51,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2603000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 6,
+      "request": 4,
+      "event": 52,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 41,
+      "request": 1,
+      "event": 49,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "29010000650000000000004000"
+        }
+      ],
+      "core_live_bytes": 108972,
+      "core_peak_bytes": 108972
+    },
+    {
+      "mode": 37,
+      "request": 2,
+      "event": 50,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2502000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 38,
+      "request": 3,
+      "event": 51,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2603000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 38,
+      "request": 4,
+      "event": 52,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2604000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 3,
+      "request": 5,
+      "event": 53,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 3,
+      "request": 6,
+      "event": 54,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        },
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "settled",
+          "tag": 4
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 38,
+      "request": 7,
+      "event": 55,
+      "responses": [
+        {
+          "glassly": "scene",
+          "abi": 1,
+          "result": "ok",
+          "replyHex": "2607000065000100000000"
+        }
+      ],
+      "core_live_bytes": 166488,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 11,
+      "request": 8,
+      "event": 56,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "cleared"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 166488
+    },
+    {
+      "mode": 6,
+      "request": 1,
+      "event": 49,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 3,
+      "request": 2,
+      "event": 50,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 3,
+      "request": 3,
+      "event": 51,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 3,
+      "request": 4,
+      "event": 52,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 6,
+      "request": 5,
+      "event": 53,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 131,
+      "request": 6,
+      "event": 54,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 6,
+      "request": 7,
+      "event": 55,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "invalid"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 11,
+      "request": 8,
+      "event": 56,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "cleared"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 6,
+      "request": 1,
+      "event": 49,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 3,
+      "request": 2,
+      "event": 50,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 3,
+      "request": 3,
+      "event": 51,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 134,
+      "request": 4,
+      "event": 52,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 131,
+      "request": 5,
+      "event": 53,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "ok",
+          "presentation": "scheduled"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    },
+    {
+      "mode": 11,
+      "request": 6,
+      "event": 54,
+      "responses": [
+        {
+          "glassly": "graphics",
+          "abi": 1,
+          "result": "cleared"
+        }
+      ],
+      "core_live_bytes": 0,
+      "core_peak_bytes": 0
+    }
+  ],
+  "fixtures": {
+    "key.message": "3e0251bf478a133645b1a47c0efc7436e344dffe4813f6683ee182a1a129dd3d",
+    "key.raw": "d2f7fb10b468ff8824b845780e9dd61f896aaf265aec4f71f225a6dd6d3c04f5",
+    "delta.message": "c2c20095da2f9c6fa67a0a85dc536ce257106d041383e78d0b3e42d138c6a143"
+  },
+  "native_stubs": {
+    "0x433c294": "try_alloc",
+    "0x434e6ee": "free",
+    "0x42eff8e": "release",
+    "0x42ef9f6": "json",
+    "0x42ef924": "status",
+    "0x425abe8": "post",
+    "0x42e866e": "send",
+    "0x42d01b2": "default_display",
+    "0x42ccc62": "active_screen",
+    "0x425db22": "base_app",
+    "0x425daf8": "top_app",
+    "0x42cf47a": "child_count",
+    "0x42cf44e": "child",
+    "0x42bd7d0": "image_create",
+    "0x42c7894": "on_delete",
+    "0x42bd7fa": "image_source",
+    "0x42c963e": "position",
+    "0x42c96ec": "size",
+    "0x42cf61c": "image_delete",
+    "0x42b68c8": "cache_invalidate",
+    "0x42c7854": "event_userdata",
+    "0x42b27ca": "timer_create",
+    "0x42b285a": "timer_delete",
+    "0x42d02c6": "now",
+    "0x433c460": "free_bytes",
+    "0x433c4a4": "low_water",
+    "0x42d153c": "font_metrics",
+    "0x42d14be": "font_bitmap"
+  },
+  "hardware_tested": false,
+  "limitations": [
+    "Actual compiled RV32 C/decoder/native wrappers; native allocator/LVGL/queue/timer/JSON APIs are mocked.",
+    "Synthetic4KiB BT/8KiB display stack guards and callee registers checked; no complete stock task-stack/interrupt proof.",
+    "Native input remains8192 bytes; original zlib decompression happened offline for fixture generation.",
+    "Only commands3/6 added, first/left bbox policy; no stereo display or full command parity claim."
+  ]
+}

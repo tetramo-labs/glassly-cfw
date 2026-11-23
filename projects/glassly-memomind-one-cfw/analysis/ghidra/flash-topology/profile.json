@@ -1,0 +1,78 @@
+{
+  "source_app_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "device_actions": false,
+  "source_runtime_edits": false,
+  "ghidra_mode": "readOnly,noanalysis",
+  "xip": {
+    "controllers": [
+      "01100100",
+      "01100200"
+    ],
+    "legacy_id_read": "02005bec",
+    "id_opcode": "90",
+    "successful_manufacturers": [
+      "85",
+      "c8"
+    ],
+    "driver_pointer_slots": [
+      "02012330",
+      "02012334"
+    ],
+    "driver_pointer_to_family": {
+      "02010898": "85",
+      "020107f0": "c8"
+    },
+    "capacity_getter": "04329d62 (active ID read, not cached)",
+    "device1_85_probe_valid": "0205c8e0",
+    "device1_85_probe_code": "0205c8e4",
+    "c8_probe_shared": true,
+    "c8_probe_valid": "02012350",
+    "c8_probe_code": "02012354",
+    "uid_helper": "02005c8e reads16B; returns0 without lower status; not proposed diagnostic"
+  },
+  "general_spi": {
+    "controller": "01480000",
+    "backend_table": "02010c6c",
+    "ready_flag": "020124d4",
+    "ready_only_after_success": true,
+    "pins": {
+      "clock": 5,
+      "manual_cs": 102,
+      "tx": 3,
+      "rx": 4
+    },
+    "id_helper": "0434633e(out20)",
+    "accepted_id_bytes": [
+      "68186818",
+      "68196819"
+    ],
+    "raw_byte_address_translation": "identity;4-byte wire address",
+    "logical_mapper": "map[offset>>12]*4096+(offset&4095)",
+    "physical_sector_range": [
+      0,
+      8191
+    ],
+    "proposed_1MiB_device1_overlap_if_alias": [
+      "00700000",
+      "00800000"
+    ]
+  },
+  "conclusion": "distinct controller/CS setup and incompatible successful ID predicates support distinct endpoints under stable supported stock initialization; no physical netlist/live ID measurement",
+  "hardware_distinction_directly_measured": false,
+  "passive_snapshot_proposed": true,
+  "cus8": {
+    "context": "02011e48",
+    "all_ff_successful_ram_query_context_possible": true,
+    "query_context_retained_after_042a4628_return": false,
+    "startup_entry": "041eb020",
+    "startup_call": "041eb04e ->041fb1ec",
+    "cleared_bss": [
+      "02011878",
+      "0205e128"
+    ],
+    "old_context_discarded_on_normal_new_image_entry": true,
+    "new_context_may_be_created_after_startup": true,
+    "warm_resume_bypassing_entry_not_covered": true
+  },
+  "offline_constructor_blocked_by_this_review": false
+}

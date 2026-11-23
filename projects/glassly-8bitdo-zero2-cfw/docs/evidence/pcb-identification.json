@@ -1,0 +1,21 @@
+{
+  "source": "User-provided photos in this thread",
+  "local_directory": "build/hardware/20261105T190155.638633Z-pcb-photos",
+  "photos": [
+    {
+      "file": "battery-side.png",
+      "sha256": "85fab4808ad58faa9c4c970ce4c4bdb48c78e23f0c184055993f816cdac2e1d4"
+    },
+    {
+      "file": "component-side.png",
+      "sha256": "070a708ee9589a39cd477ef8ae5a275f5a865eb3c08d6a5708726ff283b08fcc"
+    }
+  ],
+  "observed_chip_marking": "YC3121-L",
+  "other_marking_lines": "Not transcribed; no silicon stepping inferred",
+  "package": "Appearance consistent with datasheet QFN56; no physical dimensions measured",
+  "orientation": "Component-side image: USB connector at bottom; chip text inverted; pin-one dot toward lower-right",
+  "candidate_swd_edge": "Edge facing USB connector, inferred from dot and datasheet pinout",
+  "test_pad_net_mapping": "Unresolved; no continuity measurements",
+  "hardware_actions_this_turn": "Photo analysis only; no device commands or electrical probing"
+}

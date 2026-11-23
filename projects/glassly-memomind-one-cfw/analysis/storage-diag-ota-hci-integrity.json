@@ -1,0 +1,35 @@
+{
+  "path": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/storage-diag-runtime-20261031/ota-transfer-frozen.btsnoop",
+  "size": 12025757,
+  "sha256": "68ba750e6da9b4a524ea7d3e765bf9f68771048bb1b628308a583d1b0a9b0fb5",
+  "packets": 63186,
+  "packet_types": {
+    "event": 24022,
+    "acl": 38733,
+    "command": 431
+  },
+  "acl_handles": {
+    "0x00b": 38733
+  },
+  "first_timestamp": "2026-10-31T20:38:29.223554+00:00",
+  "last_timestamp": "2026-10-31T21:33:52.418387+00:00",
+  "truncated_records": 0,
+  "maximum_reported_drop_count": 0,
+  "issues": [
+    {
+      "offset": 2208050,
+      "error": "timestamp moved backwards"
+    },
+    {
+      "offset": 5489084,
+      "error": "timestamp moved backwards"
+    }
+  ],
+  "record_integrity_ok": false,
+  "whole_session_coverage": "unproven",
+  "limitations": [
+    "AOSP writes zero drop counters; zero does not establish losslessness.",
+    "Valid records do not prove rotation continuity or coverage of the entire OTA.",
+    "App encryption and filtering are not detected by record validation."
+  ]
+}

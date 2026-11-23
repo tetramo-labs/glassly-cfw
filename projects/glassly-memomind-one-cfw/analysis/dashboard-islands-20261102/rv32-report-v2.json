@@ -1,0 +1,1799 @@
+{
+  "passed": true,
+  "offline_only": true,
+  "cases": 72,
+  "direct_gate_cases": 18,
+  "actual_dispatcher_cases": 54,
+  "unicorn": "2.1.4",
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "edited_body_sha256": "3d3003f24abc262cdcc4ad9602da0e20c7f151b11255c74d152afc99a34dddfb",
+  "rx_capacity": 2746,
+  "results": [
+    {
+      "entry": "0x42708e2",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x42708e2",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x42708e2",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270ace",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270ace",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270ace",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270c82",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270c82",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270c82",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270dd2",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270dd2",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270dd2",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270f98",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270f98",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4270f98",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x42711a4",
+      "arguments": [
+        0,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x42711a4",
+      "arguments": [
+        4294967295,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x42711a4",
+      "arguments": [
+        50331648,
+        4294967295
+      ],
+      "count": 1,
+      "direct": true,
+      "done": true,
+      "steps": 3,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [],
+      "iterator": 0,
+      "mocks": []
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 153,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 1,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 153,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 1,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 185,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 3,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 185,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 3,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 202,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 4,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        2,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 202,
+      "gates": [
+        69669284
+      ],
+      "fallbacks": [
+        2
+      ],
+      "iterator": 4,
+      "mocks": [
+        "setting",
+        "dashboard_context",
+        "clock",
+        "time_changed",
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 144,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 144,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 176,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 176,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 193,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 4,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        4,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 193,
+      "gates": [
+        69668760
+      ],
+      "fallbacks": [
+        4
+      ],
+      "iterator": 4,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 151,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 151,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 152,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 152,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 152,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        5,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 152,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        5
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 160,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 160,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 192,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 192,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 193,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        6,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 193,
+      "gates": [
+        69668306
+      ],
+      "fallbacks": [
+        6
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 168,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 168,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 200,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 200,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 264,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        7,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 264,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        7
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 174,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 174,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 206,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 206,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 270,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        8,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 270,
+      "gates": [
+        69667970
+      ],
+      "fallbacks": [
+        8
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 180,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 180,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 212,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 212,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 276,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        9,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 276,
+      "gates": [
+        69667534
+      ],
+      "fallbacks": [
+        9
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 186,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 186,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 218,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 218,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 282,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        10,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 282,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        10
+      ],
+      "iterator": 7,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        0
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 194,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        68
+      ],
+      "count": 1,
+      "direct": false,
+      "done": true,
+      "steps": 194,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 1,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        0
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 226,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        68
+      ],
+      "count": 3,
+      "direct": false,
+      "done": true,
+      "steps": 226,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 3,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        0
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 243,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 4,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    },
+    {
+      "entry": "0x4271fb2",
+      "arguments": [
+        11,
+        68
+      ],
+      "count": 7,
+      "direct": false,
+      "done": true,
+      "steps": 243,
+      "gates": [
+        69667042
+      ],
+      "fallbacks": [
+        11
+      ],
+      "iterator": 4,
+      "mocks": [
+        "iterator_reset",
+        "iterator_next",
+        "record_count",
+        "iterator_next",
+        "iterator_next",
+        "iterator_next",
+        "UI_fallback",
+        "logging_enabled"
+      ]
+    }
+  ],
+  "limitations": [
+    "UI fallback, iterator, clock, logging and settings APIs are mocked.",
+    "No hardware, real LVGL rendering, global indirect reachability or payload execution proof."
+  ]
+}

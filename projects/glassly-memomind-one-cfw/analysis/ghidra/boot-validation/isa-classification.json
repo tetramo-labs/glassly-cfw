@@ -1,0 +1,28 @@
+{
+  "sha256": "3ec87a7b0426bfca6ccb8f1c422b3ad075309f5ab053f8d25aef9dbf53e859bc",
+  "architecture": "RISC-V RV32 little endian compressed + floating status CSR",
+  "base_from_header": "02068000",
+  "evidence": [
+    {
+      "offset": 46,
+      "halfword": "0x280d",
+      "RV32_decode": "C.JAL",
+      "signed_displacement": 50,
+      "target": "0x2068060",
+      "target_bytes": "01113775070222cc",
+      "RV64_decode": "C.ADDIW (inconsistent call/return startup flow)"
+    },
+    {
+      "offset": 92,
+      "halfword": "0x20f1",
+      "RV32_decode": "C.JAL",
+      "signed_displacement": 204,
+      "target": "0x2068128",
+      "target_bytes": "411106c622c40008",
+      "RV64_decode": "C.ADDIW (inconsistent call/return startup flow)"
+    }
+  ],
+  "pointer_width_evidence": "32-bit lw/sw gp-based globals and 4-byte startup table entries",
+  "not_arch_proof": "Header address alone, platform family alone",
+  "gnu_raw_disassembly_limitation": "Raw GNU objdump still selected RV64 compressed ADDIW despite -m riscv:rv32; startup-raw.asm retains this diagnostic artifact. CJAL bit-field decode and explicit Ghidra RV32 raw loader settle these opcodes. No ELF fabricated."
+}

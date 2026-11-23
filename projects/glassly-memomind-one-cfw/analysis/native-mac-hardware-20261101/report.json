@@ -1,0 +1,217 @@
+{
+  "format": "memomind-native-mac-hardware-v1",
+  "utc": "2026-11-02T00:42:22.647325+00:00",
+  "state": "paired; full native OTA transfer and reboot ACK verified; post-reboot connection timed out",
+  "device_address": "4C:3C:8F:90:CC:C3",
+  "user_factory_reset_reported": true,
+  "pairing": {
+    "native_api": "IOBluetoothDevicePair",
+    "success": true,
+    "confirmation_or_pin_requested": false,
+    "capture": "captures/swift-mac-pairing-20261101-01",
+    "raw_hci_capture": false
+  },
+  "transport_change": {
+    "cached_sdp_before_fresh_query": true,
+    "uuid_matched_channel": true,
+    "hardcoded_channel": false,
+    "fresh_query_timeout_fallback": false,
+    "observed": "Fresh SDP completion did not arrive on this Mac after pairing. Cached service record resolved channel 5 and RFCOMM opened successfully."
+  },
+  "probe": "captures/swift-mac-probe-20261101-06/result.json",
+  "check": "captures/swift-mac-check-20261101-01/result.json",
+  "flash": "captures/swift-mac-flash-20261101-01/result.json",
+  "independent_application_trace_verification": "analysis/native-mac-hardware-20261101/trace-verification.json",
+  "image": {
+    "path": "captures/firmware/exclusive-store-reader-001/firmware.bin",
+    "bytes": 2223753,
+    "sha256": "270dfe85438e6ff0f904a09215e15419292e16b8c7bbc36aafec50543c780c55"
+  },
+  "full_transfer_verified": true,
+  "blocks": 543,
+  "chunks": 3800,
+  "reboot_acknowledged": true,
+  "post_reboot_verified": false,
+  "post_reboot_attempt": {
+    "capture": "captures/swift-mac-boot-20261101-01",
+    "failure": "RFCOMM open timed out",
+    "application_frames_sent": false
+  },
+  "tests": {
+    "swift_passed": 32,
+    "offline_transport_passed": 23,
+    "release_build_passed": true,
+    "prior_aggregate": "analysis/regression-20261101-05/report.json",
+    "prior_aggregate_predates_transport_change": true
+  },
+  "full_managed_store_backup": {
+    "verification": "analysis/exclusive-store-backup-verification.json",
+    "bytes": 3145728,
+    "predates_user_factory_reset": true,
+    "current_post_reset_storage_snapshot": false
+  },
+  "firmware_canary_installed": false,
+  "full_g2_parity": false,
+  "limitations": [
+    "Application TX/RX trace, not an independent HCI/radio observation.",
+    "Reboot acknowledgment does not establish successful boot.",
+    "The retained full backup predates the user factory reset; fresh topology and storage preflight is needed before canary writes.",
+    "Swift firmware construction and mobile transport integration remain separate work."
+  ],
+  "capture_manifests": [
+    {
+      "path": "captures/swift-mac-pairing-20261101-01/capture-manifest.json",
+      "bytes": 2885,
+      "sha256": "04f1ec72fb5812ee00828c59e5b7e1d0429c353e3ba3c6314eea85e0b194c298"
+    },
+    {
+      "path": "captures/swift-mac-probe-20261101-03/capture-manifest.json",
+      "bytes": 2018,
+      "sha256": "06ba8a8316987d0c07e839e9cf94702b9f784600070239534eca1e5ec82c61c1"
+    },
+    {
+      "path": "captures/swift-mac-probe-20261101-04/capture-manifest.json",
+      "bytes": 440,
+      "sha256": "5e8f36e9c505b3620b28a40d1e1281a7faf989a5e87ef4cb3f2798f4c09a5591"
+    },
+    {
+      "path": "captures/swift-mac-probe-20261101-05/capture-manifest.json",
+      "bytes": 440,
+      "sha256": "aa9c05bc0c692e27829c1c6ebdfb2943478de5c0affd8d2ed8eb1786da9bdfab"
+    },
+    {
+      "path": "captures/swift-mac-probe-20261101-06/capture-manifest.json",
+      "bytes": 440,
+      "sha256": "fe21f2743f2aa96794a8ab64416f5660c2ea3ef7448c524fbca1f20ef063c191"
+    },
+    {
+      "path": "captures/swift-mac-check-20261101-01/capture-manifest.json",
+      "bytes": 440,
+      "sha256": "39dc6e9babb65b58771fe55309ef43a94c2db5fe9f904c106589aa48afffef1a"
+    },
+    {
+      "path": "captures/swift-mac-flash-20261101-01/capture-manifest.json",
+      "bytes": 444,
+      "sha256": "09ec6720a6048e375c437d1f1148ee27b8cce2e1927c1ead1c7fc8f7d36a0caa"
+    },
+    {
+      "path": "captures/swift-mac-boot-20261101-01/capture-manifest.json",
+      "bytes": 255,
+      "sha256": "a438988d257b16f0f6a7905f0b4162d4af3a047a6c45ab0677d680d21566fa98"
+    }
+  ],
+  "source_and_binary_pins": [
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindBluetooth/MacRFCOMMTransport.swift",
+      "bytes": 19471,
+      "sha256": "9449aa7a5033f0fca96883393eb0a7bd5c06a1d58b3f98b7f5c54b2a7a90c701"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindBluetooth/README.md",
+      "bytes": 5946,
+      "sha256": "d7dd40d806fca9ac7e95da3db8eba0597aa9b44468213dc5f0fadd50d8f8a801"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+      "bytes": 10787,
+      "sha256": "2bfb4d8df504e635ec7d37fccbab426dd6c8c6bb0d03130fad2f192d53297a93"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+      "bytes": 8874,
+      "sha256": "6d1ab58c45cc102658754bca69a991aee3f1b967ee1d8168a6d812b7b8cc72a7"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+      "bytes": 8984,
+      "sha256": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+      "bytes": 5399,
+      "sha256": "29738b42c2ec76b996f883a78c40e43f426c2de5775de09ef3014a0fbbc782ca"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/memomind/Arguments.swift",
+      "bytes": 3390,
+      "sha256": "dbbfc7b7da1dedab80078edeb53958185c18203a0a8a52f3d3192c6601abe979"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/memomind/Capture.swift",
+      "bytes": 3200,
+      "sha256": "6a1ab7eefa7d5a13aa0e79c800ae0fe8769efb7c6c007833e4176c319ded37a6"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/memomind/Info.plist",
+      "bytes": 583,
+      "sha256": "f5fbb6de54299635ecf9ac107a3a8f18da618b28f65c1b422262dceea26967ed"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/memomind/Replay.swift",
+      "bytes": 4734,
+      "sha256": "5fde0abc0a1f0fc131e601fb85d500d9480ef3c92546edcdeeb00db451b4afbe"
+    },
+    {
+      "path": "swift/MemoMindKit/Sources/memomind/main.swift",
+      "bytes": 6523,
+      "sha256": "4608e302f0b3c995f2a2089fe080ff50cc1c6e2d3ff0f5cc974b4b681faeeb6d"
+    },
+    {
+      "path": "swift/MemoMindKit/Package.swift",
+      "bytes": 1321,
+      "sha256": "4ef43a4f0a5ec6060fd9ebd10bf06aed604509eaaf2c1ba30793f86a7753549e"
+    },
+    {
+      "path": "swift/MemoMindKit/.build/release/memomind",
+      "bytes": 461400,
+      "sha256": "eb82e89e13fd1db2148ae21161f690fcb24ab175f6eb317c09ec3535b5976cc2"
+    }
+  ],
+  "verification_pins": [
+    {
+      "path": "analysis/native-mac-hardware-20261101/verify-trace.py",
+      "bytes": 4245,
+      "sha256": "21510f42b66512c748ce2baba49f8c5730d7b0a39a07a0b7127c0a08a5caf83d"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/trace-verification.json",
+      "bytes": 1375,
+      "sha256": "8aefa93edb8864ae5fe2143d578d1ba525f030b12cc74772ceaab76a53711946"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/verify-reader.swift",
+      "bytes": 4272,
+      "sha256": "d41a0ec95c33b29e322ab681d1a271d90878b0eb13c526d0828e6a47baeb30bf"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/verify-reader",
+      "bytes": 469216,
+      "sha256": "299fe56022cffdd76f5bb970303349f88b5e22bf6fce8b70a6fcdac7529650c0"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/swift-tests.stdout",
+      "bytes": 8383,
+      "sha256": "610d6f9be045d49fa282625f88e5568b5461d7be2fba19e34427e97081fb7740"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/swift-tests.stderr",
+      "bytes": 199,
+      "sha256": "d64d91edf3f01116d4963fc3b6a8db0a9d06348261290c09d49ddc85228e1700"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/build.stdout",
+      "bytes": 250,
+      "sha256": "21b63576a28ad7beb21e852cdb2f3877c31c3578f6333e0559b92381e9903865"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "analysis/native-mac-hardware-20261101/transport-offline/run-001/stdout.txt",
+      "bytes": 61,
+      "sha256": "9e2a0e214584d4deb7a9b824b6e5664fe366bc04e341bcee16158e7f900fac9a"
+    }
+  ]
+}

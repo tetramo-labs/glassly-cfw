@@ -1,0 +1,16 @@
+{
+  "address": "0x4382ff0",
+  "words": [
+    "0x0",
+    "0x42a3e20",
+    "0x42a40c4",
+    "0x42a411e",
+    "0x42a4178",
+    "0x42a9d0a",
+    "0x42a9dd4",
+    "0x0",
+    "0x0",
+    "0x0"
+  ],
+  "note": "Config copied by042a43c8; lasttwo replaced with appheader bodylength/CRC, inspect callbacks before attributing ownership"
+}

@@ -1,0 +1,140 @@
+{
+  "time": "2026-11-02T21:31:36.338704+00:00",
+  "release": "dashboard-ram-002",
+  "state": "Installed and boot verified; display commands and cleanup verified; visual confirmation pending",
+  "image_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+  "app_header_sha256": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+  "runtime_unchanged": true,
+  "ota_bytes_verified": 2230671,
+  "blocks": 545,
+  "chunks": 3812,
+  "boot_verified": true,
+  "requested_base_allocations_avoided_bytes": 1440,
+  "baseline": {
+    "capture": "captures/swift-mac-ram-baseline-20261102-01",
+    "samples": [
+      333980,
+      333988,
+      334012,
+      334040,
+      334040,
+      334060,
+      334088,
+      334108,
+      334108,
+      334084
+    ],
+    "range": [
+      333980,
+      334108
+    ],
+    "median": 334050.0,
+    "fresh_reboot": false
+  },
+  "before_display": {
+    "capture": "captures/swift-mac-ram-display-20261102-01",
+    "samples": [
+      354640,
+      354616,
+      354692,
+      354744,
+      354716,
+      354724,
+      354752,
+      354776,
+      354800,
+      354776
+    ],
+    "range": [
+      354616,
+      354800
+    ],
+    "median": 354734.0
+  },
+  "after_cleanup": {
+    "capture": "captures/swift-mac-ram-after-cleanup-20261102-01",
+    "samples": [
+      340684,
+      353636,
+      353652,
+      353732,
+      353740,
+      353768,
+      353772,
+      353780,
+      353776,
+      353808
+    ],
+    "range": [
+      340684,
+      353808
+    ],
+    "median": 353754.0,
+    "settled_sample_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "settled_range": [
+      353636,
+      353808
+    ],
+    "settled_median": 353768,
+    "initial_reconnect_sample": 340684,
+    "low_water_bytes": 245084
+  },
+  "observed_settled_delta_bytes": {
+    "range": [
+      19528,
+      19828
+    ],
+    "median_difference": 19718.0,
+    "causally_attributed_to_gates": false
+  },
+  "display": {
+    "protocol_verified": true,
+    "physical_output_confirmed": false,
+    "pattern": "RAM on black",
+    "hold_seconds": 90,
+    "lease_renewals": 287,
+    "cleanup_verified": true,
+    "immediate_post_cleanup_free_bytes": 354196
+  },
+  "tests": {
+    "constructor_tests": 2,
+    "actual_rv32_calls": 230,
+    "swift_tests": 106,
+    "ota_verifier_selftests": 18,
+    "full_aggregate_rerun": false
+  },
+  "verification": {
+    "ota": "analysis/dashboard-ram-native-20261102/trace-verification.json",
+    "boot": "analysis/dashboard-ram-native-20261102/after-verification.json",
+    "display": "analysis/dashboard-ram-native-20261102/display-verification.json",
+    "cleanup_heap": "analysis/dashboard-ram-native-20261102/after-cleanup-verification.json"
+  },
+  "limitations": [
+    "Observed heap delta includes possible reboot/cache-state effects; baseline was not freshly rebooted. Only the 1440 requested base bytes have exact allocation-site attribution.",
+    "All ten samples are retained. The first post-cleanup reconnect sample was transient; settled summary uses the following nine samples explicitly.",
+    "The telemetry allocates a 740-byte JSON template before sampling, plus allocator overhead; transport and autonomous tasks also perturb readings.",
+    "No largest-block or owner-specific heap telemetry. One display cycle cannot establish absence of leaks; low-water fell to 245084 bytes during the test and is historical rather than current free RAM.",
+    "Application TX/RX evidence, not an independent HCI/radio capture. Visual observation remains unconfirmed.",
+    "Native asset/message limits remain 64 KiB/8192 bytes; full G2 parity remains incomplete."
+  ],
+  "next_ram_candidate": {
+    "proposal": "analysis/ram-measurement-plan-20261102/reset-undo-proposal.json",
+    "implemented": false,
+    "typical_requested_bytes": 46756
+  },
+  "historical_canonical_snapshots": {
+    "README.md": "analysis/dashboard-ram-native-20261102/README.md.at-transfer.txt",
+    "analysis/parity-status.json": "analysis/dashboard-ram-native-20261102/parity-status.json.at-transfer.txt",
+    "analysis/storage-integration-plan.json": "analysis/dashboard-ram-native-20261102/storage-integration-plan.json.at-transfer.txt"
+  }
+}

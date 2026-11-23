@@ -1,0 +1,445 @@
+{
+  "mode": "offline_x86_64_emulation",
+  "hardware_access": false,
+  "source_revision": "68ce48a6171de86ec6b3e4b8f60b35a1f40d6e06",
+  "utility_sha256": "3a55489ca20f5cc1ef1f191201ad1cf7b3cd4cb5d618f58d8bb5148282772a32",
+  "tool_sha256": "a165d12b7d55c2f80ab45bc8a4fc2d2849f56363d7dd5d3e6dbdfb0ba37bd582",
+  "unicorn_version": "2.1.4",
+  "code_read": {
+    "cases": 40,
+    "cases_detail": [
+      {
+        "index": "0x0",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x80",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x0",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x80",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x7ff",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x9f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x7ff",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x9f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x800",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x60",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x800",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x0",
+          "0x60",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x4eda",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x4",
+          "0x7b",
+          "0x68"
+        ]
+      },
+      {
+        "index": "0x4eda",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x4",
+          "0x7b",
+          "0x68"
+        ]
+      },
+      {
+        "index": "0x4f01",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x4",
+          "0x7c",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x4f01",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x4",
+          "0x7c",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7dc1",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x7",
+          "0x77",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7dc1",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x7",
+          "0x77",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7fff",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x7",
+          "0x7f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x7fff",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x7",
+          "0x7f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x8000",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x8",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x8000",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x8",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x10000",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x10",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x10000",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x10",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x17fff",
+        "length": 4,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x17",
+          "0x3f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x17fff",
+        "length": 64,
+        "initial_control": "0x20",
+        "selectors": [
+          "0x17",
+          "0x3f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x0",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x80",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x0",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x80",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x7ff",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x9f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x7ff",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x9f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x800",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x60",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x800",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x0",
+          "0x60",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x4eda",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x4",
+          "0x7b",
+          "0x68"
+        ]
+      },
+      {
+        "index": "0x4eda",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x4",
+          "0x7b",
+          "0x68"
+        ]
+      },
+      {
+        "index": "0x4f01",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x4",
+          "0x7c",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x4f01",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x4",
+          "0x7c",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7dc1",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x7",
+          "0x77",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7dc1",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x7",
+          "0x77",
+          "0x4"
+        ]
+      },
+      {
+        "index": "0x7fff",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x7",
+          "0x7f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x7fff",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x7",
+          "0x7f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x8000",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x8",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x8000",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x8",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x10000",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x10",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x10000",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x10",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "index": "0x17fff",
+        "length": 4,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x17",
+          "0x3f",
+          "0xfc"
+        ]
+      },
+      {
+        "index": "0x17fff",
+        "length": 64,
+        "initial_control": "0x21",
+        "selectors": [
+          "0x17",
+          "0x3f",
+          "0xfc"
+        ]
+      }
+    ],
+    "executed_functions": {
+      "readcoderam2": {
+        "address": "0x5b0c",
+        "size": 415
+      },
+      "stop_cpub": {
+        "address": "0x59de",
+        "size": 39
+      },
+      "write3bytes": {
+        "address": "0x477f",
+        "size": 45
+      }
+    },
+    "stubbed": [
+      "readbyte",
+      "writebyte",
+      "writedata",
+      "readdata",
+      "gettimeofday",
+      "fprintf"
+    ],
+    "control_operation": "read 0x8203; write original OR 1",
+    "data_operation": "readdata(0x8025, destination, byte_length, flags=2)",
+    "cleanup": "write three zero bytes starting at 0x8022",
+    "radio_resume_in_this_function": false,
+    "zero2_compatibility_proven": false,
+    "limitations": [
+      "No device opened; returned bytes are synthetic",
+      "Vendor debug transport is not the 8BitDo bootloader protocol",
+      "Register access, selector meaning and stop/resume behavior on Zero 2 remain unverified"
+    ]
+  }
+}

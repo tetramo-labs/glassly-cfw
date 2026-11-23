@@ -1,0 +1,24 @@
+{
+  "name": "Glassly Micro",
+  "hardware_accessed": false,
+  "images": {
+    "probe": {
+      "package_sha256": "f1dbc998fab6789493b3b736ed1a0a8bd1fd25e1d3020450c3c3fd5da4130b34",
+      "plaintext_sha256": "5eab57a52b5df4df7c41b606243e0b40280b16c8af4277f71c58c26c348be1be",
+      "previous_plaintext_sha256": "fca4e5698166c69b67feabcce95e6674d7afcd72478f9acb25c3b9b71caf6e8e",
+      "only_name_slot_changed": true
+    },
+    "notify": {
+      "package_sha256": "340f25b175eb8b415f17bcf57d509ef54d5f31ca9280778821c8ce7178558907",
+      "plaintext_sha256": "460a8ac2c12e1e8aa6d47a6a08079ad5f6abb1907910b9302ea3bf88b2be86b8",
+      "previous_plaintext_sha256": "1c172f49d5cf74e9443277f4b904ad61fe7021c0c957acc2da2e5b91ed50a456",
+      "only_name_slot_changed": true
+    },
+    "buttons": {
+      "package_sha256": "72713359970e57dfd5697c807a7a5ba97ef521ed19fd87a3615332aefc5d3091",
+      "plaintext_sha256": "9e54738d54ae4dcb57a65f8306edefb660604c41c065f83948599a8132c2cf5e",
+      "previous_plaintext_sha256": "7a16629b0ade32cad181bbb01181d2fe33d76d80083c1432ff8b75b67df706d4",
+      "only_name_slot_changed": true
+    }
+  }
+}

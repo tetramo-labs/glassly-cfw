@@ -1,0 +1,89 @@
+{
+  "version": "GLASSLYCFW/10",
+  "capture": "captures/sensor-drain-20261103-sensors-02",
+  "result": {
+    "automaticRetries": 0,
+    "capture": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/sensor-drain-20261103-sensors-02",
+    "command": "sensors",
+    "complete": true,
+    "finalSequence": 15,
+    "flashMutations": 0,
+    "imuSnapshotsSaved": 0,
+    "lastSavedSequence": 15,
+    "lightSnapshotsSaved": 15,
+    "losslessCapture": false,
+    "missingSequences": 0,
+    "mode": "native macOS IOBluetooth RFCOMM",
+    "passiveCapture": true,
+    "physicalUnitsVerified": false,
+    "reportedOverwrites": 0,
+    "stopDiscardsUnread": false,
+    "subscriptionStopped": true,
+    "tailDrained": true
+  },
+  "savedSequencesContiguous": true,
+  "observedSamples": 15,
+  "lifecycle": [
+    {
+      "event": "sensor-start",
+      "snapshot": {
+        "activeMask": 3,
+        "deadline": 179992,
+        "generation": 1,
+        "now": 89992,
+        "result": "ok"
+      },
+      "uptimeSeconds": 2094879.7424623335,
+      "utc": "2026-11-04T01:48:48.793Z"
+    },
+    {
+      "batch": {
+        "acknowledged": 15,
+        "activeMask": 0,
+        "drops": 0,
+        "generation": 1,
+        "now": 105070,
+        "pending": 0,
+        "phase": 2,
+        "result": "ok",
+        "samples": [],
+        "sequence": 15
+      },
+      "event": "sensor-drained",
+      "uptimeSeconds": 2094894.8048264168,
+      "utc": "2026-11-04T01:49:03.856Z"
+    },
+    {
+      "event": "sensor-stopped",
+      "snapshot": {
+        "acknowledged": 15,
+        "activeMask": 0,
+        "drops": 0,
+        "generation": 1,
+        "now": 105107,
+        "pending": 0,
+        "phase": 0,
+        "result": "released",
+        "samples": [],
+        "sequence": 15
+      },
+      "uptimeSeconds": 2094894.8499564168,
+      "utc": "2026-11-04T01:49:03.901Z"
+    }
+  ],
+  "evidenceSHA256": {
+    "trace.jsonl": "b33054c58b3c2e1d6a22c4a20582b6440e614dc2020369d970db88a2be6abd90",
+    "result.json": "dfc512359f01a85d569efe672f9929fb6afb627754815139807cd2f40de6ee07"
+  },
+  "priorAttempt": {
+    "capture": "captures/sensor-drain-20261103-sensors-01",
+    "result": "RFCOMM open timed out before sensor commands"
+  },
+  "limitations": [
+    "No IMU samples observed; active sensor power is not implemented",
+    "Physical units and controlled light response not verified",
+    "This run ended with an empty tail; nonempty finish-tail retention not exercised",
+    "Expiry, stale-generation rejection and watchdog timing not hardware-tested",
+    "Physical display not checked"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "source_body_sha256": "3ec87a7b0426bfca6ccb8f1c422b3ad075309f5ab053f8d25aef9dbf53e859bc",
+  "body_crc_verified_independently": true,
+  "architecture": "RISCV:LE:32:default:gcc",
+  "base": "0x02068000",
+  "normal_handoff": "0x020683fc",
+  "optional_auth_condition": "low8(config_read(0x29)) == 0x66",
+  "auth_condition_observed": false,
+  "authenticator": "0x0206899e",
+  "digest_span": "[header+32,header+32+LE32(header+4))",
+  "signature": "RSA-2048/PKCS1-v1.5/SHA-256",
+  "normal_handoff_body_crc_call_found": false,
+  "full_allocation_verification_found_in_inspected_handoff": false,
+  "compressed_activation": "0x02068ea2",
+  "ordinary_erase": "round_up(component.decompressed_length,4096)",
+  "ordinary_program": "actual LZMA emitted bytes; exact page chunks <=256",
+  "expected_output_count_checked_after_decoding": true,
+  "bootmap_selected_physical": "0x007fc000",
+  "captured_app_body_length": 1824064,
+  "captured_app_body_end": "0x003a8560",
+  "captured_app_normal_ota_erase_end": "0x003a9000",
+  "candidate_tail": [
+    "0x003ab000",
+    "0x003eb000"
+  ],
+  "exclusive_tail_ownership_proven": false,
+  "tail_write_or_reset_test_performed": false,
+  "unknowns": [
+    "first-stage ROM/factory paths",
+    "current hardware authentication setting not read",
+    "all tail ownership not proven",
+    "power-loss/reset behavior after tail write not tested"
+  ],
+  "report": "report.md"
+}

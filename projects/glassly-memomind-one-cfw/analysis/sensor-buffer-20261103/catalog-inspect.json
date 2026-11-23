@@ -1,0 +1,9 @@
+{
+  "bluetoothAccessed" : false,
+  "bytes" : 2247245,
+  "eligible" : true,
+  "modified" : true,
+  "profile" : "H001Y-1.0.3.127-flash-canary-v1",
+  "releaseName" : "sensor-buffer-001",
+  "sha256" : "fa230c0c893d9b810d0901dcfec2798dc4a78f043069aef865a07c94b883eb86"
+}

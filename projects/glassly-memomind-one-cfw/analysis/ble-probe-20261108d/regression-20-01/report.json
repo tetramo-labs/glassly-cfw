@@ -1,0 +1,2613 @@
+{
+  "format": "memomind-offline-regression-v1",
+  "started_utc": "2026-11-09T00:15:27.397739+00:00",
+  "finished_utc": "2026-11-09T00:33:19.378590+00:00",
+  "results": [
+    {
+      "name": "rebuilt_fixtures",
+      "scope": "Fresh-build fixture binding preserves historical pins and rejects source/blob drift",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/rv32/test_rebuilt.py"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.137
+    },
+    {
+      "name": "inventory",
+      "scope": "Exact original assertion mappings and coverage inventory are current; read-only check",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/g2_compat/inventory.py",
+        "--check"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.929
+    },
+    {
+      "name": "inventory_scope",
+      "scope": "Hardware exclusions preserve compass/raw IMU/button/ALS requirements; mixed settings and optional-failure isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/g2_compat/test_scope.py"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.247
+    },
+    {
+      "name": "firmware_transport",
+      "scope": "MemoMind image construction, framing, replay and validation; offline",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/run_python_tests.py",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/firmware_transport.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 131.675
+    },
+    {
+      "name": "native_swift",
+      "scope": "Native Mac CLI build plus Swift protocol, exact capture replay, image validation and failure tests; no radio operations",
+      "command": [
+        "swift",
+        "test",
+        "--package-path",
+        "swift/MemoMindKit"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 81.511
+    },
+    {
+      "name": "g2_compat",
+      "scope": "Ported pure algorithms and separately labeled unchanged G2 reference suites",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/g2_compat/run_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/g2_compat",
+        "--demos-dependencies",
+        "/Users/fosse/dev/glassly-g2-cfw/demos/node_modules",
+        "--g2-media",
+        "/Users/fosse/dev/glassly-g2-cfw/demos"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 10.541
+    },
+    {
+      "name": "geometry",
+      "scope": "MemoMind GRAY4 geometry/RLE compared to pinned G2; RV32 compile checks",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/geometry"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 17.228
+    },
+    {
+      "name": "scene",
+      "scope": "Production portable scene/cache/assets with original shape/vector assertions and media replays",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_scene_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene",
+        "--fixtures-from",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/g2_compat"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 8.057
+    },
+    {
+      "name": "notifications",
+      "scope": "Portable notification relay with all original scenarios; G2 hook shim is test-only, native adapter pending",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_notification_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/notifications"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.268
+    },
+    {
+      "name": "record_transport",
+      "scope": "Portable record parser with all original scenarios and production pinned inflater; hardware excluded",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_transport_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-transport"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.55
+    },
+    {
+      "name": "record_session_host",
+      "scope": "Native record carrier allocation failures and deferred destruction with ASan/UBSan",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_record_transport_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-session-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.859
+    },
+    {
+      "name": "record_inflater_rv32",
+      "scope": "Actual RV32 production inflater dictionary, bounds, failure and ownership checks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/inflater_runtime_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-inflater-rv32"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 4.104
+    },
+    {
+      "name": "record_build",
+      "scope": "Full native record runtime with existing display, storage and notification features",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--text-commands",
+        "--diagnostic-commands",
+        "--reset-undo-trim",
+        "--minimal-launcher",
+        "--flash-scene",
+        "--wake-control",
+        "--notification-relay",
+        "--record-transport",
+        "--microphone-control",
+        "--sensor-capture",
+        "--raw-present",
+        "--ble-probe",
+        "--cfw-revision",
+        "18",
+        "--rx-profile",
+        "app-rx-96k-v1",
+        "--relax"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 3.626
+    },
+    {
+      "name": "ble_probe_runtime",
+      "scope": "BLE probe registers a Glassly GATT service after boot, enables advertising, counts and echoes writes; stock GATT natives mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/ble_probe_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/ble-probe-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.397
+    },
+    {
+      "name": "raw_present_runtime",
+      "scope": "Raw presents copy changed boxes into the locked panel slices; the LVGL image is the fallback; slice natives mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raw_present_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raw-present-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 26.042
+    },
+    {
+      "name": "first_run_boot",
+      "scope": "Fresh and configured boot select the minimal owner; altered patch witnesses rejected",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/first_run_boot_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/first-run-boot.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.595
+    },
+    {
+      "name": "microphone_host",
+      "scope": "Leased native Opus lifecycle, cancellation and cleanup failures under sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_microphone_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/microphone-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.4
+    },
+    {
+      "name": "microphone_native_abi",
+      "scope": "Actual stock recording task, open, stop, reset, cooldown and format ABI; hardware mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/microphone_native_abi_test.py",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/microphone-native-abi.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.076
+    },
+    {
+      "name": "sensor_native_abi",
+      "scope": "Actual ALS read/power/settings and IMU acquisition/decoding/ownership; bus, driver and RTOS mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/sensor_native_abi_test.py",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/sensor-native-abi.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.35
+    },
+    {
+      "name": "sensor_capture_host",
+      "scope": "Passive snapshot generation, expiry, cleanup and failure paths with ASan/UBSan",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_sensor_capture_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/sensor-capture-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.457
+    },
+    {
+      "name": "sensor_capture_runtime",
+      "scope": "Linked passive sensor control and patched stock acquisition/decoder with mocked bus and RTOS",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/sensor_capture_runtime_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/sensor-capture-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 3.163
+    },
+    {
+      "name": "microphone_runtime",
+      "scope": "Linked microphone control and native SPP/iAP2 veneers; native audio APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/microphone_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/microphone-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.768
+    },
+    {
+      "name": "record_gates",
+      "scope": "Actual full record-profile notification/wake service gates preserve register and stack contracts",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/notification_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.662
+    },
+    {
+      "name": "record_runtime",
+      "scope": "Actual native GM carrier through display queue, parser, inflater and scene; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/record_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/record-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 69.803
+    },
+    {
+      "name": "upstream_policy",
+      "scope": "Portable extension/settings/heading/link policies; original battery scenario retained as optional hardware reference; native mappings pending",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_upstream_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/upstream-policy"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.942
+    },
+    {
+      "name": "native_text_host",
+      "scope": "Resource-backed native glyph adapter with injected font APIs and sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_native_text_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/native-text-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.501
+    },
+    {
+      "name": "scene_session_host",
+      "scope": "Scene memory/timer ownership and native graphics queue integration; firmware APIs mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_scene_session_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-session-host",
+        "--fixtures-from",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/g2_compat"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 3.395
+    },
+    {
+      "name": "input_host",
+      "scope": "Passive input ownership, ring/ACK/lease and Python JSON contract; native APIs mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_input_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.802
+    },
+    {
+      "name": "rv32_build",
+      "scope": "Recompile checked-in probe sources with the pinned RISC-V toolchain",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_probe.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/probe-build"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.178
+    },
+    {
+      "name": "rv32_probe",
+      "scope": "Actual installed probe machine code, with explicitly mocked native functions",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/probe_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/probe-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rv32_probe.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.291
+    },
+    {
+      "name": "graphics_host",
+      "scope": "Display-worker C ownership/lifecycle and full255 geometry requests; native mocks",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.508
+    },
+    {
+      "name": "graphics_build",
+      "scope": "Recompile two-hook graphics runtime from current sources",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-build"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.403
+    },
+    {
+      "name": "graphics_gates",
+      "scope": "Actual RV32 gates and displaced worker callsite; mocked C boundaries",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/graphics_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.721
+    },
+    {
+      "name": "graphics_runtime",
+      "scope": "Actual RV32 C/native adapters and geometry; only external firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/graphics_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/graphics-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.923
+    },
+    {
+      "name": "scene_build",
+      "scope": "Compile retained scene/session native adapter as a separate RV32 artifact",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-build",
+        "--scene-session"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.418
+    },
+    {
+      "name": "scene_gates",
+      "scope": "Actual scene build gates/callsite; C boundaries mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/graphics_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.775
+    },
+    {
+      "name": "scene_runtime",
+      "scope": "Actual scene RV32 handlers, session and cache/vector C; external firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/scene_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 12.316
+    },
+    {
+      "name": "input_build",
+      "scope": "Compile optional passive input observer with retained scene runtime",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-build",
+        "--scene-session",
+        "--input-observer"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.525
+    },
+    {
+      "name": "input_gates",
+      "scope": "Actual input-enabled RV32 gates preserve stock integer/FPR/fcsr state; C callbacks mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/input_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.273
+    },
+    {
+      "name": "input_runtime",
+      "scope": "Actual input RV32 handlers/native wrappers and lifecycle; external firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/input_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/input-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.298
+    },
+    {
+      "name": "flash_read_host",
+      "scope": "Bounded read-only flash ranges, request ownership and failures; native driver mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_flash_read_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.504
+    },
+    {
+      "name": "flash_read_build",
+      "scope": "Compile optional allowlisted flash reader with scene and input runtime",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.64
+    },
+    {
+      "name": "flash_read_gates",
+      "scope": "Actual flash-enabled RV32 service/display gates preserve stock behavior; C callbacks mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_read_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.389
+    },
+    {
+      "name": "flash_read_runtime",
+      "scope": "Actual flash-reader RV32 handler and native veneer; external APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_read_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.446
+    },
+    {
+      "name": "flash_read_contract",
+      "scope": "Production C and actual RV32 emitted replies accepted/rejected by Python client over GM framing",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-runtime.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-read-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.075
+    },
+    {
+      "name": "external_read_host",
+      "scope": "Read-only external-tail profile boundaries and ownership; native flash mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_flash_read_tests.py",
+        "--external-tail",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.445
+    },
+    {
+      "name": "external_read_build",
+      "scope": "Compile separate read-only external-tail acquisition profile",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.626
+    },
+    {
+      "name": "external_read_gates",
+      "scope": "Actual external-tail reader service/display gates; C bodies mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/external_read_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.399
+    },
+    {
+      "name": "external_read_runtime",
+      "scope": "Actual external-tail reader handler and native wrapper; hardware mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/external_read_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.509
+    },
+    {
+      "name": "external_read_contract",
+      "scope": "External-tail C/RV32 emitted replies checked by pinned Python profile and GM framing",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-runtime.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-read-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.074
+    },
+    {
+      "name": "flash_store",
+      "scope": "256KiB transactional flash-store core: exhaustive partial-I/O faults, bad sectors, rollback and RV32 audit",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_flash_store_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-store"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.809
+    },
+    {
+      "name": "flash_store_native",
+      "scope": "Fixed native tail adapter: range/badmap/ownership, cache maintenance and readback; native APIs mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_flash_store_native_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-store-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.829
+    },
+    {
+      "name": "scene_flash_store",
+      "scope": "Full256KiB scene backend: unchanged fixture differentials,65535-byte messages,rollback/read faults and RV32 audit",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/portable/tests/run_scene_store_tests.py",
+        "--fixtures-from",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/g2_compat",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/scene-flash-store"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 5.551
+    },
+    {
+      "name": "external_reservation_native",
+      "scope": "Actual pinned native cache code with exact constructor edits; physical flash and KV mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/external_reservation_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/external-reservation-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 5.901
+    },
+    {
+      "name": "exclusive_storage_native",
+      "scope": "Six CUS8 entry gates from reconstructed candidate; unmapped RAM/MMIO, no hardware ownership claim",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/exclusive_storage_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/exclusive-storage-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.558
+    },
+    {
+      "name": "exclusive_storage_callers",
+      "scope": "Actual native mount callers, reset wrappers and worker failure propagation; firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/exclusive_storage_callers_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/exclusive-storage-callers"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.391
+    },
+    {
+      "name": "heap_registry_native",
+      "scope": "Actual native BSS clear/pool/TLSF allocation/free with exact constructor registry carve; critical sections mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/heap_carve_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/heap-registry-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.557
+    },
+    {
+      "name": "dashboard_islands_native",
+      "scope": "Six retired card entries and actual nine-type dispatcher fallback; UI and record APIs mocked, no hardware",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/dashboard_islands_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/dashboard-islands-native.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.13
+    },
+    {
+      "name": "dashboard_ram_native",
+      "scope": "Six production cold-boot UI gates, 230 native null-owner cases; only logging predicate mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/dashboard_ram_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/dashboard-ram-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.343
+    },
+    {
+      "name": "storage_diag_host",
+      "scope": "Fixed topology/badmap serializers: sanitizer bounds, corrupt records, source distinctions",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_storage_diag_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.399
+    },
+    {
+      "name": "storage_diag_build",
+      "scope": "Compile fixed read-only storage preflight profile with existing scene/input/reader",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.785
+    },
+    {
+      "name": "storage_diag_gates",
+      "scope": "Actual diagnostic-profile service/display gates preserve stock dispatch; C bodies mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/storage_diag_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.419
+    },
+    {
+      "name": "storage_diag_runtime",
+      "scope": "Actual fixed RAM loads, single-key native veneers and serializers; RAM/KV mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/storage_diag_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.991
+    },
+    {
+      "name": "storage_diag_contract",
+      "scope": "Emitted C/RV32 diagnostics independently checked through fragmented GM and Python",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_storage_diag_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-runtime.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.075
+    },
+    {
+      "name": "storage_diag_scene",
+      "scope": "Existing scene actual-code scenarios rerun against diagnostic image; firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/storage_diag_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 12.272
+    },
+    {
+      "name": "storage_diag_input",
+      "scope": "Existing input actual-code scenarios rerun against diagnostic image; firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/storage_diag_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/storage-diag-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.309
+    },
+    {
+      "name": "badmap_native",
+      "scope": "Actual pinned KV getter/iterator/CRC/badmap loader with synthetic read-only KV and RTOS locks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/badmap_acquisition_emulator_test.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/badmap-native"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.294
+    },
+    {
+      "name": "full_store_read_host",
+      "scope": "Read-only full3MiB range boundaries and ownership; native flash mocked",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_flash_read_tests.py",
+        "--full-store",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.553
+    },
+    {
+      "name": "full_store_read_build",
+      "scope": "Compile explicit full3MiB read-only profile with diagnostics, scene and input",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.697
+    },
+    {
+      "name": "full_store_read_gates",
+      "scope": "Actual full-store reader service/display gates; C entry points mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/full_store_read_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.507
+    },
+    {
+      "name": "full_store_read_runtime",
+      "scope": "Actual bounded full-store reader and diagnostic machine code; native flash/KV mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/full_store_read_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.047
+    },
+    {
+      "name": "full_store_read_contract",
+      "scope": "Full-store emitted C/RV32 replies through strict GM/Python profile validation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_full_store_read_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-runtime.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.076
+    },
+    {
+      "name": "full_store_scene",
+      "scope": "Existing scene actual-code scenarios on the full-store reader image; native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/full_store_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 12.388
+    },
+    {
+      "name": "full_store_input",
+      "scope": "Existing input actual-code scenarios on the full-store reader image; native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/full_store_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.318
+    },
+    {
+      "name": "raster_commands_host",
+      "scope": "Optional mode3/6 actual sender/decoder differential and native queue tests with ASan/UBSan",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_raster_commands_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.74
+    },
+    {
+      "name": "raster_commands_build",
+      "scope": "Fresh optional mode3/6 RV32 runtime with scene/input/full reader/canary; legacy profiles unchanged",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.062
+    },
+    {
+      "name": "raster_commands_gates",
+      "scope": "Actual fresh raster runtime gates; original complete gate suite with mocked C boundaries",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raster_commands_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.726
+    },
+    {
+      "name": "raster_commands_runtime",
+      "scope": "Actual raster C/native wrappers: frame/delta, animation takeover, aliases, ownership; firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raster_commands_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--fixtures-from",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-host",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 9.058
+    },
+    {
+      "name": "flash_canary_host",
+      "scope": "Fixed canary worker ownership, failure boundaries and restore logic; native mocks",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_flash_canary_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.454
+    },
+    {
+      "name": "flash_canary_build",
+      "scope": "Compile fixed-sector canary with full reader, diagnostics, scene and input",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.012
+    },
+    {
+      "name": "flash_canary_gates",
+      "scope": "Actual canary gates and stack alignment; C boundaries mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_canary_gate_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.974
+    },
+    {
+      "name": "flash_canary_runtime",
+      "scope": "Actual canary service/worker machine code; native scheduling, flash and KV mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_canary_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.694
+    },
+    {
+      "name": "flash_canary_contract",
+      "scope": "Emitted canary replies checked through strict client parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-runtime.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.077
+    },
+    {
+      "name": "flash_canary_reader",
+      "scope": "Retained full reader and diagnostics against canary machine code; native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_canary_reader_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.103
+    },
+    {
+      "name": "flash_canary_reader_contract",
+      "scope": "Reader and diagnostic emitted replies preserve exact full-store contract",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.074
+    },
+    {
+      "name": "flash_canary_scene",
+      "scope": "Existing scene machine-code scenarios on canary image; native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_canary_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 13.09
+    },
+    {
+      "name": "flash_canary_input",
+      "scope": "Existing input machine-code scenarios on canary image; native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/flash_canary_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.316
+    },
+    {
+      "name": "raster_commands_canary",
+      "scope": "Retained canary service/worker suite on fresh raster machine code; flash/task APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raster_commands_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.45
+    },
+    {
+      "name": "raster_commands_reader",
+      "scope": "Retained full reader/diagnostic suite on fresh raster machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raster_commands_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.242
+    },
+    {
+      "name": "raster_commands_input",
+      "scope": "Retained input observer/owner/lease suite on fresh raster machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/raster_commands_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.477
+    },
+    {
+      "name": "raster_commands_canary_contract",
+      "scope": "Repinned raster build canary replies checked by production strict client parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-canary.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.076
+    },
+    {
+      "name": "raster_commands_reader_contract",
+      "scope": "Repinned raster build reader/diagnostic replies checked by strict client parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/raster-commands-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.069
+    },
+    {
+      "name": "rect_copy_host",
+      "scope": "Mode9 overlap/nibble/bounds/alias differential against pinned G2 copy; sanitizer native mocks",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_rect_copy_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.901
+    },
+    {
+      "name": "rect_copy_build",
+      "scope": "Compile mode9 with prior raster/input/full reader/canary features",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--relax"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.31
+    },
+    {
+      "name": "rect_copy_gates",
+      "scope": "Actual rect-copy machine-code gates with mocked C boundaries",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/rect_copy_existing_runtime_emulator_test.py",
+        "--suite",
+        "gates",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.962
+    },
+    {
+      "name": "rect_copy_runtime",
+      "scope": "Actual mode9 RV32 C/native wrappers, pixel copies, aliases and ownership; external firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/rect_copy_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 9.283
+    },
+    {
+      "name": "rect_copy_canary",
+      "scope": "Retained fixed canary service/worker on mode9 machine code; native flash/tasks mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/rect_copy_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.629
+    },
+    {
+      "name": "rect_copy_reader",
+      "scope": "Retained full reader/diagnostic service on mode9 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/rect_copy_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.1
+    },
+    {
+      "name": "rect_copy_input",
+      "scope": "Retained input observer/lease service on mode9 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/rect_copy_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.359
+    },
+    {
+      "name": "rect_copy_canary_contract",
+      "scope": "Mode9 build canary replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-canary.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.074
+    },
+    {
+      "name": "rect_copy_reader_contract",
+      "scope": "Mode9 build reader/diagnostic replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/rect-copy-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.074
+    },
+    {
+      "name": "command_bundle_host",
+      "scope": "Mode8 pinned dispatch, single-present, partial effects and bounded settled collection with sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_command_bundle_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.838
+    },
+    {
+      "name": "command_bundle_build",
+      "scope": "Compile mode8 with raster/copy/input/full reader/canary and unchanged64KiB extension bound",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--relax"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.276
+    },
+    {
+      "name": "command_bundle_runtime",
+      "scope": "Actual mode8 RV32 execution, cache/assets, ordered notifications, failures and ownership; firmware APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 16.898
+    },
+    {
+      "name": "command_bundle_gates",
+      "scope": "Retained register/stack gates on mode8 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_existing_runtime_emulator_test.py",
+        "--suite",
+        "gates",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.637
+    },
+    {
+      "name": "command_bundle_canary",
+      "scope": "Retained fixed canary service and worker on mode8 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.188
+    },
+    {
+      "name": "command_bundle_reader",
+      "scope": "Retained full reader and diagnostics on mode8 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.189
+    },
+    {
+      "name": "command_bundle_input",
+      "scope": "Retained passive input observer and lease on mode8 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.401
+    },
+    {
+      "name": "command_bundle_scene",
+      "scope": "Retained retained scene and immediate drawing on mode8 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/command_bundle_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 12.58
+    },
+    {
+      "name": "command_bundle_canary_contract",
+      "scope": "Mode8 build canary replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-canary.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.127
+    },
+    {
+      "name": "command_bundle_reader_contract",
+      "scope": "Mode8 build reader replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/command-bundle-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.076
+    },
+    {
+      "name": "text_command_host",
+      "scope": "Mode15 255-byte text, signed placement, controls/options, native resource preflight and G2 reference cases with sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_text_command_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.956
+    },
+    {
+      "name": "text_command_build",
+      "scope": "Compile mode15 with raster/copy/input/full reader/canary and unchanged64KiB extension bound",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--text-commands",
+        "--relax"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.385
+    },
+    {
+      "name": "text_command_runtime",
+      "scope": "Actual mode15 RV32 dispatch and resource-font paths; native calls mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 16.303
+    },
+    {
+      "name": "text_command_gates",
+      "scope": "Retained register/stack gates on mode15 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "gates",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.918
+    },
+    {
+      "name": "text_command_canary",
+      "scope": "Retained fixed canary service and worker on mode15 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.693
+    },
+    {
+      "name": "text_command_reader",
+      "scope": "Retained full reader and diagnostics on mode15 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.146
+    },
+    {
+      "name": "text_command_input",
+      "scope": "Retained passive input observer and lease on mode15 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.366
+    },
+    {
+      "name": "text_command_scene",
+      "scope": "Retained retained scene and immediate drawing on mode15 machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 12.644
+    },
+    {
+      "name": "text_command_canary_contract",
+      "scope": "Mode15 build canary replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-canary.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.078
+    },
+    {
+      "name": "text_command_reader_contract",
+      "scope": "Mode15 build reader replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.077
+    },
+    {
+      "name": "text_command_bundle",
+      "scope": "Retained bundle suite on text machine code, including unchanged notifications and final cache semantics",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/text_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "bundle",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/text-command-bundle.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 17.337
+    },
+    {
+      "name": "diagnostic_command_host",
+      "scope": "Original G2 frame tracking and mode7 controls; native metadata/overlay ownership under sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_diagnostic_command_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-host"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.456
+    },
+    {
+      "name": "diagnostic_command_build",
+      "scope": "Compile diagnostics/cleanup with profile-specific size optimization and unchanged64KiB/512-byte guards",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--text-commands",
+        "--diagnostic-commands",
+        "--relax"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.234
+    },
+    {
+      "name": "diagnostic_command_runtime",
+      "scope": "Actual mode7/11 RV32 dispatch, framebuffer isolation and overlay/session lifetime; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 17.166
+    },
+    {
+      "name": "diagnostic_command_gates",
+      "scope": "Retained gates checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "gates",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 7.602
+    },
+    {
+      "name": "diagnostic_command_canary",
+      "scope": "Retained canary checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.863
+    },
+    {
+      "name": "diagnostic_command_reader",
+      "scope": "Retained reader checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.189
+    },
+    {
+      "name": "diagnostic_command_input",
+      "scope": "Retained input checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.511
+    },
+    {
+      "name": "diagnostic_command_scene",
+      "scope": "Retained scene checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.462
+    },
+    {
+      "name": "diagnostic_command_bundle",
+      "scope": "Retained bundle checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "bundle",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-bundle.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 20.223
+    },
+    {
+      "name": "diagnostic_command_text",
+      "scope": "Retained text checks on optimized diagnostics machine code; explicit metadata lifetime adaptations and native mocks",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py",
+        "--suite",
+        "text",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-text.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 18.134
+    },
+    {
+      "name": "diagnostic_command_canary_contract",
+      "scope": "Diagnostic build canary replies checked by strict production parser; no hardware writes",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/flash-canary-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-canary.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-canary-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.18
+    },
+    {
+      "name": "diagnostic_command_reader_contract",
+      "scope": "Diagnostic build flash-reader replies checked by strict production parser",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/check_flash_canary_reader_contract.py",
+        "--host-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/full-store-host/report.json",
+        "--rv32-report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-reader.json",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/diagnostic-command-reader-contract.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 0.076
+    },
+    {
+      "name": "reset_undo_trim_host",
+      "scope": "Opt-in RESET scratch ownership, rollback failures and bundle retention under sanitizers",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_reset_undo_trim_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-host",
+        "--fixtures-from",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/g2_compat"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.161
+    },
+    {
+      "name": "reset_undo_trim_build",
+      "scope": "Compile native RESET undo policy within the existing64KiB allocation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/compile_memomind_graphics.py",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--scene-session",
+        "--input-observer",
+        "--flash-reader",
+        "--external-tail-reader",
+        "--storage-diagnostics",
+        "--full-store-reader",
+        "--flash-canary",
+        "--raster-commands",
+        "--rect-copy",
+        "--command-bundles",
+        "--text-commands",
+        "--diagnostic-commands",
+        "--reset-undo-trim"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 2.366
+    },
+    {
+      "name": "reset_undo_trim_runtime",
+      "scope": "Actual RV32 allocation accounting, reacquisition failure, pixels and bundle ordering",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_runtime_emulator_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-runtime.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 18.7
+    },
+    {
+      "name": "reset_undo_trim_diagnostics",
+      "scope": "Retained diagnostics checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "diagnostics",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-diagnostics.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 17.169
+    },
+    {
+      "name": "reset_undo_trim_gates",
+      "scope": "Retained gates checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "gates",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-gates.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 7.909
+    },
+    {
+      "name": "reset_undo_trim_canary",
+      "scope": "Retained canary checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "canary",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-canary.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.861
+    },
+    {
+      "name": "reset_undo_trim_reader",
+      "scope": "Retained reader checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "reader",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-reader.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.101
+    },
+    {
+      "name": "reset_undo_trim_input",
+      "scope": "Retained input checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "input",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-input.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 1.429
+    },
+    {
+      "name": "reset_undo_trim_scene",
+      "scope": "Retained scene checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "scene",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-scene.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 14.147
+    },
+    {
+      "name": "reset_undo_trim_bundle",
+      "scope": "Retained bundle checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "bundle",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-bundle.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 19.678
+    },
+    {
+      "name": "reset_undo_trim_text",
+      "scope": "Retained text checks on RESET-trim machine code; native APIs mocked",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/reset_undo_trim_existing_runtime_emulator_test.py",
+        "--suite",
+        "text",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/reset-undo-trim-text.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 17.408
+    },
+    {
+      "name": "minimal_owner_flash",
+      "scope": "Minimal launcher lifecycle, native COW worker and full raw-message capacities",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "runtime/graphics/tests/run_minimal_owner_flash_tests.py",
+        "--output",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/minimal-owner-flash",
+        "--rv32-python",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 112.242
+    },
+    {
+      "name": "minimal_owner_flash_commands",
+      "scope": "Retained drawing, text, animation and diagnostic cleanup on flash scene",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+        "tests/rv32/run_rebuilt.py",
+        "tests/rv32/minimal_owner_flash_commands_test.py",
+        "--build",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/minimal-owner-flash/build",
+        "--report",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/ble-probe-20261108d/regression-20-01/minimal-owner-flash/retained-commands.json"
+      ],
+      "parity_required": true,
+      "returncode": 0,
+      "result": "passed",
+      "seconds": 6.966
+    }
+  ],
+  "keyboard_reference_requested": false,
+  "parity_scope": {
+    "effective_date": "2026-11-02",
+    "excluded_features": [
+      "Bluetooth keyboard/HOGP accessory support",
+      "Ring battery",
+      "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)",
+      "Mode5 sound and tone commands",
+      "Microphone volume gating"
+    ],
+    "required_hardware_features": [
+      "Single-button input",
+      "Compass data",
+      "Raw IMU data",
+      "Ambient-light sensing"
+    ],
+    "excluded_upstream_files": [
+      "demos/head-up-test.ts",
+      "demos/keyboard.test.ts",
+      "demos/keyboard.ts",
+      "demos/ring-touch-test.ts",
+      "demos/sound-test.ts",
+      "patches/host/keyboard_emulator_test.py",
+      "patches/host/keyboard_host_test.c",
+      "patches/host/volume_gate_host_test.c"
+    ],
+    "historical_tests_retained": true,
+    "mixed_non_keyboard_suites_remain_required": true,
+    "command_parity_map": "tests/g2_compat/COMMAND_PARITY.md"
+  },
+  "required_host_core_scenario_inventory": {
+    "total": 38,
+    "original_assertion_sites": 645,
+    "native_adapter_coverage_included": false
+  },
+  "all_required_offline_suites_passed": true,
+  "sources_changed_during_run": [],
+  "missing_upstream_mapped_stages": [],
+  "memo_full_suite_port_complete": false,
+  "remaining_upstream_suite_files": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
+  "host_core_scenario_inventory": {
+    "total": 46,
+    "exercised": 46,
+    "original_assertion_sites": 769,
+    "native_adapter_coverage_included": false
+  },
+  "hardware_tested": false,
+  "device_actions": 0,
+  "limitations": [
+    "Reference G2 passes are not MemoMind implementation passes.",
+    "Offline passes do not establish on-device rendering or full CFW parity."
+  ]
+}

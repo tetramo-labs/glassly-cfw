@@ -1,0 +1,418 @@
+{
+  "passed": true,
+  "image_sha256": "66205f083f031576426b25d6b67f7596af949e68fd8186623e27fbdbe45a1677",
+  "calls": [
+    {
+      "entry": 70943300,
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 12,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": 70943328,
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 80,
+      "instructions": 130,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child_count",
+        "child_count"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": 70943356,
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 12,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": 70943384,
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 13,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": 70943412,
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 12,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 76,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "home",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 32,
+      "instructions": 28,
+      "native_calls": [
+        "base_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "status",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 9,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "overlay",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 11,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 43,
+      "native_calls": [
+        "calibration"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 43,
+      "native_calls": [
+        "calibration"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 46,
+      "native_calls": [
+        "calibration",
+        "leave_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 46,
+      "native_calls": [
+        "calibration",
+        "leave_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 0,
+      "instructions": 7,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_tick",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 76,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "manager_event",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 64,
+      "instructions": 167,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "home",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 32,
+      "instructions": 28,
+      "native_calls": [
+        "base_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "status",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 9,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "overlay",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 16,
+      "instructions": 11,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 43,
+      "native_calls": [
+        "calibration"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 43,
+      "native_calls": [
+        "calibration"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 46,
+      "native_calls": [
+        "calibration",
+        "leave_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 48,
+      "instructions": 46,
+      "native_calls": [
+        "calibration",
+        "leave_app"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "calibration",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 0,
+      "instructions": 7,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "home",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 32,
+      "instructions": 32,
+      "native_calls": [
+        "base_app",
+        "welcome_home"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    }
+  ],
+  "old_objects_poisoned": true,
+  "hardware_tested": false,
+  "limitations": [
+    "Native calibration operation and app exit mocked; actual manager, flag getters, patched external entries and veneers executed."
+  ]
+}

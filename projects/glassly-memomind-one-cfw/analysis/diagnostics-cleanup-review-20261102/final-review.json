@@ -1,0 +1,128 @@
+{
+  "format": "memomind-diagnostics-cleanup-independent-final-review-v1",
+  "decision": "No concrete blocker found in the frozen offline profile and reviewed evidence",
+  "device_actions": false,
+  "source_or_test_edits": false,
+  "tests_rerun_by_review": false,
+  "hardware_tested_by_review": false,
+  "runtime_bytes": 65456,
+  "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+  "elf_sha256": "b12485e4c72ef30b9c5dc900d14a5e92f1ff8bcd9fb01b3a3bf1edd00c13593c",
+  "unchanged_maximum_bytes": 65536,
+  "remaining_bytes": 80,
+  "source_files_checked": 54,
+  "source_drift": [],
+  "optimization": {
+    "new_diagnostics_translation_unit": "-Oz",
+    "graphics_translation_unit": "-Os only diagnostic_commands=True",
+    "legacy_global_flags_unchanged": true,
+    "legacy_text_rebuild_sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7"
+  },
+  "abi_review": {
+    "hidden_target": "042cde58 /042cd8e4(object,1)",
+    "source_targets": "042bd7fa;042c963e(0,0);042c96ec(width,height)",
+    "reordering_api_called": false,
+    "compiled_helper_frame_bytes": 16,
+    "diagnostic_control_static_frame_bytes": 208,
+    "observed_stack_excludes_native_scheduler_interrupt": true
+  },
+  "evidence": {
+    "rv32.json": {
+      "sha256": "678b076ffca90885f9a3c9cd6af271d0e64bf2e975e2d6719d8df72a7876fdf3",
+      "success_field": "passed",
+      "passed": true,
+      "groups": 4,
+      "calls": 152
+    },
+    "gates.json": {
+      "sha256": "61b17d962c4ad7dd54da9d00fe5f61281c54d433b3a281bf8902ca664eae0c4e",
+      "success_field": "passed",
+      "passed": true,
+      "cases": 7955
+    },
+    "canary.json": {
+      "sha256": "6d8c915a502893153013d94d0d8f550c2d1d976b182443920688f17e3ed802ca",
+      "success_field": "passed",
+      "passed": true,
+      "groups": 10,
+      "calls": 251
+    },
+    "reader.json": {
+      "sha256": "65d275cd3b2316263215ee263598cdebe141b901a65404a024cb9fff7be2e311",
+      "success_field": "passed",
+      "passed": true,
+      "groups": 12,
+      "calls": 163
+    },
+    "input.json": {
+      "sha256": "6e1f358c6ebd1a77f0e07b61c093646d23001894105222b1ba10900c5d6a75f1",
+      "success_field": "all_passed",
+      "passed": true,
+      "groups": 6,
+      "calls": 1714
+    },
+    "scene.json": {
+      "sha256": "61ca2f395a309dc64acdaad22aae6f7cf2a91f7362f8e56d729b4a18cb5eb799",
+      "success_field": "all_passed",
+      "passed": true,
+      "groups": 8,
+      "calls": 103
+    },
+    "bundle.json": {
+      "sha256": "7ef181d97c522c061f4ff9ae62a9d5032de7a33908ef37716c445cd6367649c9",
+      "success_field": "passed",
+      "passed": true,
+      "groups": 7,
+      "calls": 131
+    },
+    "text.json": {
+      "sha256": "2cac95761c1e9d6f53cab325edea54f20dc1e4f4c0a9810831c5f663114663ea",
+      "success_field": "passed",
+      "passed": true,
+      "groups": 5,
+      "calls": 653
+    },
+    "canary-contract.json": {
+      "sha256": "abc6666b4e5fbd2a920b3d52479d0204fc90c5b3c2131e010ecebeecc214efa5",
+      "success_field": "passed",
+      "passed": true
+    },
+    "reader-contract.json": {
+      "sha256": "f7d1712bacaa50759080289b88508015bc15b636684fdf1dcb9901dc7ecbb7ef",
+      "success_field": "passed",
+      "passed": true
+    },
+    "host/report.json": {
+      "sha256": "56337626dac4bc67de1dd7dd4c8630909b7fe01851541327cfbeccb2b0c0a95e",
+      "success_field": "passed",
+      "passed": true
+    }
+  },
+  "report_sha256": "86580fba30e8b4bf27396074acb0b770d3ab3c168550bb21b7deae48d53eb960",
+  "build_manifest_sha256": "ae28e01fc5933905c3c830b64f595c1b7dde197af546c6c2dbec24cf311e5d91",
+  "admission_script_sha256": "3089f95957d6b4bdc29cbfdc06076c74362981da4c51a85da33060e165e87a08",
+  "scope": {
+    "required": [
+      "single-button press/hold/release",
+      "compass data",
+      "raw IMU acquisition/stream ownership",
+      "ALS",
+      "generic wake ownership"
+    ],
+    "excluded": [
+      "Bluetooth keyboard/HOGP",
+      "ring battery",
+      "gesture/head-up/ring-touch behavior"
+    ]
+  },
+  "limits": [
+    "Compact3x5 native overlay is not G2Terminus pixel/layout parity",
+    "History and epoch metadata lasts current screenobject only",
+    "Explicit mode11 epoch persistence is best-effort if metadataallocationfails; automaticlease/UI destruction is not globalepoch preservation",
+    "Counters cover executed scene-dispatch/token-workspace refusals only whenmetadataexists",
+    "No fabricated G2NACK/gate/DWT/latestRX/free-largest telemetry",
+    "Cleanup owns implementedgraphics/input; no claimed futurecompass/rawIMU/ALS/audio/notification shutdown and no activecanaryworker cancellation",
+    "Native APIs, callbacktree and scheduler mocked in tests; nohardware/pixel/transport performance orwhole-taskstack claim",
+    "64KiBscene assets/8192ingress remain; fullG2capacity and allcommandparity incomplete"
+  ]
+}

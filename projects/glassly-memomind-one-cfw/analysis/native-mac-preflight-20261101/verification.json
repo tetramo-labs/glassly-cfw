@@ -1,0 +1,20 @@
+{
+  "format": "memomind-native-mac-post-reset-verification-v1",
+  "complete": true,
+  "boot_capture": "captures/swift-mac-boot-20261101-02",
+  "preflight_capture": "captures/swift-mac-storage-preflight-20261101-01",
+  "strict_python_profile_and_read_validation": true,
+  "app_header_full256_matches": true,
+  "app_header_sha256": "117219ae77258054a768244fac70014ad96c77f88ed3ee116dce45ec32aa6167",
+  "topology_before_after_equal": true,
+  "topology_matches_before_reset": true,
+  "effective_badmap_matches_before_reset": true,
+  "map_source": "native-defined-absent-default",
+  "target_and_neighbor_all_ff": true,
+  "target_and_neighbor_bytes": 8192,
+  "target_and_neighbor_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+  "flash_mutations": 0,
+  "current_full_3MiB_backup": false,
+  "historical_full_backup": "analysis/exclusive-store-backup-verification.json",
+  "canary_executed": false
+}

@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-02T05:45:09.136800+00:00",
+  "state": "Exact OTA verified and reboot acknowledged; RFCOMM postboot connection timed out; awaiting wake",
+  "candidate_release": "bundle-commands-001",
+  "transfer_verified": true,
+  "reboot_acknowledged": true,
+  "boot_verified": false,
+  "hardware_smoke_started": false,
+  "last_boot_verified_release": "rect-copy-001",
+  "transfer_capture": "captures/swift-mac-bundle-flash-20261102-02",
+  "preflight_capture": "captures/swift-mac-bundle-preflight-20261102-01",
+  "verification": "analysis/bundle-native-20261102/trace-verification.json",
+  "next": "Run preflight in a fresh capture after wake, then bundle smoke"
+}

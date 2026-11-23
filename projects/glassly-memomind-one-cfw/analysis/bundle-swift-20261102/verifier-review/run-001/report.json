@@ -1,0 +1,135 @@
+{
+  "hardware_tested": false,
+  "fixture_origin": "Fully synthetic Python wire/pixel model; original firmware routines are not executed.",
+  "verifier_sha256": "eb32c80c6278d6f596da1af51c0d2437ca00b25d6f8291545c931d0a7d0e38ea",
+  "cases": [
+    {
+      "name": "valid-fragmented",
+      "expected_success": true,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "optimized-refused",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-abi-0",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-abi-1",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-abi-5",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "boolean-tag",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "tag-before-primary",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "tag-before-request",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-tag-event",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "duplicate-main",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-completion",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "missing-tag",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "duplicate-tag",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "uppercase-hex",
+      "expected_success": false,
+      "exit_code": 0,
+      "passed": false
+    },
+    {
+      "name": "whitespace-hex",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "truncated-scene",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-final-scratch-request",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-scene-epoch",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "late-failure-misreported-ok",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "timeout-hold-too-short",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-final-pixels",
+      "expected_success": false,
+      "exit_code": 1,
+      "passed": true
+    }
+  ],
+  "count": 21,
+  "passed": false
+}

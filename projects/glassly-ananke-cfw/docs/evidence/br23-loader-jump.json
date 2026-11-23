@@ -1,0 +1,36 @@
+{
+  "path": "/Users/fosse/dev/glassly-mini-gamepad-plus/research/device-backup-20261103-093602",
+  "metadata_sha256": "b3094012b600a9fa448d2dd44e070dbe7e44bd2833b7fff8431a177117eea2b5",
+  "jump_data_sha256": "bc8367b7838f64b36dde84684b4fd810e42864cf1db2e6c6b177327b957cff02",
+  "loader_sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+  "ram_transcript_verified": true,
+  "original_jump_status_rejected": true,
+  "scope": "Observed complete RAM upload/readback and rejected jump, not a complete flash backup",
+  "ram_blocks_verified": 22,
+  "ram_commands_verified": 44,
+  "usb_location": "0x02100000",
+  "jump_command": {
+    "cdb": "fb08000120000001ffffffffffffffff",
+    "cbw": "555342432e00000010000000800010fb08000120000001ffffffffffffffff",
+    "tag": 46,
+    "direction": "in",
+    "size": 16,
+    "stage": "status",
+    "complete": false,
+    "expected_residue": 0,
+    "residue_policy": "standard-zero",
+    "csw": "555342532e0000001000000000",
+    "signature": "55534253",
+    "returned_tag": 46,
+    "residue": 16,
+    "status": 0
+  },
+  "jump_reply": "fb08000000000000000000004c221100",
+  "after_close_usb_observation": {
+    "vid": "4353",
+    "pid": "800c",
+    "mode": "normal"
+  },
+  "cause_of_normal_mode_return": "Unestablished; reset/timeout/capture-release behavior not distinguished",
+  "flash_commands_sent": false
+}

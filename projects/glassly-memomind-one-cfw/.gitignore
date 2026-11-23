@@ -1,0 +1,20 @@
+captures/
+.tools/
+android_bridge/build/
+runtime/build/
+analysis/extracted/
+analysis/jadx/
+__pycache__/
+*.pyc
+node_modules/
+*.dSYM/
+
+# Raw research workspace and generated artifacts stay local. Selected source
+# helpers, notes and verification summaries are explicitly tracked.
+analysis/
+.DS_Store
+*.o
+*.elf
+*.apk
+*.idsig
+*.keystore

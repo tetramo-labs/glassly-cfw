@@ -1,0 +1,301 @@
+{
+  "application_sha256": "3f4a6bea1e7901188e7c8a202cbe4916d141ec624db66218139d9f98c01762eb",
+  "inspector_sha256": "e52edd12630fe3ef74c8ac1a2a300a7ee5bdd634d96350449d8b09f55d96bbca",
+  "scope": "Static OEM V0900 analysis only",
+  "ranges": [
+    {
+      "name": "startup",
+      "runtime_address": "0x1e00120",
+      "file_offset": "0x0",
+      "bytes": 154,
+      "sha256": "b265dd8a21d59a6641a1ff6cb3ebb8f90754625cde9626d2e73c747a729d56f2",
+      "region": "flash"
+    },
+    {
+      "name": "gpio_scan",
+      "runtime_address": "0x14ba",
+      "file_offset": "0x4d8e6",
+      "bytes": 270,
+      "sha256": "18529218d134d401216b633378821a56109d448bd5ef2b9db6d5671a6530fe24",
+      "region": "ram"
+    },
+    {
+      "name": "scan_task_candidate",
+      "runtime_address": "0x18c6",
+      "file_offset": "0x4dcf2",
+      "bytes": 48,
+      "sha256": "9a91229f9efb5f74b1d308f2c0f83b3ffbc3048a09f9a6b49bf2061929e821eb",
+      "region": "ram"
+    },
+    {
+      "name": "ae42_sender",
+      "runtime_address": "0x1e332a0",
+      "file_offset": "0x33180",
+      "bytes": 36,
+      "sha256": "7161200dbf2c3073faafa9cfe32352c6747c193d2bb6c839660f8eaac2c3be76",
+      "region": "flash"
+    },
+    {
+      "name": "hid_or_vendor_ccc_ready",
+      "runtime_address": "0x1e331fc",
+      "file_offset": "0x330dc",
+      "bytes": 94,
+      "sha256": "ad1aed1f223f77413c2b8d0f78adbdb847598c313cb54cd0aa3cd630c5a5bd9a",
+      "region": "flash"
+    },
+    {
+      "name": "att_send_wrapper",
+      "runtime_address": "0x1e3181c",
+      "file_offset": "0x316fc",
+      "bytes": 130,
+      "sha256": "31675922b80dba0677987f7f90f02fde532767216153e2c10d6b7c93e17464a0",
+      "region": "flash"
+    },
+    {
+      "name": "ble_command_dispatch",
+      "runtime_address": "0x1e16cfe",
+      "file_offset": "0x16bde",
+      "bytes": 220,
+      "sha256": "ef21cf77757dbd23dacd774efda7bc89cbc88a2367754e9c393b06b52a7c41c5",
+      "region": "flash"
+    },
+    {
+      "name": "multi_att_send_case",
+      "runtime_address": "0x1e16e86",
+      "file_offset": "0x16d66",
+      "bytes": 22,
+      "sha256": "f4741a1195f942e6f44c95a1175c75ae4f00d415108bb00bb3341d905c310134",
+      "region": "flash"
+    },
+    {
+      "name": "att_send_queue",
+      "runtime_address": "0x1e16af4",
+      "file_offset": "0x169d4",
+      "bytes": 240,
+      "sha256": "19a74a5138ff79cea2d366f5d6a152fb68938ef31e72f1d7655042b620385dce",
+      "region": "flash"
+    },
+    {
+      "name": "att_queue_record",
+      "runtime_address": "0x1e16ab0",
+      "file_offset": "0x16990",
+      "bytes": 68,
+      "sha256": "1830736d3f9ec3a73db6955fd5c18182c04755b3fca88b30a2a35fc999e4dbe9",
+      "region": "flash"
+    },
+    {
+      "name": "circular_buffer_write_candidate",
+      "runtime_address": "0x1e00ac2",
+      "file_offset": "0x9a2",
+      "bytes": 100,
+      "sha256": "02b5eee93a769b459b191cd90076f10ac6d0ab17688e479ca80a11b83b9a3b02",
+      "region": "flash"
+    },
+    {
+      "name": "ccc_lookup",
+      "runtime_address": "0x1e169d8",
+      "file_offset": "0x168b8",
+      "bytes": 54,
+      "sha256": "af858e1c61161000e4d06dbacdbcdb0537842939900eb7a650fca851ec2d89c4",
+      "region": "flash"
+    },
+    {
+      "name": "input_scan_callsite",
+      "runtime_address": "0x1e3b5b6",
+      "file_offset": "0x3b496",
+      "bytes": 4,
+      "sha256": "bd7ead7ca3e740160a02bf74d7b8b66ca8592faa93f2772deafb0d2f4f6b4996",
+      "region": "flash"
+    },
+    {
+      "name": "key_decode_callsite",
+      "runtime_address": "0x1e3b7f6",
+      "file_offset": "0x3b6d6",
+      "bytes": 4,
+      "sha256": "6deb30ab5e400d0668eff7ce6c4cec1b0d39b6adbc136ba7555d5d1a4a17d69d",
+      "region": "flash"
+    }
+  ],
+  "ram_copy": {
+    "source_file_offset": "0x4c42c",
+    "destination": "0x0",
+    "bytes": 26308
+  },
+  "bss": {
+    "start": "0x6f40",
+    "end_exclusive": "0xbfc8"
+  },
+  "candidate_state": {
+    "shared_base": "0x78e0",
+    "connection_u16": "0x7920",
+    "raw_keys_u32": "0x79e4",
+    "scan_tick_u32": "0x79e8",
+    "tick_u32": "0x7a4c"
+  },
+  "gpio_scan": [
+    {
+      "gpio": 19,
+      "mask": "0x1",
+      "active_low": true
+    },
+    {
+      "gpio": 16,
+      "mask": "0x2",
+      "active_low": true
+    },
+    {
+      "gpio": 23,
+      "mask": "0x8",
+      "active_low": true
+    },
+    {
+      "gpio": 25,
+      "mask": "0x10",
+      "active_low": true
+    },
+    {
+      "gpio": 1,
+      "mask": "0x40",
+      "active_low": true
+    },
+    {
+      "gpio": 21,
+      "mask": "0x80",
+      "active_low": true
+    },
+    {
+      "gpio": 27,
+      "mask": "0x100",
+      "active_low": true
+    },
+    {
+      "gpio": 24,
+      "mask": "0x200",
+      "active_low": true
+    },
+    {
+      "gpio": 26,
+      "mask": "0x400",
+      "active_low": true
+    },
+    {
+      "gpio": 22,
+      "mask": "0x800",
+      "active_low": true
+    },
+    {
+      "gpio": 17,
+      "mask": "0x1000",
+      "active_low": true
+    },
+    {
+      "gpio": 18,
+      "mask": "0x8000",
+      "active_low": true
+    },
+    {
+      "gpio": 3,
+      "mask": "0x10000",
+      "active_low": true
+    },
+    {
+      "gpio": 7,
+      "mask": "0x20000",
+      "active_low": true
+    },
+    {
+      "gpio": 6,
+      "mask": "0x40000",
+      "active_low": true
+    },
+    {
+      "gpio": 5,
+      "mask": "0x80000",
+      "active_low": true
+    },
+    {
+      "gpio": 8,
+      "mask": "0x800000",
+      "active_low": true
+    },
+    {
+      "gpio": 17,
+      "mask": "0x1000000",
+      "active_low": true
+    },
+    {
+      "gpio": 12,
+      "mask": "0x80000000",
+      "active_low": true
+    }
+  ],
+  "direct_calls": [
+    {
+      "site": "0x1e332bc",
+      "target": "0x1e3181c",
+      "role": "AE42 to ATT wrapper"
+    },
+    {
+      "site": "0x1e31860",
+      "target": "0x1e16cfe",
+      "role": "ATT wrapper dispatches command 26 with five arguments"
+    },
+    {
+      "site": "0x1e16ef6",
+      "target": "0x1e16af4",
+      "role": "shared multi-ATT send case to queue"
+    },
+    {
+      "site": "0x1e16bb2",
+      "target": "0x1e16ab0",
+      "role": "queue payload chunk"
+    },
+    {
+      "site": "0x1e16ad8",
+      "target": "0x1e00ac2",
+      "role": "copy payload into circular buffer candidate"
+    },
+    {
+      "site": "0x1e00af0",
+      "target": "0x1127a8",
+      "role": "external ROM copy candidate; symbol unconfirmed"
+    },
+    {
+      "site": "0x1e3324c",
+      "target": "0x1e331f8",
+      "role": "vendor CCC getter wrapper"
+    },
+    {
+      "site": "0x1e3b5b6",
+      "target": "0x18c6",
+      "role": "scan task candidate"
+    },
+    {
+      "site": "0x1e3b7f6",
+      "target": "0x192a",
+      "role": "key decode candidate"
+    }
+  ],
+  "att_lifetime": {
+    "status": "Static copy-path candidate; ROM routine and live behavior unconfirmed",
+    "dispatch_command": 26,
+    "table_base": "0x1e16d82",
+    "table_index": 23,
+    "table_entry": "0x82",
+    "case_target": "0x1e16e86",
+    "automatic_ccc": "Operation type zero looks up value handle + 1 for the current connection",
+    "record_header_bytes": 6,
+    "queue_behavior": "Writes header then payload, checks combined count, returns zero only on successful queueing",
+    "copy_candidate": "0x1e00ac2 checks capacity, calls ROM 0x1127a8 once or twice for wraparound, then advances write counters",
+    "limitation": "No installed-image equivalence, ROM symbol verification or hardware send validation yet"
+  },
+  "branch_rule": "For reviewed direct calls: (instruction address + instruction bytes + signed displacement) & 0x1ffffff; verified against scanner/helper structure, not a complete ISA audit.",
+  "unresolved": [
+    "Installed 0x0601 backup and partition map",
+    "Physical labels and contact debounce for all GPIOs",
+    "All paths reaching input task, independent of HID readiness",
+    "Confirm ROM copy routine and live ATT lifetime; CCC resets, disconnect and standby behavior",
+    "Execution limits, branch-target audit, task stack/state reservation and recovery",
+    "Live GATT capture and actual iPhone foreground/background/locked delivery"
+  ]
+}

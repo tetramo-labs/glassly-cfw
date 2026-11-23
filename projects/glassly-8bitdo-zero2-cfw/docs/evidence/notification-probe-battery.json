@@ -1,0 +1,354 @@
+{
+  "kind": "Notification/idle probe: battery subscribe-only hold and reconnect echo",
+  "firmware_package_sha256": "3a92dd60565e136a810fd0dc0148418c7b13cdb678eae66a5d5a8e2634369ed3",
+  "usb_observation": "build/hardware/20261105T210126.747901Z/summary.json",
+  "usb_target_devices_observed": [],
+  "connected_without_keepalive_seconds": 188.4475229587406,
+  "keepalive_writes": 0,
+  "reconnect_notification_echoes_verified": 4,
+  "captures": [
+    {
+      "local_directory": "build/hardware/20261105T210132.229023Z-ble-subscribe",
+      "source_sha256": {
+        "scripts/ble_probe.py": "3ec9a01475da27e1bbf1d8caae5f2bad26c9a3aadca1e9c493568cb9bf39a2e9",
+        "tools/probe_zero2.swift": "2c82cc3fada477aca796f2f113ebeea3bc5010de81d894ae57d1905876f67fcb"
+      },
+      "events_sha256": "7e348964123ce1d72e73492b7e2ecbb97497f4e315314078186b75002ed8e8ef",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.014371749944984913,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T21:01:32Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.3485689163208008,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -30,
+          "services": [],
+          "time": "2026-11-05T21:01:32Z"
+        },
+        {
+          "elapsed_seconds": 0.3488675416447222,
+          "event": "connecting",
+          "time": "2026-11-05T21:01:32Z"
+        },
+        {
+          "connected_seconds": 0.00023904209956526756,
+          "elapsed_seconds": 0.552729916293174,
+          "event": "connected",
+          "time": "2026-11-05T21:01:33Z"
+        },
+        {
+          "connected_seconds": 0.44848679192364216,
+          "elapsed_seconds": 1.0009777080267668,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T21:01:33Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.5087331254035234,
+          "elapsed_seconds": 1.0612242496572435,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:01:33Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.5089209168218076,
+          "elapsed_seconds": 1.0614119581878185,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T21:01:33Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5698506669141352,
+          "elapsed_seconds": 1.1223416663706303,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:01:33Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.5700035002082586,
+          "elapsed_seconds": 1.12249462492764,
+          "event": "discovery_complete",
+          "time": "2026-11-05T21:01:33Z"
+        },
+        {
+          "connected_seconds": 0.6282722917385399,
+          "elapsed_seconds": 1.1807632916606963,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T21:01:33Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 188.4475229587406,
+          "discovery_complete": true,
+          "echoes_verified": 0,
+          "elapsed_seconds": 189.00001399964094,
+          "event": "complete",
+          "exit_code": 0,
+          "keepalive_writes_acknowledged": 0,
+          "notifications": 0,
+          "reason": "Time limit; notification count is separate from subscription success",
+          "subscribed": true,
+          "subscription_transitions": 1,
+          "time": "2026-11-05T21:04:41Z"
+        }
+      ],
+      "exit_code": 0
+    },
+    {
+      "local_directory": "build/hardware/20261105T210449.344022Z-ble-echo",
+      "source_sha256": {
+        "scripts/ble_probe.py": "3ec9a01475da27e1bbf1d8caae5f2bad26c9a3aadca1e9c493568cb9bf39a2e9",
+        "tools/probe_zero2.swift": "2c82cc3fada477aca796f2f113ebeea3bc5010de81d894ae57d1905876f67fcb"
+      },
+      "events_sha256": "213c378efa924a136a3028afb64d3e870a553863c6b0e4f131bd8c999a1de26b",
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.014576999936252832,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T21:04:49Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.07597079174593091,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -43,
+          "services": [],
+          "time": "2026-11-05T21:04:49Z"
+        },
+        {
+          "elapsed_seconds": 0.07616458320990205,
+          "event": "connecting",
+          "time": "2026-11-05T21:04:49Z"
+        },
+        {
+          "connected_seconds": 0.0002305000089108944,
+          "elapsed_seconds": 0.23476420808583498,
+          "event": "connected",
+          "time": "2026-11-05T21:04:49Z"
+        },
+        {
+          "connected_seconds": 0.4492431664839387,
+          "elapsed_seconds": 0.6837768750265241,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.5407087081111968,
+          "elapsed_seconds": 0.7752422499470413,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.540886374656111,
+          "elapsed_seconds": 0.7754201251082122,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.6006585415452719,
+          "elapsed_seconds": 0.8351922915317118,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:50Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.6007956247776747,
+          "elapsed_seconds": 0.8353294166736305,
+          "event": "discovery_complete",
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 0.6588795832358301,
+          "elapsed_seconds": 0.8934132917784154,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.6591608333401382,
+          "elapsed_seconds": 0.8936944580636919,
+          "event": "echo_write_requested",
+          "hex": "31",
+          "index": 0,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 0.7188677913509309,
+          "elapsed_seconds": 0.9534007082693279,
+          "event": "echo_write_acknowledged",
+          "index": 0,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 0.7202222915366292,
+          "elapsed_seconds": 0.9547560000792146,
+          "event": "notification",
+          "hex": "31",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.7204232914373279,
+          "elapsed_seconds": 0.9549570414237678,
+          "event": "echo_verified",
+          "hex": "31",
+          "index": 0,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 0.9825573330745101,
+          "elapsed_seconds": 1.2170909997075796,
+          "event": "echo_write_requested",
+          "hex": "a5",
+          "index": 1,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 1.0188698749989271,
+          "elapsed_seconds": 1.2534029581584036,
+          "event": "echo_write_acknowledged",
+          "index": 1,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 1.020531041547656,
+          "elapsed_seconds": 1.255064666736871,
+          "event": "notification",
+          "hex": "a5",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:50Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 1.0207110829651356,
+          "elapsed_seconds": 1.255244791507721,
+          "event": "echo_verified",
+          "hex": "a5",
+          "index": 1,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 1.2825256250798702,
+          "elapsed_seconds": 1.5170591664500535,
+          "event": "echo_write_requested",
+          "hex": "00",
+          "index": 2,
+          "time": "2026-11-05T21:04:50Z"
+        },
+        {
+          "connected_seconds": 1.3188212914392352,
+          "elapsed_seconds": 1.553354499861598,
+          "event": "echo_write_acknowledged",
+          "index": 2,
+          "time": "2026-11-05T21:04:51Z"
+        },
+        {
+          "connected_seconds": 1.3204430830664933,
+          "elapsed_seconds": 1.5549767496995628,
+          "event": "notification",
+          "hex": "00",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:51Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 1.3206022917293012,
+          "elapsed_seconds": 1.5551359998062253,
+          "event": "echo_verified",
+          "hex": "00",
+          "index": 2,
+          "time": "2026-11-05T21:04:51Z"
+        },
+        {
+          "connected_seconds": 1.5825509163551033,
+          "elapsed_seconds": 1.8170845415443182,
+          "event": "echo_write_requested",
+          "hex": "ff",
+          "index": 3,
+          "time": "2026-11-05T21:04:51Z"
+        },
+        {
+          "connected_seconds": 1.6196202081628144,
+          "elapsed_seconds": 1.8541533746756613,
+          "event": "echo_write_acknowledged",
+          "index": 3,
+          "time": "2026-11-05T21:04:51Z"
+        },
+        {
+          "connected_seconds": 1.6221343749202788,
+          "elapsed_seconds": 1.8566680415533483,
+          "event": "notification",
+          "hex": "ff",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T21:04:51Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 1.6222729166038334,
+          "elapsed_seconds": 1.856806708034128,
+          "event": "echo_verified",
+          "hex": "ff",
+          "index": 3,
+          "time": "2026-11-05T21:04:51Z"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 1.6224052496254444,
+          "discovery_complete": true,
+          "echoes_verified": 4,
+          "elapsed_seconds": 1.856939083430916,
+          "event": "complete",
+          "exit_code": 0,
+          "keepalive_writes_acknowledged": 0,
+          "notifications": 4,
+          "reason": "All four notification echoes and write acknowledgements verified",
+          "subscribed": true,
+          "subscription_transitions": 1,
+          "time": "2026-11-05T21:04:51Z"
+        }
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limits": [
+    "Bounded test; no long-term battery-life measurement",
+    "No button stream in installed notification probe",
+    "Does not establish automatic CCC lifecycle or radio error handling"
+  ]
+}

@@ -1,0 +1,24 @@
+  0.014 central state 5
+  0.037 advert MemoMind One rssi -64 services (
+    9200
+)
+  0.637 connected
+  1.025 services ["9200", "9300", "9400"]
+  1.087 characteristics ["9401 props 30", "9402 props 30"]
+  1.236 notify 9401 true 
+  1.295 hello reply 8001001a030b
+  1.295 accepted; mtu write limit 509; flags 11 detail 11
+  1.295 -> control 02: 24-40, 0, 500 8002180028000000f401
+  1.357 control reply 8002021a030b after 61 ms: status 2 revision 26 flags 11 detail 11
+  1.357 -> control 02: 40-80, 0, 600 80022800500000005802
+  1.415 control reply 8002021a030b after 58 ms: status 2 revision 26 flags 11 detail 11
+  1.415 -> control 02: 12-12, 0, 400 80020c000c0000009001
+  1.475 control reply 8002021a030b after 60 ms: status 2 revision 26 flags 11 detail 11
+  1.475 -> control 02: 6-6, 0, 100 80020600060000006400
+  1.535 control reply 8002021a030b after 60 ms: status 2 revision 26 flags 11 detail 11
+  1.535 -> control 02: 24-40, latency 4, 500 8002180028000400f401
+  1.625 control reply 8002021a030b after 90 ms: status 2 revision 26 flags 11 detail 11
+  1.625 -> control 02: zeros 80020000000000000000
+  1.686 control reply 8002021a030b after 61 ms: status 2 revision 26 flags 11 detail 11
+  1.686 -> control 02: short payload 80020c001800
+  9.157 disconnected: The specified device has disconnected from us. accepted=true

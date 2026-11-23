@@ -1,0 +1,169 @@
+{
+  "passed": true,
+  "hardware_tested": false,
+  "source_sha256": {
+    "runtime/graphics/diagnostics.h": "d5e9f8f8e4e0694c82ae5b69b4ef6e6bfee6eab550dc085f554508a6b71da7f5",
+    "runtime/graphics/flash_canary.h": "f98abe5d8ec813ae13be53c2c7ffe6f8654f4c661406930ff737317b1e1574df",
+    "runtime/graphics/flash_read.h": "1338d546773eb2b114f53805a9f5e28ecb36d2628203571739ced72386c68c31",
+    "runtime/graphics/flash_store_native.h": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/input.h": "46a75e7f6ec4e91dc6b109851c11cc5badc657ba1af6d1d9873ff38d68ccbefd",
+    "runtime/graphics/native_text.h": "b076d1e8f3b3a22dcda0b7aedc3db437b0c880478257d11b1a67b7410758c079",
+    "runtime/graphics/scene_session.c": "784258b71cd605ec112649407d0d52f226d4fa360b5ddad0bd75b2d44513e077",
+    "runtime/graphics/scene_session.h": "c8b3b183a2d3e70f72b3f9c59a11aaa4e47befb576052642464fad8ca6de265b",
+    "runtime/graphics/storage_diag.h": "35948161d536f2598d580467f4553505ad1a1ca5a5c223985a41dc54e6ae629d",
+    "runtime/graphics/tests/run_reset_undo_trim_tests.py": "389af5758511bb6b5a354a2616f5c1378fb25a31488507ee4a1df9e549eef5d1",
+    "runtime/graphics/tests/test_reset_undo_trim.c": "a02c8ddf84344b49da8ffbf3fdf09173f3414604fb94b2b32c00687bd4166199",
+    "runtime/graphics/tests/test_scene_session.c": "8e20351381201752f51101558a0a6e80cf5a04e1e7380932418b634ce035a9dd",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "runtime/portable/keyboard.h": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947",
+    "runtime/portable/notifications.h": "54f8a2e9fc99df67b14193fcf6427f6f4f39b07582c9e509da1d434a5e3974bc",
+    "runtime/portable/raster_commands.c": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e",
+    "runtime/portable/raster_commands.h": "953fefe23bea016c9fdb6bed7a73263180b28221d2da31b5a4bc6f6e2abf1179",
+    "runtime/portable/rect_copy_commands.c": "effeceea0b14098844ac1352a596f6e2f6a75ddf04a7a64208bbcc9e799d0e2a",
+    "runtime/portable/rect_copy_commands.h": "6ef6103b490f1294df4570b23088ba3b2d1420cff6e79f237859ee6f0e37d070",
+    "runtime/portable/rle.c": "61a5ba6f0285867b426655f3c40b1aaefe50ef414b79f8241b1f18be5576a062",
+    "runtime/portable/rle.h": "12891d1c44b5b532988fd2981ee57eafa4d692478c42cd7031bbf1ad08ae746b",
+    "runtime/portable/scene.c": "fcf67ac759c06800bccde2288aa19e74d1b77701c7f125b7ad232e90e0bd2d1d",
+    "runtime/portable/scene.h": "ad124446e44e6494d93595fb6d85c715684f22ea68ee4cb73be6728ef44053ac",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_assets_external.inc": "dfecf54773597742c5a3fe0180f55562642d8787616d1399eb9fe8dbdc01ea48",
+    "runtime/portable/scene_cache.inc": "901ec86b320cbf87cab773b9bea02328714b89267fb2fd1a289cfffe6dfb5aa0",
+    "runtime/portable/scene_flash_store.h": "d80698ce3dd79cac2e3ebc724272227e3054eeceee62b48e598cfa06ff58c999",
+    "runtime/portable/scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "runtime/portable/scene_shapes.inc": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c",
+    "runtime/portable/scene_store.h": "216f288fca71bf102d0d4bfb1e85db16dd354cc3969da019ec98db91df151d79",
+    "runtime/portable/transport.h": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01",
+    "runtime/portable/upstream.h": "12f5966f3b4a9b7cd230c8d42aa35be784f796b82bf799ad6e629c26397b9e68",
+    "runtime/portable/vector.c": "52c9b0c2b5ebc7d192493213e3ca89054c82c5bea9805b68a89e2f31095540e3",
+    "runtime/portable/vector.h": "78b9a68ae9544ba57917466ecf06a54c7d1daae02a729d6b69aeb44ba5d1a1dc"
+  },
+  "commands": [
+    {
+      "name": "build-default",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_RASTER_COMMANDS=1",
+        "-DMM_RECT_COPY=1",
+        "-DMM_COMMAND_BUNDLES=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_reset_undo_trim.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rle.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/raster_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rect_copy_commands.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/default"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "default",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/default"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "build-trim",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_RASTER_COMMANDS=1",
+        "-DMM_RECT_COPY=1",
+        "-DMM_COMMAND_BUNDLES=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-DMM_SCENE_RESET_UNDO_TRIM=1",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_reset_undo_trim.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rle.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/raster_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rect_copy_commands.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/trim"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "trim",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/trim"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "build-trim-replay",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_RASTER_COMMANDS=1",
+        "-DMM_RECT_COPY=1",
+        "-DMM_COMMAND_BUNDLES=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-DMM_SCENE_RESET_UNDO_TRIM=1",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rle.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/raster_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rect_copy_commands.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/trim-replay"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "trim-replay",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/trim-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/vector-fixture.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/gif-300.bin",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/reset-undo-trim-20261102/host-03/svg-300.bin"
+      ],
+      "returncode": 0
+    }
+  ],
+  "fixtures": {
+    "vector-fixture.bin": "dbeab3248f1259a06faec40e9c83f0fedc12c674cce7d864f577ca8e1c84d269",
+    "gif-300.bin": "d8706a134a268e8ada75a4edd81356eea8d932f48f271c5f2c368f3aef744687",
+    "svg-300.bin": "7dc551a4ee22e4cdc1182bb49586889980a6fa1e24f24c905d8cd2d19a6cee1b"
+  },
+  "source_drift": []
+}

@@ -1,0 +1,153 @@
+{
+  "time": "2026-11-02T22:05:13.884641+00:00",
+  "release": "reset-undo-trim-001",
+  "image_sha256": "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
+  "runtime_sha256": "93040b1de94b52b710d7a3e37a3adef2f1e840108fb53ab69b9ecf46e14102f4",
+  "runtime_build": "runtime/build/reset-undo-trim-003",
+  "runtime_bytes": 60256,
+  "ota_verified_bytes": 2226404,
+  "blocks": 544,
+  "chunks": 3805,
+  "boot_verified": true,
+  "state": "Boot verified; matched RAM RESET/PUT sequence and cleanup verified",
+  "ota_capture": "captures/swift-mac-reset-undo-flash-20261102-01",
+  "transfer_verification": "analysis/reset-undo-trim-20261102/transfer-verification.json",
+  "offline_checkpoint": "analysis/reset-undo-trim-20261102/offline-checkpoint.json",
+  "baseline_verification": "analysis/reset-undo-trim-20261102/baseline-verification.json",
+  "hardware_saving_measured": true,
+  "native_rv32_requested_bytes_released": 46756,
+  "full_parity": false,
+  "tests": {
+    "python": 235,
+    "swift": 107,
+    "original_scene_assertion_sites": 424,
+    "new_native_calls": 85,
+    "retained_native_calls": 3167,
+    "native_gate_cases": 7955,
+    "full_aggregate_rerun": false
+  },
+  "limitations": [
+    "Reclaimed scratch helps idle-after-RESET memory only, not a scene that still owns its transaction history or peak PUT memory.",
+    "Native strict OOM policy deliberately differs from G2 revision50 destructive no-undo fallback; original portable tests unchanged.",
+    "Scene size optimization has no frame-rate claim; native mock regressions and host media replays pass.",
+    "No full G2 native capacity/parity claim. Asset store64KiB and max message8192 remain.",
+    "Application traces are not independent HCI capture."
+  ],
+  "after_verification": "analysis/reset-undo-trim-20261102/after-verification.json",
+  "after_capture": "captures/swift-mac-reset-undo-after-20261102-04",
+  "app_header_sha256": "76d7bfc287aad7294d4d855a86d4d2cfbe8043a3b555eca41a891e17b1f7a4e6",
+  "cleanup_verified": true,
+  "matched_measurements": {
+    "before": {
+      "put": {
+        "samples": [
+          81884,
+          81884,
+          81936,
+          81932,
+          81952,
+          81952,
+          81952,
+          81972,
+          81976,
+          81976
+        ],
+        "minimum": 81884,
+        "maximum": 81976,
+        "median": 81952.0
+      },
+      "reset": {
+        "samples": [
+          81976,
+          81976,
+          81972,
+          81988,
+          82008,
+          82008,
+          82008,
+          82008,
+          82028,
+          82028
+        ],
+        "minimum": 81972,
+        "maximum": 82028,
+        "median": 82008.0
+      },
+      "reacquired": {
+        "samples": [
+          82028,
+          82028,
+          82048,
+          82064,
+          82064,
+          82064,
+          82064,
+          82068,
+          82068,
+          82068
+        ],
+        "minimum": 82028,
+        "maximum": 82068,
+        "median": 82064.0
+      }
+    },
+    "after": {
+      "put": {
+        "samples": [
+          81360,
+          81324,
+          80464,
+          80396,
+          80312,
+          80404,
+          80752,
+          80756,
+          80752,
+          80836
+        ],
+        "minimum": 80312,
+        "maximum": 81360,
+        "median": 80752.0
+      },
+      "reset": {
+        "samples": [
+          127548,
+          127592,
+          127212,
+          127128,
+          127112,
+          127080,
+          127260,
+          127156,
+          127132,
+          127132
+        ],
+        "minimum": 127080,
+        "maximum": 127592,
+        "median": 127144.0
+      },
+      "reacquired": {
+        "samples": [
+          80408,
+          80464,
+          80508,
+          80452,
+          80720,
+          80872,
+          80804,
+          81728,
+          81728,
+          81728
+        ],
+        "minimum": 80408,
+        "maximum": 81728,
+        "median": 80762.0
+      }
+    },
+    "before_reset_minus_put_median_bytes": 56.0,
+    "after_reset_minus_put_median_bytes": 46392.0,
+    "after_reset_minus_reacquired_median_bytes": 46382.0,
+    "difference_of_reset_deltas_bytes": 46336.0
+  },
+  "after_cleanup_free_bytes": 353656
+}

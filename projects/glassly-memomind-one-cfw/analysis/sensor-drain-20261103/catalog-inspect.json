@@ -1,0 +1,9 @@
+{
+  "bluetoothAccessed" : false,
+  "bytes" : 2247403,
+  "eligible" : true,
+  "modified" : true,
+  "profile" : "H001Y-1.0.3.127-flash-canary-v1",
+  "releaseName" : "sensor-drain-001",
+  "sha256" : "9e0b2e114a21ac910f2d8b044b260af3944291b7a8d1bef2ec5f8c2d2cde0cd0"
+}

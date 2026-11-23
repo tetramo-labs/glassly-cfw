@@ -1,0 +1,82 @@
+{
+  "time": "2026-11-02T21:56:41.351110+00:00",
+  "state": "Offline verified; matched current-firmware baseline captured; ready for authorized native Swift OTA",
+  "candidate": "reset-undo-trim-001",
+  "runtime_build": "runtime/build/reset-undo-trim-003",
+  "image_sha256": "3bf52f5a2a6137759ddc3546c47b1ceed42a401953e75379712044d32e2206a9",
+  "image_bytes": 2226404,
+  "runtime_bytes": 60256,
+  "runtime_sha256": "93040b1de94b52b710d7a3e37a3adef2f1e840108fb53ab69b9ecf46e14102f4",
+  "runtime_rx_limit_bytes": 65536,
+  "scene_compiler_optimization": "-Os for this profile; other flags unchanged",
+  "default_build_byte_identical_to_installed_runtime": true,
+  "native_policy": "Standalone successful RESET trims undo only. Subsequent mutating PUT/SHOW requires an undo allocation and otherwise rejects CAPACITY before mutation. Bundles never trim. Default G2 no-undo and RESET retention semantics unchanged.",
+  "typical_requested_bytes_released_rv32": 46756,
+  "bytes_formula": "45476 + 20 * undo_capacity, including 8-byte native allocation header",
+  "peak_transaction_memory_reduced": false,
+  "hardware_saving_measured": false,
+  "candidate_installed": false,
+  "python_tests": 235,
+  "swift_tests": 107,
+  "new_native_groups": 3,
+  "new_native_calls": 85,
+  "retained_native": {
+    "retained-bundle.json": {
+      "groups": 7,
+      "calls": 131,
+      "gate_cases": null
+    },
+    "retained-canary.json": {
+      "groups": 10,
+      "calls": 251,
+      "gate_cases": null
+    },
+    "retained-diagnostics.json": {
+      "groups": 4,
+      "calls": 152,
+      "gate_cases": null
+    },
+    "retained-gates.json": {
+      "groups": null,
+      "calls": 0,
+      "gate_cases": 7955
+    },
+    "retained-input.json": {
+      "groups": 6,
+      "calls": 1714,
+      "gate_cases": null
+    },
+    "retained-reader.json": {
+      "groups": 12,
+      "calls": 163,
+      "gate_cases": null
+    },
+    "retained-scene.json": {
+      "groups": 8,
+      "calls": 103,
+      "gate_cases": null
+    },
+    "retained-text.json": {
+      "groups": 5,
+      "calls": 653,
+      "gate_cases": null
+    }
+  },
+  "g2_original_scene_assertion_sites": 424,
+  "original_scene_check_evaluations": 42466,
+  "full_aggregate_rerun": false,
+  "permanent_aggregate_stages_added": 11,
+  "baseline_verification": "analysis/reset-undo-trim-20261102/baseline-verification.json",
+  "baseline_reset_minus_put_median_bytes": 56,
+  "baseline_reset_minus_reacquired_median_bytes": -56,
+  "baseline_cleanup_verified": true,
+  "scratch_verifier_cases": 10,
+  "ota_verifier_cases": 18,
+  "limits": [
+    "Reclaimed scratch helps idle-after-RESET memory only, not a scene that still owns its transaction history or peak PUT memory.",
+    "Native strict OOM policy deliberately differs from G2 revision50 destructive no-undo fallback; original portable tests unchanged.",
+    "Scene size optimization has no frame-rate claim; native mock regressions and host media replays pass.",
+    "No full G2 native capacity/parity claim. Asset store64KiB and max message8192 remain.",
+    "Application traces are not independent HCI capture."
+  ]
+}

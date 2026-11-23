@@ -1,0 +1,19 @@
+{
+  "status": "read-only-script-review-before-execution",
+  "script": "analysis/diagnostics-native-20261102/admit-candidate.py",
+  "script_sha256": "a830894a0de3349cad4031986f399b674fe54e94cb70d27dec63b25982e3fe9b",
+  "executed_by_review": false,
+  "production_mutated_by_review": false,
+  "blockers": [],
+  "reviewed": [
+    "Full image and construction proof reconstructed by fixed canary constructor",
+    "Unchanged packed components1,2,4,5,6 independently compared",
+    "Candidate header256 matches reconstructed component",
+    "Catalog insertion uses exact image/header/stream hashes and prior catalog remains",
+    "Clone slice ends at OfflineTextFixture and contains exactlytwo rastertests",
+    "Test names rewritten toDiagnostic with globalduplicate guard",
+    "Onlynewprofileper-sourceoptimizations permitted;64KiBguard unchanged"
+  ],
+  "suggested_guard": "Require frozen diagnostic evidence report runtimeSHA and source hashes before catalog writes; script currently trusts local build/blob pairing plus reconstruction",
+  "pending": "Final frozen compiler/runtime/lifecycle evidence; scriptnotyetexecuted"
+}

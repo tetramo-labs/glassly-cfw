@@ -1,0 +1,37 @@
+{
+  "version": "GLASSLYCFW/4",
+  "release": "record-transport-001",
+  "imageSHA256": "424c0fe8574340199119cc5751bc6182d17e574adcd72a4a4e2d60f7a63675b8",
+  "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3",
+  "appHeaderSHA256": "83d511382090aadecc31a5af785d6bf283363223617fd4204da7c614f6867cc3",
+  "imageBytes": 2248652,
+  "transferVerified": true,
+  "rebootAcknowledged": true,
+  "bootVerified": true,
+  "hardwareCommandsVerified": true,
+  "physicalOutputConfirmed": true,
+  "automaticRetries": 0,
+  "flashCapture": "captures/record-transport-20261103-flash-01",
+  "preflight": {
+    "appHeaderSHA256": "3072438d515bb128273ec5f26eb10b4abd07e35323cec48ce62abae59b0b50ec",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "00056ecc",
+    "physicalOutputConfirmed": false,
+    "release": "notifications-settings-002",
+    "stage": "before",
+    "topologyAndBadmapVerified": true
+  },
+  "pending": [
+    "Explicit background-color confirmation"
+  ],
+  "postRebootConnectionAttempt": {
+    "capture": "captures/record-transport-20261103-after-01",
+    "error": "RFCOMM open timed out",
+    "awaitingUserWake": true,
+    "resolvedBy": "captures/record-transport-20261103-after-02"
+  },
+  "hardwareCapture": "captures/record-transport-20261103-after-02",
+  "visualConfirmation": "User: I see it (revision4 display repeat); background color not separately confirmed"
+}

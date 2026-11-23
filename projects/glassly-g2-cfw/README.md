@@ -1,0 +1,823 @@
+# g2flash
+
+`g2flash` is a utility for installing firmware on Even Realities G2 smart
+glasses, as well as a collection of firmware modifications that add features and
+fix limitations of the glasses. The modifications themselves are made with
+[Faceclaw](https://github.com/jimrandomh/faceclaw) in mind, but can be used by
+any software that communicates with the G2 glasses using their BLE protocol. If
+you are using this with Faceclaw, you can either use this tool to apply the
+firmware mods, or use the flashing tool built in to Faceclaw's onboarding
+process (both versions install the same firmware image). Installing using
+Faceclaw is a bit more user friendly than installing using g2flash.
+
+This repository contains patches applied to firmware, but does not contain the
+Even Realities firmware itself. The `build_cfw.sh` script will download the base
+firmware from Even's CDN, apply patches, and verify that the resulting firmware
+has the expected hash for you.
+
+Flashing a custom firmware will void your warranty. This tool will require you
+to acknowledge that you are voiding your warranty when you run it.
+
+DEVELOPING YOUR OWN FIRMWARE MODS IS MUCH RISKIER THAN INSTALLING FIRMWARE THAT
+HAS ALREADY BEEN TESTED. If you are considering writing firmware mods and you
+can complete a project using only phone-side changes, you are almost certainly
+better off doing it that way. It is a bad idea to work in this codebase using a
+non-frontier language model, or without a proper coding harness, or a
+nontechnical user steering.
+
+Changes that involve overwriting parts of the existing firmware are more risky
+than changes to the existing C extension files. Changes that run or affect
+behavior prior to receiving any custom messages are especially risky, because
+if you make the glasses crash on boot, they won't be able to accept an OTA
+update. Rebasing the mods onto a new base firmware is an especially hazardous
+operation, since it requires updating every firmware offset correctly and not
+missing any.
+
+
+## Modifications
+
+Custom messages reach the glasses over **private SID `0xf0` message streams**
+(merged from upstream `Faceclaw/4` through `Faceclaw/14`); since revision 31
+the stock EvenHub image path is no longer patched at all, so no image
+container is needed and no mode-prefixed payload is accepted there. A stream
+of five-byte-header records (`[flags][len:u16][crc16]` + body) is
+reconstructed across arbitrary packet boundaries before any TPL reassembly,
+on each lens the options byte selects (the other lens receives it over the
+frame bridge, in arrival order), and a processing ACK or NACK returns through
+the BLE ingress lens with a three-entry history so a lost reply never
+re-executes a command. Compression is done at the transport level (a
+persistent inflater per ingress lens, reset with `RESET_CONTEXT`), the decoded
+CRC-16 is checked, messages can be up to 65,535 bytes and need no EvenHub
+layout; modes 3/6 carry plain RLE. All commands dispatch through one owned
+640x480 packed-4bpp shadow under one mutex. `python3 send_message_probe.py
+--dry-run` shows the packet splitting; run it with your usual connection URL
+to exercise the path (the default payload is a mode-7 no-op and the debug
+overlay shows the last received size and CRC).
+
+Mode 11 cleanup releases the shadow and the object cache (descriptors and
+asset store) once pending display refreshes have finished.
+
+Image traffic is compressed with
+zlib+RLE. Screen contents can be up to 640x480 (larger than the screen area
+supported by the stock firmware), you can update dirty rects rather than
+updating the whole screen at once, and you can send messages which perform
+rect-to-rect copies for low-bandwidth scroll animations. A changed-region
+update refreshes only the panel rows it touched over QSPI rather than pushing
+the whole 640x480 panel each frame, and the zlib inflate stream and its 32 KiB
+window are kept alive for the whole session (reset per frame) instead of being
+allocated and freed on every update. Because this mode
+writes directly to the framebuffer without going through EvenHub's
+screen-update functions, stock containers do not contribute visible content
+while the direct framebuffer lease is held. A lease-scoped 256 KiB asset store
+(revision 38, allocated on the EvenHub heap) holds RLE images, cached fonts and
+strings that the phone uploads once through the object cache; the whole store
+is addressable, and the wire never carries a raw storage offset, only 32-bit
+asset ids. Modes 19/20 draw an image asset or a string with a font asset into
+the shadow. Memory layout otherwise matches upstream (revision 34): the shadow
+and the transport's buffers live on heap 13, and the retained scene renders
+into that shadow rather than a frame of its own. The debug overlay's fourth
+line reports why a message was refused (NACK reason, failing mode, failed
+malloc size and heap). Upload chunk lengths remain 16-bit. Cached draw
+commands carry an options byte whose low nibble selects the top output color;
+bit 4 makes source color 0 transparent, and bit 5 reverses the proportional
+16-entry color ramp.
+Image-handler mode 15 draws a length-prefixed UTF-8 string with the glasses'
+built-in 20 px font chain and its default pair kerning. Its payload after the
+mode byte is `[x:u16][y:u16][options:u8][strlen:u8][UTF-8 bytes]`; options match
+the cached draw commands, and inline bytes 1–31 adjust x by -10 through 20 just
+as they do in cached-font mode 20.
+
+The Glassly build of this firmware adds vector shapes, a retained object cache
+and firmware-side animation on top of the asset store:
+
+ * Mode 36 draws a list of shape records straight into the shadow:
+   `[36][count][records]`. A geometric record is
+   `[type][flags][color][width][p0..p7 as int16 LE]` and covers hairline and
+   wide lines, plain and rounded rectangles (fill or stroke), circles and rings,
+   triangles, quads, quadratic and cubic beziers, arcs and pie sectors; image
+   and text records reference assets by id (built-in 20 px font with the string
+   carried inline in the record and clipped to its box, a string asset, or a
+   string drawn with a font asset). Coordinates are signed pixels and everything
+   clips to the 640x480 panel. Mode 36 composes inside a mode-8 batch like modes
+   15/19/20. See `patches/shapes.h` for the record layouts.
+ * Modes 37-41 are the retained object cache (revision 38). Every drawable is a
+   versioned object with a stable 32-bit id, and images, fonts and shared
+   strings are versioned assets; both stay resident after the view that showed
+   them is hidden, and the least recently used unpinned ones are evicted when
+   room is needed (256 objects, 256 assets, a 256 KiB store). A PUT (37) defines
+   or updates objects and assets, a SHOW (38) validates an ordered list of
+   (id, version) references, applies animation ops (move, glide, tween, rotate,
+   freeze, finish, visibility, each with a CSS-style cubic-bezier easing) and
+   presents; a HIDE (39) freezes and blanks without flushing anything; STATE
+   (40) returns the mutation revision, journal deltas or a paginated inventory;
+   CONTROL (41) resets the cache to a session epoch, drops objects or sets the
+   frame period. Reopening a hidden dashboard is therefore one SHOW of
+   references, with no definitions, asset uploads or warm-up. Every cache
+   message carries a session epoch and a request id; each lens answers with a
+   transport reply (kind 5) naming the outcome (applied, stale epoch, missing
+   references, capacity, refused) before its ACK, and a repeated request id is
+   acknowledged without running its motion twice. A tagged SHOW still reports
+   settings field 129 when its animations settle. The wire formats, the
+   eviction and transaction rules and the reply layouts are documented at the
+   top of `patches/scene.c`; `demos/object-cache.ts` is the reference encoder.
+
+All of these are implied by the firmware revision (see below); there are no
+per-feature capability tokens.
+
+Revision 21 adds retained compound SVG paths (mode-37 op 8) and duration-based
+rotation of geometric shapes and paths (op 9). Paths support nonzero/even-odd
+fills with holes, quadratic/cubic curves, and the existing move/scale/color
+tweens. Rotation uses fractional unwrapped angles and an independent animation
+channel, so shapes can move and rotate concurrently. The wire contract accepts
+compiled paths, not XML; text/image rotation and path morphing are not included.
+See [the protocol and test instructions](patches/VECTOR_PROTOCOL.md).
+
+Revision 24 moves the local graphics packets to modes **36/37/38** and ANCS
+fields to **125/126**, leaving upstream's sensor modes 16/17 and fields 105/106
+unmodified. All record formats and operation numbers stay the same. Clients
+must use the new numbers; old graphics packets are no longer accepted. See
+[the wire mapping](patches/UPSTREAM_COMPATIBILITY.md).
+
+Revision 25 drops the feature tokens: the field-100 string is just
+`GLASSLYCFW/<n>`. Revision 26 makes upstream's fast BLE profile (7.5 ms
+connection interval, slow mode disabled) a runtime choice through settings
+field 127, defaulting to stock behaviour, and reports it in field 128.
+
+Revision 31 removes the stock image-message hooks (snapshot FIFO, deferred
+consumer, immediate ACK, 576x288 lift, per-message zlib and the BMP loader)
+and the 16-bit texture modes 12/13/14: custom commands arrive only over the
+SID `0xf0` transport, and shape records draw cached text with a mode-20 font.
+Clients on the old path get no response (the stock firmware image handler
+runs); there is no migration.
+
+Revision 30 merges upstream jimrandomh/g2flash main (`Faceclaw/4` through
+`Faceclaw/14`, ported from its 2.2.9.22 base to 2.2.10.10): the SID `0xf0`
+transport, transport-level compression with range ACKs, modes 18/19/20 over a
+256 KiB texture cache, compass calibration preservation, free/max heap
+statistics on the debug overlay and an owned panel shadow. Unlike upstream,
+the stock image path is not stripped; both paths stay live.
+
+Revision 27 makes panel ownership explicit. Any raster mode (3/6/9/15/19/20/36)
+stops and freezes a running scene animation and takes the panel over; in
+revision 38 that is an implicit HIDE (the objects leave the active list and
+stay cached). A SHOW with the TAG flag reports settings field 129 =
+`[requestLo][requestHi]` once every animation it started has ended (immediately
+when none did, or when a raster mode takes over). Cache messages are accepted
+inside a mode-8 bundle, where a SHOW or HIDE renders into the shadow the bundle
+presents.
+
+Revision 38 replaces the 128-slot scene (modes 37/38) and the raw texture
+writes (mode 18) with the retained object cache described above. There is no
+compatibility path: phone apps, demos and replay tools speak only the new
+format, and a revision mismatch is reported through the field-100 string. Lease
+loss and release no longer free the store from the settings thread; they mark
+the cache lost and the memory is reclaimed under the display gate by the next
+handler or display refresh. `docs/retained-object-cache-plan.md` records the
+design; the acceptance tests live in `patches/host/shapes_host_test.c`.
+
+Revision 41 keeps the two lenses' animations in step. A record of a SID-0xf0
+stream may address a subset of the stream's lenses: the phone sends a frame's
+left and right SHOWs (which differ whenever the global depth setting or an
+element's depth offsets the lens windows) as the two records of one stream, so
+both lenses apply them on the same packet arrival instead of the right lens
+starting one ACK round trip after the left. A lens skips a record not
+addressed to it without touching its inflate context (the phone frames every
+exclusive record, and the one after it, with `RESET_CONTEXT`), and the ACK
+ordinal counts every record. GLIDE and TWEEN progress is now elapsed time
+(`frames` x the frame period), like ROTATE, so a lens that skipped a tick while
+its display task was busy catches up on the next render instead of staying a
+frame behind. The offline checks are in `patches/host/transport_host_test.c`
+and `test_clock_tweens` in `patches/host/shapes_host_test.c`.
+
+Run the complete offline suite with
+`python3 patches/host/run_vector_tests.py --out /tmp/g2-vector-tests`.
+It tests the firmware C under sanitizers and replays the standalone shape and
+Bad Apple SVG payloads before any mobile integration. Every message and frame
+tick of the shapes and vector suites is followed by a check of the object
+cache's invariants (store bitmap, reference counts, asset bytes and kinds, the
+active list), and `patches/host/cache_fuzz_host_test.c` sends random cache
+traffic under the same checks, with lease loss and a heap that can give only a
+smaller store or rollback workspace. The suite runs its default seeds; for
+more, build it as its header says and pass `first count [steps]`. After installing revision
+38 on the glasses, `cd demos && bun vector-suite.ts --device` runs the visual
+suite; add `--bad-apple` for the vector video demo.
+
+Revision 20 adds an ANCS relay. On iOS the stock firmware already reads the
+phone's notifications through the Apple Notification Center Service (the right
+lens subscribes; the phone app itself never can) but only tells the app which
+app posted one. The relay taps the stock ANCS client before its whitelist and
+its 63-byte title copies and forwards every notification to the phone as
+private sid-0x09 field-125 records: the Notification Source event (added,
+modified, removed, with flags, category and UID), each attribute (app id,
+title, subtitle, message, message size, date, action labels; chunked so no
+message exceeds 150 bytes) and the app's display name. The phone enables it
+with a fail-open 90-second lease on field 126 (`['A','N',1,op]`: enable,
+disable, query, perform a positive/negative action on a UID, renew). Records
+are queued on the BLE stack task and drained by a timer, so a slow link drops
+whole records (counted in the STATUS reply) rather than stalling the stack. The
+full contract is at the top of `patches/ancs_relay.c`.
+`demos/shapes-demo.ts` exercises all three modes, and
+`patches/host/shapes_host_test.c` renders every primitive on the host so the
+rasterizer and easing math can be checked without glasses.
+
+The firmware also adds a microphone control plane (capability tokens `micctl`,
+`micmc`, `micraw`). Each temple carries a front + rear microphone pair, and the
+stock firmware only ever sends the phone a mono 16 kHz LC3 stream. The mic
+extension lets the phone choose, per temple, the capture front end (codec vs
+PDM), which of the pair's microphones are used, the codec (LC3 vs raw PCM
+passthrough), sample format/rate, and LC3 bitrate, over a private
+settings-channel message (sid 0x09 field 103), with live read-back on field 104
+so a UI (e.g. SybilSight's glasses -> microphones menu) can display and confirm
+the active configuration of both temples. When armed, capture is streamed as
+`'SM'` frames carrying the multi-channel samples, a millisecond timestamp, and
+the on-device SSR + TDOA angle estimate — everything a phone-side beamformer
+needs to do direction-of-arrival processing across the four microphones,
+fused with the compass/IMU heading the firmware already forwards. On a
+bilateral pair the right temple relays its two encoded channels to the left
+over the wired inter-temple link (the audio manager's common-data channel), so
+the phone receives all four microphones as one four-channel LC3 stream on a
+single Bluetooth connection rather than pairing two independent per-temple
+streams; each relayed chunk carries the inter-temple time offset the left
+temple measured, and a relay-statistics record (`'RS'`) reports pairing and
+loss so a dropped chunk shows up as a sequence gap on the phone instead of
+vanishing silently. Because the stock BLE message queue drops a streaming
+notification without warning once it is half full, the relay withholds and
+counts a frame when the queue nears that watermark instead of feeding the
+silent drop. Streaming is
+held by a fail-open 90-second renewal lease, so mics can never be left running
+when the phone goes away. Bringing up the capture hardware is additionally
+gated behind an explicit arm flag because several of the recovered stock audio
+entry points are ABI-inferred and must be validated on hardware first; see the
+contract comment in `patches/mic_control.c`.
+
+The firmware also enables LE 2M PHY support and offers a phone-selectable
+fast link: settings field 127 (`['B','L',1,op]`, op 0 = stock, 1 = fast,
+2 = query, sent to each lens) switches between the untouched stock connection
+behaviour (the default: 15-30 ms fast profile, then the one-minute slow-mode
+timer) and a 7.5 ms / latency-0 profile with slow mode suppressed, which keeps
+screen transfers from being throttled at a battery cost. Every settings read
+reports the state in field 128, including the interval the central actually
+granted. Mode 11 cleanup returns the link to stock. It also asks the
+controller for LE Data Length Extension (251-byte link-layer payloads) on the
+phone link when a microphone session arms, so a four-channel audio
+notification travels in a single radio packet instead of several — the stock
+host never raises its own transmit length. Connection parameters still depend
+on the phone; it must request 2M PHY, must agree to the short connection
+interval, and (for the larger data length) must not refuse the length update.
+See `patches/ble_link.c`.
+
+Some other features this has (used by Faceclaw, but the exact API may not be
+fully documented):
+
+ * Receive ring and temple-touchpad long-press and long-press-release as regular
+   source-qualified gestures, rather than opening a modal offering to quit
+ * Receive 2.2.10's tap-then-long gesture as distinct private event type 11 and,
+   while the framebuffer lease is held, suppress its incompatible stock Menu path
+ * Play sound effects with the piezo buzzer
+ * Receive on-head detection wear/unwear events, to trigger a lock-screen
+ * Use the magnetometer as a compass. Since revision 30 (upstream `Faceclaw/14`)
+   the current magnetic calibration accuracy is preserved across IMU
+   reconfiguration while the Faceclaw framebuffer lease is valid, including
+   compass stop/start cycles, instead of being reset to zero by the stock
+   sensor-parameter setter.
+ * Read the ambient light sensor (a TI OPT3001 on the master temple) and,
+   optionally, run it in a "passive" mode where the firmware polls the sensor
+   for the phone but the stock auto-brightness adjuster never steps the panel,
+   so the phone can implement its own brightness policy (image-handler mode 16;
+   readings arrive as settings-channel field 105). See the contract comment in
+   `patches/als_sensor.c`.
+ * Take over the wakeword ("hey Even") and replace what it opens with a
+   different phone-side transcription and AI agent pipeline
+ * Take over the screen-wake even on the dashboard, so that you can end the
+   EvenHub session (putting the glasses in a low-power mode) and return to
+   Faceclaw with a double-tap
+ * While the glasses are in that low-power mode (no app on screen), also
+   report the single tap, long press and long-press release that the stock
+   display thread drops, so the phone can show a lightweight sleep-time
+   display (Faceclaw's Glanceboard) without a full wake
+ * Report the head-up (IMU head-tilt) wake distinctly from the double-tap
+   wake, and while an EvenHub page is on screen forward the head lift (sys
+   event 12) and the head returning (15) from the foreground UI dispatcher,
+   so the phone can open and close its own dashboard on them
+
+The SID `0xf0` transport described above needs `GLASSLYCFW/31` on both lenses;
+`send_message_probe.py` documents the packet format, lens selection and ACK
+verification in its docstring and `--help`.
+
+Glasses with a custom firmware identify themselves with the version number of
+the stock firmware that the modded version is based on, with an extra field in
+the settings-response message (protobuf field 100) carrying a firmware revision
+string of the form `GLASSLYCFW/<n>` (upstream Faceclaw builds use `Faceclaw/<n>`
+with the same scheme). See `settings_send_wrapper` in `patches/settings_ext.c`.
+`<n>` goes up each time the firmware contract changes and is not kept in sync
+with Glassly phone-app versions; the phone app requires a specific revision and
+offers to reflash when the installed one is older. Older builds advertised
+`GLASSLYCFW/<n>` or `EVENCFW/<n>` followed by feature tokens instead. If writing
+your own firmware and your own phone software to go with it, use a different
+prefix, and assume that firmware is only compatible if you recognize the exact
+string.
+
+Custom firmwares in this repository are intended to be backwards-compatible
+with the official Even Realities app; ie, if the phone doesn't send any
+bluetooth messages that make use of the added features, it will behave the same
+way. In practice, this isn't tested, and using a custom firmware with the
+official Even app may introduce bugs. EvenHub apps are especially likely to be
+broken by custom firmware, since most of the modifications are to
+EvenHub-related functionality.
+
+Custom firmwares are currently _not_ expected to be compatible with each other.
+When you update Faceclaw, you should update the firmware at the same time. If
+you are writing your own software that relies on custom firmware, you probably
+want to specify a particular CFW version. (This will probably change in the
+future, when there is less new stuff still to be added.)
+
+What _is_ tested for compatibility is the OTA updater. This firmware does not
+make any changes to how OTA updates are installed. If you connect the official
+Even app to your glasses, and it has a firmware that's newer than the one your
+CFW is based on, it will offer to install an update. Installing an OTA update
+using the official Even app will fully remove the custom firmware and restore
+it to stock behavior. You can also go back to stock firmware by installing an
+unmodified firmware image using g2flash, or the "Uninstall firmware" menu item
+in Faceclaw.
+
+
+## Using the Flash Tool
+
+`g2flash.py` flashes firmware onto Even Realities G2 smart glasses by
+reimplementing the official app's BLE flash protocol. It is the tool used to
+push custom firmware (a patched `*_cfw.bin` image) onto the device.
+
+> **WARNING — this voids your warranty and can brick the glasses.**
+> Flashing custom firmware over the OTA path carries a real risk of bricking
+> the device. The tool makes you type `my warranty is void` at an interactive
+> prompt before it will write anything (use `--my-warranty-is-void` to skip the
+> prompt for automation). Only proceed if you understand and accept the risk.
+
+## Quick start
+
+```bash
+cd g2flash
+./build_cfw.sh                       # set up venv, download stock fw, patch, verify
+./venv/bin/python g2flash.py -c g2://local -f g2_2.3.0.24_cfw.bin
+```
+
+`build_cfw.sh` does the whole build: it creates `./venv` with the flasher's
+dependencies, downloads the stock **G2 2.3.0.24** firmware from Even's CDN,
+applies the patches in `patches/`, and verifies that both the download and the
+patched result match pinned SHA-256 hashes (so a clean run proves you got
+exactly the reviewed image). Run `./build_cfw.sh --help` for options
+(`--skip-venv`, `--force-download`). Then flash as shown above — see
+[Usage](#usage) for connection strings and safety flags.
+
+## What's in this directory
+
+- `g2flash.py` — the flasher.
+- `build_cfw.sh` — one-shot venv setup + download + patch + verify (see above).
+- `patches/` — the patch sources and tools:
+  - `cfw_patches.json` — the **committed patch set**: a list of
+    offset/expected-old/new byte patches (plus base + output SHA-256s) that turns
+    the stock image into the CFW image. This is the source of truth for the build.
+  - `apply_patches.py` — replays `cfw_patches.json` onto the stock image. **No
+    compiler** — pure Python stdlib, so it runs anywhere (a phone, a fresh box).
+    This is what `build_cfw.sh` uses to produce the image.
+  - `gen_patches.py` — compiles the injected code with **clang** and (re)generates
+    `cfw_patches.json`. Run it after editing the patch sources:
+    `python3 patches/gen_patches.py g2_2.3.0.24.bin patches/cfw_patches.json`
+    (or `./build_cfw.sh --update-patches`), then commit the JSON.
+  - `patch_compress.py` — the all-in-one patcher (576 carrier lift + image
+    compression + direct framebuffer presentation + capability field);
+    `gen_patches.py` calls it to build the ops.
+    Defines live patch sites; stock function and RAM references also live in
+    the C sources. `audit_stock.py` checks their reviewed inventory and stock
+    byte guards in `stock_abi_230.json` before generation. See the
+    [2.3.0.24 rebase review](docs/firmware-rebase-2.3.0.md) for every migrated
+    site, nearby behavior changes, and validation of Faceclaw/17. This fork's
+    earlier 2.2.9.22 -> 2.2.10.10 rebase is in `patches/REBASE-2.2.10.10.md`.
+  - `build.py`, `*.c` — the C→position-independent-Thumb pipeline and sources
+    for the injected firmware code (compiled by `gen_patches.py`; the resulting
+    machine code lands in `cfw_patches.json`).
+- `requirements.txt` — the flasher's Python dependencies.
+
+Firmware images (`g2_2.3.0.24*.bin`) are **not** checked in — they are Even's
+firmware, so you build them locally with `build_cfw.sh`.
+
+## Requirements
+
+- Python 3.x
+- One of two transports to reach the glasses:
+  - **local** — this machine's own Bluetooth radio, via the `bleak` package.
+  - **droidbridge** — a bonded Android phone running
+    [DroidBridge](../droidbridge) that forwards GATT over HTTP/WebSocket; uses
+    the `websocket-client` package.
+
+Third-party Python dependencies:
+
+| Package            | Needed for                          | Imported as |
+|--------------------|-------------------------------------|-------------|
+| `bleak`            | `g2://local` transport              | `bleak`     |
+| `websocket-client` | `g2://droidbridge` transport        | `websocket` |
+
+Both are imported lazily, so you only need to install the one for the transport
+you actually use. Firmware parsing, validation, and `--recompute-checksums` run
+on the standard library alone.
+
+## Setting up the venv
+
+`build_cfw.sh` creates and populates `./venv` for you as part of a normal run.
+To set it up by hand instead:
+
+```bash
+cd g2flash
+python3 -m venv venv
+./venv/bin/python -m pip install --upgrade pip
+./venv/bin/python -m pip install -r requirements.txt
+```
+
+With the venv activated (`source venv/bin/activate`) you can invoke the tool as
+`python g2flash.py ...`; otherwise use `./venv/bin/python g2flash.py ...`. Run
+`deactivate` to leave the environment.
+
+### macOS note
+
+On macOS, `bleak` talks to CoreBluetooth, which never exposes BLE MAC
+addresses — scanned addresses are random per-host UUIDs. `g2flash` works around
+this by scanning and matching the last three MAC bytes embedded in the arm's
+advertised name (`Even G2_32_L_693CCB`). For a local flash the arm must be
+powered on and **not** connected to the phone (quit the Even app / turn off the
+phone's Bluetooth) so it advertises for a direct connection. The first time you
+run it, macOS will prompt to grant your terminal Bluetooth permission.
+
+## Usage
+
+```
+python g2flash.py -c <connection-string> -f <firmware.bin> [options]
+```
+
+Connection strings:
+
+```
+# direct from this machine's Bluetooth radio (needs bleak)
+g2://local?left=<addr>&right=<addr>&addressType=public|random
+
+# through a bonded phone running DroidBridge (needs websocket-client)
+g2://droidbridge?phone=<host>&port=<port>&token=<tok>&left=<mac>&right=<mac>
+```
+
+`addressType=public` is a normal MAC (`D0:7A:47:82:09:67`); `random` is the
+macOS/CoreBluetooth peripheral-UUID style.
+
+Common options:
+
+- `--lens left|right|both` — which arm to flash (default `both`).
+- `--stop-before discover|heartbeat|file_check|flash|done` — dry-run gate that
+  halts before the named stage; use it to test connectivity without writing.
+- `--my-warranty-is-void` — skip the interactive warranty confirmation.
+- `--component-retries N` / `--block-nak-retries N` — transfer retry tuning.
+- `--reconnect-attempts N` / `--reconnect-delay SECONDS` — recovery tuning when
+  an ACK timeout indicates that the arm dropped its GATT connection.
+- `--debug` — print received BLE frames.
+
+`--recompute-checksums IMAGE` rewrites an image's stored checksums in place
+(component CRC32C + mainApp preamble CRC32) to match its current payloads and
+exits without connecting. Run it after any length-preserving binary patch —
+otherwise the glasses reject the component on END with status 7 (CHECK_FAIL).
+
+### Examples
+
+```bash
+# dry run: connect to both arms over the local radio and stop before any write
+python g2flash.py \
+  -c 'g2://local?left=AA:BB:CC:11:22:33&right=AA:BB:CC:44:55:66&addressType=public' \
+  -f g2_2.3.0.24.bin --stop-before flash
+
+# fix checksums after patching, no device needed
+python g2flash.py --recompute-checksums g2_2.3.0.24_cfw.bin
+
+# flash the custom firmware to both arms via DroidBridge
+python g2flash.py \
+  -c 'g2://droidbridge?phone=192.168.1.50&port=8080&token=secret&left=AA:BB:CC:11:22:33&right=AA:BB:CC:44:55:66' \
+  -f g2_2.3.0.24_cfw.bin
+```
+
+## How it works (brief)
+
+The flasher speaks the same `aa21`-framed envelope protocol as the official
+app, validated byte-for-byte against a real flash capture. The firmware image
+is an EVENOTA container of five or six components; each is streamed over the firmware
+data service (`...e1001`) as a FILE_CHECK subheader followed by 4 KB blocks,
+then an END check the glasses verify against a per-component CRC32C. Before
+BEGIN, it performs the stock control-channel authentication handshake; omitting
+that handshake appears to cause firmware 2.2.10 to close an otherwise busy GATT
+connection after about 30 seconds. OTA data fragments refresh the transfer watchdog. The
+official OTA capture sends no EvenHub-control heartbeats between BEGIN and the
+final END, so neither does this flasher. DroidBridge flashes also reuse one HTTP connection
+instead of opening one per BLE fragment. If an ACK is lost or a write fails
+because the link went away, the flasher never
+risks replaying that ambiguous block in place: it reconnects, restores
+notifications, sends a fresh BEGIN, and restarts the entire component from
+FILE_CHECK. Arms are flashed one at a time. See the module docstring and comments
+in `g2flash.py` for the wire-level details and the retry/recovery rationale.
+
+
+## Contributing
+
+PRs welcome, especially of firmware mods that unlock functionality that isn't
+usable in the stock firmware. Please only submit changes that you've tested on
+a real device.
+
+
+# Acknowledgements
+
+Thanks to kalanihelekunihi for [evenRealities-openCFW](https://github.com/kalanihelekunihi/evenRealities-openCFW/) and Commute773 for [g2-kit-unofficial](https://github.com/Commute773/g2-kit-unofficial/), which were immensely helpful while creating this.
+
+### R1 battery reporting
+
+The stock R1 battery cache is available in settings field 106 through the exact
+read-only image-handler query `[17,0]`. The firmware also sends this report
+after a settings read, as a separate notification rather than inside the
+settings reply. Detect support by revision 24 or later, or by the `RB` report.
+See [the wire contract and stock-firmware evidence](docs/ring-battery.md).
+
+### A RESET racing lease loss, the gate handover and a missing display gate in the object cache (revision 56)
+
+Revision 56 (`GLASSLYCFW/56`) fixes three defects an independent review of
+revision 55 found.
+
+ * A RESET under a live lease clears the lost flag so that it can empty a lost
+   cache in place. When FB_RELEASE on a settings worker thread, or a lapse
+   another task noticed, landed between the RESET's lease check and that
+   clear, revision 55 overwrote the loss: the RESET was NACKed, and the cache
+   block and the asset store (up to 256 KiB) stayed allocated with no lease
+   until the next FB_ACQUIRE or mode 11. Lease loss now moves the epoch before
+   it sets the flag, and the RESET sets the flag again when the epoch moved
+   meanwhile, so its prologue frees the cache.
+ * Queuing a frame hands the display gate to the display task, which gives it
+   back once it has copied the frame; a stock refresh may then free a cache
+   that was lost during the message. Revisions 52 to 55 still reported settled
+   and read the revision for the reply from the cache block after queuing the
+   frame, so a SHOW or HIDE could read and write freed heap. Both now finish
+   with the block before they queue the frame.
+ * The frame timer skips a frame and re-arms while the stock firmware has not
+   created the display gate. Revision 55 rendered without the gate and then
+   gave back a null one.
+
+The wire format is unchanged. Host tests: `test_reset_loss_race` and
+`test_present_hands_over_gate` in the shapes suite, and a missing-gate case in
+`test_tick_gate_busy`; revision 55 fails all three, the second as a
+heap-use-after-free under the sanitizers. The host suites now check the
+cache's invariants after every message and tick, and
+`patches/host/cache_fuzz_host_test.c` sends random cache traffic under the
+same checks. Revision 56 has not been tested on hardware.
+
+### Lease checks, cross-task writes and store placement in the object cache (revision 55)
+
+Revision 55 (`GLASSLYCFW/55`) fixes the remaining object cache audit findings.
+
+ * A STATE query checks the framebuffer lease first. When its deadline has
+   passed, the cache is lost and its epoch moves before the reply is built, so
+   an old-epoch STATE answers STALE (epoch 0 answers RESET). Revision 54 never
+   checked: it answered DELTA from the dead cache under its old epoch until a
+   lease-gated message or FB_ACQUIRE noticed, and the phone's next SHOW got a
+   bare NACK. STATE still needs no lease.
+ * Lease loss runs on the stock settings worker threads and on the timer task.
+   It now only flags the cache as lost and stops the frame timer. Revision 54
+   also cleared a field of the cache block through a pointer read without the
+   display gate, while the display task or a mode-11 cleanup could be freeing
+   that block. The frame timer reads only the context until it holds the gate,
+   the frame period moved from the block into the context, and the display
+   task no longer reaps a lost cache while a message is allocating into it
+   before the gate.
+ * The frame timer tries the display gate without waiting. When a handler or
+   an uncopied frame holds it, the timer skips that frame and re-arms.
+   Revision 54 waited up to 1,000 ticks on the RTOS timer task, which delayed
+   every other osTimer, and after a timeout it rendered and gave back a gate it
+   did not hold.
+ * A rollback workspace the heap could give only in part saves what fits;
+   then the message applies without rollback, as one without a workspace has
+   since revision 50. Revisions 49 to 54 answered CAPACITY, so under heap
+   pressure every upload into a full store failed and the phone reset the
+   cache each time the store filled.
+ * Making room in the store, or freeing an asset descriptor, evicts only
+   objects that hold an asset: first those holding an asset's last reference,
+   then those sharing one. A shape that holds no asset stays, and the store is
+   rescanned only after granules were freed. Revision 54 evicted every older
+   object first, so a font upload into a full store evicted every inactive
+   shape. A free object descriptor still takes the least recently used object.
+ * Assets of up to 1 KiB (strings, inline text, small paths) are placed from
+   the top of the store and larger ones from the bottom. The store never
+   compacts, and the strings a shown scene pins used to sit between images, so
+   a large image or font failed CAPACITY while most of the store was
+   evictable.
+ * Drawing an image or a cached-font string no longer rescans RLE that was
+   validated when the asset completed. A string's characters and glyph
+   presence are still checked before any glyph is drawn.
+
+The wire format is unchanged. Host tests: `test_state_after_lapse`,
+`test_cross_thread_writes`, `test_tick_gate_busy`, `test_store_eviction` and
+`test_store_layout` in the shapes suite, plus updated checks in
+`test_transaction_rollback`, `test_offsets`, `test_hidden_animation` and
+`test_texture_render`; revision 54 fails 27 of their checks. The Blackwall
+harness gains a STATE-after-expiry scenario. Revision 55 has not been tested
+on hardware.
+
+### Re-sent chunks, asset evictions and RESET after a lost lease (revision 54)
+
+Revision 54 (`GLASSLYCFW/54`) fixes three object cache replies.
+
+ * Every chunk of an asset that is already complete, with the same id,
+   version, kind and total length, is a no-op answered APPLIED. Before, only
+   the first chunk was. When the phone re-sent an upload whose last ack it had
+   lost, or that only the other lens needed, the second chunk of any asset over
+   one message (a font atlas over 8,160 bytes) was refused with
+   `CFW_CACHE_REFUSE_UPLOAD`, and the phone answered with a cache RESET and a
+   full re-upload. A chunk of another version, kind or length is still
+   refused, and now that includes a first chunk of another kind.
+ * Assets evicted to make room count in the evicted byte of APPLIED and
+   CAPACITY replies, as objects always did. A rejected message that evicted
+   only assets and had no rollback workspace now moves the revision, so a
+   STATE query from the old revision answers DELTA with the assets gone
+   instead of UNCHANGED.
+ * A RESET under a live lease that arrives after FB_RELEASE (or after an
+   FB_ACQUIRE that found the lease expired) and before any display refresh
+   released the lost cache now empties that cache in place and answers
+   APPLIED with the phone's epoch. Revisions 52 and 53 freed it and answered
+   CAPACITY with the firmware's epoch, so the phone dropped that frame and
+   reset again. Nothing is allocated under the display gate.
+
+The reply format is unchanged. Host tests: `test_resident_chunks`,
+`test_asset_eviction_revision` and `test_reset_after_loss` in the shapes suite,
+plus updated checks in `test_assets` and `test_lifecycle`. Revision 54 has not
+been tested on hardware.
+
+### Bounded rotations and paths, compass watchdog, timing on request (revision 53)
+
+Revision 53 (`GLASSLYCFW/53`) bounds the objects revision 51 still redrew the
+whole canvas for. A rotating or rotated shape (types 1-13) or path is bounded
+by the square around the circle its farthest corner sweeps about the pivot,
+and a path's box comes from its compiled edges under the current origin and
+scale. A spinner, a compass needle or a moving SVG path now redraws only that
+box on each animation tick. Built-in font strings without a box still redraw
+everything.
+
+A compass started with mode 10 is now stopped by a 15 s timer on the right lens
+once two checks in a row find no phone link (the connection record
+`ble_link.c` reports in field 128), so a phone that disappears without a mode 10
+stop or a mode 11 cleanup no longer leaves the magnetometer and heading reports
+running. The phone's sensor service drops its subscriptions on disconnect, so
+nothing expects the compass to survive one.
+
+Mode 7 gains sub 3 (time the worker and presents) and sub 4 (stop). The DWT
+cycle counter now runs only while timing is on or the diagnostics overlay is
+shown; otherwise `last_worker_us` and `last_present_us` read 0 and the counter
+and TRCENA are restored to their state before the CFW first enabled them.
+
+Host tests: `test_rotation_bounds` in the shapes suite (fixed spins checked
+against a full redraw, plus 400 random scenes of shapes and paths with random
+pivots, spins and glides, checking that every object draws inside its box and
+that nothing changes outside the painted box), and the link check in the
+upstream suite. The compass timer and the timing switch are compile-checked
+only; revision 53 has not been tested on hardware.
+
+### Tick refreshes and cache fixes (revision 52)
+
+Revision 52 (`GLASSLYCFW/52`) makes an animation tick refresh only the rows of
+the box it redraws. The timer callback works out that box under the display
+gate and queues those rows; the display task paints the box right before the
+copy. Revision 51 already redrew only the box but still copied, flushed and
+refreshed all 480 rows on every tick, and a SHOW that changed nothing
+refreshed the whole panel too. Now a tick or a SHOW that changes nothing
+queues no refresh at all, and a frame the display queue refuses makes the next
+render redraw everything.
+
+Fixes in the same revision:
+
+ * The cache preparation that runs before the display gate no longer frees a
+   cache lost with the lease (the display task could still be drawing from
+   it). The message that finds the cache lost is answered without one (STALE,
+   or CAPACITY with the current epoch, including a RESET); the next message
+   prepares a fresh cache.
+ * A partial upload that receives a chunk can no longer be evicted by a later
+   entry of the same message, which credited the chunk to a freed or reused
+   descriptor.
+ * FREEZE (op or SHOW flag) and FINISH, including the finish a SHOW falls back
+   to when no frame timer can be created, redraw the object where it stopped.
+ * A same-version PUT of an inline string keeps the resident string's length.
+ * An object at a whole number of turns keeps a bounded box.
+ * Mode 11 cleanup ends the volume gate lease, and a CONFIGURE renewal compares
+   the clamped parameters, so out-of-range values no longer reopen the gate.
+ * While a leased volume gate is closed, its own frame tick counts as capture
+   for the microphone's stale-session check, so a gated mic is no longer
+   restarted as dead. A lapsed microphone lease makes the next arm acquire the
+   left temple's audio-manager slot again.
+ * Image rendering walks rows instead of dividing per pixel and stops below
+   the clip; the transport CRC uses a 16-entry table. Both produce identical
+   results (host-tested exhaustively for the CRC).
+
+The wire protocol is unchanged. Host tests: `test_tick_present`,
+`test_freeze_redraw`, `test_staged_chunk_eviction`, `test_texture_render`,
+additions to `test_lifecycle`, `test_reassert` and `test_partial_render` in the
+shapes suite, the CRC check in the transport suite and the renewal and
+liveness checks in the volume gate suite.
+
+### Partial renders (revision 51)
+
+Revision 51 (`GLASSLYCFW/51`) renders only what changed. Every active object
+remembers the box its last render may have touched; a render clears and
+redraws the union of the boxes of the objects that changed, arrived, left or
+moved in the paint order, drawing every object that overlaps it clipped to
+that box, and reports that box to the panel. Before, every SHOW and every
+animation tick cleared and redrew the whole canvas, so a clock update cost as
+much as a cold frame. Cached-font strings are bounded from their glyph headers.
+Objects whose pixels cannot be bounded from their record (paths, rotated
+shapes, built-in font strings without a box) still redraw everything when they
+change; a new background or a raster takeover also does. The wire protocol is
+unchanged.
+
+### Upload continuations need no rollback space (revision 50)
+
+Revision 50 (`GLASSLYCFW/50`) saves only the bytes below an asset's committed
+fill before a PUT overwrites them. A continuation chunk writes past the fill,
+into space that is reserved but holds no data, so it needs no rollback space.
+Revision 49 saved every allocated granule, so each 8 KiB chunk needed about
+10 KiB of workspace. When the heap could not grow it, every continuation was
+refused with CAPACITY and the same chunk was refused again after each RESET:
+assets that span messages (the dashboard clock's 28 px and larger fonts) never
+drew. When the workspace cannot be allocated at all, a message now applies
+without rollback, as before revision 49; a rejection then keeps its evictions
+and moves the cache revision.
+
+### Cache transaction rollback (revision 49)
+
+Revision 49 (`GLASSLYCFW/49`) restores evicted objects, assets, store bytes and
+journal entries when a PUT or SHOW is rejected. Restarting an incomplete upload
+and then rejecting the message also restores its previous bytes and progress,
+so the phone can resume the original upload. Successful transactions keep the
+existing LRU eviction behavior.
+
+Rollback storage is allocated before taking the display gate and reused across
+messages. Only overwritten store granules are copied. If memory is insufficient,
+the transaction returns CAPACITY without changing the cache; SHOW messages with
+no embedded PUTs need no rollback snapshot. The shapes suite's
+`test_transaction_rollback` covers eviction, upload restarts, memory pressure,
+bundled-message preparation and allocation outside the display gate.
+
+### Same-version PUT re-asserts the object (revision 48)
+
+Revision 48 (`GLASSLYCFW/48`) changes what a `PUT_OBJECT` whose id and version
+are already resident does. Revisions 38-47 ignored it, which left the object at
+whatever its ops had tweened it to; a phone that had lost its mirror of the
+cache (a dropped frame backlog, a lens-window change, a raster frame, a
+transport resync) re-PUT every object by content-hashed version, the glasses
+kept the tweened state, and a notification row faded to black stayed black
+until its text changed. The PUT now re-asserts the record at commit: color,
+width, geometry and visibility return to the definition and any running tween
+or rotation stops. The definition is unchanged, so no descriptor, store space,
+journal entry or revision is spent; a message that fails leaves the tweened
+state alone. A message with more than 64 such entries stages the rest as
+replacements, which cost a descriptor each and mean the same thing. Host test
+`test_reassert` in the shapes suite.
+
+### Object cache asset replacement (revision 42)
+
+Revision 42 (`GLASSLYCFW/42`) changes how a new version of a public asset
+takes over from the old one. Objects stay bound to the old version until the
+new one's last chunk has arrived and validated, so an image re-uploaded across
+several messages never renders half-filled, and the hand-over finds the old
+version by id at commit time instead of by a descriptor index remembered while
+the message was staged (an evicted descriptor's index could be reused by a
+later entry of the same message, which once rebound a path object's private
+edges to an image and overran the vector workspace on the display task). A
+new version must keep the old one's kind, and restarting an upload after a
+chunk of it in the same message is refused. Kind-5 replies travel in a
+per-stream buffer, and ANCS field-125 bodies of 128 bytes and more carry a
+two-byte varint length.
+
+### Microphone volume gate
+
+Revision 40 (`GLASSLYCFW/40`) adds a phone-configured volume gate ahead of the
+stock PCM dispatcher (`patches/volume_gate.c`): thread.audio's two
+`bl SVC_PcmAppProcessData` sites are retargeted at `mic_gate_process`, which
+measures each 50 ms chunk's RMS and only forwards it while the gate is open.
+A closed gate drops the chunk before any LC3 encode, so neither the encoder
+nor the radio runs through silence; because every stream (the stock mono
+voice path and the four-microphone array tap) sits behind that dispatcher,
+one gate covers them all. Settings field 132 configures it (`['V','G',1,1,
+enabled, thr16, hold16, open16]`: a linear RMS floor, the quiet time before
+closing, and the minimum open time once a loud chunk opens it; op 2 queries),
+field 133 reports it on every settings read, and gate transitions plus a 2 s
+heartbeat while closed travel on the audio characteristic from both temples
+(12-byte `'V','G'` records) so a phone-side mic watchdog can tell a gated mic
+from a dead one. The gate is lease-held (10 minutes, renewed by CONFIGURE) and
+fails open, and every capture session starts open so the codec driver's
+frame check is never starved. `patches/host/volume_gate_host_test.c` covers
+the state machine; the hook sites are not yet validated on hardware.
+
+### Experimental BLE keyboard bridge
+
+The `keyboard` branch adds `GLASSLYCFW/39`: an explicitly enabled right-lens
+BLE keyboard connection with HID reports relayed to the phone alongside ring
+input. The companion driver and CLI are in `demos/keyboard*.ts`. See
+[setup, protocol and validation limits](docs/keyboard.md) and the
+[donor ABI review](docs/keyboard-abi.md). Offline tests, physical installation
+and encrypted input from one BLE keyboard pass. Three-link coexistence,
+broader keyboard compatibility and native iOS delivery remain unvalidated.

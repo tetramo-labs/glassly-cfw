@@ -1,0 +1,24 @@
+{
+  "no_patch_applied": true,
+  "edits": [
+    {
+      "address": "041fb238",
+      "body_offset": 66072,
+      "before": "93878712",
+      "after": "93878722"
+    },
+    {
+      "address": "04399550",
+      "body_offset": 1762608,
+      "before": "28e10502980c0a00",
+      "after": "28e20502980b0a00"
+    }
+  ],
+  "old_pool_start": "0205e128",
+  "new_pool_start": "0205e228",
+  "old_size": "000a0c98",
+  "new_size": "000a0b98",
+  "unchanged_end": "020fedc0",
+  "flags": 2,
+  "reservation_alignment": 8
+}

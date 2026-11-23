@@ -1,0 +1,309 @@
+{
+  "payload_sha256": "a8415156362682a565dcf179f4da985798accd9c3960bcfde419093e8bffe83c",
+  "payload_bytes": 562,
+  "payload_address": 31796280,
+  "symbols": {
+    "firmware/ananke_v0900.c": 0,
+    "send_packet": 31796398,
+    "firmware/button_stream.c": 0,
+    "stock_ccc_get": 31549912,
+    "stock_att_queue": 31550196,
+    "ag_scan_hook": 31796280,
+    "stock_critical_enter": 33568028,
+    "stock_bt_wake": 31549048,
+    "stock_keys": 31204,
+    "ag_stream_poll": 31796608,
+    "stock_scan": 33560774,
+    "ag_ccc_clear_hook": 31796552,
+    "ag_state": 49792,
+    "stock_connection": 31008,
+    "ag_stream_init": 31796586,
+    "ag_ccc_set_hook": 31796510,
+    "stock_ccc_set": 31551864,
+    "stock_critical_exit": 33568056,
+    "stock_ccc_clear": 31551566
+  },
+  "patches": [
+    {
+      "address": 31457644,
+      "file_offset": 76,
+      "before": "c3ff00d20200",
+      "after": "c3ff80c20000",
+      "purpose": "Secondary BSS destination: reserved heap page"
+    },
+    {
+      "address": 31457652,
+      "file_offset": 84,
+      "before": "c2ff00000000",
+      "after": "c2ff80000000",
+      "purpose": "Zero exactly one reserved page at startup"
+    },
+    {
+      "address": 31601970,
+      "file_offset": 144402,
+      "before": "c6ff70c20000",
+      "after": "c6ff00c30000",
+      "purpose": "Reserve one 128-byte aligned heap page"
+    },
+    {
+      "address": 31603012,
+      "file_offset": 145444,
+      "before": "c1ff4cc5e401",
+      "after": "c1ff6a2ee501",
+      "purpose": "Extend flash execution upper limit to include payload"
+    },
+    {
+      "address": 31685212,
+      "file_offset": 227644,
+      "before": "43f00004",
+      "after": "43f08004",
+      "purpose": "Input task stack: 1024 to 1152 words"
+    },
+    {
+      "address": 31700406,
+      "file_offset": 242838,
+      "before": "8eea8631",
+      "after": "80ea3fbb",
+      "purpose": "ag_scan_hook"
+    },
+    {
+      "address": 31668308,
+      "file_offset": 210740,
+      "before": "bfea901c",
+      "after": "80ea63fa",
+      "purpose": "ag_ccc_set_hook"
+    },
+    {
+      "address": 31663640,
+      "file_offset": 206072,
+      "before": "bfea1925",
+      "after": "81ea9603",
+      "purpose": "ag_ccc_clear_hook"
+    }
+  ],
+  "application_sha256": "833e76739433639e8ad81b3d7d187ac2fe6cd7729088184d8e07ca25f7e0f350",
+  "code_audit": {
+    "instruction_count": 204,
+    "branches": [
+      {
+        "address": 31796284,
+        "operation": "call",
+        "target": 6342
+      },
+      {
+        "address": 31796288,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796312,
+        "operation": "goto",
+        "target": 31796328
+      },
+      {
+        "address": 31796318,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796326,
+        "operation": "goto",
+        "target": 31796330
+      },
+      {
+        "address": 31796342,
+        "operation": "goto",
+        "target": 31796390
+      },
+      {
+        "address": 31796350,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796354,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796384,
+        "operation": "call",
+        "target": 31796608
+      },
+      {
+        "address": 31796388,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796390,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796410,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796414,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796422,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796434,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796442,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796446,
+        "operation": "goto",
+        "target": 31796462
+      },
+      {
+        "address": 31796450,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796478,
+        "operation": "goto",
+        "target": 31796468
+      },
+      {
+        "address": 31796494,
+        "operation": "call",
+        "target": 31550196
+      },
+      {
+        "address": 31796500,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796504,
+        "operation": "call",
+        "target": 31549048
+      },
+      {
+        "address": 31796508,
+        "operation": "goto",
+        "target": 31796456
+      },
+      {
+        "address": 31796518,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796528,
+        "operation": "call",
+        "target": 31551864
+      },
+      {
+        "address": 31796548,
+        "operation": "goto",
+        "target": 13624
+      },
+      {
+        "address": 31796556,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796562,
+        "operation": "call",
+        "target": 31551566
+      },
+      {
+        "address": 31796578,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796616,
+        "operation": "goto",
+        "target": 31796652
+      },
+      {
+        "address": 31796618,
+        "operation": "goto",
+        "target": 31796652
+      },
+      {
+        "address": 31796624,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796628,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796634,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796640,
+        "operation": "goto",
+        "target": 31796786
+      },
+      {
+        "address": 31796650,
+        "operation": "goto",
+        "target": 31796832
+      },
+      {
+        "address": 31796658,
+        "operation": "goto",
+        "target": 31796782
+      },
+      {
+        "address": 31796752,
+        "operation": "goto",
+        "target": 31796782
+      },
+      {
+        "address": 31796792,
+        "operation": "goto",
+        "target": 31796812
+      },
+      {
+        "address": 31796832,
+        "operation": "goto",
+        "target": 31796686
+      },
+      {
+        "address": 31796840,
+        "operation": "goto",
+        "target": 31796782
+      }
+    ],
+    "all_payload_bytes_disassembled": true,
+    "direct_targets_on_instruction_boundaries": true,
+    "indirect_call": "ag_stream_poll callback; ag_scan_hook supplies send_packet",
+    "stack_proven": false
+  },
+  "sources": {
+    "firmware/ananke_v0900.c": "b9ea97d353d1047f934d5649ce31f9344eaefcf223ca766629cf24c708dc0ea8",
+    "firmware/ananke_v0900.ld": "5e7edf5a74b37ee8ac006c918c173708bec94841cc590ada48f4b51b413497c1",
+    "firmware/button_stream.c": "1dc78587fb7566ce1b126d3094ab9f91b0a47fd80d422088eba21da804dea812",
+    "firmware/button_stream.h": "57b1c6e6ca75420c1e44d66a01ea603f4c7e13144a01be68d2d81c56a6c54b04",
+    "research/build_candidate.py": "9afafb6cf5d58bc2cf112d3026f862c0388c981a3b2edd9a178c96035837b426",
+    "scripts/build-candidate.sh": "8e7902000413668474da2fcd96d673ccc2d4ecdf8f36f4042f9081a0082f2195",
+    "scripts/pi32v2-tool.sh": "4786f792511af59782e231eb77aba0d5f34a7e5577478da535d10242ac63672d"
+  },
+  "previous_application_sha256": "3f234e58d28903fda3b175297e3d44913c1e7a64919282237343377e4e06f62e"
+}

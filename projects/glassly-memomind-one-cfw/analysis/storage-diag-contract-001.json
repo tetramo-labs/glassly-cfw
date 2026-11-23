@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "reply_counts": {
+    "analysis/storage-diag-host-002/report.json": 6,
+    "analysis/storage-diag-runtime-001.json": 46
+  },
+  "hardware_tested": false,
+  "scope": "Production C/RV32 emitted diagnostics independently validated through GM/Python; native RAM/KV synthetic"
+}

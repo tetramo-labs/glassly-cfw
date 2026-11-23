@@ -1,0 +1,10 @@
+{
+  "trace": "captures/swift-mac-text-smoke-20261102-02/trace.jsonl",
+  "sha256": "f9a8e932ca6449cfc9cfdce4cb2c599f81a60353ac196db06b76f0b74af039c0",
+  "requests": 134,
+  "counts": {
+    "business": 134
+  },
+  "examples": [],
+  "pending_at_end": 0
+}

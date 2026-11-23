@@ -1,0 +1,124 @@
+{
+  "format": "memomind-input-hardware-verification-v1",
+  "utc": "2026-10-31T20:12:10.891998+00:00",
+  "image_sha256": "bbc777895ef3c56af8ff3b5cbac85c8e7acb429eadfdc194cd407f5255c12f85",
+  "runtime_sha256": "3f8e637dff1f9da760b8842d1041eb88579cabc1b864bb5605d21bb9205167b4",
+  "image_hash_basis": "Transferred candidate and post-reboot capability evidence; no full physical flash readback",
+  "flash": {
+    "accepted_reboot": true,
+    "blocks": 543,
+    "chunks": 3796,
+    "complete_capture_proof": "analysis/protocol/input-runtime/whole-image-proof.json"
+  },
+  "identity": "captures/input-runtime-20261031/passive-02.json",
+  "native_control_checks": {
+    "evidence": "captures/input-runtime-20261031/hardware-checks-02.json",
+    "inactive_query": true,
+    "subscribe": true,
+    "conflicting_nonce_rejected": true,
+    "future_ack_rejected": true,
+    "scene_reset_put_show_state_clear": true,
+    "input_survives_scene_clear": true,
+    "explicit_stop": true,
+    "abandoned_subscription_inactive_after_31_5_seconds": true,
+    "stock_capabilities_unchanged": true,
+    "heartbeat_status": 0
+  },
+  "free_bytes": {
+    "before": 333912,
+    "after_stop": 333900,
+    "identity_before_expiry_query": 333932,
+    "final_identity": 333932
+  },
+  "input_capture": {
+    "seconds_requested": 180,
+    "evidence": "captures/input-runtime-20261031/input-events-01.jsonl",
+    "recorded_events": 0,
+    "reported_drops": 0,
+    "last_recorded_sequence": 0,
+    "coverage_ends_at_last_poll": true,
+    "physical_source_identified": false,
+    "user_action_confirmation_received": false,
+    "physical_input_validation": "not established; no events observed"
+  },
+  "stock_readonly": {
+    "evidence": "captures/input-runtime-20261031/stock-readonly-01.json",
+    "hogp_capabilities": {
+      "proto": 1,
+      "scan": true,
+      "connect": true,
+      "hid": true,
+      "gatt_relay": true,
+      "gatt_list": true,
+      "gatt_db": true,
+      "hid_event": true,
+      "hid_desc": true,
+      "hid_desc_usages": true,
+      "inputmap": true,
+      "inputmap_frag": true,
+      "inputmap_max": 8192,
+      "inputmap_version": 1,
+      "inputmap_caps": {
+        "usage_key": 16,
+        "value_match": 4,
+        "value_match_values": 6,
+        "rel_axis": 4,
+        "abs_axis": 4,
+        "abs_region": 2,
+        "abs_region_values": 6,
+        "touch_gesture": 2
+      }
+    },
+    "hogp_status": {
+      "state": 0,
+      "reason": 0,
+      "err": 0,
+      "connected": 0,
+      "bonded": 0,
+      "hid_ready": 0,
+      "gatt_ready": 0,
+      "addr": "",
+      "addr_type": 0,
+      "identity": "",
+      "identity_type": 0
+    },
+    "settings_subset": {
+      "angle": 61,
+      "hd_screenon": 1,
+      "head_sens": 2,
+      "charging": 1,
+      "wear_det": 1,
+      "nod_shark": 0
+    },
+    "settings_or_accessory_mutations": false
+  },
+  "connection_failures": [
+    {
+      "trace": "captures/input-runtime-20261031/passive-01.jsonl",
+      "failure": "RFCOMM connect IOException before any business-frame write",
+      "retry_scope": "New connection only; no firmware or mutating-command retry"
+    },
+    {
+      "trace": "captures/input-runtime-20261031/hardware-checks.jsonl",
+      "failure": "RFCOMM connect IOException before any business-frame write",
+      "retry_scope": "New connection only; no firmware or mutating-command retry"
+    }
+  ],
+  "phone_restored": {
+    "utc": "2026-10-31T20:09:58.661980+00:00",
+    "focus": [
+      "mCurrentFocus=Window{7734d6b u0 com.memomind.ai.aphrodite/com.memomind.ai.aphrodite.MainActivity}"
+    ],
+    "bridge_stopped": true,
+    "task_forward_removed": true
+  },
+  "capture_manifest": "captures/input-runtime-20261031/capture-manifest.json",
+  "capture_files_verified": 32,
+  "limitations": [
+    "HCI includes one preexisting1-microsecond timestamp reversal before this transfer; no truncated records, but general traffic losslessness remains unproven.",
+    "Physical input events, button source provenance and physical scene pixels remain unverified.",
+    "Lease status proves expired sessions are inactive; free memory recovered before status query, without direct heap-object instrumentation.",
+    "Native OOM, worst-case stack and event load/timing remain outside current hardware checks.",
+    "Full G2 firmware parity and all original native/hardware test coverage remain incomplete."
+  ]
+}

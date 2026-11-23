@@ -1,0 +1,22 @@
+{
+  "status": "proposal_only_policy_decision_needed",
+  "production_edits": false,
+  "device_actions": false,
+  "retain_original_assertions": true,
+  "never_trim_inside_bundle": true,
+  "undo_base_rv32": 45468,
+  "adapter_header_rv32": 8,
+  "granule_bytes": 20,
+  "minimum_requested_saving_if_allocated": 45476,
+  "typical_capacity64_saving": 46756,
+  "fresh_no_undo_saving": 0,
+  "source_sha256": {
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/portable/scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "runtime/graphics/scene_session.c": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+    "tests/g2_compat/upstream/patches/scene.c": "3792ddb1b2b42814d9e77aeabc60cf6ed4b53e05a17cef54d46075cf733d1b5f",
+    "tests/g2_compat/upstream/patches/host/shapes_host_test.c": "5cbf860519d82b810ef8da4e829788c4804e7df2539f6e3a9fe24d33e6849c10",
+    "runtime/portable/tests/scene/shapes_host_test.c": "f6a1d4424c7bb595c84bc37557679a7fabdd6acbbc3e77ff1fc123bf61af984f"
+  },
+  "report_sha256": "39346eb513e4a546231448a665aa2999dd8f1a537e94333652a1fbdc5b13bc3e"
+}

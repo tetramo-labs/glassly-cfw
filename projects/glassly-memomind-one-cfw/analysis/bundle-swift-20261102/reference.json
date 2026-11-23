@@ -1,0 +1,50 @@
+{
+  "source": "tests/g2_compat/upstream/patches/zlib_glue.c",
+  "source_sha256": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+  "branch_sha256": "4dc0b8db4518d6bb2a208db7e0fe8b6b16603ea75fd097b5791006056bf6acec",
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "checks": 307,
+  "mock_boundary": "Child dispatcher records length/head/checksum/order and simulated effect; no child semantics/display/native claims.",
+  "known_profile_differences": [
+    "Swift refuses mode15 until native adapter exists.",
+    "Swift enforces child minimum envelopes and complete command<=8192; original loop only checks nonemptysegments and outerbounds.",
+    "Swift emits canonical08 with no trailing bytes."
+  ],
+  "fixtures": [
+    {
+      "name": "empty",
+      "children_hex": [],
+      "hex": "0800"
+    },
+    {
+      "name": "geometry",
+      "children_hex": [
+        "2400"
+      ],
+      "hex": "080102002400"
+    },
+    {
+      "name": "copy-then-delta",
+      "children_hex": [
+        "096400b4003f001f006500b5003f001f00",
+        "0300000101010080"
+      ],
+      "hex": "08021100096400b4003f001f006500b5003f001f0008000300000101010080"
+    },
+    {
+      "name": "reset-geometry",
+      "children_hex": [
+        "290000010000",
+        "2400"
+      ],
+      "hex": "0802060029000001000002002400"
+    },
+    {
+      "name": "highbit-image",
+      "children_hex": [
+        "93010000000000000000"
+      ],
+      "hex": "08010a0093010000000000000000"
+    }
+  ]
+}

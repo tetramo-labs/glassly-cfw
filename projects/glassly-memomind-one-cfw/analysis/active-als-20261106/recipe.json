@@ -1,0 +1,67 @@
+{
+  "compile": [
+    "python3",
+    "scripts/compile_memomind_graphics.py",
+    "analysis/active-als-20261106/build-14-01",
+    "--scene-session",
+    "--input-observer",
+    "--flash-reader",
+    "--external-tail-reader",
+    "--storage-diagnostics",
+    "--full-store-reader",
+    "--flash-canary",
+    "--raster-commands",
+    "--rect-copy",
+    "--command-bundles",
+    "--text-commands",
+    "--diagnostic-commands",
+    "--reset-undo-trim",
+    "--minimal-launcher",
+    "--flash-scene",
+    "--wake-control",
+    "--notification-relay",
+    "--record-transport",
+    "--microphone-control",
+    "--sensor-capture",
+    "--cfw-revision",
+    "14",
+    "--rx-profile",
+    "app-rx-96k-v1",
+    "--relax"
+  ],
+  "construct": [
+    "python3",
+    "scripts/build_memomind_minimal_owner.py",
+    "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+    "analysis/active-als-20261106/build-14-01",
+    "analysis/active-als-20261106/image-14-01"
+  ],
+  "bootTestCommand": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/first_run_boot_test.py",
+    "--build",
+    "analysis/active-als-20261106/build-14-01",
+    "--report",
+    "analysis/active-als-20261106/boot-selector-14.json"
+  ],
+  "sensorRuntimeTest": [
+    ".tools/rv32-tests-venv/bin/python",
+    "tests/rv32/sensor_capture_runtime_test.py",
+    "--build",
+    "analysis/active-als-20261106/build-14-01",
+    "--report",
+    "analysis/active-als-20261106/sensor-capture-runtime.json"
+  ],
+  "sensorHostTest": [
+    "python3",
+    "runtime/graphics/tests/run_sensor_capture_tests.py",
+    "--output",
+    "NEW_DIRECTORY"
+  ],
+  "regression": [
+    "python3",
+    "tests/run_tests.py",
+    "--output",
+    "analysis/active-als-20261106/regression-14-01"
+  ]
+}

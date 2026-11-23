@@ -1,0 +1,6 @@
+.cache/
+.vscode/
+build/
+**/__pycache__/
+# Local CFW tooling environment
+.venv/

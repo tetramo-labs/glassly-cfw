@@ -1,0 +1,13 @@
+{
+  "confirmed_defect": "Native0200ee6a takes(owner,depth,itemBytes), tail-calling0200dbf4(depth,itemBytes,0).",
+  "old_native_test": "Actual flashed runtime passed depth16 and a poisoned item-size register to the kernel; regression rejects it.",
+  "fix": "Pass0xe6,1,itemBytes and correct host mock to three arguments.",
+  "hardware_causality": "Consistent with RESET disconnect; no crash backtrace captured.",
+  "old_release": "minimal-owner-flash-003",
+  "old_flash_commit": "19055c9",
+  "old_regression_exit": 1,
+  "native_wrapper_test": "aggregate-stage/queue-abi.json",
+  "old_regression_failure": "old-queue-abi.stderr",
+  "no_asset_writes_in_failed_attempt": true,
+  "fresh_preflight_first_failure": "Device reported front version unknown; validation refused without writes."
+}

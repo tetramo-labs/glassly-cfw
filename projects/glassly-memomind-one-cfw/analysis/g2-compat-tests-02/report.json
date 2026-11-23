@@ -1,0 +1,78 @@
+{
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "results": [
+    {
+      "name": "ported_shapes",
+      "scope": "MemoMind geometry API: 14 original geometric assertion sites",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "ported_easing",
+      "scope": "portable copied algorithm; animation integration unimplemented",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "ported_volume_gate",
+      "scope": "portable copied state machine; MemoMind audio integration unimplemented",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_ancs_relay",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_upstream",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_keyboard",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_transport",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_shapes",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "reference_vector",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "typescript",
+      "scope": "copied phone-side algorithms/protocol fixtures; G2-specific wire cases do not establish MemoMind routing",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "keyboard_arm_emulator",
+      "scope": "ARM imports/compiled G2 image and g2emu pin required; RV32 equivalent absent",
+      "result": "platform-specific-not-run"
+    },
+    {
+      "name": "device_demos",
+      "scope": "require real G2 BLE/device hardware; no device actions permitted",
+      "result": "platform-specific-not-run"
+    }
+  ],
+  "hardware_tested": false,
+  "memo_full_suite_port_complete": false,
+  "skipped_or_unimplemented_count_as_pass": false
+}

@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-02T05:37:08.827707+00:00",
+  "state": "Awaiting user wake; initial RFCOMM connection timed out before any application frame",
+  "installed_release_last_verified": "rect-copy-001",
+  "candidate_release": "bundle-commands-001",
+  "candidate_installed": false,
+  "required_offline_stages_passed": 94,
+  "python_tests_passed": 222,
+  "swift_tests_passed": 79,
+  "source_files_rechecked": 269,
+  "candidate_matches_aggregate_runtime": true,
+  "failed_attempt": "captures/swift-mac-bundle-flash-20261102-01",
+  "application_frames_submitted": 0,
+  "ota_started": false,
+  "next": "Retry exact candidate in a new capture after user wake confirmation"
+}

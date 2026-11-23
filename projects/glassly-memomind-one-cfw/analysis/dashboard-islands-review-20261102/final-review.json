@@ -1,0 +1,24 @@
+{
+  "passed_review": true,
+  "constructor_docstring_only_delta_verified": true,
+  "constructor_sha256": "a86ceb01fdf68cd38e9916db84285bda1c273dfd589966785c2c3a421cf76c74",
+  "offline_constructor_checks": 42,
+  "parent_rv32_report_passed": true,
+  "parent_rv32_cases": 72,
+  "parent_direct_gate_cases": 18,
+  "parent_actual_dispatcher_cases": 54,
+  "independent_rv32_run": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .tools/rv32-tests-venv/bin/python3 tests/rv32/dashboard_islands_emulator_test.py --output analysis/dashboard-islands-review-20261102/rv32-independent.json",
+    "exit_code": 132,
+    "output_file_created": false,
+    "successful_independent_rerun_claimed": false
+  },
+  "scope": "offline candidate and mocked actual-caller validation; no live or universal indirect-reachability admission",
+  "hashes": {
+    "scripts/build_memomind_dashboard_reclaim.py": "a86ceb01fdf68cd38e9916db84285bda1c273dfd589966785c2c3a421cf76c74",
+    "tests/rv32/dashboard_islands_emulator_test.py": "a638265d51047eeb0dd5400ea6495d8816fb44532a325e65983941b0bbd48b0e",
+    "analysis/dashboard-islands-20261102/rv32-report-v2.json": "734b10050fde534b60abcfa84a84eaf57f183f3e166188bc98eaa68d7167bd79",
+    "analysis/dashboard-islands-review-20261102/checks-final.json": "9565344a61568be2f0a1c135070c8f9b56d3bbf687f3b360fb5e120e366cb075",
+    "analysis/dashboard-islands-review-20261102/candidate-range-check.json": "8cfb43de8fcf608662c7c1676bae4885f042cedd6a44dfd9d3fa9ddaa93f8324"
+  }
+}

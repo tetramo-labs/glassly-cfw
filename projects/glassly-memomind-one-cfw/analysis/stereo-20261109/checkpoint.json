@@ -1,0 +1,59 @@
+{
+ "version": "GLASSLYCFW/22",
+ "release": "stereo-001",
+ "imageSHA256": "ee9029bd3f75cb9ec203b77f3ec1f485dd2a72397df8c225cadd48b1378a4bb2",
+ "flashedUTC": "2026-11-09T18:23Z",
+ "flashCapture": "captures/flash-22-20261109-102306",
+ "transferredRange": [
+  18,
+  2251853
+ ],
+ "verify": {
+  "capture": "captures/v22-verify-102850",
+  "bootHeaderVerified": true,
+  "appHeaderSHA256": "bb6922de7daf02c539f60abb9b625d7b7cfcd8baf0ce3c1e7e8010d945e7e699"
+ },
+ "bootRegistration": {
+  "capture": "captures/v22-ble-status-102944",
+  "registerCalled": false,
+  "service": 1,
+  "serviceHandle": 14,
+  "valueHandle": 16,
+  "cccdHandle": 17,
+  "slotEnabled": 1
+ },
+ "bleTransportMac": {
+  "advEnableNeeded": true,
+  "capabilitiesOverBleMs": 516.5,
+  "capabilitiesVersion": "GLASSLYCFW/22",
+  "echoMedianMs": 36.6,
+  "echoRounds": 16,
+  "commandRttsMs": [
+   181.0,
+   94.7,
+   157.2,
+   516.5
+  ]
+ },
+ "eyeCheck": {
+  "captures": [
+   "captures/v22-stereo-check-103204",
+   "captures/v22-stereo-check-103342"
+  ],
+  "allShowsAccepted": true,
+  "perEyeShowMedianMs": 61.8,
+  "pairMedianMs": 114.6,
+  "wearerConfirmation": {
+   "utc": "2026-11-09T19:23Z",
+   "tool": "analysis/live/memomind-live + eye-test.json (0x7D direct scene commands)",
+   "step1": "left one square, right two squares (as sent)",
+   "step2": "swapped (as sent)",
+   "step3": "square and bar shown; depth impression not yet reported",
+   "step4": "two squares both eyes",
+   "step5": "end of test"
+  },
+  "panelMapping": "bit 5 (0x20) = left eye, bit 4 (0x10) = right eye: confirmed"
+ },
+ "iphoneBle": "pending (glasses factory reset; phone must re-pair)",
+ "recordTransportNote": "Scene commands through GraphicsRecordSession (mode 126) return CAPACITY; the earlier stereo-check captures timed refusals. Direct 0x7D is what the phone uses."
+}

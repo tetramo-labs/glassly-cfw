@@ -1,0 +1,12 @@
+{
+  "complete": false,
+  "error": "RFCOMM open timed out",
+  "flashAssetWritesStarted": false,
+  "imageSHA256": "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12",
+  "physicalOutputConfirmed": false,
+  "runtimeSHA256": "9c92bba16a2fcb6f3235488b6578ac0d43f79a6369d7415fd4c10f40745ed02b",
+  "version": "GLASSLYCFW/11",
+  "capture": "captures/v11-boot-20261104-01",
+  "traceSHA256": "c08fd16a11d3de6db291107f6da8add7b500124939ba51c1ab99a983405c0054",
+  "bootVerified": false
+}

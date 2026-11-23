@@ -1,0 +1,48 @@
+CALL ram:042608f8 FUNCTION ram:042608ea
+ram:042608e2  c.lwsp s0,0x18(sp)
+ram:042608e4  c.lwsp s1,0x14(sp)
+ram:042608e6  c.addi16sp sp,0x20
+ram:042608e8  ret
+ram:042608ea  c.addi sp,-0x10
+ram:042608ec  c.swsp s0,0x8(sp)
+ram:042608ee  c.swsp ra,0xc(sp)
+ram:042608f0  c.addi4spn s0,sp,0x10
+ram:042608f2  jal ra,0x0425ec64
+ram:042608f6  c.beqz a0,0x04260906
+ram:042608f8  jal ra,0x042ae81c
+ram:042608fc  c.lwsp s0,0x8(sp)
+ram:042608fe  c.lwsp ra,0xc(sp)
+ram:04260900  c.addi sp,0x10
+ram:04260902  j 0x0425ea86
+CALL ram:042ae8de FUNCTION ram:042ae8b6
+ram:042ae8c4  c.bnez a0,0x042ae90c
+ram:042ae8c6  lui s1,0x2010
+ram:042ae8ca  lbu a5,0x318(s1)
+ram:042ae8ce  addi s1,s1,0x318
+ram:042ae8d2  c.andi a5,0x2
+ram:042ae8d4  c.beqz a5,0x042ae90c
+ram:042ae8d6  c.lw a5,0x0(s1)
+ram:042ae8d8  c.srli a5,0x2
+ram:042ae8da  c.andi a5,0x1
+ram:042ae8dc  c.bnez a5,0x042ae8ee
+ram:042ae8de  jal ra,0x042ae81c
+ram:042ae8e2  lbu a5,0x0(s1)
+ram:042ae8e6  ori a5,a5,0x4
+ram:042ae8ea  sb a5,0x0(s1)
+ram:042ae8ee  c.li a0,0x1
+CALL ram:042ae938 FUNCTION ram:042ae916
+ram:042ae91c  c.fswsp fs0,0xc(sp)
+ram:042ae91e  c.swsp ra,0x1c(sp)
+ram:042ae920  c.addi4spn s0,sp,0x20
+ram:042ae922  lui s1,0x2010
+ram:042ae926  lw a5,0x318(s1)
+ram:042ae92a  fmv.s fs0,fa0
+ram:042ae92e  addi s1,s1,0x318
+ram:042ae932  c.srli a5,0x2
+ram:042ae934  c.andi a5,0x1
+ram:042ae936  c.bnez a5,0x042ae948
+ram:042ae938  jal ra,0x042ae81c
+ram:042ae93c  lbu a5,0x0(s1)
+ram:042ae940  ori a5,a5,0x4
+ram:042ae944  sb a5,0x0(s1)
+ram:042ae948  fmv.w.x fa5,zero

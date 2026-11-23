@@ -1,0 +1,31 @@
+{
+ "version": "GLASSLYCFW/18",
+ "release": "ble-probe-003",
+ "change": "Revision 17 plus a guard that keeps the probe's state out of the characteristic node until its value handle exists (the bytes +0x24.. are the registration message's descriptor count and list).",
+ "build": "build-18-01",
+ "runtimeBytes": 97392,
+ "runtimeSHA256": "371aff8e3b27605bf317741c47698e05f6e43f6a9bf924eec956ab19b47d0164",
+ "linkerRelaxation": true,
+ "imageBytes": 2251153,
+ "imageSHA256": "80364527bd91081bb31c36fa29899d958af827d6e04d2124ab5b9dd663e3b1bb",
+ "containerHeaderSHA256": "133ca7d69449be87f7c3629dcbe81e781ba29733e069df3a3030d13ac9bc1360",
+ "appHeaderSHA256": "692401e424ecc4e492dd18394a5985f7f554caeae29c4ceafc6ae6040f6225db",
+ "bootSelectorTest": "boot-selector-18.json",
+ "rawPresentTest": "raw-present-runtime.json",
+ "bleProbeTest": "ble-probe-runtime.json",
+ "recordGates": "record-gates-18.json",
+ "flashed": true,
+ "flashAttempt": "captures/v18-flash-20261108-01 was interrupted after 1,186,912 bytes (no result); the glasses kept revision 17 (captures/v17-postabort-20261108-01) and offered to resume at that offset (v18-flash-20261108-02 refused it); captures/v18-flash-20261108-08 resumed with --resume: 260 blocks, 1,819 chunks, bytes [1186912, 2251153), reboot acknowledged",
+ "bootVerified": true,
+ "bootCapture": "captures/v18-boot-20261108-05 (installed app header 692401e4\u2026 matches ble-probe-003)",
+ "hardwareChecks": {
+  "bleRegistrationObserved": true,
+  "registration": "captures/v18-ble-register-20261108-01 / v18-ble-status-20261108-01: service handle 14, value handle 17, CCCD handle 18, registering cleared, no crash; repeated after the glasses' sleep reboot with the same handles (v18b-ble-register-*)",
+  "advertising": "captures/v18-ble-adv-20261108-01..03: enable accepted; the Mac central found 'MemoMind One' (adv service 0x9200, rssi -54) and connected within 1 s; after the glasses slept and woke, enable was still accepted but nothing advertised",
+  "centralDiscovery": "analysis/ble-probe-20261107/ble-central: services 9200, 9300, 9400 listed; 9400 reported zero characteristics; stock 9201 discovered (props 0x0e, no CCCD, MTU 509). Cause: the stock register_service/register_chara kick the walker when the pending flag is set, so the probe's own kick posted the service twice (records 14 and 15, chara 16-18 under 14) \u2014 fixed in revision 19",
+  "linkDrop": "every connection (ours or against stock 9200) was terminated by the glasses 3.6-3.7 s after connect (CBErrorDomain 7). Static trace: the app's LE connection handler 0421465e (event dispatcher 04217546) treats a central that is neither a known ring (0424eef2) nor the bonded phone (042133e2 / address DAT_0201132c) as foreign: it stores the peer at DAT_020128ac and posts app event 0x3f3 after 2000 ms, whose handler calls 04318dca (opcode 0x2bc) toward the peer and retries at count x 1000 ms; gatt_disconnect is 04319c04 (opcode 0x21f, BT core bt_service_gatt_disconnect 0x14060f06), called from 0421465e and app_ble 042de6a6. This is stock policy toward unbonded centrals (the iPhone, bonded for ANCS, passes), so the channel must be tested from an iPhone or the policy patched.",
+  "echo": "not reached (no characteristic to subscribe)"
+ },
+ "regression": null,
+ "regressionNotes": "targeted gates only (record-gates-18.json); revision 19 supersedes it"
+}

@@ -1,0 +1,281 @@
+{
+  "source_sha256": "8eb058b4fd5bc467f33e3c257a7a744fb48484227854a8a2d09210ce7f173612",
+  "source_size": 1936677,
+  "profile": "WuQi-ADK-update-container",
+  "outer_magic": "0000",
+  "inner_header_words": [
+    "0x1",
+    "0x1f",
+    "0xffffffff",
+    "0x158"
+  ],
+  "component_count": 4,
+  "table_crc_offset": 114,
+  "stream_start": 118,
+  "metadata_header_words": [
+    0,
+    16,
+    0,
+    33980416,
+    0,
+    65536
+  ],
+  "partitions": [
+    {
+      "index": 0,
+      "type": 48,
+      "flash_start": 65536,
+      "load_address": 335609888,
+      "body_size": 952440,
+      "allocation_size": 1228800
+    },
+    {
+      "index": 1,
+      "type": 112,
+      "flash_start": 1294336,
+      "load_address": 637534208,
+      "body_size": 803900,
+      "allocation_size": 1146880
+    },
+    {
+      "index": 2,
+      "type": 32,
+      "flash_start": 2441216,
+      "load_address": 69550112,
+      "body_size": 2161680,
+      "allocation_size": 2457600
+    },
+    {
+      "index": 3,
+      "type": 144,
+      "flash_start": 4898816,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    },
+    {
+      "index": 4,
+      "type": 145,
+      "flash_start": 4902912,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    },
+    {
+      "index": 5,
+      "type": 160,
+      "flash_start": 4907008,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 720896
+    },
+    {
+      "index": 6,
+      "type": 4,
+      "flash_start": 5627904,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 2670592
+    },
+    {
+      "index": 7,
+      "type": 196,
+      "flash_start": 8298496,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 8,
+      "type": 195,
+      "flash_start": 8306688,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 9,
+      "type": 194,
+      "flash_start": 8314880,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 10,
+      "type": 193,
+      "flash_start": 8323072,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 11,
+      "type": 192,
+      "flash_start": 8331264,
+      "load_address": 0,
+      "body_size": 3016,
+      "allocation_size": 8192
+    },
+    {
+      "index": 12,
+      "type": 7,
+      "flash_start": 8339456,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 32768
+    },
+    {
+      "index": 13,
+      "type": 8,
+      "flash_start": 8372224,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 8192
+    },
+    {
+      "index": 14,
+      "type": 2,
+      "flash_start": 8380416,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    },
+    {
+      "index": 15,
+      "type": 9,
+      "flash_start": 8384512,
+      "load_address": 0,
+      "body_size": 0,
+      "allocation_size": 4096
+    }
+  ],
+  "streams": [
+    {
+      "index": 0,
+      "offset": 118,
+      "packed_size": 149,
+      "unpacked_size": 344,
+      "packed_sha256": "209bd2d9e9dfd4158554112afa380c830be15faa3a71afc3bc03d0b521ae587c",
+      "unpacked_sha256": "71bf1cef8e14d57b1859a03f700effacb44602d7f374c6f90bc2f7701d37581c",
+      "flash_start": null,
+      "flash_end": null
+    },
+    {
+      "index": 1,
+      "offset": 267,
+      "packed_size": 505809,
+      "unpacked_size": 952472,
+      "packed_sha256": "63015bb1f4d7153b72dd6c835f3b7c1a09557937007427c2eb9c39295d9178fa",
+      "unpacked_sha256": "c4e48c9aab37b8df1fe6f1b04669eda3b13896096dbdf3f2208adb1463bbc148",
+      "flash_start": 65536,
+      "flash_end": 1294336,
+      "image_header_words": [
+        2766445079,
+        952440,
+        1048591,
+        335609888,
+        394706158,
+        0,
+        270921728,
+        0
+      ],
+      "body_sha256": "cd73ef4111fb71a51a785e06d1263dfefa335f1ade43338aab54fcf4da55e2dc",
+      "body_crc32": 394706158,
+      "load_address_candidate": 335609888,
+      "auxiliary_address_unknown": 270921728,
+      "partition_index": 0,
+      "partition_type": 48
+    },
+    {
+      "index": 2,
+      "offset": 506076,
+      "packed_size": 514172,
+      "unpacked_size": 803932,
+      "packed_sha256": "b2991a54fad251a7e789fb9d0bb4a99f30bfff56933cc7e797294af835b340f3",
+      "unpacked_sha256": "c1e7bef00d0d0916b96b0beaff5df31dfe1b4d0722f3a824102102887f77a7e7",
+      "flash_start": 1294336,
+      "flash_end": 2441216,
+      "image_header_words": [
+        2766445079,
+        803900,
+        1048591,
+        637534208,
+        3019749109,
+        0,
+        642250752,
+        0
+      ],
+      "body_sha256": "6a8343ad9540926916fe11135741775e34dd3af83410aebdca9f5c482f803ced",
+      "body_crc32": 3019749109,
+      "load_address_candidate": 637534208,
+      "auxiliary_address_unknown": 642250752,
+      "partition_index": 1,
+      "partition_type": 112
+    },
+    {
+      "index": 3,
+      "offset": 1020248,
+      "packed_size": 915188,
+      "unpacked_size": 2161712,
+      "packed_sha256": "0aa99a98613a70fb48816d975a770302f64259f548aab0a7ae370d477ceffe07",
+      "unpacked_sha256": "f1d473694d5e3f239bf6763402b20ac6f6dc010792915d8c89b97b5be5c2e461",
+      "flash_start": 2441216,
+      "flash_end": 4898816,
+      "image_header_words": [
+        2766445079,
+        2161680,
+        1048591,
+        69550112,
+        1279875241,
+        0,
+        34598912,
+        0
+      ],
+      "body_sha256": "48364cea55a9d8d872a248328d67a7578a074fb4c2518cb387e07440bc14463f",
+      "body_crc32": 1279875241,
+      "load_address_candidate": 69550112,
+      "auxiliary_address_unknown": 34598912,
+      "partition_index": 2,
+      "partition_type": 32
+    },
+    {
+      "index": 4,
+      "offset": 1935436,
+      "packed_size": 1237,
+      "unpacked_size": 3048,
+      "packed_sha256": "daa223ed3b78a31619b98bfb46dbe7d979d078c174b625c8dc8947a4df805216",
+      "unpacked_sha256": "c6a98a733b53e109b2e66b3b10339537df2bfc7753ed2610410e42fb6db0e49f",
+      "flash_start": 8331264,
+      "flash_end": 8339456,
+      "image_header_words": [
+        2766445079,
+        3016,
+        0,
+        0,
+        1887331268,
+        0,
+        0,
+        0
+      ],
+      "body_sha256": "06e04964a0a466e2d034c296131e36a50851d4e97687999f2504f9606942ff86",
+      "body_crc32": 1887331268,
+      "load_address_candidate": 0,
+      "auxiliary_address_unknown": 0,
+      "partition_index": 11,
+      "partition_type": 192
+    }
+  ],
+  "checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-4"
+  },
+  "unaccounted_bytes": 0,
+  "limitations": [
+    "Uninterpreted header words are retained, not assigned invented semantics.",
+    "CRC validity does not prove modified firmware is accepted or safe to boot.",
+    "No standalone signature block is identified; enforcement remains unknown."
+  ]
+}

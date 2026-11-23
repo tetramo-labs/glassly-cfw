@@ -1,0 +1,15 @@
+{
+  "format": "memomind-body-patch-v1",
+  "source_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+  "output_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+  "edits": [
+    {
+      "component": 3,
+      "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+      "offset": 1562384,
+      "before": "426c7565746f6f746820646973636f6e6e6563746564",
+      "after": "476c6173736c79206669726d77617265207265616479",
+      "reason": "Replace only the English Bluetooth-disconnected LVGL toast; retain original string length, terminator, code, layout, version and all other components."
+    }
+  ]
+}

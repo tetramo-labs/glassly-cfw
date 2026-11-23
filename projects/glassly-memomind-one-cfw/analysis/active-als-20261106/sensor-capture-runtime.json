@@ -1,0 +1,4020 @@
+{
+  "passed": true,
+  "groups": 9,
+  "runtimeSHA256": "9c2a6c130b76e507f025ee137c0e00cf64ad489e9773f076883eba11d42d8856",
+  "hooks": {
+    "cases": 16,
+    "results": [
+      {
+        "sensor": 1,
+        "stackAlignment": 16,
+        "error": 0,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 16,
+        "error": 0,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 16,
+        "error": 11,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "log"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 16,
+        "error": 11,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "log"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 8,
+        "error": 0,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 8,
+        "error": 0,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 8,
+        "error": 11,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "log"
+        ]
+      },
+      {
+        "sensor": 1,
+        "stackAlignment": 8,
+        "error": 11,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "imu_bus",
+          "log"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 16,
+        "error": 0,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 16,
+        "error": 0,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 16,
+        "error": 11,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 16,
+        "error": 11,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 8,
+        "error": 0,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 8,
+        "error": 0,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock",
+          "finish"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 8,
+        "error": 11,
+        "generation": 0,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock"
+        ]
+      },
+      {
+        "sensor": 2,
+        "stackAlignment": 8,
+        "error": 11,
+        "generation": 3,
+        "calls": [
+          "begin",
+          "lock",
+          "als_driver",
+          "unlock"
+        ]
+      }
+    ],
+    "imageSHA256": "e9e42be73f1a45052d2091237a87c1131d6abfb896c0d48c3db7188ceddf553f",
+    "hooks": [
+      {
+        "address": 69383802,
+        "before": "797122d44ad04ece",
+        "after": "b7b23a04678002cb",
+        "purpose": "sensor-als"
+      },
+      {
+        "address": 70546934,
+        "before": "eff09fe3",
+        "after": "ef30a666",
+        "purpose": "sensor-imu"
+      }
+    ]
+  },
+  "hardwareTested": false,
+  "nativeBusAndRTOSMocked": true,
+  "calls": [
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2301,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2301,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2492,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "als_setting",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 96,
+      "instructions": 171,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_read",
+        "mic_timer"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 270,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2385,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 2265,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 96,
+      "instructions": 171,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_read",
+        "mic_timer"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 2265,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 96,
+      "instructions": 137,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 96,
+      "instructions": 149,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 96,
+      "instructions": 183,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2447,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2359,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2477,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2374,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2614,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2477,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_cleanup",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 92,
+      "native_calls": [
+        "critical_enter",
+        "critical_leave",
+        "als_setting",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2418,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2428,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 141,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 170,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2535,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 219,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 208,
+      "instructions": 693,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "default_display",
+        "active_screen",
+        "child_count",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "child_count",
+        "child_count",
+        "child_count",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 366,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 270,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 273,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 284,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 284,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 284,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 284,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3669,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3669,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3781,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1793,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1776,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 2561,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_cleanup",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 77,
+      "native_calls": [
+        "critical_enter",
+        "critical_leave",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "memset",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 0,
+      "instructions": 3,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "memset",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 0,
+      "instructions": 8,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "memset",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 0,
+      "instructions": 68,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "memset",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 0,
+      "instructions": 263,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "memset",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 0,
+      "instructions": 1278,
+      "native_calls": [],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 366,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1776,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1793,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1865,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1831,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1776,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1787,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1844,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 366,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 270,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2587,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2585,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2359,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 94,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 366,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2552,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_cleanup",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 112,
+      "instructions": 448,
+      "native_calls": [
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "default_display",
+        "active_screen",
+        "child_count",
+        "child_count",
+        "child_count",
+        "child_count"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2350,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2383,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 100,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 78,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2363,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_graphics_display",
+      "task": "display",
+      "stack_capacity": 8192,
+      "observed_stack_bytes": 208,
+      "instructions": 693,
+      "native_calls": [
+        "default_display",
+        "active_screen",
+        "child_count",
+        "default_display",
+        "active_screen",
+        "child_count",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "child_count",
+        "child_count",
+        "child_count",
+        "json",
+        "send",
+        "release"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 78,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2266,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2283,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2286,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2286,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2281,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2275,
+      "native_calls": [
+        "release",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 1305,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "status"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1787,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1788,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 178,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 172,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1807,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2414,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 141,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1787,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_microphone_task_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 80,
+      "instructions": 223,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2416,
+      "native_calls": [
+        "release",
+        "free_bytes",
+        "try_alloc",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_timer",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 366,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 369,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 380,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1776,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1793,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 80,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1666,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "status"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_begin",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 81,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3680,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3679,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "glassly_sensor_finish",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 48,
+      "instructions": 101,
+      "native_calls": [
+        "mic_clock",
+        "critical_enter",
+        "critical_leave"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3679,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2358,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2391,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3791,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 3790,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 240,
+      "instructions": 1899,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    },
+    {
+      "entry": "service_entry",
+      "task": "BT",
+      "stack_capacity": 4096,
+      "observed_stack_bytes": 432,
+      "instructions": 2361,
+      "native_calls": [
+        "release",
+        "mic_clock",
+        "critical_enter",
+        "critical_leave",
+        "free",
+        "critical_enter",
+        "critical_leave",
+        "mic_clock",
+        "try_alloc",
+        "json",
+        "free"
+      ],
+      "callee_gp_tp_preserved": true,
+      "callee_fp_registers_preserved": true,
+      "all_cpu_memory_accesses_bounded": true
+    }
+  ]
+}

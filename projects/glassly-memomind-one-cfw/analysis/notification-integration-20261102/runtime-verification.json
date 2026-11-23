@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "runtimeSHA256": "fee267bb4d880b77e3a0683625b74cd645555705d37f5ca99c7d4fc4865cd85e",
+  "groups": 3,
+  "stockAPIsMocked": true,
+  "hardwareTested": false,
+  "maxAddedStackBytes": 256,
+  "checks": [
+    "source forwarding",
+    "nested body copy before stock free",
+    "session queue reset",
+    "positive/negative flag eligibility",
+    "native action posting",
+    "busy rejection",
+    "stale UID rejection",
+    "lease expiry",
+    "cleanup",
+    "malformed attributes",
+    "invalid body range",
+    "allocation headroom rejection"
+  ]
+}

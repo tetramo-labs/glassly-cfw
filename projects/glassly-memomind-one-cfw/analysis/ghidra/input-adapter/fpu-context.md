@@ -1,0 +1,15 @@
+# Stock floating-point context prerequisite
+
+This is static evidence from the same pinned stock segment-3 body, not a live register measurement. It supports FP instructions at the display-worker gate independently of the SDK's ilp32f declaration.
+
+* Startup at `0x041eb052` loads t0=0x6000; `0x041eb054` ORs it into mstatus. These are FS bits 14:13, setting FS=3. It then reads the bits and executes `fscsr zero` at `0x041eb064` when present. [Startup bytes/disassembly](startup-code.asm).
+* Display initializer `0x0425aa40` calls `0x0200f168(0x0425bd9e,NULL,5,0x800,"display_app_task")`; see the existing `display-adapter/queue-init/function-0425aa40.c` export.
+* [Task wrapper 0x0200f168](function-0200f168.c) calls task creation `0x0200c4f2`, which calls frame initializer `0x02009060` at `0x0200c5de` ([call-site witness](task-frame-init-callers.txt)). The initializer saves `(mstatus & ~8) | 0x1880`, preserving FS. It initializes 32 FP register slots. [Initializer](function-02009060.c) and [instruction witness](task-context.asm).
+* Context entry `0x02008cf0` saves integer state and mstatus, then unconditionally saves all 32 single-precision FPRs at `0x02008d34`…`0x02008d72`. It stores the task stack pointer into the current task control block through `0x020123a0`. Restore paths load all FPRs and write saved mstatus at `0x02008f7c` / `0x0200901c`, before mret. This is an FP-aware native task context, not a soft-float-only scheduler.
+* The separate exception path at `0x0200a2b0` likewise saves/restores all 32 FPRs and mstatus; see [fpu-switch.asm](fpu-switch.asm). A further low-level entry at `0x0200ac16` sets mstatus to 0x7800 and zeros fcsr; [fpu-first-task.asm](fpu-first-task.asm) preserves that witness, though its full caller role was not established here.
+
+The task context excerpts do **not** save/restore fcsr. Therefore they prove FPR preservation and FS-enabled execution, but do not establish per-task floating-point rounding/exception isolation. The appended gate's own fcsr save/restore is still relevant around its synchronous C observer; it does not fix any pre-existing stock scheduling behavior. No change to native rounding modes is proposed.
+
+The compiled gate's 144-byte aligned frame can save volatile FPRs while callee-saved FPRs remain the C callee's ABI responsibility. Its admission still depends on the independent machine tests and the observer's actual call chain/stack/lifetime review. This evidence is not a dynamic assertion that FS can never be changed by unreviewed code. An FS-Off emulator trap alone is not representative of the established normal stock startup/task path.
+
+Reproduction: `startup-code.bin` is the first 0x64 bytes of the body; `rtos-code.bin` is the startup RAM-copy source at body offset 0x64, length 0xf8b4, mapped to 0x02000000. The latter is wrapped in an RV32IMAF-C attributed ELF object (`rtos-code.S/.o`) only for disassembly. Plain binary objdump guessed ambiguous compressed opcodes as RV64 loads/stores; the attributed ELF disassembly correctly decodes them as RV32 FLW/FSW. None of these evidence files is a firmware patch.

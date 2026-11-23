@@ -1,0 +1,286 @@
+{
+  "format": "scene-flash-integration-review-v1",
+  "scope": "read-only source review; no implementation or hardware execution",
+  "sources": {
+    "runtime/portable/scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "runtime/portable/scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+    "runtime/portable/scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+    "runtime/portable/scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_shapes.inc": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
+    "runtime/portable/vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+    "runtime/portable/vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba",
+    "runtime/portable/transport.c": "eb81a88613f69514c5fd0b534a67a3ba71a52b188bd5408cec65a82814e3eda2",
+    "runtime/portable/transport.h": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01",
+    "runtime/portable/flash_store.c": "d565de6f9b9f197e1711803739f23bc1500e590a3f4311e2b5906be33233c03f",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/graphics/graphics.c": "33af3b506187274b0d9f11b1f882a966072784711a5540f4864dbd69ade286df",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/native.c": "29cc3ec56a6f8bdd03b61d5ae55cbce55a8cddcc4c8844b835bee4890163c899",
+    "runtime/graphics/scene_session.c": "f9181e0b8226725d9c3c86b32171c6b238e59acdcef2892c15be55fc2718c4e1",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62"
+  },
+  "pointer_sites": {
+    "runtime/portable/scene.c": [
+      {
+        "line": 60,
+        "source": "    (void)mm_vector_draw_path(&target,work,sizeof(*work),path,mm_vector_path_bytes(path->count),&transform,color&15u);"
+      },
+      {
+        "line": 122,
+        "source": "       mm_scene_overlap(src,len,ctx->texture_cache,ctx->texture_cache_size) ||"
+      }
+    ],
+    "runtime/portable/scene.h": [
+      {
+        "line": 43,
+        "source": "    uint8_t *texture_cache;"
+      },
+      {
+        "line": 44,
+        "source": "    uint32_t texture_cache_size;"
+      }
+    ],
+    "runtime/portable/scene_internal.h": [
+      {
+        "line": 278,
+        "source": "    const uint8_t *reassert_records[CFW_CACHE_TXN_REASSERTS];"
+      }
+    ],
+    "runtime/portable/scene_cache.inc": [
+      {
+        "line": 244,
+        "source": "    sc->store_bytes = ctx->texture_cache ? ctx->texture_cache_size : 0;"
+      },
+      {
+        "line": 255,
+        "source": "    if (ctx->texture_cache == 0) {"
+      },
+      {
+        "line": 260,
+        "source": "            ctx->texture_cache = store;"
+      },
+      {
+        "line": 261,
+        "source": "            ctx->texture_cache_size = sizes[i];"
+      },
+      {
+        "line": 264,
+        "source": "        if (ctx->texture_cache == 0) return 0;"
+      },
+      {
+        "line": 267,
+        "source": "    if (sc) sc->store_bytes = ctx->texture_cache_size;"
+      },
+      {
+        "line": 268,
+        "source": "    return ctx->texture_cache;"
+      },
+      {
+        "line": 272,
+        "source": "    if (ctx && ctx->texture_cache) {"
+      },
+      {
+        "line": 273,
+        "source": "        uint8_t *store = ctx->texture_cache;"
+      },
+      {
+        "line": 274,
+        "source": "        ctx->texture_cache = 0;"
+      },
+      {
+        "line": 275,
+        "source": "        ctx->texture_cache_size = 0;"
+      },
+      {
+        "line": 328,
+        "source": "    if (ctx->scene || ctx->texture_cache) {"
+      },
+      {
+        "line": 621,
+        "source": "        s->asset = store + a->offset;"
+      },
+      {
+        "line": 627,
+        "source": "        s->font = store + a->offset;"
+      },
+      {
+        "line": 637,
+        "source": "    return (const cfw_path *)(const void *)(store + a->offset);"
+      },
+      {
+        "line": 642,
+        "source": "    const uint8_t *store = ctx ? ctx->texture_cache : 0;"
+      },
+      {
+        "line": 890,
+        "source": "    t->store = store;"
+      },
+      {
+        "line": 929,
+        "source": "        memcpy(undo->granules[at].bytes, t->store + g * CFW_CACHE_GRANULE, CFW_CACHE_GRANULE);"
+      },
+      {
+        "line": 973,
+        "source": "            memcpy(t->store + undo->granules[i].offset, undo->granules[i].bytes, CFW_CACHE_GRANULE);"
+      },
+      {
+        "line": 1078,
+        "source": "    if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);"
+      },
+      {
+        "line": 1082,
+        "source": "    memcpy(t->store + sc->assets[idx].offset + offset, data, len);"
+      },
+      {
+        "line": 1087,
+        "source": "        if (!cfw_asset_content_valid(t->store + sc->assets[idx].offset, total, kind))"
+      },
+      {
+        "line": 1134,
+        "source": "        t->reassert_records[t->reassert_count++] = p + CFW_PUT_OBJECT_HDR;"
+      },
+      {
+        "line": 1169,
+        "source": "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);"
+      },
+      {
+        "line": 1171,
+        "source": "        memcpy(t->store + sc->assets[pa].offset, s.text, len);"
+      },
+      {
+        "line": 1183,
+        "source": "        if (t->store == 0) return cfw_txn_fail(t, CFW_CACHE_REPLY_CAPACITY, 0);"
+      },
+      {
+        "line": 1185,
+        "source": "        cfw_path *path = (cfw_path *)(void *)(t->store + sc->assets[pa].offset);"
+      },
+      {
+        "line": 1186,
+        "source": "        path->count = (uint16_t)n;"
+      },
+      {
+        "line": 1187,
+        "source": "        path->rule = s.width;"
+      },
+      {
+        "line": 1188,
+        "source": "        path->pad = 0;"
+      },
+      {
+        "line": 1189,
+        "source": "        for (int i = 0; i < n; i++) memcpy(&path->edges[i], &w->edges[i], sizeof(cfw_edge));"
+      },
+      {
+        "line": 1301,
+        "source": "        cfw_shape_decode(t->reassert_records[i], &s);"
+      },
+      {
+        "line": 1486,
+        "source": "    uint8_t *store = ctx->texture_cache;"
+      },
+      {
+        "line": 1545,
+        "source": "    uint8_t *store = ctx->texture_cache;"
+      },
+      {
+        "line": 1578,
+        "source": "            { const cfw_path *path = cfw_object_path(sc, store, &sc->objects[idx]); if (path) edges += path->count; }"
+      },
+      {
+        "line": 1584,
+        "source": "                { const cfw_path *path = cfw_object_path(sc, store, o); if (path) edges += path->count; }"
+      },
+      {
+        "line": 1788,
+        "source": "            uint32_t kib = ctx->texture_cache_size / 1024u;"
+      },
+      {
+        "line": 1850,
+        "source": "    if (sc == 0 || ctx->texture_cache == 0) return 0;"
+      },
+      {
+        "line": 1856,
+        "source": "    return ctx->texture_cache + a->offset;"
+      }
+    ],
+    "runtime/portable/scene_assets.inc": [
+      {
+        "line": 89,
+        "source": "    while (pos < image->rle_len) {"
+      },
+      {
+        "line": 93,
+        "source": "        if (!cfw_texture_rle_token(image->rle + pos,"
+      },
+      {
+        "line": 94,
+        "source": "                                   image->rle_len - pos,"
+      }
+    ],
+    "runtime/portable/vector.c": [
+      {
+        "line": 230,
+        "source": "    uint32_t count=path->count;"
+      },
+      {
+        "line": 233,
+        "source": "        cfw_edge e=path->edges[i];"
+      },
+      {
+        "line": 239,
+        "source": "    cv_fill(r,w,count,path->rule,color);"
+      },
+      {
+        "line": 389,
+        "source": "    if(path->count>MM_VECTOR_MAX_EDGES || path->rule>1 || path->pad ||"
+      },
+      {
+        "line": 390,
+        "source": "       path_bytes<mm_vector_path_bytes(path->count))return MM_VECTOR_MESSAGE;"
+      },
+      {
+        "line": 395,
+        "source": "    for(unsigned i=0;i<path->count;i++) {"
+      },
+      {
+        "line": 396,
+        "source": "        mm_vector_edge e=path->edges[i];"
+      }
+    ]
+  },
+  "measured_rv32_layout": {
+    "context": 1016,
+    "platform": 60,
+    "cache": 43420,
+    "transaction": 1636,
+    "object": 116,
+    "asset": 32,
+    "undo_base": 45468,
+    "undo_granule": 20,
+    "vector_workspace": 10752
+  },
+  "original_check_sites": {
+    "shapes_host_test.c": 334,
+    "vector_host_test.c": 90
+  },
+  "fixtures": [
+    {
+      "file": "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/regression-20261031-10/g2_compat/vector-fixture.bin",
+      "bytes": 2480,
+      "sha256": "dbeab3248f1259a06faec40e9c83f0fedc12c674cce7d864f577ca8e1c84d269"
+    },
+    {
+      "file": "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/regression-20261031-10/g2_compat/gif-300.bin",
+      "bytes": 320295,
+      "sha256": "d8706a134a268e8ada75a4edd81356eea8d932f48f271c5f2c368f3aef744687"
+    },
+    {
+      "file": "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/regression-20261031-10/g2_compat/svg-300.bin",
+      "bytes": 500442,
+      "sha256": "7dc551a4ee22e4cdc1182bb49586889980a6fa1e24f24c905d8cd2d19a6cee1b"
+    }
+  ],
+  "source_drift_during_review": []
+}

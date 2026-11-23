@@ -1,0 +1,221 @@
+{
+  "format": "memomind-native-directory-inventory-v1",
+  "source_sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+  "bytes": 65536,
+  "all_bytes_erased": true,
+  "snapshot_slots": [
+    {
+      "slot": 0,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 1,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 2,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 3,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 4,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 5,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 6,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    },
+    {
+      "slot": 7,
+      "erased_bytes": 8192,
+      "magic": "0xffffffff",
+      "version": 4294967295,
+      "generation_raw": 18446744073709551615,
+      "capacity_raw": 4294967295,
+      "cursor_raw": 4294967295,
+      "crc_stored": "0xffffffff",
+      "crc_computed": "0x2c17087a",
+      "crc_matches": false,
+      "commit": "0xffffffff",
+      "committed": false,
+      "nonerased_journal_slots": []
+    }
+  ],
+  "native_mount_conditional": {
+    "return_code": -1,
+    "read_callbacks": [
+      {
+        "offset": 0,
+        "length": 4088
+      },
+      {
+        "offset": 8188,
+        "length": 4
+      },
+      {
+        "offset": 8192,
+        "length": 4088
+      },
+      {
+        "offset": 16380,
+        "length": 4
+      },
+      {
+        "offset": 16384,
+        "length": 4088
+      },
+      {
+        "offset": 24572,
+        "length": 4
+      },
+      {
+        "offset": 24576,
+        "length": 4088
+      },
+      {
+        "offset": 32764,
+        "length": 4
+      },
+      {
+        "offset": 32768,
+        "length": 4088
+      },
+      {
+        "offset": 40956,
+        "length": 4
+      },
+      {
+        "offset": 40960,
+        "length": 4088
+      },
+      {
+        "offset": 49148,
+        "length": 4
+      },
+      {
+        "offset": 49152,
+        "length": 4088
+      },
+      {
+        "offset": 57340,
+        "length": 4
+      },
+      {
+        "offset": 57344,
+        "length": 4088
+      },
+      {
+        "offset": 65532,
+        "length": 4
+      }
+    ],
+    "instructions": 5738,
+    "max_stack_bytes": 192,
+    "mutating_callbacks": 0,
+    "synthetic_badmap_sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4",
+    "badmap_callback_status": 0
+  },
+  "native_source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "unicorn_version": "2.1.4",
+  "selected_snapshot": null,
+  "classification": "erased-unformatted",
+  "entries": [],
+  "protected_entries": [],
+  "candidate_entries": [],
+  "pending_move": null,
+  "recorded_overlap_last_256k": false,
+  "journal_replay_performed": false,
+  "badmap_acquired": false,
+  "consistent_atomic_snapshot_proven": false,
+  "reservation_established": false,
+  "limitations": [
+    "Native mount executed with synthetic zero badmap, not actual KV0x6009",
+    "Capture is sequential256-byte reads, not atomic",
+    "Payload sectors and live RAM owners not acquired",
+    "No directory entries does not reserve flash; native allocator/reset still owns full partition"
+  ]
+}

@@ -1,0 +1,457 @@
+{
+  "status": "EXPERIMENTAL OFFLINE CANDIDATE \u2014 INSTALLATION BLOCKED",
+  "installable": false,
+  "flashed": false,
+  "blockers": [
+    "Application-independent recovery entry and sector restore are not demonstrated.",
+    "BR23 protection and erase/program behavior are not validated; no writer is provided.",
+    "Input task stack headroom and live critical-section latency need validation.",
+    "Physical button mapping, contact debounce and standby/wake need hardware validation.",
+    "HID coexistence, vendor notifications and real iPhone background/locked delivery are untested."
+  ],
+  "target": "IINE Mini Retro Ananke Gen 2 / Purple, Gray, Cream Yellow / HID BLE",
+  "base_release": "IG05_V0900",
+  "original_flash_sha256": "da281f118ea0e3dc412b2298ce27c1b73a9cf6bca795814708e900a20a9538bc",
+  "oem_application_sha256": "3f4a6bea1e7901188e7c8a202cbe4916d141ec624db66218139d9f98c01762eb",
+  "original_roundtrip_identical": true,
+  "candidate_sha256": "a93b93a788452026e2b155a8797805ef7d1d55be0af1e2eb7fcdd9fda49388d3",
+  "application_sha256": "3f234e58d28903fda3b175297e3d44913c1e7a64919282237343377e4e06f62e",
+  "payload_sha256": "2e47c3fbbb75a2ed3400ad85b40aa8d0d1c308e468c7c7aa13496ff615e52e33",
+  "elf_sha256": "c003dee241fafb4480b1e3e04eb4ac4020dbd6e417cc5ea0a0f1ca9b06640fd1",
+  "payload_bytes": 552,
+  "payload_address": 31796280,
+  "payload_end_exclusive": 31796832,
+  "application_bytes": 343208,
+  "flash_bytes": 1048576,
+  "patches": [
+    {
+      "address": 31457644,
+      "file_offset": 76,
+      "before": "c3ff00d20200",
+      "after": "c3ff80c20000",
+      "purpose": "Secondary BSS destination: reserved heap page"
+    },
+    {
+      "address": 31457652,
+      "file_offset": 84,
+      "before": "c2ff00000000",
+      "after": "c2ff80000000",
+      "purpose": "Zero exactly one reserved page at startup"
+    },
+    {
+      "address": 31601970,
+      "file_offset": 144402,
+      "before": "c6ff70c20000",
+      "after": "c6ff00c30000",
+      "purpose": "Reserve one 128-byte aligned heap page"
+    },
+    {
+      "address": 31603012,
+      "file_offset": 145444,
+      "before": "c1ff4cc5e401",
+      "after": "c1ff602ee501",
+      "purpose": "Extend flash execution upper limit to include payload"
+    },
+    {
+      "address": 31685212,
+      "file_offset": 227644,
+      "before": "43f00004",
+      "after": "43f08004",
+      "purpose": "Input task stack: 1024 to 1152 words"
+    },
+    {
+      "address": 31700406,
+      "file_offset": 242838,
+      "before": "8eea8631",
+      "after": "80ea3fbb",
+      "purpose": "ag_scan_hook"
+    },
+    {
+      "address": 31668308,
+      "file_offset": 210740,
+      "before": "bfea901c",
+      "after": "80ea5efa",
+      "purpose": "ag_ccc_set_hook"
+    },
+    {
+      "address": 31663640,
+      "file_offset": 206072,
+      "before": "bfea1925",
+      "after": "81ea9103",
+      "purpose": "ag_ccc_clear_hook"
+    }
+  ],
+  "code_audit": {
+    "instruction_count": 201,
+    "branches": [
+      {
+        "address": 31796284,
+        "operation": "call",
+        "target": 6342
+      },
+      {
+        "address": 31796288,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796312,
+        "operation": "goto",
+        "target": 31796328
+      },
+      {
+        "address": 31796318,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796326,
+        "operation": "goto",
+        "target": 31796330
+      },
+      {
+        "address": 31796342,
+        "operation": "goto",
+        "target": 31796390
+      },
+      {
+        "address": 31796350,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796354,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796384,
+        "operation": "call",
+        "target": 31796598
+      },
+      {
+        "address": 31796388,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796390,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796410,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796416,
+        "operation": "goto",
+        "target": 31796490
+      },
+      {
+        "address": 31796424,
+        "operation": "goto",
+        "target": 31796490
+      },
+      {
+        "address": 31796436,
+        "operation": "goto",
+        "target": 31796490
+      },
+      {
+        "address": 31796444,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796448,
+        "operation": "goto",
+        "target": 31796490
+      },
+      {
+        "address": 31796468,
+        "operation": "goto",
+        "target": 31796458
+      },
+      {
+        "address": 31796484,
+        "operation": "call",
+        "target": 31550196
+      },
+      {
+        "address": 31796490,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796508,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796518,
+        "operation": "call",
+        "target": 31551864
+      },
+      {
+        "address": 31796538,
+        "operation": "goto",
+        "target": 13624
+      },
+      {
+        "address": 31796546,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796552,
+        "operation": "call",
+        "target": 31551566
+      },
+      {
+        "address": 31796568,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796606,
+        "operation": "goto",
+        "target": 31796642
+      },
+      {
+        "address": 31796608,
+        "operation": "goto",
+        "target": 31796642
+      },
+      {
+        "address": 31796614,
+        "operation": "goto",
+        "target": 31796650
+      },
+      {
+        "address": 31796618,
+        "operation": "goto",
+        "target": 31796650
+      },
+      {
+        "address": 31796624,
+        "operation": "goto",
+        "target": 31796650
+      },
+      {
+        "address": 31796630,
+        "operation": "goto",
+        "target": 31796776
+      },
+      {
+        "address": 31796640,
+        "operation": "goto",
+        "target": 31796822
+      },
+      {
+        "address": 31796648,
+        "operation": "goto",
+        "target": 31796772
+      },
+      {
+        "address": 31796742,
+        "operation": "goto",
+        "target": 31796772
+      },
+      {
+        "address": 31796782,
+        "operation": "goto",
+        "target": 31796802
+      },
+      {
+        "address": 31796822,
+        "operation": "goto",
+        "target": 31796676
+      },
+      {
+        "address": 31796830,
+        "operation": "goto",
+        "target": 31796772
+      }
+    ],
+    "all_payload_bytes_disassembled": true,
+    "direct_targets_on_instruction_boundaries": true,
+    "indirect_call": "ag_stream_poll callback; ag_scan_hook supplies send_packet",
+    "stack_proven": false
+  },
+  "symbols": {
+    "firmware/ananke_v0900.c": 0,
+    "send_packet": 31796398,
+    "firmware/button_stream.c": 0,
+    "stock_ccc_get": 31549912,
+    "stock_att_queue": 31550196,
+    "ag_scan_hook": 31796280,
+    "stock_critical_enter": 33568028,
+    "stock_keys": 31204,
+    "ag_stream_poll": 31796598,
+    "stock_scan": 33560774,
+    "ag_ccc_clear_hook": 31796542,
+    "ag_state": 49792,
+    "stock_connection": 31008,
+    "ag_stream_init": 31796576,
+    "ag_ccc_set_hook": 31796500,
+    "stock_ccc_set": 31551864,
+    "stock_critical_exit": 33568056,
+    "stock_ccc_clear": 31551566
+  },
+  "state": {
+    "address": 49792,
+    "reserved_bytes": 128,
+    "binding_bytes": 96,
+    "initialized_by": "secondary BSS clear"
+  },
+  "input_task_stack": {
+    "before_words": 1024,
+    "after_words": 1152,
+    "word_bytes": 4,
+    "before_bytes": 4096,
+    "after_bytes": 4608,
+    "allocation_trace": [
+      31685212,
+      19882,
+      19432,
+      19442
+    ]
+  },
+  "changed_sectors_4096": [
+    12288,
+    16384,
+    20480,
+    24576,
+    28672,
+    32768,
+    36864,
+    40960,
+    45056,
+    49152,
+    53248,
+    57344,
+    61440,
+    65536,
+    69632,
+    73728,
+    77824,
+    81920,
+    86016,
+    90112,
+    94208,
+    98304,
+    102400,
+    106496,
+    110592,
+    114688,
+    118784,
+    122880,
+    126976,
+    131072,
+    135168,
+    139264,
+    143360,
+    147456,
+    151552,
+    155648,
+    159744,
+    163840,
+    167936,
+    172032,
+    176128,
+    180224,
+    184320,
+    188416,
+    192512,
+    196608,
+    200704,
+    204800,
+    208896,
+    212992,
+    217088,
+    221184,
+    225280,
+    229376,
+    233472,
+    237568,
+    241664,
+    245760,
+    249856,
+    253952,
+    258048,
+    262144,
+    266240,
+    270336,
+    274432,
+    278528,
+    282624,
+    286720,
+    290816,
+    294912,
+    299008,
+    303104,
+    307200,
+    311296,
+    315392,
+    319488,
+    323584,
+    327680,
+    331776,
+    335872,
+    339968,
+    344064,
+    348160,
+    352256
+  ],
+  "first_changed_byte": 12320,
+  "last_changed_byte": 355775,
+  "preservation": "Every byte outside the original used application area; all partition offsets and sizes; cfg_tool payload; stock RAM initializer",
+  "protocol": {
+    "service": "AE40",
+    "characteristic": "AE42",
+    "value_handle": 84,
+    "ccc_handle": 85,
+    "bytes": 8,
+    "format": "47 02 sequence flags keys32LE"
+  },
+  "sources": {
+    "firmware/ananke_v0900.c": "9434ff61ee69e41ea0bf6f4410bd8a9d83970cbfbe31422ed72e8c895e439476",
+    "firmware/ananke_v0900.ld": "d8469cd90b47a8ce1876171431f4398ed43387d30a3f0e4436ed26a137947d6d",
+    "firmware/button_stream.c": "1dc78587fb7566ce1b126d3094ab9f91b0a47fd80d422088eba21da804dea812",
+    "firmware/button_stream.h": "57b1c6e6ca75420c1e44d66a01ea603f4c7e13144a01be68d2d81c56a6c54b04",
+    "research/build_candidate.py": "65672ade53ff456840a760530684aa60e0def5a948bed07539b98dc7b507d009",
+    "scripts/build-candidate.sh": "8e7902000413668474da2fcd96d673ccc2d4ecdf8f36f4042f9081a0082f2195",
+    "scripts/pi32v2-tool.sh": "4786f792511af59782e231eb77aba0d5f34a7e5577478da535d10242ac63672d"
+  },
+  "cipher_source_sha256": "3e6112cf8171b6dcbbed738a8c57beda2559fd2bdf8c6e95b995e8a0d124c1f4",
+  "validation": {
+    "python_tests": 49,
+    "sanitized_binding_tests_pass": true,
+    "sanitized_stream_tests_pass": true,
+    "reproducible_build": true,
+    "independent_unpack": {
+      "files/app.bin": {
+        "sha256": "3f234e58d28903fda3b175297e3d44913c1e7a64919282237343377e4e06f62e",
+        "matches_expected": true
+      },
+      "files/cfg_tool.bin": {
+        "sha256": "21334ccee5588a3e72bd871ce0cc3eb2ad3c333f79927842279855fed87f1ec8",
+        "matches_expected": true
+      },
+      "top/uboot.boot": {
+        "sha256": "b319dbb4e8ad85c39a68e4aea6f078bcdc25bfde21af6fdc3a49e47073fb6d30",
+        "matches_expected": true
+      },
+      "top/isd_config.ini": {
+        "sha256": "3828b68b451df8ddd2dc987a7e15517d32bb5f9e4f0e1e126760571a8ebc888e",
+        "matches_expected": true
+      }
+    }
+  },
+  "supersedes": {
+    "candidate_sha256": "ccf72e6fa222bc2b486475dea623c5e70ce975862abb6dddf919b53d73cea5b3",
+    "reason": "Disconnect hook return-value bug; unguarded readiness/send window."
+  }
+}

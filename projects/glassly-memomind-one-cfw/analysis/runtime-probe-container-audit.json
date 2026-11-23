@@ -1,0 +1,128 @@
+{
+  "format": "memomind-runtime-probe-container-audit-v1",
+  "offline_only": true,
+  "candidate_modified": false,
+  "device_actions": false,
+  "source_path": "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+  "candidate_path": "captures/firmware/runtime-probe-001/firmware.bin",
+  "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+  "candidate_sha256": "775ad2376a7231b8929fa31880d52074dede507530f1b2edd55adeeef5364ed7",
+  "source_bytes": 2185415,
+  "candidate_bytes": 2185578,
+  "blob_sha256": "217431d6b0b8c7b6c5dc9f31d13e761938acd2a9e8b02de8ff4c1d38de89ba2c",
+  "blob_bytes": 208,
+  "manifest_and_verification_match_actual_bytes": true,
+  "independent_native_table_walk_and_crc_validation": true,
+  "independent_decompression_validation": true,
+  "independent_reconstruction_matches_candidate": true,
+  "hook": {
+    "xip_address": "0x42e82e0",
+    "body_offset": 1036992,
+    "before": "b7472e0493870768",
+    "after": "b7c73904938707ea",
+    "permitted_edit_bytes": 8,
+    "actual_changed_prefix_offsets": [
+      1036993,
+      1036994,
+      1036999
+    ],
+    "actual_changed_prefix_offsets_hex": [
+      "0xfd2c1",
+      "0xfd2c2",
+      "0xfd2c7"
+    ],
+    "all_other_original_body_bytes_identical": true,
+    "following_callback_store_bytes_preserved": true
+  },
+  "append": {
+    "original_body_end": 1773176,
+    "padding_bytes": 8,
+    "padding_all_zero": true,
+    "payload_body_offset": 1773184,
+    "payload_xip_start": "0x0439bea0",
+    "payload_xip_end_exclusive": "0x439bf70",
+    "payload_matches_both_blob_files": true,
+    "final_body_bytes": 1773392
+  },
+  "verified_text_patch_preserved": true,
+  "changed_app_header_word_indices": [
+    1,
+    4
+  ],
+  "changed_metadata_byte_offsets": [
+    76,
+    77
+  ],
+  "metadata_only_app_body_size_changed": true,
+  "partition_start_load_allocation_unchanged": true,
+  "container_header_changed_offsets": [
+    8,
+    9,
+    14,
+    15,
+    16,
+    17,
+    38,
+    82,
+    83,
+    86,
+    87,
+    146,
+    147,
+    148,
+    149
+  ],
+  "unchanged_streams": [
+    {
+      "index": 1,
+      "raw_and_packed_identical": true,
+      "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+      "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+    },
+    {
+      "index": 2,
+      "raw_and_packed_identical": true,
+      "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+      "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+    },
+    {
+      "index": 4,
+      "raw_and_packed_identical": true,
+      "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+      "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+    },
+    {
+      "index": 5,
+      "raw_and_packed_identical": true,
+      "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+      "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+    },
+    {
+      "index": 6,
+      "raw_and_packed_identical": true,
+      "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+      "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+    }
+  ],
+  "bounds": {
+    "app_allocation": 2097152,
+    "app_raw_bytes": 1773424,
+    "app_free_bytes": 323728,
+    "staging_capacity": 2482176,
+    "staged_payload_bytes": 2185560,
+    "staged_payload_rounded4096": 2187264,
+    "staging_headroom": 296616,
+    "all_pass": true
+  },
+  "crc32": {
+    "outer_payload": "5e63d43f",
+    "compression_table": "c7036d9f",
+    "compressed_streams": "0f3dd58c",
+    "app_body": "20e91dfb",
+    "all_components_verified": true
+  },
+  "limitations": [
+    "This audit establishes exact container changes and integrity, not runtime instruction semantics or response correctness.",
+    "Boot handling of image growth, executable hook safety and recovery are assessed separately."
+  ]
+}

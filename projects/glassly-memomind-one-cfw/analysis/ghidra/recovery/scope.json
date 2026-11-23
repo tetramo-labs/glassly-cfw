@@ -1,0 +1,214 @@
+{
+  "search_boundary": "All six validated decompressed component body files: ASCII printable runs of at least five bytes; Ghidra code references followed only in application component3. Existing mapped app project; no ROM, bootloader dump, live RAM, or other component code analysis. Not an exhaustive crypto/control-flow audit.",
+  "files": [
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-1.body.bin",
+      "bytes": 909644,
+      "sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f"
+    },
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-2.body.bin",
+      "bytes": 695480,
+      "sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea"
+    },
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+      "bytes": 1773176,
+      "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8"
+    },
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-4.body.bin",
+      "bytes": 284268,
+      "sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262"
+    },
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-5.body.bin",
+      "bytes": 3584,
+      "sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57"
+    },
+    {
+      "file": "analysis/extracted/validated-1.0.3.127/segment-6.body.bin",
+      "bytes": 81562,
+      "sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e"
+    }
+  ],
+  "specific_keyword_hits": {
+    "bootloader": [],
+    "dfu": [],
+    "download_mode": [],
+    "authentication": []
+  },
+  "exported_functions": [
+    {
+      "requested": "0434c3e0",
+      "address": "ram:0434c3e0",
+      "incoming_references": [
+        "ram:0434c446 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0431684e",
+      "address": "ram:0431684e",
+      "incoming_references": [
+        "ram:04316980 UNCONDITIONAL_CALL",
+        "ram:043169f2 UNCONDITIONAL_CALL",
+        "ram:04316952 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0422b280",
+      "address": "ram:0422b280",
+      "incoming_references": [
+        "ram:041fcad8 UNCONDITIONAL_CALL",
+        "ram:0422b2e0 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "04325706",
+      "address": "ram:04325706",
+      "incoming_references": [
+        "ram:0434c5a6 UNCONDITIONAL_CALL",
+        "ram:0434c482 UNCONDITIONAL_CALL",
+        "ram:0434c4a2 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "04325714",
+      "address": "ram:04325714",
+      "incoming_references": [
+        "ram:0434c45a UNCONDITIONAL_CALL",
+        "ram:0434c48e UNCONDITIONAL_CALL",
+        "ram:0434c500 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "043323fa",
+      "address": "ram:043323fa",
+      "incoming_references": [
+        "ram:043241be UNCONDITIONAL_CALL",
+        "ram:043240a8 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0423eb7e",
+      "address": "ram:0423eb7e",
+      "incoming_references": [
+        "ram:0423b924 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "041fc9cc",
+      "address": "ram:041fc9cc",
+      "incoming_references": [
+        "ram:041fca7a UNCONDITIONAL_CALL",
+        "ram:04243994 UNCONDITIONAL_CALL",
+        "ram:0425bc0a UNCONDITIONAL_CALL",
+        "ram:04260188 UNCONDITIONAL_CALL",
+        "ram:0422451e UNCONDITIONAL_CALL",
+        "ram:04272ff0 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "041fc12c",
+      "address": "ram:041fc12c",
+      "incoming_references": [
+        "ram:041fca3e UNCONDITIONAL_CALL",
+        "ram:041fca7e UNCONDITIONAL_CALL",
+        "ram:041fca6a UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "041fca6e",
+      "address": "ram:041fca6e",
+      "incoming_references": [
+        "ram:0424bab6 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "042e4a5e",
+      "address": "ram:042e4a5e",
+      "incoming_references": [
+        "ram:042e82d4 DATA"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "042e4c26",
+      "address": "ram:042e4c26",
+      "incoming_references": [
+        "ram:042e82ca DATA"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0424ba34",
+      "address": "ram:0424ba34",
+      "incoming_references": [
+        "ram:041fb3a2 PARAM"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0434c44a",
+      "address": "ram:0434c44a",
+      "incoming_references": [
+        "ram:0429b154 UNCONDITIONAL_CALL",
+        "ram:0434c404 UNCONDITIONAL_CALL",
+        "ram:0429abb6 UNCONDITIONAL_CALL",
+        "ram:0429b24e UNCONDITIONAL_CALL",
+        "ram:0429b0cc UNCONDITIONAL_CALL",
+        "ram:04213b3e COMPUTED_CALL",
+        "ram:04213c56 COMPUTED_CALL",
+        "ram:042428b4 COMPUTED_CALL",
+        "ram:04241cb0 COMPUTED_CALL",
+        "ram:04241b5e COMPUTED_CALL",
+        "ram:04241c66 COMPUTED_CALL",
+        "ram:042417e4 COMPUTED_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "0434c486",
+      "address": "ram:0434c486",
+      "incoming_references": [
+        "ram:0434c406 UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    },
+    {
+      "requested": "043241aa",
+      "address": "ram:043241aa",
+      "incoming_references": [
+        "ram:0434c40a UNCONDITIONAL_CALL"
+      ],
+      "completed": true,
+      "error": ""
+    }
+  ],
+  "function_count": 16
+}

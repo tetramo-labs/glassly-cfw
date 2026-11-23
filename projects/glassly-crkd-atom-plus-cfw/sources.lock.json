@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "updated": "2026-11-09",
+  "target": "CRKD ATOM+ / Atom Plus",
+  "downloaded_artifacts": [
+    {
+      "path": "research/downloads/crkd-android-20261109/apks/base.apk",
+      "kind": "installed-android-apk",
+      "origin": {
+        "package": "com.crkd_app",
+        "version_name": "1.0.365",
+        "version_code": 365,
+        "method": "adb pull from user-connected phone"
+      },
+      "size_bytes": 23358007,
+      "sha256": "f0737abd290f2c19c880fd3d3160d0089ce986f5bb09aafaad6ab1b8cd0ece2d",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09"
+    },
+    {
+      "path": "research/downloads/crkd-android-20261109/apks/split_config.arm64_v8a.apk",
+      "kind": "installed-android-apk",
+      "origin": {
+        "package": "com.crkd_app",
+        "version_name": "1.0.365",
+        "version_code": 365,
+        "method": "adb pull from user-connected phone"
+      },
+      "size_bytes": 21989912,
+      "sha256": "5c6f81514288d85af929d00bf25bea137f8b89a7c8515d522d38d5c2153b816e",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09"
+    },
+    {
+      "path": "research/downloads/crkd-android-20261109/apks/split_config.en.apk",
+      "kind": "installed-android-apk",
+      "origin": {
+        "package": "com.crkd_app",
+        "version_name": "1.0.365",
+        "version_code": 365,
+        "method": "adb pull from user-connected phone"
+      },
+      "size_bytes": 57753,
+      "sha256": "2b91ef26c607a9d0d688a1a0c3323c0f1f5489802f721bd333b2ce0fd0f1516d",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09"
+    },
+    {
+      "path": "research/downloads/crkd-android-20261109/apks/split_config.xxhdpi.apk",
+      "kind": "installed-android-apk",
+      "origin": {
+        "package": "com.crkd_app",
+        "version_name": "1.0.365",
+        "version_code": 365,
+        "method": "adb pull from user-connected phone"
+      },
+      "size_bytes": 180545,
+      "sha256": "a52d25b208424c84776dd998c9f441446ec5437d6fbf7382f3608492a46f9f58",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09"
+    },
+    {
+      "path": "research/downloads/crkd-android-20261109/unpacked/base/assets/index.android.bundle",
+      "kind": "hermes-bytecode",
+      "origin": {
+        "apk_sha256": "f0737abd290f2c19c880fd3d3160d0089ce986f5bb09aafaad6ab1b8cd0ece2d",
+        "entry": "assets/index.android.bundle"
+      },
+      "size_bytes": 8087708,
+      "sha256": "86190fc07fa202f8cc941e881014137010d9c00b6d74d26c0159993f0c780dca",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09",
+      "bytecode_version": 98
+    },
+    {
+      "path": "research/downloads/crkd-android-20261109/firmware-catalog.json",
+      "kind": "firmware-catalog",
+      "origin": {
+        "url": "https://api.crkd.gg/device/firmware",
+        "authentication": "none"
+      },
+      "size_bytes": 12240,
+      "sha256": "079cfcdf66b79158016e8c277c380e83f54f22ee0c40d30bfd7dd26086c344e2",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09"
+    },
+    {
+      "path": "research/downloads/atom-plus-firmware/20260814.bin",
+      "kind": "oem-firmware",
+      "origin": {
+        "url": "https://a.crkd.gg/firmware_release/ATOM_PLUS/20260814.bin",
+        "catalog_key": "ATOM_PLUS"
+      },
+      "size_bytes": 400976,
+      "sha256": "c2e4bb56fcfcb6f5df1cea18412798453e307bfb7dadec0d800103d846db9657",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09",
+      "display_version": "v1.1.0",
+      "internal_version": "0260814a",
+      "audience": [
+        "beta"
+      ]
+    },
+    {
+      "path": "research/downloads/atom-plus-firmware/20260723.bin",
+      "kind": "oem-firmware",
+      "origin": {
+        "url": "https://a.crkd.gg/firmware_release/ATOM_PLUS/20260723.bin",
+        "catalog_key": "ATOM_PLUS"
+      },
+      "size_bytes": 400540,
+      "sha256": "aacf0a5bc5acf37977aeb2d981ba2eef31a7559203d6b220ce2a6231b4b89657",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09",
+      "display_version": "v1.0.0",
+      "internal_version": "0260723a",
+      "audience": [
+        "beta",
+        "all"
+      ]
+    },
+    {
+      "path": "research/downloads/atom-plus-firmware/20260912.bin",
+      "kind": "oem-firmware",
+      "origin": {
+        "url": "https://a.crkd.gg/firmware_release/ATOM_PLUS/20260912.bin",
+        "catalog_key": "ATOM_PLUS"
+      },
+      "size_bytes": 430188,
+      "sha256": "e441148066aa94c0bd1744ed2d0d3841f3aaff9811f7d6b2603df2bf9ba6d74e",
+      "status": "downloaded-and-hashed",
+      "retrieved": "2026-11-09",
+      "display_version": "v1.1.0",
+      "internal_version": "0260912a",
+      "audience": [
+        "beta"
+      ]
+    }
+  ],
+  "web_sources": [
+    {
+      "url": "https://crkd.gg/pages/atom-plus-gaming-controller",
+      "kind": "vendor-product",
+      "status": "page-read"
+    },
+    {
+      "url": "https://crkd.gg/pages/firmware",
+      "kind": "vendor-firmware-index",
+      "status": "page-read-no-atom-plus-download-listed"
+    },
+    {
+      "url": "https://crkd.gg/pages/quickstart",
+      "kind": "vendor-manual-index",
+      "status": "page-read-atom-link-not-confirmed-as-plus"
+    },
+    {
+      "url": "https://fccid.io/2BAXLCK26AP",
+      "kind": "regulatory-mirror-index",
+      "status": "metadata-read"
+    }
+  ],
+  "artifact_leads": [
+    {
+      "name": "ATOM PLUS internal photos",
+      "exhibit_id": "9516807",
+      "url": "https://fccid.io/2BAXLCK26AP/Internal-Photos/Internal-Photos-9516807",
+      "status": "metadata-only-pdf-not-downloaded",
+      "reported_size_bytes": 1407125,
+      "reported_sha256": "65d23a0a83f0e06ad8641f65882fd5441233d38b85b5713ff068935c0f5e4fdc",
+      "verified_sha256": null
+    },
+    {
+      "name": "ATOM PLUS user manual",
+      "exhibit_id": "9516813",
+      "url": "https://fccid.io/2BAXLCK26AP/User-Manual/Users-Manual-9516813",
+      "status": "metadata-only-pdf-not-downloaded",
+      "reported_size_bytes": 1417904,
+      "reported_sha256": "f313240440a1cc1f78c957505400f2522d041c80464f1a98e5d9d87f652cf096",
+      "verified_sha256": null
+    }
+  ],
+  "analysis_tools": [
+    {
+      "name": "jadx",
+      "version": "1.5.6",
+      "status": "completed-with-errors",
+      "exit_code": 3,
+      "reported_errors": 51
+    },
+    {
+      "name": "hermes-dec",
+      "version": "0.1.8",
+      "repository": "https://github.com/P1sec/hermes-dec",
+      "commit": "2e796663e1fedb93dca51060797ebf3327b3fedb",
+      "disassembly_exit_code": 0,
+      "decompilation_exit_code": 0,
+      "warning": "v98 is not formally supported; pseudocode contains reconstruction warnings"
+    }
+  ]
+}

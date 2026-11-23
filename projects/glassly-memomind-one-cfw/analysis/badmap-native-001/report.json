@@ -1,0 +1,847 @@
+{
+  "format": "memomind-native-badmap-acquisition-emulation-v1",
+  "passed": true,
+  "all_passed": true,
+  "cases": [
+    {
+      "return": 7,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 129,
+      "getter_calls": 1,
+      "kv_memory_reads": 896,
+      "instructions": 9819,
+      "max_stack_bytes": 128,
+      "scratch_writes": 788,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter absent mode1",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 129,
+      "getter_calls": 1,
+      "kv_memory_reads": 896,
+      "instructions": 9898,
+      "max_stack_bytes": 272,
+      "scratch_writes": 817,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader absent zero map mode1",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 116,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 266,
+      "max_stack_bytes": 128,
+      "scratch_writes": 51,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter present () mode1",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 10584,
+      "max_stack_bytes": 272,
+      "scratch_writes": 83,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader preserves full physical map () mode1",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 116,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 266,
+      "max_stack_bytes": 128,
+      "scratch_writes": 51,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter present (16, 511, 512, 767) mode1",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 10584,
+      "max_stack_bytes": 272,
+      "scratch_writes": 83,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader preserves full physical map (16, 511, 512, 767) mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 7292,
+      "max_stack_bytes": 272,
+      "scratch_writes": 58,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "directory badbit(0,) mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 7457,
+      "max_stack_bytes": 272,
+      "scratch_writes": 58,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "directory badbit(15,) mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 300,
+      "max_stack_bytes": 272,
+      "scratch_writes": 56,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects magic mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 303,
+      "max_stack_bytes": 272,
+      "scratch_writes": 56,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects version mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 306,
+      "max_stack_bytes": 272,
+      "scratch_writes": 56,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects base mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 309,
+      "max_stack_bytes": 272,
+      "scratch_writes": 56,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects reduced logical size mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 42,
+      "instructions": 305,
+      "max_stack_bytes": 272,
+      "scratch_writes": 58,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects short mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 9,
+      "instructions": 172,
+      "max_stack_bytes": 272,
+      "scratch_writes": 25,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects long mode1",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 7269,
+      "max_stack_bytes": 272,
+      "scratch_writes": 57,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects CRC mode1",
+      "passed": true
+    },
+    {
+      "return": 4,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 5,
+      "instructions": 108,
+      "max_stack_bytes": 128,
+      "scratch_writes": 20,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "corrupt KV header mode1",
+      "passed": true
+    },
+    {
+      "return": 7,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 129,
+      "getter_calls": 1,
+      "kv_memory_reads": 896,
+      "instructions": 9819,
+      "max_stack_bytes": 128,
+      "scratch_writes": 788,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter absent mode2",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 129,
+      "getter_calls": 1,
+      "kv_memory_reads": 896,
+      "instructions": 9898,
+      "max_stack_bytes": 272,
+      "scratch_writes": 817,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader absent zero map mode2",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 116,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1119,
+      "max_stack_bytes": 128,
+      "scratch_writes": 54,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter present () mode2",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 11437,
+      "max_stack_bytes": 272,
+      "scratch_writes": 86,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader preserves full physical map () mode2",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 116,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1119,
+      "max_stack_bytes": 128,
+      "scratch_writes": 54,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter present (16, 511, 512, 767) mode2",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 11437,
+      "max_stack_bytes": 272,
+      "scratch_writes": 86,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader preserves full physical map (16, 511, 512, 767) mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 8145,
+      "max_stack_bytes": 272,
+      "scratch_writes": 61,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "directory badbit(0,) mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 8310,
+      "max_stack_bytes": 272,
+      "scratch_writes": 61,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "directory badbit(15,) mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1153,
+      "max_stack_bytes": 272,
+      "scratch_writes": 59,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects magic mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1156,
+      "max_stack_bytes": 272,
+      "scratch_writes": 59,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects version mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1159,
+      "max_stack_bytes": 272,
+      "scratch_writes": 59,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects base mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 1162,
+      "max_stack_bytes": 272,
+      "scratch_writes": 59,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects reduced logical size mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 161,
+      "instructions": 1151,
+      "max_stack_bytes": 272,
+      "scratch_writes": 61,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects short mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 12,
+      "instructions": 183,
+      "max_stack_bytes": 272,
+      "scratch_writes": 25,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects long mode2",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 160,
+      "instructions": 8122,
+      "max_stack_bytes": 272,
+      "scratch_writes": 60,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader rejects CRC mode2",
+      "passed": true
+    },
+    {
+      "return": 4,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 5,
+      "instructions": 108,
+      "max_stack_bytes": 128,
+      "scratch_writes": 20,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "corrupt KV header mode2",
+      "passed": true
+    },
+    {
+      "return": 4,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 129,
+      "instructions": 1001,
+      "max_stack_bytes": 128,
+      "scratch_writes": 23,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "KV mode2 payload integrity error",
+      "passed": true
+    },
+    {
+      "return": 0,
+      "actual_length": 116,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 40,
+      "instructions": 266,
+      "max_stack_bytes": 128,
+      "scratch_writes": 51,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "KV mode1 invalid badmap is still copied",
+      "passed": true
+    },
+    {
+      "return": 7,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 129,
+      "getter_calls": 1,
+      "kv_memory_reads": 899,
+      "instructions": 9841,
+      "max_stack_bytes": 128,
+      "scratch_writes": 788,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "different key absent",
+      "passed": true
+    },
+    {
+      "return": 2,
+      "actual_length": 0,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 1,
+      "kv_memory_reads": 0,
+      "instructions": 45,
+      "max_stack_bytes": 64,
+      "scratch_writes": 14,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter uninitialized",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 1,
+      "kv_memory_reads": 0,
+      "instructions": 72,
+      "max_stack_bytes": 208,
+      "scratch_writes": 19,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader uninitialized fails not absent",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 0,
+      "kv_memory_reads": 0,
+      "instructions": 4,
+      "max_stack_bytes": 0,
+      "scratch_writes": 0,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader null output",
+      "passed": true
+    },
+    {
+      "return": -1,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 0,
+      "kv_memory_reads": 0,
+      "instructions": 6,
+      "max_stack_bytes": 0,
+      "scratch_writes": 0,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "loader wrong map length",
+      "passed": true
+    },
+    {
+      "return": 13,
+      "actual_length": 0,
+      "locks": [
+        "take",
+        "give"
+      ],
+      "iterator_calls": 1,
+      "getter_calls": 1,
+      "kv_memory_reads": 9,
+      "instructions": 145,
+      "max_stack_bytes": 128,
+      "scratch_writes": 20,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter short capacity",
+      "passed": true
+    },
+    {
+      "return": 13,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 1,
+      "kv_memory_reads": 0,
+      "instructions": 39,
+      "max_stack_bytes": 64,
+      "scratch_writes": 13,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter zero capacity",
+      "passed": true
+    },
+    {
+      "return": 13,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 1,
+      "kv_memory_reads": 0,
+      "instructions": 34,
+      "max_stack_bytes": 64,
+      "scratch_writes": 13,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter null output",
+      "passed": true
+    },
+    {
+      "return": 13,
+      "actual_length": 3435973836,
+      "locks": [],
+      "iterator_calls": 0,
+      "getter_calls": 1,
+      "kv_memory_reads": 0,
+      "instructions": 37,
+      "max_stack_bytes": 64,
+      "scratch_writes": 13,
+      "allocations": 0,
+      "flash_mutations": 0,
+      "native_init_calls": 0,
+      "name": "getter null length output",
+      "passed": true
+    }
+  ],
+  "case_count": 43,
+  "expected_cases": 43,
+  "command": [
+    "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/bin/python",
+    "tests/rv32/badmap_acquisition_emulator_test.py",
+    "--output",
+    "analysis/badmap-native-001"
+  ],
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "provenance": {
+    "analysis/extracted/validated-1.0.3.127/segment-3.body.bin": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "analysis/ghidra/badmap-acquisition-review/emulate.py": "f6f535620bc0db3bef69af894e03753f53caa368124ce2a6d3daf4dc2d148659",
+    "analysis/ghidra/badmap-acquisition-review/emulation.json": "963ff194c310b57816c3b2f9fa24cdf9a62ad652632aa214d0554e9b66d19508",
+    "tests/rv32/badmap_acquisition_emulator_test.py": "0b85f45acbd61935b773e99595418bd6810a7accb4a620b4b6b95427da42a261"
+  },
+  "device_actions": false,
+  "native_image_output_written": false,
+  "actual_native_executed": [
+    "04235032 KV getter",
+    "0423463e sector iteration",
+    "04235554 cached KV base",
+    "042a9d0a badmap loader",
+    "042a9c84 CRC32",
+    "042a9cca physical bitmap validator",
+    "0434cc64/0434cc3a KV CRC8",
+    "native memcpy/memset"
+  ],
+  "mocked": [
+    "RTOS mutex take/give; exact order checked",
+    "synthetic KV pages and initialized globals"
+  ],
+  "limitations": [
+    "No real badmap acquired",
+    "No actual mutex contention/RTOS scheduling/XIP hardware tested",
+    "Known initialized base used; initializer/repair/write paths forbidden",
+    "No proof of cancellation or worst-case native interrupt stack"
+  ],
+  "unicorn": "2.1.4",
+  "max_stack_bytes": 272,
+  "original_predicates_and_case_inventory_preserved": true,
+  "baseline_results_identical": true,
+  "allocations": 0,
+  "flash_mutations": 0,
+  "global_state_writes": 0
+}

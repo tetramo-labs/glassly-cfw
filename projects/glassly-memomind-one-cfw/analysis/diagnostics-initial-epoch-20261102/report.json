@@ -1,0 +1,179 @@
+{
+  "format": "memomind-initial-epoch-rv32-v1",
+  "passed": true,
+  "runtime": "runtime/build/diagnostic-commands-001/graphics.bin",
+  "blob_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+  "build_manifest_sha256": "ae28e01fc5933905c3c830b64f595c1b7dde197af546c6c2dbec24cf311e5d91",
+  "actual_rv32_execution": true,
+  "unicorn_version": "2.1.4",
+  "native_clock_and_external_APIs_mocked": true,
+  "device_actions": false,
+  "production_or_test_edits": false,
+  "source_drift": [],
+  "reproduction_script": "analysis/diagnostics-initial-epoch-20261102/reproduce.py",
+  "reproduction_script_sha256": "76625017390d1546101834bbc8c75a80df79fc46881ccad6e83a11cc7e6de806",
+  "command": [
+    ".tools/rv32-tests-venv/bin/python",
+    "analysis/diagnostics-initial-epoch-20261102/reproduce.py",
+    "--report",
+    "analysis/diagnostics-initial-epoch-20261102/report.json"
+  ],
+  "rows": [
+    {
+      "native_tick_mock": 0,
+      "folded_seed": 1,
+      "initial_saved_epoch": 0,
+      "first_reset_reply": 2,
+      "snapshot_after_first_reset": 0,
+      "saved_after_cleanup": 3,
+      "second_zero_reset_reply": 4,
+      "snapshot_after_second_reset": 3,
+      "handler_calls": 19,
+      "instructions": 1185049
+    },
+    {
+      "native_tick_mock": 33148,
+      "folded_seed": 33148,
+      "initial_saved_epoch": 0,
+      "first_reset_reply": 33149,
+      "snapshot_after_first_reset": 0,
+      "saved_after_cleanup": 33150,
+      "second_zero_reset_reply": 33151,
+      "snapshot_after_second_reset": 33150,
+      "handler_calls": 19,
+      "instructions": 1185050
+    },
+    {
+      "native_tick_mock": 65535,
+      "folded_seed": 65535,
+      "initial_saved_epoch": 0,
+      "first_reset_reply": 1,
+      "snapshot_after_first_reset": 0,
+      "saved_after_cleanup": 2,
+      "second_zero_reset_reply": 3,
+      "snapshot_after_second_reset": 2,
+      "handler_calls": 19,
+      "instructions": 1185052
+    },
+    {
+      "native_tick_mock": 305419896,
+      "folded_seed": 17484,
+      "initial_saved_epoch": 0,
+      "first_reset_reply": 17485,
+      "snapshot_after_first_reset": 0,
+      "saved_after_cleanup": 17486,
+      "second_zero_reset_reply": 17487,
+      "snapshot_after_second_reset": 17486,
+      "handler_calls": 19,
+      "instructions": 1185050
+    }
+  ],
+  "source_witnesses": [
+    {
+      "path": "runtime/portable/scene_cache.inc",
+      "sha256": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+      "excerpts": [
+        {
+          "first_line": 221,
+          "last_line": 235,
+          "text": "static uint16_t cfw_cache_epoch(customCfwContext *ctx) {\n    if (ctx->cache_epoch == 0) {\n        uint32_t t = mm_scene_now(ctx);\n        ctx->cache_epoch = (uint16_t)((t ^ (t >> 16)) & 0xffffu);\n        if (ctx->cache_epoch == 0) ctx->cache_epoch = 1;\n    }\n    return ctx->cache_epoch;\n}\n\nstatic void cfw_cache_next_epoch(customCfwContext *ctx) {\n    uint16_t e = (uint16_t)(cfw_cache_epoch(ctx) + 1u);\n    ctx->cache_epoch = e ? e : 1u;\n}\n\n#ifdef MM_SCENE_EXTERNAL_STORE"
+        },
+        {
+          "first_line": 240,
+          "last_line": 253,
+          "text": "static cfw_cache *cfw_cache_get(customCfwContext *ctx) {\n    cfw_cache *sc = cfw_cache_peek(ctx);\n    if (sc) return sc;\n    sc = (cfw_cache *)mm_scene_allocate(ctx, MM_SCENE_PERSISTENT, sizeof(cfw_cache));      /* EvenHub heap, next to the store */\n    if (sc == 0) return 0;\n    bzero((uint8_t *)sc, sizeof(cfw_cache));\n    sc->magic = CFW_CACHE_MAGIC;\n    sc->owner = ctx;\n    sc->period_ms = CFW_SCENE_DEFAULT_PERIOD;\n    sc->store_bytes = MM_STORE_READY(ctx) ? ctx->texture_cache_size : 0;\n    ctx->scene = sc;\n    (void)cfw_cache_epoch(ctx);\n    return sc;\n}"
+        },
+        {
+          "first_line": 439,
+          "last_line": 446,
+          "text": "    }\n    if (ctx == 0 || mode < 37 || mode > 41 || mode == 40) return;\n    cfw_cache_reap(ctx);\n    if (!mm_scene_lease(ctx)) return;\n    cfw_cache *sc = cfw_cache_get(ctx);\n    if (sc == 0) return;\n    (void)cfw_cache_store(ctx);                 /* RESET reports the size the heap gave */\n    if (mode == 37 || mode == 38) {"
+        },
+        {
+          "first_line": 1934,
+          "last_line": 1955,
+          "text": "    sc->store_bytes = store_bytes;\n    if (epoch) ctx->cache_epoch = epoch;\n    else cfw_cache_next_epoch(ctx);\n}\n\nstatic int cfw_cache_control(customCfwContext *ctx, const uint8_t *src, uint32_t srclen) {\n    uint16_t epoch, request;\n    if (cfw_cache_prologue(ctx, src, srclen, &epoch, &request)) return -1;\n    if (srclen < 5u) return -1;\n    uint8_t sub = src[4];\n    cfw_cache *sc = cfw_cache_peek(ctx);\n    if (sub == 0) {\n        if (srclen >= 6u && src[5] > ctx->cache_reply_cap + CFW_REPLY_HDR_SIZE) {\n            mm_scene_reply_capacity_hint(ctx, src[5]);\n            ctx->cache_reply_cap = (uint8_t)(src[5] - CFW_REPLY_HDR_SIZE);\n        }\n        if (sc == 0) { cfw_reply_simple(ctx, 41, request, CFW_CACHE_REPLY_CAPACITY, 0, 0); return 0; }\n        cfw_cache_reset(ctx, sc, epoch);\n        /* APPLIED extra: [evicted][store KiB:u16] so the phone can size its mirror */\n        uint32_t cap;\n        uint8_t *x = cfw_reply_begin(ctx, 41, request, CFW_CACHE_REPLY_APPLIED, sc, &cap);\n        if (x && cap >= 3u) {"
+        }
+      ]
+    },
+    {
+      "path": "runtime/portable/scene.c",
+      "sha256": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+      "excerpts": [
+        {
+          "first_line": 19,
+          "last_line": 19,
+          "text": "static uint32_t mm_scene_now(mm_scene_context *ctx) {return ctx->platform.now_ms(ctx->platform.user);}"
+        },
+        {
+          "first_line": 163,
+          "last_line": 168,
+          "text": "int mm_scene_init(mm_scene_context *ctx,const mm_scene_platform *p,uint32_t limit) {\n    if(!ctx || !p || !p->allocate || !p->deallocate || !p->now_ms || !p->lease_active || !p->shadow ||\n       limit<MM_SCENE_MIN_STORE || limit>MM_SCENE_MAX_STORE)return -1;\n    if(mm_scene_overlap(ctx,sizeof(*ctx),p,sizeof(*p)))return -1;\n    bzero((uint8_t *)ctx,sizeof(*ctx));mm_scene_memcpy(&ctx->platform,p,sizeof(*p));ctx->store_limit=limit;ctx->magic=MM_SCENE_MAGIC;return 0;\n}"
+        }
+      ]
+    },
+    {
+      "path": "runtime/graphics/scene_session.c",
+      "sha256": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+      "excerpts": [
+        {
+          "first_line": 40,
+          "last_line": 42,
+          "text": "static uint32_t now(void *user) {\n    mm_scene_session *s=user;return s->hooks.now_ms(s->hooks.user);\n}"
+        }
+      ]
+    },
+    {
+      "path": "runtime/graphics/graphics.c",
+      "sha256": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+      "excerpts": [
+        {
+          "first_line": 141,
+          "last_line": 141,
+          "text": "static uint32_t scene_now(void *user) {(void)user;return P.now();}"
+        },
+        {
+          "first_line": 187,
+          "last_line": 193,
+          "text": "    };\n#ifdef MM_DIAGNOSTIC_COMMANDS\n    int rc=mm_scene_session_init(&o->scene,&hooks,&target,MM_SCENE_SESSION_BUDGET,\n        MM_SCENE_SESSION_HEADROOM,MM_SCENE_MIN_STORE);\n    if(!rc)o->scene.core.cache_epoch=mm_diagnostics_epoch(o->parent);\n    return rc;\n#else"
+        },
+        {
+          "first_line": 382,
+          "last_line": 389,
+          "text": "            result=scene_response?ok:no_memory;\n        }else if((data[0]&127u)==11){\n            uint16_t epoch=0;\n            if(o && o->scene.initialized){mm_scene_session_dispose(&o->scene);epoch=o->scene.core.cache_epoch;}\n            mm_diagnostics_cleanup(parent,epoch);\n#ifdef MM_GRAPHICS_INPUT\n            glassly_input_cleanup(parent);\n#endif"
+        }
+      ]
+    },
+    {
+      "path": "runtime/graphics/native.c",
+      "sha256": "44272642ed0a38b0c20535bff925b796408b300d3b1a564ceb903c488c7f5834",
+      "excerpts": [
+        {
+          "first_line": 108,
+          "last_line": 111,
+          "text": "    FN(0x042bd7d0u,object_fn),on_delete,image_source,FN(0x042cf61cu,free_fn),\n    FN(0x042b68c8u,cache_fn),FN(0x042c7854u,object_fn),FN(0x042b27cau,timer_fn),\n    FN(0x042b285au,free_fn),timer_userdata,FN(0x042d02c6u,now_fn),\n    FN(0x0433c460u,now_fn),FN(0x0433c4a4u,now_fn)"
+        }
+      ]
+    },
+    {
+      "path": "runtime/graphics/diagnostics.c",
+      "sha256": "b947c5f31dedb48416ff365e416b0c8e1407c4665a8fb7a1fa356c71ca3714c4",
+      "excerpts": [
+        {
+          "first_line": 88,
+          "last_line": 89,
+          "text": "void mm_diagnostics_cleanup(void *parent,uint16_t epoch) {diagnostic_owner *d=epoch?diagnostic_get(parent):diagnostic_find(parent);if(d){d->hidden=1;if(epoch)d->epoch=epoch;if(d->overlay)glassly_diagnostics_hidden(d->overlay,1);}}\nuint16_t mm_diagnostics_epoch(void *parent) {diagnostic_owner *d=diagnostic_find(parent);return d?d->epoch:0;}"
+        }
+      ]
+    }
+  ],
+  "conclusion": {
+    "fresh_epoch": "Fold native millisecond tick into16 bits; replace zero with1; first zero-epoch RESET increments that seed, skipping zero.",
+    "live33149": "Reproduced with mocked tick33148. This is consistent with source behavior, not proof of the exact tick sampled on hardware.",
+    "saved_epoch": "Diagnostic snapshot is saved cleanup epoch, not a mirror of active scene cache epoch.",
+    "helper_v2": "Accept the first valid APPLIED nonzero RESET reply and anchor E there; assert cleanup next(E) and subsequent zero-epoch RESET next(next(E)). Snapshot remains the cleanup value until another cleanup."
+  },
+  "limitations": [
+    "Native clock, heap, LVGL and transport APIs mocked; no hardware was contacted.",
+    "Reproduction does not weaken the frozen runtime tests or modify previous reports."
+  ]
+}

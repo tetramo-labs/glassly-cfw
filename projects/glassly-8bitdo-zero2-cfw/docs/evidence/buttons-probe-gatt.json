@@ -1,0 +1,324 @@
+{
+  "kind": "Live v4 button stream baseline and bounded USB-connected hold",
+  "firmware_package_sha256": "a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be",
+  "usb_connected": true,
+  "local_directory": "build/hardware/20261105T212446.628541Z-ble-buttons",
+  "source_sha256": {
+    "scripts/ble_probe.py": "79ba9742f9bf0694f0cf00dc937cad0f695d324d1707f3bb280be9d00d099795",
+    "tools/probe_zero2.swift": "ebc1a4e7f700b6b593cb50e001c787153ba4aadd5ad399cc2bda06442bb37727"
+  },
+  "events_sha256": "dfa77d7677d9710e5dfcb83e9ed8fdad0732e1edb5388ba18335b2edac56954f",
+  "events": [
+    {
+      "authorization": 3,
+      "elapsed_seconds": 0.014513124711811543,
+      "event": "bluetooth_state",
+      "state": 5,
+      "time": "2026-11-05T21:24:46Z"
+    },
+    {
+      "cached_name": "80EL",
+      "connectable": 1,
+      "elapsed_seconds": 1.2372974581085145,
+      "event": "advertisement",
+      "local_name": "80EL",
+      "manufacturer_hex": "",
+      "rssi": -41,
+      "services": [],
+      "time": "2026-11-05T21:24:48Z"
+    },
+    {
+      "elapsed_seconds": 1.2375079579651356,
+      "event": "connecting",
+      "time": "2026-11-05T21:24:48Z"
+    },
+    {
+      "connected_seconds": 0.00025029154494404793,
+      "elapsed_seconds": 1.4494180413894355,
+      "event": "connected",
+      "time": "2026-11-05T21:24:48Z"
+    },
+    {
+      "connected_seconds": 0.4467284167185426,
+      "elapsed_seconds": 1.8958963747136295,
+      "event": "service",
+      "primary": true,
+      "time": "2026-11-05T21:24:48Z",
+      "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.5065479585900903,
+      "elapsed_seconds": 1.9557158746756613,
+      "event": "characteristic",
+      "properties": 24,
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:24:48Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.5067484583705664,
+      "elapsed_seconds": 1.9559164997190237,
+      "event": "subscription_requested",
+      "service": "FF10",
+      "time": "2026-11-05T21:24:48Z",
+      "uuid": "FF13"
+    },
+    {
+      "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+      "connected_seconds": 0.5679089166224003,
+      "elapsed_seconds": 2.0170769579708576,
+      "event": "descriptors",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:24:48Z",
+      "uuids": [
+        "2902"
+      ]
+    },
+    {
+      "connected_seconds": 0.5680483751930296,
+      "elapsed_seconds": 2.017216541338712,
+      "event": "discovery_complete",
+      "time": "2026-11-05T21:24:48Z"
+    },
+    {
+      "connected_seconds": 0.6264092084020376,
+      "elapsed_seconds": 2.0755773331038654,
+      "enabled": true,
+      "event": "subscription",
+      "time": "2026-11-05T21:24:48Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.6265346249565482,
+      "elapsed_seconds": 2.07570245815441,
+      "event": "button_start_requested",
+      "hex": "a1",
+      "time": "2026-11-05T21:24:48Z"
+    },
+    {
+      "connected_seconds": 0.6864536665380001,
+      "elapsed_seconds": 2.1356218750588596,
+      "event": "button_start_acknowledged",
+      "time": "2026-11-05T21:24:49Z"
+    },
+    {
+      "connected_seconds": 0.6877368749119341,
+      "elapsed_seconds": 2.1369050829671323,
+      "event": "notification",
+      "hex": "4704000200000000",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:24:49Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.6878663334064186,
+      "elapsed_seconds": 2.1370344581082463,
+      "event": "button_snapshot",
+      "flags": 2,
+      "mask": 0,
+      "mask_hex": "0000",
+      "pressed_mask": 0,
+      "released_mask": 0,
+      "resync": true,
+      "sequence": 0,
+      "sequence_gap": false,
+      "time": "2026-11-05T21:24:49Z"
+    },
+    {
+      "connected_seconds": 187.55016666697338,
+      "elapsed_seconds": 188.99933283310384,
+      "event": "button_stop_requested",
+      "hex": "a0",
+      "time": "2026-11-05T21:27:55Z"
+    },
+    {
+      "connected_seconds": 187.58922566659749,
+      "elapsed_seconds": 189.03839245811105,
+      "event": "button_stop_acknowledged",
+      "time": "2026-11-05T21:27:55Z"
+    },
+    {
+      "button_snapshots": 1,
+      "button_start_acknowledged": true,
+      "candidates": 1,
+      "connected_seconds": 187.59000483341515,
+      "discovery_complete": true,
+      "echoes_verified": 0,
+      "elapsed_seconds": 189.03917254135013,
+      "event": "complete",
+      "exit_code": 0,
+      "keepalive_writes_acknowledged": 0,
+      "notifications": 1,
+      "reason": "Time limit; notification count is separate from subscription success",
+      "subscribed": true,
+      "subscription_transitions": 1,
+      "time": "2026-11-05T21:27:55Z"
+    }
+  ],
+  "connected_seconds": 187.59000483341515,
+  "button_snapshots": 1,
+  "physical_transitions_observed": 0,
+  "start_and_stop_acknowledged": true,
+  "limits": [
+    "Baseline proves eight-byte notification and polling path, not physical press/release delivery",
+    "User had not confirmed completing the requested tap sequence when capture ended",
+    "No physical button mapping, battery test of this image, ACK progression under button changes or Glassly background test"
+  ],
+  "reconnect": {
+    "local_directory": "build/hardware/20261105T212818.610726Z-ble-buttons",
+    "events": [
+      {
+        "authorization": 3,
+        "elapsed_seconds": 0.020520916674286127,
+        "event": "bluetooth_state",
+        "state": 5,
+        "time": "2026-11-05T21:28:18Z"
+      },
+      {
+        "cached_name": "80EL",
+        "connectable": 1,
+        "elapsed_seconds": 0.36480279173702,
+        "event": "advertisement",
+        "local_name": "80EL",
+        "manufacturer_hex": "",
+        "rssi": 127,
+        "services": [],
+        "time": "2026-11-05T21:28:19Z"
+      },
+      {
+        "elapsed_seconds": 0.3650739165022969,
+        "event": "connecting",
+        "time": "2026-11-05T21:28:19Z"
+      },
+      {
+        "connected_seconds": 0.00022350018844008446,
+        "elapsed_seconds": 0.5673201247118413,
+        "event": "connected",
+        "time": "2026-11-05T21:28:19Z"
+      },
+      {
+        "connected_seconds": 0.4499338334426284,
+        "elapsed_seconds": 1.0170290833339095,
+        "event": "service",
+        "primary": true,
+        "time": "2026-11-05T21:28:19Z",
+        "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+      },
+      {
+        "connected_seconds": 0.5101589998230338,
+        "elapsed_seconds": 1.07725412491709,
+        "event": "characteristic",
+        "properties": 24,
+        "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+        "time": "2026-11-05T21:28:19Z",
+        "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+      },
+      {
+        "connected_seconds": 0.511210166849196,
+        "elapsed_seconds": 1.0783022083342075,
+        "event": "subscription_requested",
+        "service": "FF10",
+        "time": "2026-11-05T21:28:19Z",
+        "uuid": "FF13"
+      },
+      {
+        "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+        "connected_seconds": 0.5697551667690277,
+        "elapsed_seconds": 1.1368505414575338,
+        "event": "descriptors",
+        "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+        "time": "2026-11-05T21:28:19Z",
+        "uuids": [
+          "2902"
+        ]
+      },
+      {
+        "connected_seconds": 0.5724614164792001,
+        "elapsed_seconds": 1.13955729175359,
+        "event": "discovery_complete",
+        "time": "2026-11-05T21:28:19Z"
+      },
+      {
+        "connected_seconds": 0.630190166644752,
+        "elapsed_seconds": 1.1972849164158106,
+        "enabled": true,
+        "event": "subscription",
+        "time": "2026-11-05T21:28:20Z",
+        "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+      },
+      {
+        "connected_seconds": 0.6308437082916498,
+        "elapsed_seconds": 1.1979374163784087,
+        "event": "button_start_requested",
+        "hex": "a1",
+        "time": "2026-11-05T21:28:20Z"
+      },
+      {
+        "connected_seconds": 0.6906173750758171,
+        "elapsed_seconds": 1.2577129998244345,
+        "event": "button_start_acknowledged",
+        "time": "2026-11-05T21:28:20Z"
+      },
+      {
+        "connected_seconds": 0.6913810414262116,
+        "elapsed_seconds": 1.258477000053972,
+        "event": "notification",
+        "hex": "4704000200000000",
+        "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+        "time": "2026-11-05T21:28:20Z",
+        "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+      },
+      {
+        "connected_seconds": 0.6919276248663664,
+        "elapsed_seconds": 1.259023499675095,
+        "event": "button_snapshot",
+        "flags": 2,
+        "mask": 0,
+        "mask_hex": "0000",
+        "pressed_mask": 0,
+        "released_mask": 0,
+        "resync": true,
+        "sequence": 0,
+        "sequence_gap": false,
+        "time": "2026-11-05T21:28:20Z"
+      },
+      {
+        "connected_seconds": 30.933058958500624,
+        "elapsed_seconds": 31.50015304144472,
+        "event": "button_stop_requested",
+        "hex": "a0",
+        "time": "2026-11-05T21:28:50Z"
+      },
+      {
+        "connected_seconds": 30.98905949993059,
+        "elapsed_seconds": 31.556156291626394,
+        "event": "button_stop_acknowledged",
+        "time": "2026-11-05T21:28:50Z"
+      },
+      {
+        "button_snapshots": 1,
+        "button_start_acknowledged": true,
+        "candidates": 1,
+        "connected_seconds": 30.989237666595727,
+        "discovery_complete": true,
+        "echoes_verified": 0,
+        "elapsed_seconds": 31.556334583088756,
+        "event": "complete",
+        "exit_code": 0,
+        "keepalive_writes_acknowledged": 0,
+        "notifications": 1,
+        "reason": "Time limit; notification count is separate from subscription success",
+        "subscribed": true,
+        "subscription_transitions": 1,
+        "time": "2026-11-05T21:28:50Z"
+      }
+    ],
+    "events_sha256": "d1ac4292dffe4be9b94b12c59125f71c01aaf16db1c0a55486978cce0d034889",
+    "source_sha256": {
+      "scripts/ble_probe.py": "79ba9742f9bf0694f0cf00dc937cad0f695d324d1707f3bb280be9d00d099795",
+      "tools/probe_zero2.swift": "ebc1a4e7f700b6b593cb50e001c787153ba4aadd5ad399cc2bda06442bb37727"
+    },
+    "baseline_sequence_reset_to_zero": true,
+    "start_and_stop_acknowledged": true
+  }
+}

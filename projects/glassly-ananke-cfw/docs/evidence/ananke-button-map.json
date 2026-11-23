@@ -1,0 +1,130 @@
+{
+  "protocol": "Ananke custom AE42 v2",
+  "service": "AE40",
+  "characteristic": "AE42",
+  "packet_bytes": 8,
+  "layout": "47 02 sequence flags keys32LE",
+  "flags": {
+    "overflow": 1,
+    "baseline": 2
+  },
+  "buttons": {
+    "A": {
+      "mask": 1,
+      "hex": "0x00000001",
+      "press_sequence": 1,
+      "release_sequence": 2,
+      "observed_press_release_seconds": 0.118858,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "B": {
+      "mask": 2,
+      "hex": "0x00000002",
+      "press_sequence": 3,
+      "release_sequence": 4,
+      "observed_press_release_seconds": 0.089566,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "L": {
+      "mask": 64,
+      "hex": "0x00000040",
+      "press_sequence": 5,
+      "release_sequence": 6,
+      "observed_press_release_seconds": 0.167112,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "ZL": {
+      "mask": 256,
+      "hex": "0x00000100",
+      "press_sequence": 7,
+      "release_sequence": 8,
+      "observed_press_release_seconds": 0.119757,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "R": {
+      "mask": 128,
+      "hex": "0x00000080",
+      "press_sequence": 9,
+      "release_sequence": 10,
+      "observed_press_release_seconds": 0.133516,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "ZR": {
+      "mask": 512,
+      "hex": "0x00000200",
+      "press_sequence": 11,
+      "release_sequence": 12,
+      "observed_press_release_seconds": 0.151766,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "Capture": {
+      "mask": 32768,
+      "hex": "0x00008000",
+      "press_sequence": 13,
+      "release_sequence": 14,
+      "observed_press_release_seconds": 0.132641,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "Home": {
+      "mask": 16781312,
+      "hex": "0x01001000",
+      "press_sequence": 15,
+      "release_sequence": 16,
+      "observed_press_release_seconds": 0.088615,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "Minus": {
+      "mask": 1024,
+      "hex": "0x00000400",
+      "press_sequence": 17,
+      "release_sequence": 18,
+      "observed_press_release_seconds": 0.148838,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "Plus": {
+      "mask": 2048,
+      "hex": "0x00000800",
+      "press_sequence": 19,
+      "release_sequence": 20,
+      "observed_press_release_seconds": 0.117488,
+      "capture": "cfw-gatt-20261104-fixed-controls.log"
+    },
+    "X": {
+      "mask": 8,
+      "hex": "0x00000008",
+      "capture": "cfw-gatt-20261104-first.log"
+    },
+    "Y": {
+      "mask": 16,
+      "hex": "0x00000010",
+      "capture": "cfw-gatt-20261104-first.log"
+    },
+    "Up": {
+      "mask": 65536,
+      "hex": "0x00010000",
+      "capture": "cfw-gatt-20261104-first.log"
+    },
+    "Down": {
+      "mask": 131072,
+      "hex": "0x00020000",
+      "capture": "cfw-gatt-20261104-first.log"
+    },
+    "Left": {
+      "mask": 262144,
+      "hex": "0x00040000",
+      "capture": "cfw-gatt-20261104-first.log"
+    },
+    "Right": {
+      "mask": 524288,
+      "hex": "0x00080000",
+      "capture": "cfw-gatt-20261104-first.log"
+    }
+  },
+  "home_alias": "Home produces bits 12 and 24 together (0x01001000). Treat the mask as one logical button; never emit two Home events.",
+  "evidence": "User-confirmed ordered short taps. First corrected-build capture has separate press/release arrivals and consecutive sequences.",
+  "not_yet_validated": [
+    "Normal HID reports",
+    "Standby/wake",
+    "iPhone foreground/background/locked delivery"
+  ]
+}

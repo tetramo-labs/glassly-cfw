@@ -1,0 +1,138 @@
+{
+  "passed": true,
+  "cases": 604,
+  "caseGroups": {
+    "als": 140,
+    "cached_imu": 20,
+    "direct_imu": 16,
+    "als_power": 192,
+    "als_setting": 192,
+    "imu_power": 6,
+    "imu_raw_enable": 20,
+    "imu_decode": 18
+  },
+  "stockBodySHA256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "fullReport": "analysis/sensor-abi-20261103/native-05.json",
+  "fullReportSHA256": "03c7d5ffcb5c874ce96f0e7796fdd56bf4a9c870f15c8f486bddb9f5f7da234a",
+  "sourceSHA256": {
+    "tests/rv32/sensor_native_abi_test.py": "cbd852a9111718730e582c3c3b0f26e5f36e58956e5e3bf5432abcc05027cdcb",
+    "tests/run_tests.py": "21c693cc42e9eb32328136b31093d259d40bd0f38fec608b9ae861eb4726479d",
+    "tests/g2_compat/test_scope.py": "a825ffad349aa6d9767e7b7ce99e296b9172423fd7c5dacb9ec03e9c372ff7c1",
+    "tests/g2_compat/COMMAND_PARITY.md": "8712e846fdad04e4bd65785cae3da9d90eadeb31cdd23ccf5772e2d4fe5ec0f2"
+  },
+  "actualCodeRanges": [
+    [
+      69383802,
+      69384006
+    ],
+    [
+      69372160,
+      69372322
+    ],
+    [
+      69378444,
+      69378486
+    ],
+    [
+      70546244,
+      70546364
+    ],
+    [
+      69383594,
+      69383802
+    ],
+    [
+      69371554,
+      69371772
+    ],
+    [
+      69372322,
+      69372360
+    ],
+    [
+      69369084,
+      69369296
+    ],
+    [
+      69369420,
+      69369546
+    ],
+    [
+      70546892,
+      70547244
+    ]
+  ],
+  "mockBoundaries": {
+    "0x43421d2": "bus_lock",
+    "0x4342200": "bus_unlock",
+    "0x200f758": "sleep",
+    "0x200a23a": "enter",
+    "0x200a264": "leave",
+    "0x200ec3a": "mutex_lock",
+    "0x200ecb2": "mutex_unlock",
+    "0x2000000": "copy",
+    "0x2003d5e": "log_enabled",
+    "0x5000010": "read",
+    "0x5000020": "resume",
+    "0x5000030": "suspend",
+    "0x422a0c4": "imu_force",
+    "0x422a06a": "imu_resume",
+    "0x42276d0": "imu_signal",
+    "0x4229d46": "imu_busy",
+    "0x422a1e0": "imu_reset",
+    "0x434742e": "imu_bus_read"
+  },
+  "hardwareTested": false,
+  "ownershipImplemented": false,
+  "sourceFirmwareChanged": false,
+  "aggregateRequiredStage": "sensor_native_abi",
+  "aggregateScopeTestsPassed": 10,
+  "upstreamInventoryCheckPassed": true,
+  "fullAggregateRerun": false,
+  "witnesses": [
+    {
+      "address": "0x422b67a",
+      "bytes16": "797122d44ad04ece06d626d252cc56ca"
+    },
+    {
+      "address": "0x4228900",
+      "bytes16": "59cd411122c426c24ac006c60008b704"
+    },
+    {
+      "address": "0x422a18c",
+      "bytes16": "411122c60008370701020347479b11cb"
+    },
+    {
+      "address": "0x4347344",
+      "bytes16": "411122c406c60008372701020327474e"
+    },
+    {
+      "address": "0x43475cc",
+      "bytes16": "797122d426d200184ece06d64ad0aa84"
+    },
+    {
+      "address": "0x439b3a4",
+      "bytes16": "007834042c773404cc753404ba793404"
+    },
+    {
+      "address": "0x42286a2",
+      "bytes16": "011122cc4ac84ec606ce26ca00103709"
+    },
+    {
+      "address": "0x42289a2",
+      "bytes16": "411122c6370701020008130787960589"
+    },
+    {
+      "address": "0x422b5aa",
+      "bytes16": "411122c426c206c6000883c701fa0d47"
+    },
+    {
+      "address": "0x422b5e6",
+      "bytes16": "411122c426c206c6000883c701fa1947"
+    },
+    {
+      "address": "0x422b620",
+      "bytes16": "411122c6156700081107938701fa6314"
+    }
+  ]
+}

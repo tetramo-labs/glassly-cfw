@@ -1,0 +1,52 @@
+{
+  "format": "memomind-session-response-filter-readonly-review-v1",
+  "assessment": "No blocking defect found in the inspected optional-filter behavior.",
+  "root_source_edits": false,
+  "device_operations": false,
+  "own_checks": {
+    "checks": [
+      "nil final filter preserves historical last-match behavior",
+      "nil fragment filter preserves historical first-business stop",
+      "final ACK never calls business filter",
+      "all continuation ACK heads preserve fragment sequencing",
+      "wrong fragment ACK after a notification stops before next write",
+      "coalesced early rejection ACK and notification stop remaining writes",
+      "filter throw after candidate reply rejects complete read",
+      "notification alone cannot acknowledge request fragment",
+      "notifications do not hide duplicate accepted replies",
+      "different-event business message is routed without passing response filter",
+      "late duplicated prior reply routes to unsolicited on next event"
+    ],
+    "count": 11,
+    "device_operations": false,
+    "passed": true
+  },
+  "existing_root_tests": {
+    "count": 6,
+    "logs": "analysis/bundle-native-20261102/session-tests.*"
+  },
+  "correct": [
+    "Coalesced matching main reply is retained while same-key settled notifications route to unsolicited, regardless of their position in the read.",
+    "Empty fragment ACKs bypass the business filter and intermediate ACK heads remain checked.",
+    "An accepted early business reply returns before any remaining request fragment is written. A malformed filter result throws, with no retry.",
+    "Two filter-accepted business replies in the same decoded read are rejected even with intervening notifications.",
+    "Nil filter preserves historical final-read last-match selection and intermediate first-business return."
+  ],
+  "limits": [
+    "The filter only sees matching event/service/command business messages. Different-event messages and late duplicates route to nonthrowing unsolicited.",
+    "Client should returnfalse only for validated notifications; native rejections must returntrue or throw to prevent later fragment writes.",
+    "An unsolicited validator can record an error flag; live caller must check it before further commands because callback itself cannotthrow.",
+    "No extra drain occurs after accepted reply. Duplicate detection is bounded to one decoded read and is explicitly documented; nextread may see late notifications.",
+    "Generic session has no poisoned-state flag; caller controls recovery after a thrown error."
+  ],
+  "sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift": "193bde8d024d08340b3f683d2605acf1002c98f2eda9db342dd128d1d28ed1e6",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/SessionResponseFilterTests.swift": "7731e5d72514b3c6e14281c30064ea8cd777406af80b26f26ca9f3228d6d7e19",
+    "analysis/bundle-native-20261102/session-tests.stdout": "90ac0a7404e92b6b00f37df4dd83849091da2d61b3cd7858e47d2936f887682e",
+    "analysis/bundle-native-20261102/session-tests.stderr": "b6a63d98bbef4e336e84eed73ec6d075d6745f86e3dc94dbe6210535b972eaca",
+    "analysis/bundle-swift-20261102/session-review/main.swift": "a809ccfcf92c0041d05af9556bd11bb1263e8df8ddce67a22b0027ce0a044a5e",
+    "analysis/bundle-swift-20261102/session-review/review": "e8aa9dcca2fc473f20cca23726d6cd8af39516577b56c43ea23038d59ebe23e5"
+  },
+  "command": "swiftc -Onone swift/MemoMindKit/Sources/MemoMindCore/*.swift analysis/bundle-swift-20261102/session-review/main.swift -o analysis/bundle-swift-20261102/session-review/review"
+}

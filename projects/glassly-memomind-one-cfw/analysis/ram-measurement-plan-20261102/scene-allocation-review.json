@@ -1,0 +1,29 @@
+{
+  "read_only": true,
+  "device_actions": false,
+  "production_edits": false,
+  "source_sha256": {
+    "runtime/graphics/scene_session.c": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+    "runtime/graphics/scene_session.h": "c8b3b183a2d3e70f72b3f9c59a11aaa4e47befb576052642464fad8ca6de265b",
+    "runtime/graphics/graphics.c": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/portable/scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "runtime/portable/vector.c": "52c9b0c2b5ebc7d192493213e3ca89054c82c5bea9805b68a89e2f31095540e3",
+    "runtime/portable/vector.h": "78b9a68ae9544ba57917466ecf06a54c7d1daae02a729d6b69aeb44ba5d1a1dc",
+    "analysis/regression-20261102-04/scene/report.json": "eda96099e9b4e4af9aacdb1edd5f6a94b70221c540bf32737f49a2a9458fe2b0"
+  },
+  "rv32_layout": {
+    "context": 1016,
+    "platform": 60,
+    "cache": 43420,
+    "transaction": 1636,
+    "object": 116,
+    "asset": 32,
+    "undo_base": 45468,
+    "undo_granule": 20,
+    "vector_workspace": 10752
+  },
+  "candidate_status": "Unimplemented; needs differential, allocation-failure, bundle and native lifecycle tests",
+  "report_sha256": "2f99fdc99491ce5481f06014927b283a6bb29bcb36b6dd2a20f9e0b2c1931edb"
+}

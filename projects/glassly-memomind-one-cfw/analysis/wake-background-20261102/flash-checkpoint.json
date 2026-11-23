@@ -1,0 +1,26 @@
+{
+  "release": "wake-background-001",
+  "pins": {
+    "release": "wake-background-001",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "59abc5fa55be310c07886ab05fb713e6847a28632c75ead84cc76203d4d9a6d7",
+    "image_bytes": 2235644,
+    "header150_sha256": "d4cab46f823c0f8897fadfc6672f86d406e3d1a7f347afa17bb26527dd58f93c",
+    "app_header256_sha256": "6c4d37b94b7190aa902ed55163f514a373e1fe59a84ce03fd741bc1dd6bec7e0",
+    "metadata_bytes": 171,
+    "metadata_sha256": "9aaf54003c8b29364662268927f224d8e10311a8efe39165b55f1f0cc4be5ff2",
+    "app_packed_bytes": 964542,
+    "app_raw_bytes": 1848160,
+    "app_sha256": "e29a270fea9b42fc3c596e5ce37f6205421ee5e1f5f29b96b66f4a235341149c",
+    "runtime_sha256": "4b5b69350fc47a30787004c10945128d5f018cea476b9066828acc3fd83367b5",
+    "runtime_bytes": 74944
+  },
+  "transferVerified": true,
+  "transferReport": "ota-verification.json",
+  "rebootAcknowledged": true,
+  "bootVerified": false,
+  "bootStatus": "Post-reboot connection pending.",
+  "physicalBackgroundConfirmed": false,
+  "physicalWakeHandshakeConfirmed": false,
+  "tests": "offline-checkpoint.json"
+}

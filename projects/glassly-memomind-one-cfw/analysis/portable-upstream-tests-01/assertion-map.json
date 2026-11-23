@@ -1,0 +1,470 @@
+[
+  {
+    "upstream_line": 17,
+    "ported_line": 27,
+    "expression": "type == 1 && sends < 4 && len <= sizeof(sent[0])",
+    "sha256": "c4948d4e5abd65acbdee1c9f6fbf880a0ec77ba70e6ba489e24e188183cf72b2"
+  },
+  {
+    "upstream_line": 25,
+    "ported_line": 35,
+    "expression": "i < len",
+    "sha256": "cd8d903b781b97f42eae17de07ec726ee8bb3404db79c3d59257376c333648af"
+  },
+  {
+    "upstream_line": 27,
+    "ported_line": 37,
+    "expression": "i < len",
+    "sha256": "cd8d903b781b97f42eae17de07ec726ee8bb3404db79c3d59257376c333648af"
+  },
+  {
+    "upstream_line": 29,
+    "ported_line": 39,
+    "expression": "value <= len - i",
+    "sha256": "0292557d664def159c7c30bf8d73c137267590cda1eefb02a0701af22955d0be"
+  },
+  {
+    "upstream_line": 32,
+    "ported_line": 42,
+    "expression": "(tag & 7) == 0",
+    "sha256": "da9fb7995d149dffa9b3153be38ec9b199645e13d928adf7a3f3f786af59e8f8"
+  },
+  {
+    "upstream_line": 57,
+    "ported_line": 70,
+    "expression": "n == 8 && p[0] == 'K' && p[1] == 'B' && p[2] == 1",
+    "sha256": "934a0fe0c1dc1677c63610359eb25bc24dbb5ac89ecbd087336e2e5dea06e4dc"
+  },
+  {
+    "upstream_line": 67,
+    "ported_line": 80,
+    "expression": "n == 4 && p[0] == 'A' && p[1] == 'N' && p[2] == 1 && p[3] == 3",
+    "sha256": "80ac27c58f0994fd4c8f45a598d86db6ea66a78019e75b81cca3ae27b60e6206"
+  },
+  {
+    "upstream_line": 83,
+    "ported_line": 96,
+    "expression": "conn == ble_conn",
+    "sha256": "633fef2b2be69219ecdfc1944a1c65b5fde000a9f082819a2398837c6e4332a2"
+  },
+  {
+    "upstream_line": 126,
+    "ported_line": 209,
+    "expression": "keyboard_controls == 1",
+    "sha256": "4f478e63519e02f3e24c6e935eaae65fa3030fb71f98538c5446e77e8f009c7d"
+  },
+  {
+    "upstream_line": 128,
+    "ported_line": 211,
+    "expression": "keyboard_controls == 1",
+    "sha256": "4f478e63519e02f3e24c6e935eaae65fa3030fb71f98538c5446e77e8f009c7d"
+  },
+  {
+    "upstream_line": 130,
+    "ported_line": 213,
+    "expression": "!is_shadow_message(0, 2) && !is_shadow_message(p, 0)",
+    "sha256": "8b99ca1f6d9ae787c2a1875f631646ca587427b73370fb69b202f06baed66341"
+  },
+  {
+    "upstream_line": 135,
+    "ported_line": 218,
+    "expression": "!is_shadow_message(p, len)",
+    "sha256": "3b4709e48ecebbdce9d98628bcd2689b8c119f7f94fb672d03402cfb00bd61a0"
+  },
+  {
+    "upstream_line": 139,
+    "ported_line": 222,
+    "expression": "is_shadow_message(p, 3)",
+    "sha256": "7443bcdae9ab9ac0e8e9add8a9543cbbb637426ccb83ef2bd2adeaf0fdb36ae0"
+  },
+  {
+    "upstream_line": 140,
+    "ported_line": 223,
+    "expression": "is_shadow_message(p, 3)",
+    "sha256": "7443bcdae9ab9ac0e8e9add8a9543cbbb637426ccb83ef2bd2adeaf0fdb36ae0"
+  },
+  {
+    "upstream_line": 145,
+    "ported_line": 228,
+    "expression": "ancs_controls == 1",
+    "sha256": "60042d5fa5ace0808d16dc029bbbca23ac20dce77f421722fa5fd99df1a2e68d"
+  },
+  {
+    "upstream_line": 147,
+    "ported_line": 230,
+    "expression": "ancs_controls == 1",
+    "sha256": "60042d5fa5ace0808d16dc029bbbca23ac20dce77f421722fa5fd99df1a2e68d"
+  },
+  {
+    "upstream_line": 157,
+    "ported_line": 240,
+    "expression": "ring_battery_control(query, 2) == 0 && sends == 1",
+    "sha256": "cf707a0ebbbf6118ce6095074c9fe003ebce94dadae6a9a793583e7dadef8ffd"
+  },
+  {
+    "upstream_line": 159,
+    "ported_line": 242,
+    "expression": "b && size == 5 && b[0] == 'R' && b[1] == 'B' && b[2] == 1",
+    "sha256": "2a5b9660cd088752df19d11aa08a95c74279e468179783e5a3bb17049bcf7009"
+  },
+  {
+    "upstream_line": 161,
+    "ported_line": 244,
+    "expression": "b[3] == (connected | (valid ? 2 : 0) | (valid && charging ? 4 : 0))",
+    "sha256": "ae32cbcf4ef7cc960dcf13776a1d9c218e3073c1501bd4a54b53980abb5be307"
+  },
+  {
+    "upstream_line": 162,
+    "ported_line": 245,
+    "expression": "b[4] == (valid ? level : 255)",
+    "sha256": "18f629b652a945f813803cd93f4f402c33fb67c6b3a4a23c7a59aa4e65258d93"
+  },
+  {
+    "upstream_line": 167,
+    "ported_line": 250,
+    "expression": "ring_battery_control(query, 2) == 0 && sends == 0",
+    "sha256": "4deceadea5fb7b5fd527a66bc3d820b0f2a5b20affda2ce8ef00366b18145202"
+  },
+  {
+    "upstream_line": 168,
+    "ported_line": 251,
+    "expression": "ring_battery_control(scene, 3) == -1 && sends == 0",
+    "sha256": "bcac944dd3bfcc6eef18b6be5fa917297c1982d66b48f8736b2752ec033c6fff"
+  },
+  {
+    "upstream_line": 175,
+    "ported_line": 258,
+    "expression": "settings_send_wrapper(1,9,buf,44) == 0 && sends == 2",
+    "sha256": "970cf00fdb26a3eb93dbb0436df950d2a38f5bd61285d20a01da403ada955627"
+  },
+  {
+    "upstream_line": 177,
+    "ported_line": 260,
+    "expression": "caps && n == 13 && memcmp(caps,\"GLASSLYCFW/50\",13) == 0",
+    "sha256": "445d4cb76907f393a4b194a2fed09b822bc1c01aecbcfb4d71bc5cb09ba10bdd"
+  },
+  {
+    "upstream_line": 178,
+    "ported_line": 261,
+    "expression": "sent_len[0] == 44 + 16 + 27 + 24 + 20 + 27",
+    "sha256": "0f1285efddc3da7ec54d2d4d1cca0a9b331d0b43e5012dfec222986268479cee"
+  },
+  {
+    "upstream_line": 179,
+    "ported_line": 262,
+    "expression": "field(sent[0],sent_len[0],107,&n) && n == 24",
+    "sha256": "63c02cfddb225f22e654776b880cf07f42b6a8c1033504ad384182f2b5a08ae6"
+  },
+  {
+    "upstream_line": 180,
+    "ported_line": 263,
+    "expression": "field(sent[0],sent_len[0],133,&n) && n == 24",
+    "sha256": "1004e1b6e3d70ca62a9ac4361492087f857e309206341ab42f22e66e50c31955"
+  },
+  {
+    "upstream_line": 181,
+    "ported_line": 264,
+    "expression": "sent_len[0] + 2 <= 232",
+    "sha256": "5a7816c17ab9ce3346da87a6aafb500c53a4f76dc058c31ea11b707124cf90bf"
+  },
+  {
+    "upstream_line": 182,
+    "ported_line": 265,
+    "expression": "field(sent[0],sent_len[0],104,&n) && n == 21",
+    "sha256": "ac1cb00a295c59941614675396e36a730de2f2afc155c36789ec5c742d1ff03d"
+  },
+  {
+    "upstream_line": 183,
+    "ported_line": 266,
+    "expression": "!field(sent[0],sent_len[0],106,&n)",
+    "sha256": "c6695357b8e33cd0ab10067f00b1c43f096f50006be4300349f40268792da191"
+  },
+  {
+    "upstream_line": 184,
+    "ported_line": 267,
+    "expression": "field(sent[1],sent_len[1],106,&n) && n == 5 && sent_len[1] == 12",
+    "sha256": "56b5eccd61f80d31c8bafcfd70766b06279b2599226b4b8c008ffc68ddf1dd76"
+  },
+  {
+    "upstream_line": 186,
+    "ported_line": 269,
+    "expression": "settings_send_wrapper(1,9,buf,44) == -1 && sends == 1",
+    "sha256": "564178bedf22b0bcad76491165b2dbb40e37b6bb72bd8ce6da473ba02c6aceee"
+  },
+  {
+    "upstream_line": 188,
+    "ported_line": 271,
+    "expression": "settings_send_wrapper(1,8,buf,4) == 0 && sends == 1 && sent_len[0] == 4",
+    "sha256": "255832b45958d2c1875f06efe75ff299cd55bf90a793640796713ef570c94cd7"
+  },
+  {
+    "upstream_line": 196,
+    "ported_line": 279,
+    "expression": "compass_decode_capture(0,0,0,gaf) == 0",
+    "sha256": "c1d58b57873610cdbd8c06f3c2cd63c84b526da0ac02d625eff267698e251556"
+  },
+  {
+    "upstream_line": 197,
+    "ported_line": 280,
+    "expression": "ctx.compass_samples[0].source == 3 && ctx.compass_samples[0].flags == 0x8f",
+    "sha256": "3b3340e2b25a6948656fe23bad322387f44573274fb617fbbb0f27b61b51066d"
+  },
+  {
+    "upstream_line": 201,
+    "ported_line": 284,
+    "expression": "compass_report_event(9,heading) == 42 && sends == 1 && sent_sid[0] == 8",
+    "sha256": "81f1d8f1323be6a32fa1c8f4fa5e6fd1e7c4688747fdb78f5a05903195ea0735"
+  },
+  {
+    "upstream_line": 203,
+    "ported_line": 286,
+    "expression": "b && n == 12 && b[3] == 3 && b[4] == 2 && b[5] == 3 && b[6] == 0x8f",
+    "sha256": "91d1331a153380c5e289417d220ea15a2f6c1d7121bcf04bc503dafc9fab34e1"
+  },
+  {
+    "upstream_line": 204,
+    "ported_line": 287,
+    "expression": "b[8] == (1234 & 255) && b[9] == (1234 >> 8)",
+    "sha256": "8723692dd96efcf1e409a8fbddeb90e63eea0141d137f0a5aaf1b37fe3b8b5d4"
+  },
+  {
+    "upstream_line": 206,
+    "ported_line": 289,
+    "expression": "b && b[0] == 8 && ((b[1] & 127) | (n == 3 ? b[2] << 7 : 0)) == heading",
+    "sha256": "6808c107b7323c6c71e3322bed794fe14de82803ccec67cc1667144b073c516d"
+  },
+  {
+    "upstream_line": 211,
+    "ported_line": 294,
+    "expression": "b && b[3] == 255 && b[5] == 0 && b[6] == 0",
+    "sha256": "bed99662eef593d60db979a5cc396ecd39a7ccc03017fdd75d3413701b7e3ed4"
+  },
+  {
+    "upstream_line": 217,
+    "ported_line": 300,
+    "expression": "sends == 0 && stock_events == before + 6",
+    "sha256": "c25392823a227a3986ecd76f963ea0ce7af3b3dd1e60d726925f63aed09df221"
+  },
+  {
+    "upstream_line": 223,
+    "ported_line": 306,
+    "expression": "settings_send_wrapper(1,9,buf,44) == 0",
+    "sha256": "4aa8d92312bf601542e50274ee9d832a1d6bf23e2db203e0b617608dfa25f5e0"
+  },
+  {
+    "upstream_line": 225,
+    "ported_line": 308,
+    "expression": "st && n == 17 && st[0] == 'B' && st[1] == 'L' && st[2] == 1",
+    "sha256": "d3e8a46e067ddf1d296da41a181ae59b6bfdd783505031276a75a453ba56778a"
+  },
+  {
+    "upstream_line": 243,
+    "ported_line": 326,
+    "expression": "ble_filter_mode(0xa4) == 0xa4 && ble_filter_mode(0xa3) == 0xa3",
+    "sha256": "5f55492734e38a11c79108643833633c167b4905120a580b5d2374f22ddfdb81"
+  },
+  {
+    "upstream_line": 244,
+    "ported_line": 327,
+    "expression": "ble_hook_classify(ble_conn) == 0xa3 && ble_classifies == 1",
+    "sha256": "e6d0fad4ef1b3a4690da83ef9e109f7e3e900163d3e1d35de2ce9bd76a3f95bb"
+  },
+  {
+    "upstream_line": 245,
+    "ported_line": 328,
+    "expression": "ble_hook_request(0xa3, (void *)0x1234) == 0 && ble_sends == 1",
+    "sha256": "6c1de14968d3ac147e555ea0ddeb922c4f835dcaff3bccc3351371fff717d1cd"
+  },
+  {
+    "upstream_line": 246,
+    "ported_line": 329,
+    "expression": "ble_sent_mode == 0xa3 && ble_sent_conn == (void *)0x1234 && ble_profile_slot == stock_fast_profile",
+    "sha256": "8a930ef4dbf096c1ae30a1f74a914ef349b617782a47ecd09094d25508aad86e"
+  },
+  {
+    "upstream_line": 248,
+    "ported_line": 331,
+    "expression": "st[3] == 0 && st[4] == 1 && st[5] == 0xa3 && st[6] == 0xa3",
+    "sha256": "6a24ba657cc6c01aa791df235528b381c1eb4d3278f312547e8bffc5eb2a0ca1"
+  },
+  {
+    "upstream_line": 249,
+    "ported_line": 332,
+    "expression": "st[7] == 0x0c && st[8] == 0 && st[9] == 0x18 && st[10] == 0 && st[11] == 0 && st[12] == 0",
+    "sha256": "1500e2b19ff35a4ab361d31d3533a27ebfe79e7bf258a202df6f0c6d227d2fdb"
+  },
+  {
+    "upstream_line": 250,
+    "ported_line": 333,
+    "expression": "st[13] == 12 && st[14] == 0 && st[15] == 0 && st[16] == 0",
+    "sha256": "99ae77dc3b645b428828c574209a4b3f1fde223b78b47ee6fe4df64b7ed995e5"
+  },
+  {
+    "upstream_line": 253,
+    "ported_line": 336,
+    "expression": "st[13] == 0 && st[14] == 0 && st[15] == 0 && st[16] == 0",
+    "sha256": "f6fb19d9565e9bf3d5d427c400c1bc832ef93b6cb496cdc2229ec2afdb93758a"
+  },
+  {
+    "upstream_line": 260,
+    "ported_line": 343,
+    "expression": "ctx.ble_fast == 0 && ble_posts == 0 && ble_cancels == 0 && ble_applied == 0xa3",
+    "sha256": "27b17a0d828ac8f93ace9bfc10cb848231cef40b391e1ec5637eb98a6c191c97"
+  },
+  {
+    "upstream_line": 264,
+    "ported_line": 347,
+    "expression": "ctx.ble_fast == 1 && ble_applied == 0 && ble_wanted == 0xa3",
+    "sha256": "96e1326032baa37524438dbc6d87ad7b80c317b385d0c2930d692c132988be7f"
+  },
+  {
+    "upstream_line": 265,
+    "ported_line": 348,
+    "expression": "ble_cancels == 1 && ble_posts == 1 && ble_post_fn == 0x0047b475u && ble_post_arg == 0xa3 && ble_post_ms == 0",
+    "sha256": "b19c55ea072b8a32ca8cdaa94d93e97dba0905e2097a3cefe6b83a4df272dbb5"
+  },
+  {
+    "upstream_line": 267,
+    "ported_line": 350,
+    "expression": "ble_posts == 1",
+    "sha256": "90bcde703eec9741025e4ead6878e41735a0b5357441efde0abd75089c656237"
+  },
+  {
+    "upstream_line": 268,
+    "ported_line": 351,
+    "expression": "ble_filter_mode(0xa4) == 0xa3 && ble_filter_mode(0xa3) == 0xa3 && ble_filter_mode(0) == 0xa3",
+    "sha256": "e2378bb1529601749f6781ecb813e5bd1d00cea709e46fd04b99cae777fa88d1"
+  },
+  {
+    "upstream_line": 271,
+    "ported_line": 354,
+    "expression": "ble_hook_classify(ble_conn) == 0xa4 && ble_classifies == 1",
+    "sha256": "4e542af9d5275b392774fcb77d96474dbf79c8f9e8f7e053c4d739969dd34c4e"
+  },
+  {
+    "upstream_line": 273,
+    "ported_line": 356,
+    "expression": "ble_hook_classify(ble_conn) == 0xa3",
+    "sha256": "d317c8ba096cb0109eda13d06136614a9c31629d43f5aedae2df9e2471c1c6ca"
+  },
+  {
+    "upstream_line": 275,
+    "ported_line": 358,
+    "expression": "ble_hook_classify(ble_conn) == 0xa4",
+    "sha256": "458c9d35b98b5f0b7f7ddd4bf120d04432763093727c1e050b80955a8ed1831f"
+  },
+  {
+    "upstream_line": 277,
+    "ported_line": 360,
+    "expression": "ble_hook_classify(0) == 0xa4 && ble_classifies == 1",
+    "sha256": "62b1a334b6fb8f3373fea415bb146f90a98b1b091057e843c598d0af55aa979d"
+  },
+  {
+    "upstream_line": 279,
+    "ported_line": 362,
+    "expression": "ble_hook_request(0xa3, 0) == 0 && ble_sends == 1 && ble_sent_mode == 0xa3",
+    "sha256": "cbb8199f9e4101ba45754e673113962fc9d34878055db6b9bb1344f537d4027b"
+  },
+  {
+    "upstream_line": 280,
+    "ported_line": 363,
+    "expression": "ble_profile_slot == ctx.ble_fast_profile",
+    "sha256": "276fa7994f320acb728bd85ada2bb10e0338154238bc0ac2863984163593386f"
+  },
+  {
+    "upstream_line": 282,
+    "ported_line": 365,
+    "expression": "p[4] == 6 && p[5] == 0 && p[6] == 6 && p[7] == 0 && p[8] == 0 && p[9] == 0",
+    "sha256": "8a5a96eb3dec0804c878c8a13f6a5861301de164e9fa0faef294166ca4192a80"
+  },
+  {
+    "upstream_line": 283,
+    "ported_line": 366,
+    "expression": "p[10] == 0x58 && p[11] == 2 && p[12] == 5 && p[13] == 0",
+    "sha256": "d85e0e5893099f3e9fcbe87bdfc7f523b5efcb54a92c4fcdd094c952c7f05bd5"
+  },
+  {
+    "upstream_line": 285,
+    "ported_line": 368,
+    "expression": "ble_hook_request(0xa4, 0) == 0 && ble_profile_slot == stock_slow_profile",
+    "sha256": "e67c04f028f36b984837bede3ec54e938b15fd4088a48ca3295c4956e84b2e8e"
+  },
+  {
+    "upstream_line": 288,
+    "ported_line": 371,
+    "expression": "st[3] == 1 && st[7] == 6 && st[8] == 0 && st[9] == 6 && st[10] == 0 && st[11] == 0 && st[12] == 0",
+    "sha256": "b93375835cfb2f3e898ba10f4e9c081b4e818b6e226c93d2aa94cbf3af1ecb0f"
+  },
+  {
+    "upstream_line": 289,
+    "ported_line": 372,
+    "expression": "st[13] == 6 && st[14] == 0 && st[15] == 0 && st[16] == 0",
+    "sha256": "728309dc8c2219b37c8436df80e23d95fbb9afd63e13c25b883d25b681e182fd"
+  },
+  {
+    "upstream_line": 295,
+    "ported_line": 378,
+    "expression": "ctx.ble_fast == 0 && ble_profile_slot == stock_fast_profile && ble_applied == 0",
+    "sha256": "a2bb7520d30371713103ff99035307eee856f7cfd96a8ac60a8f1cf45740e8d3"
+  },
+  {
+    "upstream_line": 296,
+    "ported_line": 379,
+    "expression": "ble_cancels == 2 && ble_posts == 2 && ble_post_arg == 0xa4 && ble_wanted == 0xa4",
+    "sha256": "db25531945d382507cf5ee4c5881c99e3f55be0986a63478496fca321496a2dc"
+  },
+  {
+    "upstream_line": 298,
+    "ported_line": 381,
+    "expression": "ble_posts == 3 && ble_post_arg == 0xa3",
+    "sha256": "abb13809d4222e49d352e0292c93085b4c7897f69817c1a6df865164f3b356a4"
+  },
+  {
+    "upstream_line": 301,
+    "ported_line": 384,
+    "expression": "ble_posts == 4 && ble_post_arg == 0xa3 && ble_profile_slot == stock_slow_profile",
+    "sha256": "878d71d3dc66e56a0cec787573b0d5ffa64de432112b3e10a4d1c1ac5a8da506"
+  },
+  {
+    "upstream_line": 305,
+    "ported_line": 388,
+    "expression": "ctx.ble_fast == 1 && ble_posts == 5",
+    "sha256": "7faff9f8c6bda552d29cbdb80376749a9f98aa291519e35414795a05bc59b411"
+  },
+  {
+    "upstream_line": 307,
+    "ported_line": 390,
+    "expression": "ctx.ble_fast == 0 && ble_posts == 6 && ble_post_arg == 0xa3",
+    "sha256": "52485d67cf469410b95be1152b0f3f4e12dac809f83a0334be294fe01f81b4b4"
+  },
+  {
+    "upstream_line": 309,
+    "ported_line": 392,
+    "expression": "ble_posts == 6",
+    "sha256": "ed842bf9da353935cec6e7365b476436352c70ae6e7d10e2a58d0c0ec36dc30d"
+  },
+  {
+    "upstream_line": 313,
+    "ported_line": 396,
+    "expression": "ble_filter_mode(0xa4) == 0xa4",
+    "sha256": "65e45f8d37f97a42a45dab7e6c2eadb60715ae7acb8e324150a396c05f0b0085"
+  },
+  {
+    "upstream_line": 314,
+    "ported_line": 397,
+    "expression": "ble_hook_classify(ble_conn) == 0xa3 && ble_classifies == 2",
+    "sha256": "bdc7a47c1e10bc709b6f7d1a832e31a927424b90e79bd18931e5c92e77bab339"
+  },
+  {
+    "upstream_line": 316,
+    "ported_line": 399,
+    "expression": "ble_hook_request(0xa3, 0) == 0 && ble_profile_slot == stock_fast_profile",
+    "sha256": "df2b048708a8028ac87081d0f4e65d59c5a54bd6100a383b33dd261920dcadd9"
+  },
+  {
+    "upstream_line": 319,
+    "ported_line": 402,
+    "expression": "st[3] == 0 && ble_posts == 6",
+    "sha256": "4e6a70cdb8611de5a0f10b7b4a91220eb55405ab50509c3e8af16639f85333db"
+  }
+]

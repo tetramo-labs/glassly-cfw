@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "mode": 6,
+      "decodedBytes": 17,
+      "wireBytes": 17,
+      "crc16": 52952,
+      "streamID": 0,
+      "resetContext": true,
+      "decodedSHA256": "2f2a05c2e9f840608bf559ab8197726167628db53df658cb6e8706fe6867f981",
+      "closing": 0
+    },
+    {
+      "mode": 15,
+      "decodedBytes": 19,
+      "wireBytes": 25,
+      "crc16": 39827,
+      "streamID": 1,
+      "resetContext": false,
+      "decodedSHA256": "28cadc7359920d9e7b7e9ac6b8ccedacb77aa253e6efc99734b9beca897389f1",
+      "closing": 0
+    },
+    {
+      "mode": 15,
+      "decodedBytes": 25,
+      "wireBytes": 30,
+      "crc16": 44712,
+      "streamID": 2,
+      "resetContext": false,
+      "decodedSHA256": "b08cca4d031ae1b64caf326566e458ddb2603edc92f666bc70221605a850252b",
+      "closing": 0
+    },
+    {
+      "mode": 8,
+      "decodedBytes": 4096,
+      "wireBytes": 314,
+      "crc16": 29115,
+      "streamID": 3,
+      "resetContext": false,
+      "decodedSHA256": "8f623d8d4f20d4c48f807092ab9a6898eff826ef0a24180854d4fb9efdbf05b8",
+      "closing": 0
+    },
+    {
+      "mode": 8,
+      "decodedBytes": 4096,
+      "wireBytes": 38,
+      "crc16": 29115,
+      "streamID": 6,
+      "resetContext": false,
+      "decodedSHA256": "8f623d8d4f20d4c48f807092ab9a6898eff826ef0a24180854d4fb9efdbf05b8",
+      "closing": 0
+    },
+    {
+      "mode": 8,
+      "decodedBytes": 65535,
+      "wireBytes": 84,
+      "crc16": 6392,
+      "streamID": 7,
+      "resetContext": false,
+      "decodedSHA256": "59e52dc17d600ba3b63fe331c6528514a51993ee69a276b997ec9d7439282db9",
+      "closing": 0
+    },
+    {
+      "mode": 7,
+      "decodedBytes": 2,
+      "wireBytes": 8,
+      "crc16": 38073,
+      "streamID": 8,
+      "resetContext": false,
+      "decodedSHA256": "ff86c77e8ead00caf9bc3d3d424d759b34b27c685c3b94002cece6edfe763c41",
+      "binaryReplyBytes": 20,
+      "closing": 0
+    },
+    {
+      "mode": 11,
+      "decodedBytes": 1,
+      "wireBytes": 7,
+      "crc16": 20635,
+      "streamID": 9,
+      "resetContext": false,
+      "decodedSHA256": "e7cf46a078fed4fafd0b5e3aff144802b853f8ae459a4f0c14add3314b7cc3a6",
+      "closing": 1
+    },
+    {
+      "mode": 6,
+      "decodedBytes": 17,
+      "wireBytes": 17,
+      "crc16": 52952,
+      "streamID": 0,
+      "resetContext": true,
+      "decodedSHA256": "2f2a05c2e9f840608bf559ab8197726167628db53df658cb6e8706fe6867f981",
+      "closing": 0
+    },
+    {
+      "mode": 15,
+      "decodedBytes": 19,
+      "wireBytes": 25,
+      "crc16": 39827,
+      "streamID": 1,
+      "resetContext": false,
+      "decodedSHA256": "28cadc7359920d9e7b7e9ac6b8ccedacb77aa253e6efc99734b9beca897389f1",
+      "closing": 0
+    },
+    {
+      "mode": 15,
+      "decodedBytes": 25,
+      "wireBytes": 30,
+      "crc16": 44712,
+      "streamID": 2,
+      "resetContext": false,
+      "decodedSHA256": "b08cca4d031ae1b64caf326566e458ddb2603edc92f666bc70221605a850252b",
+      "closing": 0
+    }
+  ],
+  "traceSHA256": "5beef589fb43983f7f212b041048084e6f6bb4a492df03578d6ea13515db64f5",
+  "limitation": "Application callback traffic, not independent radio capture or visual confirmation"
+}

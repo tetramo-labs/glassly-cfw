@@ -1,0 +1,75 @@
+{
+  "format": "memomind-storage-diagnostic-hardware-v1",
+  "updated_utc": "2026-10-31T21:37:56.097496+00:00",
+  "currently_installed": true,
+  "build": "runtime/build/storage-diag-001",
+  "runtime_bytes": 54064,
+  "runtime_sha256": "265f8837b2b939930434253f7be63a1155190fef701c57d8c123d482a66725eb",
+  "ota_bytes": 2223868,
+  "ota_sha256": "97b93ea4c56a8d628149a6ed57af04fad3976ec46c2a37ee770e9183bc928a76",
+  "ota_proof": "analysis/protocol/storage-diag-runtime/whole-image-proof.json",
+  "preflight_manifest": "captures/storage-diag-runtime-20261031/preflight-03/manifest.json",
+  "app_header_full256_matches": true,
+  "effective_physical_badmap_acquired": true,
+  "persisted_badmap_record_present": false,
+  "badmap_source": "native-defined-absent-default",
+  "native_getter_status": 7,
+  "effective_tail_usable_sectors": 256,
+  "topology_unchanged_and_consistent": true,
+  "xip1_driver": "85-family",
+  "cached_xip1_legacy_id": "0x1685",
+  "known_general_spi_ready": true,
+  "cus8_context_present": false,
+  "cus8_validated_package_state": 0,
+  "topology_inference": "Observed recognized85-family XIP1 and ready known generalSPI backend corroborate distinct supported identity predicates; not direct electrical/netlist proof.",
+  "plugin_directory_unchanged_and_all_ff": true,
+  "physical_flash_read_calls": 258,
+  "physical_flash_read_bytes": 66048,
+  "badmap_getter_calls": 1,
+  "passive_topology_queries": 2,
+  "failed_reconnects": [
+    {
+      "attempt": "preflight-01",
+      "before_business_frame_writes": true,
+      "automatic_retry": false
+    },
+    {
+      "attempt": "preflight-02",
+      "before_business_frame_writes": true,
+      "automatic_retry": false
+    }
+  ],
+  "reconnect_evidence": "captures/storage-diag-runtime-20261031/reconnect-state.json",
+  "post_checks": "captures/storage-diag-runtime-20261031/post-checks.json",
+  "free_bytes_after_reads": 334076,
+  "input_observer_inactive": true,
+  "heartbeat": 0,
+  "capture_files_hash_verified": 24,
+  "rotation_recovered_tail_bytes": 5479,
+  "capture_caveats": {
+    "session-combined.btsnoop": {
+      "truncated_records": 0,
+      "issues": [
+        {
+          "offset": 2208050,
+          "error": "timestamp moved backwards"
+        },
+        {
+          "offset": 5489084,
+          "error": "timestamp moved backwards"
+        }
+      ]
+    },
+    "hci-002.btsnoop": {
+      "truncated_records": 0,
+      "issues": []
+    }
+  },
+  "general_capture_losslessness_proven": false,
+  "flash_mutations_by_diagnostics": 0,
+  "mutable_flash_reserved": false,
+  "phone_restored": true,
+  "bridge_stopped": true,
+  "collector_stopped": true,
+  "full_cfw_parity": false
+}

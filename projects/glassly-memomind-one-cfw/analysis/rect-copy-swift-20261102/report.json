@@ -1,0 +1,53 @@
+{
+  "status": "passed-offline",
+  "hardware_operations": false,
+  "api": "RasterCommands.rectangleCopy(source: RasterRectangle, destination: RasterRectangle) throws -> Data",
+  "wire": {
+    "mode": 9,
+    "bytes": 17,
+    "fields": "source x,y,width,height then destination x,y,width,height; all unsignedLE16",
+    "stereo_api": false
+  },
+  "constraints": {
+    "display": [
+      600,
+      350
+    ],
+    "positive_equal_dimensions": true,
+    "both_wholly_in_bounds": true,
+    "clipping": false,
+    "odd_coordinates_and_dimensions": true,
+    "overlap_and_self_copy": true
+  },
+  "upstream": {
+    "commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+    "source": "tests/g2_compat/upstream/patches/zlib_glue.c",
+    "source_sha256": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+    "branch_sha256": "178c0a1e6d88a72f7e124c789948987aacab9831d891ce353b33d16aa1c35183",
+    "ordinary_09": "One shared source/destination pair.",
+    "variant_89": "First/left pair for FW_SIDE()==2; second/right otherwise. Only selected pair validated. MemoMind nativeadapterdeclaresfirst/left selection; Swift emits09only.",
+    "trailing": "Original09/89 accept17/33minimum andignoretrailing. Swift outputs exact17only."
+  },
+  "checks": {
+    "original_branch_with_call_recorder": 72,
+    "swift_new_test_methods": 5,
+    "swift_prior_raster_test_methods": 8,
+    "all_selected_passed": true,
+    "wire_vectors": 6
+  },
+  "limitations": [
+    "Nativecall mocks record selection/coordinates; do not execute framebuffercopy, MemoMindownership, or hardwaredisplay.",
+    "Pureencoderdoesnotacquirelease, establishrasterbase, stopscene, querymodecapability, orsendcommands.",
+    "Actualnativeintegrationandhardwaretestremainparent/firmwareagentscope."
+  ],
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/RectangleCopyCommand.swift": "a27fce2c6ade44dd7d7355a9b0507ed772347dbe9fd3fcce718dc9e5a8756a73",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/RectangleCopyCommandTests.swift": "6bc18259d01a9e0ecf1cef578b0246baa615656460ca2fbbacb446c47daaf6c0",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/RectangleCopyVectors.swift": "417c8a55c5e6820bd4be06ac49bd82a42d771b8b0681f7fb33778eaaf216124c",
+    "swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift": "7d6482a2d22c3ac52c84972215255d44151f7766585d49abaafc15c9e585ee3e"
+  },
+  "commands": [
+    "python3 analysis/rect-copy-swift-20261102/generate_reference.py",
+    "swift test --package-path swift/MemoMindKit --scratch-path /tmp/mm-swift-rect-copy-tests --filter RectangleCopyCommandTests|RasterCommandsTests"
+  ]
+}

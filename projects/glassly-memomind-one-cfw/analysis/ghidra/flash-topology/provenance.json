@@ -1,0 +1,36 @@
+{
+  "inputs": [
+    {
+      "path": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+      "bytes": 1773176,
+      "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8"
+    },
+    {
+      "path": "analysis/ghidra/boot-validation/report.md",
+      "bytes": 10281,
+      "sha256": "1a7f3c14f5943ba1b9ad5b9270467c1f27ca20b88c426abb5a18d898a812aaf2"
+    },
+    {
+      "path": "analysis/ghidra/native-store-inventory/report.md",
+      "bytes": 6366,
+      "sha256": "5efdea3444dd8b6cc84378ee4d9dd70191e19d6df3c2a22d99f619e34e45b784"
+    },
+    {
+      "path": "analysis/ghidra/external-reservation-review/other/function-04239a66.c",
+      "bytes": 2520,
+      "sha256": "a896d1d87f6395ba6e6e06943f436cab644750d57f053188071c208c686f0157"
+    },
+    {
+      "path": "analysis/ghidra/external-reservation-review/other/function-04239ea4.c",
+      "bytes": 1777,
+      "sha256": "9b65025919d837e62a0c37c6c47a36f823ca4727311cf6bc20f8b1af25bd632d"
+    },
+    {
+      "path": "analysis/ghidra/input-adapter/startup-code.asm",
+      "bytes": 1387,
+      "sha256": "9df75ea8fac0fd375d4ff66d0f5738931469f424dce194c017007ae37ece7d79"
+    }
+  ],
+  "controller_tables": "startup-derived initialized RAM mapping; not live memory",
+  "writes": "analysis evidence only"
+}

@@ -1,0 +1,67 @@
+{
+  "format": "memomind-native-rect-copy-hardware-v1",
+  "utc": "2026-11-02T04:51:04.500623+00:00",
+  "state": "Mode9 installed, exact boot header verified, overlap/copy commands acknowledged, copied pattern confirmed visible, malformed requests rejected, session cleared",
+  "candidate": {
+    "path": "captures/firmware/rect-copy-001/firmware.bin",
+    "bytes": 2228668,
+    "sha256": "680163e3789831cd3eda89a60b208cb0e85eaa61c46067dbd6d59ff26cee1885"
+  },
+  "runtime": {
+    "path": "runtime/build/rect-copy-001/graphics.bin",
+    "bytes": 62240,
+    "sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7"
+  },
+  "current_installed_release": "rect-copy-001",
+  "installed": true,
+  "boot_verified": true,
+  "added_command_mode": 9,
+  "hardware_commands_executed": true,
+  "visible_copy_confirmed": true,
+  "background_gray4": 0,
+  "transfer_verification": "analysis/rect-copy-native-20261102/trace-verification.json",
+  "preflight_verification": "analysis/rect-copy-native-20261102/preflight-verification.json",
+  "smoke_verification": "analysis/rect-copy-native-20261102/smoke-verification.json",
+  "visual_confirmation": "analysis/rect-copy-native-20261102/visual-confirmation.json",
+  "visual_repeat_verification": "analysis/rect-copy-native-20261102/smoke-02-partial-verification.json",
+  "repeat_disconnected_after_seconds": 50.24641187489033,
+  "separate_cleanup_verification": "analysis/rect-copy-native-20261102/cleanup-verification.json",
+  "capture_manifests": [
+    "captures/swift-mac-rect-copy-cleanup-20261102-01/capture-manifest.json",
+    "captures/swift-mac-rect-copy-flash-20261102-01/capture-manifest.json",
+    "captures/swift-mac-rect-copy-preflight-20261102-01/capture-manifest.json",
+    "captures/swift-mac-rect-copy-preflight-20261102-02/capture-manifest.json",
+    "captures/swift-mac-rect-copy-smoke-20261102-01/capture-manifest.json",
+    "captures/swift-mac-rect-copy-smoke-20261102-02/capture-manifest.json"
+  ],
+  "offline_runtime_report": "analysis/rect-copy-001/report.json",
+  "swift_encoder_report": "analysis/rect-copy-swift-20261102/report.json",
+  "independent_review": "analysis/rect-copy-review-20261102/report.md",
+  "smoke_review": "analysis/rect-copy-swift-20261102/smoke-review.json",
+  "aggregate": "analysis/regression-20261102-01/report.json",
+  "required_stages_passed": 84,
+  "python_tests_passed": 221,
+  "swift_tests_passed": 63,
+  "ios15_core_typecheck_passed": true,
+  "regression_source_files_rechecked": 260,
+  "source_drift": false,
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support"
+  ],
+  "full_command_parity": false,
+  "full_g2_parity": false,
+  "next_command_modes": [
+    8,
+    15
+  ],
+  "canary_repeated": false,
+  "limits": [
+    "8192-byte native ingress and64KiB cache remain; native full capacity is pending.",
+    "Single display first/left rectangle pair; no stereo claim.",
+    "User confirms visible copy; no hardware pixel readback or exact per-pixel physical comparison.",
+    "Independent decoded command/snapshot verification does not prove physical overlap pixels or continuous retention.",
+    "Application trace, not independent HCI/radio capture.",
+    "Native timing/performance, other commands and storage integration remain incomplete.",
+    "First90s run completed and cleared; user missed it. Repeat was visibly confirmed but Bluetooth closed after50s; a separate reconnect/header check/clear succeeded. Disconnect cause is unproven."
+  ]
+}

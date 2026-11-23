@@ -1,0 +1,49 @@
+{
+  "format": "memomind-bundle-verifier-readonly-review-v1",
+  "assessment": "No remaining blocking defect found after root corrections.",
+  "root_sources_edited": false,
+  "hardware_operations": false,
+  "synthetic_cases": 22,
+  "all_passed": true,
+  "suite": "run-004/report.json",
+  "source_sha256": {
+    "analysis/bundle-native-20261102/verify-smoke.py": "aa1c36611dd48bdc69d93ea8bc03232b188f5878eb771ad945103055ef2859c2",
+    "analysis/bundle-native-20261102/admit-candidate.py": "05ec260a17a067b097ac9bf6d64ca2bea0bd896894827b93031940c27423b5d5",
+    "analysis/bundle-swift-20261102/verifier-review/test_verifier.py": "19e9cda274e7824ad879d371c9e465406d618b4e8ebdea875efe93dde99f20fc"
+  },
+  "fixed_findings": [
+    "Settled notifications now require a completed originating request and no pending request, so cannot precede primary reply or request transmission. Their source command is checked against the exact tag/late-failure bundles.",
+    "Scene JSON now requires one bounded TLV, exact integerABI and canonical serialized wrapper; replyHex is lowercase/even/bounded and parsed by status-specific scene decoder.",
+    "All new TX submissions require no pending business request. This closes independently reproduced acceptance of overlapping RESET/tag-bundle requests with reordered responses."
+  ],
+  "covered_faults": [
+    "optimized-refused",
+    "boolean-abi-0",
+    "boolean-abi-1",
+    "boolean-abi-5",
+    "boolean-tag",
+    "tag-before-primary",
+    "tag-before-request",
+    "wrong-tag-event",
+    "duplicate-main",
+    "overlapping-business-requests",
+    "missing-completion",
+    "missing-tag",
+    "duplicate-tag",
+    "uppercase-hex",
+    "whitespace-hex",
+    "truncated-scene",
+    "wrong-final-scratch-request",
+    "wrong-scene-epoch",
+    "late-failure-misreported-ok",
+    "timeout-hold-too-short",
+    "wrong-final-pixels"
+  ],
+  "admission": "admission-review.json; AST/markers/optimized refusal checked; normal mutation script never executed by reviewer.",
+  "limitations": [
+    "Fragment ACKs are checksum/stream parsed but their head/order is not independently asserted by this verifier. Production GMSession enforces intermediate ACK heads; this is an explicit scope boundary.",
+    "Synthetic positive fixture uses a timeout-based300second hold, not actual time or a user-confirmation sentinel; it makes no hardware/visibility claim.",
+    "Initial run-001 uppercase negative was ineffective because its hex contained no alphabeticdigits; epoch changed to12ab inrun-002 onward. run-003 preserved actual overlapping-request verifier bug before rootfix. Finalrun-004 is authoritative.",
+    "Pin substitution and final constructed catalog tests remain roots deployment gate; no live outcome inferred."
+  ]
+}

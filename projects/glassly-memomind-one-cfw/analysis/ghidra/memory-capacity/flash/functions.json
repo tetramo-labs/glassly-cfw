@@ -1,0 +1,55 @@
+[
+  {
+    "requested": "043299aa",
+    "address": "ram:043299aa",
+    "incoming_references": [
+      "ram:042356b8 UNCONDITIONAL_CALL",
+      "ram:04316a30 UNCONDITIONAL_CALL",
+      "ram:0433f6dc UNCONDITIONAL_CALL",
+      "ram:0420fe0c COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04329b1e",
+    "address": "ram:04329b1e",
+    "incoming_references": [
+      "ram:04235648 UNCONDITIONAL_CALL",
+      "ram:04316a40 UNCONDITIONAL_CALL",
+      "ram:04316a7e UNCONDITIONAL_CALL",
+      "ram:04316aa8 UNCONDITIONAL_CALL",
+      "ram:042403d8 UNCONDITIONAL_CALL",
+      "ram:04240406 UNCONDITIONAL_CALL",
+      "ram:0433f5be UNCONDITIONAL_CALL",
+      "ram:0433f66e UNCONDITIONAL_CALL",
+      "ram:04341534 UNCONDITIONAL_CALL",
+      "ram:04341ac6 UNCONDITIONAL_CALL",
+      "ram:0420fe5e COMPUTED_CALL",
+      "ram:042a40f2 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0420fd64",
+    "address": "ram:0420fd64",
+    "incoming_references": [
+      "ram:042106c0 UNCONDITIONAL_CALL",
+      "ram:042106cc UNCONDITIONAL_CALL",
+      "ram:042100c0 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042a8986",
+    "address": "ram:042a8986",
+    "incoming_references": [
+      "ram:042a8e4e UNCONDITIONAL_CALL",
+      "ram:042a8d26 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

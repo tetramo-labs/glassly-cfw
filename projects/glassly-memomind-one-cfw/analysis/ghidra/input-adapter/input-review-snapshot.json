@@ -1,0 +1,10 @@
+{
+  "scope": "read-only ownership/native ABI review; no hardware validation",
+  "sources": {
+    "runtime/graphics/input.c": "d606bfdf8d3401735b56ffc4ecc008f9318d0d6ab49ef735b4e584e0bf4d372c",
+    "runtime/graphics/input.h": "7cb5e503daee3a0b8fac116ce76d820cd7d32a07a4980861a2aa7c0acd6ca5c3",
+    "runtime/graphics/native.c": "0367b842286e22c47ee0b20340594b9a57db716405b4b62b6c944be27b810cbf",
+    "runtime/graphics/graphics.c": "dade3b2422099b5ee35551450b7b0c4ad0a5aacdf5c48f8733ec8feb9bc14cb3",
+    "runtime/graphics/entry.S": "5b52acaa19aa5cef580edb22f88b1b595322a5e527486d4e3858917c8abe222b"
+  }
+}

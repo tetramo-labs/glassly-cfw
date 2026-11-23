@@ -1,0 +1,50 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source": "tests/g2_compat/upstream/patches/zlib_glue.c",
+  "source_sha256": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+  "context_header_sha256": "b97c5a410cc29c37397f6dacdcbc25955d692c311f8a77a0a242800f118ac231",
+  "frame_id_ring_entries": 16,
+  "diagnostic_branch_sha256": "88c601dd2ed882340fc3c8d6ed3ee1ff656a5e8c25959b01a1b8b7ea597460d5",
+  "cleanup_branch_sha256": "70a28db908ba68d5b815c2138ed63bf89642b2c1b493705070cb7b1117059a5c",
+  "checks": 2071,
+  "build_command": [
+    "clang",
+    "-dynamiclib",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/diagnostics-swift-20261102/reference.c",
+    "-o",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/diagnostics-swift-20261102/reference.dylib"
+  ],
+  "mock_boundary": "Host-owned diagnostic field context, allocator diagnostic reset counter and cleanup callback return37. No actual cleanup internals/native controller or display claims.",
+  "canonical_fixtures": {
+    "clear": "0700",
+    "hide": "0701",
+    "show": "0702",
+    "cleanup": "0b"
+  },
+  "status": "passed",
+  "swift_test_methods": 12,
+  "new_swift_test_methods": 3,
+  "bundle_test_methods": 9,
+  "device_actions": false,
+  "source_files": [
+    "swift/MemoMindKit/Sources/MemoMindCore/DiagnosticCommands.swift",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/DiagnosticCommandsTests.swift"
+  ],
+  "existing_production_edits": false,
+  "source_sha256s": {
+    "swift/MemoMindKit/Sources/MemoMindCore/DiagnosticCommands.swift": "60ce8cc65e3cc32870d84828e7dfbd30861b9ddc8c070633453493dcc7f4bbfe",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/DiagnosticCommandsTests.swift": "83432f9cc891c4b76492c71eeeacc75cb26fdb9eec0e931b4605375da9d65085"
+  },
+  "artifact_sha256": {
+    "report.md": "1253c71df08a22258632082397687d62af4610fc997f43ae04dfe5b63df04601",
+    "reference.c": "eeb9c59f37242213697d4368ed8b5b115d3a26aec4a89fb6411a138150d59201",
+    "generate_reference.py": "1b7c547e65f47771c61c85cfc9cb74418c8778ca632665ccc54bab7e848a4c44",
+    "swift-tests.log": "8900abdedf36805eaaa5c73cf06afab9768d587de28b2c81d6a01bb6edbf18aa",
+    "reference.json": "9bf66e068fe805756b54875d80a5c8dbe4a790d9969e94bd9f9facff9193cc13",
+    "reference.dylib": "6e743911c05c01aac091450d34a6ddac1fc1c3c3d4505932456ebed928fccb40"
+  }
+}

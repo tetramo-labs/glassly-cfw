@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-04",
+  "attempt": "flash-attempt-20261104-101746",
+  "flashed": true,
+  "candidate_sha256": "574f6542ef749741721d8bf040aa0b45eb8837d9357b900865473400027d2c59",
+  "actual_image_sha256": "4ddf865a61576ad00e08374833df34cda679e0bae6f61190a8d86458a9286294",
+  "fresh_backups_identical": true,
+  "full_readback_verified": true,
+  "verified_sectors": [
+    "0x26000",
+    "0x35000",
+    "0x36000",
+    "0x55000",
+    "0x3000"
+  ],
+  "page_programs": 80,
+  "current_settings_preserved": true,
+  "metadata_sha256": "d28eeb8739290cf33b0533a55ca9c7d6afca2567e37e43df6a815798838d1e43",
+  "hardware_behavior_tested": false
+}

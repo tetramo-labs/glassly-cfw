@@ -1,0 +1,231 @@
+{
+  "kind": "offline execution of stock Thumb in simulated memory; not hardware validation",
+  "unicorn_version": "2.1.4",
+  "tool_sha256": {
+    "emulate_stock.py": "99e3345daf42f6e8dc8c55d9012e4d5a68e61c5409d5fa40d8442a34fa43a5ee",
+    "startup.py": "6d2281c79fc2910e531ca881e55b50aca1f8fe9bb5029bca53d722a8972517a7",
+    "memory_layout.py": "a736199248e8ab6b8997b037aa9a7b25b525feedef8091883bfca8b618f7f208"
+  },
+  "section_sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+  "startup": {
+    "records": [
+      {
+        "source": 16947276,
+        "destination": 131072,
+        "size": 1932,
+        "initializer": 16876490
+      },
+      {
+        "source": 16948228,
+        "destination": 133004,
+        "size": 9100,
+        "initializer": 16921410
+      }
+    ],
+    "compressed_bytes_consumed": 950,
+    "initialized_and_zero_ram_sha256": "5ba3a96ed254415ba07065e0fe4433eeb4fa56e40af28cee551cc4d2ff302fbd"
+  },
+  "memory_pools": {
+    "pools": 8,
+    "blocks": 26,
+    "all_arguments_and_free_lists_checked": true,
+    "writes_limited_to_heads_block_links_and_stack": true,
+    "observed_initializer_stack_bytes": 72,
+    "stubs": [],
+    "whole_firmware_stack_bound": false
+  },
+  "gpio": {
+    "combinations": 4096,
+    "ignored_pins_checked": true,
+    "mapping": [
+      {
+        "bank": 0,
+        "pin_bit": 1,
+        "mask_bit": 5
+      },
+      {
+        "bank": 0,
+        "pin_bit": 0,
+        "mask_bit": 4
+      },
+      {
+        "bank": 0,
+        "pin_bit": 9,
+        "mask_bit": 13
+      },
+      {
+        "bank": 0,
+        "pin_bit": 10,
+        "mask_bit": 12
+      },
+      {
+        "bank": 0,
+        "pin_bit": 5,
+        "mask_bit": 11
+      },
+      {
+        "bank": 1,
+        "pin_bit": 14,
+        "mask_bit": 9
+      },
+      {
+        "bank": 1,
+        "pin_bit": 10,
+        "mask_bit": 8
+      },
+      {
+        "bank": 1,
+        "pin_bit": 13,
+        "mask_bit": 7
+      },
+      {
+        "bank": 1,
+        "pin_bit": 12,
+        "mask_bit": 6
+      },
+      {
+        "bank": 1,
+        "pin_bit": 11,
+        "mask_bit": 0
+      },
+      {
+        "bank": 2,
+        "pin_bit": 4,
+        "mask_bit": 3
+      },
+      {
+        "bank": 2,
+        "pin_bit": 1,
+        "mask_bit": 10
+      }
+    ],
+    "physical_labels": "unresolved"
+  },
+  "input_wrapper": {
+    "combinations": 4096,
+    "stubs": [],
+    "constant_predicate": "0x0101f09c returns one",
+    "delay_calls": 0,
+    "retained_state_unchanged": true,
+    "finding": "Stock wrapper returns raw GPIO mask; delay/resample branch is bypassed"
+  },
+  "input_task_gates": {
+    "mode": 5,
+    "software_ring_capacity": 2048,
+    "cases": [
+      {
+        "state": 2,
+        "ipc_available": 799,
+        "software_ring_used": 1997,
+        "reached": "early_return"
+      },
+      {
+        "state": 2,
+        "ipc_available": 800,
+        "software_ring_used": 1997,
+        "reached": "gpio"
+      },
+      {
+        "state": 2,
+        "ipc_available": 800,
+        "software_ring_used": 1998,
+        "reached": "alternate_input"
+      },
+      {
+        "state": 2,
+        "ipc_available": 799,
+        "software_ring_used": 1998,
+        "reached": "early_return"
+      },
+      {
+        "state": 1,
+        "ipc_available": 799,
+        "software_ring_used": 1997,
+        "reached": "gpio"
+      },
+      {
+        "state": 1,
+        "ipc_available": 799,
+        "software_ring_used": 1998,
+        "reached": "gpio"
+      }
+    ],
+    "stubs": {
+      "0x0101c418": 0,
+      "0x0101f0bc": 1,
+      "0x0101a92c": 0,
+      "0x0101fba0": 0,
+      "0x0101fc18": 0
+    },
+    "finding": "In state 2, stock GPIO sampling is skipped by either IPC or software-ring congestion; other modes not exhaustively checked"
+  },
+  "timer": {
+    "deadline_cases": 36,
+    "registration_executed": true,
+    "timer_address": "0x000219dc",
+    "callback": "0x0101be15",
+    "tick_counter": "0x00020640",
+    "scale_byte": "0x0002058d",
+    "formula": "deadline = tick + 1 + floor(delay_argument / scale), modulo 2^32",
+    "scales_are_synthetic": true,
+    "wall_clock_and_sleep_behavior_verified": false
+  },
+  "ble_lifecycle": {
+    "ble_state_address": "0x00020682",
+    "connected_value": 2,
+    "disconnected_value": 3,
+    "event_opcodes": {
+      "connect": 2,
+      "disconnect": 5,
+      "data": 8
+    },
+    "timer_address": "0x00021ebc",
+    "timer_delay_argument": 5999,
+    "wrong_handle_preserves_timer": true,
+    "matching_handle_cancels_timer": true,
+    "synthetic_handle": "0x2345",
+    "watchdog_cases": [
+      {
+        "disconnected": false,
+        "mode": 0,
+        "flags": 0,
+        "restart_entry_calls": 1
+      },
+      {
+        "disconnected": false,
+        "mode": 3,
+        "flags": 0,
+        "restart_entry_calls": 0
+      },
+      {
+        "disconnected": false,
+        "mode": 0,
+        "flags": 64,
+        "restart_entry_calls": 0
+      },
+      {
+        "disconnected": true,
+        "mode": 0,
+        "flags": 0,
+        "restart_entry_calls": 0
+      }
+    ],
+    "stubs": [
+      "0x0101f98c",
+      "0x0101f9a0",
+      "0x0101c874",
+      "0x01023290"
+    ],
+    "radio_event_generation_verified": false,
+    "ccc_semantics_verified": false,
+    "restart_executed": false,
+    "wall_time_verified": false
+  },
+  "ipc": {
+    "cursor_pairs": 1024,
+    "exact_fill_ambiguities": 32,
+    "sleep_wake_tested": false,
+    "radio_delivery_tested": false,
+    "finding": "Stock accepts exact fill, leaving read == write; custom producer must reserve a byte"
+  }
+}

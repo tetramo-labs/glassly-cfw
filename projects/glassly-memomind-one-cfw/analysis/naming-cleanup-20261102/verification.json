@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "scope": "Bundled reference naming normalization and repository history cleanup",
+  "version_format": "GLASSLYCFW/N",
+  "firmware_flashed": false,
+  "installed_firmware_changed": false,
+  "checks": {
+    "g2_host_and_typescript_stages_passed": 16,
+    "geometry_original_pixel_comparisons": 828,
+    "rle_count_color_combinations": 1048560,
+    "rle_malformed_differential_streams": 20000,
+    "encoder_byte_identical_cases": 378,
+    "portable_upstream_original_assertion_sites": 78,
+    "portable_upstream_original_assertion_evaluations": 25620,
+    "portable_upstream_public_api": "passed",
+    "rv32_compile": "passed",
+    "inventory": "passed",
+    "scene_port_reproducibility": "passed",
+    "git_diff_check": "passed"
+  },
+  "limits": [
+    "No hardware test or OTA performed for naming cleanup",
+    "Full MemoMind command and capacity parity remains incomplete",
+    "Historical execution reports retain the hashes of inputs used at execution time"
+  ],
+  "reports": {
+    "g2/report.json": {
+      "sha256": "bbeb471c5276c075dbdd5d1107c9838b3d73b3609ed5ee19c813162ae7238e5c",
+      "bytes": 13422
+    },
+    "geometry/report.json": {
+      "sha256": "83753c5ed60514378e77ec8579256af2e529c9da7cb8cdeb1f1b49328df20f7f",
+      "bytes": 11326
+    },
+    "geometry/vector/report.json": {
+      "sha256": "9b5c7b94e658c7d02d5a39d3afd4c8a7ecf6b88c490e82237a9eeeddc212481d",
+      "bytes": 141525
+    },
+    "upstream/report.json": {
+      "sha256": "0c8dee97677f98f3fa1f877f315d716a86f02db8314e9cf777b98e079cd26694",
+      "bytes": 11571
+    }
+  }
+}

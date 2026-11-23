@@ -1,0 +1,91 @@
+{
+  "format": "memomind-text-commands-offline-v1",
+  "frozen": true,
+  "hardware_tested": false,
+  "runtime": "runtime/build/text-commands-001/graphics.bin",
+  "build_manifest": "runtime/build/text-commands-001/build.json",
+  "blob_bytes": 63648,
+  "blob_sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7",
+  "elf_sha256": "6d3297971ac0efbe2643fa945588b9736cab2acfd67f05d01c0e5d578909119b",
+  "unchanged_blob_limit": 65536,
+  "remaining_blob_bytes": 1888,
+  "changed_source_sha256": {
+    "runtime/graphics/native_text.c": "3e3a2c07b8c35db4456badab224044b4f2a7a04d016f7377b03179674125aaa6",
+    "runtime/graphics/native_text.h": "b076d1e8f3b3a22dcda0b7aedc3db437b0c880478257d11b1a67b7410758c079",
+    "runtime/graphics/scene_session.c": "f638e0b70f7e53eccac0d4f9d5140ad8dd14003dcddbc2f5c6c99f5f087a09a9",
+    "runtime/graphics/graphics.c": "32bb88a767557471e7fd292d500001519d2f7eed13eb56690d8f769702363d9f",
+    "scripts/compile_memomind_graphics.py": "c527dd45787844cd65423da51545c1f9d7c9dcd7117fdd8e396f33339fd99164",
+    "scripts/test_compile_memomind_text.py": "e522f54c75f7197b3b1e373c82a145fdb2a2509e2c7086ced5b9b462a09682b3",
+    "runtime/graphics/tests/test_text_commands.c": "8b325f9948393a9064585887374b556ffe2df966e550469eb3da640b1a276c02",
+    "runtime/graphics/tests/run_text_command_tests.py": "9e4f85ee0262cf57aa20bbe808b4d50eb07cf0ff9d74fe8d3b11f02a80733c65",
+    "tests/rv32/text_command_runtime_emulator_test.py": "b4b6877a50efc021996bfb9044fabe428346fa5f0f2c8b06870fad11a84f017f",
+    "tests/rv32/text_command_existing_runtime_emulator_test.py": "5fb4d7db5a49c5323c08c63355fee949346e8b9094204a55b61050454a60a2ea"
+  },
+  "source_drift_from_build": [],
+  "legacy_bundle_byte_identical": {
+    "verified": true,
+    "bytes": 63200,
+    "sha256": "deeddff1533fc36c5468394a1fbbd612d3a2ec096dc864d963fa3cc30148f450",
+    "manifest": "legacy-bundle-build.json"
+  },
+  "host_original_function_differential_cases": 2598,
+  "host_report": "host/report.json",
+  "actual_rv32_groups": 5,
+  "actual_rv32_calls": 644,
+  "observed_stack_bytes": {
+    "BT": 64,
+    "display": 1152
+  },
+  "native_firmware_mocked": true,
+  "gate_cases": 7955,
+  "retained_suite_groups": {
+    "canary": 10,
+    "reader": 12,
+    "input": 6,
+    "scene": 8,
+    "bundle": 7
+  },
+  "strict_contract_reports": [
+    "canary-contract.json",
+    "reader-contract.json"
+  ],
+  "compiler_dependency_tests": {
+    "tests": 1,
+    "subcases": 4
+  },
+  "independent_review": "analysis/text-command-review-20261102",
+  "semantics": {
+    "modes": [
+      15,
+      143
+    ],
+    "wire": "mode,x:s16LE,y:s16LE,options:u8,length:u8,exactly length bytes",
+    "text_bytes": [
+      0,
+      255
+    ],
+    "trailing": "rejected",
+    "utf8": "strict scalar values; NUL invalid; DEL valid; controls1..31 shiftx by byte-11",
+    "options": "low4 intensity;0x10 skips originalzero;0x20 inverse then floor(scale/15);0xc0 ignored",
+    "native_fonts": "existing proven mapped resource handles only; missing/unsupported/unavailable rejects full string",
+    "scratch": "4*max(byteLength,1) transient bytes plus RV32 ownershipheader8; existing170KiBbudget/48KiBheadroom",
+    "valid": "preflight all glyphs, draw shared buffer, takeover stops animation, one present outside bundle",
+    "invalid": "pixels and retained animation unchanged before this child; prior bundle children retained",
+    "bundle": "15 admitted with finalcache retention and one finalpresent; existingcollector and partialfailure semantics"
+  },
+  "not_changed": [
+    "portable scene/vector implementation",
+    "aggregate runner/inventory/status",
+    "Swift/catalog",
+    "previous immutable binaries/evidence",
+    "device state"
+  ],
+  "limitations": [
+    "Syntheticfont differential does not establish equal real G2/Memo glyphs or metrics",
+    "G2 missingglyph advance-only behavior intentionally differs: Memo rejects; native fallback baselines use proven resolvedfont fields",
+    "Existing retained shape text cap128 unchanged; onlymode15 supports255",
+    "Native8192 ingress/64KiB RAM asset capacity unchanged; no fullcommand/capacity parity claim",
+    "Native firmware APIs mocked; actual hardware fontresources, timing and delivery not established here",
+    "Synthetic stacks exclude nativecallees/scheduler/interrupt frames"
+  ]
+}

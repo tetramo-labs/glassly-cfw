@@ -1,0 +1,187 @@
+{
+  "format": "memomind-scene-hardware-verification-v1",
+  "updated_utc": "2026-10-31T19:29:40.337312+00:00",
+  "image_sha256": "ae772aed4107926e2d2c659e8cbdbc69d92421792c98630f9b7175b1188290d5",
+  "image_bytes": 2218446,
+  "runtime_sha256": "cd849a72ecd662a79327d01f792ddbe6b09cd5d7a2a683aa05440301dced2bbd",
+  "runtime_bytes": 44592,
+  "installed_modes": [
+    11,
+    19,
+    20,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "native_store_kib": 64,
+  "max_raw_message_bytes": 8192,
+  "ota_proof": "analysis/protocol/scene-runtime/whole-image-proof.json",
+  "offline_regression": "analysis/regression-20261031-06/report.json",
+  "independent_native_review": "analysis/ghidra/display-adapter/scene-review.md",
+  "runs": {
+    "passive-01": {
+      "source": "captures/scene-runtime-20261031/passive-01.json",
+      "sha256": "0764a0c4ed1b938e57269acb3e735f8288dd8247dc375628c050635ac8f17b64",
+      "before_free_bytes": 333812,
+      "after_free_bytes": 333812,
+      "trace_span_seconds": 2.132
+    },
+    "smoke-02": {
+      "source": "captures/scene-runtime-20261031/smoke-02.json",
+      "sha256": "8a408d1f68d7cd6fb5dd9ffcab0dc5ec9f14409f91919b1535292496e4a27046",
+      "before_free_bytes": 333836,
+      "after_free_bytes": 333620,
+      "scene_replies": [
+        {
+          "mode": 41,
+          "status": "applied"
+        },
+        {
+          "mode": 37,
+          "status": "applied"
+        },
+        {
+          "mode": 38,
+          "status": "applied"
+        },
+        {
+          "mode": 40,
+          "status": "unchanged"
+        }
+      ],
+      "settled_notifications": [
+        {
+          "event": 52,
+          "tag": 3
+        }
+      ],
+      "trace_span_seconds": 4.468
+    },
+    "animation-text-01": {
+      "source": "captures/scene-runtime-20261031/animation-text-01.json",
+      "sha256": "ae6cb254163efdd72c1c09853df8f3dda0c4eb3836312aadef3134981abe1335",
+      "before_free_bytes": 333840,
+      "active_free_bytes": 58352,
+      "after_free_bytes": 333952,
+      "settled_notifications": [
+        {
+          "event": 52,
+          "tag": 3
+        },
+        {
+          "event": 55,
+          "tag": 5
+        }
+      ],
+      "text": "Scene cache ready",
+      "text_result": {
+        "glassly": "graphics",
+        "abi": 1,
+        "result": "ok",
+        "presentation": "scheduled"
+      },
+      "hold_ms": 30000,
+      "heartbeat": 0,
+      "trace_span_seconds": 33.206
+    },
+    "vector-01": {
+      "source": "captures/scene-runtime-20261031/vector-01.json",
+      "sha256": "882a607f64d4b855e4311b0a14a59cc94d24a8ddc96824ccfd6d7e19901b5a13",
+      "before_free_bytes": 333852,
+      "after_free_bytes": 333940,
+      "commands": 24,
+      "all_applied": true,
+      "source_dimensions": [
+        640,
+        480
+      ],
+      "target_dimensions": [
+        600,
+        350
+      ],
+      "coordinate_policy": "preserve coordinates; clip right40/bottom130 pixels; no scaling",
+      "pixel_probes_verified": 0,
+      "fixture_sha256": "dbeab3248f1259a06faec40e9c83f0fedc12c674cce7d864f577ca8e1c84d269",
+      "trace_span_seconds": 26.425
+    },
+    "gif-01": {
+      "source": "captures/scene-runtime-20261031/gif-01.json",
+      "sha256": "2b1c35843d7200f0cac803a1fb2646d2c8afde426652c4716ffe6a6d7c96dd83",
+      "before_free_bytes": 333848,
+      "after_free_bytes": 333928,
+      "commands": 302,
+      "all_applied": true,
+      "source_dimensions": [
+        640,
+        480
+      ],
+      "target_dimensions": [
+        600,
+        350
+      ],
+      "coordinate_policy": "preserve coordinates; clip right40/bottom130 pixels; no scaling",
+      "pixel_probes_verified": 0,
+      "fixture_sha256": "d8706a134a268e8ada75a4edd81356eea8d932f48f271c5f2c368f3aef744687",
+      "trace_span_seconds": 124.468
+    },
+    "svg-01": {
+      "source": "captures/scene-runtime-20261031/svg-01.json",
+      "sha256": "50de5145ba79e6b8bff591e7b041a0a5a5c5eefcbf0ca7b4b6dbdf57f2390240",
+      "before_free_bytes": 333876,
+      "after_free_bytes": 333960,
+      "commands": 302,
+      "all_applied": true,
+      "source_dimensions": [
+        640,
+        480
+      ],
+      "target_dimensions": [
+        600,
+        350
+      ],
+      "coordinate_policy": "preserve coordinates; clip right40/bottom130 pixels; no scaling",
+      "pixel_probes_verified": 0,
+      "fixture_sha256": "7dc551a4ee22e4cdc1182bb49586889980a6fa1e24f24c905d8cd2d19a6cee1b",
+      "trace_span_seconds": 150.185
+    },
+    "final-check": {
+      "source": "captures/scene-runtime-20261031/final-check.json",
+      "sha256": "665aca79a58fca7b2a7becffed301612871085f85d071a579dc4c3b4bff31b50",
+      "stock_capabilities_unchanged": true,
+      "heartbeat": 0,
+      "after_free_bytes": 333852,
+      "trace_span_seconds": 2.053
+    }
+  },
+  "physical_visibility": "User confirmation requested for rectangle and Scene cache ready text; no response received",
+  "failed_attempts": [
+    {
+      "source": "captures/scene-runtime-20261031/smoke-01.jsonl",
+      "phase": "Bluetooth connect",
+      "business_commands_sent": 0,
+      "error": "IOException: read failed, socket might closed or timeout, read ret: -1",
+      "subsequent_action": "New connection and smoke test succeeded; no ambiguous mutation retried"
+    }
+  ],
+  "cleanup": {
+    "bridge_stopped": true,
+    "adb_forward_removed": true,
+    "memomind_app_restored": true,
+    "capture_finalized": true,
+    "capture_manifest": "captures/scene-runtime-20261031/capture-manifest.json",
+    "capture_files_verified": 38
+  },
+  "limitations": [
+    "Full CFW parity remains incomplete; input/keyboard/notifications and other drawing/message features remain.",
+    "A 64KiB store and8192-byte ingress are current integration limits; full G2 capacities are not claimed.",
+    "Video sequences were accepted, but physical pixels were not independently read back or confirmed; source coordinates crop to600x350.",
+    "Trace spans include transport, command handling and requested delays;124s/150s video replays do not establish30fps performance.",
+    "Free-byte snapshots are not leak, largest-block, or worst-case concurrency proofs.",
+    "Native text supports proved resource fonts; dynamic fallback lifetime and ignored core callback failures remain limitations.",
+    "The HCI recording retains one1us timestamp reversal predating this OTA; every image byte matches independently.",
+    "Initial pairing and all app interactions are not fully captured."
+  ]
+}

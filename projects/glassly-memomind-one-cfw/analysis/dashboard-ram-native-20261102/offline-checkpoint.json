@@ -1,0 +1,26 @@
+{
+  "time": "2026-11-02T21:13:25.937831+00:00",
+  "candidate": "dashboard-ram-002",
+  "hardware_validated": false,
+  "native_cases": 230,
+  "swift_tests": 106,
+  "construction_tests": 2,
+  "source_runtime_unchanged": true,
+  "sha256": {
+    "scripts/build_memomind_dashboard_ram.py": "5ae9dce5969324b634db39757edabb5c60752736d30dfa1feb8cb77305b24155",
+    "scripts/test_build_memomind_dashboard_ram.py": "5d26cd2bb786d97f15cf4841ea8191268a508fdecb2a3be3049aeaa074a725d6",
+    "captures/firmware/dashboard-ram-002/firmware.bin": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+    "captures/firmware/dashboard-ram-002/manifest.json": "2b2c09e2c80f8634791a0a9ba927ef19d3f9f3d02a08238ab42d232119bb1183",
+    "captures/firmware/dashboard-ram-002/expected-app-header.bin": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+    "analysis/dashboard-ram-review-20261102/report.json": "dcd6b8ef7a74d1693c5ee8a9339dab4a831229738d5418a47429159532424f36",
+    "analysis/dashboard-ram-card-20261102/rv32-root-01.json": "2e125e39426bfbb22c9466032084315461b1540c821cfda8bad10a6004a17113",
+    "analysis/dashboard-ram-status-20261102/rv32-root-01.json": "0dc203e94d9965fff89bd8c60f85c997054d7518182e818a6b9dca7ed372712a",
+    "analysis/dashboard-ram-native-20261102/swift-tests.log": "52c1040e96f63d678f4d54beaecb6644d9b300b3045af5ba65c8615463a41f40",
+    "analysis/dashboard-ram-native-20261102/measure.swift": "f1be7d70b54ea369a46150269273d219a00974bd1be774d61fb412e59a902b27",
+    "analysis/dashboard-ram-native-20261102/measure": "c7e881cafc78829831ff087f1f6872d33c8cf44f9adbd044f95451e0bed656e0",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "2fe86f0d11df7b7cc913110d509b2f2aaba870934660962878f764f33aacdd28",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/FirmwareImageTests.swift": "69b9ed66426516c33cdffa493b8f8d1cf46df57cdbf6f47d521c7ed565200d62",
+    "swift/MemoMindKit/.build/debug/memomind": "e45888f87ebfc8f16c738bb6d27d840b985df1cc8475f2bf6fd67da4447327de",
+    "captures/swift-mac-ram-baseline-20261102-01/result.json": "daae8bb5e78af1bfdcb3eb448de090ca33557295a67ad5b4e02b70d9bbb3b8af"
+  }
+}

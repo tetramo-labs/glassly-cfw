@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "groups": 5,
+  "runtimeSHA256": "11ea130154cdc7648cd3baa372b58bb3690b40d670d9ea2bd55ce17c1a5f2b09",
+  "hardwareTested": false,
+  "slicesMocked": true
+}

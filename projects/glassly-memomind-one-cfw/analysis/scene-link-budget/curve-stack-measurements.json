@@ -1,0 +1,80 @@
+[
+  {
+    "optimization": "O2",
+    "case": "closed_line",
+    "result": 2,
+    "input_hex": "000000000001a000a00004",
+    "observed_stack_bytes": 128,
+    "instructions": 293,
+    "maximum_curve_depth_argument": null,
+    "curve_entry_count": 0,
+    "writes": 59,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  },
+  {
+    "optimization": "O2",
+    "case": "high_curvature_cubic",
+    "result": 163,
+    "input_hex": "000080008003ff7f00800080ff7fff7fff7f04",
+    "observed_stack_bytes": 896,
+    "instructions": 29657,
+    "maximum_curve_depth_argument": 8,
+    "curve_entry_count": 323,
+    "writes": 4739,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  },
+  {
+    "optimization": "O2",
+    "case": "opposed_control_cubic",
+    "result": 132,
+    "input_hex": "000000000003ff7f00800080ff7f1000000004",
+    "observed_stack_bytes": 896,
+    "instructions": 24091,
+    "maximum_curve_depth_argument": 8,
+    "curve_entry_count": 261,
+    "writes": 3840,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  },
+  {
+    "optimization": "Os",
+    "case": "closed_line",
+    "result": 2,
+    "input_hex": "000000000001a000a00004",
+    "observed_stack_bytes": 144,
+    "instructions": 373,
+    "maximum_curve_depth_argument": null,
+    "curve_entry_count": 0,
+    "writes": 69,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  },
+  {
+    "optimization": "Os",
+    "case": "high_curvature_cubic",
+    "result": 163,
+    "input_hex": "000080008003ff7f00800080ff7fff7fff7f04",
+    "observed_stack_bytes": 1008,
+    "instructions": 29072,
+    "maximum_curve_depth_argument": 8,
+    "curve_entry_count": 323,
+    "writes": 5387,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  },
+  {
+    "optimization": "Os",
+    "case": "opposed_control_cubic",
+    "result": 132,
+    "input_hex": "000000000003ff7f00800080ff7f1000000004",
+    "observed_stack_bytes": 1008,
+    "instructions": 23626,
+    "maximum_curve_depth_argument": 8,
+    "curve_entry_count": 261,
+    "writes": 4364,
+    "saved_gp_tp_registers_preserved": true,
+    "scope": "Actual linked RV32 mm_vector_compile and all callees; no native functions or scene callbacks invoked"
+  }
+]

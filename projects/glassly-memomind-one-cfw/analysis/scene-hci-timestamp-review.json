@@ -1,0 +1,17 @@
+{
+  "capture": "captures/scene-runtime-20261031/ota-transfer-frozen.btsnoop",
+  "capture_sha256": "18c8d75dc6faa840c58bca4f81cd764149b724e86fddaa72af4eb0ae05bb5a08",
+  "prior_capture_is_exact_prefix": true,
+  "prior_capture_bytes": 5742035,
+  "issues": [
+    {
+      "offset": 5440302,
+      "error": "timestamp moved backwards"
+    }
+  ],
+  "timestamp_review": "analysis/graphics-hci-timestamp-review.json",
+  "issue_predates_scene_ota": true,
+  "truncated_records": 0,
+  "recording_modified": false,
+  "coverage_scope": "Every scene OTA image byte independently reconstructed; losslessness of all general traffic remains unproven"
+}

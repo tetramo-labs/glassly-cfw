@@ -1,0 +1,97 @@
+{
+  "format": "memomind-diagnostics-offline-checkpoint-v1",
+  "utc": "2026-11-02T18:01:59.921951+00:00",
+  "release": "diagnostic-commands-001",
+  "candidate": {
+    "image_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "image_bytes": 2230267,
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "runtime_bytes": 65456,
+    "header_sha256": "7787494fdb8d50c1a0d578c2494cd0127a1cbcb954dc8aa2541faaa766baf016",
+    "app_header_sha256": "a42392b3f2afe8eb1b432f77770bcaab86d3e488c921cc9ae8dffd490f17b65e",
+    "metadata_packed_bytes": 171,
+    "metadata_sha256": "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a",
+    "app_packed_bytes": 959165,
+    "app_raw_bytes": 1838672,
+    "app_sha256": "054f97d9e687ba2baf008f5dc118bff7dbc5c49ad462bb9f7188b1f6d9352ff9"
+  },
+  "aggregate": "analysis/regression-20261102-05/report.json",
+  "regression_execution_scope": "115 unchanged full-run passes reused; two corrected contract invocations executed; not a second full run",
+  "all_required_offline_suites_passed": true,
+  "required_stages": 117,
+  "python_tests": 224,
+  "swift_tests": 100,
+  "source_files_rechecked": 285,
+  "source_drift": false,
+  "ios15_core_typecheck": true,
+  "swift_catalog_admitted": true,
+  "trace_verifier_synthetic_cases": 37,
+  "current_installed_release_at_checkpoint": "text-commands-001",
+  "diagnostics_candidate_installed": false,
+  "hardware_tested": false,
+  "parity_scope": {
+    "effective_date": "2026-11-02",
+    "excluded_features": [
+      "Bluetooth keyboard/HOGP accessory support",
+      "Ring battery",
+      "Gesture recognition and gesture-triggered controls (including head-up and ring-touch)"
+    ],
+    "required_hardware_features": [
+      "Single-button input",
+      "Compass data",
+      "Raw IMU data",
+      "Ambient-light sensing"
+    ],
+    "excluded_upstream_files": [
+      "demos/head-up-test.ts",
+      "demos/keyboard.test.ts",
+      "demos/keyboard.ts",
+      "demos/ring-touch-test.ts",
+      "patches/host/keyboard_emulator_test.py",
+      "patches/host/keyboard_host_test.c"
+    ],
+    "historical_tests_retained": true,
+    "mixed_non_keyboard_suites_remain_required": true,
+    "command_parity_map": "tests/g2_compat/COMMAND_PARITY.md"
+  },
+  "required_original_inventory": {
+    "total": 39,
+    "original_assertion_sites": 654,
+    "native_adapter_coverage_included": false
+  },
+  "remaining_required_suite_entries": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/sound-test.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "full_cfw_parity": false,
+  "limitations": [
+    "Metadata/history/epoch lifetime is current screenobject, notG2boot singleton",
+    "Epoch persistence best-effort ifnewmetadata allocationfails; cleanup stillreleases graphics/input",
+    "Failure counters collectedonlywhenmetadataexists and fromexecuted scene-dispatch/token-workspace failures; noBTadmission/nativeJSON/owner-create/allocationcoverage",
+    "NoNACK/gate/DWT/calibration/latestRX metricsfabricated; tiny3x5hex overlay isnotG2Terminus/fontlayout parity",
+    "Mode11 doesnotimplement/cancel futurecompass/rawIMU/ALS/audio/notificationcontrollers oractivecanaryworker",
+    "NativeAPIs/childeventtree/scheduler mocked; nohardware/panel/timing/radiodelivery orwhole-taskstack guarantee",
+    "Native8192 ingress/64KiBscene assetcapacity unchanged",
+    "Offline original G2 references and native mocks do not prove hardware acceptance.",
+    "Mac transport traces are application logs, not independent HCI/radio captures.",
+    "Compass/raw IMU, single-button ownership and other required native adapters remain unfinished.",
+    "Swift iOS type checking does not establish an iOS Bluetooth or Glassly integration."
+  ]
+}

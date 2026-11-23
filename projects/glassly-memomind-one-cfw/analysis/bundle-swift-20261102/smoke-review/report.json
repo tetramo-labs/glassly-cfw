@@ -1,0 +1,51 @@
+{
+  "format": "memomind-bundle-livehelper-readonly-review-v1",
+  "assessment": "No remaining blocking defect found after root fixes; native/live execution is separate.",
+  "template_sha256": "8c6bd0476df8a75d2deae71e9093b8a4551cf45213bf87887f1a5f070f69724c",
+  "tested_template_sha256": "8c6bd0476df8a75d2deae71e9093b8a4551cf45213bf87887f1a5f070f69724c",
+  "checks": {
+    "passed": true,
+    "checks": 48,
+    "device_operations": false
+  },
+  "root_source_edits": false,
+  "hardware_operations": false,
+  "findings": [
+    {
+      "issue": "Post-request notificationError check allowed later fragment writes after unsolicited validation failure",
+      "resolution": "Root added CheckedIO read/write guard plus entry/post checks. Extracted guard tests confirm no second read/write after observed error."
+    },
+    {
+      "issue": "Settled tag parser accepted leading-zero invalid JSON numbers",
+      "resolution": "Root added canonical decimal restriction; extracted parser rejects00/011/00011 and noninteger/overflow forms."
+    },
+    {
+      "issue": "Notification tag list did not reject wrong-event or unexpected late notifications",
+      "resolution": "Root preregisters ordered(event,tag) pairs for each tag-producing request. All callbacks enforce that queue, preserving intended repeated tags."
+    },
+    {
+      "issue": "Added eviction-byte check initially indexed byte10 before validating exact length",
+      "resolution": "Root moved exact13/11byte applied-reply checks before extra fields; extracted parser rejects every truncated reset/HIDE reply without traps."
+    }
+  ],
+  "confirmed": [
+    "Reset wire29 0000 0100 00 fa requests new epoch and250reply capacity; parser requiresAPPLIED andnonzeroepoch,64KiBstore andzeroevicted.",
+    "Tag sequence11,12,11,12,13,14,15,16 has no adjacent duplicate request; upstream only suppresses immediately repeated request, so eight tags expected. Final scratch reply39/request16 matches.",
+    "Late failure HIDE17 then zero-width copy yields graphicsinvalid, preserves HIDEeffect/tag17; malformedcopy is not drawn.",
+    "Visual bundle executes keyframe,checker delta,odd overlap,secondcopy in order; source snapshots and region bounds match intended twoB8/checker groups.",
+    "Empty88/count0/trailing bytes is intentional native tolerance; four malformedbundles test nested8,control11,unsupported15,declared-lengthtruncation.",
+    "finish-requested.json existence stops hold and invokes mode11;300s deadline also exits. Sentinel is an explicit presence flag, not parsed confirmation content."
+  ],
+  "limits": [
+    "Queued stale bytes not yet parsed cannot set notificationError before first write; independent full trace correlation remains required.",
+    "GMSession returns before future notifications necessarily arrive. Expected tag checks are over observed callbacks, not a future-delivery guarantee.",
+    "No hardware pixel readback. Native lease renewal ACKs do not prove continuous retained pixels; user visual confirmation stays separate.",
+    "Catch path closes without claiming clear; mode11 acknowledged only on normal exit. Native timed lease is fallback if worker progresses."
+  ],
+  "artifact_sha256": {
+    "analysis/bundle-swift-20261102/smoke-review/main.swift": "dad0b26f881a0a3d4b42066ebbb75619d8c596f738b176c79c4a670a9eb771c1",
+    "analysis/bundle-swift-20261102/smoke-review/extracted.swift": "ef07faea995df363d23ff7ad789fc7f5b2c83848ea81f147ad46bf37878492a9",
+    "analysis/bundle-swift-20261102/smoke-review/review": "8507d155b6f0d8a9773afe3889b6c49693cf1094fcfb8d7968f2e871e773432c",
+    "analysis/bundle-swift-20261102/smoke-review/checks.json": "5735cc7f2af4283c8a4795130336d61de3e65cae3a165721f34b5c470504a0e8"
+  }
+}

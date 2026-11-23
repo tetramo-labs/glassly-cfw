@@ -1,0 +1,18 @@
+{
+  "source": "User downloaded to ~/Downloads/iine-plus.pdf after the manuals.plus URL was supplied",
+  "local_path": "research/manual-l1254-l1255.pdf",
+  "bytes": 8570849,
+  "sha256": "bf4160920fc1158a50d20485eb70a327402e02ca8f169099778bc743f4040987",
+  "pdf_pages": 1,
+  "printed_panels_per_language": 18,
+  "languages": [
+    "Chinese",
+    "English"
+  ],
+  "models": [
+    "L1254",
+    "L1255"
+  ],
+  "inspection": "All panels visually inspected using macOS PDFKit rendering; image-only PDF, no text layer",
+  "firmware_update_entry_documented": false
+}

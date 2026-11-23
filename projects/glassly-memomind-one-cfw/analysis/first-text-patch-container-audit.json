@@ -1,0 +1,166 @@
+{
+  "audit_kind": "independent offline same-length text-patch container audit",
+  "candidate_image_written": false,
+  "device_accessed": false,
+  "source_path": "captures/firmware/ota-1.0.3.127-jhv3_release.bin",
+  "source_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+  "output_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+  "source_bytes": 2185697,
+  "output_bytes": 2185415,
+  "component": 3,
+  "original_body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "patched_body_sha256": "5f1be39f4597b64a4e1ff1bbdbae9600b4b14f20870bc00403b1ba334c943e5a",
+  "edit": {
+    "body_offset": 1562384,
+    "body_offset_hex": "0x17d710",
+    "before": "Bluetooth disconnected",
+    "after": "Glassly firmware ready",
+    "length": 22,
+    "original_terminator_preserved": true
+  },
+  "changed_body_offsets": [
+    1562384,
+    1562386,
+    1562387,
+    1562388,
+    1562389,
+    1562390,
+    1562391,
+    1562392,
+    1562393,
+    1562394,
+    1562395,
+    1562396,
+    1562397,
+    1562398,
+    1562399,
+    1562400,
+    1562401,
+    1562402,
+    1562403,
+    1562404,
+    1562405
+  ],
+  "changed_body_offsets_hex": [
+    "0x17d710",
+    "0x17d712",
+    "0x17d713",
+    "0x17d714",
+    "0x17d715",
+    "0x17d716",
+    "0x17d717",
+    "0x17d718",
+    "0x17d719",
+    "0x17d71a",
+    "0x17d71b",
+    "0x17d71c",
+    "0x17d71d",
+    "0x17d71e",
+    "0x17d71f",
+    "0x17d720",
+    "0x17d721",
+    "0x17d722",
+    "0x17d723",
+    "0x17d724",
+    "0x17d725"
+  ],
+  "component_header_changed_word_indices": [
+    4
+  ],
+  "component_header_only_body_crc_changed": true,
+  "container_header_changed_offsets": [
+    8,
+    9,
+    14,
+    15,
+    16,
+    17,
+    86,
+    87,
+    146,
+    147,
+    148,
+    149
+  ],
+  "unchanged_streams": [
+    {
+      "index": 0,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "45d887da5b90937595fd94385a586fb265b919d1511d565223b586f7c9a18f28",
+      "packed_sha256": "bf19868459ff0a657c781745d1efaa9f0352d296ecaae19ab301f1d1af9fdebe"
+    },
+    {
+      "index": 1,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+      "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+    },
+    {
+      "index": 2,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+      "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+    },
+    {
+      "index": 4,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+      "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+    },
+    {
+      "index": 5,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+      "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+    },
+    {
+      "index": 6,
+      "raw_byte_identical": true,
+      "packed_byte_identical": true,
+      "raw_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+      "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+    }
+  ],
+  "metadata_raw_and_packed_unchanged": true,
+  "source_app_packed_size": 914600,
+  "output_app_packed_size": 914318,
+  "packed_app_delta": -282,
+  "staging": {
+    "source": "stock metadata partition type4; native capacity getter043415b4 calls partition lookup04316962(type4); e2 parser0423a90e bounds advertised payload against returned allocation",
+    "capacity": 2482176,
+    "payload_bytes": 2185397,
+    "payload_rounded_4096": 2187264,
+    "headroom": 296779,
+    "payload_and_rounded_span_fit": true,
+    "capacity_is_static_metadata_inference_not_live_flash_read": true
+  },
+  "app_flash_allocation": 2097152,
+  "app_raw_bytes": 1773208,
+  "app_raw_headroom": 323944,
+  "outer_crc_before": "07c720bd",
+  "outer_crc_after": "68989a2a",
+  "native_verifier_equivalent_checks": {
+    "component_mask_bit_count": 7,
+    "inner_header_bytes": 132,
+    "table_crc32": true,
+    "stream_crc32": true,
+    "exact_payload_accounting": true
+  },
+  "apply_memomind_patch_reproduces_identical_output": true,
+  "all_parser_checks_pass": true,
+  "limitations": [
+    "Container validation does not establish bootloader acceptance, authentication, rollback or boot safety.",
+    "UI render and event gating evidence is owned by the native analysis task, not independently asserted by this container audit.",
+    "Parser currently lacks staging capacity enforcement; this audit explicitly checks both payload and4096-byte-rounded span."
+  ],
+  "live_validation_recommendation": [
+    "Match independently built artifact SHA256 to output_sha256.",
+    "New payload length/CRC differs from stock; require initial e3 requested file offset18 unless intentionally resuming this exact candidate.",
+    "Capture e6 validation and reboot outcome, then trigger the proved disconnect toast and visually verify exact text."
+  ]
+}

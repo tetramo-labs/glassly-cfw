@@ -1,0 +1,645 @@
+# G1CFW private protocol (command byte `0xF0`)
+
+G1CFW/54 is injected by `cfw/src/g1cfw.c` on Even G1 application **1.6.3**;
+revisions through 45 used 1.5.60. See the [port evidence](G1_CFW_163_PORT.md)
+and, for the 640x380 canvas and timed tweens, [G1CFW/49](G1_CFW_49_CANVAS_AND_TIMING.md).
+The stock BLE receive hook call at `0x23d4e` calls `spec_ble_command_hook(data, len)` and only
+forwards a packet to the request dispatcher when that hook returns non-zero;
+the profile redirects the call to `cfw_rx`, which consumes `0xF0` packets and
+passes everything else through unchanged. Each temple handles its own packets,
+so a phone must send display commands to both the `_L_` and `_R_` connections.
+
+Packets travel over the Nordic UART RX characteristic exactly like stock
+commands. The stock receive buffer holds **at most 256 bytes** per packet. Every
+command is answered with one notification on the TX characteristic:
+
+```
+request:  F0 <sub> <payload...>
+reply:    F0 <sub> <status> <body...>
+```
+
+| status | meaning |
+| --- | --- |
+| `00` | ok |
+| `01` | bad length (payload shorter than the command needs) |
+| `02` | unknown sub-command (reply `sub` echoes the request) |
+| `03` | bad rectangle (odd x or width, zero size, or outside 640x200) |
+| `04` | panel off (frame written where applicable, nothing pushed) |
+| `05` | bad sequence (stream packet out of order or no message in flight) |
+| `06` | bad CRC (assembled message does not match the declared CRC-16) |
+| `07` | too big (declared length over 4096, or more data than declared) |
+| `08` | bad record (record header or length does not fit the message) |
+| `09` | bad RLE (PackBits data ended before the rectangle was filled) |
+| `0A` | bad font (TEXT font other than 0, 1, 2) |
+| `0B` | no memory (heap arena unavailable, directory or arena full) |
+| `0C` | no asset (unknown id) |
+| `0D` | bad asset (wrong kind, incomplete image, append to a closed asset) |
+| `0E` | no object (SHOW or drop named an unknown object id) |
+
+A bare `F0` with no sub-command is answered `F0 FF 01`.
+
+Little-endian 16-bit fields are written `u16`. The frame buffer is 640x200 at
+4 bits per pixel, two pixels per byte, high nibble on the left, 320 bytes per
+row. From G1CFW/49 the canvas is **640x380**: retained objects are composed
+through the buffer in bands of up to 200 rows for every push, and the direct
+draws below (BLIT, FILL, TEXT, SHAPES, ASSET_DRAW, ASSET_TEXT) use canvas rows
+0..199, the window, which is re-composed from the objects first when a lower
+band went through the buffer since.
+Rectangles are `[x0:u16][y0:u16][w:u16][h:u16]` with even `x0` and `w`.
+
+## `00` PING
+
+Reply body: `"G1CFW/<n>" 00 <major> <minor> <patch>` where `<n>` is the
+protocol revision (20 for this document) and the version is the stock base
+(1, 5, 60). `g1flash.py ping` checks this.
+
+## `01` BLIT: `[flags][rect][pixels]`
+
+Writes pixels into the frame buffer.
+
+- `flags` bit 0: input is 1 bit per pixel, MSB first, each row padded to a
+  whole byte (`(w+7)/8` bytes per row). Set bits become the grey level in the
+  high nibble of `flags` (0 means 15); clear bits become 0.
+- `flags` bit 0 clear: input is raw 4bpp rows of `w/2` bytes.
+- `flags` bit 1: push the rectangle to the panel after writing.
+- `flags` bit 2: the pixel bytes are PackBits-encoded (`n` 0-127: `n+1`
+  literal bytes follow; `n` 129-255: repeat the next byte `257-n` times; 128
+  is a no-op). The decoder stops after `rows * stride` output bytes.
+
+The payload must contain at least `rows * stride` pixel bytes. With the 256-byte
+packet limit, a 640-wide 1bpp blit carries three rows per packet; a full-frame
+1bpp image is 67 packets.
+
+## `02` FILL: `[flags][rect][level]`
+
+Fills the rectangle with `level & 0xF`. `flags` bit 1 pushes it afterwards.
+
+## `03` FLUSH: `[rect]`
+
+The rectangle is in canvas rows (0..379 from G1CFW/49): rows 0..199 go out
+from the buffer as drawn, the rows below are re-composed from the shown
+objects. Pushes the rectangle from the frame buffer to the panel using the stock
+`_reflash_fb_data_to_lcd` path with the stock column/row origins. The stock
+routine's x1 is exclusive (it sends `x1/2 - x0/2` bytes per row); the CFW
+passes `x0 + w`, so the full width including columns 638-639 is pushed. The
+stock full-frame refresh passes 639 and clips those two columns, which is
+visible as a missing right border on stock screens.
+
+From G1CFW/45, the destination rows are clipped to the physical panel's
+0..479 range after applying VIEW. A fully off-panel rectangle succeeds
+without a transfer; its framebuffer contents are retained. This avoids
+the stock driver's nine-bit row-address wrapping.
+
+## `04` INFO
+
+Reply body: `[powered][max_packet][col_off:i16][row_off:i16][frame_ptr:u32][width/4][height][canvas_height:u16]`.
+`max_packet` is 255; `width/4` is 160; `height` is the buffer's 200 and
+`canvas_height` (G1CFW/49) 380.
+
+## `05` PANEL: `[mode]`
+
+`mode` 1 resumes the panel through the stock `global_system_resume` path, the
+same entry the stock silent-mode exit uses; 0 suspends it through
+`global_system_suspend`. Both are no-ops unless the power state actually
+changes, and the stock resume only re-powers the panel when its wear/dock
+policy allows it. `mode` 2 instead calls the panel context's own `on`
+callback (`panel_on`: rail on, SPI init, panel init, powered flag set) and 3
+its `off` callback, bypassing that policy; use these to draw while docked.
+`mode` 4 calls the context's `suspend` callback (`panel_suspend`: SPI deep
+power down) and 5 its `resume` callback (`panel_resume`: panel init plus
+brightness; it refuses when bit 8 of the halfword at panel+0x4fc is clear),
+`mode` 6 and 7 call the driver's suspend and resume directly (SPI deep
+power down; `panel_init` plus brightness, rail untouched) and clear or set
+the powered flag, for experiments. Reply body:
+`[power_state][powered]`, where `power_state` is the stock byte (0 running,
+1 suspended, 2 suspending, 3 resuming) and `powered` is the panel context
+flag that FLUSH checks. While the glasses are docked the stock firmware
+keeps the panel suspended, so a PANEL on is needed before anything becomes
+visible there. Under the CFW with the auto panel enabled the stock suspend
+is refused; with it disabled, `mode` 0 rebooted a temple on hardware, so
+prefer 3 or 4 to switch the panel off.
+
+From G1CFW/47, panel initialization clears the physical 640×480 cache before
+stock enables the LEDs, without erasing the retained framebuffer. Modes 1, 2,
+5 and 7 then restore the frame with LEDs disabled until clear, redraw and
+latch synchronization finish. The wear path uses the same sequence, repeated
+600 ms and 1.2 s later for post-wake reliability. Physical clears ignore view
+origins, so displaced canvases cannot leave lit edge strips. See the
+[panel wake fix](G1_CFW_47_PANEL_WAKE.md).
+
+## `06` TEXT: `[font][flags][x0:u16][y0:u16][x1:u16][y1:u16][max_lines][utf8...]`
+
+Draws left-aligned text with the stock font engine (`gui_utf_draw`) into the
+box, wrapping at `x1` and stopping after `max_lines` lines or when the next
+line would pass `y1`. Font 0 is the proportional 20 px face (26-row cells,
+27 px line pitch; ASCII from internal flash, other scripts fetched from the
+external flash at draw time); fonts 1 and 2 are the stock digit faces, 32 and
+39 rows tall. `flags` bit 0 clears the box to black first, bit 1 pushes the
+box afterwards. `x0` and `x1` must be even; a box that is cleared or pushed
+must keep `y1` plus the cell height within 200 rows (so `y1 <= 173` for font
+0), otherwise the text is clipped to the window. From G1CFW/49 the engine
+draws through a CFW row table with the box moved to engine row 0, so text
+objects clip at band and canvas edges and a box may be up to 380 rows tall.
+Text is 1-240 bytes;
+`\n` moves to the next line. Glyphs are only on or off; there is no grey
+level. TEXT is also a valid stream record.
+
+## `07` COPY (removed in G1CFW/42)
+
+G1CFW/11 to /41 copied a rectangle within the frame (`[flags][src rect]
+[dst x:u16][dst y:u16]`, overlap-safe, for scrolling). It left to make room
+for the vector contract; retained objects glide instead. The sub-command now
+answers `02`.
+
+## Assets (`08`-`0C`)
+
+Assets live in an arena taken from the stock heap on first use (48 KB is
+requested first, falling back in 8 KB steps to 8 KB; on the glasses the heap
+refused 48 KB), with a 56-entry directory in the CFW RAM. ASSET_INFO reports
+the size obtained. Kinds: 0 = 1bpp image (rows padded to
+bytes), 1 = 4bpp image, 2 = UTF-8 string (up to 240 bytes), 3 = path
+(G1CFW/39).
+
+- `08` ASSET_PUT `[id:u16][kind][flags][w:u16][h:u16][data...]`: `flags`
+  bit 0 appends to the still-open asset with this id (images close when all
+  their bytes have arrived; the newest asset is the only one that can grow);
+  otherwise it creates the asset, replacing any entry with that id (bytes are
+  reclaimed only when the replaced asset was the newest). Use STREAM records
+  for images larger than one packet. A **path** (kind 3) is uploaded in one
+  record (no append) as compiled commands in Q4 (1/16 pixel) signed int16
+  coordinates: `0` M x y, `1` L x y, `2` Q cx cy x y, `3` C c0x c0y c1x c1y x y,
+  `4` Z; every contour starts with M and closes with Z (`demos/vector-protocol.ts`
+  in g2flash compiles the SVG `d` subset M L H V Q C S T Z, absolute and
+  relative). `w` is the fill rule (0 nonzero, 1 even-odd), `h` 0. The glasses
+  flatten the curves once (De Casteljau, at most 8 levels, half a pixel of
+  flatness) and keep at most 128 edges per path, 16 bytes each behind a
+  4-byte header; an unclosed contour, an unknown command, a curve that
+  needs more edges or an append is `0D`, a full arena `0B`.
+- `09` ASSET_DRAW `[id:u16][flags][x:u16][y:u16]`: blit a complete image
+  asset; `flags` as BLIT (bit 1 flush, high nibble grey level for 1bpp).
+- `0A` ASSET_TEXT `[id:u16][font][flags][x0][y0][x1][y1][max_lines]`: TEXT
+  with a string asset.
+- `0B` ASSET_CLEAR: forget every asset and reset the arena.
+- `0C` ASSET_INFO: reply `[count][max][used:u24][arena_kib][allocated][arena>>8:u24]`.
+
+All of these except INFO are valid stream records.
+
+## `0D` SHAPES: `[flags][count][records...]` (20-byte records from G1CFW/38)
+
+Draws `count` records straight into the frame with the vector rasterizer
+ported from g2flash (`patches/shapes.c`). Every record is 20 bytes:
+`[type][flags][color][width][p0..p7 as int16 LE]`. `color` is the grey
+nibble, `width` the stroke in pixels for outlines and open strokes (0 is
+drawn as 1), `flags` is reserved for objects (bit 0 visible) and ignored
+here. Unused parameters are zero.
+
+| type | shape | parameters |
+| --- | --- | --- |
+| 1 | LINE | x0 y0 x1 y1 (hairline at width 1, else a square-capped stroke) |
+| 2 | RECT | x y w h r: stroked rounded rectangle, corner radius r |
+| 3 | RECT_FILL | x y w h r |
+| 4 | CIRCLE | cx cy r: ring of `width` pixels |
+| 5 | CIRCLE_FILL | cx cy r |
+| 6 | TRI | x0 y0 x1 y1 x2 y2, stroked |
+| 7 | TRI_FILL | x0 y0 x1 y1 x2 y2 |
+| 8 | QUAD | x0 y0 x1 y1 x2 y2 x3 y3, stroked |
+| 9 | QUAD_FILL | x0 y0 x1 y1 x2 y2 x3 y3 |
+| 10 | BEZIER2 | x0 y0 cx cy x1 y1: quadratic, stroked |
+| 11 | BEZIER3 | x0 y0 c0x c0y c1x c1y x1 y1: cubic, stroked |
+| 12 | ARC | cx cy r a0 a1: stroked arc in degrees, 0 = +x, clockwise |
+| 13 | PIE | cx cy r a0 a1: filled sector |
+| 14 | IMAGE | x y asset: a complete image asset at x,y, `color` as the 1bpp grey (G1CFW/42) |
+| 15 | TEXT | x y w h asset lines: a string asset in the box with `width` as the font (G1CFW/42) |
+
+Coordinates are signed canvas pixels, clamped to +/-1024 before any
+arithmetic and clipped to 640x200. Circles are centred on the pixel
+(cx, cy) and cover an odd 2r+1 pixel diameter (r = 1 is a 3x3 dot); corners
+are quarter circles of radius r (clamped to half the shorter side); polygons,
+wide lines, curves and sectors are scan-converted at pixel centres in 1/16
+pixel units, so shared edges never gap or double-cover. A type of 0 or above
+13 is `08`; a payload shorter than `count` records is `01`. Payload `flags`
+bit 1 pushes the whole frame afterwards. SHAPES is also a valid stream
+record. (G1CFW/13 to /37 used 16-byte records with types 0-3; those
+builds answer PING with their revision, so a host can tell them apart.)
+
+## Retained objects (`20`-`26`)
+
+Up to 96 object descriptors live in the second CFW RAM region (the stock
+navigation map buffer at `0x2001bf24`); pixels come from assets, the font
+engine or shape records, so showing a scene again costs one SHOW.
+
+- `20` OBJ_PUT `[id:u16][version:u16][kind][flags]` + body: define or
+  replace an object. `flags` bit 0 = visible. Kinds 0-3 carry
+  `[x:i16][y:i16][w:u16][h:u16][asset:u16][level][font][lines]` (19 bytes
+  in all): 0 image (asset at x,y, grey `level` for 1bpp), 1 text (string
+  asset in the box x,y,w,h with `font`/`lines`, drawn full-bright by the
+  stock engine then scaled to `level` from G1CFW/39), 2 rect (filled, `level`),
+  3 shapes (a string asset holding `[count][records]`, drawn in canvas
+  coordinates; x,y,w,h unused). Kind 4 (G1CFW/38) SHAPE carries one 20-byte
+  SHAPES record (26 bytes in all; the record's own flags byte is ignored):
+  a single geometric primitive whose parameters, colour and stroke width can
+  be animated. Kind 5 (G1CFW/39) PATH uses the kinds 0-3 body: a path asset
+  drawn at `x`,`y` with `w` as a Q8 scale (256 = 1x, up to 2048) and grey
+  `level`, filled by its own rule. Kinds 4 and 5 also carry a rotation
+  (angle in Q4 degrees about a pivot in canvas pixels, animated through
+  OBJ_ANIM values 10-12 below); a PUT resets it to 0. A PUT stops any
+  animation of that object. A wrong kind, a record type outside 1-13 or a
+  body shorter than the kind needs is `08`/`01`.
+  Text objects (kind 1) are drawn with their box widened to even columns
+  and clipped to the frame (G1CFW/43): a glide interpolates the box on the
+  glasses, so between frames it can sit on an odd column or partly off the
+  canvas; what is clipped away draws nothing, as the G2 clips its text.
+  Image objects (kind 0, and image records in a shape list) likewise take x
+  down to an even column and clip at every canvas edge from G1CFW/54; before,
+  an odd x or one partly off the canvas drew nothing for that frame.
+- `21` OBJ_SHOW `[flags][count][ids:u16...]`: the listed objects, in order,
+  are the scene. Bit 1 composes and pushes the whole canvas; without it only
+  the window is composed (for direct draws and a FLUSH to follow). From
+  G1CFW/49 the canvas is always composed from cleared rows (bit 0 is
+  implied), every object is drawn, and the reply is the first object's render
+  status. An unknown id refuses the whole SHOW before drawing. From
+  G1CFW/56 bit 2 (with bit 1) composes and pushes only the union of the
+  boxes of what changed since the last SHOW or HIDE: objects that arrived,
+  left or moved in the paint order, shown objects PUT again or dropped (old
+  and new box), and shown objects drawn from an asset that was PUT. An
+  object without a box (shapes lists, a missing image asset), a DROP_ALL,
+  an ASSET_CLEAR or a direct draw since the last SHOW push the whole canvas.
+- `22` OBJ_HIDE `[flags]`: blank the canvas (bit 1 pushes; with bit 2 only
+  where shown objects were, G1CFW/56) and stop every animation; objects stay.
+- `23` OBJ_STATE: reply `[revision:u16][count][shown][id,version x up to 4]`
+  of the shown list; with a `[page]` byte (G1CFW/40) the reply is
+  `[page][id,version x up to 4]` for object-table entries `page*4` onward,
+  shown or not, so a host can read the whole inventory back. With
+  `[FF][since:u16]` (G1CFW/42) the reply is the journal of definition
+  changes after revision `since`, oldest first, two per reply:
+  `[revision:u16][count][kind, id:u16, version:u16 ...]` with kinds 1 object
+  put, 2 object drop, 3 drop all, 4 asset put (version = asset kind), 5
+  asset clear; `count` `FF` means `since` is older than the ten entries the
+  journal keeps, so read the inventory pages instead. The revision here is
+  the journal's own, bumped on every definition change.
+- `24` OBJ_CONTROL `[op][id:u16]`: op 0 drops all objects (and animations),
+  op 1 drops one object (and its animation) and, from G1CFW/54, takes it out
+  of the SHOW list (earlier builds kept the id there, so a later PUT under it
+  reappeared in the scene and OBJ_STATE read a missing object); op 2 freezes
+  and op 3 finishes (jumps to the targets and pushes the frame) the tweens of
+  object `id`, or of every object when `id` is `FFFF` or absent (G1CFW/39).
+- `25` OBJ_ANIM `[period_ms][count][entries...]` (tween form from G1CFW/38):
+  each entry is `[id:u16][mask:u16][frames][easing]` followed by one `i16`
+  target value per set mask bit, low bit first. Mask bits 0-7 name the
+  parameters of a kind-4 shape (p0..p7; only the type's geometry bits are
+  valid: LINE `0x0F`, RECT/RECT_FILL/ARC/PIE `0x1F`, CIRCLE/CIRCLE_FILL
+  `0x07`, TRI/TRI_FILL/BEZIER2 `0x3F`, QUAD/QUAD_FILL/BEZIER3 `0xFF`) or, for
+  kinds 0-2, bit 0 x, bit 1 y, bit 2 w, bit 3 h (w/h only for text and
+  rect) or, for kind 5, bit 0 x, bit 1 y, bit 2 the Q8 scale. Bit 8
+  (`0x100`) is the colour nibble (kinds 4 and 5) or `level` (kinds 0, 1 and
+  2; for text the glyph pixels the stock drawer wrote are scaled by it, so
+  a level tween fades a caption), bit 9 (`0x200`) the stroke width
+  (kind 4 only), bits 10-12 (`0x400`, `0x800`, `0x1000`) the rotation angle
+  in Q4 degrees (16 per degree, so 1440 is a quarter turn; unwrapped, so
+  5760 is a full turn) and the pivot x and y in canvas pixels (kinds 4 and
+  5 only; the pivot moves at once when its entry applies, only the angle
+  glides). A rotated primitive is drawn as a contour (rounded rectangles,
+  rings and arcs become polylines of 8-degree segments, strokes stay
+  `width` wide); through G1CFW/53 it pushed the whole frame. Each entry interpolates its object from its current
+  values (mid-flight if it was already animating) to the targets over
+  `frames` frames, `period_ms` apart (10-250; 0 keeps the current period);
+  `frames` 0 applies the targets at once. From G1CFW/49 progress is elapsed
+  time over `frames x period_ms`, counted from one period before the OBJ_ANIM
+  ran: a frame that takes longer than the period skips ahead, so a glide ends
+  on time. Entries merge into the running
+  set by object id, so an ANIM for one object never disturbs another's
+  glide; up to 16 objects animate at a time (`0B` when the set is full).
+  Easing 0 linear, 1 smoothstep, 2 ease-out, 3 ease-in, or `80` (G1CFW/40)
+  for a CSS cubic-bezier whose four control bytes `x1 y1 x2 y2` (0-255 for
+  0.0-1.0, g2flash's curve encoding: ease `40 1A 40 FF`, ease-in-out
+  `6B 00 94 FF`, ease-out `00 00 94 FF`, ease-in `6B 00 FF FF`) follow the
+  entry's values. An unknown id is `0E`, a mask bit the kind cannot animate
+  or an unknown easing byte is `08`, a truncated entry list `01`. The glasses render the frames themselves on the display thread: the
+  stubbed stock refresh handler is redirected to the CFW tick, which
+  re-composes the SHOW list, pushes the frame, sleeps the period and
+  re-posts the stock refresh message until every tween has settled. Each
+  frame pushes only the union of the animated objects' old and new boxes
+  (kind-4 shapes have a type-aware box with a stroke margin of `width + 2`;
+  from G1CFW/54 paths and rotated shapes are boxed by the edges they are
+  drawn from instead of forcing a whole-canvas push); a kind-3 shapes object
+  has no box and forces a whole-frame push. (G1CFW/17 to /37 took fixed 8-byte glide
+  entries `id, tx, ty, frames, easing`.)
+- `26` ANIM_STATE: reply `[active][period_ms][ticks:u32][full_pushes:u32][frame_ms:u16]`
+  (`frame_ms`, G1CFW/49: compose and push time of the last tween frame).
+
+All but STATE are valid stream records.
+
+## `10` STREAM: `[seq][flags][data]`
+
+Multi-packet messages with one reply per message, so the phone can write
+packets back to back. `flags` bit 0 marks the first packet, whose data begins
+with `[total:u16][crc:u16]` (CRC-16/CCITT-FALSE over the whole message); bit 1
+marks the last; bit 2 (G1CFW/41) on the last packet asks for the message to
+run **once**: when its length and CRC equal the message that ran last, the
+glasses answer with that message's status and record count without running
+it again, so a host whose reply was lost can resend without restarting the
+glides it started (g2flash's repeated request id). `seq` increments by one per packet; a gap, a packet with no
+message in flight, a declared length over 4096, or more data than declared is
+refused with status `05`/`07` and the message is dropped. Mid-message packets
+get no reply. The last packet is answered `F0 10 <status> <seq> <records done>`
+after the message runs.
+
+G1CFW/45 keeps the cached execution status separate from the latest transport
+error, so a malformed retry cannot change the result returned by ONCE.
+The host matches replies to the current message's packet sequence range
+(including 255-to-0 wrap), accepts success/deferred only for its final
+packet, and uses one acknowledgement deadline even when stale replies arrive.
+This remains a length/CRC-based replay cache, not a unique request ID.
+
+From G1CFW/50, flag bit 3 on the first packet marks a **compressed** message:
+the declared length and CRC cover `[raw:u16]` followed by one LZ4 block (the
+standard block format) that decodes to the `raw` bytes of records. The packets
+are assembled at the end of the 4 KB buffer and decoded in place, so `raw` plus
+LZ4's in-place margin, `(block >> 8) + 32`, must fit in 4096 bytes. A block
+that is malformed, decodes to a different length, or leaves no margin is
+refused with `09` (bad RLE) before any record runs. ONCE compares the
+compressed bytes. G1CFW/50 has no persistent compression context: every
+message is a block of its own.
+
+A message is a list of records `[cmd:u8][len:u16][payload]` using the BLIT,
+FILL, FLUSH and TEXT payloads above, so one message can carry a clear, several
+compressed bands and a single flush. The first failing record stops the
+message; `records done` says how many ran. A flush that meets the panel off
+does not stop it (G1CFW/32): the pixels are in the frame buffer and go out
+with the whole frame when the panel comes on, every record runs, and the
+reply carries status `04` so the host knows nothing is visible yet.
+
+## `11` STATS
+
+Reply body: `[messages:u16][errors:u16][stock_swallowed:u16][last_status]
+[message_active][message_bytes:u16][message_max>>8][ram>>8]`.
+
+## `12` PEEK: `[addr:u32][len]`
+
+Diagnostic: reply body is `len` (at most 16) bytes read from `addr`. Used to
+inspect candidate RAM before reclaiming it.
+
+## `14` VIEW: `[op][dx:i16][dy:i16]` (G1CFW/23 and later; dx as content shift from G1CFW/26)
+
+Where the 640x200 frame lands on the panel. The stock UI turns the phone's
+height gear into the panel row origin ((8 - gear) * 35 rows; both temples
+boot at 210, gear 2) and the depth gear into an opposite horizontal shift of
+the two lenses' content (gears 1..9 shift 22, 8, 0, -4, -8, -10, -12, -14,
+-16 columns, negated on the master temple). `dy` is added to the stock row
+origin at every push. `dx` cannot move the column origin: the panel's
+column space is exactly 640 wide, so a shifted origin clips one edge and
+wraps the other (seen on hardware with G1CFW/23). Instead each push shifts
+the affected frame rows by `dx` in place, blanks the strip the canvas no
+longer covers, pushes, and restores the rows, so drawing stays in canvas
+coordinates and content near the far edge is cropped. `dx` must be even
+and within +/-24 (the stock table tops out at 22); `dy` within +/-480.
+`op` bit 0 = query only. Reply body `[dx:i16][dy:i16][stock_col:i16]
+[stock_row:i16][height_gear][depth_gear]`. From G1CFW/38 setting the view
+while the panel is powered also clears the physical panel and pushes the
+whole frame (with LEDs disabled during the operation since /47) (op bit 1, the old explicit push, is
+accepted and redundant), so a connecting host that places the canvas wipes
+whatever the stock screens left on the panel before it. `g1flash.py view
+--height H --depth D` map the stock gears per temple, `--dx/--dy` set the
+offset directly.
+
+## IMU streaming (`33`-`34`, G1CFW/23 and later)
+
+The IMU fusion thread runs on the master (right) temple and keeps three
+attitude words (hundredths of a degree: roll-like, drifting yaw, pitch).
+
+- `33` IMU_CONTROL `[period_ms][count:u16]`: stream `count` samples (`ffff`
+  = until stopped, 0 = stop) every `period_ms` (10-250). Samples are sent
+  from the display-thread tick that also drives animation; while a glide
+  runs, its period sets the pace. Reply `[active][period_ms][remaining:u16]
+  [sent:u32]`.
+- `34` IMU_SAMPLE: unsolicited `F0 34 00 [seq:u16][word0:i32][word1:i32]
+  [pitch:i32]`.
+
+## `40` MIC_CONTROL: `[op]` (G1CFW/25 and later)
+
+`op` 1 starts a capture session, 0 stops it, 2 queries. Start does what the
+phone's stock open-mic command (`0E 01`) does without its screen-state
+checks: it routes encoded chunks to BLE rather than the quick-note flash
+recorder, sets the capture mode to "stream" and asks the main thread for a
+PDM session. The session reads 16 kHz mono blocks, LC3-encodes them and
+the BLE dispatcher sends them to the connected central as stock
+`[F1][seq][200-byte chunk]` notifications. Stop sets the mode byte that
+makes the session loop exit after its next block. Nothing stops the stream
+on disconnect; the host must send `op` 0 (or the glasses must reboot).
+Reply body `[recording][starts:u16][stops:u16][mode][armed]` (`mode` 0
+stream, 1 stopped, 2 capture without sending; `armed` non-zero while the
+main thread owns a session). `g1flash.py mic record --seconds N --out
+file.lc3` starts, captures, stops and writes the raw concatenated chunks;
+`tools/lc3_decode.py file.lc3` turns the capture into a WAV through liblc3
+(`brew install liblc3`): each 200-byte chunk is ten 10 ms LC3 frames of
+20 bytes (16 kbit/s) at 16 kHz, so one chunk arrives every 100 ms.
+
+## ANCS relay (`35`-`36`, G1CFW/51 and later)
+
+The stock firmware's ANCS client, on the temple whose state byte 0 reads 2,
+fetches every notification iOS shares with the bonded phone into a record
+(app id, display name, title, subtitle, 256-byte message, date; see
+`fw_abi.h`) and handed it to `recv_ble_data`, which applied the Even app's
+whitelist and posted the stock popup. Both GATT handlers also discarded
+every event while one of the AI-family screens was up, and the CFW's screen
+`0x10` is one of them, so nothing ever got through while the phone drove
+the display. G1CFW/51 patches the two gates (the `cmp #0x10` at `0x190d8`
+and `0x18e12` compares against `0xff`) and replaces the consumer with
+`cfw_ancs_recv` (`b.w` at `0x1981c`).
+
+The client is only subscribed in the first place after `discover_gattp`
+runs on the phone link at security level 2: iOS hides ANCS from an
+unencrypted link. The stock reaches that from `ancs_security_changed`
+(needs the persisted notify-enable byte `0x1088` and the bonded MAC at
+`0x1081`) and from the Even app's notify-enable command `14 01`
+(`BLE_REQ_PUT_NOTIFY_EN`, `FUN_00019c80`, which also persists `0x1088`),
+and it asks for level 2 itself only from `low_speed_peripheral_dispatch_thread`
+behind state flags the Even app sets. Since G1CFW/52 every ENABLE and RENEW
+on the temple with the client does the missing step: a connection below
+level 2 gets `bt_conn_set_security(conn, 2)` (iOS pairs and asks the wearer
+to share notifications if it has not), one at level 2 with no discovery
+running or finished (`ancs_discovery_flags` bits 0 and 1) gets
+`discover_gattp`. The host still sends `14 01` once per connection so the
+stock's own path works on later connections. From G1CFW/54 no security
+request is made while `ancs_security_changed`'s count of failed changes in a
+row (`0x20006c14`) is non-zero: the stock re-requests after each failure on
+its own and reboots the temple after ten. G1CFW/52 and /53 were built without
+the `ancs` patch groups, so on them the gates and `cfw_ancs_recv` were not
+installed and nothing was relayed.
+
+- `35` ANCS_CONTROL `[op]`: 1 ENABLE arms or extends a 90 s lease, 5 RENEW
+  extends a live one, 2 DISABLE drops it, 3 QUERY only answers; 4 ACTION
+  is refused (`08`). Reply body: the STATUS record
+  `['A','N',1,4][enabled][side][drops:u16][sent:u16][send_errors]`, where
+  `side` is state byte 0 (2 on the temple with the client). G1CFW/52
+  appends `[security][discovery][notify_enabled][force_bind][connected]
+  [notifications:u16][kicks]`: the phone link's security level (`ff` while
+  the client has no connection), the stock discovery flags, user-setting
+  bytes `0x1088` and `0x1089`, whether the client has a connection, records
+  taken from the stock queue since boot, and which steps the CFW has taken
+  since boot (bit 0 security requested, bit 1 discovery started).
+- `36` ANCS_RECORD: unsolicited `F0 36 00 ['A','N',1,kind][body]`, one
+  record per notification, at most 150 bytes each, in the G2 relay's
+  format (g2flash `patches/ancs_relay.c`): kind 1 SOURCE
+  `[event][flags][category][count][uid:u32]`, kind 3 APP
+  `[total:u16][offset:u16][id_len][app id][display name]`, kind 2 ATTR
+  `[uid:u32][attr][total:u16][offset:u16][chunk]` for attributes 0-7 in
+  order (4, 6 and 7, which the stock never requests, went out with total 0
+  until G1CFW/56, which leaves them out for the phone to fill in; the
+  message is chunked at 134 bytes). A removed notification (event 2)
+  sends its SOURCE only. The uid of an added or modified notification, and
+  every notification's flags, category and count, come from the stock
+  uid-queue entry at `0x20006c8c` (the stock leaves the record's uid field
+  zero except for a removal; G1CFW/51 to /53 sent uid 0 for those); a removal's
+  uid comes from its record and borrows the entry's flags only when the entry
+  names the same uid.
+
+Without a lease a fetched record is dropped and counted, so the stock popup
+never draws over the scene; the phone renews every 45 s. From G1CFW/54 a
+lease found expired is cleared, so it does not read as live again 2^31
+ticks (18.2 h) later. The stock gate's
+other conditions stay: nothing is fetched in the first 10 s of a
+connection or in work modes 1 and 8, a second event for the uid the client
+last fetched is not re-fetched, and ANCS is only discovered on the bonded
+phone at security level 2. Records go through the stock BLE write queue
+(96 entries of 256 bytes) to every subscribed central.
+
+## Input events (`30`-`32`, G1CFW/21 and later)
+
+Two stock paths are redirected into the CFW so the host can observe what
+the glasses sense:
+
+- **Touch gestures** (G1CFW/21). Each temple's capacitive touch chip wakes
+  the stock `touch_key_thread`, which classifies the press history into a
+  gesture code and hands it to the stock key-event thread through a small
+  helper; that helper is now `cfw_touch_event`. Codes: 1 single tap,
+  2 double, 3 triple, 4 long-press start (stock turns the mic on), 5
+  long-press end, 6 long-press timeout. Five, six, ten, eleven and fifteen
+  taps act inside the stock thread (reboot, force bind, user data reset,
+  ESB band) and never reach the helper, so they are not reported.
+- **Stock events** (G1CFW/22). Everything the stock firmware reports to the
+  phone as an `F5` notification passes through one poster function, now
+  `cfw_stock_event`: 2 head up, 3 head down (IMU fusion thread); 6 worn,
+  7 taken off outside the case, 8 placed in the open case, 9 charging
+  state, `0a` battery percent, `0b` case closed, `0e` case charging state,
+  `0f` case battery (work-mode checker); `11` sent once per connection
+  after the bind check; plus key and dashboard events the stock UI emits
+  (`13`-`16`, `18`, `1e`, `20`, 0).
+  The CFW re-implements the poster (direct `[F5][code][CB]` packet when the
+  link is ready, otherwise the BLE context's event semaphore), so the stock
+  phone path is unchanged unless swallowed.
+
+- `30` INPUT_CONTROL `[flags]`: bit 0 report gestures, bit 1 keep gestures
+  from the stock handler (no dashboard, mic or temple sync), bit 2 report
+  stock events, bit 3 keep stock events from the phone path, bit 4 leave
+  panel power to the host, bit 5 (G1CFW/56) switch a worn panel off once the
+  canvas has been blank (no shown object, no direct draw) for 8 checker
+  passes (1.6 s), bit 6 (G1CFW/56) skip the repeat pushes 600 ms and 1.2 s
+  after a power-up. All off at boot, so a bare host sees no
+  unsolicited traffic and the panel follows wear. Since G1CFW/31 the body
+  may be `[flags][wear_on][wear_off]`: the CFW's own wear thresholds on the
+  radio-link word (worn at or above `wear_on`, not worn at or below
+  `wear_off`, defaults 56 and 53, `wear_on` must exceed `wear_off`). Reply
+  body `[flags][wear_on][wear_off]`; an unknown bit or a bad pair is
+  `bad-record`.
+- `31` INPUT_STATE: reply `[flags][last_gesture][gestures:u16]
+  [gestures_passed:u16][last_event][events:u16][events_sent:u16]
+  [panel_autos][work_mode][last_mode][mode_changes][checks][suspends_skipped]`
+  (since G1CFW/28-29: the stock work mode now, the last mode asked of
+  `change_work_mode`, and the low bytes of three counters: mode changes,
+  200 ms checker passes, stock display suspends refused).
+
+**Panel follows wear (G1CFW/27, reworked in /28).** With the stock refresh
+pipeline stubbed nothing asks for the panel when the glasses are put on, so
+unless bit 4 is set the CFW switches it: on through the panel's resume
+callback, falling back to the on callback plus a brightness write when
+resume refuses (it does on these units), then a push of the whole frame
+buffer, repeated 600 ms and 1.2 s later on the 200 ms ticks (G1CFW/35).
+The buffer survives power-up: revision 47 replaces the stock initialization
+clear with a raw physical-cache clear that does not touch the frame. It runs
+before stock LED enable; the CFW then keeps output disabled throughout the
+full-cache clear and retained-frame redraw. Stock screen-exit clears remain
+stubbed. This replaces the visible row-by-row margin clear used in /37–46.
+Off goes through the suspend callback, falling back to the off callback. Two sources
+feed it. The stock events `worn` (6), `taken off` (7), `in case open` (8)
+and `case closed` (`0b`) only flow while a central is connected (the stock
+wear state machine resets when nothing is). The stock work-mode switch
+(`change_work_mode`, detoured at its entry) runs whether or not one is:
+modes 2 `normal-run` and 3 `normal-standby` mean worn and switch on, 4
+`normal-low-power` (taken off), 5 and 6 (charging in the case) and 8 (deep
+sleep) switch off; 0, 1, 7 and 9 are left alone. G1CFW/29 adds the two
+pieces that make this hold: the stock work-mode checker, which runs every
+200 ms, reconciles panel power with the current mode on each pass (the
+stock display-off path switches the panel without a mode change), and the
+stock system suspend is refused outright while the CFW manages the panel,
+so nothing blanks a worn pair but the host. G1CFW/30 adds the piece that
+makes the wear sensor itself report: the sensor is the radio link between
+the temples (the network core reports its ESB statistics over IPC about
+every six seconds; the checker classifies the fourth word, `>= 0x33` worn,
+`< 0x28` not worn), and the IPC handler overwrites that word with `0x46`
+(worn) whenever the wear-detection user setting is off, so a pair with the
+setting off never leaves normal standby. The 200 ms pass turns the setting
+on while the CFW manages the panel. `g1flash.py touch state` reads the
+live word and the setting alongside INPUT_STATE through PEEK. The stock
+thresholds leave a pair lying unfolded on a table (word 47-50 measured
+here; on a head 62-74, folded in the case 25) in a dead band for ever, so
+from G1CFW/31 the CFW classifies the word itself while the stock mode says
+worn: panel on at or above `wear_on`, off at or below `wear_off`, unchanged
+in between, and a word of 0 (no statistics yet after boot) trusts the
+mode. `g1flash.py touch control --wear-on N --wear-off M` sets the pair.
+From G1CFW/48 taken off waits: the panel goes off only after 100
+consecutive 200 ms checker passes (20 s) that each say taken off (mode 4,
+or mode 2/3 with a nonzero word at or below `wear_off`). Any other pass
+(worn, the dead band, any other mode) starts the wait over, as does the
+`worn` event; mode changes and the `taken off` event switch nothing
+themselves. Case open/closed (events 8, `0b`; modes 5, 6) and deep sleep
+(mode 8) still switch off at once, and putting the glasses on is still
+immediate. The wait is fixed; INPUT_CONTROL is unchanged.
+With bit 4 set everything stands down (the wait is dropped) and the stock
+suspend works again.
+From G1CFW/56 the checker pass also watches the phone link (the stock
+connection pointer at `0x20007ef4`, cleared by the disconnect callback): a
+microphone capture stops on the first pass without a central, and after
+150 passes (30 s) the SHOW list and tweens are dropped and a worn panel goes
+off. With bit 5, the panel bit 5 switched off comes back on the pass after
+content arrives, also in the wear dead band.
+PANEL (`05`) still works for manual control.
+- `32` INPUT_EVENT: unsolicited `F0 32 00 [class][code][count:u16]`, class 0
+  gesture, class 1 stock event, from the temple that produced it. The host
+  tool (`g1flash.py touch watch`) sets bits 0 and 2, prints events for a
+  while and clears the flags on exit.
+
+The flags are per temple and live in RAM until reboot.
+
+## Link policy (G1CFW/20 and later)
+
+The stock firmware accepts only the bonded phone's address while out of the
+case and drops any unbonded central 30 s after it connects. G1CFW/20 patches
+both checks out, so any BLE central can connect at any time and stay
+connected. There is no authentication on the private protocol; this is a
+development firmware.
+
+## Stock commands the CFW swallows
+
+`0x15` (BMP data), `0x16` (BMP CRC) and `0x20` (BMP end) are consumed without
+reply: their staging RAM at `0x20017d30` on 1.6.3 (5,120 bytes) now holds the CFW
+context and the 4 KB message buffer.
+
+From G1CFW/50 the CFW also consumes the stock data of screens it replaced, whose
+buffers (`0x20010dbc..0x20017d2f`) contain the CFW's third RAM region: `0x09`,
+`0x0A` (navigation, which clears `0x20012a4f` + 16,592 bytes), dashboard `0x06`
+subcommands 3-7 (byte 4; 7 copies to `0x200143cb`) and quick-note `0x1E`
+subcommands 3 and 8. `0x06` subcommands 1 and 2 (time and weather) still reach
+the stock handler. The stock `#cmd@...` string path, which synthesizes binary
+commands inside `spec_ble_command_hook`, is not filtered.
+
+## Caveats
+
+- From G1CFW/8 the stock UI refresh pipeline (`display_reflash_handler`) and
+  screen-exit clear are stubbed. Since /47 the initialization clear is
+  replaced with a CFW physical-cache clear; it preserves the framebuffer. The CFW owns the frame; stock screens no
+  longer draw.
+- Flushing runs on the BLE worker thread and takes about 1 ms plus SPI time
+  per call. Prefer one FLUSH per frame over flushing every BLIT.
+- Single-packet commands have no CRC; their reply is the acknowledgement.
+  STREAM messages are CRC-checked and are the pipelined path.

@@ -1,0 +1,14 @@
+{
+  "version": "GLASSLYCFW/10",
+  "passed": true,
+  "groups": 8,
+  "nativeHookCases": 16,
+  "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+  "nativeBusAndRTOSMocked": true,
+  "hardwareTested": false,
+  "reports": {
+    "host-03/report.json": "15456d64210de16da706d6e7af3c28dc4fff618586cb6cb74e1f3b6c0c239605",
+    "rv32-02.json": "4a674b9ed81dce6354f438e88a8de92920972b359e9e03cbb08037650fc29229",
+    "rv32-02.bindings.json": "d6db616c4d1ed7b8af0e3da45c14dac1587a3a54b4fdad1004529c470cd347fb"
+  }
+}

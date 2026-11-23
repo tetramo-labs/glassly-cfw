@@ -1,0 +1,44 @@
+[
+  {
+    "address": "0x435f598",
+    "body_offset": "0x174578",
+    "bytes_hex": "696400",
+    "text": "id"
+  },
+  {
+    "address": "0x435ea6c",
+    "body_offset": "0x173a4c",
+    "bytes_hex": "7479706500",
+    "text": "type"
+  },
+  {
+    "address": "0x4374878",
+    "body_offset": "0x189858",
+    "bytes_hex": "6100",
+    "text": "a"
+  },
+  {
+    "address": "0x435ad3c",
+    "body_offset": "0x16fd1c",
+    "bytes_hex": "747300",
+    "text": "ts"
+  },
+  {
+    "address": "0x437628c",
+    "body_offset": "0x18b26c",
+    "bytes_hex": "746900",
+    "text": "ti"
+  },
+  {
+    "address": "0x435d950",
+    "body_offset": "0x172930",
+    "bytes_hex": "6300",
+    "text": "c"
+  },
+  {
+    "address": "0x4362e28",
+    "body_offset": "0x177e08",
+    "bytes_hex": "706b675f6e616d6500",
+    "text": "pkg_name"
+  }
+]

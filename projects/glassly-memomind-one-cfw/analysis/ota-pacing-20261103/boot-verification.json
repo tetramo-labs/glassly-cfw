@@ -1,0 +1,111 @@
+{
+  "appHeaderSHA256": "3072438d515bb128273ec5f26eb10b4abd07e35323cec48ce62abae59b0b50ec",
+  "bootHeaderVerified": true,
+  "complete": true,
+  "flashAssetWritesStarted": false,
+  "freeBeforeHex": "00056dd4",
+  "originalPosition": {
+    "dist": 3,
+    "pos": 2
+  },
+  "physicalOutputConfirmed": false,
+  "positionChangeReadbackVerified": true,
+  "positionRestoreVerified": true,
+  "relayEnablePollDisableVerified": true,
+  "release": "notifications-settings-002",
+  "stage": "after",
+  "topologyAndBadmapVerified": true,
+  "capture": "captures/notifications-settings-20261103-after-02",
+  "traceSHA256": "cf0f76946f178a1ac28fc9a22e79a0b5e4147dcf7c45c6ad706d84f24a74e327",
+  "capabilities": {
+    "abi": 1,
+    "assetStorage": "flash-volatile-map",
+    "builtinText": true,
+    "bundleMaxSegments": 255,
+    "bundleModes": [
+      3,
+      6,
+      9,
+      15,
+      19,
+      20,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "cleanup": "graphics-input-current-screen",
+    "diagnostics": "native-v1",
+    "displayOwner": "minimal",
+    "displaySettings": {
+      "depth": 11,
+      "max": 8,
+      "min": 0,
+      "position": 10
+    },
+    "emptyGeometry": "lease-only",
+    "flashCanary": 122,
+    "flashRead": 123,
+    "freeBytesHex": "00056dd4",
+    "glassly": "graphics-runtime",
+    "height": 350,
+    "inputObserver": {
+      "capacity": 32,
+      "command": 124,
+      "leaseTicks": 30000
+    },
+    "largeMessage": {
+      "chunkBytes": 1024,
+      "crc": "crc32-ieee",
+      "mode": 127
+    },
+    "leaseTicks": 30000,
+    "lowWaterBytesHex": "00056a70",
+    "maxGeometryRecords": 255,
+    "maxMessageBytes": 65535,
+    "maxWireMessageBytes": 8192,
+    "missingGlyph": "reject",
+    "modes": [
+      3,
+      6,
+      7,
+      8,
+      9,
+      11,
+      15,
+      19,
+      20,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "notifications": {
+      "command": 120,
+      "leaseTicks": 90000,
+      "transport": "poll"
+    },
+    "ownership": {
+      "claimedTicks": 5000,
+      "command": 121,
+      "fallbackTicks": 400,
+      "leaseTicks": 90000
+    },
+    "profile": "H001Y-1.0.3.127",
+    "rasterLens": "first-left",
+    "registryBytes": 256,
+    "snapshotBytes": 20,
+    "storeKiB": 256,
+    "textFont": "native-resource",
+    "textMaxBytes": 255,
+    "tickMs": 1,
+    "version": "GLASSLYCFW/3",
+    "width": 600,
+    "writableStaticBytes": 256
+  },
+  "version": "GLASSLYCFW/3"
+}

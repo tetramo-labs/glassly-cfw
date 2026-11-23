@@ -1,0 +1,18 @@
+{
+  "recording_sha256": "7f875122058f8e38e43c5f86a5723c77448e5ab73899a6057c0558962dba7a21",
+  "backwards_timestamps": [
+    {
+      "record": 23347,
+      "offset": 5440302,
+      "previous_offset": 5440251,
+      "previous_timestamp_us": 63961727384272906,
+      "timestamp_us": 63961727384272905,
+      "delta_us": -1,
+      "unix_epoch": 1793471384.272905
+    }
+  ],
+  "all_reversals_after_last_ota_frame": true,
+  "last_ota_timestamp": 1793471314.641375,
+  "modified_recording": false,
+  "inspector_result_preserved": "analysis/graphics-hci-integrity.json"
+}

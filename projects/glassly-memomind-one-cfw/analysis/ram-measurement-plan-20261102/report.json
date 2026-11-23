@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "compiled": true,
+  "executed": false,
+  "device_actions": false,
+  "helper": "analysis/ram-measurement-plan-20261102/measure",
+  "invocation": "analysis/ram-measurement-plan-20261102/measure NEW_CAPTURE_DIRECTORY",
+  "working_directory": "/Users/fosse/dev/glassly-memomind-one-cfw",
+  "source_sha256": {
+    "analysis/ram-measurement-plan-20261102/measure.swift": "3dcf9d87cdf110517323a959a36e7ba5c39a343b33c042839193dffc4c532a71",
+    "analysis/ram-measurement-plan-20261102/measure": "b8fa292182dbf43e5e87e822c77687ac91aa93f12b9eb30e2b181731f7080e9f",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o": "0e6987b432d1883712bf510e1854398ddeddd6c6e3baa3a3d21cab8d8a6ec9da",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o": "1f3cf000f1e72256b8baed98c071b9a5c7f613576cc39edc84a61ee5b1bff7c8",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "7aab9ae7e60e870e9dfa9fe4b81014778f203d1c5188e5544b53acfc44b56240",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift": "193bde8d024d08340b3f683d2605acf1002c98f2eda9db342dd128d1d28ed1e6",
+    "runtime/graphics/graphics.c": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+    "runtime/graphics/native.c": "44272642ed0a38b0c20535bff925b796408b300d3b1a564ceb903c488c7f5834",
+    "analysis/diagnostics-native-20261102/smoke-v2.swift": "7098f80a57f370d16a07a84d2d6fd0b869e8ec85fefbf094c670b56105e7a691",
+    "analysis/diagnostics-native-20261102/admit-candidate.py": "3089f95957d6b4bdc29cbfdc06076c74362981da4c51a85da33060e165e87a08",
+    "analysis/ghidra/memory-capacity/allocator/function-0433c460.c": "0db43685e557efc047ed390424f2bac2d8a7aaf983191a25de5ee4fbe2b7fb5d",
+    "analysis/ghidra/memory-capacity/allocator/function-0433c4a4.c": "e286f9f4e02a793c39b90178a90803741f912e8e941e056269cccd20773cada0"
+  },
+  "source_static_review": {
+    "one_connection": true,
+    "only_custom_commands": [
+      "0x7b bounded header read",
+      "0x7e capability query"
+    ],
+    "samples": 10,
+    "pause_seconds": 0.5,
+    "no_ota_or_graphics_mutations": true,
+    "all_local_pins_before_connect": true,
+    "live_header_before_sampling": true,
+    "correlation_filter_enabled": true
+  },
+  "telemetry": {
+    "current_free_abi": "uint32_t 0x0433c460(void)",
+    "low_water_abi": "uint32_t 0x0433c4a4(void)",
+    "current_free_semantics": "Sum of registered pool current-free accounting",
+    "low_water_semantics": "Sum of per-pool historical minimum-free accounting",
+    "pool_descriptor_range": [
+      "0x0205d5f8",
+      "0x0205d648"
+    ],
+    "largest_block_supported": false,
+    "probe_temporary_allocation": true,
+    "atomic_pair": false,
+    "template_bytes_including_nul": 740
+  },
+  "historical_samples": [
+    {
+      "path": "captures/swift-mac-diagnostics-cleanup-20261102-01/capabilities.json",
+      "sha256": "e14965d70d14fee359fc55107adbb9c50778cdeab6ebd748ff058fcdaffdefb3",
+      "free_bytes": 332452,
+      "low_water_bytes": 99496
+    },
+    {
+      "path": "captures/swift-mac-diagnostics-smoke-20261102-01/capabilities.json",
+      "sha256": "0247d35f400e098a079a061dd4bc9b39d1dd176a92e7c0fd35fde27fdd24abff",
+      "free_bytes": 333628,
+      "low_water_bytes": 315904
+    },
+    {
+      "path": "captures/swift-mac-diagnostics-smoke-20261102-02/capabilities.json",
+      "sha256": "db374aec2d2f57ef1c0d8cb22542bfbef273a0c613f1d3fa374006a9e2ac76f5",
+      "free_bytes": 332588,
+      "low_water_bytes": 99496
+    }
+  ],
+  "admission": {
+    "existing": "diagnostic-commands-001",
+    "new_release_requires_literal_internal_catalog": true,
+    "external_manifest_grants_no_native_swift_authority": true,
+    "rx96_currently_offline_only": true
+  },
+  "limitations": [
+    "Only compiled and source-reviewed; root owns execution. Samples are not new measurements until capture completes.",
+    "The helper pumps the main run loop between requests; 0.5 seconds is a requested inter-request pause, not an exact sampling period.",
+    "Low-water may remain depressed after resources are freed; compare current-free under matched screen/activity/connection conditions.",
+    "The response formatting template is allocated before measurement and freed afterward; transport and response allocations also perturb total heap.",
+    "No largest-block, allocator fragmentation, per-owner memory or spare RAM inference is available.",
+    "Read-only queries are transient allocating operations, not an absence of all device state change.",
+    "Session only observes trailing traffic when subsequently read; no proof of all later notifications being drained at final close."
+  ]
+}

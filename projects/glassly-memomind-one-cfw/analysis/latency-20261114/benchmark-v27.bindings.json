@@ -1,0 +1,71 @@
+{
+  "runtimeSHA256": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+  "build": "/Users/fosse/dev/glassly-memomind-one-cfw/build/latency-27",
+  "sourcesVerified": true,
+  "bindings": [
+    {
+      "file": "tests/rv32/graphics_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "141a7a29ecbc29f7a3195b26a73ce26bd08d84a3377c2cd277f4b88e94068c87"
+    },
+    {
+      "file": "tests/rv32/scene_runtime_emulator_test.py",
+      "names": [
+        "SCENE_SHA"
+      ],
+      "historical": "cd849a72ecd662a79327d01f792ddbe6b09cd5d7a2a683aa05440301dced2bbd",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "814c58a44271d8fcbc88dd6242704646f64ec7cbe388ac3de9ab56c0add9f319"
+    },
+    {
+      "file": "tests/rv32/diagnostic_command_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "c9d673d67f30e7b6242d14955759a1b09f9175b5cfd9d5b111b791b3663f8e06"
+    },
+    {
+      "file": "tests/rv32/input_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "3f8e637dff1f9da760b8842d1041eb88579cabc1b864bb5605d21bb9205167b4",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "6e995640f1b08942770d54a5a0b1e62eaf3de653b6402b7b67c10ba05ddb759c"
+    },
+    {
+      "file": "tests/rv32/command_bundle_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "deeddff1533fc36c5468394a1fbbd612d3a2ec096dc864d963fa3cc30148f450",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "47a708c891b6a8d6ded9ee1fa04ebb82cebf3582f3fef1b22d5a872f1b3c4a43"
+    },
+    {
+      "file": "tests/rv32/rect_copy_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "1fecdd5e1335dc8f2f5bee9d5edfffbe045a2f7244fc91b1f08259fb29349963"
+    },
+    {
+      "file": "tests/rv32/text_command_runtime_emulator_test.py",
+      "names": [
+        "PINNED_SHA"
+      ],
+      "historical": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7",
+      "rebuilt": "3a441b29a53aaa3e8e62c95d723a92cdd104a79f5cec0ad28a100db405553e10",
+      "sourceSHA256": "a2316b16e292d0769e927ec91fa7ac0b953ddd7349834d57e4a8e9ea392ba983"
+    }
+  ],
+  "testBodiesUnchanged": true
+}

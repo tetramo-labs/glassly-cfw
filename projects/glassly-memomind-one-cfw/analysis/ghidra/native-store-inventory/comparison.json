@@ -1,0 +1,21 @@
+{
+  "captures": [
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/plugin-directory.bin",
+      "bytes": 65536,
+      "sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "all_ff": true,
+      "manifest_matches": true
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata-repeat/plugin-directory.bin",
+      "bytes": 65536,
+      "sha256": "71189f7fb6aed638640078fba3a35fda6c39c8962e74dcc75935aac948da9063",
+      "all_ff": true,
+      "manifest_matches": true
+    }
+  ],
+  "identical": true,
+  "atomic_snapshot_proven": false,
+  "real_badmap_acquired": false
+}

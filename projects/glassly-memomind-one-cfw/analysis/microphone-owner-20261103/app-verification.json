@@ -1,0 +1,19 @@
+{
+  "macTests": 108,
+  "iosTests": 11,
+  "androidTests": 17,
+  "engineTests": 2,
+  "hardwareTested": false,
+  "logSHA256": {
+    "mac": "5ce0450d001f64e9656d789e0279622e362e45de17311b5599d4e787e4e09e1a",
+    "ios": "0a3c856be36dba3e394b0436027a7554251496f3ae27ce2bb6dd017314e6cac0",
+    "android": "d303139a3dafb23d0c9caabc8ff75cd100aac2208b5a7a8d00555ea585658a9b"
+  },
+  "checks": [
+    "Native Opus bytes/status validation",
+    "Queued start and shutdown polling",
+    "iOS and Android display clear preserves microphone capture",
+    "Bundled image catalog eligibility",
+    "Engine requires revision7"
+  ]
+}

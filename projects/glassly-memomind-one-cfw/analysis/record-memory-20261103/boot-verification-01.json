@@ -1,0 +1,31 @@
+{
+  "appHeaderSHA256": "d65d7e3e761e4ee754e359a5921034d775267e1d0374c006e70de30cdba48f68",
+  "binaryReplyBytes": 20,
+  "bootHeaderVerified": true,
+  "complete": true,
+  "compressedCommandsAccepted": true,
+  "dictionaryReuseAccepted": true,
+  "flashAssetWritesStarted": false,
+  "freeAfterCleanupHex": "00052d84",
+  "freeBeforeHex": "00056dd8",
+  "highBitCommandsAccepted": true,
+  "maximumDecodedRecordAccepted": 65535,
+  "originalPosition": {
+    "dist": 3,
+    "pos": 2
+  },
+  "physicalOutputConfirmed": false,
+  "positionChangeReadbackVerified": true,
+  "positionRestoreVerified": true,
+  "recordCleanupAccepted": true,
+  "relayEnablePollDisableVerified": true,
+  "release": "record-memory-001",
+  "stage": "after",
+  "topologyAndBadmapVerified": true,
+  "visualLeasePendingExpiry": true,
+  "version": "GLASSLYCFW/6",
+  "capture": "captures/record-memory-20261103-after-02",
+  "traceSHA256": "7091c93ee2cdbc55d60847a989c01cfba549dd3ff741598886160310938c8ede",
+  "hardwareHelperSHA256": "57388e99f509fd51478070bc94fb21319e9639ba26f63f44d283431009779f69",
+  "matchedRAMSavingMeasured": false
+}

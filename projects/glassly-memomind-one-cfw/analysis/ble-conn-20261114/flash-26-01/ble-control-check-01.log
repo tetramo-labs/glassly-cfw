@@ -1,0 +1,23 @@
+  0.026 central state 5
+  4.282 advert MemoMind One rssi -64 services (
+    9200
+)
+  5.279 connected
+  5.791 services ["9200", "9300", "9400"]
+  5.890 characteristics ["9401 props 30", "9402 props 30"]
+  6.048 notify 9401 true 
+  6.219 hello reply 8001001a030b
+  6.219 accepted; mtu write limit 509; flags 11 detail 11
+  6.219 -> heartbeat (before)
+  6.345 GM reply fa00000e01010106000001000112 after 126 ms
+  6.345 -> control 02: interval 12-24, latency 0, timeout 400 80020c00180000009001
+  6.508 control reply 8002021a030b after 163 ms: status 2 revision 26 flags 11 detail 11
+  8.608 -> heartbeat (after conn update)
+  8.649 GM reply fa00000e01010106000001000112 after 42 ms
+  8.650 -> control 03: security request 8003
+  8.769 control reply 8003001a0300 after 120 ms: status 0 revision 26 flags 11 detail 0
+ 10.867 -> heartbeat (after security request)
+ 11.101 GM reply fa00000e01010106000001000112 after 234 ms
+ 11.101 -> heartbeat (again)
+ 11.144 GM reply fa00000e01010106000001000112 after 43 ms
+ 12.227 disconnected: requested accepted=true

@@ -1,0 +1,157 @@
+{
+  "scope": "Static input ABI and source mapping, not live event confirmation or installed observer",
+  "stock_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "sdk_commit": "171098bff25934a534a49f95b88df58fbed404c7",
+  "sdk_layout": {
+    "host_size": 112,
+    "imu_enable_offset": 80,
+    "imu_read_offset": 84,
+    "extension_get_offset": 108,
+    "core_event_size": 20,
+    "core_event_union_offset": 8,
+    "raw_event_size": 40,
+    "descriptor_on_event_offset": 24,
+    "system_event_size": 12
+  },
+  "native": {
+    "host": "0x0436609c",
+    "extension_get": "0x0429a3a2",
+    "input_table": "0x02011404",
+    "input_subscribe": "0x04299932",
+    "input_unsubscribe": "0x042998e2",
+    "system_table": "0x02011410",
+    "system_subscribe": "0x0429999a",
+    "system_unsubscribe": "0x042997f8",
+    "imu_enable": "0x04299d1a",
+    "imu_read": "0x04299caa",
+    "display_dispatch": "0x0425b38a",
+    "app_route": "0x0425dbfc",
+    "plugin_app_callback": "0x0429ac6a",
+    "plugin_event_call": "0x0429b966",
+    "imu_worker": "0x04227eca",
+    "physical_button_handler": "0x0421e0f6",
+    "key_enqueue": "0x04225696",
+    "raw_hogp_enqueue": "0x042256d0",
+    "appbus_register": "0x04235ffa",
+    "appbus_dispatch": "0x04235770"
+  },
+  "display_envelope": {
+    "class_byte": 1,
+    "class_mask": 63,
+    "event_u16le_offset": 4,
+    "length_u16le_offset": 6,
+    "payload_offset": 8,
+    "classes": {
+      "2": "cooked key/event ID; producer has0B payload",
+      "3": "IMU gesture ID; producer has0B payload",
+      "23": "normalized HOGP, exact36B payload"
+    }
+  },
+  "cooked_keys": {
+    "0x1f7b": "single",
+    "0x1f7c": "double",
+    "0x1f7d": "long",
+    "0x1f7e": "very_long",
+    "0x1f7f": "release"
+  },
+  "navigation_keys": {
+    "0x1fb0": "up",
+    "0x1fb1": "down",
+    "0x1fb2": "left",
+    "0x1fb3": "right",
+    "0x1fb4": "page_up",
+    "0x1fb5": "page_down",
+    "0x1fb6": "scroll_up",
+    "0x1fb7": "scroll_down",
+    "0x1fb8": "back",
+    "0x1fb9": "home"
+  },
+  "imu_ids": {
+    "1": "nod",
+    "2": "head_raise",
+    "3": "head_lower",
+    "4": "shake",
+    "5": "head_raise_timeout",
+    "6": "head_lower_timeout",
+    "7": "left",
+    "8": "right"
+  },
+  "raw36_offsets": {
+    "key_u8": 0,
+    "phase_u8": 1,
+    "source_u8": 2,
+    "axis_u8": 3,
+    "value_s32": 4,
+    "norm_value_s32": 8,
+    "x_s32": 12,
+    "y_s32": 16,
+    "modifiers_u16": 20,
+    "usage_page_u16": 22,
+    "usage_id_u16": 24,
+    "report_id_u8": 26,
+    "reserved_u8": 27,
+    "application_u32": 28,
+    "timestamp_ms_u32": 32
+  },
+  "witnesses": [
+    {
+      "address": "0x0436609c",
+      "body_offset": "0x17b07c",
+      "bytes": "70000001ff0000005aa22904c6022d045cb829046ab82904049729046861360488a02904c49f2904549f2904629f29043c9f2904fc9e2904e89e2904ac9e2904989e29045c9e2904269e2904969d29041a9d2904aa9c290472f022042c112104c8872a044e9c29048ea42904a2a32904"
+    },
+    {
+      "address": "0x02011404",
+      "body_offset": "0x1b0af4",
+      "bytes": "32992904e2982904f6f600029a992904f8972904"
+    },
+    {
+      "address": "0x020102b8",
+      "body_offset": "0x1af9a8",
+      "bytes": "7c6036048860360484b3290400000000feb22904dcaf290452af29040000000010af2904000000006aac2904"
+    },
+    {
+      "address": "0x0425c00a",
+      "body_offset": "0x70fea",
+      "bytes": "032504f9eff0cfb7"
+    },
+    {
+      "address": "0x0425dbfc",
+      "body_offset": "0x72bdc",
+      "bytes": "797122d426d206d64ad04ece52cc56ca5ac80018aa842e868de19307"
+    },
+    {
+      "address": "0x0429b966",
+      "body_offset": "0xb0946",
+      "bytes": "411122c6000883a7017a8dc303c7670a11cf03c7770a19ebaa8509c903a7470911c7324403a5070841010287"
+    },
+    {
+      "address": "0x042279c2",
+      "body_offset": "0x3c9a2",
+      "bytes": "37a7350437852204130747a99306e015154681451305a5ec9770defde780e078"
+    },
+    {
+      "address": "0x0425b768",
+      "body_offset": "0x70748",
+      "bytes": "03d76400930740026314f72493858400130640021305c4f99750dafde78000889305c4f94145ef20e046"
+    },
+    {
+      "address": "0x042256fc",
+      "body_offset": "0x3a6dc",
+      "bytes": "9c40014793064002850781455d459cc0ef50c34d854709c5"
+    },
+    {
+      "address": "0x0425add2",
+      "body_offset": "0x6fdb2",
+      "bytes": "411122c600083244054741016ff0bfe0"
+    }
+  ],
+  "limits": [
+    "No input/IMU capture or device actions performed",
+    "Official raw subscribe claims input and suppresses cooked route",
+    "Official callbacks validated within loaded plugin image, not generic appendedcode",
+    "Appbus has2slots and shifts/evicts when full; topic10 has2staticregistrations",
+    "Native imu_read can wait in mutex60000ticks thenassert despite SDKnonblockingdescription",
+    "No ringrawreport clock/provenance mapping to G2RI",
+    "No validated headup settings query/write/echo parity or guaranteed inactivegestureedge"
+  ]
+}

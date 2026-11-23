@@ -1,0 +1,24 @@
+{
+  "version": "GLASSLYCFW/11",
+  "capture": "captures/v11-display-record-20261104-02",
+  "traceSHA256": "c6ce633a67ce86b8aee2057d1bec996d35dffbda545398a8dc44c781e73a641c",
+  "recordBatches": 25,
+  "allRecordStatusesZero": true,
+  "allNackReasonsZero": true,
+  "result": {
+    "appHeaderSHA256": "a05a4f16da4f48d3ddb10fd9705390cab743401f8448c3405fee6c5b6b42cc15",
+    "bootHeaderVerified": true,
+    "cleanupVerified": true,
+    "complete": true,
+    "displayHoldSeconds": 180,
+    "flashAssetWritesStarted": false,
+    "physicalOutputConfirmed": false,
+    "release": "first-run-owner-001",
+    "stage": "after"
+  },
+  "physicalVisibilityConfirmed": false,
+  "limitations": [
+    "Simple full-frame clear and builtin text; does not reproduce the phone dashboard bitmap or iAP2 session.",
+    "User visual confirmation pending."
+  ]
+}

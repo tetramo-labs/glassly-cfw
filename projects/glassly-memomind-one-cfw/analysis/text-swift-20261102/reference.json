@@ -1,0 +1,128 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source": "tests/g2_compat/upstream/patches/texture_cache.c",
+  "source_sha256": "e29998399ca11d19cc2ab90b5260a50aeff756475c9ad8752ffb58ae6c4c5fb0",
+  "utf8_sha256": "9392f647675e8ce0140acad72286bf40b73c9329edd8a238cd24f9c910801603",
+  "draw_sha256": "5556c201955fc779a5f552753fd68eab1ecce3e4f052b76e3a56adb7fd575edb",
+  "checks": 963,
+  "build_command": [
+    "clang",
+    "-dynamiclib",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-swift-20261102/reference.c",
+    "-o",
+    "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-swift-20261102/reference.dylib"
+  ],
+  "mock_boundary": "Live lease, font metrics and zero-area glyph callbacks mocked; full original parser/tokenization/preflight/control loop executes. No hardware or real glyph/pixel claim.",
+  "fixtures": [
+    {
+      "name": "empty",
+      "x": 0,
+      "y": 0,
+      "options": 15,
+      "text_hex": "",
+      "wire_hex": "0f000000000f00"
+    },
+    {
+      "name": "ascii",
+      "x": 123,
+      "y": 45,
+      "options": 15,
+      "text_hex": "476c6173736c79",
+      "wire_hex": "0f7b002d000f07476c6173736c79"
+    },
+    {
+      "name": "signed-extremes",
+      "x": -32768,
+      "y": 32767,
+      "options": 255,
+      "text_hex": "41",
+      "wire_hex": "0f0080ff7fff0141"
+    },
+    {
+      "name": "offscreen",
+      "x": -1,
+      "y": -2,
+      "options": 0,
+      "text_hex": "42",
+      "wire_hex": "0ffffffeff000142"
+    },
+    {
+      "name": "controls",
+      "x": 0,
+      "y": 0,
+      "options": 63,
+      "text_hex": "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "wire_hex": "0f000000003f1f0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+    },
+    {
+      "name": "del",
+      "x": 0,
+      "y": 0,
+      "options": 128,
+      "text_hex": "7f",
+      "wire_hex": "0f0000000080017f"
+    },
+    {
+      "name": "unicode",
+      "x": 256,
+      "y": -256,
+      "options": 31,
+      "text_hex": "41c280dfbfe0a080ed9fbfee8080efbfbff0908080f48fbfbf",
+      "wire_hex": "0f000100ff1f1941c280dfbfe0a080ed9fbfee8080efbfbff0908080f48fbfbf"
+    },
+    {
+      "name": "bom",
+      "x": 1,
+      "y": 2,
+      "options": 15,
+      "text_hex": "efbbbf",
+      "wire_hex": "0f010002000f03efbbbf"
+    },
+    {
+      "name": "decomposed",
+      "x": 3,
+      "y": 4,
+      "options": 15,
+      "text_hex": "65cc81",
+      "wire_hex": "0f030004000f0365cc81"
+    },
+    {
+      "name": "max-bytes",
+      "x": 0,
+      "y": 0,
+      "options": 15,
+      "text_hex": "414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141",
+      "wire_hex": "0f000000000fff414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141"
+    }
+  ],
+  "invalid_utf8_or_nul": [
+    "00",
+    "80",
+    "bf",
+    "c0af",
+    "c180",
+    "c2",
+    "c220",
+    "df7f",
+    "e08080",
+    "eda080",
+    "e1",
+    "e180",
+    "e18020",
+    "f0808080",
+    "f4908080",
+    "f5808080",
+    "f1",
+    "f180",
+    "f18080",
+    "f1808020",
+    "ff",
+    "fe",
+    "eda080",
+    "41c242"
+  ]
+}

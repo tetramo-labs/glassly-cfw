@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-05",
+  "result": "BLE visibility probe flashed, full readback verified, runtime USB boot observed",
+  "transaction_directory": "build/hardware/20261105T200611.552694Z-script-flash",
+  "package_sha256": "c51e350561aa51130b552efbaa64b3b5c2547731947001a0255ac36e60f43e59",
+  "readback_sha256": "2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6450cd2b83fe22",
+  "verified_plaintext_bytes": 73216,
+  "application_changed_offsets_from_name_probe": [
+    "0x2310"
+  ],
+  "metadata_4096_bytes_unchanged": true,
+  "runtime_registry": "build/hardware/20261105T200705.666288Z/summary.json",
+  "runtime_product": "Glassly Zero 2 test01",
+  "runtime_vid_pid": "2dc8:9018",
+  "version_record": 108,
+  "custom_gatt_stream_implemented": false,
+  "source_sha256": {
+    "scripts/flash.py": "28d8a83d289b8219e6b89dce7dcb52854e692d2d1fadd5928ed83c8994e1cfb5",
+    "tools/flash_zero2.c": "fefafd00a1c4819f8c2e7259ec64fd10044f89ee87056793d1384e5e8a656f67",
+    "tools/build_name_probe.py": "32891df71d22832d62e498f884b4edb7d798ae7381a4017977c82b39d5f47457",
+    "tools/build_ble_probe.py": "e6357d5e84e9926482f6d45aec18a45d5411bb49a6c8798bb9097f97f55698d7",
+    "tools/firmware_image.py": "c70a2e9a81f9b08cfdecf2f733a29bf0ce1785a85e1d1ee21b4c2ef22d195c89",
+    "tools/startup.py": "6d2281c79fc2910e531ca881e55b50aca1f8fe9bb5029bca53d722a8972517a7",
+    "third_party/8cryptdo/cryptdo8.py": "6701ba2b6089c47686b2785e1c5729e8533ef1102e1f7cdde904bad9b73167bc",
+    "sources.lock.json": "c2ffb165b4a605e4ae94cf120775e90d5e708f8e2b299c68e44008a75131f02d"
+  },
+  "archived_source_directory": "build/hardware/20261105T200611.552694Z-script-flash/sources",
+  "transport_log_sha256": "05c1e08cbaf5d9748aa88fcb8f28a2637b973eefc99750c1fb05b4bab6a30fe0"
+}

@@ -1,0 +1,15 @@
+{
+  "started_utc": "2026-11-05T20:57:15.805403+00:00",
+  "finished_utc": "2026-11-05T21:14:10.913148+00:00",
+  "all_required_offline_suites_passed": true,
+  "sources_changed_during_run": [],
+  "missing_upstream_mapped_stages": [],
+  "hardware_tested": false,
+  "upstream_commit": "e889569fe77775ed5822af6f7e47210f2984f15d",
+  "version": "GLASSLYCFW/13",
+  "stages": 145,
+  "report": "analysis/text-scale-20261105/regression-13-02/report.json",
+  "reportSHA256": "ba705a655e069f67705b1d8472910f60635658167647867c88e821f4562815ee",
+  "demos_dependencies": "~/dev/glassly-g2-cfw/demos/node_modules",
+  "g2_media": "~/dev/glassly-g2-cfw/demos"
+}

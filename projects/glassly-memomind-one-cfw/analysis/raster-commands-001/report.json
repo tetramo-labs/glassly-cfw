@@ -1,0 +1,89 @@
+{
+  "format": "memomind-raster-commands-offline-v1",
+  "frozen": true,
+  "hardware_tested": false,
+  "runtime": "runtime/build/raster-commands-001/graphics.bin",
+  "runtime_manifest": "runtime/build/raster-commands-001/build.json",
+  "blob_bytes": 61392,
+  "blob_sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328",
+  "elf_sha256": "3ce4dd34a73fab8659e466e359b8f922d5cb1d7eeef546ae5730bf30eed82ac2",
+  "changed_source_sha256": {
+    "runtime/graphics/graphics.c": "e7b64e642c7274c7b0aff05720afe4b2ba2e798d6e6129ff3f1ba770f7ff85df",
+    "runtime/graphics/scene_session.c": "9890a32c3a6569230f1c0c50cc33f39dc8141675a000ee562a3715735835b056",
+    "runtime/portable/raster_commands.c": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e",
+    "runtime/portable/raster_commands.h": "953fefe23bea016c9fdb6bed7a73263180b28221d2da31b5a4bc6f6e2abf1179",
+    "runtime/portable/rle.c": "61a5ba6f0285867b426655f3c40b1aaefe50ef414b79f8241b1f18be5576a062",
+    "runtime/portable/rle.h": "12891d1c44b5b532988fd2981ee57eafa4d692478c42cd7031bbf1ad08ae746b",
+    "runtime/portable/scene.c": "bb9fdb5afe6bd85bb3e701fdb7e47fbeffba12d05a874760641727c989114ec7",
+    "runtime/portable/scene.h": "cd40251d1a7754cba516a5a5135213f739c6406945a26e0d99a471240542cb91",
+    "scripts/compile_memomind_graphics.py": "d823ed4e5ade58951d6bd9b8346c7d7b363bb9cca7830e38023e0f20ab92a92c",
+    "scripts/test_compile_memomind_graphics.py": "11632dad33efba12ac11f0f26ecc7dd984bed5c0911cbc511d11dd2906c15035",
+    "runtime/graphics/tests/raster_g2_reference.c": "d383dabfa6939607f3cd66c587fd2f0817da42628b82641eb2332ec914c2c2ce",
+    "runtime/graphics/tests/test_raster_commands.c": "eb0c5170afa8a90922893e8e682bea6a150b349fb43a81a3cef17557d2936006",
+    "runtime/graphics/tests/run_raster_commands_tests.py": "1a3e6eb1be9542a020d535035cbc25a06f7e40929c7d2aa76db989e5da0f392c",
+    "tests/rv32/raster_commands_runtime_emulator_test.py": "baabda70792b95d2b25fd8668844fb24fef693a2dc7895a98ef86d84454bf9f9",
+    "tests/rv32/raster_commands_gate_emulator_test.py": "079447e5615f961a97a243b4e8aa1a12e8286fce5374089901f26dba6a6a5e2d",
+    "tests/rv32/raster_commands_existing_runtime_emulator_test.py": "d3d1b34b4ca82306a0cdfe0a5b5d9f59d4939361afcc9a13f6574b76d9a2970b",
+    "tests/run_tests.py": "20d5190df969b387708599fd706260f5cc50e5df6f4dc8fb52f54266bc66e769"
+  },
+  "default_off_compatibility": [
+    {
+      "frozen_build": "runtime/build/flash-canary-004",
+      "bytes": 59584,
+      "sha256": "c30da32f8759627aa85247757d0ccae67466a730b5802827246fe2d91a699992",
+      "fresh_flag_off_byte_equal": true
+    },
+    {
+      "frozen_build": "runtime/build/full-store-read-001",
+      "bytes": 54016,
+      "sha256": "83290f4c3d300b3f479bcd60865ffb5cc29b55e5887e635fac6f0d0d208d352b",
+      "fresh_flag_off_byte_equal": true
+    }
+  ],
+  "source_drift_from_final_build": [],
+  "host_report": "host/report.json",
+  "host_cases": 1736,
+  "raster_rv32_groups": 4,
+  "raster_rv32_calls": 69,
+  "raster_observed_stack_bytes": {
+    "BT": 64,
+    "display": 1120
+  },
+  "gate_cases": 7955,
+  "retained_suites": {
+    "canary": {
+      "groups": 10,
+      "report": "canary.json",
+      "contract": "canary-contract.json"
+    },
+    "reader_diagnostics": {
+      "groups": 12,
+      "report": "reader.json",
+      "contract": "reader-contract.json"
+    },
+    "input": {
+      "groups": 6,
+      "report": "input.json"
+    }
+  },
+  "compiler_guard_tests": 8,
+  "aggregate_scope_tests": 8,
+  "aggregate_stages_added": [
+    "raster_commands_host",
+    "raster_commands_build",
+    "raster_commands_gates",
+    "raster_commands_runtime",
+    "raster_commands_canary",
+    "raster_commands_reader",
+    "raster_commands_input",
+    "raster_commands_canary_contract",
+    "raster_commands_reader_contract"
+  ],
+  "limits": [
+    "Only modes3/6 added; first-left bbox policy, no stereo claim",
+    "Native8192-byte ingress and64KiB scene store unchanged",
+    "Original sender zlib is removed offline for fixtures; no native decompression added",
+    "Native services mocked in machine execution; no device/OTA operations",
+    "Static frames and observed synthetic stacks are not cumulative native/interrupt stack proof"
+  ]
+}

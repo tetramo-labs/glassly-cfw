@@ -1,0 +1,23 @@
+{
+  "size": 1048576,
+  "sha256": "da281f118ea0e3dc412b2298ce27c1b73a9cf6bca795814708e900a20a9538bc",
+  "passes_match": true,
+  "complete": true,
+  "flash_modified": false,
+  "jedec_id": "856014",
+  "usb_location": "0x2100000",
+  "loader_sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+  "source_hashes": {
+    "backup_controller.py": "6ab2ffb64e57f489228f5875fdd5c70529247e6b647d71198830e9d18c9bab23",
+    "usb_transport.py": "dc2770a3729b37b4d747de93e5080cf218fef2a8b94a322d8ce4614ea63b1ecc",
+    "native-usb.m": "c07527ec7e8ee52b219148f052cb49835c075e27f10e69d8d2fa6315d8038525",
+    "native-usb.dylib": "6d863999436a110711ee6095ec255f0c885f60a2a27c539b10c4e39ed49a669d"
+  },
+  "path": "research/device-backup-20261103-174931",
+  "metadata_sha256": "c3caa88d12d125ebf63d00f0ded5fa6387f9239534478f052e2ca362cc3cd520",
+  "files": [
+    "flash-pass1.bin",
+    "flash-pass2.bin"
+  ],
+  "verification": "Both complete reads independently checked against metadata; identical byte-for-byte; read-only and Git ignored"
+}

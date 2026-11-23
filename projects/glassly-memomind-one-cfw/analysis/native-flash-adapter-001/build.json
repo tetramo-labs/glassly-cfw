@@ -1,0 +1,35 @@
+{
+  "source_sha256": {
+    "runtime/graphics/flash_store_native.c": "5a65c55a135037fdf446fd8b013132a5ba6d1fbe1a883376f6d118a3df7c2fa1",
+    "runtime/graphics/flash_store_native.h": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/graphics/tests/flash_store_native/test_flash_store_native.c": "71a1bbb0e0a37a082ff2b56978fb7ec356559c303cb1b728224e706cff66d26a",
+    "runtime/graphics/tests/flash_store_native/layout.c": "5006129f827d24c387fd26b702e621ea437e348d65c6b691efddf60d91478fcd",
+    "runtime/graphics/tests/run_flash_store_native_tests.py": "27f182c3cf922d58f87e9fd209ed3418ad36a58bf6e0cc1ccb5b9b425891ca6e",
+    "tests/rv32/flash_store_native_emulator_test.py": "d34d6e99039eeea70dad4993be13aa65e3d5616252a48b1da83dbdd61f05cc4f"
+  },
+  "binary_sha256": "a2c79a2e62f4d997d69687488a51963ca94b29e53e3719bd79d3b55824042a4a",
+  "symbols": {
+    "__BSS_END__": 70980884,
+    "__DATA_BEGIN__": 70980882,
+    "__SDATA_BEGIN__": 70980882,
+    "__bss_start": 70980882,
+    "_edata": 70980882,
+    "_end": 70980884,
+    "admit": 70975488,
+    "mm_flash_native_callbacks": 70976614,
+    "mm_flash_native_erase": 70976044,
+    "mm_flash_native_init": 70976446,
+    "mm_flash_native_program": 70975686,
+    "mm_flash_native_read": 70976266
+  },
+  "layout": {
+    "context_bytes": 300,
+    "status_offset": 4,
+    "verification_offset": 40,
+    "busy_offset": 296,
+    "phase_offset": 297
+  },
+  "compiler": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0",
+  "base": 70975488
+}

@@ -1,0 +1,153 @@
+{
+  "time": "2026-11-02T21:17:11.550647+00:00",
+  "state": "Offline reviewed and ready; initial connection timed out before any transmission; user wake response pending",
+  "candidate": "dashboard-ram-002",
+  "candidate_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+  "requested_base_allocations_avoided_bytes": 1440,
+  "measured_ram_saving_bytes": null,
+  "baseline": {
+    "appHeaderSHA256": "a42392b3f2afe8eb1b432f77770bcaab86d3e488c921cc9ae8dffd490f17b65e",
+    "automaticRetries": 0,
+    "complete": true,
+    "displayCommands": 0,
+    "flashMutations": 0,
+    "largestBlockSupported": false,
+    "maximumFreeBytes": 334108,
+    "maximumLowWaterBytes": 320068,
+    "minimumFreeBytes": 333980,
+    "minimumLowWaterBytes": 320068,
+    "otaCommands": 0,
+    "requestedPauseSeconds": 0.5,
+    "runtimeRelease": "diagnostic-commands-001",
+    "sampleCount": 10,
+    "samples": [
+      {
+        "eventID": 50,
+        "freeBytes": 333980,
+        "freeBytesHex": "0005189c",
+        "index": 0,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004206.8950063335
+      },
+      {
+        "eventID": 51,
+        "freeBytes": 333988,
+        "freeBytesHex": "000518a4",
+        "index": 1,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004207.4638764167
+      },
+      {
+        "eventID": 52,
+        "freeBytes": 334012,
+        "freeBytesHex": "000518bc",
+        "index": 2,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004208.0111272084
+      },
+      {
+        "eventID": 53,
+        "freeBytes": 334040,
+        "freeBytesHex": "000518d8",
+        "index": 3,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004208.5684852502
+      },
+      {
+        "eventID": 54,
+        "freeBytes": 334040,
+        "freeBytesHex": "000518d8",
+        "index": 4,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004209.111150917
+      },
+      {
+        "eventID": 55,
+        "freeBytes": 334060,
+        "freeBytesHex": "000518ec",
+        "index": 5,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004209.6526097918
+      },
+      {
+        "eventID": 56,
+        "freeBytes": 334088,
+        "freeBytesHex": "00051908",
+        "index": 6,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004210.194539875
+      },
+      {
+        "eventID": 57,
+        "freeBytes": 334108,
+        "freeBytesHex": "0005191c",
+        "index": 7,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004210.7363548335
+      },
+      {
+        "eventID": 58,
+        "freeBytes": 334108,
+        "freeBytesHex": "0005191c",
+        "index": 8,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004211.3242015834
+      },
+      {
+        "eventID": 59,
+        "freeBytes": 334084,
+        "freeBytesHex": "00051904",
+        "index": 9,
+        "lowWaterBytes": 320068,
+        "lowWaterBytesHex": "0004e244",
+        "uptime": 2004211.9318296667
+      }
+    ],
+    "serviceDiscovery": "cached-sdp",
+    "telemetryIncludesTemporaryProbeAllocation": true
+  },
+  "baseline_verification": "analysis/ram-measurement-plan-20261102/baseline-verification.json",
+  "installed_release": "diagnostic-commands-001",
+  "firmware_bytes_sent": 0,
+  "installed": false,
+  "boot_verified": false,
+  "tests": {
+    "actual_native_calls": 230,
+    "swift_tests": 106,
+    "constructor_tests": 2,
+    "permanent_aggregate_stage": "dashboard_ram_native",
+    "aggregate_stage_report": "analysis/dashboard-ram-native-20261102/aggregate-stage/report.json",
+    "full_aggregate_rerun": false
+  },
+  "review": "analysis/dashboard-ram-review-20261102/report.json",
+  "candidate_proof": "captures/firmware/dashboard-ram-002/verification.json",
+  "lower_bound_breakdown": {
+    "card_state_and_base_objects": 216,
+    "status_contexts_and_root": 1028,
+    "DND_label_and_image": 196
+  },
+  "limits": [
+    "Requested payload lower bound excludes allocator overhead, styles and decoded resources; savings are not measured yet.",
+    "Cold-boot suppression, not live object teardown; shared stock UI intentionally removed across its callers.",
+    "CFW runtime, active screen, launcher root/header container and sensor/transport drivers remain unchanged.",
+    "No largest-block telemetry. Baseline includes a740-byte probe-template allocation plus allocator overhead."
+  ],
+  "additional_candidate": {
+    "kind": "native-only post-top-level-RESET undo trim",
+    "proposal": "analysis/ram-measurement-plan-20261102/reset-undo-proposal.json",
+    "typical_requested_bytes": 46756,
+    "implemented": false,
+    "requires": "Explicit allocation-failure/rollback policy and preserving original RESET pointer-retention assertions and bundle preparation"
+  },
+  "next_capture": "captures/swift-mac-dashboard-ram-flash-20261102-02",
+  "full_cfw_parity": false
+}

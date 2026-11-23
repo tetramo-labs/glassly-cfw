@@ -1,0 +1,24 @@
+[
+  {
+    "requested": "042a3e20",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "042a40c4",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "042a411e",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "042a4178",
+    "address": "ram:042a4178",
+    "incoming_references": [
+      "ram:042a4948 UNCONDITIONAL_CALL",
+      "ram:04383000 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

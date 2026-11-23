@@ -1,0 +1,24 @@
+{
+  "all_passed": true,
+  "case_count": 28,
+  "max_observed_stack_bytes": 320,
+  "root_executed": true,
+  "source_sha256": "5e35f9ceab060abe0bfa502cf19459899a9621ae32622b80446a5a1d9121b94a",
+  "result_path": "analysis/exclusive-storage-callers-native-003/report.json",
+  "result_sha256": "68bc03447d4f283041ae8ad9a17d261163f8b4d49bb05f361275a3821b2f5203",
+  "cases_by_entry": {
+    "0x423eb42": 1,
+    "0x423eb52": 1,
+    "0x42a4598": 7,
+    "0x42a4628": 5,
+    "0x42a4994": 2,
+    "0x42a49e2": 3,
+    "0x42a4a2c": 3,
+    "0x42a90ba": 6
+  },
+  "worker_completions": 6,
+  "flash_calls": 0,
+  "kv_calls": 0,
+  "production_edits": false,
+  "device_actions": false
+}

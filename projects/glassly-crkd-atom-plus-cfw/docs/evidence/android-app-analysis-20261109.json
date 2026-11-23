@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-09",
+  "evidence_type": "installed-app-static-analysis-and-public-downloads",
+  "package": "com.crkd_app",
+  "version_name": "1.0.365",
+  "version_code": 365,
+  "java_files": 9490,
+  "jadx_reported_errors": 51,
+  "hermes_bytecode_version": 98,
+  "controller_accessed": false,
+  "firmware_written": false,
+  "private_account_data_read": false,
+  "root_required_for_extraction": false,
+  "app_route": "atomp -> bleNdp -> com.host4.platform",
+  "app_constants": {
+    "normal_service": "0000FF00-0000-1000-8000-00805F9B34FB",
+    "normal_write": "0000FF01-0000-1000-8000-00805F9B34FB",
+    "normal_notify": "0000FF02-0000-1000-8000-00805F9B34FB",
+    "ota_service": "0000FF10-0000-1000-8000-00805F9B34FB",
+    "ota_control": "0000FF11-0000-1000-8000-00805F9B34FB",
+    "ota_data": "0000FF12-0000-1000-8000-00805F9B34FB",
+    "test_mode_enable": 130,
+    "test_mode_disable": 0
+  },
+  "live_gatt_verified": false,
+  "physical_inputs_verified": false,
+  "firmware_format_decoded": false,
+  "chipset_identified": false,
+  "decompiler_outputs": [
+    {
+      "path": "research/decompiled/crkd-android-20261109/index.hasm",
+      "size_bytes": 95529458,
+      "sha256": "c608a61ae0fd3a7fde415466d7e154d6a6e2ec94099aba5af9e0ddb92a754558"
+    },
+    {
+      "path": "research/decompiled/crkd-android-20261109/index.pseudo.js",
+      "size_bytes": 50085341,
+      "sha256": "72df1b1225210c42dca67eed8d24056ce8f15d062181a6d950ca6888b0806dcf"
+    }
+  ]
+}

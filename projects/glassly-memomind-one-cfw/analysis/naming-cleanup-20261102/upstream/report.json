@@ -1,0 +1,267 @@
+{
+  "format": "memomind-portable-upstream-tests-v1",
+  "result": "passed",
+  "commands": [
+    {
+      "label": "build-original",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/upstream/upstream_host_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-original",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/original"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-public",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/upstream/public_api_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "run-public",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-build",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/upstream.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-undefined",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-nm",
+        "-u",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/upstream.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-sections",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-size",
+        "-A",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/upstream.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "-march=rv32imafc",
+        "-mabi=ilp32f",
+        "-mstrict-align",
+        "-mno-relax",
+        "-std=c11",
+        "-Os",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-jump-tables",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fstack-usage",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/upstream/layout.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/layout.o"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rv32-layout-extract",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-objcopy",
+        "-O",
+        "binary",
+        "--only-section=.rodata.mm_upstream_layout",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/layout.o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/upstream/layout.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "cc-version",
+      "argv": [
+        "clang",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "rvcc-version",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/riscv-toolchain/xpack-riscv-none-elf-gcc-15.2.0-1/bin/riscv-none-elf-gcc",
+        "--version"
+      ],
+      "returncode": 0
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "pending": [
+    "MemoMind native settings write/readback and user-facing semantics",
+    "Native heading source/diagnostics and stock-hook adapter",
+    "Native BLE scheduling/profile ownership; classic RFCOMM unaffected",
+    "Native extension routing/capability publication"
+  ],
+  "source_sha256": {
+    "upstream/LICENSE": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b",
+    "upstream/patches/protobuf.c": "39a30ce2570a3a7fc71c1668a4cb4fbf5cddc0318fd1106c9d4c4eb39d4d59a8",
+    "upstream/patches/settings_ext.c": "100ba692c8ba6ce7ab3ad48d9afe17bb591b5b2394f0db8318067247c7bf01f8",
+    "upstream/patches/zlib_glue.c": "b69474dd056c2864098b81e001ad645d5ff9e6e853327820cc26c37989f96692",
+    "upstream/patches/ring_battery.c": "51976b33dea397f32b789e3752ee55a0c9a77fb9596298512ce7f9f8838adbd0",
+    "upstream/patches/compass.c": "39106e861b73bd7b230596871f739759f0296c69fc44457d8638ed84a75f5e0f",
+    "upstream/patches/ble_link.c": "370a11df2bd759bf041ad59062e5f3e75f46d3e0740dd64726e1f4c3c8ba5c1f",
+    "upstream/patches/host/upstream_host_test.c": "f6c399e03820e4287735dedda1e6e1b9ca2a66fb924a3203ad312b8f4bd66333",
+    "upstream.c": "f9964b2d8c30a626491ee6817e782b7286b2b985e6cdf4303c4c04c66314af0f",
+    "upstream.h": "12f5966f3b4a9b7cd230c8d42aa35be784f796b82bf799ad6e629c26397b9e68",
+    "tests/run_upstream_tests.py": "d141def1188f465dbe1314c2f851452eb658b8f89030140a1368003cf373e593",
+    "tests/upstream/layout.c": "0320bfce24c9b58c13f54d2e1b83176a58e71ba19618ab5b669916e7dfd988b2",
+    "tests/upstream/mapping.json": "708f78b79b754678679f8a71439ba42dbb764932967e7ec76f5d7a17967be99e",
+    "tests/upstream/public_api_test.c": "29a00287a910ffb81c07b8a37e8f78798616b7e9bc44ea5e009b90f3a6bc6a72",
+    "tests/upstream/upstream_host_test.c": "0d4d35ad73eef937bd6b75b6f06ad854823a61c7c55ecc726509f242b3e596ea"
+  },
+  "scenario_main_calls": {
+    "routing": 1,
+    "batteries": 1,
+    "settings": 1,
+    "headings": 1,
+    "ble_link": 1
+  },
+  "original_assert_sites": 78,
+  "original_scenarios": [
+    "routing",
+    "batteries",
+    "settings",
+    "headings",
+    "ble_link"
+  ],
+  "required_parity_scenarios": [
+    "routing",
+    "settings",
+    "headings",
+    "ble_link"
+  ],
+  "optional_reference_scenarios": [
+    "batteries"
+  ],
+  "scope_note": "Ring battery hardware excluded; unchanged mixed reference scenarios still execute. Compass and raw IMU data remain in scope.",
+  "original_result": "portable upstream original assert evaluations: 25620\nPASS: merged mode routing, bounded settings replies, ring battery, compass diagnostics and BLE link control",
+  "original_assert_evaluations": 25620,
+  "file_status": "mixed-portable-core-tested-native-adapter-pending",
+  "public_api_result": "upstream public API: normalized profiles/generation, two states, 20000 malformed packets, bounds/alias, composition and heading matching passed",
+  "rv32": {
+    "undefined_symbols": [],
+    "writable_global_bytes": 0,
+    "text_bytes": 2574,
+    "rodata_bytes": 0,
+    "stack_frames": [
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:8:17:writevar\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:22:12:readvar\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:95:12:valid_link\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:96:13:request_mode\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:97:13:set_fast\t16\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:10:10:mm_upstream_append\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:28:6:mm_upstream_scan\t80\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:41:5:mm_upstream_shadow\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:43:10:mm_upstream_battery_append\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:47:5:mm_upstream_battery_query\t48\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:53:5:mm_upstream_settings_send\t64\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:64:6:mm_upstream_capture_sample\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:72:10:mm_upstream_heading\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:81:10:mm_upstream_filter\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:82:10:mm_upstream_classify\t0\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:86:5:mm_upstream_request\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:102:6:mm_upstream_link_control\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:106:6:mm_upstream_link_cleanup\t32\tstatic",
+      "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/upstream.c:107:6:mm_upstream_link_status\t32\tstatic"
+    ],
+    "max_individual_stack_bytes": 80,
+    "layout": {
+      "state_bytes": 180,
+      "profile_bytes": 16,
+      "sample_bytes": 8,
+      "record_bytes": 8,
+      "link_platform_bytes": 52,
+      "extension_bytes": 12,
+      "battery_bytes": 3,
+      "capture_bytes": 11
+    }
+  },
+  "tools": {
+    "cc": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+    "rvcc": "riscv-none-elf-gcc (xPack GNU RISC-V Embedded GCC arm64) 15.2.0"
+  },
+  "artifact_sha256": {
+    "upstream.su": "de5aa7a12694da8dbba9c4b8169df74c5a0b6d70c770766ed7d030b7b2622a0e",
+    "original": "168a790b9eb6ec8e15ada1800568588ac31aaa2968effc8c67b5a4a4c9aae8c1",
+    "public_api": "80ba65078a14ffc039213ca58292ec32eb64b30f6fa9abfccd96acc27bcd2dfe",
+    "layout.o": "873e7cdfb0709ffa8c2ba08bddd97688808c8f9eb2058052e5bf77b16536df40",
+    "layout.su": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "layout.bin": "7a0926647e3b7010a29564c8eb2ebfee62dc69fd4b5598143e6b5e3c17d9598a",
+    "upstream.o": "ce97a977a88f940bbdb1e482c841503236bcad18c721089530812b905f4cd7f1"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-04",
+  "capture": "cfw-gatt-20261104-first.log",
+  "capture_sha256": "832871b4a2b9b3a7caec6e3364cd67c7ff85b2a579f9c4dafcbc79e03ca016c3",
+  "ae42_packets": 78,
+  "sequence_contiguous": true,
+  "overflow_flags": 0,
+  "baseline_hex": "4702000200000000",
+  "normal_application_ble_boot_observed": true,
+  "normal_hid_reports_tested": false,
+  "ios_background_locked_tested": false,
+  "button_masks": {
+    "A": 1,
+    "B": 2,
+    "X": 8,
+    "Y": 16,
+    "Up": 65536,
+    "Down": 131072,
+    "Left": 262144,
+    "Right": 524288
+  },
+  "mapping_evidence": "User confirmed A/B/X/Y/Up/Down/Left/Right ordered press-release test (sequences 52..67) and isolated A (76..77). Other sequences are unlabeled.",
+  "timing_caveat": "Notifications arrived in batches. Capture now being repeated with an App Nap activity assertion and monotonic timestamps; latency is not established."
+}

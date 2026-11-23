@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "target": "arm64-apple-ios15.0",
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-typecheck",
+    "-target",
+    "arm64-apple-ios15.0",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
+    "-module-name",
+    "MemoMindCore",
+    "swift/MemoMindKit/Sources/MemoMindCore/BundleCommand.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/DiagnosticCommands.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/RectangleCopyCommand.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift",
+    "swift/MemoMindKit/Sources/MemoMindCore/TextCommand.swift"
+  ],
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/BundleCommand.swift": "b543e7f1a45e700fe5dc2ab68cef0e49234636033ae9b33eae6c89d836f48602",
+    "swift/MemoMindKit/Sources/MemoMindCore/DiagnosticCommands.swift": "ee49d7abc2d5a4dfa247c97be0a9e4e84b821c4521c9fcad3dca04618168d372",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "7aab9ae7e60e870e9dfa9fe4b81014778f203d1c5188e5544b53acfc44b56240",
+    "swift/MemoMindKit/Sources/MemoMindCore/FixedCanaryClient.swift": "c49eccecb0f7929e78548d4a81a19c8365929c4289845332b55c4cd6827ff719",
+    "swift/MemoMindKit/Sources/MemoMindCore/OTATransaction.swift": "6d1ab58c45cc102658754bca69a991aee3f1b967ee1d8168a6d812b7b8cc72a7",
+    "swift/MemoMindKit/Sources/MemoMindCore/Protocol.swift": "2e062f9977ed8b4f740e21bc79293d72fe9e0067718fa93fe5a9653570eed58e",
+    "swift/MemoMindKit/Sources/MemoMindCore/RasterCommands.swift": "7d6482a2d22c3ac52c84972215255d44151f7766585d49abaafc15c9e585ee3e",
+    "swift/MemoMindKit/Sources/MemoMindCore/RectangleCopyCommand.swift": "a27fce2c6ade44dd7d7355a9b0507ed772347dbe9fd3fcce718dc9e5a8756a73",
+    "swift/MemoMindKit/Sources/MemoMindCore/Session.swift": "193bde8d024d08340b3f683d2605acf1002c98f2eda9db342dd128d1d28ed1e6",
+    "swift/MemoMindKit/Sources/MemoMindCore/StrictDeviceJSON.swift": "e6e7aedac7f9da34323f126ce6d19dbf905d5e88136ec4307777939a819ebbcb",
+    "swift/MemoMindKit/Sources/MemoMindCore/TextCommand.swift": "2ab8214d4ba2543966301e946a093653572a56e15f0703337bfdf5df2a4aed1a"
+  },
+  "typecheck_only": true,
+  "ios_transport_or_Glassly_integration": false
+}

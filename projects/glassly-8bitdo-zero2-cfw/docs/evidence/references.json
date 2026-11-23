@@ -1,0 +1,185 @@
+{
+  "glassly-mini-gamepad": {
+    "revision": "9d51cdf93e5bc4be71bbc7e05fe8984130838033",
+    "docs/custom-firmware.md": "b3a522451286ef34857348a7dbb76a28a2f232b147fce3f6e07dc482c781991d"
+  },
+  "glassly-mini-gamepad-plus": {
+    "revision": "d8efedc55769e773e939782eb8a497ad2b985d01",
+    "firmware/button_stream.c": "1dc78587fb7566ce1b126d3094ab9f91b0a47fd80d422088eba21da804dea812",
+    "firmware/button_stream.h": "57b1c6e6ca75420c1e44d66a01ea603f4c7e13144a01be68d2d81c56a6c54b04",
+    "docs/button-protocol.md": "47ec1c9985a9cdf0489315da6b6493b71a953fe255bd54e945ff84ae492eaa08",
+    "docs/custom-firmware.md": "3a7e85c13debe188479b4970627677eb4af5d86b254c6ed2cfa4d2a0ef2c9629"
+  },
+  "yc1021": {
+    "url": "https://github.com/oushaojun/yc1021_bluetooth",
+    "revision": "46db146cabec9384f2b30a53888f779d8f55fc09",
+    "role": "Protocol comparison only; different chip",
+    "bt_protocol.c": "e34ed813c4216e81b684017b38795ccb2b89402963c58ec1e39889b29ec7a7df",
+    "bt_protocol.h": "925e080d87e9a22f0cfaf36aa10120203358ed2ee24a6b00c351b679779cdf9d"
+  },
+  "yc1121": {
+    "url": "https://github.com/WuSJ1001/YC1121_Stack",
+    "revision": "c9e8ada633cf35299f0083caa50eafcc4f827224",
+    "role": "Protocol and instruction-encoding comparison; Zero 2 memory-transfer fields validated separately",
+    "program/app_module.prog": "97392ccc7e6cf129597148b138442c7ecb9c81684d932a17ec6c44dcaeb8a7fe",
+    "format/app_module.format": "419417b484cc0c8a64cb754794ad234c684418c4c87d042412ae213392c3b388",
+    "program/ble_protocol_stack/le_l2cap_att.prog": "6692f40859cbedeafd2e71ea3edbeee25cafc58f623bd871f9a81edc77dd1704",
+    "format/command.format": "3300b64f0534e8fedad49309eebdb0c4b4fb9edd7429cbaa524923d9545cadb3",
+    "format/bt.format": "0faef3ebd548620a794bd2a8a7818fc9612fa61959d9f6443457c1a12c0f134b",
+    "program/ble_protocol_stack/le.prog": "ac815559c9dece311add19392b308edb78c2deaba19c283d4fda8119e6dedbbd"
+  },
+  "rt_thread_sdk_inventory": {
+    "url": "https://github.com/RT-Thread/rt-thread/tree/master/bsp/yichip/yc3121-pos/libraries/sdk",
+    "git_tree_sha": "f5a304011b654d3d18e5e9818b1bae72d28ee9f6",
+    "files": [
+      "yc_dma.c",
+      "yc_dma.h",
+      "yc_gpio.c",
+      "yc_gpio.h",
+      "yc_systick.c",
+      "yc_systick.h",
+      "yc_uart.c",
+      "yc_uart.h",
+      "yc_wdt.c",
+      "yc_wdt.h"
+    ],
+    "finding": "No Bluetooth or radio ROM implementation in this SDK subtree"
+  },
+  "yc1121_led": {
+    "url": "https://github.com/WuSJ1001/YC1121_LED",
+    "revision": "7b0e501bd72b5197e3926ee5677e740c18f2360c",
+    "role": "Additional related-chip source inventory; no matching YC3121 ROM binary or symbol map found",
+    "format/command.format": "3300b64f0534e8fedad49309eebdb0c4b4fb9edd7429cbaa524923d9545cadb3",
+    "program/app_module.prog": "97392ccc7e6cf129597148b138442c7ecb9c81684d932a17ec6c44dcaeb8a7fe",
+    "program/ble_protocol_stack/le_l2cap_att.prog": "6692f40859cbedeafd2e71ea3edbeee25cafc58f623bd871f9a81edc77dd1704"
+  },
+  "rt_thread_core_rom_api": {
+    "url": "https://github.com/RT-Thread/rt-thread/blob/b1cd917f9a4a10182773f2a22f6a07041eeeaacc/bsp/yichip/yc3121-pos/libraries/core/rom_api.h",
+    "rom_api_last_change_commit": "b1cd917f9a4a10182773f2a22f6a07041eeeaacc",
+    "role": "YC3121 ARM ROM address names; no implementation, radio ROM or memory-clobber contract",
+    "files": {
+      "rom_api.h": {
+        "sha256": "c8fc4ceed7acd63b4eee51380f9733616ef57c5b8bdfe9cfa9150edb5abe481b",
+        "git_blob_sha1": "bd57d6056de0e09abea1f4c8c4fe96fb46f0d064"
+      },
+      "system.c": {
+        "sha256": "891168064dda701d1bc556578d56a5c953bfeda9a436b4a2efc7ced4a6c93500",
+        "git_blob_sha1": "99b3f8b928a3b1bd88f4de02c75fcc779919e8d0"
+      },
+      "system.h": {
+        "sha256": "f90749c1e8e753053df1e63d85e193f90e3263d46ceb9860a41d03c600a65573",
+        "git_blob_sha1": "b7bd069a985de099f604324b87b6a9494f16dae4"
+      },
+      "yc3121.h": {
+        "sha256": "c4f1a83a3db05458c70e77bbe8847a460a3ac48d2c31659d4174239e6a9f1d6c",
+        "git_blob_sha1": "0e060075918ba82b624b41d089562b9df98ff1f6"
+      }
+    }
+  },
+  "yichip_public_repository": {
+    "url": "https://github.com/Yichip-Microelectronics/YC3121",
+    "revision": "077cf0c74d590caeb654deec7fc08b5715e073d7",
+    "branches": [
+      "main"
+    ],
+    "files": [
+      "README.md"
+    ],
+    "finding": "Only an 8-byte README; no SDK source or ROM image in the inspected tree"
+  },
+  "niimbot_yc3121": {
+    "role": "Offline comparison of same-family printer firmware; no ROM identity or Zero 2 binding implied",
+    "files": {
+      "D110_6.10.bin": {
+        "url": "https://fw.niim.blue/stable/D110/D110_6.10.bin",
+        "size": 90924,
+        "sha256": "ff11bf410aa87538aaa8f10fd486f714d3d81d226fae2a570faa8fef8bced962",
+        "original_url_from_archive_note": "https://oss-print.niimbot.com/public_resources/font/1946bf0077cb9328252f96485fb73e96.bin"
+      },
+      "D110_6.10.bin.txt": {
+        "url": "https://fw.niim.blue/stable/D110/D110_6.10.bin.txt",
+        "size": 207,
+        "sha256": "b812878f67be4f5c39efc7269bf08b2ac6e08014df29cf4f03f2532c229ddb7e"
+      },
+      "B1_2.03.bin": {
+        "url": "https://fw.niim.blue/stable/B1/B1_2.03.bin",
+        "size": 107968,
+        "sha256": "c5d23953e4e368ba118f1b9d72264152f039cd4c4c48a6bde150a5412b5066b8",
+        "original_url_from_archive_note": "https://oss-print.niimbot.com/public_resources/font/46b6b890a0ab81bd00e672e93da7e23c.bin"
+      },
+      "B1_2.03.bin.txt": {
+        "url": "https://fw.niim.blue/stable/B1/B1_2.03.bin.txt",
+        "size": 207,
+        "sha256": "f744ddd3348c62252f28f86b9611ec78ba442ff43b42656c5424376bb13c6189"
+      }
+    },
+    "hardware_documentation": {
+      "repository": "https://github.com/MultiMote/niimbot-wiki",
+      "revision": "47af7952fcd07cab9bf55e6cca2f1916e043d42e",
+      "files": {
+        "niimbot-b1.md": "e64bfb1d5896605b6e676a0483bd154f6fd83f125354056d2631c14af0ebd55b",
+        "niimbot-d110.md": "767c997ac38c1a06b04ccc56501e7486b1469cc66251c053c6e3353d8b3a3e0c"
+      }
+    }
+  },
+  "yc3121_bt_datasheet": {
+    "repository": "https://github.com/HorrorTroll/Yichip_YC3121",
+    "revision": "86152554668279263f9298a49e1505e2f7d5f1f4",
+    "path": "Datasheet/YC3121 (BT)芯片数据手册V1.7.pdf",
+    "sha256": "5079a873a68f54de56e7bafd8f972b81be120911928d0691e47bb88ba5d43d3a",
+    "size": 14309182,
+    "inspected_pages": [
+      11,
+      12,
+      13,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "method": "Visual review of scanned PDF via native PDFKit rendering",
+    "finding": "Page 12 documents 32KB ARM ROM [0,0x8000) and 64KB RAM [0x20000,0x30000); no direct radio ROM mapping established",
+    "limits": "Public mirror; datasheet is not proof of exact silicon revision or access permissions"
+  },
+  "yichip_debug_utility": {
+    "repository": "https://github.com/Yichip-Microelectronics/16xx",
+    "revision": "68ce48a6171de86ec6b3e4b8f60b35a1f40d6e06",
+    "files": {
+      "SDK/Libraries/core/register.h": {
+        "size": 385921,
+        "sha256": "8fd247f0f51496f5dce76fe7b641c4233f2af8de4b4e95a38fdcc7ead07a8007"
+      },
+      "SDK/util/tool/e": {
+        "size": 134176,
+        "sha256": "3a55489ca20f5cc1ef1f191201ad1cf7b3cd4cb5d618f58d8bb5148282772a32"
+      },
+      "SDK/util/download.py": {
+        "size": 3638,
+        "sha256": "96f768f94bd16536af186abd47c1f94bcce5e59a7e4ff82114c7786a72be0cd8"
+      },
+      "README.md": {
+        "size": 1143,
+        "sha256": "80a6d72b00bcd495757aea980e0ee31c8c83eee395c91a2ec6f55ec632ecb397"
+      }
+    },
+    "role": "Static inspection and isolated emulation of vendor code-memory read setup; different-family SDK, not a Zero 2 binding",
+    "git_tree_sha": "abb23c8bdfd385f875b635b5f4af3cc42a47173a"
+  },
+  "yc3121_l_datasheet": {
+    "repository": "https://github.com/HorrorTroll/Yichip_YC3121",
+    "revision": "86152554668279263f9298a49e1505e2f7d5f1f4",
+    "path": "Datasheet/YC3121-L芯片数据手册V1.1.pdf",
+    "sha256": "e04c5b0c04c29f652331d14c617beb2969ad1f2bc99032f746573e07ff2aa174",
+    "size": 3840003,
+    "inspected_pages": [
+      15,
+      16,
+      17
+    ],
+    "method": "Native PDFKit text extraction plus visual inspection of rendered pinout and pin tables",
+    "role": "YC3121-L QFN56 pin definitions; PCB pad connectivity and debug access remain unverified"
+  }
+}

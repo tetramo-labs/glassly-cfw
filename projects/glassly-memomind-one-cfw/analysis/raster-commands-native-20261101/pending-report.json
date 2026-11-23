@@ -1,0 +1,52 @@
+{
+  "format": "memomind-native-raster-hardware-v1",
+  "utc": "2026-11-02T03:40:57.121622+00:00",
+  "state": "implementation and offline validation complete; Bluetooth connection timed out before update bytes; awaiting awake glasses",
+  "command_modes": [
+    6,
+    3
+  ],
+  "candidate": {
+    "path": "captures/firmware/raster-commands-001/firmware.bin",
+    "bytes": 2227971,
+    "sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261"
+  },
+  "runtime": {
+    "path": "runtime/build/raster-commands-001/graphics.bin",
+    "bytes": 61392,
+    "sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328"
+  },
+  "installed": false,
+  "boot_verified": false,
+  "hardware_commands_executed": false,
+  "failed_connection_capture": "captures/swift-mac-raster-flash-20261101-01",
+  "application_frames_sent": 0,
+  "automatic_retries": 0,
+  "aggregate": "analysis/regression-20261101-07/report.json",
+  "required_stages_passed": 75,
+  "python_tests_passed": 220,
+  "swift_tests_passed": 56,
+  "scope_tests_passed": 8,
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support"
+  ],
+  "required_host_scenarios": 40,
+  "required_host_assertion_sites": 660,
+  "required_bun_cases": 11,
+  "full_command_parity": false,
+  "full_g2_parity": false,
+  "previous_canary_hardware_passed": "analysis/native-mac-canary-20261101/report.json",
+  "current_installed_release": "flash-canary-001",
+  "next_actions": [
+    "On user readiness: native Swift flash to new capture swift-mac-raster-flash-20261101-02",
+    "Verify complete OTA with verify-ota.py; then exact header/read profile/preflight",
+    "Run smoke on correctly pinned new image; obtain visual confirmation while RLE/checkerboard held90s; independently verify trace; clear image"
+  ],
+  "limits": [
+    "Only modes3/6 implemented in this command slice.",
+    "Current native8192-byte message admission and64KiB cache remain.",
+    "First/left bbox mapping on one display; no stereo claim.",
+    "Outer zlib/G2 record envelope is not added; Swift creates RLE commands for native GM carrier.",
+    "Device visibility, native performance and other required commands remain unverified."
+  ]
+}

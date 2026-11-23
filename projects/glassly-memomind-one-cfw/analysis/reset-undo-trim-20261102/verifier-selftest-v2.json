@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "cases": 18,
+  "results": [
+    {
+      "name": "historical_real_complete_diagnostic",
+      "passed": true
+    },
+    {
+      "name": "bad_block_transport_status",
+      "passed": true,
+      "rejected": "OTA transport status/ACK sequence"
+    },
+    {
+      "name": "wrong_block_ack_sequence",
+      "passed": true,
+      "rejected": "OTA transport status/ACK sequence"
+    },
+    {
+      "name": "nonzero_ack_delay",
+      "passed": true,
+      "rejected": "Unsupported block status/delay"
+    },
+    {
+      "name": "wrong_first_requested_offset",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "unsupported_update_result",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "wrong_reboot_status",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "bad_ota_footer",
+      "passed": true,
+      "rejected": "Invalid OTA frame footer"
+    },
+    {
+      "name": "chunk_crc_corruption_with_successful_matching_completion",
+      "passed": true,
+      "rejected": "Chunk CRC or sequence"
+    },
+    {
+      "name": "chunk_offset_corruption_with_successful_matching_completion",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "chunk_payload_corruption_with_successful_matching_completion",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "file_header_corruption_with_successful_matching_completion",
+      "passed": true,
+      "rejected": "Unexpected outgoing command bytes"
+    },
+    {
+      "name": "duplicate_block_ack",
+      "passed": true,
+      "rejected": "OTA send/reply ordering mismatch"
+    },
+    {
+      "name": "boolean_false_completion_not_status_zero",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "reported_block_count_mismatch",
+      "passed": true,
+      "rejected": "(544, 545)"
+    },
+    {
+      "name": "missing_tx_completion",
+      "passed": true,
+      "rejected": "Write completion differs"
+    },
+    {
+      "name": "truncated_attempt",
+      "passed": true,
+      "rejected": ""
+    },
+    {
+      "name": "split_native_MTU_chunk_submissions",
+      "passed": true
+    }
+  ],
+  "fixture_capture": "captures/swift-mac-diagnostics-flash-20261102-01",
+  "fixture_trace_sha256": "4c87ffa43ef7436c390654e4055dfc590542f6f5a227eedff940f6406594d547",
+  "fixture_image_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "verifier_sha256": "95a2e589aaf7dc8490844a65d8815da3b6c54d52927aa42b248dccf3f3f24d3d",
+  "test_source_sha256": "5ef6b88c856a9944c394a5c7b3ac8424bcbb13382b1b3ae33d622e990aa486b5",
+  "fixture_not_reset_undo_candidate": true,
+  "device_actions": false
+}

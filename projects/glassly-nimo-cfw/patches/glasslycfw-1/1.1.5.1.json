@@ -1,0 +1,31 @@
+{
+  "name": "GLASSLYCFW/1",
+  "purpose": "First custom image on the mainline 1.1.5.1 firmware (no Dynamic Layout page): string-only edits that prove the updater accepts a repacked image and that it boots. No code, pointer, length or layout changes.",
+  "source": {
+    "file": "ota-1.1.5.1-20261027111705-8e6f7a-vendor-app.bin",
+    "sha256": "baa41550d8af80b48a623c0b8bf006664804e83acee6520305bd9f4f341636bf",
+    "provenance": "Rebuilt byte for byte from the vendor app's OTA to Nimo-4026 (HCI capture 2026-11-09)"
+  },
+  "output": "ota-1.1.5.1-glasslycfw-1.bin",
+  "partition_type": 32,
+  "edits": [
+    {
+      "what": "Build tag after FW-VERSION-; the commit and Debug suffix make room for GLASSLYCFW/1",
+      "offset": "0x2607cf",
+      "old": "v1.1.5.1-20261027111705-8e6f7a-Debug",
+      "new": "v1.1.5.1-20261027111705-GLASSLYCFW/1"
+    },
+    {
+      "what": "English title of the waiting-for-phone widget",
+      "offset": "0x1c908c",
+      "old": "Phone not connected",
+      "new": "Glassly CFW running"
+    },
+    {
+      "what": "Chinese title of the waiting-for-phone widget (one byte shorter, NUL padded)",
+      "offset": "0x1c98a8",
+      "old": "未连接手机",
+      "new": "Glassly 就绪"
+    }
+  ]
+}

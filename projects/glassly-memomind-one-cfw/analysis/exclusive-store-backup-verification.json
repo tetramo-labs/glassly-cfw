@@ -1,0 +1,16 @@
+{
+  "format": "memomind-managed-store-backup-independent-verification-v1",
+  "complete": true,
+  "capture": "captures/exclusive-store-runtime-20261101/full-backup-02",
+  "bytes": 3145728,
+  "sha256": "908b6cfc9aef496dd5ab5c5540d80c6383ed6e92f86044574c996315381bc064",
+  "store_chunks_verified": 12288,
+  "header_chunks_verified": 1,
+  "journal_intents_and_chunks_contiguous_and_hashed": true,
+  "app_header_full256_matches": true,
+  "prior_partial_prefix_matches_bytes": 699904,
+  "prior_directory_64k_matches": true,
+  "all_bytes_ff": true,
+  "flash_mutations": 0,
+  "automatic_retries": 0
+}

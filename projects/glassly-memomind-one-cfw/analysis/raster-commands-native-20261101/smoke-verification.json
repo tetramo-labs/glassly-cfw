@@ -1,0 +1,16 @@
+{
+  "format": "memomind-native-raster-smoke-verification-v1",
+  "capture": "captures/swift-mac-raster-smoke-20261101-02",
+  "complete": true,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "keyframe_acknowledged": true,
+  "delta_acknowledged": true,
+  "invalid_commands_rejected": 2,
+  "lease_renewals_acknowledged": 293,
+  "cleared": true,
+  "encoded_pixels_match_expected": true,
+  "hardware_pixel_readback": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "2337a4860f6210c024b9ecb719cfb69bf1577186dd6e4cbc6ecd324c31e6622d"
+}

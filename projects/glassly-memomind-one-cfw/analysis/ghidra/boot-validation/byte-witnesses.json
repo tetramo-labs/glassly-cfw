@@ -1,0 +1,56 @@
+[
+  {
+    "address": "0206802e",
+    "body_offset": 46,
+    "bytes": "0d28",
+    "meaning": "RV32 C.JAL init"
+  },
+  {
+    "address": "0206805c",
+    "body_offset": 92,
+    "bytes": "f120",
+    "meaning": "RV32 C.JAL main"
+  },
+  {
+    "address": "02068450",
+    "body_offset": 1104,
+    "bytes": "492c25ed",
+    "meaning": "optional authentication condition"
+  },
+  {
+    "address": "0206846a",
+    "body_offset": 1130,
+    "bytes": "63892501032684fe4a85efb0c06d",
+    "meaning": "XIP compare or map.body_length copy"
+  },
+  {
+    "address": "020684ca",
+    "body_offset": 1226,
+    "bytes": "2685c92959d195bf",
+    "meaning": "conditional verifier result"
+  },
+  {
+    "address": "020689ae",
+    "body_offset": 2478,
+    "bytes": "dc4083ce440101453388f40013080802",
+    "meaning": "body length and trailer count"
+  },
+  {
+    "address": "020689e0",
+    "body_offset": 2528,
+    "bytes": "138704024685a13b",
+    "meaning": "hash body pointer and preserved body length arguments"
+  },
+  {
+    "address": "020691ee",
+    "body_offset": 4590,
+    "bytes": "8327c4f803a60c0001453e96fd777d8eef10800483a64c00c98c03a58c00930584f96286ef70d07383a60c00832584f9c98ce38e",
+    "meaning": "ordinary component erase/decode/output equality"
+  },
+  {
+    "address": "020756b0",
+    "body_offset": 54960,
+    "bytes": "3031300d060960864801650304020105000420",
+    "meaning": "SHA256 DigestInfo"
+  }
+]

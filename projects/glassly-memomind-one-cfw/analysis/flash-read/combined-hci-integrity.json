@@ -1,0 +1,31 @@
+{
+  "path": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/flash-read-runtime-20261031/ota-transfer-combined.btsnoop",
+  "size": 15255402,
+  "sha256": "635cf4043d0f5ec89c61bbf40777d7b90e3f89e332673a4812080deee631f55a",
+  "packets": 72281,
+  "packet_types": {
+    "command": 1273,
+    "event": 30243,
+    "acl": 40765
+  },
+  "acl_handles": {
+    "0x00b": 40765
+  },
+  "first_timestamp": "2026-10-31T17:30:12.427860+00:00",
+  "last_timestamp": "2026-10-31T20:42:05.938342+00:00",
+  "truncated_records": 0,
+  "maximum_reported_drop_count": 0,
+  "issues": [
+    {
+      "offset": 5440302,
+      "error": "timestamp moved backwards"
+    }
+  ],
+  "record_integrity_ok": false,
+  "whole_session_coverage": "unproven",
+  "limitations": [
+    "AOSP writes zero drop counters; zero does not establish losslessness.",
+    "Valid records do not prove rotation continuity or coverage of the entire OTA.",
+    "App encryption and filtering are not detected by record validation."
+  ]
+}

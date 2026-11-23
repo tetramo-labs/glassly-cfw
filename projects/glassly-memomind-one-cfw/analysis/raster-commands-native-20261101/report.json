@@ -1,0 +1,71 @@
+{
+  "format": "memomind-native-raster-hardware-v1",
+  "utc": "2026-11-02T03:59:13.570814+00:00",
+  "state": "Installed and boot verified; full-frame RLE and bbox delta acknowledged and visible to user; malformed commands rejected; session cleared",
+  "candidate": {
+    "path": "captures/firmware/raster-commands-001/firmware.bin",
+    "bytes": 2227971,
+    "sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261"
+  },
+  "runtime": {
+    "path": "runtime/build/raster-commands-001/graphics.bin",
+    "bytes": 61392,
+    "sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328"
+  },
+  "current_installed_release": "raster-commands-001",
+  "installed": true,
+  "boot_verified": true,
+  "command_modes": [
+    6,
+    3
+  ],
+  "hardware_commands_executed": true,
+  "visible_output_confirmed": true,
+  "transfer_verification": "analysis/raster-commands-native-20261101/trace-verification.json",
+  "preflight_verification": "analysis/raster-commands-native-20261101/preflight-verification.json",
+  "smoke_verification": "analysis/raster-commands-native-20261101/smoke-verification.json",
+  "visual_confirmation": "analysis/raster-commands-native-20261101/visual-confirmation.json",
+  "capture_manifests": [
+    "captures/swift-mac-raster-flash-20261101-02/capture-manifest.json",
+    "captures/swift-mac-raster-preflight-20261101-01/capture-manifest.json",
+    "captures/swift-mac-raster-preflight-20261101-02/capture-manifest.json",
+    "captures/swift-mac-raster-smoke-20261101-01/capture-manifest.json",
+    "captures/swift-mac-raster-smoke-20261101-02/capture-manifest.json"
+  ],
+  "first_smoke_failure": {
+    "capture": "captures/swift-mac-raster-smoke-20261101-01",
+    "cause": "Test helper expected ok without presentation:scheduled. Firmware returned its documented scheduled reply. Helper and verifier corrected in v2; original files and capture retained.",
+    "keyframe_submitted": true,
+    "delta_submitted": false
+  },
+  "aggregate": "analysis/regression-20261101-07/report.json",
+  "required_stages_passed": 75,
+  "python_tests_passed": 220,
+  "swift_tests_passed": 56,
+  "scope_tests_passed": 8,
+  "regression_source_files_rechecked": 250,
+  "source_drift": false,
+  "required_host_scenarios": 40,
+  "required_host_assertion_sites": 660,
+  "required_bun_cases": 11,
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support"
+  ],
+  "previous_canary_hardware_passed": "analysis/native-mac-canary-20261101/report.json",
+  "canary_repeated_on_raster_image": false,
+  "full_command_parity": false,
+  "full_g2_parity": false,
+  "next_command_modes": [
+    9,
+    8,
+    15
+  ],
+  "limits": [
+    "Current native ingress8192 bytes and cache64KiB; full capacity remains pending.",
+    "Single display, first/left bbox mapping; no stereo claim.",
+    "RLE sent over native GM; no outer G2/zlib transport added.",
+    "Application TX/RX trace, not separate HCI/radio observation.",
+    "User confirmed letters/checkerboard; no hardware pixel readback or pixel-perfect display comparison.",
+    "Other commands, native performance, storage integration and physical input acceptance remain unfinished."
+  ]
+}

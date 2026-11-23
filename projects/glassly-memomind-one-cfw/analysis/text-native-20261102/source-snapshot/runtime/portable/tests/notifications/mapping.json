@@ -1,0 +1,30 @@
+{
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "upstream_file": "patches/host/ancs_relay_host_test.c",
+  "upstream_sha256": "8a0a8fcb276ce308ad907150ed83f43ab151466b47cda2f26b6a5acf64e91b5c",
+  "counterpart": "runtime/portable/tests/notifications/ancs_relay_host_test.c",
+  "production": "runtime/portable/notifications.c",
+  "status": "ported-core-native-adapter-pending",
+  "scenario_functions": [
+    "test_left_lens_and_disabled",
+    "test_enable_status_and_source",
+    "test_attr_chunking",
+    "test_app_attr",
+    "test_ring_full_and_pacing",
+    "test_lease_expiry_and_epoch",
+    "test_send_failure",
+    "test_action",
+    "test_cleanup"
+  ],
+  "unchanged_check_sites": 76,
+  "check_evaluations": 266,
+  "assertion_map": "analysis/portable-notification-tests-02/assertion-map.json",
+  "runner": "runtime/portable/tests/run_notification_tests.py",
+  "pending": [
+    "MemoMind notification source/ANCS discovery and attribute adapter",
+    "MemoMind action adapter",
+    "Outbound transport envelope/channel",
+    "Native queue/timer/allocator adapter and scheduler testing"
+  ],
+  "test_only_native_shim": "G2 ANCC struct offsets, stock callback chaining and G2 SRAM handle validation; no MemoMind native-integration claim"
+}

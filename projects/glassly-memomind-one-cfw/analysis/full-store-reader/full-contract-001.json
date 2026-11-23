@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "sources": [
+    {
+      "source": "analysis/full-store-reader/host-001/report.json",
+      "reply_count": 5,
+      "counts": {
+        "query": 1,
+        "read": 1,
+        "native_error": 3,
+        "status_error": 0
+      }
+    },
+    {
+      "source": "analysis/full-store-reader/runtime-001.json",
+      "reply_count": 112,
+      "counts": {
+        "query": 2,
+        "read": 40,
+        "native_error": 68,
+        "status_error": 2
+      }
+    }
+  ],
+  "diagnostic_counts": {
+    "topology": 26,
+    "badmap": 20
+  },
+  "hardware_tested": false,
+  "profile": "H001Y-1.0.3.127-full-store-read-v1"
+}

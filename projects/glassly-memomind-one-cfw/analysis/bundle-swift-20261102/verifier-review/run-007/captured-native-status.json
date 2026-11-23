@@ -1,0 +1,63 @@
+{
+  "format": "memomind-native-bundle-smoke-verification-v1",
+  "capture": "analysis/bundle-swift-20261102/verifier-review/run-007/synthetic-capture",
+  "complete": true,
+  "startup_notifications_captured": [],
+  "native_service_notifications_logged": 1,
+  "all_native_write_submissions_completed": true,
+  "application_frames_independently_parsed_and_correlated": true,
+  "bundle_acknowledged": true,
+  "final_cache_reply_verified": true,
+  "ordered_settled_notifications": [
+    [
+      65,
+      11
+    ],
+    [
+      65,
+      12
+    ],
+    [
+      65,
+      11
+    ],
+    [
+      65,
+      12
+    ],
+    [
+      65,
+      13
+    ],
+    [
+      65,
+      14
+    ],
+    [
+      65,
+      15
+    ],
+    [
+      65,
+      16
+    ],
+    [
+      67,
+      17
+    ]
+  ],
+  "invalid_commands_rejected": 5,
+  "late_failure_settled_verified": true,
+  "lease_renewals_acknowledged": 3,
+  "cleared": true,
+  "encoded_and_expected_pixels_independently_verified": true,
+  "hardware_pixel_readback": false,
+  "physical_single_presentation_proven": false,
+  "background_gray4": 0,
+  "hold_seconds_before_clear": 301.04999999999995,
+  "finish_requested": false,
+  "maximum_hold_submission_gap_seconds": 301.03999999999996,
+  "continuous_pixel_retention_proven": false,
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "37df55f2ebe52f7f7ce1dc3a7cab3a2bd0fd0dffcf71f9a12cc446c92f2817d5"
+}

@@ -1,0 +1,883 @@
+{
+  "passed": true,
+  "device_actions": false,
+  "firmware_images_written": false,
+  "variants": [
+    {
+      "carved": false,
+      "passed": true,
+      "pool_start": 33939752,
+      "pool_end": 34598336,
+      "raw_size": 658584,
+      "initial_free": 656568,
+      "registry_cleared": false,
+      "registry_guarded_after_clear": false,
+      "old_native_globals_preserved_except_pool_slot": true,
+      "critical_calls": 21,
+      "calls": [
+        {
+          "stage": "clear",
+          "entry": "0x41fb234",
+          "arguments": [],
+          "result": 33626232,
+          "instructions": 117617,
+          "max_stack": 0,
+          "native_writes": 78392
+        },
+        {
+          "stage": "pool_constructor",
+          "entry": "0x433c5a8",
+          "arguments": [],
+          "result": 0,
+          "instructions": 2305,
+          "max_stack": 176,
+          "native_writes": 551
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c460",
+          "arguments": [],
+          "result": 656568,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33939751
+          ],
+          "result": 0,
+          "instructions": 40,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33939752
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33940007
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33940008
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33939752
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            34598335
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            34598336
+          ],
+          "result": 0,
+          "instructions": 42,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            1,
+            0
+          ],
+          "result": 33941772,
+          "instructions": 333,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33941772
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            12,
+            0
+          ],
+          "result": 33941788,
+          "instructions": 332,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33941788
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            124,
+            0
+          ],
+          "result": 33941804,
+          "instructions": 332,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33941804
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            256,
+            0
+          ],
+          "result": 33941932,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33941932
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            4096,
+            0
+          ],
+          "result": 33942192,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942192
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            8192,
+            0
+          ],
+          "result": 33946292,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33946292
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            65536,
+            0
+          ],
+          "result": 33954488,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33954488
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            1048576,
+            0
+          ],
+          "result": 0,
+          "instructions": 209,
+          "max_stack": 112,
+          "native_writes": 22
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            128,
+            1
+          ],
+          "result": 0,
+          "instructions": 53,
+          "max_stack": 48,
+          "native_writes": 6
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            128,
+            2
+          ],
+          "result": 34020028,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            34020028
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33954488
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33946292
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942192
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33941932
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33941804
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33941788
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33941772
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c460",
+          "arguments": [],
+          "result": 656568,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c4a4",
+          "arguments": [],
+          "result": 578180,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        }
+      ],
+      "native_calls": 37,
+      "max_observed_stack": 176
+    },
+    {
+      "carved": true,
+      "passed": true,
+      "pool_start": 33940008,
+      "pool_end": 34598336,
+      "raw_size": 658328,
+      "initial_free": 656312,
+      "registry_cleared": true,
+      "registry_guarded_after_clear": true,
+      "old_native_globals_preserved_except_pool_slot": true,
+      "critical_calls": 21,
+      "calls": [
+        {
+          "stage": "clear",
+          "entry": "0x41fb234",
+          "arguments": [],
+          "result": 33626232,
+          "instructions": 117713,
+          "max_stack": 0,
+          "native_writes": 78456
+        },
+        {
+          "stage": "pool_constructor",
+          "entry": "0x433c5a8",
+          "arguments": [],
+          "result": 0,
+          "instructions": 2305,
+          "max_stack": 176,
+          "native_writes": 551
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c460",
+          "arguments": [],
+          "result": 656312,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33939751
+          ],
+          "result": 0,
+          "instructions": 40,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33939752
+          ],
+          "result": 0,
+          "instructions": 40,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33940007
+          ],
+          "result": 0,
+          "instructions": 40,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33940008
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33940008
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            34598335
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            34598336
+          ],
+          "result": 0,
+          "instructions": 42,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            1,
+            0
+          ],
+          "result": 33942028,
+          "instructions": 333,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942028
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            12,
+            0
+          ],
+          "result": 33942044,
+          "instructions": 332,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942044
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            124,
+            0
+          ],
+          "result": 33942060,
+          "instructions": 332,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942060
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            256,
+            0
+          ],
+          "result": 33942188,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942188
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            4096,
+            0
+          ],
+          "result": 33942448,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33942448
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            8192,
+            0
+          ],
+          "result": 33946548,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33946548
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            65536,
+            0
+          ],
+          "result": 33954744,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c190",
+          "arguments": [
+            33954744
+          ],
+          "result": 33936888,
+          "instructions": 21,
+          "max_stack": 16,
+          "native_writes": 1
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            1048576,
+            0
+          ],
+          "result": 0,
+          "instructions": 209,
+          "max_stack": 112,
+          "native_writes": 22
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            128,
+            1
+          ],
+          "result": 0,
+          "instructions": 53,
+          "max_stack": 48,
+          "native_writes": 6
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c294",
+          "arguments": [
+            128,
+            2
+          ],
+          "result": 34020284,
+          "instructions": 374,
+          "max_stack": 112,
+          "native_writes": 48
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            34020284
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33954744
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33946548
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942448
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942188
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942060
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942044
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x20099a0",
+          "arguments": [
+            33942028
+          ],
+          "result": 12,
+          "instructions": 251,
+          "max_stack": 64,
+          "native_writes": 35
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c460",
+          "arguments": [],
+          "result": 656312,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        },
+        {
+          "stage": "allocator",
+          "entry": "0x433c4a4",
+          "arguments": [],
+          "result": 577924,
+          "instructions": 43,
+          "max_stack": 32,
+          "native_writes": 3
+        }
+      ],
+      "native_calls": 37,
+      "max_observed_stack": 176
+    }
+  ],
+  "limitations": [
+    "Actual startup clear span, not whole boot.",
+    "Critical enter/exit mocked and checked; no IRQ, RTOS, other-core or hardware behavior emulated.",
+    "Original and proposed bytes run in separate emulators; no firmware image persisted.",
+    "Native allocator invariants/selected operations, not exhaustive exhaustion or concurrent allocation proof."
+  ],
+  "constructor_sha256": "ad178810720a3d93755f9d8422a8a657f8a4d1ddabd86c7e79046536b6a24077",
+  "unicorn": "2.1.4",
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "proposed_in_memory_sha256": "c8cfe2cf103ac96a1241e9e8ef245262ece0ca610a09f034382d3ec094a80976",
+  "script_sha256": "c343e9017e75f61f3fcd2f6de050eef7b586f06083fabd1a5c8135e787a03297",
+  "edits": [
+    {
+      "address": "0x41fb238",
+      "before": "93878712",
+      "after": "93878722"
+    },
+    {
+      "address": "0x4399550",
+      "before": "28e10502",
+      "after": "28e20502"
+    },
+    {
+      "address": "0x4399554",
+      "before": "980c0a00",
+      "after": "980b0a00"
+    }
+  ],
+  "total_native_calls": 74,
+  "initial_free_delta": 256
+}

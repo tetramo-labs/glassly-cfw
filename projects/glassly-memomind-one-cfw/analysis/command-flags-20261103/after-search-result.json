@@ -1,0 +1,16 @@
+{
+  "found": false,
+  "elapsedSeconds": 29.18264895887114,
+  "attempts": [
+    {
+      "capture": "captures/command-flags-20261103-after-01",
+      "exitCode": 1,
+      "elapsedSeconds": 17.12092737480998
+    },
+    {
+      "capture": "captures/command-flags-20261103-after-02",
+      "exitCode": 1,
+      "elapsedSeconds": 29.182607959024608
+    }
+  ]
+}

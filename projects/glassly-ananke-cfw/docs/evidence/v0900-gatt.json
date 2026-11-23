@@ -1,0 +1,1104 @@
+{
+  "application_sha256": "3f4a6bea1e7901188e7c8a202cbe4916d141ec624db66218139d9f98c01762eb",
+  "application_bytes": 338712,
+  "scope": "Offline OEM V0900 only; not installed 0x0601 or a live GATT capture",
+  "profile": {
+    "file_offset": 304799,
+    "end_exclusive": 305744,
+    "sha256": "c8cde854121eddb4ca0ddd996e3f0b40b1ca8744605bab6e0f9651cad2aa3aa1",
+    "attributes": [
+      {
+        "file_offset": 304799,
+        "length": 10,
+        "flags": 2,
+        "handle": 1,
+        "uuid": 10240,
+        "value": "0018"
+      },
+      {
+        "file_offset": 304809,
+        "length": 13,
+        "flags": 2,
+        "handle": 2,
+        "uuid": 10243,
+        "value": "020300002a"
+      },
+      {
+        "file_offset": 304822,
+        "length": 8,
+        "flags": 258,
+        "handle": 3,
+        "uuid": 10752,
+        "value": ""
+      },
+      {
+        "file_offset": 304830,
+        "length": 13,
+        "flags": 2,
+        "handle": 4,
+        "uuid": 10243,
+        "value": "020500012a"
+      },
+      {
+        "file_offset": 304843,
+        "length": 8,
+        "flags": 258,
+        "handle": 5,
+        "uuid": 10753,
+        "value": ""
+      },
+      {
+        "file_offset": 304851,
+        "length": 13,
+        "flags": 2,
+        "handle": 6,
+        "uuid": 10243,
+        "value": "020700042a"
+      },
+      {
+        "file_offset": 304864,
+        "length": 8,
+        "flags": 258,
+        "handle": 7,
+        "uuid": 10756,
+        "value": ""
+      },
+      {
+        "file_offset": 304872,
+        "length": 10,
+        "flags": 2,
+        "handle": 8,
+        "uuid": 10240,
+        "value": "0118"
+      },
+      {
+        "file_offset": 304882,
+        "length": 13,
+        "flags": 2,
+        "handle": 9,
+        "uuid": 10243,
+        "value": "200a00052a"
+      },
+      {
+        "file_offset": 304895,
+        "length": 8,
+        "flags": 32,
+        "handle": 10,
+        "uuid": 10757,
+        "value": ""
+      },
+      {
+        "file_offset": 304903,
+        "length": 10,
+        "flags": 266,
+        "handle": 11,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 304913,
+        "length": 10,
+        "flags": 2,
+        "handle": 12,
+        "uuid": 10240,
+        "value": "0a18"
+      },
+      {
+        "file_offset": 304923,
+        "length": 13,
+        "flags": 2,
+        "handle": 13,
+        "uuid": 10243,
+        "value": "020e00292a"
+      },
+      {
+        "file_offset": 304936,
+        "length": 8,
+        "flags": 258,
+        "handle": 14,
+        "uuid": 10793,
+        "value": ""
+      },
+      {
+        "file_offset": 304944,
+        "length": 13,
+        "flags": 2,
+        "handle": 15,
+        "uuid": 10243,
+        "value": "021000242a"
+      },
+      {
+        "file_offset": 304957,
+        "length": 8,
+        "flags": 258,
+        "handle": 16,
+        "uuid": 10788,
+        "value": ""
+      },
+      {
+        "file_offset": 304965,
+        "length": 13,
+        "flags": 2,
+        "handle": 17,
+        "uuid": 10243,
+        "value": "021200252a"
+      },
+      {
+        "file_offset": 304978,
+        "length": 8,
+        "flags": 258,
+        "handle": 18,
+        "uuid": 10789,
+        "value": ""
+      },
+      {
+        "file_offset": 304986,
+        "length": 13,
+        "flags": 2,
+        "handle": 19,
+        "uuid": 10243,
+        "value": "021400272a"
+      },
+      {
+        "file_offset": 304999,
+        "length": 8,
+        "flags": 258,
+        "handle": 20,
+        "uuid": 10791,
+        "value": ""
+      },
+      {
+        "file_offset": 305007,
+        "length": 13,
+        "flags": 2,
+        "handle": 21,
+        "uuid": 10243,
+        "value": "021600262a"
+      },
+      {
+        "file_offset": 305020,
+        "length": 8,
+        "flags": 258,
+        "handle": 22,
+        "uuid": 10790,
+        "value": ""
+      },
+      {
+        "file_offset": 305028,
+        "length": 13,
+        "flags": 2,
+        "handle": 23,
+        "uuid": 10243,
+        "value": "021800282a"
+      },
+      {
+        "file_offset": 305041,
+        "length": 8,
+        "flags": 258,
+        "handle": 24,
+        "uuid": 10792,
+        "value": ""
+      },
+      {
+        "file_offset": 305049,
+        "length": 13,
+        "flags": 2,
+        "handle": 25,
+        "uuid": 10243,
+        "value": "021a00232a"
+      },
+      {
+        "file_offset": 305062,
+        "length": 8,
+        "flags": 258,
+        "handle": 26,
+        "uuid": 10787,
+        "value": ""
+      },
+      {
+        "file_offset": 305070,
+        "length": 13,
+        "flags": 2,
+        "handle": 27,
+        "uuid": 10243,
+        "value": "021c002a2a"
+      },
+      {
+        "file_offset": 305083,
+        "length": 8,
+        "flags": 258,
+        "handle": 28,
+        "uuid": 10794,
+        "value": ""
+      },
+      {
+        "file_offset": 305091,
+        "length": 13,
+        "flags": 2,
+        "handle": 29,
+        "uuid": 10243,
+        "value": "021e00502a"
+      },
+      {
+        "file_offset": 305104,
+        "length": 8,
+        "flags": 1282,
+        "handle": 30,
+        "uuid": 10832,
+        "value": ""
+      },
+      {
+        "file_offset": 305112,
+        "length": 10,
+        "flags": 2,
+        "handle": 31,
+        "uuid": 10240,
+        "value": "0f18"
+      },
+      {
+        "file_offset": 305122,
+        "length": 13,
+        "flags": 2,
+        "handle": 32,
+        "uuid": 10243,
+        "value": "122100192a"
+      },
+      {
+        "file_offset": 305135,
+        "length": 8,
+        "flags": 274,
+        "handle": 33,
+        "uuid": 10777,
+        "value": ""
+      },
+      {
+        "file_offset": 305143,
+        "length": 10,
+        "flags": 266,
+        "handle": 34,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305153,
+        "length": 10,
+        "flags": 2,
+        "handle": 35,
+        "uuid": 10240,
+        "value": "1218"
+      },
+      {
+        "file_offset": 305163,
+        "length": 13,
+        "flags": 2,
+        "handle": 36,
+        "uuid": 10243,
+        "value": "0625004e2a"
+      },
+      {
+        "file_offset": 305176,
+        "length": 9,
+        "flags": 6,
+        "handle": 37,
+        "uuid": 10830,
+        "value": "01"
+      },
+      {
+        "file_offset": 305185,
+        "length": 13,
+        "flags": 2,
+        "handle": 38,
+        "uuid": 10243,
+        "value": "1a27004d2a"
+      },
+      {
+        "file_offset": 305198,
+        "length": 8,
+        "flags": 282,
+        "handle": 39,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305206,
+        "length": 10,
+        "flags": 266,
+        "handle": 40,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305216,
+        "length": 10,
+        "flags": 2,
+        "handle": 41,
+        "uuid": 10504,
+        "value": "0101"
+      },
+      {
+        "file_offset": 305226,
+        "length": 13,
+        "flags": 2,
+        "handle": 42,
+        "uuid": 10243,
+        "value": "1a2b004d2a"
+      },
+      {
+        "file_offset": 305239,
+        "length": 8,
+        "flags": 282,
+        "handle": 43,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305247,
+        "length": 10,
+        "flags": 266,
+        "handle": 44,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305257,
+        "length": 10,
+        "flags": 2,
+        "handle": 45,
+        "uuid": 10504,
+        "value": "0201"
+      },
+      {
+        "file_offset": 305267,
+        "length": 13,
+        "flags": 2,
+        "handle": 46,
+        "uuid": 10243,
+        "value": "0e2f004d2a"
+      },
+      {
+        "file_offset": 305280,
+        "length": 8,
+        "flags": 270,
+        "handle": 47,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305288,
+        "length": 10,
+        "flags": 2,
+        "handle": 48,
+        "uuid": 10504,
+        "value": "0102"
+      },
+      {
+        "file_offset": 305298,
+        "length": 13,
+        "flags": 2,
+        "handle": 49,
+        "uuid": 10243,
+        "value": "1a32004d2a"
+      },
+      {
+        "file_offset": 305311,
+        "length": 8,
+        "flags": 282,
+        "handle": 50,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305319,
+        "length": 10,
+        "flags": 266,
+        "handle": 51,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305329,
+        "length": 10,
+        "flags": 2,
+        "handle": 52,
+        "uuid": 10504,
+        "value": "0301"
+      },
+      {
+        "file_offset": 305339,
+        "length": 13,
+        "flags": 2,
+        "handle": 53,
+        "uuid": 10243,
+        "value": "1a36004d2a"
+      },
+      {
+        "file_offset": 305352,
+        "length": 8,
+        "flags": 282,
+        "handle": 54,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305360,
+        "length": 10,
+        "flags": 266,
+        "handle": 55,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305370,
+        "length": 10,
+        "flags": 2,
+        "handle": 56,
+        "uuid": 10504,
+        "value": "0401"
+      },
+      {
+        "file_offset": 305380,
+        "length": 13,
+        "flags": 2,
+        "handle": 57,
+        "uuid": 10243,
+        "value": "1a3a004d2a"
+      },
+      {
+        "file_offset": 305393,
+        "length": 8,
+        "flags": 282,
+        "handle": 58,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305401,
+        "length": 10,
+        "flags": 266,
+        "handle": 59,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305411,
+        "length": 10,
+        "flags": 2,
+        "handle": 60,
+        "uuid": 10504,
+        "value": "0501"
+      },
+      {
+        "file_offset": 305421,
+        "length": 13,
+        "flags": 2,
+        "handle": 61,
+        "uuid": 10243,
+        "value": "1a3e004d2a"
+      },
+      {
+        "file_offset": 305434,
+        "length": 8,
+        "flags": 282,
+        "handle": 62,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305442,
+        "length": 10,
+        "flags": 266,
+        "handle": 63,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305452,
+        "length": 10,
+        "flags": 2,
+        "handle": 64,
+        "uuid": 10504,
+        "value": "0601"
+      },
+      {
+        "file_offset": 305462,
+        "length": 13,
+        "flags": 2,
+        "handle": 65,
+        "uuid": 10243,
+        "value": "0e42004d2a"
+      },
+      {
+        "file_offset": 305475,
+        "length": 8,
+        "flags": 270,
+        "handle": 66,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305483,
+        "length": 10,
+        "flags": 2,
+        "handle": 67,
+        "uuid": 10504,
+        "value": "0202"
+      },
+      {
+        "file_offset": 305493,
+        "length": 13,
+        "flags": 2,
+        "handle": 68,
+        "uuid": 10243,
+        "value": "0e45004d2a"
+      },
+      {
+        "file_offset": 305506,
+        "length": 8,
+        "flags": 270,
+        "handle": 69,
+        "uuid": 10829,
+        "value": ""
+      },
+      {
+        "file_offset": 305514,
+        "length": 10,
+        "flags": 2,
+        "handle": 70,
+        "uuid": 10504,
+        "value": "0302"
+      },
+      {
+        "file_offset": 305524,
+        "length": 13,
+        "flags": 2,
+        "handle": 71,
+        "uuid": 10243,
+        "value": "0248004b2a"
+      },
+      {
+        "file_offset": 305537,
+        "length": 8,
+        "flags": 258,
+        "handle": 72,
+        "uuid": 10827,
+        "value": ""
+      },
+      {
+        "file_offset": 305545,
+        "length": 13,
+        "flags": 2,
+        "handle": 73,
+        "uuid": 10243,
+        "value": "1a4a00332a"
+      },
+      {
+        "file_offset": 305558,
+        "length": 8,
+        "flags": 26,
+        "handle": 74,
+        "uuid": 10803,
+        "value": ""
+      },
+      {
+        "file_offset": 305566,
+        "length": 10,
+        "flags": 266,
+        "handle": 75,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305576,
+        "length": 13,
+        "flags": 2,
+        "handle": 76,
+        "uuid": 10243,
+        "value": "024d004a2a"
+      },
+      {
+        "file_offset": 305589,
+        "length": 8,
+        "flags": 258,
+        "handle": 77,
+        "uuid": 10826,
+        "value": ""
+      },
+      {
+        "file_offset": 305597,
+        "length": 13,
+        "flags": 2,
+        "handle": 78,
+        "uuid": 10243,
+        "value": "044f004c2a"
+      },
+      {
+        "file_offset": 305610,
+        "length": 8,
+        "flags": 260,
+        "handle": 79,
+        "uuid": 10828,
+        "value": ""
+      },
+      {
+        "file_offset": 305618,
+        "length": 10,
+        "flags": 2,
+        "handle": 80,
+        "uuid": 10240,
+        "value": "40ae"
+      },
+      {
+        "file_offset": 305628,
+        "length": 13,
+        "flags": 2,
+        "handle": 81,
+        "uuid": 10243,
+        "value": "04520041ae"
+      },
+      {
+        "file_offset": 305641,
+        "length": 8,
+        "flags": 260,
+        "handle": 82,
+        "uuid": 44609,
+        "value": ""
+      },
+      {
+        "file_offset": 305649,
+        "length": 13,
+        "flags": 2,
+        "handle": 83,
+        "uuid": 10243,
+        "value": "10540042ae"
+      },
+      {
+        "file_offset": 305662,
+        "length": 8,
+        "flags": 16,
+        "handle": 84,
+        "uuid": 44610,
+        "value": ""
+      },
+      {
+        "file_offset": 305670,
+        "length": 10,
+        "flags": 266,
+        "handle": 85,
+        "uuid": 10498,
+        "value": "0000"
+      },
+      {
+        "file_offset": 305680,
+        "length": 10,
+        "flags": 2,
+        "handle": 128,
+        "uuid": 10240,
+        "value": "00ae"
+      },
+      {
+        "file_offset": 305690,
+        "length": 13,
+        "flags": 2,
+        "handle": 129,
+        "uuid": 10243,
+        "value": "04820001ae"
+      },
+      {
+        "file_offset": 305703,
+        "length": 8,
+        "flags": 260,
+        "handle": 130,
+        "uuid": 44545,
+        "value": ""
+      },
+      {
+        "file_offset": 305711,
+        "length": 13,
+        "flags": 2,
+        "handle": 131,
+        "uuid": 10243,
+        "value": "10840002ae"
+      },
+      {
+        "file_offset": 305724,
+        "length": 8,
+        "flags": 16,
+        "handle": 132,
+        "uuid": 44546,
+        "value": ""
+      },
+      {
+        "file_offset": 305732,
+        "length": 10,
+        "flags": 266,
+        "handle": 133,
+        "uuid": 10498,
+        "value": "0000"
+      }
+    ],
+    "characteristics": [
+      {
+        "service_uuid": 6144,
+        "uuid": 10752,
+        "properties": 2,
+        "declaration_handle": 2,
+        "value_handle": 3,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6144,
+        "uuid": 10753,
+        "properties": 2,
+        "declaration_handle": 4,
+        "value_handle": 5,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6144,
+        "uuid": 10756,
+        "properties": 2,
+        "declaration_handle": 6,
+        "value_handle": 7,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6145,
+        "uuid": 10757,
+        "properties": 32,
+        "declaration_handle": 9,
+        "value_handle": 10,
+        "ccc_handle": 11
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10793,
+        "properties": 2,
+        "declaration_handle": 13,
+        "value_handle": 14,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10788,
+        "properties": 2,
+        "declaration_handle": 15,
+        "value_handle": 16,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10789,
+        "properties": 2,
+        "declaration_handle": 17,
+        "value_handle": 18,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10791,
+        "properties": 2,
+        "declaration_handle": 19,
+        "value_handle": 20,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10790,
+        "properties": 2,
+        "declaration_handle": 21,
+        "value_handle": 22,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10792,
+        "properties": 2,
+        "declaration_handle": 23,
+        "value_handle": 24,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10787,
+        "properties": 2,
+        "declaration_handle": 25,
+        "value_handle": 26,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10794,
+        "properties": 2,
+        "declaration_handle": 27,
+        "value_handle": 28,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6154,
+        "uuid": 10832,
+        "properties": 2,
+        "declaration_handle": 29,
+        "value_handle": 30,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6159,
+        "uuid": 10777,
+        "properties": 18,
+        "declaration_handle": 32,
+        "value_handle": 33,
+        "ccc_handle": 34
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10830,
+        "properties": 6,
+        "declaration_handle": 36,
+        "value_handle": 37,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 38,
+        "value_handle": 39,
+        "ccc_handle": 40
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 42,
+        "value_handle": 43,
+        "ccc_handle": 44
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 14,
+        "declaration_handle": 46,
+        "value_handle": 47,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 49,
+        "value_handle": 50,
+        "ccc_handle": 51
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 53,
+        "value_handle": 54,
+        "ccc_handle": 55
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 57,
+        "value_handle": 58,
+        "ccc_handle": 59
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 26,
+        "declaration_handle": 61,
+        "value_handle": 62,
+        "ccc_handle": 63
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 14,
+        "declaration_handle": 65,
+        "value_handle": 66,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10829,
+        "properties": 14,
+        "declaration_handle": 68,
+        "value_handle": 69,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10827,
+        "properties": 2,
+        "declaration_handle": 71,
+        "value_handle": 72,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10803,
+        "properties": 26,
+        "declaration_handle": 73,
+        "value_handle": 74,
+        "ccc_handle": 75
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10826,
+        "properties": 2,
+        "declaration_handle": 76,
+        "value_handle": 77,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 6162,
+        "uuid": 10828,
+        "properties": 4,
+        "declaration_handle": 78,
+        "value_handle": 79,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 44608,
+        "uuid": 44609,
+        "properties": 4,
+        "declaration_handle": 81,
+        "value_handle": 82,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 44608,
+        "uuid": 44610,
+        "properties": 16,
+        "declaration_handle": 83,
+        "value_handle": 84,
+        "ccc_handle": 85
+      },
+      {
+        "service_uuid": 44544,
+        "uuid": 44545,
+        "properties": 4,
+        "declaration_handle": 129,
+        "value_handle": 130,
+        "ccc_handle": null
+      },
+      {
+        "service_uuid": 44544,
+        "uuid": 44546,
+        "properties": 16,
+        "declaration_handle": 131,
+        "value_handle": 132,
+        "ccc_handle": 133
+      }
+    ]
+  },
+  "vendor_characteristics": [
+    {
+      "service_uuid": 44608,
+      "uuid": 44609,
+      "properties": 4,
+      "declaration_handle": 81,
+      "value_handle": 82,
+      "ccc_handle": null
+    },
+    {
+      "service_uuid": 44608,
+      "uuid": 44610,
+      "properties": 16,
+      "declaration_handle": 83,
+      "value_handle": 84,
+      "ccc_handle": 85
+    },
+    {
+      "service_uuid": 44544,
+      "uuid": 44545,
+      "properties": 4,
+      "declaration_handle": 129,
+      "value_handle": 130,
+      "ccc_handle": null
+    },
+    {
+      "service_uuid": 44544,
+      "uuid": 44546,
+      "properties": 16,
+      "declaration_handle": 131,
+      "value_handle": 132,
+      "ccc_handle": 133
+    }
+  ],
+  "string_anchors": [
+    {
+      "text": "m_app_key.pressed_b",
+      "file_offsets": [
+        270816
+      ]
+    },
+    {
+      "text": "m_app_key.double_b",
+      "file_offsets": [
+        270784
+      ]
+    },
+    {
+      "text": "m_app_key.three_b",
+      "file_offsets": [
+        270752
+      ]
+    },
+    {
+      "text": "emf process:BLE_ST_NOTIFY_IDICATE",
+      "file_offsets": [
+        287662
+      ]
+    },
+    {
+      "text": "dy_hid_service(%d):",
+      "file_offsets": [
+        280628
+      ]
+    },
+    {
+      "text": "bt(%d) hid ready=%d...",
+      "file_offsets": [
+        282496
+      ]
+    },
+    {
+      "text": "mode=%x,att=%x,r=%4x,t=%4x,k=%8x,x=%3x,y=%3x",
+      "file_offsets": [
+        294886
+      ]
+    },
+    {
+      "text": "ble_get_gatt_profile_data",
+      "file_offsets": [
+        283639
+      ]
+    },
+    {
+      "text": "IG05 Gamepad",
+      "file_offsets": [
+        278385
+      ]
+    },
+    {
+      "text": "../../../../apps/hid/board/br23/board_ac635n_demo.c",
+      "file_offsets": [
+        297325
+      ]
+    }
+  ],
+  "limitations": [
+    "File offsets are not established runtime addresses or patch locations.",
+    "Profile selection, CCC handling and button transmission require code tracing.",
+    "No packet format, installed layout or iOS background delivery is established."
+  ],
+  "package": {
+    "path": "research/IG05_V0900.ufw",
+    "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3"
+  },
+  "inspector_sha256": "c9650735406364744a11168eb4f0987d9c019b5c0c2af72c92dd2ca141b47700"
+}

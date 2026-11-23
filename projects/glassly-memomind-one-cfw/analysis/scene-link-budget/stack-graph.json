@@ -1,0 +1,1140 @@
+[
+  {
+    "optimization": "O2",
+    "method": "GCC -fcallgraph-info=su and .su; sums every direct parent frame (including tail-call candidates); cv_curve at most9 frames from depth0..8 guard; cfw_cache_prepare at most2 frames because mode8 only recurses into modes37..41",
+    "indirect_or_missing_boundaries": [
+      "__indirect_call"
+    ],
+    "other_cycles_detected": [],
+    "not_a_full_task_stack_bound": true,
+    "roots": [
+      {
+        "entry": "mm_scene_render_if_due",
+        "known_C_frame_sum": 1488,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_render_if_due",
+            "frame": 160
+          },
+          {
+            "name": "cfw_scene_render",
+            "frame": 208
+          },
+          {
+            "name": "mm_scene_shape_draw.isra",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_dispatch",
+        "known_C_frame_sum": 1456,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_dispatch",
+            "frame": 128
+          },
+          {
+            "name": "cfw_scene_render",
+            "frame": 208
+          },
+          {
+            "name": "mm_scene_shape_draw.isra",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_immediate",
+        "known_C_frame_sum": 1264,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_immediate",
+            "frame": 144
+          },
+          {
+            "name": "mm_scene_shape_draw.isra",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_shape_draw.isra",
+        "known_C_frame_sum": 1120,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_shape_draw.isra",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_draw_shape",
+        "known_C_frame_sum": 1024,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_compile",
+        "known_C_frame_sum": 992,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_compile",
+            "frame": 128
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_display",
+        "known_C_frame_sum": 448,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_display",
+            "frame": 80
+          },
+          {
+            "name": "mm_geometry_mode36",
+            "frame": 224
+          },
+          {
+            "name": "rs_line_q4",
+            "frame": 48
+          },
+          {
+            "name": "rs_fill_poly_q4.part.0",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_probe",
+        "known_C_frame_sum": 336,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_probe",
+            "frame": 336
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_tick",
+        "known_C_frame_sum": 256,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_tick",
+            "frame": 208
+          },
+          {
+            "name": "cfw_object_advance",
+            "frame": 32
+          },
+          {
+            "name": "cfw_ease_progress.part.0",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_prepare",
+        "known_C_frame_sum": 192,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_prepare",
+            "frame": 32
+          },
+          {
+            "name": "cfw_cache_prepare",
+            "frame": 64
+          },
+          {
+            "name": "cfw_cache_prepare",
+            "frame": 64
+          },
+          {
+            "name": "cfw_cache_free_storage",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_draw_path",
+        "known_C_frame_sum": 176,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_draw_path",
+            "frame": 48
+          },
+          {
+            "name": "cv_fill",
+            "frame": 80
+          },
+          {
+            "name": "mm_raster_span",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_takeover",
+        "known_C_frame_sum": 96,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_takeover",
+            "frame": 48
+          },
+          {
+            "name": "cfw_object_advance",
+            "frame": 32
+          },
+          {
+            "name": "cfw_ease_progress.part.0",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_reap",
+        "known_C_frame_sum": 64,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_reap",
+            "frame": 32
+          },
+          {
+            "name": "cfw_cache_free_storage",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_release",
+        "known_C_frame_sum": 64,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_release",
+            "frame": 32
+          },
+          {
+            "name": "cfw_cache_free_storage",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_shadow",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_shadow",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_command",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_command",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_lose",
+        "known_C_frame_sum": 32,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_lose",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_input_valid.part.0",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_input_valid.part.0",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_init",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_init",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_path_bytes",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_path_bytes",
+            "frame": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "optimization": "Os",
+    "method": "GCC -fcallgraph-info=su and .su; sums every direct parent frame (including tail-call candidates); cv_curve at most9 frames from depth0..8 guard; cfw_cache_prepare at most2 frames because mode8 only recurses into modes37..41",
+    "indirect_or_missing_boundaries": [
+      "__indirect_call"
+    ],
+    "other_cycles_detected": [],
+    "not_a_full_task_stack_bound": true,
+    "roots": [
+      {
+        "entry": "mm_scene_render_if_due",
+        "known_C_frame_sum": 1504,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_render_if_due",
+            "frame": 176
+          },
+          {
+            "name": "cfw_scene_render",
+            "frame": 208
+          },
+          {
+            "name": "mm_scene_shape_draw",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_dispatch",
+        "known_C_frame_sum": 1472,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_dispatch",
+            "frame": 144
+          },
+          {
+            "name": "cfw_scene_render",
+            "frame": 208
+          },
+          {
+            "name": "mm_scene_shape_draw",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_immediate",
+        "known_C_frame_sum": 1264,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_immediate",
+            "frame": 144
+          },
+          {
+            "name": "mm_scene_shape_draw",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_shape_draw",
+        "known_C_frame_sum": 1120,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_shape_draw",
+            "frame": 96
+          },
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_draw_shape",
+        "known_C_frame_sum": 1024,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_draw_shape",
+            "frame": 160
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_compile",
+        "known_C_frame_sum": 1008,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_compile",
+            "frame": 144
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          },
+          {
+            "name": "cv_curve",
+            "frame": 96
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_display",
+        "known_C_frame_sum": 592,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_display",
+            "frame": 96
+          },
+          {
+            "name": "mm_geometry_mode36",
+            "frame": 224
+          },
+          {
+            "name": "rs_line_q4",
+            "frame": 112
+          },
+          {
+            "name": "rs_fill_poly_q4.part.0",
+            "frame": 128
+          },
+          {
+            "name": "rs_span_pixels",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_probe",
+        "known_C_frame_sum": 352,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_probe",
+            "frame": 336
+          },
+          {
+            "name": "reply",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_tick",
+        "known_C_frame_sum": 272,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_tick",
+            "frame": 208
+          },
+          {
+            "name": "present_buffer",
+            "frame": 64
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_draw_path",
+        "known_C_frame_sum": 208,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_draw_path",
+            "frame": 64
+          },
+          {
+            "name": "cv_fill",
+            "frame": 96
+          },
+          {
+            "name": "mm_raster_span",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_prepare",
+        "known_C_frame_sum": 176,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_prepare",
+            "frame": 32
+          },
+          {
+            "name": "cfw_cache_prepare",
+            "frame": 48
+          },
+          {
+            "name": "cfw_cache_prepare",
+            "frame": 48
+          },
+          {
+            "name": "cfw_cache_reap",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_free_storage",
+            "frame": 16
+          },
+          {
+            "name": "cfw_scene_stop",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_takeover",
+        "known_C_frame_sum": 144,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_takeover",
+            "frame": 48
+          },
+          {
+            "name": "cfw_object_freeze",
+            "frame": 32
+          },
+          {
+            "name": "cfw_object_advance",
+            "frame": 16
+          },
+          {
+            "name": "cfw_ease_progress",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "glassly_graphics_command",
+        "known_C_frame_sum": 80,
+        "maximum_known_path": [
+          {
+            "name": "glassly_graphics_command",
+            "frame": 64
+          },
+          {
+            "name": "valid_message",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_shadow",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_shadow",
+            "frame": 48
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_lose",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_lose",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_next_epoch",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_epoch",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_reap",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_reap",
+            "frame": 0
+          },
+          {
+            "name": "cfw_cache_reap",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_free_storage",
+            "frame": 16
+          },
+          {
+            "name": "cfw_scene_stop",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_release",
+        "known_C_frame_sum": 48,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_release",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_next_epoch",
+            "frame": 16
+          },
+          {
+            "name": "cfw_cache_epoch",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_input_valid",
+        "known_C_frame_sum": 32,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_input_valid",
+            "frame": 32
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_init",
+        "known_C_frame_sum": 16,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_init",
+            "frame": 16
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_deallocate",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_deallocate",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_now",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_now",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_lease",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_lease",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_timer_start",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_timer_start",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_overlap",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_overlap",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_scene_memcpy.isra",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_scene_memcpy.isra",
+            "frame": 0
+          }
+        ]
+      },
+      {
+        "entry": "mm_vector_path_bytes",
+        "known_C_frame_sum": 0,
+        "maximum_known_path": [
+          {
+            "name": "mm_vector_path_bytes",
+            "frame": 0
+          }
+        ]
+      }
+    ]
+  }
+]

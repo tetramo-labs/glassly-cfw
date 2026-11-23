@@ -1,0 +1,20 @@
+{
+  "runtime/graphics/entry.S": "b98daa36e3d0bb9035ab6df60a16a364d019b9bbab5501d4f3bc6ecaa65682bc",
+  "runtime/graphics/graphics.c": "4756c3d062f35c08ce5462a75fc986b3e8e22e79858172eb032bca4485e36985",
+  "runtime/graphics/graphics.h": "894bff2eaf6b71f0ba4b6a61d8a7f2c9aba0b8da429867acb77f588c4106abd5",
+  "runtime/graphics/graphics.ld": "1073e111b7817979895781dec2cc4583989fb364a6719c766e55bce7d5c50a00",
+  "runtime/graphics/native.c": "c8ef4626f35cc7a2e8b6b1452cf2d0ba38fc04b80ca1331d10a7decab8eaf7e7",
+  "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+  "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+  "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+  "runtime/portable/rle.c": "945e57f8ed5996859eccd3598a19a953cd2f37132dcd5acf86ecac93d09f4158",
+  "runtime/portable/rle.h": "b770902f55175ecb1fa156d73f32f1c8b9a541009589dea037de634d1d0d346f",
+  "runtime/portable/scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+  "runtime/portable/scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+  "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+  "runtime/portable/scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
+  "runtime/portable/scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+  "runtime/portable/scene_shapes.inc": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
+  "runtime/portable/vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+  "runtime/portable/vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba"
+}

@@ -1,0 +1,20 @@
+{
+  "format": "memomind-portable-scene-tests-v1",
+  "result": "failed",
+  "commands": [
+    {
+      "label": "generated-source-check",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/prepare_scene_port.py",
+        "--check"
+      ],
+      "returncode": 1
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "scope": "Production portable scene/cache/assets + portable geometry/vector, original full host assertion bodies",
+  "pending_boundary": "Native built-in font uses explicit callback; host retains unchanged upstream box-font stub",
+  "error": "generated-source-check failed: see stdout/stderr"
+}

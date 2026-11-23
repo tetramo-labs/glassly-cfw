@@ -1,0 +1,11 @@
+{
+  "file": "captures/flash-read-runtime-20261031/hci-002.btsnoop",
+  "reversals": [
+    {
+      "offset": 2208050,
+      "delta_microseconds": -1,
+      "timestamp": 63961735368506312
+    }
+  ],
+  "payload_completeness_not_inferred_from_timestamps": true
+}

@@ -1,0 +1,37 @@
+{
+ "version": "GLASSLYCFW/19",
+ "release": "ble-probe-004",
+ "change": "Revision 18 plus: the probe clears the pending flag before registering its nodes so the stock register_service kick does not post the service a second time; its status dumps the stock advertising slot (0x38 bytes) and the BT link flags; op 5 restarts enabled advertising slots; the JSON buffer is sized from the state length (128 bytes).",
+ "build": "build-19-01",
+ "runtimeBytes": 97520,
+ "runtimeSHA256": "8da689e8cea4255c793da509a36583424b2bc887f066a17dd0f9ff077e365825",
+ "linkerRelaxation": true,
+ "imageBytes": 2251180,
+ "imageSHA256": "ff06f107b078d2c464f4c4f5e64189bccbfdcaab9b3650732863d33315a2826b",
+ "containerHeaderSHA256": "1d33a3c06552e26db4598f2de35b498bee4637c05f8c8699958d627ec1790b2e",
+ "appHeaderSHA256": "ab41a4e7a3af0cdf35faf6e9c64fbf9107c5894e9e49a1ad51a23b765d79d60d",
+ "bootSelectorTest": "boot-selector-19.json",
+ "rawPresentTest": "raw-present-runtime.json",
+ "bleProbeTest": "ble-probe-runtime.json (7 tests)",
+ "recordGates": "record-gates-19.json",
+ "regression": "regression-19-01",
+ "regressionNotes": "all 147 required offline stages passed, no source drift (report.json)",
+ "flashed": true,
+ "flashAttempt": "captures/v19-flash-20261108-05 (550 blocks, 3,847 chunks, bytes [18, 2251180), reboot acknowledged; attempts 01-04 timed out opening RFCOMM while the glasses slept)",
+ "bootVerified": true,
+ "hardwareChecks": {
+  "bleRegistrationObserved": true,
+  "registration": "captures/v19-ble-register-155023 / v19-ble-status-155033: service handle 14, value handle 16, CCCD 17 (contiguous; revision 18 had the phantom handle 15), registering cleared, slot configured/enabled/state 1, link flags 01000000",
+  "centralDiscovery": "analysis/ble-probe-20261107/ble-walk after v19-ble-adv-155139: services 9200/9300/9400; 9400 lists 9401 props 0x1e with descriptor 2902; 9201/9301 props 0x0e without descriptors",
+  "echo": "analysis/ble-probe-20261107/ble-central after v19-ble-adv-155315: subscribed, 20 writes echoed as notifications, RTT median 61.5 ms (min 59.4, max 89.8), MTU 509; probe counters afterwards (v19-ble-status-155332): writes 20, notified 20, notifyFailed 0, cccd 1, peer 06c2b6f28c70",
+  "linkDrop": "the glasses still terminate the Mac central (8.3 s after connect on the walk run); stock policy toward unbonded centrals, see the revision 18 checkpoint; an advertising enable issued while the RFCOMM session is open does not take effect until the session closes",
+  "ancsRelayPoll": "analysis/ancs-20261108/ancs-poll 60 s (captures/v19-ancs-poll-155200): relay enabled, 30 polls, one status record (AN v1 op 4) per poll, connected 0, no notification records: no iPhone ANCS link during the run",
+  "animationTiming": "captures/v19-anim-timing-20261108-01 (analysis/ble-probe-20261108c/anim-timing after): medians idle status 38.7 ms, idle renew 41.2 ms, cold-open 123.4 ms, present after a clock-tick SHOW 117.0 / 54.4 / 64.2 ms, SHOW during a running tween 86.9 ms, tick SHOW 65.5 ms; same raw-present path as revision 16 (38.7 / 39.5 / 120.7 / 114.3 / 61.7 / 63.3) against revision 14's 116 ms full present and 575 ms stall"
+ },
+ "bootCapture": "captures/v19-boot-20261108-07 (installed app header ab41a4e7\u2026 matches ble-probe-004; attempts 03-06 failed only on the verify tool's stale revision string)",
+ "glasslyBundle": {
+  "files": "memomind-one-glassly-cfw-19.bin in both resource dirs, MemoMindOneFirmware.swift and MemoMindOTA.kt pins, READMEs, FirmwareImage.swift copy, UPSTREAM.json repin",
+  "branch": "dev",
+  "commit": "94402db408"
+ }
+}

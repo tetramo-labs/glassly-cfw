@@ -1,0 +1,35 @@
+{
+  "path": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/external-read-runtime-20261031/hci-001.btsnoop",
+  "size": 9347624,
+  "sha256": "858d8c675a15f1cf28ad46d97fd6da0d5242e94a7d5414cb366cc87a6c1f92bd",
+  "packets": 53041,
+  "packet_types": {
+    "event": 19664,
+    "acl": 33014,
+    "command": 363
+  },
+  "acl_handles": {
+    "0x00b": 33014
+  },
+  "first_timestamp": "2026-10-31T20:38:29.223554+00:00",
+  "last_timestamp": "2026-10-31T21:20:38.111625+00:00",
+  "truncated_records": 0,
+  "maximum_reported_drop_count": 0,
+  "issues": [
+    {
+      "offset": 2208050,
+      "error": "timestamp moved backwards"
+    },
+    {
+      "offset": 5489084,
+      "error": "timestamp moved backwards"
+    }
+  ],
+  "record_integrity_ok": false,
+  "whole_session_coverage": "unproven",
+  "limitations": [
+    "AOSP writes zero drop counters; zero does not establish losslessness.",
+    "Valid records do not prove rotation continuity or coverage of the entire OTA.",
+    "App encryption and filtering are not detected by record validation."
+  ]
+}

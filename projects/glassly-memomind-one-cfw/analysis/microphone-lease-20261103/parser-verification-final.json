@@ -1,0 +1,1073 @@
+{
+  "passed": true,
+  "cases": 38,
+  "stockBodySHA256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "unicorn": "2.1.4",
+  "actualCodeRanges": [
+    "0420a7da\u20130420aabc"
+  ],
+  "hardwareTested": false,
+  "testSourceSHA256": "fbcc3ac5535678640a9b1b5bad9315cc9b083a3c3c6b5d74a76ddbf30a378595",
+  "mockBoundaries": {
+    "33554432": "copy",
+    "33570142": "log_enabled",
+    "69246440": "negotiate",
+    "69244814": "peer_transport",
+    "70371998": "spp_send",
+    "69493684": "iap2_channel",
+    "70367372": "iap2_send",
+    "70362898": "ble_send",
+    "69427640": "post",
+    "69244782": "stop_prepare",
+    "69248970": "recording_kind",
+    "69381884": "setting"
+  },
+  "results": [
+    {
+      "packet": "521200",
+      "transport": 0,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 71
+    },
+    {
+      "packet": "521201",
+      "transport": 0,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            1,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521301312800"
+        }
+      ],
+      "done": true,
+      "steps": 71
+    },
+    {
+      "packet": "521202",
+      "transport": 0,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 71
+    },
+    {
+      "packet": "521200",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "spp_send",
+          "args": [
+            50331648,
+            50462624,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 74
+    },
+    {
+      "packet": "521201",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            1,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "spp_send",
+          "args": [
+            50331648,
+            50462624,
+            50462664,
+            6
+          ],
+          "payload": "521301312800"
+        }
+      ],
+      "done": true,
+      "steps": 74
+    },
+    {
+      "packet": "521202",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "spp_send",
+          "args": [
+            50331648,
+            50462624,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 74
+    },
+    {
+      "packet": "521200",
+      "transport": 2,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_channel",
+          "args": [
+            2,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_send",
+          "args": [
+            50331648,
+            7,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 72
+    },
+    {
+      "packet": "521201",
+      "transport": 2,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            1,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_channel",
+          "args": [
+            2,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_send",
+          "args": [
+            50331648,
+            7,
+            50462664,
+            6
+          ],
+          "payload": "521301312800"
+        }
+      ],
+      "done": true,
+      "steps": 72
+    },
+    {
+      "packet": "521202",
+      "transport": 2,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_channel",
+          "args": [
+            2,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "iap2_send",
+          "args": [
+            50331648,
+            7,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 72
+    },
+    {
+      "packet": "521200",
+      "transport": 3,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 73
+    },
+    {
+      "packet": "521201",
+      "transport": 3,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            1,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521301312800"
+        }
+      ],
+      "done": true,
+      "steps": 73
+    },
+    {
+      "packet": "521202",
+      "transport": 3,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "negotiate",
+          "args": [
+            0,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "peer_transport",
+          "args": [
+            50331648,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "ble_send",
+          "args": [
+            50331648,
+            0,
+            50462664,
+            6
+          ],
+          "payload": "521300312800"
+        }
+      ],
+      "done": true,
+      "steps": 73
+    },
+    {
+      "packet": "520100",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520101",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520102",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520103",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520104",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520105",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520106",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520107",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520108",
+      "transport": 1,
+      "mode": 1,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 53
+    },
+    {
+      "packet": "520100",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050605"
+        }
+      ],
+      "done": true,
+      "steps": 60
+    },
+    {
+      "packet": "520101",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050601"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520102",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050605"
+        }
+      ],
+      "done": true,
+      "steps": 61
+    },
+    {
+      "packet": "520103",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050603"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520104",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050604"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520105",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050605"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520106",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050606"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520107",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050607"
+        }
+      ],
+      "done": true,
+      "steps": 62
+    },
+    {
+      "packet": "520108",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "post",
+          "args": [
+            19,
+            1,
+            50462664,
+            7
+          ],
+          "payload": "01020304050605"
+        }
+      ],
+      "done": true,
+      "steps": 60
+    },
+    {
+      "packet": "520000",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "stop_prepare",
+          "args": [
+            50331648,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "recording_kind",
+          "args": [
+            5,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "post",
+          "args": [
+            19,
+            2,
+            50331648,
+            6
+          ],
+          "payload": "010203040506"
+        }
+      ],
+      "done": true,
+      "steps": 50
+    },
+    {
+      "packet": "520000",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 1,
+      "calls": [
+        {
+          "name": "stop_prepare",
+          "args": [
+            50331648,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "recording_kind",
+          "args": [
+            5,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "post",
+          "args": [
+            19,
+            2,
+            50331648,
+            6
+          ],
+          "payload": "010203040506"
+        }
+      ],
+      "done": true,
+      "steps": 50
+    },
+    {
+      "packet": "520000",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 2,
+      "calls": [
+        {
+          "name": "stop_prepare",
+          "args": [
+            50331648,
+            50331904,
+            3,
+            18
+          ]
+        }
+      ],
+      "done": true,
+      "steps": 42
+    },
+    {
+      "packet": "520000",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 3,
+      "calls": [
+        {
+          "name": "stop_prepare",
+          "args": [
+            50331648,
+            50331904,
+            3,
+            18
+          ]
+        },
+        {
+          "name": "recording_kind",
+          "args": [
+            5,
+            3489660939,
+            3489660940,
+            3489660941
+          ]
+        },
+        {
+          "name": "post",
+          "args": [
+            19,
+            2,
+            50331648,
+            6
+          ],
+          "payload": "010203040506"
+        }
+      ],
+      "done": true,
+      "steps": 50
+    },
+    {
+      "packet": "",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "log_enabled",
+          "args": [
+            230,
+            5,
+            0,
+            0
+          ]
+        }
+      ],
+      "done": true,
+      "steps": 34
+    },
+    {
+      "packet": "52",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "log_enabled",
+          "args": [
+            230,
+            5,
+            1,
+            1
+          ]
+        }
+      ],
+      "done": true,
+      "steps": 34
+    },
+    {
+      "packet": "0001",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [
+        {
+          "name": "log_enabled",
+          "args": [
+            230,
+            5,
+            2,
+            0
+          ]
+        }
+      ],
+      "done": true,
+      "steps": 37
+    },
+    {
+      "packet": "52ff",
+      "transport": 1,
+      "mode": 5,
+      "nativeState": 0,
+      "calls": [],
+      "done": true,
+      "steps": 41
+    }
+  ],
+  "limitations": [
+    "Task delivery, recorder state, codec, audio, link callbacks and radio are mocked.",
+    "Parser ABI is not proof of a safely leased microphone owner."
+  ]
+}

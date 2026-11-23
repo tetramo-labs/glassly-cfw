@@ -1,0 +1,31 @@
+{
+  "version": "GLASSLYCFW/3",
+  "capture": "captures/notifications-settings-20261103-display-05",
+  "userConfirmedText": "I saw cfw3 wake frame lease",
+  "userConfirmedBackground": "Black around the text",
+  "physicalTextConfirmed": true,
+  "blackBackgroundConfirmed": true,
+  "physicalPositionDepthConfirmed": false,
+  "firmwareReflashedForRepeat": false,
+  "macRecovery": "Read-only RFCOMM open timed out despite connected ACL. Disconnecting only MemoMind via blueutil restored the next ownership session. Charging causality not established.",
+  "recordedUTC": "2026-11-03T07:39:39.808218+00:00",
+  "traceSHA256": "43b4fbe56aa730a2e69a97d28fa14b90044ea648aff99cccfa6e69f0d2d63702",
+  "framePreservedPast35Seconds": true,
+  "finalObservedOwnership": {
+    "frameLease": false,
+    "framePresented": false,
+    "nonce": 0,
+    "pending": false,
+    "powerBlocked": false,
+    "screenOn": true,
+    "wakeLease": false
+  },
+  "operationResult": {
+    "automaticRetries": 0,
+    "command": "ownership",
+    "complete": false,
+    "error": "RFCOMM channel closed",
+    "postRebootVersionVerified": false
+  },
+  "limitation": "RFCOMM closed after both leases expired; explicit cleanup was not acknowledged in this repeat. The first revision 3 ownership session completed cleanup successfully."
+}

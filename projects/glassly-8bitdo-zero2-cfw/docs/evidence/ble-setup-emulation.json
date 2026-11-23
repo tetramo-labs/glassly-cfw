@@ -1,0 +1,315 @@
+{
+  "kind": "Offline stock instruction execution to IPC entry; no submission or radio execution",
+  "hardware_accessed": false,
+  "stock_plaintext_sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+  "name_probe_plaintext_sha256": "8a1725b90710223d073754583de314552c6dce8a468cc09633a156c23a079050",
+  "ble_probe_plaintext_sha256": "2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6450cd2b83fe22",
+  "name_cases": [
+    {
+      "image": "stock",
+      "synthetic_chip_id": "000000000000",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "stock",
+      "synthetic_chip_id": "0123456789ab",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "stock",
+      "synthetic_chip_id": "ffffffffffff",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "name-probe",
+      "synthetic_chip_id": "000000000000",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "name-probe",
+      "synthetic_chip_id": "0123456789ab",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "name-probe",
+      "synthetic_chip_id": "ffffffffffff",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "synthetic_chip_id": "000000000000",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "synthetic_chip_id": "0123456789ab",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "synthetic_chip_id": "ffffffffffff",
+      "command": {
+        "opcode": 4,
+        "length": 14,
+        "payload_hex": "3830454c00000000000000000000"
+      }
+    }
+  ],
+  "visibility_cases": [
+    {
+      "image": "stock",
+      "arguments": [
+        0,
+        0,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "02"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        0,
+        0,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "02"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        0,
+        1,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "02"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        0,
+        1,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "02"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        1,
+        0,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "03"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        1,
+        0,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "03"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        1,
+        1,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "03"
+      }
+    },
+    {
+      "image": "stock",
+      "arguments": [
+        1,
+        1,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "03"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        0,
+        0,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "06"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        0,
+        0,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "06"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        0,
+        1,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "06"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        0,
+        1,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "06"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        1,
+        0,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "07"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        1,
+        0,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "07"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        1,
+        1,
+        0
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "07"
+      }
+    },
+    {
+      "image": "ble-probe",
+      "arguments": [
+        1,
+        1,
+        1
+      ],
+      "command": {
+        "opcode": 2,
+        "length": 1,
+        "payload_hex": "07"
+      }
+    }
+  ],
+  "stubs": [
+    "0x01018d8c startup hardware initializer: return without effects"
+  ],
+  "synthetic_registers": [
+    "NVIC register page 0xe000e000"
+  ],
+  "limits": [
+    "Opcode 04 BLE-name meaning is supported by related YC1021/YC1121 source",
+    "Actual advertisement name, visibility, acceptance and on-air identity remain unobserved",
+    "The 80EL name alone does not identify this physical controller"
+  ],
+  "source_sha256": {
+    "tools/inspect_ble_setup.py": "ea3bc26321289ab0208a5d93e822385fe80617f9228a75fdc594c9d5fd70447f",
+    "tools/build_ble_probe.py": "e6357d5e84e9926482f6d45aec18a45d5411bb49a6c8798bb9097f97f55698d7"
+  }
+}

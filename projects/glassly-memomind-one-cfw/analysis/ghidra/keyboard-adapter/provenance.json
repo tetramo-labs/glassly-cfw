@@ -1,0 +1,721 @@
+{
+  "kind": "static-native-re-with-parent-live-readonly-corroboration",
+  "firmware": "H001Y-1.0.3.127",
+  "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "body_xip_base": "0x041eb020",
+  "architecture": "RV32 little endian; existing native Ghidra map",
+  "sdk_commit": "171098bff25934a534a49f95b88df58fbed404c7",
+  "analysis_mode": "existing Ghidra project, -readOnly -noanalysis; no fake ELF or architecture substitution",
+  "rea_evidence_ids": [],
+  "device_actions_by_this_agent": false,
+  "runtime_source_edits": false,
+  "function_export_count": 48,
+  "function_export_errors": [],
+  "local_evidence": [
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424fbd0.asm",
+      "sha256": "2c9e40566b1875c6bd8791dac17cc8066365026bc8937e028b01c87aee8f8f1b",
+      "bytes": 944
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424fbd0.c",
+      "sha256": "4b93571635b293b91199d75254c054698ad850ee13e62d8c7caee45289362651",
+      "bytes": 546
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424fc28.asm",
+      "sha256": "65936a057e10f2cd321bb278f49c421ec946a128d22c068a0381b259ff54d5a0",
+      "bytes": 207
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424fc28.c",
+      "sha256": "0375a1d70a4f821f070d06936a2c29359542aa8f41cc0961bcdb0185c76717a4",
+      "bytes": 115
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424ffe0.asm",
+      "sha256": "9359eee1112d582b9557947452a4ea5671d9b8e8ecb91099b2e4d7f968536558",
+      "bytes": 575
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0424ffe0.c",
+      "sha256": "9b9fee1361fc30a43f0d54173a027e0ec072b4ba34dba21866d6b67aa2343a8a",
+      "bytes": 388
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250018.asm",
+      "sha256": "3563b1b8a9ac4c31cf4065c10ad4e1e71f41d76fd03d1fd37ce5eb64551453d6",
+      "bytes": 406
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250018.c",
+      "sha256": "30cddd60d05c87f4acb1031b03cf4bc4c7e997311619ecc71a3e02f867bb7994",
+      "bytes": 140
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0425005c.asm",
+      "sha256": "a859e46ca3f5c0c394edb23b312d4f99f8867df8b1dc6a625f5fb61f6421ad17",
+      "bytes": 1255
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0425005c.c",
+      "sha256": "35aad39cd7dae42c42ffc39f5dfbfc3ccf0feb8d36407b5f43a8c9d77c075cbe",
+      "bytes": 536
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042500d2.asm",
+      "sha256": "4a8eab9854e4346ec2330b85718382337e8ed05330069a3fbb183b7c9f487edf",
+      "bytes": 406
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042500d2.c",
+      "sha256": "5a61d6d429659d2baa83f65771d0a5dd3a80f5abb97c93a7a494ca0e9c79bc35",
+      "bytes": 140
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042500f4.asm",
+      "sha256": "6b457ea8c87155e595fdb75d2d3684c40e7efe0e7cd33cf84b80c38705466167",
+      "bytes": 406
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042500f4.c",
+      "sha256": "860a01066ff8e8eb438e7574e0355b9b68fe4371650768fd63e64c88f24ee4bc",
+      "bytes": 138
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250116.asm",
+      "sha256": "a508362ef599645956243712fc451ddc4d3b1c8d581243da22d344030c637887",
+      "bytes": 406
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250116.c",
+      "sha256": "ad9385c518ebc33f6a2414e0c5f971cbd14425eeea9ad81b9b1632dc85d59d9e",
+      "bytes": 140
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0425015a.asm",
+      "sha256": "62b367037d2ddcefcb8e2874f9d0780a445e56bca5eac4b8502aeed606808a83",
+      "bytes": 407
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-0425015a.c",
+      "sha256": "bbad0fbacb6f86b65735f44c14d676879b074a0b9dc7755457f55fac0373484d",
+      "bytes": 141
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250320.asm",
+      "sha256": "a0bd47399100593141a4c64a5afa8ab574aa99553585de4689ce6d26e1023f62",
+      "bytes": 1709
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-04250320.c",
+      "sha256": "63eeeff400237c58fbdbc43b4adb3f8b2cf1787556736780daff564147be9e97",
+      "bytes": 814
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042503be.asm",
+      "sha256": "86c27a1ddc59bf77d7f32078b1d2c1fa1b94c1a892cd9e7b6866f35ccba08c2e",
+      "bytes": 472
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042503be.c",
+      "sha256": "a36ddc69f3c952fe2c791bcd658e43730ac27d31c2266455b5d5c6fae2050967",
+      "bytes": 118
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042523b8.asm",
+      "sha256": "e8f404d7e8fe02f74057ed8c70486dfdf1cc857c7b962eeab397e1bed89efcc7",
+      "bytes": 3702
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/function-042523b8.c",
+      "sha256": "2533541bcf7e748f1ba7537482b499b958a84c0a89aa19ccffb8cafee6337525",
+      "bytes": 2046
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/api/functions.json",
+      "sha256": "fa218959c913602e9a0fceb9c3d382b69053c19fbd0185c88f57a120f2b08ddf",
+      "bytes": 2784
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callback-refs.txt",
+      "sha256": "139d6a2d98565131e3cef73f7815ed9f22efbf1d44856110e0565e92a8db8303",
+      "bytes": 330
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc32.asm",
+      "sha256": "cfa0bae703cf8a82af8d0e4d6ca641842f572c2dea0845d7f6d96612d82859d2",
+      "bytes": 851
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc32.c",
+      "sha256": "31527e5874df264a1a33e96ed6ce1e8bf0b1a636603f2feb98cfa3f408bdcf8c",
+      "bytes": 337
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc72.asm",
+      "sha256": "667a83e68ae99d40452ef108fdb8d58b503a985717259475360965d06dd4525c",
+      "bytes": 442
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc72.c",
+      "sha256": "d8ef46e933f4164961cdbb7952049b1d677d65f8984c1f10defbef8480d51b96",
+      "bytes": 125
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc98.asm",
+      "sha256": "effa738fe7e2eb3b052b39f0a5a82006463fbc2c707304472f9781e5ebf7aa21",
+      "bytes": 653
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/function-0421bc98.c",
+      "sha256": "d2071c2358786e1dd58c2f600c90a9dc3a7927e5f8597f7ef9003591b4520187",
+      "bytes": 206
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/callbacks/functions.json",
+      "sha256": "7e624dd2ef4610fcae07ead2e5d9d3699eafa812c9f8f30c51d2e6ec769555c5",
+      "bytes": 513
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/dispatch/function-04319f28.asm",
+      "sha256": "716da1c860bf42975fb8f90682d4d989ab9eeee30c1e63d6b07094e1bbee1ec5",
+      "bytes": 353
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/dispatch/function-04319f28.c",
+      "sha256": "5830c382c6bd746c43593776e3f481eaf60a7a949c447cbd9e20e7e681865dc0",
+      "bytes": 315
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/dispatch/functions.json",
+      "sha256": "4347f6b9d08548df81fc115dacd5794fb81065ab84c5311609c1bbee2ed1ada8",
+      "bytes": 186
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/dispatch-refs.txt",
+      "sha256": "da15acd50c6435c2227afa4d97455ad3933d13f265094613e1531112f21a2f85",
+      "bytes": 129
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/event-dispatch/function-04319792.asm",
+      "sha256": "71ed8a24f0fdb6fd24cf69bc0792cb2a8c5e7c65a85f339b17c02e1d209f06d0",
+      "bytes": 2469
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/event-dispatch/function-04319792.c",
+      "sha256": "de3302f927ef089e43f94e7640958364951dba7101d209a624b00e3a60c8f410",
+      "bytes": 1432
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/event-dispatch/functions.json",
+      "sha256": "00ca388a967de160867b007949ad5b0ba3719af3e9258181c03c7c2b1652675b",
+      "bytes": 181
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/event-dispatch-refs.txt",
+      "sha256": "527b87019d3b03f46374e5f3b65ef5130da4fbca93ec2f3c1146f13e20a6375b",
+      "bytes": 124
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-001.log",
+      "sha256": "6f7793ebd68dc4f79a9c3a9398606856f1d39d8d7fa0948002d84686297ff309",
+      "bytes": 6069
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-002.log",
+      "sha256": "4fcf71c042ddcc75659947c157ccb25cdaf58c2b6e369bab5a7b2133e64b4f42",
+      "bytes": 6027
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-003.log",
+      "sha256": "8e2704fa749302413a93ed4b4899032e3fc45648b1c04f2db9dd9fe2a20c8df6",
+      "bytes": 5801
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-004.log",
+      "sha256": "935c6eb3fbd76f0ec18fb3b2054d85bf2d0833f3710caa59bf719aa602f56878",
+      "bytes": 5654
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-005.log",
+      "sha256": "78769f94139dcf447c836b2005c2fc295a7776316ca945b78d7fee0aeeb5cf3b",
+      "bytes": 5617
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-006.log",
+      "sha256": "bc0bafb28de955ca33712a73edf3b1946d1a862900af0953ad7c44aab42ccbb3",
+      "bytes": 5613
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-007.log",
+      "sha256": "5c3d07b6708729404854bb6340ef7cb43d5c7b2a9e3b2b60c34f537c3b9309f9",
+      "bytes": 5609
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/export-008.log",
+      "sha256": "656789cf3b243dbd2b18b66c96efd0f3b2cb1f482fc783e85f87b769b0d2526d",
+      "bytes": 5621
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-0424dd92.asm",
+      "sha256": "8018583433683fe73ea9bdadc54cb82824d12c4ac167baf68c60d05518ba11ae",
+      "bytes": 1910
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-0424dd92.c",
+      "sha256": "96daba682d44d404117a7457f30ad9e774017c9ce441b4ba7b12cc4db6df0806",
+      "bytes": 788
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-042503ea.asm",
+      "sha256": "f26dea5af8eba9599ff773ba80d35431d611344bb578d351990faf69b63c25fb",
+      "bytes": 4994
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-042503ea.c",
+      "sha256": "91b5524d7a39cfee0fc9008b5b3367587d60e9ef2621ac288ecf98178c9d8a38",
+      "bytes": 1876
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-04256b96.asm",
+      "sha256": "ad0fca38f300c8b44c5ffd86666bb2b21fd44f784d3c2ce81bb4d972e76e330e",
+      "bytes": 510
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/function-04256b96.c",
+      "sha256": "4daed83fe18ce2e5b39641c1207194f371c7f70127a72fb4ca8f75f78b8c500b",
+      "bytes": 151
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/functions.json",
+      "sha256": "fb9d9d7fd93bda67723c2d6ec61477b523574dbfee7e475ee9ef340a2a6880ee",
+      "bytes": 677
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/final/refs.txt",
+      "sha256": "678050984148d3cdd6a56cfb7e36efa982c38a95c4f437432fe00150fed7aa69",
+      "bytes": 275
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424c4ae.asm",
+      "sha256": "3497055b2c99230487ca02e11db5671d162622e3edb3b297f2c26f8847f7f6c7",
+      "bytes": 422
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424c4ae.c",
+      "sha256": "633cba3b17159090296812c8a213d91adc539ff10f714ed16f67af5854f11ec5",
+      "bytes": 211
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424d2f6.asm",
+      "sha256": "495c0bca4b3cea0f0a442d3b77d652b26cb27dcce47a4861230929492dd0b959",
+      "bytes": 679
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424d2f6.c",
+      "sha256": "d57a24dc45e09b5891a5bd29ca33c89c6eec5983013f9633f2fbdd16642c4d99",
+      "bytes": 357
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424f030.asm",
+      "sha256": "dacd8341cd042f8364a9028503026237ff04970266d20c35a40c2aee25c0d95c",
+      "bytes": 16198
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424f030.c",
+      "sha256": "a87b5bb71ee46cbaa326486db2f9e53053dfdb67b79269c130ac550b4c2b0907",
+      "bytes": 9004
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424fe72.asm",
+      "sha256": "5e66cdcc922ed6cfad6c816330908834676879214d4bb518021e5e8ac632aa71",
+      "bytes": 3875
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0424fe72.c",
+      "sha256": "3587aa584b5cbda86200348877b6b3dbb38ea734c173b8bb0c2a7aae7aa38a88",
+      "bytes": 1532
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0425081e.asm",
+      "sha256": "e3ebc14e2052d63f8dbceec4ea3edb3ac403bb480deb7afdf9a9960f1b2b35df",
+      "bytes": 42698
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-0425081e.c",
+      "sha256": "7957acce0b1b8cac76dff2ba153c8c9149cb50f618621b8245e0e88dd9cd7f77",
+      "bytes": 24865
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-042519cc.asm",
+      "sha256": "708a1f724b51dfbe8e89e9a12992f9f2583add8f90af519171b2f2bc0bbba9d8",
+      "bytes": 9982
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-042519cc.c",
+      "sha256": "cbd89da3c15d6dab43b8de8bc11c3da024ffa2d35997817a4b96d38343585a2d",
+      "bytes": 4887
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-04251dd2.asm",
+      "sha256": "a339b070bdcb591d63f3eb34c6d401bfdf0b19a9305888189df6dab9b1c6fcb7",
+      "bytes": 14210
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-04251dd2.c",
+      "sha256": "fc4d8084ff60fbce22c82e89ec235cd70e0e5d0fc973eef6d2c6cecd541a2359",
+      "bytes": 8021
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-042528dc.asm",
+      "sha256": "9801456dd535024f2f7eab8e94891bd5779f99d62ad33aa86fbca678caac7ff2",
+      "bytes": 44855
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/function-042528dc.c",
+      "sha256": "295c22dbf330ecc07d69cd0c10bd9290645e3f51e6d118ccffaf2ee99563af28",
+      "bytes": 17250
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host/functions.json",
+      "sha256": "25b154679fa18c175d9f526281d3a0fe5fe03862626022950097deaa0baeddb6",
+      "bytes": 2279
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host-functions.txt",
+      "sha256": "3e103e39ccb0cd0bb8a3051f1392cf59e73e21f2f1c007d288da35e7f24825db",
+      "bytes": 1403
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/host-refs.txt",
+      "sha256": "e6e2ac813ee5c8ada4120604725b206d0293b3b96b1319677d75eb990b97c63a",
+      "bytes": 1014
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress/function-0421bc26.asm",
+      "sha256": "5ac7df1ec2b9df231a3437dd84470f295d33a96eee242515832f0b9ef905b28c",
+      "bytes": 177
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress/function-0421bc26.c",
+      "sha256": "7c18d30e91ac682ea7bb644d1c09811ab6c3366221bc04d81ca1d926d0891052",
+      "bytes": 71
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress/function-04319f14.asm",
+      "sha256": "f11e22ea769554723601ec623b099d580f7763dbcb73993aa396fe581e6b8ac0",
+      "bytes": 235
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress/function-04319f14.c",
+      "sha256": "e226beb1ae8973bc19ecdbd23c1831df0ca139c46fee6fb02e89800ae961dfe6",
+      "bytes": 115
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress/functions.json",
+      "sha256": "cdb6706b383a1ddb62adf4c2e946282e82f31eb0e7199cf465d4a7cb858c8bba",
+      "bytes": 357
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress-global-refs.txt",
+      "sha256": "8cd2ca461e816484cd8cdfa1da68fc576c7194c73d10069d8033fe837bba2af9",
+      "bytes": 141
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/ingress-refs.txt",
+      "sha256": "e1fafdd6eb18b404b99f7a2c458304fdafe5fe930ee933bb9a71cdeeea0d0308",
+      "bytes": 129
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0421bcf0.asm",
+      "sha256": "0c316923485ad2e78ab7a1ad094c033ea306dd10cc52aacb0f427e73d36e9481",
+      "bytes": 1063
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0421bcf0.c",
+      "sha256": "b82c2cce1cde57d2da91a27b5a57ed5c146285e05fc3ba41e9e7ed90d2ae720d",
+      "bytes": 592
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424d5b4.asm",
+      "sha256": "fe87e3e23bfcff11e17e33264685459e143b5ce383e991ca6f6b007d36af7961",
+      "bytes": 359
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424d5b4.c",
+      "sha256": "56dd18f192976c8f25535ed627b483853363c3d556e817270da4380baf8ee101",
+      "bytes": 122
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424e78c.asm",
+      "sha256": "f5cd69076baba9ae7281ec124a6e6caa10dbf5787f87cf645aa01514526373c5",
+      "bytes": 2733
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424e78c.c",
+      "sha256": "6fd41cd1ab8d717beeceb88c1861d0fa2a9ae3662e6c4adc36eea0f800892751",
+      "bytes": 1061
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424ecfa.asm",
+      "sha256": "d36787b876140792835c0e4d5a82736e99096930c02bf1ded789ffb7ae74fa02",
+      "bytes": 2060
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424ecfa.c",
+      "sha256": "7383b8a44dcaaf0b6a07f8dc65c0cd997e16dbe0691b7a992fb054e468a53e0e",
+      "bytes": 1036
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424eef2.asm",
+      "sha256": "1b9951b72c4f734285707835ee4335ee91d863414333db3ffd5f1dca6b67d3e8",
+      "bytes": 79
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424eef2.c",
+      "sha256": "3189d0dc3768c3ae1ef766c3547a4d519a11094dc93eecc418800a1b18e5e7dc",
+      "bytes": 389
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424ef4a.asm",
+      "sha256": "3fa5cdb198688b347e38da9b4cf110e06b40fcb23217b66c9f530e58747b1c9f",
+      "bytes": 2357
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424ef4a.c",
+      "sha256": "378d25b1541e87d9a1eb24c70093ff1dd06f326f00753e9de9c8d6ab390be7ef",
+      "bytes": 1115
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424f6e4.asm",
+      "sha256": "0aa0d398b7ebe0f02e2ea78a1798077dc0979debec6d3862e44be5f7e676acd5",
+      "bytes": 2729
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424f6e4.c",
+      "sha256": "09ed23ce2d0a7db9314a08a968bfe63ab685e202bdba3f3df4355da624da16f4",
+      "bytes": 902
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424f7f4.asm",
+      "sha256": "928afce9aed91c658a31eae5afa928aff753c6000e5f64559713a6c01f978e01",
+      "bytes": 3577
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424f7f4.c",
+      "sha256": "328f4834b06f55cc092d2e5a2c3cc5364785a3f661a4c8f6ab3a1c3cd7f9ba79",
+      "bytes": 1714
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424fc48.asm",
+      "sha256": "adeb9ed5a4a2be91e597ec2d87775b26ee535b8e687d0a38ca0c95edddcbe290",
+      "bytes": 4945
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0424fc48.c",
+      "sha256": "17124e7962829bf66dd537f243bb4909a5175764c9fe6c49fcdce03591abed90",
+      "bytes": 1787
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317dde.asm",
+      "sha256": "cbbfb3ded8638e105823ba7321c2b59094fb8594dee42bf0b6a302580a1f3e3c",
+      "bytes": 779
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317dde.c",
+      "sha256": "416f52381ca2ef8cfc4950708f876a49bd5d6fd4b1e44ef30ad3e15cf44858fe",
+      "bytes": 275
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317e2c.asm",
+      "sha256": "f093de81a2aaab57d72897a99880c9bd4a16daf65608cc8ea66e53bb7dbfd552",
+      "bytes": 1564
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317e2c.c",
+      "sha256": "af03af695b03cdaaade36f8b3ec9bdb6cc153ea672b19286f1681eba1287cf53",
+      "bytes": 699
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317ec0.asm",
+      "sha256": "3a29e8b30cbf5320bd792e7951eaba609d606817f2678c3a8506748e5de81e53",
+      "bytes": 1138
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317ec0.c",
+      "sha256": "5bc579febdab0f6b96e24a88d1c30a53266acc344f91808da010f2b1f421950c",
+      "bytes": 448
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317f94.asm",
+      "sha256": "92f8deef58ae187f3557505e8e2c24f4290e5c8f244f0c998cbba58434d83138",
+      "bytes": 2105
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04317f94.c",
+      "sha256": "bae47f049178cf4dc01301985e83e520f4fc3e9bac6f357d588c224b778170f5",
+      "bytes": 953
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04318052.asm",
+      "sha256": "359949eb18dbea8b72a95e4d70f9c20aae1474c13b52d512627910b7ed7b7cf8",
+      "bytes": 813
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04318052.c",
+      "sha256": "14e78622c08949e003f121fbaf99da890a066d47c786dc7d35d2d6b79004736a",
+      "bytes": 310
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04319ff8.asm",
+      "sha256": "81f4d4a7ff19a130589ea9b5634923a30b701a62c5913f55c19eb69d877a4af2",
+      "bytes": 2069
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-04319ff8.c",
+      "sha256": "e9903780a7e7493692e234259ba357263a963bef9dc21b565a0a48b053d9ec55",
+      "bytes": 955
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0431a0c8.asm",
+      "sha256": "954857ef56e1cb9057b648854099546eff01d9448f6216fc630a57e518ad6860",
+      "bytes": 1042
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0431a0c8.c",
+      "sha256": "c75439db03ae5baf2f9d0274e7a85dc9e6681f5fc827c6061aaca03b85e710ee",
+      "bytes": 466
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0431a128.asm",
+      "sha256": "6c826a8b43819fcf32a0627b9ce4b7920dc468c860f9d742b373ab5e684d1ecf",
+      "bytes": 1453
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/function-0431a128.c",
+      "sha256": "e48d3110c9a00bb496115cf7327dcc6207e0ed0b82192c6760a11f029bd33987",
+      "bytes": 592
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower/functions.json",
+      "sha256": "b079e47b1650b1efc596788f70202021b0d2a9178043d176f2b71d944fbf40e0",
+      "bytes": 5771
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/lower-refs.txt",
+      "sha256": "6d2f436e6e648a5c52ff802871a2a41fc149a463ed69fbe814fb258adc868ca8",
+      "bytes": 1210
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/rea-raw-import-scope.txt",
+      "sha256": "4bdff6e906c278244339c768cf703668e0da9129842d469fd88f99879b0d3abc",
+      "bytes": 2414
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/register-topic52.txt",
+      "sha256": "82868e411f41ef1cc20951c3f30b927951efccaa98b94fc479ae562b4cb552e6",
+      "bytes": 15083
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/report.md",
+      "sha256": "31b2cccf2ce23f84dc2feeed40f6c88e1a4dadb536c347d06fb8ec5b1104b0d4",
+      "bytes": 16518
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/seeds.txt",
+      "sha256": "39336af606e6e221c559c4e3d6213ceb0af69a3aba08b1a20f43c3cc0507a4df",
+      "bytes": 668
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/status/function-04255830.asm",
+      "sha256": "a9757afe895fb60c4a9d0f06bc6e4b513aa46cff8b701244487e6134975d08b5",
+      "bytes": 3940
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/status/function-04255830.c",
+      "sha256": "f354db2bf8f941ba93adae59bd8bac86fda7969790e7a124db46218279cc3d02",
+      "bytes": 2583
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/status/functions.json",
+      "sha256": "1f3f743690663c9306641b29f92fc0123a2ee5db4453606ad42a2e02221813ac",
+      "bytes": 227
+    },
+    {
+      "path": "analysis/ghidra/keyboard-adapter/strings.json",
+      "sha256": "1a0082cbf95c890d622dfcb02a8a8668465f7e209dec63b01263c67c3390d6f7",
+      "bytes": 8634
+    }
+  ],
+  "shared_evidence": [
+    {
+      "path": "analysis/ghidra/app/function-ram:04256ef4.c",
+      "sha256": "3ba5e16efa32666a18415c72f6df0b6ab2d0c530525222c1585eca04994ed897"
+    },
+    {
+      "path": "analysis/ghidra/app/function-ram:04256ef4.asm",
+      "sha256": "dd106efed4c89822d5b124c08e3c486a9d17c1d900dc11f5c241c99bc2a3ef46"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-04217546.c",
+      "sha256": "7e4ca0df8c0276d96ca7d05a2ca9ad8cf891d41c0d6329a3b594164167250233"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-04217546.asm",
+      "sha256": "7b3e50f9ac36ab68d114995bd225ef7b6a128839454cb35538f9c17748baf80b"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-042127a4.c",
+      "sha256": "028d4a5919b153bf5e284439f922c0f334c5836f022170a7906f092689a3b092"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-04212cea.c",
+      "sha256": "cbbcd1f66faa3a2e2478f20f764705dfc3777cb72bdf4995c7e9d1d9c590fec7"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-04319058.c",
+      "sha256": "d2995eedaa626593efc15aafd17522439396a4c09361d63388d2bfba60376198"
+    },
+    {
+      "path": "analysis/ghidra/notification-adapter/function-043196e0.c",
+      "sha256": "cfd4d40533e27f514f53189843a56069103fd18e488ca600a2f42111f82a0104"
+    },
+    {
+      "path": "analysis/ghidra/input-adapter/function-04235770.c",
+      "sha256": "f9bb99cfe92d00bc5d531d010d1e2cda89bd240e560c52bd96954159a85f5e16"
+    },
+    {
+      "path": "analysis/ghidra/input-adapter/function-04235ffa.c",
+      "sha256": "4cd07366e36f0fb0881c8d2ea819736583333d0994812fa9ffc36e1f54650b41"
+    },
+    {
+      "path": "analysis/ghidra/input-adapter/report.md",
+      "sha256": "636851dae7697a80b186389dead10615889a93852fd24abe11f867f8724ac1fa"
+    },
+    {
+      "path": "runtime/portable/keyboard.h",
+      "sha256": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947"
+    },
+    {
+      "path": "runtime/portable/keyboard.c",
+      "sha256": "e3d927becaf032ef7153d83dc928a76dc51c84982f113b5ee043ae810fa6d0cd"
+    },
+    {
+      "path": ".tools/memomind-open-platform/GlassSDK/docs/HOGP_QUICKSTART.md",
+      "sha256": "8e9ccc0856db35545ac7faf1bae21dec851e57a83407c0df9e96de29ae93aeb9"
+    },
+    {
+      "path": ".tools/memomind-open-platform/GlassSDK/docs/BLE_ACCESSORY_PROTOCOL.md",
+      "sha256": "1e57406c38c54e101175c91d389377691bde47f425b2620282cb01f81e9252aa"
+    },
+    {
+      "path": "captures/input-runtime-20261031/stock-readonly-01.json",
+      "sha256": "7e1ccf8fe9b7b201330d07ed55527cd785d182b530ce32268d0408b6ead55df6"
+    },
+    {
+      "path": "captures/input-runtime-20261031/stock-readonly-01.jsonl",
+      "sha256": "7b327e4cffc08e7b5740a6bc9ead3ff44c5cbec9e665fad363e398e737f514fd"
+    }
+  ]
+}

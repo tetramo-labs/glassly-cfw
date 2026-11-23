@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "native_calls": 230,
+  "production_gates_match": true,
+  "hardware_tested": false,
+  "logging_predicate_mocked": true,
+  "scope": "Cold-zero owner state; full task/app lifecycle and unknown indirect aliases are not emulated",
+  "source_sha256": {
+    "analysis/dashboard-ram-card-20261102/emulate-null-state.py": "975166c7887ddef3722b6d11093e9fd49193ed379125bb857cfed2828371f3d9",
+    "analysis/dashboard-ram-status-20261102/emulate_retirement.py": "4eb8491d99c3620f54ff2ea12f7fc40618320a5b48169560e825d1e97f001406",
+    "scripts/build_memomind_dashboard_ram.py": "5ae9dce5969324b634db39757edabb5c60752736d30dfa1feb8cb77305b24155"
+  }
+}

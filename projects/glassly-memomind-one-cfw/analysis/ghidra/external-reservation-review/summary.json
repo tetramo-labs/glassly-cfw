@@ -1,0 +1,30 @@
+{
+  "format": "memomind-external-reservation-review-v1",
+  "analysis_only": true,
+  "recommended_reserved_bytes": 1048576,
+  "recommended_device": 1,
+  "recommended_device_range": [
+    7340032,
+    8388608
+  ],
+  "native_capacity": 2097152,
+  "native_payload_capacity": 2031616,
+  "instruction_sites": 11,
+  "replaced_instruction_bytes": 44,
+  "added_code_bytes": 0,
+  "boundary_checks_passed": 46,
+  "recipe_complete_for_traced_managed_cache_paths": true,
+  "universal_raw_flash_owner_isolation_proven": false,
+  "badmap_read_address": "0x042a9d0a",
+  "badmap_bytes": 96,
+  "mandatory_tail_slice": [
+    64,
+    96
+  ],
+  "badmap_key": 24585,
+  "badmap_identity_unchanged": true,
+  "real_badmap_acquired_by_this_task": false,
+  "native_or_firmware_image_modified": false,
+  "precondition": "Current unformatted directory, no old live cache context; otherwise migration required",
+  "stock_firmware_restore_invalidates_reservation": true
+}

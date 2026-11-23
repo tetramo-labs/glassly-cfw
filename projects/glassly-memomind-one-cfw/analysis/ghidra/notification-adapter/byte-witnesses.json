@@ -1,0 +1,65 @@
+{
+  "target_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "witnesses": [
+    {
+      "address": "042e522c",
+      "body_offset": 1024524,
+      "first_32_bytes_hex": "011122cc26ca001006ce4ac82326b4fe8d47b6842e86630ff50291472a89630c"
+    },
+    {
+      "address": "042e5254",
+      "body_offset": 1024564,
+      "first_32_bytes_hex": "85c19305c00591460145ef5057b7b7e535049385c54a0145efa0806b88c051a0"
+    },
+    {
+      "address": "042616dc",
+      "body_offset": 485052,
+      "first_32_bytes_hex": "411122c60008aa87130760042e85636bf70013073004637ef7003244be854101"
+    },
+    {
+      "address": "04261714",
+      "body_offset": 485108,
+      "first_32_bytes_hex": "91c18841324441016f505473411122c426c24ac006c600081569aa84aa851305"
+    },
+    {
+      "address": "04212cea",
+      "body_offset": 163018,
+      "first_32_bytes_hex": "397122dc26da800052d406de4ad84ed656d25ad05eceaa84328aa30504fc2326"
+    },
+    {
+      "address": "04211af4",
+      "body_offset": 158420,
+      "first_32_bytes_hex": "397122dc4ed606de26da4ad852d48000b71900609389c98411e5814613868903"
+    },
+    {
+      "address": "04211c34",
+      "body_offset": 158740,
+      "first_32_bytes_hex": "1d71a2ccd2c486cea6cacac8cec6d6c2dac05ede62dc66da6ad86ed68010371a"
+    },
+    {
+      "address": "04318ee6",
+      "body_offset": 1236678,
+      "first_32_bytes_hex": "011106ce22cc26ca00104ac82e89b28499462a869945130544fe9720cffde780"
+    },
+    {
+      "address": "04318f1a",
+      "body_offset": 1236730,
+      "first_32_bytes_hex": "930544fe2d461305002c230794feef00b02af2406244d24442490561828019c5"
+    },
+    {
+      "address": "043199d2",
+      "body_offset": 1239474,
+      "first_32_bytes_hex": "011122cc06ce0010b72601029386862183c7260095c33756006081461306c683"
+    },
+    {
+      "address": "04319a4c",
+      "body_offset": 1239596,
+      "first_32_bytes_hex": "3a852326e4feefd0efaa0327c4fe45d537560060aa8789461306868495451305"
+    },
+    {
+      "address": "042127a4",
+      "body_offset": 161668,
+      "first_32_bytes_hex": "797106d622d426d200184ad0b73401029306c00501469305c005138584869790"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "kind": "Live battery button delivery and idle hold",
+  "firmware_package_sha256": "a64e0b6e96ee9e8d2ea70448255554cf98b32a68cf9b8bfe5345c977da1228be",
+  "usb_observation": "build/hardware/20261105T214846.032851Z/summary.json",
+  "usb_devices": [],
+  "local_directory": "build/hardware/20261105T214853.470035Z-ble-buttons",
+  "source_sha256": {
+    "scripts/ble_probe.py": "79ba9742f9bf0694f0cf00dc937cad0f695d324d1707f3bb280be9d00d099795",
+    "tools/probe_zero2.swift": "bcbde01857870a90501dbfe2a85d7bc99cf64c31ebc6842d88a5be4484e990d5"
+  },
+  "events_sha256": "037e3ee9b85c3584206a68373e1bee1b597a2c1420ac1d86d52e5ee5a2ef5cb1",
+  "events": [
+    {
+      "authorization": 3,
+      "elapsed_seconds": 0.013250207994133234,
+      "event": "bluetooth_state",
+      "state": 5,
+      "time": "2026-11-05T21:48:53Z"
+    },
+    {
+      "cached_name": "80EL",
+      "connectable": 1,
+      "elapsed_seconds": 0.9513389579951763,
+      "event": "advertisement",
+      "local_name": "80EL",
+      "manufacturer_hex": "",
+      "rssi": -53,
+      "services": [],
+      "time": "2026-11-05T21:48:54Z"
+    },
+    {
+      "elapsed_seconds": 0.9515594164840877,
+      "event": "connecting",
+      "time": "2026-11-05T21:48:54Z"
+    },
+    {
+      "connected_seconds": 0.00022454140707850456,
+      "elapsed_seconds": 1.095475499983877,
+      "event": "connected",
+      "time": "2026-11-05T21:48:54Z"
+    },
+    {
+      "connected_seconds": 0.47773054149001837,
+      "elapsed_seconds": 1.5729778329841793,
+      "event": "service",
+      "primary": true,
+      "time": "2026-11-05T21:48:55Z",
+      "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.5395876248367131,
+      "elapsed_seconds": 1.6348378746770322,
+      "event": "characteristic",
+      "properties": 24,
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:48:55Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.5402290830388665,
+      "elapsed_seconds": 1.6354795414954424,
+      "event": "subscription_requested",
+      "service": "FF10",
+      "time": "2026-11-05T21:48:55Z",
+      "uuid": "FF13"
+    },
+    {
+      "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+      "connected_seconds": 0.5987732913345098,
+      "elapsed_seconds": 1.6940235830843449,
+      "event": "descriptors",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:48:55Z",
+      "uuids": [
+        "2902"
+      ]
+    },
+    {
+      "connected_seconds": 0.5991503330878913,
+      "elapsed_seconds": 1.6944009996950626,
+      "event": "discovery_complete",
+      "time": "2026-11-05T21:48:55Z"
+    },
+    {
+      "connected_seconds": 0.6578117082826793,
+      "elapsed_seconds": 1.7530613746494055,
+      "enabled": true,
+      "event": "subscription",
+      "time": "2026-11-05T21:48:55Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.6586771248839796,
+      "elapsed_seconds": 1.7539248750545084,
+      "event": "button_start_requested",
+      "hex": "a1",
+      "time": "2026-11-05T21:48:55Z"
+    },
+    {
+      "connected_seconds": 0.717126457951963,
+      "elapsed_seconds": 1.8123770831152797,
+      "event": "button_start_acknowledged",
+      "time": "2026-11-05T21:48:55Z"
+    },
+    {
+      "connected_seconds": 0.7187587083317339,
+      "elapsed_seconds": 1.8140093749389052,
+      "event": "notification",
+      "hex": "4704000200000000",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:48:55Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.7190429582260549,
+      "elapsed_seconds": 1.8142938748933375,
+      "event": "button_snapshot",
+      "flags": 2,
+      "held_buttons": [],
+      "mask": 0,
+      "mask_hex": "0000",
+      "pressed_buttons": [],
+      "pressed_mask": 0,
+      "released_buttons": [],
+      "released_mask": 0,
+      "resync": true,
+      "sequence": 0,
+      "sequence_gap": false,
+      "time": "2026-11-05T21:48:55Z"
+    },
+    {
+      "connected_seconds": 21.539302666671574,
+      "elapsed_seconds": 22.634551874827594,
+      "event": "notification",
+      "hex": "4704010000200000",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:49:16Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 21.540391291491687,
+      "elapsed_seconds": 22.635641541332006,
+      "event": "button_snapshot",
+      "flags": 0,
+      "held_buttons": [
+        "A"
+      ],
+      "mask": 8192,
+      "mask_hex": "2000",
+      "pressed_buttons": [
+        "A"
+      ],
+      "pressed_mask": 8192,
+      "released_buttons": [],
+      "released_mask": 0,
+      "resync": false,
+      "sequence": 1,
+      "sequence_gap": false,
+      "time": "2026-11-05T21:49:16Z"
+    },
+    {
+      "connected_seconds": 21.69010429130867,
+      "elapsed_seconds": 22.785353916697204,
+      "event": "notification",
+      "hex": "4704020000000000",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T21:49:16Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 21.690571749582887,
+      "elapsed_seconds": 22.78582241665572,
+      "event": "button_snapshot",
+      "flags": 0,
+      "held_buttons": [],
+      "mask": 0,
+      "mask_hex": "0000",
+      "pressed_buttons": [],
+      "pressed_mask": 0,
+      "released_buttons": [
+        "A"
+      ],
+      "released_mask": 8192,
+      "resync": false,
+      "sequence": 2,
+      "sequence_gap": false,
+      "time": "2026-11-05T21:49:16Z"
+    },
+    {
+      "connected_seconds": 187.9062827914022,
+      "elapsed_seconds": 189.00152804143727,
+      "event": "button_stop_requested",
+      "hex": "a0",
+      "time": "2026-11-05T21:52:02Z"
+    },
+    {
+      "connected_seconds": 187.95002479152754,
+      "elapsed_seconds": 189.04527408303693,
+      "event": "button_stop_acknowledged",
+      "time": "2026-11-05T21:52:02Z"
+    },
+    {
+      "button_snapshots": 3,
+      "button_start_acknowledged": true,
+      "candidates": 1,
+      "connected_seconds": 187.95073487469926,
+      "discovery_complete": true,
+      "echoes_verified": 0,
+      "elapsed_seconds": 189.04598504165187,
+      "event": "complete",
+      "exit_code": 0,
+      "keepalive_writes_acknowledged": 0,
+      "notifications": 3,
+      "reason": "Time limit; notification count is separate from subscription success",
+      "subscribed": true,
+      "subscription_transitions": 1,
+      "time": "2026-11-05T21:52:02Z"
+    }
+  ],
+  "connected_seconds": 187.95073487469926,
+  "idle_after_A_release_seconds": 166.26016312511638,
+  "keepalive_writes": 0,
+  "button": "A",
+  "start_stop_acknowledged": true,
+  "limits": [
+    "Bounded battery capture, not battery-life or iPhone background validation",
+    "Only A was retested on battery; all 12 and A+B were tested with USB connected"
+  ]
+}

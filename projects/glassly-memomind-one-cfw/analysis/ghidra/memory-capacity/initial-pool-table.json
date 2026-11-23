@@ -1,0 +1,29 @@
+{
+  "table_start": "0x04399550",
+  "table_end_exclusive": "0x0439955c",
+  "entry_bytes": 12,
+  "entry_count": 1,
+  "pool_base": "0x205e128",
+  "pool_size": 658584,
+  "pool_size_hex": "0xa0c98",
+  "pool_end_exclusive": "0x20fedc0",
+  "flags": "0x2",
+  "adjacent_words": [
+    {
+      "address": "0x4399550",
+      "words": [
+        "0x205e128",
+        "0xa0c98",
+        "0x2"
+      ]
+    },
+    {
+      "address": "0x439955c",
+      "words": [
+        "0x54616e67",
+        "0x3f0006",
+        "0x421f6ae"
+      ]
+    }
+  ]
+}

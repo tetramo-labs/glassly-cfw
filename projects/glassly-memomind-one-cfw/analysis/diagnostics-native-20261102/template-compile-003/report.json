@@ -1,0 +1,37 @@
+{
+  "compile_passed": true,
+  "executed": false,
+  "aggregate_swift_tests": 100,
+  "pins": {
+    "image_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+    "image_bytes": 2230267,
+    "runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "runtime_bytes": 65456,
+    "header_sha256": "7787494fdb8d50c1a0d578c2494cd0127a1cbcb954dc8aa2541faaa766baf016",
+    "app_header_sha256": "a42392b3f2afe8eb1b432f77770bcaab86d3e488c921cc9ae8dffd490f17b65e",
+    "metadata_packed_bytes": 171,
+    "metadata_sha256": "a189ba5a175480d2500bd2a1df5730c34b1124503fa809c47738930d820b8d9a",
+    "app_packed_bytes": 959165,
+    "app_raw_bytes": 1838672,
+    "app_sha256": "054f97d9e687ba2baf008f5dc118bff7dbc5c49ad462bb9f7188b1f6d9352ff9"
+  },
+  "files_sha256": {
+    "analysis/diagnostics-native-20261102/smoke.swift.in": "0e25f7e52c969ff3a96936a14dc24a4174fef80a8214f47806bcd362a8c7fcdd",
+    "analysis/diagnostics-native-20261102/smoke.swift": "f0d75e889ce387d4744356b5305b9571f143e6ef4bdd090aced3b794b80fb414",
+    "analysis/diagnostics-native-20261102/verify-smoke.py": "2ebb5eee6e61fd8d415e2e96f272739a9f35f566bcbc19138ac9455ee238b821",
+    "analysis/diagnostics-native-20261102/test-verifier.py": "ae03e1da84ed2a2ffb1d0c06f7b8872b1479f54b365aa23be51a76488369b66f",
+    "analysis/diagnostics-native-20261102/candidate-pins.json": "c2156d2a13bc94a05dac594f013bebda1120e57bd4274bf07f93120bad95deda",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindCore.o": "0e6987b432d1883712bf510e1854398ddeddd6c6e3baa3a3d21cab8d8a6ec9da",
+    "swift/MemoMindKit/.build/out/Products/Debug/MemoMindBluetooth.o": "1f3cf000f1e72256b8baed98c071b9a5c7f613576cc39edc84a61ee5b1bff7c8",
+    "analysis/regression-20261102-04/native_swift.stdout": "3bcffb3cf4b739b07e0aeb81ea9b2e3ea3e81d77d9287efc40d661f93d3c7713",
+    "analysis/diagnostics-native-20261102/template-compile-003/smoke": "7f9632156d2b5dcd0c6ce866420ab6574668c923016f9f103eb45848956528c2"
+  },
+  "verifier_evidence": "analysis/diagnostics-native-20261102/verifier-tests-004/report.json",
+  "ack_order_evidence": "analysis/diagnostics-native-20261102/ack-order-review.json",
+  "limitations": [
+    "No device invocation; candidate catalog admission and source build do not prove hardware smoke success.",
+    "Mock traces test application protocol validation, not pixels, delays or physical input.",
+    "Show/hide wire replies do not prove physical refresh timing.",
+    "Epoch metadata persistence is only tested on successful current-screen allocation."
+  ]
+}

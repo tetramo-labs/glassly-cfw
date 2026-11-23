@@ -1,0 +1,38 @@
+{
+  "result": "No static ABI/ownership blocker identified for this exact compiled candidate. Device execution remains unverified.",
+  "blob_sha256": "217431d6b0b8c7b6c5dc9f31d13e761938acd2a9e8b02de8ff4c1d38de89ba2c",
+  "blob_bytes": 208,
+  "firmware_sha256": "775ad2376a7231b8929fa31880d52074dede507530f1b2edd55adeeef5364ed7",
+  "text_bytes": 98,
+  "actual_elf_flat_blob_and_disassembly_text_match": true,
+  "actual_rodata_match": true,
+  "actual_json_response": {
+    "glassly": "runtime-probe",
+    "abi": 1,
+    "profile": "H001Y-1.0.3.127",
+    "entry": "0439bea0",
+    "writableStaticBytes": 0
+  },
+  "actual_ota_tail_matches_blob": true,
+  "actual_hook_and_following_store_hex": "b7c73904938707eabcd8",
+  "decoded_hook_rd": "a5",
+  "decoded_hook_target": "0x439bea0",
+  "all_container_checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "stack_frame_bytes": 32,
+  "stock_forwarding": "non-tail call retaining a0-a3, then restore ra/sp",
+  "callee_saved_used": [
+    "s0 saved only on ping branch and restored on all exits from it"
+  ],
+  "gp_tp_and_fp_registers": "No instructions touch these registers",
+  "relocations": "No final ELF relocations per readelf",
+  "remaining_limits": [
+    "Additional 32-byte stack frame on stock forwarding; no live stack watermark measurement",
+    "Expanded-image boot acceptance and runtime execution not established by static review",
+    "If both JSON and error TLV allocation fail, dispatcher sees NULL and sends no response; no invalid pointer is returned"
+  ]
+}

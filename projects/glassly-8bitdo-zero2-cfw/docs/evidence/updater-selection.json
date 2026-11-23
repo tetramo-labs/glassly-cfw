@@ -1,0 +1,147 @@
+{
+  "kind": "Isolated native selection and read-query construction; updater application never launched",
+  "unicorn_version": "2.1.4",
+  "tool_sha256": "9a2393897e022a93f00d61f718c76c993486b4641ccff26cf480014251ca9acf",
+  "updater_zip_sha256": "88fd6af7eb62a33546415db75a40907ef9120d14f10c6cd7a4337ea59994a26f",
+  "dll_sha256": "b38ffa61b12af29d41dc55212e5ba44e509130facf6e3c4db9a7141aa313f974",
+  "stock_sha256": "43a313564ac1125df1de9c5b47c393fb5ebfc4d9ff70790e519fb72e609da808",
+  "anchors": {
+    "pid_9018_dispatches_header_scanner": {
+      "virtual_address": 268466527,
+      "size": 26,
+      "file_offset": 27999,
+      "sha256": "8c6dead761124a2d3a31a05802331ff1c5b7651ea3d8c71d7b1a73309f327676"
+    },
+    "seek_read_28_byte_header": {
+      "virtual_address": 268464712,
+      "size": 29,
+      "file_offset": 26184,
+      "sha256": "e273a29d02f7d9ad9b430508903680cd96a5a34a2bf8e2dd702f8da8c463cad6"
+    },
+    "compare_header_pid_and_advance": {
+      "virtual_address": 268464741,
+      "size": 20,
+      "file_offset": 26213,
+      "sha256": "f9b70033facdbcdf4f66cecd177e4492c888155e21b31941529123554223d1e0"
+    },
+    "seek_selected_header": {
+      "virtual_address": 268466888,
+      "size": 41,
+      "file_offset": 28360,
+      "sha256": "84de6731f75ee42a7dfb7d047a793f6d7ee3ac1876ff5640e660c20d4d7582c2"
+    },
+    "boot_version_protocol_gate": {
+      "virtual_address": 268455758,
+      "size": 84,
+      "file_offset": 17230,
+      "sha256": "f14e471ea45a6b33a0fde143eb7e6058a710708c845e80c2a430ee2207032d4b"
+    },
+    "address_read_packet_constructor": {
+      "virtual_address": 268472768,
+      "size": 202,
+      "file_offset": 34240,
+      "sha256": "749dea5919250c0315817ca47e260ba773c5419499693b2eb73ffeea0a2763b0"
+    },
+    "address_read_response_validation": {
+      "virtual_address": 268472976,
+      "size": 149,
+      "file_offset": 34448,
+      "sha256": "584d9510b11e83d7bb663a556d965fc9cb302f5784fb485c841f08711aa85dea"
+    },
+    "boot_version_four_byte_read": {
+      "virtual_address": 268473230,
+      "size": 135,
+      "file_offset": 34702,
+      "sha256": "009f13e3619976f4c3d293fec64cdd5636e5fd70f047c42f79f411e153caad7d"
+    },
+    "product_identity_query": {
+      "virtual_address": 268484336,
+      "size": 186,
+      "file_offset": 45808,
+      "sha256": "430eb86ad64a332574ee9435cdc623c1e127b395fc5fdafc4b322e23ac30877d"
+    }
+  },
+  "native_comparisons": 5,
+  "cases": [
+    {
+      "header_pid": 0,
+      "selected_offset": 0
+    },
+    {
+      "header_pid": 36888,
+      "selected_offset": 51228
+    },
+    {
+      "header_pid": 4294967295,
+      "selected_offset": null
+    }
+  ],
+  "boot_version_protocol_cases": [
+    {
+      "vid": 11720,
+      "pid": 36888,
+      "address_read_version_path": false
+    },
+    {
+      "vid": 1155,
+      "pid": 22368,
+      "address_read_version_path": false
+    },
+    {
+      "vid": 11720,
+      "pid": 12808,
+      "address_read_version_path": true
+    },
+    {
+      "vid": 11720,
+      "pid": 12290,
+      "address_read_version_path": true
+    }
+  ],
+  "vendor_version_read": {
+    "address": 134299700,
+    "size": 4,
+    "constructor_packets": [
+      {
+        "logical_length": 17,
+        "hid_output_hex": "05050000000400ffff04000000344001080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "stubs": [
+      "memset",
+      "WriteHid capture",
+      "stack-cookie check"
+    ],
+    "hardware_executed": false,
+    "limit": "Proves host packet construction, not target memory mapping or readback support"
+  },
+  "product_identity_query": {
+    "constructor_packets": [
+      {
+        "logical_length": 17,
+        "hid_output_hex": "05080000000200ffff02000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "expected_response_command": 8,
+    "response_product_word_offset": 18,
+    "hardware_executed": false
+  },
+  "application_entry_read": {
+    "address": 16875520,
+    "size": 32,
+    "constructor_packets": [
+      {
+        "logical_length": 17,
+        "hid_output_hex": "05050000002000ffff20000000008001010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ],
+    "hardware_executed": false,
+    "address_source": "Pinned Zero 2 section-1 load address"
+  },
+  "finding": "When the updater takes its PID 0x9018 path, header PID matching selects the v1.08 Yichip section at 0xc81c",
+  "limits": [
+    "This offline tool observes no device identity or silicon; live findings are separate",
+    "GD32 hardware selection path unresolved; PID zero case tests scanner arithmetic only",
+    "Whole updater, malformed-file handling, Windows APIs and flashing were not executed"
+  ]
+}

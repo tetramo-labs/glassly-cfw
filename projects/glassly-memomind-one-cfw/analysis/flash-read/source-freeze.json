@@ -1,0 +1,15 @@
+{
+  "source_drift": [],
+  "blob_sha256": "d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b",
+  "blob_bytes": 50880,
+  "reader_static_frame_bytes": 96,
+  "native_wrapper_frame_bytes": 0,
+  "probe_static_frame_bytes": 480,
+  "native_driver_address": "0x04329ad8",
+  "no_device_actions": true,
+  "offline_OTA_constructed": false,
+  "review_pending": false,
+  "native_review": "analysis/flash-read/native-review.md",
+  "host_report": "analysis/flash-read/host-002/report.json",
+  "aggregate": "analysis/regression-20261031-09 (running; construction pending)"
+}

@@ -1,0 +1,103 @@
+{
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "method": "direct local Ghidra RV32 export plus exhaustive unaligned LE32 scan; not a REA MCP observation",
+  "launcher_band": [
+    "0x4270738",
+    "0x4273e90"
+  ],
+  "defined_functions": 57,
+  "defined_bytes": 14168,
+  "renderer_bytes": 2778,
+  "retained_gate_bytes": 32,
+  "candidate_rx_bytes": 2746,
+  "raw_pointer_matches": [
+    {
+      "source_xip": "0x4363130",
+      "value": "0x42711a4"
+    },
+    {
+      "source_xip": "0x4363138",
+      "value": "0x4270f98"
+    },
+    {
+      "source_xip": "0x4363140",
+      "value": "0x4270dd2"
+    },
+    {
+      "source_xip": "0x4363148",
+      "value": "0x4270dd2"
+    },
+    {
+      "source_xip": "0x4363150",
+      "value": "0x4270c82"
+    },
+    {
+      "source_xip": "0x4363158",
+      "value": "0x4270c82"
+    },
+    {
+      "source_xip": "0x4363160",
+      "value": "0x4270ace"
+    },
+    {
+      "source_xip": "0x4363168",
+      "value": "0x42708e2"
+    },
+    {
+      "source_xip": "0x4363170",
+      "value": "0x42708e2"
+    }
+  ],
+  "raw_interior_pointer_matches": [],
+  "raw_scan_limit": "Does not cover split immediates, dynamically computed targets or other firmware images.",
+  "known_external_shared_entries": [
+    "0x0427253a",
+    "0x04272664",
+    "0x0427267a",
+    "0x04272960"
+  ],
+  "retained_closure_lower_bound_bytes": 1434,
+  "minimal_parent_not_implemented": true,
+  "known_explicit_dashboard_state_allocation_bytes": 128,
+  "heap_reclaimed_by_candidate_bytes": 0,
+  "islands": [
+    {
+      "entry": "0x42708e2",
+      "rx_start": "0x42708e8",
+      "rx_end": "0x4270ace",
+      "rx_capacity": 486
+    },
+    {
+      "entry": "0x4270ace",
+      "rx_start": "0x4270ad4",
+      "rx_end": "0x4270c82",
+      "rx_capacity": 430
+    },
+    {
+      "entry": "0x4270c82",
+      "rx_start": "0x4270c86",
+      "rx_end": "0x4270dd2",
+      "rx_capacity": 332
+    },
+    {
+      "entry": "0x4270dd2",
+      "rx_start": "0x4270dd6",
+      "rx_end": "0x4270f98",
+      "rx_capacity": 450
+    },
+    {
+      "entry": "0x4270f98",
+      "rx_start": "0x4270f9e",
+      "rx_end": "0x42711a4",
+      "rx_capacity": 518
+    },
+    {
+      "entry": "0x42711a4",
+      "rx_start": "0x42711aa",
+      "rx_end": "0x42713bc",
+      "rx_capacity": 530
+    }
+  ],
+  "candidate": "captures/firmware/dashboard-islands-001",
+  "hardware_validated": false
+}

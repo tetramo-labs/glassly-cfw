@@ -1,0 +1,42 @@
+[
+  {
+    "requested": "0432a620",
+    "address": "ram:0432a620",
+    "incoming_references": [
+      "ram:0439afb8 DATA",
+      "ram:020108a8 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0432a522",
+    "address": "ram:0432a522",
+    "incoming_references": [
+      "ram:0439afbc DATA",
+      "ram:020108ac DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0432a06e",
+    "address": "ram:0432a06e",
+    "incoming_references": [
+      "ram:0439af10 DATA",
+      "ram:02010800 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04329f5c",
+    "address": "ram:04329f5c",
+    "incoming_references": [
+      "ram:0439af14 DATA",
+      "ram:02010804 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

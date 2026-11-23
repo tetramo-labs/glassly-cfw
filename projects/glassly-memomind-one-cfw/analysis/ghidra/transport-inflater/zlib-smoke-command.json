@@ -1,0 +1,23 @@
+{
+  "command": [
+    "clang",
+    "-std=c11",
+    "-O1",
+    "-g",
+    "-DZ_SOLO",
+    "-DNO_GZIP",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-I.tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib",
+    "analysis/ghidra/transport-inflater/zlib-local-smoke.c",
+    ".tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib/inflate.c",
+    ".tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib/inffast.c",
+    ".tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib/inftrees.c",
+    ".tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib/adler32.c",
+    ".tools/ghidra/ghidra_12.2_PUBLIC/Ghidra/Features/Decompiler/src/decompile/zlib/zutil.c",
+    "-o",
+    "analysis/ghidra/transport-inflater/zlib-local-smoke"
+  ],
+  "build_exit": 0,
+  "run_exit": 0
+}

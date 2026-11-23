@@ -1,0 +1,31 @@
+{
+  "format": "memomind-rect-copy-hardware-pending-v1",
+  "utc": "2026-11-02T04:27:32.471372+00:00",
+  "state": "OTA fully verified and reboot acknowledged; post-reboot RFCOMM open timed out before any application frames; awaiting user wake",
+  "candidate": {
+    "image_sha256": "680163e3789831cd3eda89a60b208cb0e85eaa61c46067dbd6d59ff26cee1885",
+    "image_bytes": 2228668,
+    "runtime_sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+    "runtime_bytes": 62240,
+    "header_sha256": "873f44726e712b0b3a2f234397db184b12073a55e23c3bc01a33aca488f8b55f",
+    "app_header_sha256": "1f476db3d3a95b95bdaad72ad91dde9978c4ac411b39c32b28c438bd549597a0",
+    "metadata_packed_bytes": 171,
+    "metadata_sha256": "9eb32419f61f803cea53df4fa4e2f24c830c83d77d6a16dd79a741f0a6ad013f",
+    "app_packed_bytes": 957566,
+    "app_raw_bytes": 1835456,
+    "app_sha256": "4d8a3c422831394a7dd0729d72f2233b260f34b0984d2448cab1f6828c47932d"
+  },
+  "transfer_verification": "analysis/rect-copy-native-20261102/trace-verification.json",
+  "capture": "captures/swift-mac-rect-copy-flash-20261102-01",
+  "preflight_attempt": "captures/swift-mac-rect-copy-preflight-20261102-01",
+  "boot_verified": false,
+  "hardware_copy_commands_sent": false,
+  "previous_boot_verified_release": "raster-commands-001",
+  "aggregate": "analysis/regression-20261102-01/report.json",
+  "required_stages_passed": 84,
+  "python_tests_passed": 221,
+  "swift_tests_passed": 63,
+  "ios_core_typecheck_passed": true,
+  "full_g2_parity": false,
+  "next_step": "On user wake: new preflight capture02, independently verify header/storage, native smoke capture01, visual confirmation, verify trace and seal evidence."
+}

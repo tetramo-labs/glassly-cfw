@@ -1,0 +1,19 @@
+{
+  "target_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "candidate_only": true,
+  "installed": false,
+  "site": "04217568",
+  "body_offset": 181576,
+  "length": 8,
+  "original_hex": "97201000e780a022",
+  "original_callee": "04319792",
+  "continuation": "04217570",
+  "argument_registers": {
+    "a0": "event",
+    "a1": "payload",
+    "a2": "length"
+  },
+  "new_flow": "copy bounded admitted ANCS payload before tail-forwarding original callee; preserve original return address and callee-saved state",
+  "middle_entry_references": "none in existing project; pre-entry conditional branch lands at04217568",
+  "display_gate_sufficient_for_raw_ancs": false
+}

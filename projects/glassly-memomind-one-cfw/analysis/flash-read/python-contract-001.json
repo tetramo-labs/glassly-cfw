@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "sources": [
+    {
+      "source": "analysis/flash-read/host-001/report.json",
+      "reply_count": 5,
+      "counts": {
+        "query": 1,
+        "read": 1,
+        "native_error": 3,
+        "status_error": 0
+      }
+    },
+    {
+      "source": "analysis/flash-read/runtime-001.json",
+      "reply_count": 91,
+      "counts": {
+        "query": 1,
+        "read": 33,
+        "native_error": 56,
+        "status_error": 1
+      }
+    }
+  ],
+  "hardware_tested": false,
+  "scope": "Production C/RV32 emitted replies replayed through GM stream and Python client; native flash mocked"
+}

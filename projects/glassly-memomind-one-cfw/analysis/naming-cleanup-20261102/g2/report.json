@@ -1,0 +1,346 @@
+{
+  "keyboard_reference_requested": false,
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support"
+  ],
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "results": [
+    {
+      "name": "ported_shapes",
+      "scope": "MemoMind geometry API: 14 original geometric assertion sites",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_shapes.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2"
+      ],
+      "binary_sha256": "25623113e4733d9c26dafe4de9f7541b1c36406777286dc6fe84c41005d40147",
+      "parity_required": true
+    },
+    {
+      "name": "ported_easing",
+      "scope": "portable copied algorithm; animation integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_easing.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_easing"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_easing"
+      ],
+      "binary_sha256": "7be2d82f15dd336aefcb15434100f1a5f64c44aafb7b61eff7890f30d9717303",
+      "parity_required": true
+    },
+    {
+      "name": "ported_volume_gate",
+      "scope": "portable copied state machine; MemoMind audio integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/portable_algorithms",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/volume_gate_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_volume_gate"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/ported_volume_gate"
+      ],
+      "binary_sha256": "1de05b766f8d1df97bcd7551dd8f5795934d4249f5cd28ffb9813665f67df84f",
+      "parity_required": true
+    },
+    {
+      "name": "reference_ancs_relay",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/ancs_relay_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_ancs_relay"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_ancs_relay"
+      ],
+      "binary_sha256": "f820460b50603c778e51b3657d2a128f361279dd4d048ace4273fe95bed71397",
+      "parity_required": true
+    },
+    {
+      "name": "reference_upstream",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/upstream_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_upstream"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_upstream"
+      ],
+      "binary_sha256": "4fd61bb213869102602f75d012dd628a2d0af4a79963630f423564ae1cfa66f9",
+      "parity_required": true
+    },
+    {
+      "name": "reference_transport",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/transport_host_test.c",
+        "-lz",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_transport"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_transport"
+      ],
+      "binary_sha256": "050cbf0895b0a5ffbc0f918f88bfb6624536e88464804da0b7f50b3cd8e35300",
+      "parity_required": true
+    },
+    {
+      "name": "reference_shapes",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/shapes_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2"
+      ],
+      "binary_sha256": "2656c38c5202f2a51a18c8f5b09a582d93358d4d43f5fde718740159082f12d4",
+      "parity_required": true
+    },
+    {
+      "name": "reference_vector",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/vector_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_vector"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2"
+      ],
+      "binary_sha256": "a80782c27f47a89025cfecafe31a38f935c2722aa66c491aefdbc7c5c1833db3",
+      "parity_required": true
+    },
+    {
+      "name": "typescript",
+      "scope": "copied phone-side algorithms/protocol fixtures; G2-specific wire cases do not establish MemoMind routing",
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "typecheck_vector",
+      "scope": "Unchanged upstream TypeScript type check",
+      "command": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.vector.json"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "vector_fixture_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/vector-fixture.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "vector_fixture_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/vector_fixture-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/vector-fixture.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "gif_300_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--bad-apple",
+        "--frames",
+        "300",
+        "--gif",
+        "/Users/fosse/dev/g2flash/demos/bad_apple_quarter.gif",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/gif-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "gif_300_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/gif_300-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/gif-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "svg_300_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--svg-video",
+        "/Users/fosse/dev/g2flash/demos/.cache/bad-apple/smooth/video.json",
+        "--frames",
+        "300",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/svg-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "svg_300_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/svg_300-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/naming-cleanup-20261102/g2/svg-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "keyboard_arm_emulator",
+      "scope": "Optional historical keyboard reference; excluded from required parity, not a pass",
+      "result": "excluded-not-run",
+      "parity_required": false
+    },
+    {
+      "name": "device_demos",
+      "scope": "require real G2 BLE/device hardware; no device actions permitted",
+      "result": "platform-specific-not-run",
+      "parity_required": true
+    }
+  ],
+  "hardware_tested": false,
+  "memo_full_suite_port_complete": false,
+  "skipped_or_unimplemented_count_as_pass": false
+}

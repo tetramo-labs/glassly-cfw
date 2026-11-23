@@ -1,0 +1,16 @@
+{
+  "automaticRetries": 0,
+  "buttonEvents": 0,
+  "capture": "captures/notifications-settings-20261103-display-01",
+  "cleanupVerified": true,
+  "command": "ownership",
+  "complete": true,
+  "flashMutations": 0,
+  "framePreservedPast35Seconds": true,
+  "leasesExpired": true,
+  "mode": "native macOS IOBluetooth RFCOMM",
+  "physicalOutputConfirmed": false,
+  "wakeHandshakes": 0,
+  "traceSHA256": "8d99fcc5d19749231c511864a508a396538f47394a4ee6c13c6cae7df3089a5d",
+  "userObservation": "Nothing visible / missed it"
+}

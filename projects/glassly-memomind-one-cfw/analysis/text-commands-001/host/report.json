@@ -1,0 +1,207 @@
+{
+  "format": "memomind-text-command-host-v1",
+  "passed": true,
+  "hardware_tested": false,
+  "source_sha256": {
+    "runtime/graphics/flash_canary.h": "f98abe5d8ec813ae13be53c2c7ffe6f8654f4c661406930ff737317b1e1574df",
+    "runtime/graphics/flash_read.h": "1338d546773eb2b114f53805a9f5e28ecb36d2628203571739ced72386c68c31",
+    "runtime/graphics/flash_store_native.h": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65",
+    "runtime/graphics/graphics.c": "32bb88a767557471e7fd292d500001519d2f7eed13eb56690d8f769702363d9f",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/input.h": "7cb5e503daee3a0b8fac116ce76d820cd7d32a07a4980861a2aa7c0acd6ca5c3",
+    "runtime/graphics/native_text.c": "3e3a2c07b8c35db4456badab224044b4f2a7a04d016f7377b03179674125aaa6",
+    "runtime/graphics/native_text.h": "b076d1e8f3b3a22dcda0b7aedc3db437b0c880478257d11b1a67b7410758c079",
+    "runtime/graphics/scene_session.c": "f638e0b70f7e53eccac0d4f9d5140ad8dd14003dcddbc2f5c6c99f5f087a09a9",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62",
+    "runtime/graphics/storage_diag.h": "35948161d536f2598d580467f4553505ad1a1ca5a5c223985a41dc54e6ae629d",
+    "runtime/graphics/tests/run_text_command_tests.py": "9e4f85ee0262cf57aa20bbe808b4d50eb07cf0ff9d74fe8d3b11f02a80733c65",
+    "runtime/graphics/tests/test_graphics.c": "2ddf0b80ef802e51ff27bd8f7e1107834e02ceaf1ffd3c6bef7479a84ce625f4",
+    "runtime/graphics/tests/test_native_text.c": "9713cfc05ba16b9026be20fa3c77d1d7c38222d225e269d168ce0deac06dc17f",
+    "runtime/graphics/tests/test_text_commands.c": "8b325f9948393a9064585887374b556ffe2df966e550469eb3da640b1a276c02",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "runtime/portable/keyboard.h": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947",
+    "runtime/portable/notifications.h": "54f8a2e9fc99df67b14193fcf6427f6f4f39b07582c9e509da1d434a5e3974bc",
+    "runtime/portable/raster_commands.c": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e",
+    "runtime/portable/raster_commands.h": "953fefe23bea016c9fdb6bed7a73263180b28221d2da31b5a4bc6f6e2abf1179",
+    "runtime/portable/rect_copy_commands.c": "effeceea0b14098844ac1352a596f6e2f6a75ddf04a7a64208bbcc9e799d0e2a",
+    "runtime/portable/rect_copy_commands.h": "6ef6103b490f1294df4570b23088ba3b2d1420cff6e79f237859ee6f0e37d070",
+    "runtime/portable/rle.c": "61a5ba6f0285867b426655f3c40b1aaefe50ef414b79f8241b1f18be5576a062",
+    "runtime/portable/rle.h": "12891d1c44b5b532988fd2981ee57eafa4d692478c42cd7031bbf1ad08ae746b",
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/portable/scene.h": "8ef3f42bd0fc9128b4d9183760220cafa6b7ff0627607d5f8029d3f981a0ddce",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_assets_external.inc": "dfecf54773597742c5a3fe0180f55562642d8787616d1399eb9fe8dbdc01ea48",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/portable/scene_flash_store.h": "d80698ce3dd79cac2e3ebc724272227e3054eeceee62b48e598cfa06ff58c999",
+    "runtime/portable/scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "runtime/portable/scene_shapes.inc": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c",
+    "runtime/portable/scene_store.h": "216f288fca71bf102d0d4bfb1e85db16dd354cc3969da019ec98db91df151d79",
+    "runtime/portable/transport.h": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01",
+    "runtime/portable/upstream.h": "12f5966f3b4a9b7cd230c8d42aa35be784f796b82bf799ad6e629c26397b9e68",
+    "runtime/portable/vector.c": "52c9b0c2b5ebc7d192493213e3ca89054c82c5bea9805b68a89e2f31095540e3",
+    "runtime/portable/vector.h": "78b9a68ae9544ba57917466ecf06a54c7d1daae02a729d6b69aeb44ba5d1a1dc"
+  },
+  "original_functions": [
+    {
+      "function": "bzero",
+      "source": "patches/utils.c",
+      "lines": [
+        3,
+        5
+      ],
+      "sha256": "566c6ec8220797080cdcd23da45341f346b6d9a90f4149a2018d19656a586ed6"
+    },
+    {
+      "function": "rd16",
+      "source": "patches/utils.c",
+      "lines": [
+        41,
+        43
+      ],
+      "sha256": "bf1ebb716a3a41923d911eb65e3a4166f8c88a8df0f8c112d700e7e983025b92"
+    },
+    {
+      "function": "cfw_texture_make_lut",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        122,
+        128
+      ],
+      "sha256": "a23c9c2bee37255f40eb4f89ef2a370aeb67375900263c3db959d63752c0e2fa"
+    },
+    {
+      "function": "cfw_texture_render_a4",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        166,
+        194
+      ],
+      "sha256": "c26701d3e6981d4cb7d8f53316fbfe16e7919495da89460b4618f02861b4ab8f"
+    },
+    {
+      "function": "cfw_texture_add_rect",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        196,
+        208
+      ],
+      "sha256": "55b7a91a60abc9ca688b26ab97ceb5d6b47984b94a7035a8838ff39432eebc8d"
+    },
+    {
+      "function": "cfw_texture_utf8",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        287,
+        326
+      ],
+      "sha256": "35b82323cb16dccce8fa4f52fdc59a27eb24f3b44eb36f8f7876ef2264304981"
+    },
+    {
+      "function": "cfw_texture_next_glyph",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        343,
+        348
+      ],
+      "sha256": "fa3fbefaad52a7e406c5c6634e7a0720941f03dbb5d357a662b366fce344a97b"
+    },
+    {
+      "function": "cfw_texture_s16",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        350,
+        352
+      ],
+      "sha256": "df13de6e1896ad256c768168bb887596b3e068ab2d31d0a1498a04a3f7da6706"
+    },
+    {
+      "function": "cfw_texture_s32",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        354,
+        358
+      ],
+      "sha256": "dca2d55f994ae5b73406adaf30a64d99a8c28cd36b1cb1fe077f189ada709c8f"
+    },
+    {
+      "function": "cfw_builtin_glyph",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        364,
+        387
+      ],
+      "sha256": "46d97f4b49a4412ceb35ea581ae493dfa8b2d1dffdb5ae71b3e4ea6a757cd5ca"
+    },
+    {
+      "function": "cfw_builtin_draw_string_buf",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        393,
+        471
+      ],
+      "sha256": "7fee02a37961f96fc021af4aac53c0aec319c3a8b636152df5d0852e28fdd14e"
+    },
+    {
+      "function": "cfw_builtin_draw_string",
+      "source": "patches/texture_cache.c",
+      "lines": [
+        474,
+        481
+      ],
+      "sha256": "e1a1fa8e506832891d15433e84911a4d3c523452619efbb0422e06f43fe8a1cb"
+    }
+  ],
+  "reference_sha256": "819b9f4c71a39a8d7fc9a1c7aa7e06897e890f45cc09161ebcec78eb0952c7a8",
+  "injected_graphics_sha256": "3640a0ec68f019451be9bb9d26520b5f4c1c553a6a38063943c10c338cee4d3d",
+  "commands": [
+    {
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_GRAPHICS_SCENE=1",
+        "-DMM_RASTER_COMMANDS=1",
+        "-DMM_RECT_COPY=1",
+        "-DMM_COMMAND_BUNDLES=1",
+        "-DMM_TEXT_COMMANDS=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-commands-001/host/graphics_injected.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/native_text.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rle.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/raster_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rect_copy_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_text_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-commands-001/host/g2_text_reference.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-commands-001/host/test_text"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/text-commands-001/host/test_text"
+      ],
+      "returncode": 0
+    }
+  ],
+  "limits": [
+    "Native metrics/bitmaps are synthetic equivalent glyphs; no real G2/Memo font equality.",
+    "Missing-glyph fallback and native fallback baselines intentionally differ; native resource failures reject."
+  ],
+  "source_drift": []
+}

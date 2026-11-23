@@ -1,0 +1,110 @@
+{
+  "scope": "raw RAM initializer words; descriptor extent not yet established",
+  "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "rows": [
+    {
+      "ram": "0x200fc7c",
+      "xip_source": "0x439a38c",
+      "value": "0x43609c0",
+      "ascii": "launcher"
+    },
+    {
+      "ram": "0x200fc80",
+      "xip_source": "0x439a390",
+      "value": "0x436311c",
+      "ascii": "launcher_app"
+    },
+    {
+      "ram": "0x200fc84",
+      "xip_source": "0x439a394",
+      "value": "0x4273454"
+    },
+    {
+      "ram": "0x200fc88",
+      "xip_source": "0x439a398",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fc8c",
+      "xip_source": "0x439a39c",
+      "value": "0x4271d6a"
+    },
+    {
+      "ram": "0x200fc90",
+      "xip_source": "0x439a3a0",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fc94",
+      "xip_source": "0x439a3a4",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fc98",
+      "xip_source": "0x439a3a8",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fc9c",
+      "xip_source": "0x439a3ac",
+      "value": "0x4273266"
+    },
+    {
+      "ram": "0x200fca0",
+      "xip_source": "0x439a3b0",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fca4",
+      "xip_source": "0x439a3b4",
+      "value": "0x4272a36"
+    },
+    {
+      "ram": "0x200fca8",
+      "xip_source": "0x439a3b8",
+      "value": "0x4273734"
+    },
+    {
+      "ram": "0x200fcac",
+      "xip_source": "0x439a3bc",
+      "value": "0x2000000"
+    },
+    {
+      "ram": "0x200fcb0",
+      "xip_source": "0x439a3c0",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fcb4",
+      "xip_source": "0x439a3c4",
+      "value": "0x0"
+    },
+    {
+      "ram": "0x200fcb8",
+      "xip_source": "0x439a3c8",
+      "value": "0x4363174",
+      "ascii": "user_display_calibration"
+    },
+    {
+      "ram": "0x200fcbc",
+      "xip_source": "0x439a3cc",
+      "value": "0x4363190",
+      "ascii": "user_display_calibration_app"
+    },
+    {
+      "ram": "0x200fcc0",
+      "xip_source": "0x439a3d0",
+      "value": "0x4274174"
+    },
+    {
+      "ram": "0x200fcc4",
+      "xip_source": "0x439a3d4",
+      "value": "0x4274154"
+    },
+    {
+      "ram": "0x200fcc8",
+      "xip_source": "0x439a3d8",
+      "value": "0x42741d8"
+    }
+  ]
+}

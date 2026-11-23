@@ -1,0 +1,35 @@
+{
+  "status": "candidate proof only; no firmware bytes edited",
+  "source": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+  "source_size": 1773176,
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "body_offset": "0x17d710",
+  "xip_address": "0x4368730",
+  "before": "Bluetooth disconnected",
+  "proposed_after": "Glassly firmware ready",
+  "text_bytes": 22,
+  "capacity_including_original_nul": 23,
+  "terminator_body_offset": "0x17d726",
+  "before_with_nul_hex": "426c7565746f6f746820646973636f6e6e656374656400",
+  "after_with_nul_hex": "476c6173736c79206669726d7761726520726561647900",
+  "before_with_nul_sha256": "36d355b1270f94ccfbce9d8623173a427afaabb41b1c9198fbe131b47c49399a",
+  "after_with_nul_sha256": "d6e3ffa9d98156205710d440b465d7ba38b2b12732db39d6ffad2fa3aa1b6ec0",
+  "before_exact_occurrences": 1,
+  "all_literal_pointer_occurrences_in_body": [
+    {
+      "body_offset": "0x1948a8",
+      "xip_address": "0x437f8c8"
+    }
+  ],
+  "resource_id": "0x50",
+  "locale_table_base": "0x0437f384",
+  "language_table_index": 1,
+  "device_language_setting": 2,
+  "locale_table_slot": "0x0437f8c8",
+  "activation": "Phone Bluetooth disconnect; awake/worn glasses, normal idle UI. Static display path proven; visual baseline still needed.",
+  "limits": [
+    "Other languages unchanged",
+    "Application UI policy may suppress toast; verify baseline on stock",
+    "No boot acceptance or recovery guarantee"
+  ]
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "label": "store_program_alias",
+    "address": "042a40e6",
+    "end_exclusive": "042a410e",
+    "body_offset": 757958,
+    "hex": "b7055000ca9505452384017cef50d822b7055005aa844e860145ca95ef00982e333590003305a040"
+  },
+  {
+    "label": "store_erase_alias",
+    "address": "042a4140",
+    "end_exclusive": "042a4168",
+    "body_offset": 758048,
+    "hex": "b7055000ca9505452384017cef50980cb7055005aa844e860145ca95ef00f828333590003305a040"
+  },
+  {
+    "label": "public_program_alias",
+    "address": "04329b6a",
+    "end_exclusive": "04329b7e",
+    "body_offset": 1305418,
+    "hex": "2685eff0ffddb70500044e86ca950145efb00f87"
+  },
+  {
+    "label": "cache_normalization",
+    "address": "0432dd10",
+    "end_exclusive": "0432dd58",
+    "body_offset": 1322224,
+    "hex": "b70700f819e1b70700fcbe95b7f700029387877f0a053e9518417d0693f705feb2952320f70881992322b7081c43b706e0ffb916f58fb70620008506d58f1cc31c439183858beddf"
+  },
+  {
+    "label": "task_create",
+    "address": "042a991e",
+    "end_exclusive": "042a9968",
+    "body_offset": 780542,
+    "hex": "114685451305600e9750d6fde780405423a0a90009e903a5090041e90325c4fd23a0090065b737473804856637952a041307c7f893860680154681451305a50b9760d6fde780a08079d5"
+  },
+  {
+    "label": "task_callback",
+    "address": "0200f142",
+    "end_exclusive": "0200f168",
+    "body_offset": 61862,
+    "hex": "411106c622c426c200085c41aa84084582972685efa0bf842244b2409244014541016fd0efe6"
+  },
+  {
+    "label": "cache_table",
+    "address": "0200f7f8",
+    "end_exclusive": "0200f80c",
+    "body_offset": 63580,
+    "hex": "00007401000075010000a4100000a0200000a320"
+  }
+]

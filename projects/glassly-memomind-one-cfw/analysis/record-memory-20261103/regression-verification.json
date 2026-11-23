@@ -1,0 +1,1198 @@
+{
+  "version": "GLASSLYCFW/6",
+  "allRequiredOfflineSuitesPassed": true,
+  "stages": 138,
+  "pythonTests": 235,
+  "swiftTests": 137,
+  "startedUTC": "2026-11-03T09:05:54.587712+00:00",
+  "finishedUTC": "2026-11-03T09:24:16.836573+00:00",
+  "sourceDrift": [],
+  "missingUpstreamMappedStages": [],
+  "fullMemoSuitePortComplete": false,
+  "remainingUpstreamSuiteFiles": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "upstreamCommit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardwareTested": false,
+  "deviceActions": 0,
+  "fullReport": "analysis/regression-20261103-v6-final/report.json",
+  "fullReportSHA256": "e28ab664a6198bf197ec4c2d02e00a7c5144fb27d28d7a5bf8e66934978f7c1c",
+  "sourceSnapshotSHA256": "91d4a6b9f0818c990d1a87d08896d29b507a79c212287dd9cf7ec102e3c0a3b5",
+  "freshRuntimeBindings": [
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-canary.bindings.json",
+      "SHA256": "81bd9c56e8444e67f31dee60f3bdc4f27712380dbb8e7c79f6743efc707c4f06",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-gates.bindings.json",
+      "SHA256": "2c727d24dfd4529b4460e7cf60dcc609405eeec632718798f26fbe4bdc902f30",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-input.bindings.json",
+      "SHA256": "4952c4e35c6bd489b79a850567b6928834b6fe8069d25550a26c131152183612",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-reader.bindings.json",
+      "SHA256": "664e942c82a4b35008f9f5dfb47e379f398dd414dee85220a795e276d0db0f61",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-runtime.bindings.json",
+      "SHA256": "b74ec30c567bb6219e8204d78086b6a1fdae172c427bb099718e3e3a5437a922",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/command-bundle-scene.bindings.json",
+      "SHA256": "b74ec30c567bb6219e8204d78086b6a1fdae172c427bb099718e3e3a5437a922",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-bundle.bindings.json",
+      "SHA256": "c0e876691930bfa72c67158357d93982073d107433c177a1a6d8501ddae40c53",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-canary.bindings.json",
+      "SHA256": "e05842e64bb8822494933ef4fed6de89e99ad368003d11979059dafaef6d567a",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-gates.bindings.json",
+      "SHA256": "1b035ff1393a5f650306c9bee4a27722619acfcc17cb67b835070a4dad85dff8",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-input.bindings.json",
+      "SHA256": "c0e876691930bfa72c67158357d93982073d107433c177a1a6d8501ddae40c53",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-reader.bindings.json",
+      "SHA256": "0f90e06c8b86c21a18792b1f28ec7e6b442e45b956189d75fdbc290cdb7e00b1",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 11
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-runtime.bindings.json",
+      "SHA256": "c0e876691930bfa72c67158357d93982073d107433c177a1a6d8501ddae40c53",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-scene.bindings.json",
+      "SHA256": "c0e876691930bfa72c67158357d93982073d107433c177a1a6d8501ddae40c53",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/diagnostic-command-text.bindings.json",
+      "SHA256": "c0e876691930bfa72c67158357d93982073d107433c177a1a6d8501ddae40c53",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/external-read-gates.bindings.json",
+      "SHA256": "60d6b090482a85fcd57f875b87be8887313b6d1e573b50eee85eebe549d83611",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/external-read-runtime.bindings.json",
+      "SHA256": "86a35d20061c959ba03bcf061f7296dc0aa69e17c66c75b1670208efb2df9397",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-canary-gates.bindings.json",
+      "SHA256": "174e0a8e5532d033f7654222da91ff275496cd569dc9c5c0644652de65d22345",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-canary-input.bindings.json",
+      "SHA256": "c5268d543e60cec4412a0c25042a265315b42de38506eb7219a36d0770f1d90a",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-canary-reader.bindings.json",
+      "SHA256": "4475f34e30f30649c5997160519f78e929c36632071f6b87eabac16369529f6c",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-canary-runtime.bindings.json",
+      "SHA256": "b912e539a63208f9089abbd94ea0637b450aabc2a10ff2e76e038c7e29570b78",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-canary-scene.bindings.json",
+      "SHA256": "02dbafb6c3bd2d8bf6e15c0bd388bc1b646a6b9a4d0e5757e399e85fab3197f2",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-read-gates.bindings.json",
+      "SHA256": "010c2228b592908ac65f1cfb007b2445793da20f8e5bc73e8b5601013f651217",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/flash-read-runtime.bindings.json",
+      "SHA256": "937d3cfb56cc498b4d81c2b862fc358e9f63935fcf39963d3be44d318d103229",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/full-store-gates.bindings.json",
+      "SHA256": "44500c2f2924fd3bfe1cc291a88475251c07e0a6c9d9bf499be64ce5d0e73256",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/full-store-input.bindings.json",
+      "SHA256": "56e65b2ca3b5167d43c50d1bfca0f1e3e144eb92f2f564fff201aac5136fed4f",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/full-store-runtime.bindings.json",
+      "SHA256": "0e71395fc707b9bdda78d2fbb2f63a81a039b198419433459c2b88fc9e92f7bc",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/full-store-scene.bindings.json",
+      "SHA256": "10eb3dc0d63b09fda66b51cffbd00381ece8cdd660fb320c274c2bc650ce6931",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/graphics-gates.bindings.json",
+      "SHA256": "b55d9a80c24f5cfa6d35dc25e4f6b6577410af13b1670c98751c344d632dd389",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/graphics-runtime.bindings.json",
+      "SHA256": "57847a88fe0a1e7e6fd779f0f257bccf63c6d8d5aad2a19cc7e32288c838f254",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/input-gates.bindings.json",
+      "SHA256": "86c95a6bb6dafeae9b874f4e63728181a489408e87092495f0208bb4e04e8b6f",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/input-runtime.bindings.json",
+      "SHA256": "45d3a3b2bb68e39f241598bc2ec435d409932ae7499127754de64104111884dc",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/minimal-owner-flash/retained-commands.bindings.json",
+      "SHA256": "02eb8dde01e62d19ea89dcf11bc132cb7dd7828a02bec2867cefa5395f012191",
+      "runtimeSHA256": "3a4e92ee6e5d8cc4d4f8144e69a5f5ca52d88ea5a8654dfcd890790011c0b068",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/raster-commands-canary.bindings.json",
+      "SHA256": "946818dbcd4691a4f6a584c2324a7c1c5c693b84f8138f3d109a7f7566120b63",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/raster-commands-gates.bindings.json",
+      "SHA256": "4434467505627265b83bba390ba10fdb3c56d2141c2cbb56f18c0b50abd5dcb6",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/raster-commands-input.bindings.json",
+      "SHA256": "19c8f82d51fb94256606f3c63e00d2cbc54bc00ee09c4fc1e8c2f8b138cbb724",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/raster-commands-reader.bindings.json",
+      "SHA256": "20cad789989158f26052cfa957b0e8d2706ee489e668c5f88b9fd71a8ba486db",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/raster-commands-runtime.bindings.json",
+      "SHA256": "e9cdd453293f9e66915c25cc5c1a0d18725037d2ca1f047498e035c70e833562",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/record-gates.bindings.json",
+      "SHA256": "b8e3b6a7490528f765be043d57515e034d80e461368af311c6b3848b046e2ed1",
+      "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/record-runtime.bindings.json",
+      "SHA256": "d6bb2d3589780556e490579a5e58c5ae0cc3c2a746e96c03fd27293aa853760e",
+      "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/rect-copy-canary.bindings.json",
+      "SHA256": "634be37f5060329abaf2532bdbdc91fb22e1531bca81c53a79c0b694ad9fa0ce",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/rect-copy-gates.bindings.json",
+      "SHA256": "1dae38ba51cb525947b3419585b55e72f5ed1b54685dcb623b9b76c4af84473e",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/rect-copy-input.bindings.json",
+      "SHA256": "6c9cfbeda97fd39a88b401a5137f6627bd12a44cedd95040880611c15a0f10a9",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/rect-copy-reader.bindings.json",
+      "SHA256": "9e5613de9c2e1c15515233df8083011fabc7f52895a7b5164226528fa3ff755f",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/rect-copy-runtime.bindings.json",
+      "SHA256": "866d2e8f5730885dd52614ddfb9d038113df175f4c997fc19289723d270d6d02",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-bundle.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-canary.bindings.json",
+      "SHA256": "2327a6c69db026d952162153885b3846c0c45b490c469f67c02f498b5eecbf58",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-diagnostics.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-gates.bindings.json",
+      "SHA256": "06f8b45d9df14187f9c43a6c2b8ffea597691704f24f7c2581fb49cde9d43806",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 10
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-input.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-reader.bindings.json",
+      "SHA256": "44f001f2568c2dd16b7356ad02f12eb061cf2299a93e293902032ef81a94ba6e",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 12
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-runtime.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-scene.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/reset-undo-trim-text.bindings.json",
+      "SHA256": "b98f863a6372884920e497b9eafa1e17c55213e58fcc773785c094b0a82f522d",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/scene-gates.bindings.json",
+      "SHA256": "03da150f7a3e1742424fea97b20ff071a109ab77805526f87c575c3e34be9b6a",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/scene-runtime.bindings.json",
+      "SHA256": "d7dae4eb65ce0b7b022d8f3483dc172d9e087ca9b3d219b07aaef2a90a2f4da2",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/storage-diag-gates.bindings.json",
+      "SHA256": "778ee5fe85847a24440b68bb7a4267757cecde175e31bd7065b5023beff9c0fb",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/storage-diag-input.bindings.json",
+      "SHA256": "1390a34f09dd18c02ce7e6ba451aaaed928a33dd12ad8bcdc0760a125300e19e",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/storage-diag-runtime.bindings.json",
+      "SHA256": "afc8fe584b17dfd8901de62032b170a1dde217527ea0fadac4e7a7f27372e9c6",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/storage-diag-scene.bindings.json",
+      "SHA256": "f7c4d0831f159922d45974f72952b69cde0b6a4bb5d3084da207fefe5491b95c",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-bundle.bindings.json",
+      "SHA256": "727124b4013c45aae652dd041d0e0949fdc337c2680ddeeb97bd0b5bf604f05e",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-canary.bindings.json",
+      "SHA256": "2374cf382f55169d3a62076f6e8d291a797ef57dcc2ddc1edc07a81eeef5c623",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-gates.bindings.json",
+      "SHA256": "f82d3caeb36e1d1fde7301930492886e76a98007240890f0577f5258faf0bccf",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-input.bindings.json",
+      "SHA256": "7050320db13044b340a74fdd173a3ec238a136139bde4f68f1e13b4a530f8d37",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-reader.bindings.json",
+      "SHA256": "de56edf1ebc881d15892c1e0a6909f079851273cf1553cd5a793c8758d7fece7",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-runtime.bindings.json",
+      "SHA256": "727124b4013c45aae652dd041d0e0949fdc337c2680ddeeb97bd0b5bf604f05e",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v6-final/text-command-scene.bindings.json",
+      "SHA256": "727124b4013c45aae652dd041d0e0949fdc337c2680ddeeb97bd0b5bf604f05e",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    }
+  ],
+  "results": [
+    {
+      "name": "rebuilt_fixtures",
+      "result": "passed",
+      "seconds": 0.082
+    },
+    {
+      "name": "inventory",
+      "result": "passed",
+      "seconds": 0.889
+    },
+    {
+      "name": "inventory_scope",
+      "result": "passed",
+      "seconds": 0.245
+    },
+    {
+      "name": "firmware_transport",
+      "result": "passed",
+      "seconds": 138.392
+    },
+    {
+      "name": "native_swift",
+      "result": "passed",
+      "seconds": 63.008
+    },
+    {
+      "name": "g2_compat",
+      "result": "passed",
+      "seconds": 10.082
+    },
+    {
+      "name": "geometry",
+      "result": "passed",
+      "seconds": 16.436
+    },
+    {
+      "name": "scene",
+      "result": "passed",
+      "seconds": 7.559
+    },
+    {
+      "name": "notifications",
+      "result": "passed",
+      "seconds": 1.405
+    },
+    {
+      "name": "record_transport",
+      "result": "passed",
+      "seconds": 2.621
+    },
+    {
+      "name": "record_session_host",
+      "result": "passed",
+      "seconds": 0.951
+    },
+    {
+      "name": "record_inflater_rv32",
+      "result": "passed",
+      "seconds": 3.997
+    },
+    {
+      "name": "record_build",
+      "result": "passed",
+      "seconds": 3.332
+    },
+    {
+      "name": "record_gates",
+      "result": "passed",
+      "seconds": 0.604
+    },
+    {
+      "name": "record_runtime",
+      "result": "passed",
+      "seconds": 36.091
+    },
+    {
+      "name": "upstream_policy",
+      "result": "passed",
+      "seconds": 0.958
+    },
+    {
+      "name": "native_text_host",
+      "result": "passed",
+      "seconds": 0.533
+    },
+    {
+      "name": "scene_session_host",
+      "result": "passed",
+      "seconds": 3.343
+    },
+    {
+      "name": "input_host",
+      "result": "passed",
+      "seconds": 1.761
+    },
+    {
+      "name": "rv32_build",
+      "result": "passed",
+      "seconds": 0.2
+    },
+    {
+      "name": "rv32_probe",
+      "result": "passed",
+      "seconds": 0.315
+    },
+    {
+      "name": "graphics_host",
+      "result": "passed",
+      "seconds": 0.482
+    },
+    {
+      "name": "graphics_build",
+      "result": "passed",
+      "seconds": 0.38
+    },
+    {
+      "name": "graphics_gates",
+      "result": "passed",
+      "seconds": 0.724
+    },
+    {
+      "name": "graphics_runtime",
+      "result": "passed",
+      "seconds": 1.939
+    },
+    {
+      "name": "scene_build",
+      "result": "passed",
+      "seconds": 1.297
+    },
+    {
+      "name": "scene_gates",
+      "result": "passed",
+      "seconds": 0.826
+    },
+    {
+      "name": "scene_runtime",
+      "result": "passed",
+      "seconds": 20.684
+    },
+    {
+      "name": "input_build",
+      "result": "passed",
+      "seconds": 1.429
+    },
+    {
+      "name": "input_gates",
+      "result": "passed",
+      "seconds": 6.203
+    },
+    {
+      "name": "input_runtime",
+      "result": "passed",
+      "seconds": 1.315
+    },
+    {
+      "name": "flash_read_host",
+      "result": "passed",
+      "seconds": 0.381
+    },
+    {
+      "name": "flash_read_build",
+      "result": "passed",
+      "seconds": 1.52
+    },
+    {
+      "name": "flash_read_gates",
+      "result": "passed",
+      "seconds": 6.285
+    },
+    {
+      "name": "flash_read_runtime",
+      "result": "passed",
+      "seconds": 0.426
+    },
+    {
+      "name": "flash_read_contract",
+      "result": "passed",
+      "seconds": 0.045
+    },
+    {
+      "name": "external_read_host",
+      "result": "passed",
+      "seconds": 0.427
+    },
+    {
+      "name": "external_read_build",
+      "result": "passed",
+      "seconds": 1.456
+    },
+    {
+      "name": "external_read_gates",
+      "result": "passed",
+      "seconds": 6.265
+    },
+    {
+      "name": "external_read_runtime",
+      "result": "passed",
+      "seconds": 0.502
+    },
+    {
+      "name": "external_read_contract",
+      "result": "passed",
+      "seconds": 0.046
+    },
+    {
+      "name": "flash_store",
+      "result": "passed",
+      "seconds": 2.841
+    },
+    {
+      "name": "flash_store_native",
+      "result": "passed",
+      "seconds": 0.837
+    },
+    {
+      "name": "scene_flash_store",
+      "result": "passed",
+      "seconds": 5.627
+    },
+    {
+      "name": "external_reservation_native",
+      "result": "passed",
+      "seconds": 5.857
+    },
+    {
+      "name": "exclusive_storage_native",
+      "result": "passed",
+      "seconds": 1.532
+    },
+    {
+      "name": "exclusive_storage_callers",
+      "result": "passed",
+      "seconds": 0.37
+    },
+    {
+      "name": "heap_registry_native",
+      "result": "passed",
+      "seconds": 0.501
+    },
+    {
+      "name": "dashboard_islands_native",
+      "result": "passed",
+      "seconds": 0.139
+    },
+    {
+      "name": "dashboard_ram_native",
+      "result": "passed",
+      "seconds": 0.324
+    },
+    {
+      "name": "storage_diag_host",
+      "result": "passed",
+      "seconds": 0.409
+    },
+    {
+      "name": "storage_diag_build",
+      "result": "passed",
+      "seconds": 1.645
+    },
+    {
+      "name": "storage_diag_gates",
+      "result": "passed",
+      "seconds": 6.377
+    },
+    {
+      "name": "storage_diag_runtime",
+      "result": "passed",
+      "seconds": 1.019
+    },
+    {
+      "name": "storage_diag_contract",
+      "result": "passed",
+      "seconds": 0.046
+    },
+    {
+      "name": "storage_diag_scene",
+      "result": "passed",
+      "seconds": 20.769
+    },
+    {
+      "name": "storage_diag_input",
+      "result": "passed",
+      "seconds": 1.315
+    },
+    {
+      "name": "badmap_native",
+      "result": "passed",
+      "seconds": 0.251
+    },
+    {
+      "name": "full_store_read_host",
+      "result": "passed",
+      "seconds": 0.662
+    },
+    {
+      "name": "full_store_read_build",
+      "result": "passed",
+      "seconds": 1.595
+    },
+    {
+      "name": "full_store_read_gates",
+      "result": "passed",
+      "seconds": 6.308
+    },
+    {
+      "name": "full_store_read_runtime",
+      "result": "passed",
+      "seconds": 1.05
+    },
+    {
+      "name": "full_store_read_contract",
+      "result": "passed",
+      "seconds": 0.083
+    },
+    {
+      "name": "full_store_scene",
+      "result": "passed",
+      "seconds": 20.517
+    },
+    {
+      "name": "full_store_input",
+      "result": "passed",
+      "seconds": 1.291
+    },
+    {
+      "name": "raster_commands_host",
+      "result": "passed",
+      "seconds": 1.654
+    },
+    {
+      "name": "raster_commands_build",
+      "result": "passed",
+      "seconds": 1.91
+    },
+    {
+      "name": "raster_commands_gates",
+      "result": "passed",
+      "seconds": 6.567
+    },
+    {
+      "name": "raster_commands_runtime",
+      "result": "passed",
+      "seconds": 10.941
+    },
+    {
+      "name": "flash_canary_host",
+      "result": "passed",
+      "seconds": 0.437
+    },
+    {
+      "name": "flash_canary_build",
+      "result": "passed",
+      "seconds": 1.817
+    },
+    {
+      "name": "flash_canary_gates",
+      "result": "passed",
+      "seconds": 6.553
+    },
+    {
+      "name": "flash_canary_runtime",
+      "result": "passed",
+      "seconds": 14.456
+    },
+    {
+      "name": "flash_canary_contract",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "name": "flash_canary_reader",
+      "result": "passed",
+      "seconds": 1.019
+    },
+    {
+      "name": "flash_canary_reader_contract",
+      "result": "passed",
+      "seconds": 0.085
+    },
+    {
+      "name": "flash_canary_scene",
+      "result": "passed",
+      "seconds": 20.603
+    },
+    {
+      "name": "flash_canary_input",
+      "result": "passed",
+      "seconds": 1.368
+    },
+    {
+      "name": "raster_commands_canary",
+      "result": "passed",
+      "seconds": 14.308
+    },
+    {
+      "name": "raster_commands_reader",
+      "result": "passed",
+      "seconds": 1.066
+    },
+    {
+      "name": "raster_commands_input",
+      "result": "passed",
+      "seconds": 1.297
+    },
+    {
+      "name": "raster_commands_canary_contract",
+      "result": "passed",
+      "seconds": 0.09
+    },
+    {
+      "name": "raster_commands_reader_contract",
+      "result": "passed",
+      "seconds": 0.048
+    },
+    {
+      "name": "rect_copy_host",
+      "result": "passed",
+      "seconds": 1.819
+    },
+    {
+      "name": "rect_copy_build",
+      "result": "passed",
+      "seconds": 2.1
+    },
+    {
+      "name": "rect_copy_gates",
+      "result": "passed",
+      "seconds": 6.538
+    },
+    {
+      "name": "rect_copy_runtime",
+      "result": "passed",
+      "seconds": 11.154
+    },
+    {
+      "name": "rect_copy_canary",
+      "result": "passed",
+      "seconds": 14.367
+    },
+    {
+      "name": "rect_copy_reader",
+      "result": "passed",
+      "seconds": 1.058
+    },
+    {
+      "name": "rect_copy_input",
+      "result": "passed",
+      "seconds": 1.365
+    },
+    {
+      "name": "rect_copy_canary_contract",
+      "result": "passed",
+      "seconds": 0.087
+    },
+    {
+      "name": "rect_copy_reader_contract",
+      "result": "passed",
+      "seconds": 0.049
+    },
+    {
+      "name": "command_bundle_host",
+      "result": "passed",
+      "seconds": 1.782
+    },
+    {
+      "name": "command_bundle_build",
+      "result": "passed",
+      "seconds": 1.985
+    },
+    {
+      "name": "command_bundle_runtime",
+      "result": "passed",
+      "seconds": 23.986
+    },
+    {
+      "name": "command_bundle_gates",
+      "result": "passed",
+      "seconds": 6.64
+    },
+    {
+      "name": "command_bundle_canary",
+      "result": "passed",
+      "seconds": 14.416
+    },
+    {
+      "name": "command_bundle_reader",
+      "result": "passed",
+      "seconds": 1.085
+    },
+    {
+      "name": "command_bundle_input",
+      "result": "passed",
+      "seconds": 1.333
+    },
+    {
+      "name": "command_bundle_scene",
+      "result": "passed",
+      "seconds": 20.729
+    },
+    {
+      "name": "command_bundle_canary_contract",
+      "result": "passed",
+      "seconds": 0.083
+    },
+    {
+      "name": "command_bundle_reader_contract",
+      "result": "passed",
+      "seconds": 0.083
+    },
+    {
+      "name": "text_command_host",
+      "result": "passed",
+      "seconds": 1.888
+    },
+    {
+      "name": "text_command_build",
+      "result": "passed",
+      "seconds": 2.138
+    },
+    {
+      "name": "text_command_runtime",
+      "result": "passed",
+      "seconds": 22.307
+    },
+    {
+      "name": "text_command_gates",
+      "result": "passed",
+      "seconds": 6.654
+    },
+    {
+      "name": "text_command_canary",
+      "result": "passed",
+      "seconds": 14.255
+    },
+    {
+      "name": "text_command_reader",
+      "result": "passed",
+      "seconds": 1.075
+    },
+    {
+      "name": "text_command_input",
+      "result": "passed",
+      "seconds": 1.321
+    },
+    {
+      "name": "text_command_scene",
+      "result": "passed",
+      "seconds": 20.468
+    },
+    {
+      "name": "text_command_canary_contract",
+      "result": "passed",
+      "seconds": 0.083
+    },
+    {
+      "name": "text_command_reader_contract",
+      "result": "passed",
+      "seconds": 0.049
+    },
+    {
+      "name": "text_command_bundle",
+      "result": "passed",
+      "seconds": 23.905
+    },
+    {
+      "name": "diagnostic_command_host",
+      "result": "passed",
+      "seconds": 0.447
+    },
+    {
+      "name": "diagnostic_command_build",
+      "result": "passed",
+      "seconds": 2.103
+    },
+    {
+      "name": "diagnostic_command_runtime",
+      "result": "passed",
+      "seconds": 16.192
+    },
+    {
+      "name": "diagnostic_command_gates",
+      "result": "passed",
+      "seconds": 6.735
+    },
+    {
+      "name": "diagnostic_command_canary",
+      "result": "passed",
+      "seconds": 14.493
+    },
+    {
+      "name": "diagnostic_command_reader",
+      "result": "passed",
+      "seconds": 1.087
+    },
+    {
+      "name": "diagnostic_command_input",
+      "result": "passed",
+      "seconds": 1.428
+    },
+    {
+      "name": "diagnostic_command_scene",
+      "result": "passed",
+      "seconds": 21.717
+    },
+    {
+      "name": "diagnostic_command_bundle",
+      "result": "passed",
+      "seconds": 25.244
+    },
+    {
+      "name": "diagnostic_command_text",
+      "result": "passed",
+      "seconds": 23.435
+    },
+    {
+      "name": "diagnostic_command_canary_contract",
+      "result": "passed",
+      "seconds": 0.086
+    },
+    {
+      "name": "diagnostic_command_reader_contract",
+      "result": "passed",
+      "seconds": 0.048
+    },
+    {
+      "name": "reset_undo_trim_host",
+      "result": "passed",
+      "seconds": 5.408
+    },
+    {
+      "name": "reset_undo_trim_build",
+      "result": "passed",
+      "seconds": 2.008
+    },
+    {
+      "name": "reset_undo_trim_runtime",
+      "result": "passed",
+      "seconds": 21.427
+    },
+    {
+      "name": "reset_undo_trim_diagnostics",
+      "result": "passed",
+      "seconds": 16.832
+    },
+    {
+      "name": "reset_undo_trim_gates",
+      "result": "passed",
+      "seconds": 6.891
+    },
+    {
+      "name": "reset_undo_trim_canary",
+      "result": "passed",
+      "seconds": 14.312
+    },
+    {
+      "name": "reset_undo_trim_reader",
+      "result": "passed",
+      "seconds": 1.079
+    },
+    {
+      "name": "reset_undo_trim_input",
+      "result": "passed",
+      "seconds": 1.453
+    },
+    {
+      "name": "reset_undo_trim_scene",
+      "result": "passed",
+      "seconds": 23.087
+    },
+    {
+      "name": "reset_undo_trim_bundle",
+      "result": "passed",
+      "seconds": 27.234
+    },
+    {
+      "name": "reset_undo_trim_text",
+      "result": "passed",
+      "seconds": 25.407
+    },
+    {
+      "name": "minimal_owner_flash",
+      "result": "passed",
+      "seconds": 117.747
+    },
+    {
+      "name": "minimal_owner_flash_commands",
+      "result": "passed",
+      "seconds": 10.309
+    }
+  ],
+  "limitations": [
+    "Reference G2 passes are not MemoMind implementation passes.",
+    "Offline passes do not establish on-device rendering or full CFW parity."
+  ]
+}

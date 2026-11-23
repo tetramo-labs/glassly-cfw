@@ -1,0 +1,59 @@
+{
+  "decision": "bounded read-only inventory then fixed-sector canary design feasible; no full reservation yet",
+  "device_actions": false,
+  "runtime_source_edits": false,
+  "shared_ghidra_access": "readOnly,noanalysis",
+  "candidate_device": 0,
+  "candidate_start": "003ab000",
+  "candidate_end": "003eb000",
+  "current_body_end": "003a8560",
+  "current_ota_erase_end": "003a9000",
+  "current_code_growth_bytes_before_reservation": 10912,
+  "proposed_canary_sector": [
+    "003d1000",
+    "003d2000"
+  ],
+  "canary_executed": false,
+  "program": {
+    "address": "04329b1e",
+    "abi": "int(unsigned device,uint32 physical,const void* source,uint32 length)",
+    "page_size": 256,
+    "erase_implicit": false,
+    "public_frame": 48
+  },
+  "erase": {
+    "address": "04329a14",
+    "abi": "int(unsigned device,uint32 physical,uint32 length)",
+    "minimum_alignment": 4096,
+    "large_block_if_aligned_and_fits": 65536,
+    "public_frame": 48
+  },
+  "read": "04329ad8",
+  "zero_success_surface_requires_readback": true,
+  "partition_bounds_in_public_api": false,
+  "locking": "04329912/0432994a; native device mutex or existing critical mode",
+  "native_software_cancellation": false,
+  "recognized_refs": {
+    "program": 12,
+    "range_erase": 6,
+    "sector_erase": 4,
+    "rmw": 7
+  },
+  "normal_runtime_tail_owner_found": false,
+  "known_tail_overwriter": "042400b6 selected type20 full-allocation update",
+  "exclusive_ownership_proven": false,
+  "other_core_arithmetic_or_rom_excluded": false,
+  "required_next_evidence": [
+    "stable full-tail read inventory",
+    "all-FF fixed canary sector",
+    "fresh live header/map validation",
+    "compiled fixed-range native implementation review/tests",
+    "canary readback/reset/restoration evidence"
+  ],
+  "documents": [
+    "report.md",
+    "abi.md",
+    "canary-design.md"
+  ],
+  "separate_ota_spi_backend_physical_isolation": "unproven; distinct general-SPI0 software path; exclude concurrent OTA"
+}

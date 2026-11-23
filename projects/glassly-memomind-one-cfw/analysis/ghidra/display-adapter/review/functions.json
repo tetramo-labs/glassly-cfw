@@ -1,0 +1,11 @@
+[
+  {
+    "requested": "042db4aa",
+    "address": "ram:042db4aa",
+    "incoming_references": [
+      "ram:04399efc DATA"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "new_stage": "dashboard_islands_native",
+  "initial_stage_definitions": 107,
+  "command_ast": "[str(args.rv32_python.absolute()), 'tests/rv32/dashboard_islands_emulator_test.py', '--output', str(out / 'dashboard-islands-native.json')]",
+  "check": "AST wiring only; individual72-case test executed separately; not a full regression rerun"
+}

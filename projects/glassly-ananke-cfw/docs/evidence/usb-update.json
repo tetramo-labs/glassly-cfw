@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-11-01",
+  "entry_method": "Turn off, hold Capture + Home while connecting USB; user performed it",
+  "vid": "4c4a",
+  "pid": "2342",
+  "product": "BR23UBOOT1.00",
+  "location_id": "00100000",
+  "scsi_identity": "BR23 / UBOOT1.00",
+  "flash_writes": 0,
+  "inquiry_evidence": "bootloader-inquiry.json"
+}

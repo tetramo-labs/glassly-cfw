@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "capture": "captures/swift-mac-reset-undo-before-20261102-02",
+  "release": "dashboard-ram-002",
+  "wire_requests": 70,
+  "boot_header_verified": true,
+  "app_header_sha256": "c7bd3f186f0d37277aa126c843a72a220886845e055013cfe547a1695601625a",
+  "phases": {
+    "put": {
+      "samples": [
+        81884,
+        81884,
+        81936,
+        81932,
+        81952,
+        81952,
+        81952,
+        81972,
+        81976,
+        81976
+      ],
+      "minimum": 81884,
+      "maximum": 81976,
+      "median": 81952.0
+    },
+    "reset": {
+      "samples": [
+        81976,
+        81976,
+        81972,
+        81988,
+        82008,
+        82008,
+        82008,
+        82008,
+        82028,
+        82028
+      ],
+      "minimum": 81972,
+      "maximum": 82028,
+      "median": 82008.0
+    },
+    "reacquired": {
+      "samples": [
+        82028,
+        82028,
+        82048,
+        82064,
+        82064,
+        82064,
+        82064,
+        82068,
+        82068,
+        82068
+      ],
+      "minimum": 82028,
+      "maximum": 82068,
+      "median": 82064.0
+    }
+  },
+  "reset_minus_put_median_bytes": 56.0,
+  "reset_minus_reacquired_median_bytes": -56.0,
+  "cleanup_verified": true,
+  "after_cleanup_free_bytes": 353996,
+  "maximum_lease_gap": 0.25149799999780953,
+  "no_ota_or_flash_mutation_commands": true,
+  "hardware_visual_confirmed": false,
+  "source_sha256": {
+    "analysis/reset-undo-trim-20261102/verify-scratch.py": "5ed0f8bc72d0625ac82e5ff51b79966696e112776169dd925f1f34aabec8c471",
+    "analysis/diagnostics-native-20261102/verify-smoke-v2.py": "120743caa379b9f5822393eafbf8a92141b6a1bd96f1fe2b2a6e561cadefcd68",
+    "scripts/memomind_transport.py": "3e0bcf1108a582359717216e6eea049bedd5dfa87277d20b9bb47bc4ba2859d0"
+  },
+  "capture_sha256": {
+    "capabilities-after-cleanup.json": "aebcc1dc92e982f0d7e84c84bbc0479f44373f7ec8a1d63f84af7812eec227d6",
+    "device.json": "7249ef54b495796cbe1c5e63002677367cdca0e00f862305a758e4329437dc60",
+    "header-reply.json": "56ec91743eff7a263be3d168b0add66cc2c487c2165619ec942929ed34eedd15",
+    "put-0.json": "d94738ce271b43b014e564687af9b64be1687f7949a0b7d371c49c0babe84ce4",
+    "put-1.json": "9a72aebfeecf1f495c04745dee0786b8b29f5a76f146ff4cb1d975d90b58ac17",
+    "put-2.json": "b2ef1e3d87b253d3dae7b0a56bda4ccd9b853dc7dd2993cb4cd8fd5efd59a074",
+    "put-3.json": "de059efd49373ada0192886b6178a0cbfa3ebef7ef3270d4dfdc9521ecb37e28",
+    "put-4.json": "2196ad3618c6b1c2fa8b14238df1bf655f22d0b673b58ef9a71cae609584bcf2",
+    "put-5.json": "2196ad3618c6b1c2fa8b14238df1bf655f22d0b673b58ef9a71cae609584bcf2",
+    "put-6.json": "2196ad3618c6b1c2fa8b14238df1bf655f22d0b673b58ef9a71cae609584bcf2",
+    "put-7.json": "2af38f8edc60e09b39302313992b4e445fda0652d3c7c7123c29dea481bbd8e0",
+    "put-8.json": "efdc781b3b06acea95bed84b26bdfd028f38935501ec5f799f41d42a06958f40",
+    "put-9.json": "efdc781b3b06acea95bed84b26bdfd028f38935501ec5f799f41d42a06958f40",
+    "reacquired-0.json": "04fd430a80422f9b7a113ad5fbc8a34d6e8b3eb36d1f791e1e56f2c8f91b2052",
+    "reacquired-1.json": "04fd430a80422f9b7a113ad5fbc8a34d6e8b3eb36d1f791e1e56f2c8f91b2052",
+    "reacquired-2.json": "647a56e823f0a45496b74689aad0abe65bbdf972e10b4e9b54062081fde3f226",
+    "reacquired-3.json": "91475e9efb6ea7b70eff4f5b2588e06157c8a777412871b7bd92a58590ee914b",
+    "reacquired-4.json": "91475e9efb6ea7b70eff4f5b2588e06157c8a777412871b7bd92a58590ee914b",
+    "reacquired-5.json": "91475e9efb6ea7b70eff4f5b2588e06157c8a777412871b7bd92a58590ee914b",
+    "reacquired-6.json": "91475e9efb6ea7b70eff4f5b2588e06157c8a777412871b7bd92a58590ee914b",
+    "reacquired-7.json": "ada039c7f8117a92191cd71a73cd855e715905e4803115b6fcfc450a4ff541a3",
+    "reacquired-8.json": "ada039c7f8117a92191cd71a73cd855e715905e4803115b6fcfc450a4ff541a3",
+    "reacquired-9.json": "ada039c7f8117a92191cd71a73cd855e715905e4803115b6fcfc450a4ff541a3",
+    "reset-0.json": "efdc781b3b06acea95bed84b26bdfd028f38935501ec5f799f41d42a06958f40",
+    "reset-1.json": "efdc781b3b06acea95bed84b26bdfd028f38935501ec5f799f41d42a06958f40",
+    "reset-2.json": "2af38f8edc60e09b39302313992b4e445fda0652d3c7c7123c29dea481bbd8e0",
+    "reset-3.json": "7ab923b49a67fe6d85b051b05b978fe6d55b45ebca84988e3c19c2782407c1a8",
+    "reset-4.json": "9457d8c1c96be1ffa01c76837f7429ce0328f6b29e5de216aadd9a1494b5393b",
+    "reset-5.json": "9457d8c1c96be1ffa01c76837f7429ce0328f6b29e5de216aadd9a1494b5393b",
+    "reset-6.json": "9457d8c1c96be1ffa01c76837f7429ce0328f6b29e5de216aadd9a1494b5393b",
+    "reset-7.json": "9457d8c1c96be1ffa01c76837f7429ce0328f6b29e5de216aadd9a1494b5393b",
+    "reset-8.json": "04fd430a80422f9b7a113ad5fbc8a34d6e8b3eb36d1f791e1e56f2c8f91b2052",
+    "reset-9.json": "04fd430a80422f9b7a113ad5fbc8a34d6e8b3eb36d1f791e1e56f2c8f91b2052",
+    "result.json": "2847b04183d6cb24a7814071d08debe4422afc0c768cb2cd0178b2d7350f2577",
+    "scene-1.json": "18696166f4d9b46754c97d05e2f410b1114e1fc8a74430d4a612a217dda6b7b3",
+    "scene-2.json": "8ba91d5de40bb138d6e8cefb172fc6061837a4429a5f770561e2c6d3050f57c1",
+    "scene-3.json": "98950ef6f8eabc9237c46231a7922bb990bd99638d4eae889b9e07a07c2eaba9",
+    "scene-4.json": "7dd02f9b29a7edf1df5d62533485641de6a238620296a368d166396ffbbedc3a",
+    "trace.jsonl": "190efc457b2542c3e948f8d92403e19f2a794d74dc46714c9d0c112d230af5dd"
+  },
+  "limitations": [
+    "Native free-byte accounting includes query allocation and asynchronous activity; no largest-block or allocator-owner telemetry.",
+    "Raw application TX/RX, not independent HCI capture."
+  ]
+}

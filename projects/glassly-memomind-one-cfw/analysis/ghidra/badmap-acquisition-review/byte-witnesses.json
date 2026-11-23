@@ -1,0 +1,32 @@
+[
+  {
+    "address": "0x4235052",
+    "offset": 303154,
+    "bytes": "a9cdb684b54bb1ca328a21caaa8a03a5814623a0060013898146894b1dcd056cae89b75b715797a0ddfde780",
+    "meaning": "getter args lengthzero initialized check lock"
+  },
+  {
+    "address": "0x423519a",
+    "offset": 303482,
+    "bytes": "b54be362baf08947130acb00630ff60003564b00d2854e8597b0dcfde780e0e483574b00814b9cc0f9bd",
+    "meaning": "capacity copy length underlock"
+  },
+  {
+    "address": "0x42a9d32",
+    "offset": 781586,
+    "bytes": "1965ae84930684f7130640079305c4f72505232c04f6efb0a8ae9d47631cf50013060006814526859760d5fde780003801457db74df5032784f793074007",
+    "meaning": "fixed6009 getter absent7 zero semantics"
+  },
+  {
+    "address": "0x42a9d68",
+    "offset": 781640,
+    "bytes": "032784f793074007e310f7fa0327c4f7b7474d4793871723e318f7f8032704f88547e313f7f8032744f8b7075001e31df7f6032784f8b7073000e317f7f60329c4fe1305c4f7eff07fede31fa9f41305c4f8eff01ff129d9130600069305c4f826859760d5fde780602341bf757122c5",
+    "meaning": "full record validation chain"
+  },
+  {
+    "address": "0x42a9cda",
+    "offset": 781498,
+    "bytes": "138707ff637de60013d737002a970347070093f577003357b700058b01eb8507e390d7fe05453244410182800145e5bf",
+    "meaning": "physical bits validity returns1or0"
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "device": 1,
+  "physical_reserved": [
+    7340032,
+    8388608
+  ],
+  "unified_reserved": [
+    24117248,
+    25165824
+  ],
+  "cpu_xip_reserved": [
+    91226112,
+    92274688
+  ],
+  "translation_cpu_from_physical": 83886080,
+  "translation_unified_from_physical": 16777216,
+  "unified_is_not_proven_cpu_pointer": true,
+  "read": 70425304,
+  "program": 70425374,
+  "erase": 70425108,
+  "correct_alias_maintenance": {
+    "function": 70405098,
+    "cache_index": 0,
+    "address": "physical+0x05000000",
+    "length": "changed extent",
+    "line_size": 32,
+    "controller": 24379392,
+    "software_deadline": false
+  },
+  "public_wrapper_device1_alias_sufficient": false,
+  "raw_xip_load_acquires_mutex": false,
+  "concurrent_same_device_read_while_program_erase_proven": false,
+  "other_core_cache_coherence_proven": false,
+  "generic_existing_worker_callback_slot_proven": false,
+  "normal_task_entry": {
+    "create": 33616232,
+    "signature": "handle *create(void (*entry)(void *), void *argument, unsigned priority, unsigned stack_depth, const char *name)",
+    "trampoline": 33616194,
+    "stock_worker": 69898426,
+    "stock_priority": 5,
+    "stock_stack_depth_argument": 2048
+  },
+  "render_policy": "Pin validated immutable map epoch, no retained borrowed spans, exclude all custom device1 mutation until readers drain; correct-alias maintenance plus readback before publication. Native stock concurrent writers remain a separately qualified boundary."
+}

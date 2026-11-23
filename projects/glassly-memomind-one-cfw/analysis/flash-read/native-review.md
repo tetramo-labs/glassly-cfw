@@ -1,0 +1,29 @@
+# Flash-read native review
+
+**No concrete ABI, range, or ownership blocker found for constructing the offline candidate.** This is a read-only source/compiled-code review, not a hardware-read result or proof that the native driver cannot hang/assert.
+
+Reviewed `runtime/build/flash-read-001`: 50,880 bytes, SHA256 `d162d7c2f93ac57618f7756260e2b9c945313c160e6874517f98a8202777ca1b`. All build-recorded source hashes still match. [Review snapshot](native-review.json) pins the reviewed source. No runtime/source/device edits were made.
+
+## ABI, task and native driver
+
+Compiled helper `0x0439ce44` loads `0x04329ad8` into a5 and tail-jumps, preserving a0=device, a1=physical offset, a2=owned destination, a3=byte count, and the original return address. It has no frame or gp/tp writes. Actual compiler flags are RV32IMAFC/ilp32f, medany, no relaxation and small-data limit0. The linked image has one RX segment, no writable data/BSS, and no relocations.
+
+Service gate at0439bea0 routes only command7b to the reader, preserves ordinary command arguments/stack, and tail-forwards other stock commands to042e4680. Command7b is outside that stock handler's implemented command cases. The flash command is not reachable through the display gate/observer. It inherits the normal GM service-handler task context and gp02011688; no new thread, ISR, flash lock, or critical section is introduced. The reader's compiled frame is96 bytes; the helper adds0. This does not establish cumulative native driver/interrupt stack usage. Existing 4096-byte app/BT task allocation is not measured free margin.
+
+Native04329ad8 explicitly saves all four args, locks04329912(device), calls0432957e, unlocks0432994a(device), and returns the preserved read status. Lock mode is native per-device mutex or native critical mode selected by existing initialization. Core0432957e splits at256-byte boundaries; aligned requests<=256 take one chunk. Descriptor04329460 selects native read03/EB/BB mode; SRAM020081da reads the controller FIFO and writes exactly count destination bytes. No program/erase/status-protection call is in this reader path. Evidence: `../ghidra/app-tail-store/read`, `read-core`, and `../ghidra/memory-capacity/flash-core` / `flash-init`.
+
+## Range and ownership checks
+
+The request must be a single BYTES TLV through the existing strict `request_bytes` callback. Query is one byte00. Read is exactly8 bytes:01, device, LE32 offset, LE16 count. Counts1..256 and offsets aligned256 are enforced. Device0 is restricted to[0,10000),[1eb000,1eb100),[7fc000,7fe000); device1 to[500000,510000), all hex and end-exclusive. Unknown devices, overflow/high addresses, gaps and end crossings reject before driver entry. `length <= end-offset` is evaluated only after offset bounds, so subtraction cannot underflow into admission.
+
+All device0 ranges fit the known8MiB map. App-header allowance includes its32-byte header and first224 body bytes, within its allocation. Bootmap addresses are used by stock native code. The initial64KiB is only a candidate boot-content acquisition range; presence/readability/content is still unverified. Device1 uses the correct physical SPI offset500000, not unified-map01500000 or XIP05500000. Its64KiB directory is an existing managed CUS8 store, and these raw reads do not mount/repair it or invoke its write-capable initializer. Mapping evidence is in `../ghidra/app-tail-store/report.md` and `../ghidra/native-store-capacity/report.md`.
+
+Parsed scalar values are saved before request release. No request/event bytes are accessed afterward. The1024-byte owned workspace consists of256-byte raw buffer plus768-byte JSON buffer; all256 raw bytes are zeroed before the call. Nonzero driver status frees the workspace and emits only read-failed, preventing partial/uninitialized data disclosure. Success hex encodes exactly count bytes. The maximum allowed success JSON is608 characters plus NUL, within768; no data-dependent string content is inserted. The JSON helper042ef9f6→042efe44 synchronously allocates/copies its type5 TLV before the workspace is freed. The ordinary GM dispatcher owns the returned response; the reader does not send or double-free it.
+
+## Evidence and limitations
+
+Existing host report `host-002/report.json` passes2400 range/ownership cases and failure paths with ASan/UBSan. `runtime-001.json` records95 calls through actual linked RV32 code, including38 flash-read stub calls; reader/frame and register/ownership checks pass. `gates-001.json` records7955 gate cases. I checked the reports, assembly, native chain and current hashes; I did not rerun unchanged suites. Native flash/MMIO remains mocked in those tests. Maximum observed stack480 in the whole runtime report includes the separate probe; it is not the reader's96-byte frame nor a complete native-chain bound.
+
+The32768-byte reserve plus workspace/response allowance is conservative free-byte policy, not an atomic reservation or fragmentation proof. Own workspace allocation uses the existing nonasserting try allocator, but native JSON/status allocation may still assert on OOM; even an allocation-failed response needs native allocation. Native flash locks and SRAM busy loops have no software cancellation/timeout, so a host timeout does not cancel an in-flight read. No automatic retry, flash reinitialization, protection change, or hidden write is introduced.
+
+A256-byte success response exceeds the503-byte single-frame GM body budget and needs ordinary native fragmentation/reassembly. A future acquisition client must await the complete correlated response, validate exact hex length/device/offset, issue only one request at a time, and stop on nonzero result or disconnect. Query and a bounded known app-header read are separate from proving the first64KiB's contents. The review allows offline construction; live readability, controller timing, and dump integrity remain to be measured by the parent-owned acquisition workflow.

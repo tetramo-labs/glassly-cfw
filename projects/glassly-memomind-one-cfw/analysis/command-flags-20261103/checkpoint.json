@@ -1,0 +1,32 @@
+{
+  "version": "GLASSLYCFW/5",
+  "release": "command-flags-001",
+  "imageSHA256": "b461c399c1361f5ac53f226a9d70896e1b2f039c0e70722a287737da3fab7851",
+  "runtimeSHA256": "61d7c855f63101789f0adbcb1b7fc035ee5b1ae366c69d48cf64ff50dfe9248e",
+  "appHeaderSHA256": "824bf7c3642d4c4f8418f1e12ce017bad61eeba9bbc2da13cd27288d1b1e974a",
+  "imageBytes": 2248692,
+  "runtimeBytes": 96128,
+  "transferVerified": true,
+  "rebootAcknowledged": true,
+  "bootVerified": true,
+  "hardwareCommandsVerified": false,
+  "physicalOutputConfirmed": false,
+  "automaticRetries": 0,
+  "flashCapture": "captures/command-flags-20261103-flash-01",
+  "pending": [
+    "Display ownership busy; high-bit hardware/visual checks pending"
+  ],
+  "appBundleDoesNotWaitForHardware": true,
+  "bootCapture": "captures/command-flags-20261103-after-02",
+  "hardwareControlVerified": [
+    "notification enable/poll/disable",
+    "display position/depth readback and restore"
+  ],
+  "glasslyCommit": "2244f63be8",
+  "glasslyTests": {
+    "macSwift": 104,
+    "ios": 10,
+    "android": 14,
+    "engine": 2
+  }
+}

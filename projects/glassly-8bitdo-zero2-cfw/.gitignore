@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+/build/
+/research/downloads/
+/research/upstream-firmware/
+/research/yc3121-sdk/
+/research/yc3121-reference/
+/third_party/8cryptdo/.git/
+.DS_Store

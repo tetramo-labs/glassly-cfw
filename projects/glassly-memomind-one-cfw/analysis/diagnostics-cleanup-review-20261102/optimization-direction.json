@@ -1,0 +1,75 @@
+{
+  "status": "direction-reviewed-awaiting-frozen-profile",
+  "source_changes_by_review": false,
+  "device_actions": false,
+  "max_blob_bytes": 65536,
+  "max_static_frame_bytes": 512,
+  "last_recorded_attempt": {
+    "prospective_bytes": 66256,
+    "overflow_bytes": 720,
+    "candidate_created": false
+  },
+  "approved_direction_review": [
+    "-Oz only for new diagnostics.c translation unit",
+    "Optional -Os only for graphics.c when diagnostic_commands=True",
+    "No legacy/global flags, linker length, constructor or64KiB guard changes"
+  ],
+  "scope_confirmed": {
+    "required": [
+      "single-button press/hold/release input",
+      "compass data",
+      "raw IMU acquisition and stream ownership",
+      "ALS",
+      "generic wake ownership"
+    ],
+    "excluded": [
+      "Bluetooth keyboard/HOGP accessory support",
+      "ring battery",
+      "gesture recognition/head-up/ring-touch behavior"
+    ]
+  },
+  "remaining_evidence": [
+    "Actual frozen artifact/source hashes and exact per-source flags",
+    "Retained command-family and native gate regression evidence for changed graphics.c optimization",
+    "Legacy text/default byte-identical rebuild",
+    "Actual ELF imports/RW/relocations, helpers ABI and static/observed stack",
+    "Child-overlay lifetime tests including both parent-screen deletion orders"
+  ],
+  "sha256": {
+    "scripts/compile_memomind_graphics.py": "50c5a6cbe92726e51da3a98787477426eb2561dda2d401f369ac1a3ff96d904e",
+    "runtime/graphics/graphics.ld": "4ef8aeefd2d412c1a436e994d7a59ad463e33ce64b404a5ec03479a3c6333732",
+    "analysis/parity-status.json": "d760d024139b580a065a400a63704a0b2b53f9d5c4eb24c2804dbb4244fa0b5d",
+    "analysis/storage-integration-plan.json": "66c9537db39f74275c5ccaa6f4d9d1ec93665a0329a4b0ee7faef94437ae887d",
+    "tests/g2_compat/COMMAND_PARITY.md": "532573ea579123ff5862231a0930eb77a4d568e8b71f486d435f7b4cc1c70eba",
+    "tests/g2_compat/README.md": "87f361ddf062de2bb8925d5c695f878e04258944e364854bfc54f40272370cf7",
+    "analysis/diagnostic-commands-budget-20261102/report.json": "7c1437a04cf8a9fdbd746041e9ecce4e74333385fb99d9799b7ae316fcc15e42"
+  },
+  "preliminary_successful_build": {
+    "path": "/tmp/mm-diag-budget-07",
+    "final_frozen_profile": false,
+    "blob_bytes": 65456,
+    "blob_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+    "diagnostics_extra_flags": [
+      "-Oz"
+    ],
+    "graphics_extra_flags": [
+      "-Os"
+    ],
+    "max_blob_bytes": 65536,
+    "remaining_bytes": 80,
+    "single_rx": true,
+    "undefined_symbols": [],
+    "relocation_records": [],
+    "nonempty_writable_sections": [],
+    "observed_static_frames": {
+      "native_source_helper": 16,
+      "diagnostic_control": 208,
+      "diagnostic_present": 32,
+      "overlay_delete_callback": 16,
+      "metadata_delete_callback": 16
+    },
+    "native_helpers_abi_reviewed": true,
+    "whole_stack_bound_claimed": false,
+    "build_manifest_sha256": "be9d7840978464e541e01f399030d1f3ba85f2c5e6475e02a8ce8f71713e6aed"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "graphics": {
+    "bytes": 7808,
+    "sha256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+    "flash_reader": false,
+    "identical": true
+  },
+  "scene": {
+    "bytes": 44592,
+    "sha256": "cd849a72ecd662a79327d01f792ddbe6b09cd5d7a2a683aa05440301dced2bbd",
+    "flash_reader": false,
+    "identical": true
+  },
+  "input": {
+    "bytes": 49248,
+    "sha256": "3f8e637dff1f9da760b8842d1041eb88579cabc1b864bb5605d21bb9205167b4",
+    "flash_reader": false,
+    "identical": true
+  }
+}

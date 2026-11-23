@@ -1,0 +1,11 @@
+[
+  {"step": 1, "title": "Identity", "cmd": "7e", "key": "01", "expect_status": 0,
+   "expect_json": {"version": "GLASSLYCFW/4", "platform": "nimo"}},
+  {"step": 2, "title": "Echo", "cmd": "7e", "key": "02", "payload_hex": "676c6173736c79", "expect_status": 0,
+   "expect_data_hex": "676c6173736c79"},
+  {"step": 3, "title": "Gray ramp", "cmd": "7e", "key": "10", "payload_hex": "00", "expect_status": 0, "hold_seconds": 5,
+   "look_for": "16 vertical gray bars, dark at the left to white at the right, plus a white square on each eye's outer side"},
+  {"step": 4, "title": "Border and diagonal", "cmd": "7e", "key": "10", "payload_hex": "01", "expect_status": 0, "hold_seconds": 5,
+   "look_for": "white border on all four edges, gray diagonal, white square on each eye's outer side"},
+  {"step": 5, "title": "Unknown key is refused", "cmd": "7e", "key": "09", "expect_status": 5}
+]

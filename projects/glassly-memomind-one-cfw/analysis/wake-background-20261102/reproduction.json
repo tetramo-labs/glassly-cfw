@@ -1,0 +1,13 @@
+{
+  "report": "Bright rectangle that stays lit",
+  "followup": "I think it timed out / I missed this? I just see the lit rectangle atm",
+  "installedReleaseAtReport": "wake-control-002",
+  "precedingCapture": "captures/swift-mac-ownership-20261102-01",
+  "precedingTestFinished": true,
+  "precedingFrameLeaseExpired": true,
+  "physicalTextConfirmation": false,
+  "expected": "Empty shared screen remains black after frame release/expiry and on wake.",
+  "hypothesis": "Minimal launcher omitted stock shared-screen zero background initialization.",
+  "candidate": "wake-background-001",
+  "candidatePhysicalResult": "pending"
+}

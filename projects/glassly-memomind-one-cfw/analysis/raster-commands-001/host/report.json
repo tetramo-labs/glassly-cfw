@@ -1,0 +1,125 @@
+{
+  "format": "memomind-raster-commands-host-v1",
+  "passed": true,
+  "source_sha256": {
+    "runtime/graphics/flash_canary.h": "f98abe5d8ec813ae13be53c2c7ffe6f8654f4c661406930ff737317b1e1574df",
+    "runtime/graphics/flash_read.h": "1338d546773eb2b114f53805a9f5e28ecb36d2628203571739ced72386c68c31",
+    "runtime/graphics/flash_store_native.h": "f4d696d34f07974b52dbc6e00e2d1634cbca5e8d787bf7a252132571fb961d65",
+    "runtime/graphics/graphics.c": "e7b64e642c7274c7b0aff05720afe4b2ba2e798d6e6129ff3f1ba770f7ff85df",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/input.h": "7cb5e503daee3a0b8fac116ce76d820cd7d32a07a4980861a2aa7c0acd6ca5c3",
+    "runtime/graphics/native_text.c": "7971a929a8ba7b572d5669cd2310402ad341c8943bd44270d273a3ad5209204d",
+    "runtime/graphics/native_text.h": "dfdf659d613169bd16df7aa64631dd5e6f0602622f2ac33de9c257c464becc99",
+    "runtime/graphics/scene_session.c": "9890a32c3a6569230f1c0c50cc33f39dc8141675a000ee562a3715735835b056",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62",
+    "runtime/graphics/storage_diag.h": "35948161d536f2598d580467f4553505ad1a1ca5a5c223985a41dc54e6ae629d",
+    "runtime/graphics/tests/raster_g2_reference.c": "d383dabfa6939607f3cd66c587fd2f0817da42628b82641eb2332ec914c2c2ce",
+    "runtime/graphics/tests/run_raster_commands_tests.py": "1a3e6eb1be9542a020d535035cbc25a06f7e40929c7d2aa76db989e5da0f392c",
+    "runtime/graphics/tests/test_graphics.c": "2ddf0b80ef802e51ff27bd8f7e1107834e02ceaf1ffd3c6bef7479a84ce625f4",
+    "runtime/graphics/tests/test_raster_commands.c": "eb0c5170afa8a90922893e8e682bea6a150b349fb43a81a3cef17557d2936006",
+    "runtime/portable/flash_store.h": "66009f286aeca2658ff9c0ae45b6d5dff12ae130cc3d1064d17c0063026f30ff",
+    "runtime/portable/geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "runtime/portable/geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "runtime/portable/geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "runtime/portable/keyboard.h": "7197871221b4eea8dd80d58af5b8a1e74e1142b261a94353cd23eb05c7960947",
+    "runtime/portable/notifications.h": "54f8a2e9fc99df67b14193fcf6427f6f4f39b07582c9e509da1d434a5e3974bc",
+    "runtime/portable/raster_commands.c": "c7d9f8cf72b3a92a0d8b51626a6208093535ae8b6ecc5ec8c76ab90fcaccac7e",
+    "runtime/portable/raster_commands.h": "953fefe23bea016c9fdb6bed7a73263180b28221d2da31b5a4bc6f6e2abf1179",
+    "runtime/portable/rle.c": "61a5ba6f0285867b426655f3c40b1aaefe50ef414b79f8241b1f18be5576a062",
+    "runtime/portable/rle.h": "12891d1c44b5b532988fd2981ee57eafa4d692478c42cd7031bbf1ad08ae746b",
+    "runtime/portable/scene.c": "bb9fdb5afe6bd85bb3e701fdb7e47fbeffba12d05a874760641727c989114ec7",
+    "runtime/portable/scene.h": "cd40251d1a7754cba516a5a5135213f739c6406945a26e0d99a471240542cb91",
+    "runtime/portable/scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "runtime/portable/scene_assets_external.inc": "dfecf54773597742c5a3fe0180f55562642d8787616d1399eb9fe8dbdc01ea48",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/portable/scene_flash_store.h": "d80698ce3dd79cac2e3ebc724272227e3054eeceee62b48e598cfa06ff58c999",
+    "runtime/portable/scene_internal.h": "42b47dada01962dfd6a6bccf5180f900e8c326141f76972f280dd9fb4a570ef8",
+    "runtime/portable/scene_shapes.inc": "5f1b8a9466b3a0e5769080ddbbded4790c78ae435016e6fe269f546e22257b9c",
+    "runtime/portable/scene_store.h": "216f288fca71bf102d0d4bfb1e85db16dd354cc3969da019ec98db91df151d79",
+    "runtime/portable/transport.h": "45925f37dec8a3fa2542ce4289dfa6baaf4c8168e035d2978b0ad60b6016ba01",
+    "runtime/portable/upstream.h": "12f5966f3b4a9b7cd230c8d42aa35be784f796b82bf799ad6e629c26397b9e68",
+    "runtime/portable/vector.c": "52c9b0c2b5ebc7d192493213e3ca89054c82c5bea9805b68a89e2f31095540e3",
+    "runtime/portable/vector.h": "78b9a68ae9544ba57917466ecf06a54c7d1daae02a729d6b69aeb44ba5d1a1dc"
+  },
+  "hardware_tested": false,
+  "commands": [
+    {
+      "name": "sender",
+      "argv": [
+        "bun",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/sender.ts",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "build",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-DMM_GRAPHICS_SCENE=1",
+        "-DMM_RASTER_COMMANDS=1",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-DG2_REFERENCE_SOURCE=\"/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/shapes_host_test.c\"",
+        "-DG2_RLE_REFERENCE_SOURCE=\"/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/rle.c\"",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/graphics.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/scene_session.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/native_text.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/rle.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/raster_commands.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/raster_g2_reference.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/graphics/tests/test_raster_commands.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/test_raster"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "host",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/test_raster",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/key.message",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/key.raw",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/raster-commands-001/host/delta.message"
+      ],
+      "returncode": 0
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source_drift": [],
+  "fixtures": {
+    "delta.message": {
+      "bytes": 15,
+      "sha256": "c2c20095da2f9c6fa67a0a85dc536ce257106d041383e78d0b3e42d138c6a143"
+    },
+    "key.wire": {
+      "bytes": 68,
+      "sha256": "ce149c58b0e19eb2cfb9c7c71feca201572fe1b877530f447a0a6c908efa32ca"
+    },
+    "key.message": {
+      "bytes": 1401,
+      "sha256": "3e0251bf478a133645b1a47c0efc7436e344dffe4813f6683ee182a1a129dd3d"
+    },
+    "key.raw": {
+      "bytes": 105000,
+      "sha256": "d2f7fb10b468ff8824b845780e9dd61f896aaf265aec4f71f225a6dd6d3c04f5"
+    },
+    "delta.wire": {
+      "bytes": 23,
+      "sha256": "ecc8044158730ebb327b8425a9376494a924b5976fa9489a6630576ab52d0856"
+    }
+  }
+}

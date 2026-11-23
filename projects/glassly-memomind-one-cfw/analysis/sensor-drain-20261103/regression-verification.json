@@ -1,0 +1,1087 @@
+{
+  "version": "GLASSLYCFW/10",
+  "allRequiredOfflineSuitesPassed": true,
+  "stages": 144,
+  "pythonTests": 235,
+  "swiftTests": 155,
+  "startedUTC": "2026-11-04T00:44:14.196136+00:00",
+  "finishedUTC": "2026-11-04T01:02:53.280874+00:00",
+  "sourceDrift": [],
+  "missingUpstreamMappedStages": [],
+  "fullMemoSuitePortComplete": false,
+  "remainingUpstreamSuiteFiles": [
+    "patches/host/ancs_relay_host_test.c",
+    "patches/host/run_vector_tests.py",
+    "patches/host/transport_host_test.c",
+    "patches/host/upstream_host_test.c",
+    "demos/vector-protocol.test.ts",
+    "send_message_probe.py",
+    "demos/bad-apple-tests.ts",
+    "demos/cache-probe.ts",
+    "demos/video-test.sh",
+    "build_cfw.sh",
+    "demos/vector-suite.ts",
+    "demos/shapes-suite.ts",
+    "demos/video-bench.ts",
+    "demos/prepare-bad-apple.ts",
+    "demos/card-demo.ts",
+    "demos/shapes-demo.ts",
+    "demos/detect-cfw.ts",
+    "demos/ble-mode.ts"
+  ],
+  "upstreamCommit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardwareTested": false,
+  "deviceActions": 0,
+  "fullReport": "analysis/regression-20261103-v10-01/report.json",
+  "fullReportSHA256": "ddcd466d8995a2ffc6f4e72a2f50e9dbfe43b99559087034c5b0d12283feb62c",
+  "sourceSnapshotSHA256": "5f0e5e34c2dcdb6d6c2a104ba90ffae7ac267a0f6c446c7220616724e6009a4a",
+  "freshRuntimeBindings": [
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-canary.bindings.json",
+      "SHA256": "7bae9b1247f9b442dc2af5555b8e3c1b73200701c00985313355cce47cdea96d",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-gates.bindings.json",
+      "SHA256": "d2c5d250e13baf7d191985d0acbc1d0662f20965e30acd23d6632335fb23443b",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-input.bindings.json",
+      "SHA256": "264ecbaf197a87a7738519c80092a911a83c0e3e0c11d0d8b2cf86cbb33adb87",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-reader.bindings.json",
+      "SHA256": "ec4224472c1d88b2105d996ffa7a3bb8c0180368792d924a6e15a42fda0c9dce",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-runtime.bindings.json",
+      "SHA256": "057a0cb6d4185cadb32523861aca66b6d074c5050361977667985dbd36e7159a",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/command-bundle-scene.bindings.json",
+      "SHA256": "057a0cb6d4185cadb32523861aca66b6d074c5050361977667985dbd36e7159a",
+      "runtimeSHA256": "261d1ca94570d1f36a838efedb26411b090c6b9e56c3f70c3c23c749bc4b4822",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-bundle.bindings.json",
+      "SHA256": "d16bb19cd23839b66a12164ebc3a2b30498b203a37be7fc53cb265cd0dde7cfc",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-canary.bindings.json",
+      "SHA256": "5c88f6d074b015ec7a8a51c575b6908966637d6048026086feff634c44e7bc9f",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-gates.bindings.json",
+      "SHA256": "fdd8c2802380429de58b896245b93a7850c005da5e8333af9127e510118a5706",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-input.bindings.json",
+      "SHA256": "d16bb19cd23839b66a12164ebc3a2b30498b203a37be7fc53cb265cd0dde7cfc",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-reader.bindings.json",
+      "SHA256": "e28d2e87e9306bb47bd813b741d65247ed73599fbcb4cb58f8b5cd31bd604134",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 11
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-runtime.bindings.json",
+      "SHA256": "d16bb19cd23839b66a12164ebc3a2b30498b203a37be7fc53cb265cd0dde7cfc",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-scene.bindings.json",
+      "SHA256": "d16bb19cd23839b66a12164ebc3a2b30498b203a37be7fc53cb265cd0dde7cfc",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/diagnostic-command-text.bindings.json",
+      "SHA256": "d16bb19cd23839b66a12164ebc3a2b30498b203a37be7fc53cb265cd0dde7cfc",
+      "runtimeSHA256": "7495426a8fcb1f2d211b53c99c5891f41e75c4dd608b7fd830b595d4e622b9ca",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/external-read-gates.bindings.json",
+      "SHA256": "9ae3fb5a91bb0d895cec79ec21f54001e4b9a2b98bec4a24b870238cfa776269",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/external-read-runtime.bindings.json",
+      "SHA256": "5d5a7ecbbe3a3eed147e1caa82d0a283c88713a3408b83c68232e1094edffb6d",
+      "runtimeSHA256": "bef029060a7396c876f9e355dd0eb7ab76130ddc216db70507978c879095bf33",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-canary-gates.bindings.json",
+      "SHA256": "8a4805b6856cc8654f1cbc63fd66a4763d61631744f42265072c5f1f35655dca",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-canary-input.bindings.json",
+      "SHA256": "00bcae5f7e75b0d56478757093a84689fce4f1dd82f7f289c9c7ec2b8650e9fa",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-canary-reader.bindings.json",
+      "SHA256": "8c2e68fe009c82276ff332dd5ebd101aa7960a89b140b93784b5b4dc8ccac596",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-canary-runtime.bindings.json",
+      "SHA256": "4f69f9ce2d111dcae1d842242040875c43e6f25dbae7c6d81976c8540ee541b8",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-canary-scene.bindings.json",
+      "SHA256": "862fd81fad0a33dce8d63b661e02c8496407423f55c904ea4bafdfde2ca4f82a",
+      "runtimeSHA256": "cdda0f0f670ae554bd79880527b947584835b7e8df74ed726df1b51de5821b85",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-read-gates.bindings.json",
+      "SHA256": "223f4ccf1d9d97f497727ed8aa0893f7d827ca6c5eb48d99dd362119d23b1706",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/flash-read-runtime.bindings.json",
+      "SHA256": "1209649020fe5594f9a66a330c4f5558c0899e584582d1a5449ab2b8978ec450",
+      "runtimeSHA256": "db4e94fdc39fa047421b880a6e689212670c4759c6963eff1a4fac2477b5155b",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/full-store-gates.bindings.json",
+      "SHA256": "c97d7499dc81f2e30b941271fafb41ff9dac5394920f3f6362447347b82e744f",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/full-store-input.bindings.json",
+      "SHA256": "ccb9f67070b2b7cc6242c7ecc066f9827ff157b2c4f70f52b196c1f0aad3ebca",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/full-store-runtime.bindings.json",
+      "SHA256": "a447034eff479f0973f6e8b2305b0ad8fd60b745fa5244190e0b08b493fef29f",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/full-store-scene.bindings.json",
+      "SHA256": "decc6664d7acae4a6d363b8bc2a1469de5f9e77ec744cc7e4f9196f768fefef5",
+      "runtimeSHA256": "57ec34ab16fc65138eac23a0fb26e88abeb06d42401e0f0b575e18093710b88c",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/graphics-gates.bindings.json",
+      "SHA256": "d2221c53c538bb39ce27087bcbd8986906ac353c5028451f43740539f70b1530",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/graphics-runtime.bindings.json",
+      "SHA256": "629916fdea8b3635cef64f5f231b88facf4ce09bf9e4b1a68e97314f97765c75",
+      "runtimeSHA256": "08d478321f5340d06eab0f7007a49741a1ee7b1d8a3f716534221672ceac0b39",
+      "sourcesVerified": true,
+      "bindings": 1
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/input-gates.bindings.json",
+      "SHA256": "cebf72c50df5f519847e78178dd25ac3995dbfdf82483ea3e9e4d2535ebbc9ce",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/input-runtime.bindings.json",
+      "SHA256": "7ae932590187b7c013b98c03676ed90c25667e617e4e70c1b98b1ad2f186c483",
+      "runtimeSHA256": "90d9d9a4a8a0fee52fa9e4b65d8675d7f3b9086fde10ec153052e3cc0ae9e064",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/microphone-runtime.bindings.json",
+      "SHA256": "635d424aa5cffdb61a82dfd0cbfb99d936ab788f1b76d4f9c8a7c64993295acc",
+      "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/raster-commands-canary.bindings.json",
+      "SHA256": "2e12eb3224c7dbfbeaa9686ba885ec68a0c3c8399347b749292ae84d28944e61",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/raster-commands-gates.bindings.json",
+      "SHA256": "e14da0831a057a90b3e3d2b3b43d5748e72bb2be4ee8e6dba93fb573c9918352",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/raster-commands-input.bindings.json",
+      "SHA256": "c2ec5bfee43237b692e318acbd4790cc01a01b3b51623754ded51002ec5153c8",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/raster-commands-reader.bindings.json",
+      "SHA256": "4662f5c30a423f717cf71ac9e9eb41f0cc28c82bc4ba9145f62188d7f08c58cc",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/raster-commands-runtime.bindings.json",
+      "SHA256": "c9793bc78752b2b3b62c1e2924139ef531dbd5a1fbe7cf30d8ecbcb1849a9321",
+      "runtimeSHA256": "50a9a675546f61053f6d26736c0846f140558092378e32cdfdcfc7c942fa5faf",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/record-gates.bindings.json",
+      "SHA256": "3eed406dcbad3b773da6e9378fa33cdcc52e1fee74603e538fd34cd05603106d",
+      "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/record-runtime.bindings.json",
+      "SHA256": "825e8f06c1cfec285d86101b6639365701aff6c70bd1581fcfb65ce8cba58fa4",
+      "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/rect-copy-canary.bindings.json",
+      "SHA256": "2977265f6239ba94601aa0087c39682830d28b90b869d3ef455237518ae62e36",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/rect-copy-gates.bindings.json",
+      "SHA256": "292aa3dfaf8f37555b50e79bc5fbcda4077f7e5ed16642658c889b14d56405f7",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/rect-copy-input.bindings.json",
+      "SHA256": "51f165747bc9fe28f7acd389be6115b7b236513f391e3ef72142fa36c308a0c3",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/rect-copy-reader.bindings.json",
+      "SHA256": "e192cafc51add923706001e3aba21dd1c6db534ce5615d5d1f5c4ec34d68116f",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/rect-copy-runtime.bindings.json",
+      "SHA256": "02134eccb077e6347fbb6513202e8615cc3d228b9b8b2da548c93df258d5757c",
+      "runtimeSHA256": "7c494e2cbf01672af5737f960f0ae7c24919d793ec77a1b5047af2a6169fc732",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-bundle.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-canary.bindings.json",
+      "SHA256": "2a1956023e1f95e4e81001f12680bef0e09e1da6c3228051336510c495bdd98a",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-diagnostics.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-gates.bindings.json",
+      "SHA256": "99ab64ac2d11983c4a9ae98144019f6ab2f2ba3594dfdfcba3e65f1514be38c1",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 10
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-input.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-reader.bindings.json",
+      "SHA256": "93459c2c5a406608cf57d38c15a86fef272488b2568fb67f60db5c6585d277c5",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 12
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-runtime.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-scene.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/reset-undo-trim-text.bindings.json",
+      "SHA256": "cea95986e81d702ff1b95e501d5a746e584a93161408addc95e1bf0b9c4b10e4",
+      "runtimeSHA256": "4773852811729cf39ed4799a72f1dbc05fa79e72cb9d1aaa8b029b04fdef8cd5",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/scene-gates.bindings.json",
+      "SHA256": "3c01251950140a3af32f3447d78b08cf7cdfbf82dcfbaf22ac00a6d16fb2a1a7",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 0
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/scene-runtime.bindings.json",
+      "SHA256": "ebdda4379b59d15a339f80ea75dc4538514349f457a69971bcb412423f34aaee",
+      "runtimeSHA256": "718fa91dfbc5fb5b5aba83dfa559314e7893af8c72e32c66cf948b0544603c20",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/sensor-capture-runtime.bindings.json",
+      "SHA256": "06450d1b66a85a1c1033eab8790b77280506315ea703063baea6b883a24e5960",
+      "runtimeSHA256": "a78084c025f71a9e1f302cba65da6acd5d068d9fa7e134347f52c0eb3915a50f",
+      "sourcesVerified": true,
+      "bindings": 8
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/storage-diag-gates.bindings.json",
+      "SHA256": "22e4a3ebc36a46512bdc3f383d0aba53576db9f850749cbe20c4036c3c4c49a7",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 2
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/storage-diag-input.bindings.json",
+      "SHA256": "e048638239697b78636efefe1db843701f91886654d8d54155a2ce92e45e4f32",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/storage-diag-runtime.bindings.json",
+      "SHA256": "7c8513c4eb8a191d3814e641b6d2c6f1e4601959953abcc47b77323d207b7063",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 3
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/storage-diag-scene.bindings.json",
+      "SHA256": "aeb325344be3aa7c7ed45058e13b0a7bff69b89290d54fb81bf4321e27989a0f",
+      "runtimeSHA256": "8011f83b7e066c863df8e9fa1d4a4075ee4d4e41029c142d39b99aeb18efaf81",
+      "sourcesVerified": true,
+      "bindings": 4
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-bundle.bindings.json",
+      "SHA256": "249952f83bfae0590f83373337b3ca8c4cb8bca162b72a5d4abe0443d4f8505a",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-canary.bindings.json",
+      "SHA256": "57c66349eb571d76ef212624f696cfcffcf1be01d35487b0952a0abcec4d7217",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-gates.bindings.json",
+      "SHA256": "9446fef73182e6ec961230828339741b84218bda1da4175bb5bf5b7154fbb500",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 7
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-input.bindings.json",
+      "SHA256": "95cd7859cce57c85d409277527760026387cdcc38c4c2eead4b5b709deb03f64",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 6
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-reader.bindings.json",
+      "SHA256": "9f8970a7d8a6a2396e56c0a293ac647e2ea9dd36aa9227081c12b306da4bc769",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 9
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-runtime.bindings.json",
+      "SHA256": "249952f83bfae0590f83373337b3ca8c4cb8bca162b72a5d4abe0443d4f8505a",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    },
+    {
+      "report": "analysis/regression-20261103-v10-01/text-command-scene.bindings.json",
+      "SHA256": "249952f83bfae0590f83373337b3ca8c4cb8bca162b72a5d4abe0443d4f8505a",
+      "runtimeSHA256": "a302aceb06b41f3fd743c3ce1633db8bbebfba6427693b3aa532c0e712be31aa",
+      "sourcesVerified": true,
+      "bindings": 5
+    }
+  ],
+  "stageResults": [
+    {
+      "name": "rebuilt_fixtures",
+      "result": "passed"
+    },
+    {
+      "name": "inventory",
+      "result": "passed"
+    },
+    {
+      "name": "inventory_scope",
+      "result": "passed"
+    },
+    {
+      "name": "firmware_transport",
+      "result": "passed"
+    },
+    {
+      "name": "native_swift",
+      "result": "passed"
+    },
+    {
+      "name": "g2_compat",
+      "result": "passed"
+    },
+    {
+      "name": "geometry",
+      "result": "passed"
+    },
+    {
+      "name": "scene",
+      "result": "passed"
+    },
+    {
+      "name": "notifications",
+      "result": "passed"
+    },
+    {
+      "name": "record_transport",
+      "result": "passed"
+    },
+    {
+      "name": "record_session_host",
+      "result": "passed"
+    },
+    {
+      "name": "record_inflater_rv32",
+      "result": "passed"
+    },
+    {
+      "name": "record_build",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_host",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_native_abi",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_native_abi",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_capture_host",
+      "result": "passed"
+    },
+    {
+      "name": "sensor_capture_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "microphone_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "record_gates",
+      "result": "passed"
+    },
+    {
+      "name": "record_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "upstream_policy",
+      "result": "passed"
+    },
+    {
+      "name": "native_text_host",
+      "result": "passed"
+    },
+    {
+      "name": "scene_session_host",
+      "result": "passed"
+    },
+    {
+      "name": "input_host",
+      "result": "passed"
+    },
+    {
+      "name": "rv32_build",
+      "result": "passed"
+    },
+    {
+      "name": "rv32_probe",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_host",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_build",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_gates",
+      "result": "passed"
+    },
+    {
+      "name": "graphics_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "scene_build",
+      "result": "passed"
+    },
+    {
+      "name": "scene_gates",
+      "result": "passed"
+    },
+    {
+      "name": "scene_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "input_build",
+      "result": "passed"
+    },
+    {
+      "name": "input_gates",
+      "result": "passed"
+    },
+    {
+      "name": "input_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "external_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_store",
+      "result": "passed"
+    },
+    {
+      "name": "flash_store_native",
+      "result": "passed"
+    },
+    {
+      "name": "scene_flash_store",
+      "result": "passed"
+    },
+    {
+      "name": "external_reservation_native",
+      "result": "passed"
+    },
+    {
+      "name": "exclusive_storage_native",
+      "result": "passed"
+    },
+    {
+      "name": "exclusive_storage_callers",
+      "result": "passed"
+    },
+    {
+      "name": "heap_registry_native",
+      "result": "passed"
+    },
+    {
+      "name": "dashboard_islands_native",
+      "result": "passed"
+    },
+    {
+      "name": "dashboard_ram_native",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_host",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_build",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_gates",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_contract",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_scene",
+      "result": "passed"
+    },
+    {
+      "name": "storage_diag_input",
+      "result": "passed"
+    },
+    {
+      "name": "badmap_native",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_host",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_build",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_gates",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_read_contract",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_scene",
+      "result": "passed"
+    },
+    {
+      "name": "full_store_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_host",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_build",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_gates",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_host",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_build",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_gates",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_reader",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_scene",
+      "result": "passed"
+    },
+    {
+      "name": "flash_canary_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_canary",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_reader",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_input",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "raster_commands_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_host",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_build",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_gates",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_canary",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_reader",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_input",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "rect_copy_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_host",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_build",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_gates",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_canary",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_reader",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_input",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_scene",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "command_bundle_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_host",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_build",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_gates",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_canary",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_reader",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_input",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_scene",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "text_command_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_host",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_build",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_gates",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_canary",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_reader",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_input",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_scene",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_text",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_canary_contract",
+      "result": "passed"
+    },
+    {
+      "name": "diagnostic_command_reader_contract",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_host",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_build",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_runtime",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_diagnostics",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_gates",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_canary",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_reader",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_input",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_scene",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_bundle",
+      "result": "passed"
+    },
+    {
+      "name": "reset_undo_trim_text",
+      "result": "passed"
+    },
+    {
+      "name": "minimal_owner_flash",
+      "result": "passed"
+    },
+    {
+      "name": "minimal_owner_flash_commands",
+      "result": "passed"
+    }
+  ]
+}

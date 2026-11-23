@@ -1,0 +1,39 @@
+{
+  "candidate": "notifications-settings-001",
+  "versionAttempted": "GLASSLYCFW/2",
+  "imageSHA256": "18959dcd3339667ffa82670843813349dbbc401b809e8c5fc12abcf56f39f719",
+  "runtimeSHA256": "fee267bb4d880b77e3a0683625b74cd645555705d37f5ca99c7d4fc4865cd85e",
+  "capture": "captures/notifications-settings-20261102-flash-01",
+  "transferComplete": false,
+  "rebootRequested": false,
+  "rebootAcknowledged": false,
+  "candidateBootVerified": false,
+  "chunks": 28,
+  "verifiedImageRange": [
+    18,
+    16402
+  ],
+  "allChunkCRCsAndBytesMatch": true,
+  "blockReplyParameters": [
+    "000000101210000000",
+    "000000201210000000",
+    "000000301210000000",
+    "0000004012040007d0"
+  ],
+  "stoppedReason": "Nonzero delay/retry field is unsupported",
+  "newFieldHex": "07d0",
+  "userObservation": "May have plugged glasses into charger during transfer; causal relationship unverified",
+  "postStop": {
+    "appHeaderSHA256": "6c4d37b94b7190aa902ed55163f514a373e1fe59a84ce03fd741bc1dd6bec7e0",
+    "bootHeaderVerified": true,
+    "complete": true,
+    "flashAssetWritesStarted": false,
+    "freeBeforeHex": "000561fc",
+    "physicalOutputConfirmed": false,
+    "release": "wake-background-001",
+    "stage": "before",
+    "topologyAndBadmapVerified": true
+  },
+  "nextFlashRevision": 3,
+  "retriesSent": 0
+}

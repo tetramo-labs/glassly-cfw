@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/flash_broker_queue_abi_test.py", line 110, in <module>
+    main()
+    ~~~~^^
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/flash_broker_queue_abi_test.py", line 98, in main
+    m.call('glassly_flash_broker_bind', out, bad, display=True)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/graphics_runtime_emulator_test.py", line 316, in call
+    self.uc.emu_start(start, RET, count=getattr(self,"instruction_budget",3000000))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/lib/python3.14/site-packages/unicorn/unicorn_py3/unicorn.py", line 769, in emu_start
+    raise self._hook_exception
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/lib/python3.14/site-packages/unicorn/unicorn_py3/unicorn.py", line 363, in wrapper
+    return func(uc, *args, **kwargs)
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/.tools/rv32-tests-venv/lib/python3.14/site-packages/unicorn/unicorn_py3/unicorn.py", line 1063, in __hook_code_cb
+    callback(uc, address, size, user_data)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/flash_broker_queue_abi_test.py", line 54, in instruction
+    return super().instruction(uc, address, size, userdata)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/graphics_runtime_emulator_test.py", line 182, in instruction
+    result = self.native(name, args)
+  File "/Users/fosse/dev/glassly-memomind-one-cfw/tests/rv32/flash_broker_queue_abi_test.py", line 70, in native
+    assert (a0, a1, a2) == (1, (16, 4)[len(self.queues)], 0), (a0, a1, a2)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (16, 3489664012, 0)

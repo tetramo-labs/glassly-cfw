@@ -1,0 +1,55 @@
+{
+ "revision": 25,
+ "version": "GLASSLYCFW/25",
+ "release": "ble-link-001",
+ "imageSHA256": "9cdd04786fceee283c30dafc20a01d680894d60026fdc78dbb7a8195fe54fae1",
+ "imageBytes": 2243544,
+ "runtimeSHA256": "39d3adb2257a6f22aeff4cc492f94c861ca32440e23260bf2a20174cab28b3cd",
+ "runtimeBytes": 83824,
+ "appHeaderSHA256": "c5b4fcd592909a8c33af834a6eb283832e61f502d3ec2af946122524e034fcf1",
+ "flashedWith": "memomind install (macOS IOBluetooth RFCOMM)",
+ "device": {
+  "model": "H001Y",
+  "mac": "4C:3C:8F:90:CC:C3",
+  "stockVersion": "1.0.3.127"
+ },
+ "transfer": {
+  "startedUtc": "2026-11-11T21:59:15.805Z",
+  "completedUtc": "2026-11-11T22:02:39.642Z",
+  "range": [
+   18,
+   2243544
+  ],
+  "blocks": 548,
+  "chunks": 3834,
+  "state": "reboot acknowledged",
+  "traceRows": 8256,
+  "traceSHA256": "d42cba52a0989b4ad0e048edd214e1611f1aa8274654a5e7f83c2e303934271c"
+ },
+ "bootVerification": {
+  "method": "capabilities 15/0x7E over Classic RFCOMM after reboot",
+  "version": "GLASSLYCFW/25",
+  "verifiedUtc": "2026-11-11T22:11Z",
+  "note": "also exercises the GM writer gate's fall-through to the stock Classic writer"
+ },
+ "hardwareChecks": {
+  "bleAdvertising": "0x9200 advert seen after reboot (rssi -65)",
+  "gattServices": [
+   "9200",
+   "9300",
+   "9400"
+  ],
+  "characteristics": {
+   "9401": "props 0x1e",
+   "9402": "props 0x1e"
+  },
+  "hello": "unbonded Mac central: every hello answered 80 01 01 19 (wait, revision 25)",
+  "unbondedDrop": "stock policy disconnected the Mac 8.3 s after connect; never accepted",
+  "notChecked": [
+   "bonded iPhone acceptance",
+   "GM over BLE",
+   "OTA over BLE",
+   "advertising after a disconnect from an accepted phone"
+  ]
+ }
+}

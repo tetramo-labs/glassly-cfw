@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "source_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "proposed_in_memory_sha256": "c8cfe2cf103ac96a1241e9e8ef245262ece0ca610a09f034382d3ec094a80976",
+  "script_sha256": "27d87f09fa1ab47de040abbd35c738509d9ed2d3f950c2ba3995106b14b24c37",
+  "total_native_calls": 74,
+  "initial_free_delta": 256,
+  "variants": [
+    {
+      "carved": false,
+      "pool_start": 33939752,
+      "pool_end": 34598336,
+      "raw_size": 658584,
+      "initial_free": 656568,
+      "critical_calls": 21,
+      "native_calls": 37,
+      "max_observed_stack": 176
+    },
+    {
+      "carved": true,
+      "pool_start": 33940008,
+      "pool_end": 34598336,
+      "raw_size": 658328,
+      "initial_free": 656312,
+      "critical_calls": 21,
+      "native_calls": 37,
+      "max_observed_stack": 176
+    }
+  ],
+  "root_executed": true,
+  "report_path": "analysis/heap-carve-native-001/report.json",
+  "report_sha256": "ad3550ec762dff04eecc19cd9857a6019936ddc61782edf58ea12d5eaab8e518"
+}

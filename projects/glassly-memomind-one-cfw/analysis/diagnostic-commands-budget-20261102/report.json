@@ -1,0 +1,34 @@
+{
+  "format": "memomind-diagnostic-budget-v1",
+  "compiled_and_linked": false,
+  "final_candidate": null,
+  "linker_limit_bytes": 65536,
+  "linker_overflow_bytes": 720,
+  "prospective_bytes": 66256,
+  "new_module_extra_flags": [
+    "-Os"
+  ],
+  "guard_changed": false,
+  "device_actions": false,
+  "source_sha256": {
+    "runtime/graphics/diagnostics.c": "cc85eb303de8d7bafaa52993bbacb988aa059853d9411193c6914d55732b185b",
+    "runtime/graphics/diagnostics.h": "d5e9f8f8e4e0694c82ae5b69b4ef6e6bfee6eab550dc085f554508a6b71da7f5",
+    "runtime/graphics/graphics.c": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+    "runtime/graphics/native.c": "44272642ed0a38b0c20535bff925b796408b300d3b1a564ceb903c488c7f5834",
+    "runtime/graphics/input.c": "77654846c285158b8644f46b1f3ff56590bb2fca44a1a344416573f55cce0cda",
+    "runtime/graphics/input.h": "46a75e7f6ec4e91dc6b109851c11cc5badc657ba1af6d1d9873ff38d68ccbefd",
+    "runtime/graphics/scene_session.c": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+    "runtime/graphics/scene_session.h": "c8b3b183a2d3e70f72b3f9c59a11aaa4e47befb576052642464fad8ca6de265b",
+    "scripts/compile_memomind_graphics.py": "1cbf1635aad7d951d413b89fd983033dd14d3ff6057ff38444250d7c8881c3bf"
+  },
+  "known_pending": [
+    "Host/RV32functionalvalidation notyetcomplete",
+    "Overlay is separatechildofgraphicsimage; no move-to-frontpath",
+    "Counters reflect scene-dispatch/token-workspace refusal producers only",
+    "Current-screenobject metadataepoch persistence best-effort onallocationfailure"
+  ],
+  "prior_text_image_untouched": {
+    "path": "runtime/build/text-commands-001/graphics.bin",
+    "sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7"
+  }
+}

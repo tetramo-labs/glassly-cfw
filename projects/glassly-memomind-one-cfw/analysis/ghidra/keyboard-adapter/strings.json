@@ -1,0 +1,287 @@
+[
+  {
+    "address": "0x435899c",
+    "offset": "0x16d97c",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:556] [recordsv_ring_buf]  E:erase block failed: phys=0x%08x ret=%d"
+  },
+  {
+    "address": "0x4358a04",
+    "offset": "0x16d9e4",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:566] [recordsv_ring_buf]  E:erase page failed: phys=0x%08x ret=%d"
+  },
+  {
+    "address": "0x4358a6c",
+    "offset": "0x16da4c",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:143] [recordsv_ring_buf]  E:wq_flash_write failed: addr=0x%08x len=%u ret=%d"
+  },
+  {
+    "address": "0x4358ae0",
+    "offset": "0x16dac0",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:162] [recordsv_ring_buf]  E:wq_flash_read failed: addr=0x%08x len=%u ret=%d"
+  },
+  {
+    "address": "0x4358b54",
+    "offset": "0x16db34",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:192] [recordsv_ring_buf]  E:init failed: bootmap_get_image(CUS7) ret=%d"
+  },
+  {
+    "address": "0x4358bc4",
+    "offset": "0x16dba4",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:241] [recordsv_ring_buf]  E:init failed: erase ring buffer range failed (base=0x%08x pages=%u)"
+  },
+  {
+    "address": "0x4358c48",
+    "offset": "0x16dc28",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:268] [recordsv_ring_buf]  E:write failed: invalid params (data=%p len=%u)"
+  },
+  {
+    "address": "0x4358cb8",
+    "offset": "0x16dc98",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:281] [recordsv_ring_buf]  E:write failed: no space (need %u, free %u, used %u/%u)"
+  },
+  {
+    "address": "0x4358d30",
+    "offset": "0x16dd10",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:353] [recordsv_ring_buf]  E:read failed: invalid params (buf=%p len=%u)"
+  },
+  {
+    "address": "0x4358da0",
+    "offset": "0x16dd80",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:410] [recordsv_ring_buf]  E:commit failed: len=%u frozen=%u pages=%u"
+  },
+  {
+    "address": "0x4358e0c",
+    "offset": "0x16ddec",
+    "text": "[T:0x%08X][recordsv_flash_ring_buf.c:483] [recordsv_ring_buf]  E:freeze failed: skip=%u exceeds free=%u (data=%u invalid=%u total=%u)"
+  },
+  {
+    "address": "0x435da6c",
+    "offset": "0x172a4c",
+    "text": "[T:0x%08X][app_pm.c:624] [app_pm] E:Ignoring PM mode change to %d during shutdown."
+  },
+  {
+    "address": "0x435dac0",
+    "offset": "0x172aa0",
+    "text": "[T:0x%08X][app_pm.c:606] [app_pm] E:Ignoring unsafe activity record ('%s') during shutdown."
+  },
+  {
+    "address": "0x435db34",
+    "offset": "0x172b14",
+    "text": "[T:0x%08X][app_pm.c:523] [app_pm] E:Ignoring activity record ('%s') during shutdown."
+  },
+  {
+    "address": "0x435dec0",
+    "offset": "0x172ea0",
+    "text": "voice event during call"
+  },
+  {
+    "address": "0x435e684",
+    "offset": "0x173664",
+    "text": "[app_hogp_host] HOGP scan dev %02X:%02X:%02X:%02X:%02X:%02X name:'%s' hid:%d comp:0x%04X uuids:%d rssi:%d"
+  },
+  {
+    "address": "0x435e728",
+    "offset": "0x173708",
+    "text": "[app_hogp_host] GAP Device Name learned:%s"
+  },
+  {
+    "address": "0x435e754",
+    "offset": "0x173734",
+    "text": "[app_hogp_host] HOGP target is mouse appearance:%d name:%s"
+  },
+  {
+    "address": "0x435e790",
+    "offset": "0x173770",
+    "text": "[app_hogp_host] LE connect(%s) submit state:%d active:%d report:%d bond:%d addr_type:%d connect_type:%d"
+  },
+  {
+    "address": "0x435e7fc",
+    "offset": "0x1737dc",
+    "text": "[app_hogp_host] LE connect(%s) submit failed ret:%d state:%d active:%d report:%d bond:%d"
+  },
+  {
+    "address": "0x435e9c0",
+    "offset": "0x1739a0",
+    "text": "[app_hogp_relay] RING_SCAN_STATE ->app scan_id:%u state:%s reason:%s"
+  },
+  {
+    "address": "0x435eb98",
+    "offset": "0x173b78",
+    "text": "[app_hogp_relay] RING_SET_INPUTMAP rules uk:%u vm:%u rel:%u abs:%u reg:%u tg:%u"
+  },
+  {
+    "address": "0x435ee94",
+    "offset": "0x173e74",
+    "text": "[app_hogp_relay] RING_GATT_LIST ->app list_id:%u items:%u frags:%u ok:%u"
+  },
+  {
+    "address": "0x435ef90",
+    "offset": "0x173f70",
+    "text": "[app_hogp_relay] RING_GATT_DB ->app list_id:%u attrs:%u frags:%u ok:%u"
+  },
+  {
+    "address": "0x435f084",
+    "offset": "0x174064",
+    "text": "[app_hogp_relay] RING_HID_DESC ->app list_id:%u fields:%u frags:%u"
+  },
+  {
+    "address": "0x435f180",
+    "offset": "0x174160",
+    "text": "[app_hogp_relay] RING_HID_EVENT ->app %s key:%u ph:%u rid:%u page:0x%04X usage:0x%04X app:0x%08X val:%d"
+  },
+  {
+    "address": "0x435f258",
+    "offset": "0x174238",
+    "text": "[app_hogp_relay] RING_CTRL op:%s"
+  },
+  {
+    "address": "0x435f628",
+    "offset": "0x174608",
+    "text": "[app_hogp_relay] RING_GATT_OP op:%s vh:0x%04X cccd:0x%04X seq:%u len:%d"
+  },
+  {
+    "address": "0x435f720",
+    "offset": "0x174700",
+    "text": "[app_hogp_report]   rid:%d %s(0x%04X) %s off:%d sz:%d cnt:%d usg:0x%04X-0x%04X list:%d [0x%04X,0x%04X,0x%04X]"
+  },
+  {
+    "address": "0x435f790",
+    "offset": "0x174770",
+    "text": "[app_hogp_report] HOGP key: rid:%d page:0x%04X usage:0x%04X val:%d app:0x%08X%s%s"
+  },
+  {
+    "address": "0x435f7e4",
+    "offset": "0x1747c4",
+    "text": "[app_hogp_report] HOGP key: rid:%d page:0x%04X usage:0x%04X(arr) app:0x%08X%s%s"
+  },
+  {
+    "address": "0x435fd60",
+    "offset": "0x174d40",
+    "text": "hogp_input"
+  },
+  {
+    "address": "0x4360054",
+    "offset": "0x175034",
+    "text": "[T:0x%08X][dynamic_font.c:677] [DFont] E:Clearing %d characters from cache..."
+  },
+  {
+    "address": "0x4363810",
+    "offset": "0x1787f0",
+    "text": "preparing"
+  },
+  {
+    "address": "0x43681b0",
+    "offset": "0x17d190",
+    "text": "Multi-device audio pairing in progress, please connect in the device's Bluetooth list."
+  },
+  {
+    "address": "0x4368280",
+    "offset": "0x17d260",
+    "text": "Entered pairing mode."
+  },
+  {
+    "address": "0x436875c",
+    "offset": "0x17d73c",
+    "text": "Restoring factory settings. Please wait..."
+  },
+  {
+    "address": "0x4369558",
+    "offset": "0x17e538",
+    "text": "Welcome to Memo glasses. Press the right button to start pairing"
+  },
+  {
+    "address": "0x43695b4",
+    "offset": "0x17e594",
+    "text": "Battery temperature too high during discharge"
+  },
+  {
+    "address": "0x43695e4",
+    "offset": "0x17e5c4",
+    "text": "Battery temperature too low during discharge"
+  },
+  {
+    "address": "0x4369614",
+    "offset": "0x17e5f4",
+    "text": "Battery temperature too high during charging"
+  },
+  {
+    "address": "0x4369644",
+    "offset": "0x17e624",
+    "text": "Battery temperature too low during charging"
+  },
+  {
+    "address": "0x436eec1",
+    "offset": "0x183ea1",
+    "text": "te-Audio-Pairing l"
+  },
+  {
+    "address": "0x436efb8",
+    "offset": "0x183f98",
+    "text": "Pairing-Modus wurde aktiviert."
+  },
+  {
+    "address": "0x436ff9c",
+    "offset": "0x184f7c",
+    "text": "rke verringern"
+  },
+  {
+    "address": "0x436ffdc",
+    "offset": "0x184fbc",
+    "text": "Helligkeit verringern"
+  },
+  {
+    "address": "0x4382814",
+    "offset": "0x1977f4",
+    "text": "[T:0x%08X][dashboard_cache.c:1635] [dashboard_cache]  E:Failed to add data to ring buffer for type %d"
+  },
+  {
+    "address": "0x4383d1c",
+    "offset": "0x198cfc",
+    "text": "[T:0x%08X][json_util.c:79] [gmjson]  E:Expected string for key '%s' at index %zu"
+  },
+  {
+    "address": "0x438fb88",
+    "offset": "0x1a4b68",
+    "text": "[T:0x%08X][app_econn_demo.c:7732] [app_econn]  E:Failed to convert string to mac address: %s"
+  },
+  {
+    "address": "0x4390e20",
+    "offset": "0x1a5e00",
+    "text": "[T:0x%08X][bt_data_handler.c:2329] [bt_handler]  E:Failed to parse MAC string: %s"
+  },
+  {
+    "address": "0x4390f30",
+    "offset": "0x1a5f10",
+    "text": "[T:0x%08X][bt_data_handler.c:2357] [bt_handler]  E:Failed to parse MAC string: %s"
+  },
+  {
+    "address": "0x439103c",
+    "offset": "0x1a601c",
+    "text": "[T:0x%08X][bt_data_handler.c:2385] [bt_handler]  E:Failed to parse MAC string: %s"
+  },
+  {
+    "address": "0x43911dc",
+    "offset": "0x1a61bc",
+    "text": "[T:0x%08X][bt_data_handler.c:2126] [bt_handler]  E:Invalid version string length: %d"
+  },
+  {
+    "address": "0x43933c8",
+    "offset": "0x1a83a8",
+    "text": "toast expects a single non-empty STRING"
+  },
+  {
+    "address": "0x43955e0",
+    "offset": "0x1aa5c0",
+    "text": "m_ring.c"
+  },
+  {
+    "address": "0x4396610",
+    "offset": "0x1ab5f0",
+    "text": "[T:0x%08X][gm_cap_wear.c:1110] cap_wear E:user wear calib: sync XGIMI_SETTING_WEARING_HW_ADAPTIVE failed ret=%d"
+  },
+  {
+    "address": "0x43966f8",
+    "offset": "0x1ab6d8",
+    "text": "[T:0x%08X][gm_cap_wear.c:1140] cap_wear E:OEM wear calib: sync XGIMI_SETTING_WEARING_HW_ADAPTIVE failed ret=%d"
+  }
+]

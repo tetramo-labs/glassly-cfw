@@ -1,0 +1,192 @@
+{
+  "profile": "H001Y 1.0.3.127, original app addresses preserved by reviewed probe builds",
+  "queue": {
+    "send": "0x0425abe8",
+    "signature": "uint32_t send(uint32_t class_id, uint16_t event, const void *data, uint32_t length, uint32_t priority)",
+    "candidate_class": 63,
+    "candidate_priority": 2,
+    "inline_copy": true,
+    "envelope_offsets": {
+      "class_byte": 1,
+      "event_u16": 4,
+      "length_u16": 6,
+      "payload": 8
+    },
+    "rtos_send": "0x0200ee8c (zero timeout)",
+    "return_limit": "0 includes admission rejection; not an execution acknowledgement",
+    "worker": "0x0425bd9e",
+    "dispatch": "0x0425b38a",
+    "worker_dispatch_call": "0x0425c00e",
+    "worker_frees_envelope": true
+  },
+  "candidate_dispatch_gate": {
+    "address": "0x0425b38a",
+    "body_offset": "0x7036a",
+    "original_bytes8": "1971a2dca6da86de",
+    "stock_resume": "0x0425b392",
+    "displaced": [
+      "addi sp,sp,-128",
+      "sw s0,120(sp)",
+      "sw s1,116(sp)",
+      "sw ra,124(sp)"
+    ],
+    "implemented": false,
+    "superseded_by": "preferred_worker_gate"
+  },
+  "framebuffer": {
+    "lock": "0x0425f20e",
+    "pointer": "0x0425f7fa",
+    "submit_or_release": "0x0425f292",
+    "width": 600,
+    "height": 350,
+    "stride_bytes": 320,
+    "slice_height": 175,
+    "slice_masks": [
+      1,
+      2
+    ],
+    "rect_layout": "uint16_t x1,y1,x2,y2 inclusive; 8 bytes",
+    "native_waits": [
+      "042ac4be takes slice semaphore with UINT32_MAX timeout",
+      "0425f292 uses mutex take0200ec3a whose native timeout is60000 then assertion",
+      "042ac430 loops with1-tick sleeps until transfer queue accepts"
+    ],
+    "bounded_direct_bt_render_proven": false
+  },
+  "allocator": {
+    "generic_alloc": "0x0434e6da",
+    "generic_free": "0x0434e6ee",
+    "plugin_alloc_tracking_unsuitable_for_runtime": true,
+    "try_alloc": "0x0433c294",
+    "try_alloc_signature": "void*(uint32_t size,uint32_t capability_mask=0)",
+    "try_alloc_ordinary_no_fit": "NULL without OOM hook; invariant asserts retained",
+    "free_compatible": "0x020099a0",
+    "free_bytes_caps": "0x0433c3c6",
+    "total_free": "0x0433c460",
+    "sum_pool_minimum_free": "0x0433c4a4",
+    "largest_free_accessor_established": false,
+    "generic_malloc_oom_hook": "0433c174 -> registered0434d020 -> assertiondispatcher041fd1ae",
+    "lvgl_metadata_and_render_oom_still_unsafe": true,
+    "reservation_api_established": false
+  },
+  "coexistence": {
+    "base_get": "0x0425db22",
+    "stack_top_get": "0x0425daf8",
+    "launcher_descriptor": "0x0200fc7c",
+    "guard": "Both getters must equal launcher; this is conservative but not a complete compositor lifecycle",
+    "plugin_host_state_required": true
+  },
+  "preferred_worker_gate": {
+    "address": "0x425c00a",
+    "body_offset": "0x70fea",
+    "original_bytes8": "032504f9eff0cfb7",
+    "original_instructions": [
+      "lw a0,-0x70(s0)",
+      "jal ra,0x0425b38a"
+    ],
+    "continuation": "0x425c012",
+    "gate_must_replay": "lw a0,-0x70(s0) before any prologue alters s0",
+    "normal_path": "tail-jump0425b38a with ra=0425c012, no stack change",
+    "raw_u32_code_pointer_occurrences": {
+      "0x425c00a": [],
+      "0x425c00e": [],
+      "0x425c012": []
+    },
+    "ghidra_incoming_to_start": [
+      "0425bff4 conditional branch"
+    ],
+    "ghidra_incoming_to_interior": [],
+    "implemented": false
+  },
+  "lvgl": {
+    "default_display": "0x042d01b2",
+    "active_screen": "0x042ccc62",
+    "explicit_parent_normalizer": "0x0429a30c",
+    "raw_line_create": "0x042be290",
+    "line_points_set": "0x042be2ba",
+    "raw_image_create": "0x042bd7d0",
+    "raw_image_set_source": "0x042bd7fa",
+    "raw_object_delete": "0x042cf61c",
+    "sdk_image_wrapper_plugin_state_required": true,
+    "native_image_descriptor": [
+      "u32 header=(height<<21)|(width<<10)|9",
+      "u32 data_size=64+ceil(width/2)*height",
+      "const uint8_t* data (4-byte aligned; borrowed)"
+    ],
+    "descriptor_borrowed": true,
+    "lifecycle_limit": "Active screen is a verified parent, but runtime object cleanup/yield on future app transitions still needs design/review",
+    "position": "0x042c963e",
+    "size": "0x042c96ec",
+    "event_add": "0x042c7894",
+    "event_userdata": "0x042c7854",
+    "delete_event": 33,
+    "child_get": "0x042cf44e",
+    "child_count": "0x042cf47a",
+    "cache_invalidate_noop": "0x042b68c8",
+    "event_descriptor_layout": "obj+8 spec; spec+0xc records; (u16(spec+0x22)&63) count; records12B callback@0 userdata@4 filter@8"
+  },
+  "completion": {
+    "send": "0x042e866e",
+    "signature": "uint32_t(event_u8,service_u8,command_u8,tlv_list,route_u32)",
+    "route": 1,
+    "input_tlvs": "borrowed; copied synchronously; caller frees after return",
+    "serializer": "0x042f008a",
+    "bt_envelope_copy": "0x04235a9c",
+    "bt_queue": "0x0423608e",
+    "return1": "queued copies, not peer receipt or physical presentation",
+    "non_bt_retry_sleep_max_ticks_per_packet": 20,
+    "budget_helper_400_is_not_sleep": "0x04235d94",
+    "stock_display_callsite_function": "0x0426223c"
+  },
+  "timer": {
+    "create": "0x042b27ca",
+    "delete": "0x042b285a",
+    "signature": "void* create(void(*cb)(void*timer),uint32_t period,void*userdata)",
+    "userdata_offset": 12,
+    "default_repeat": -1,
+    "handler": "0x042b288c",
+    "self_delete_supported": true,
+    "tick_now": "0x042d02c6",
+    "tick_elapsed": "0x042d02d8",
+    "tick_units_independently_proven": true,
+    "task_stack_bytes": 8192,
+    "task_default_priority": 5,
+    "priority_override_possible": true,
+    "frame_stack_sizes_not_total_usage": {
+      "worker": 128,
+      "timer_handler": 80
+    },
+    "configured_rate_hz": 1000,
+    "hardware_reload": 15999
+  },
+  "request_tlv": {
+    "node": "next_u32@0,header_ptr_u32@4",
+    "header": "type_u8@0,length_u24_le@1,data_ptr_u32@4",
+    "strict_geometry": "one node only, type1, 2<=length<=5102, data[0]==36, length==2+20*data[1], nonNULL pointers; copy bytes+*event before freeing local request",
+    "free": "0x042eff8e"
+  },
+  "geometry_admission": {
+    "service": 15,
+    "command": 125,
+    "stock_unused_status": 2,
+    "max_frame_length": 81920,
+    "max_single_tlv_data": 81907,
+    "geometry_max_data": 5102,
+    "geometry_full_declared_length": 5115,
+    "special_zero_copy_path_applies": false,
+    "parser_peak_data_buffers_bytes_at_max_geometry": 10220
+  },
+  "indexed4_render": {
+    "default_decoder_open": "0x042b61e0",
+    "decoder_state_palette_opacity_requested_bytes": 52,
+    "decoded_row_requested_bytes_max": 1200,
+    "packed_row_scratch_bytes": 300,
+    "software_color_and_opacity_requested_bytes_each_max": 600,
+    "concurrent_requested_image_payload_max": 2452,
+    "full_rgba_frame_allocation_in_traced_path": false,
+    "whole_system_peak_proven": false,
+    "optional_refresh_rotation_scratch": 10240,
+    "primary_static_draw_buffer_bytes": 60000,
+    "report": "render/report.md"
+  }
+}

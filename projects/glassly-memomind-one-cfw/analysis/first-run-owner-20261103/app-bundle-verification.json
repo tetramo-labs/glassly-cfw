@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "version": "GLASSLYCFW/11",
+  "bundles": [
+    {
+      "path": "ios/Source/Resources/MemoMindOneFirmware/memomind-one-glassly-cfw-11.bin",
+      "bytes": 2247074,
+      "sha256": "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12"
+    },
+    {
+      "path": "android/src/main/assets/memomind-one/memomind-one-glassly-cfw-11.bin",
+      "bytes": 2247074,
+      "sha256": "cb040a3439a0355e5cb2800742d05edd97648c7dfa456850acf9f3fb02e18f12"
+    }
+  ],
+  "androidAssetSymlink": "../../../../../ios/Source/Resources/MemoMindOneFirmware/memomind-one-glassly-cfw-11.bin"
+}

@@ -1,0 +1,59 @@
+{
+  "format": "memomind-mode8-independent-implementation-review-v1",
+  "read_only": true,
+  "device_actions": false,
+  "concrete_blockers": [],
+  "reviewed_source_sha256": {
+    "runtime/graphics/graphics.c": "7c8b2184cdcd99728b66f121302e193834dd21517d0236d01d1e251e785ac44f",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/scene_session.c": "c3bcd105514b1112bf0ba2391f7ff47ac1cff14c0cb8faa7b8ee8ef1affa8f6f",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62",
+    "runtime/portable/scene.c": "c394162f5bb3cd3623e5550029aed5edd02d1631e5b0ea3d593c14446605fa03",
+    "runtime/portable/scene.h": "8ef3f42bd0fc9128b4d9183760220cafa6b7ff0627607d5f8029d3f981a0ddce",
+    "runtime/portable/scene_cache.inc": "233fa9550cf00d3684291ae8c8c7ee9627ab1a8a96628eee121febef71599d7e",
+    "runtime/graphics/tests/test_command_bundles.c": "88dfb04d66f9f6eff3e1708a493e1f798c6f4b3be86da5ce37a71f2b2ad69992"
+  },
+  "compiled_source_matches": {
+    "runtime/graphics/graphics.c": true,
+    "runtime/graphics/graphics.h": true,
+    "runtime/graphics/scene_session.c": true,
+    "runtime/graphics/scene_session.h": true,
+    "runtime/portable/scene.c": true,
+    "runtime/portable/scene.h": true,
+    "runtime/portable/scene_cache.inc": true
+  },
+  "build": {
+    "directory": "runtime/build/bundle-commands-001",
+    "blob_bytes": 63200,
+    "blob_sha256": "deeddff1533fc36c5468394a1fbbd612d3a2ec096dc864d963fa3cc30148f450",
+    "elf_sha256": "8b6ae0eb1992630759cdae904bf04fc8e85ab818acc6908a10299937826cdf9f",
+    "max_blob_bytes": 65536
+  },
+  "findings": {
+    "prepare_calls_per_bundle": 1,
+    "cache_reply_policy": "one final scratch; cache dispatch resets, raster preserves; no cache reply on handler failure",
+    "collector_capacity_tags": "2*count, maximum510; proven callback upper bound count+1 for count>=1",
+    "collector_max_bytes": 1020,
+    "collector_allocated_before_prepare": true,
+    "collector_free_after_response_and_flush": true,
+    "count_zero_collector_pointer": null,
+    "presentation": "one explicit final present on successful bundle, none after failed subcommand",
+    "unsupported_mode15": "sequential rejection; earlier segments and preparation effects remain",
+    "nested_bundle": "sequential rejection; earlier segments and preparation effects remain",
+    "preflight_all_segment_semantics": false
+  },
+  "existing_evidence_reviewed": {
+    "host": "analysis/bundle-commands-001/host/report.json",
+    "rv32": "analysis/bundle-commands-001/rv32.json",
+    "gates": "analysis/bundle-commands-001/gates.json"
+  },
+  "reviewer_reran_tests": false,
+  "limitations": [
+    "Native allocation/sender hardware behavior mocked in tests; native response allocation may assert under OOM.",
+    "Ordered lossless local collection is not reliable Bluetooth delivery; native send result ignored.",
+    "No entire-bundle rollback; failed bundle can leave shared pixels visible on later LVGL refresh.",
+    "All callbacks must obey nonreentrant display-worker and no-owner-destruction contract.",
+    "Large notification flush may delay display/UI/lease timers; no hard latency bound.",
+    "Mode15 remains unsupported;8192-byte native ingress and64KiB asset capacity remain."
+  ]
+}

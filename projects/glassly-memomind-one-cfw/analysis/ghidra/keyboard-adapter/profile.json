@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "stock_body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "read_only_query": {
+    "service": 16,
+    "command": 1,
+    "tlv_type": 5,
+    "json": {
+      "op": "query_status"
+    },
+    "capability_json": {
+      "op": "query_cap"
+    },
+    "handler": "0x04256ef4",
+    "status_formatter": "0x04255830",
+    "snapshot": "0x042523b8"
+  },
+  "host": {
+    "init": "0x0424ecfa",
+    "app_topic": 52,
+    "app_callback": "0x042528dc",
+    "target_address": "0x0201414a",
+    "target_type": "0x02014150",
+    "connection_handle_u16": "0x02014152",
+    "invalid_connection_handle": 65535,
+    "managed_accessories": 1
+  },
+  "gatt": {
+    "enqueue": "0x04250320",
+    "request_bytes": 72,
+    "request_layout": {
+      "op": 0,
+      "handle_u16": 2,
+      "sequence_u16": 4,
+      "length_u16": 6,
+      "inline_data": 8
+    },
+    "max_write": 64,
+    "pending_slots": 4,
+    "pending_base": "0x0201465c",
+    "inflight_max": 1,
+    "runner": "0x042503ea",
+    "timeout_ticks": 5000,
+    "callback_entry": "0x04250818",
+    "decompiled_body": "0x0425081e",
+    "callback_slots_base": "0x020129d8",
+    "callback_slots": 4,
+    "callback_register": "0x0421bcf0",
+    "callback_fanout": "0x0421bc32",
+    "task_owner": "stock app worker",
+    "ordering_proof": [
+      "0x04217568 auipc ra,0x102",
+      "0x0421756c jalr ra,ra,0x22a -> 0x04319792",
+      "0x04319792 -> 0x04319f28 -> pointer0x02012224 ->0x0421bc32 ->0x04250818",
+      "stock router later frees nested payload"
+    ]
+  },
+  "unresolved": [
+    "explicit authentication/passkey/numeric-comparison API and ownership",
+    "indication confirmation owner",
+    "portable core/native broker transaction arbitration",
+    "timer/producer integration lifetime",
+    "hardware scanning/pairing/ATT/HID report delivery/coexistence"
+  ],
+  "not_claimed": [
+    "Cordio struct or event ABI compatibility",
+    "unfiltered advertising feed",
+    "lossless HID forwarding",
+    "multiple independently owned accessory connections",
+    "physical origin of cooked keys"
+  ]
+}

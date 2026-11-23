@@ -1,0 +1,29 @@
+{
+  "format": "memomind-native-diagnostics-smoke-verification-v1",
+  "complete": true,
+  "capture": "analysis/diagnostics-native-20261102/verifier-tests-002/synthetic-capture",
+  "requests": 1247,
+  "snapshots": 19,
+  "all_native_writes_completed": true,
+  "probe_header_caps_verified": true,
+  "frame_ring_resync_verified": true,
+  "worker_dispatch_failure_counter_verified": true,
+  "allocation_failure_injection_performed": false,
+  "cleanup_observer_inactive": true,
+  "epochs": [
+    65535,
+    1,
+    2,
+    3
+  ],
+  "lease_renewals": 1200,
+  "hold_seconds": 303.60199999999674,
+  "max_hold_submission_gap": 0.2530000000000143,
+  "finish_requested": true,
+  "hardware_pixel_readback": false,
+  "continuous_pixel_retention_proven": false,
+  "overlay_font_equivalent_to_g2": false,
+  "epoch_persistence_scope": "successful allocation/current-screen only",
+  "visual_confirmation": "separate user observation required",
+  "trace_sha256": "86662af42d9457de8ce4f936e714c85dd949e6906382379617a430df6eb57f93"
+}

@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "scope": "Unchanged verification engine on sealed V6 OTA evidence, not a V10 transfer",
+  "fixtureCapture": "captures/record-memory-20261103-flash-01",
+  "traceSHA256": "07ac2015c0f8630b5bb0f4d9649adf73e510d9a4ba737e0b7bcf6e0a527c1c1d",
+  "verifierSHA256": "563b9a21b2ec2f58170f657bd963992443fb3eef0c4b37e0a67ad211606dd3d0",
+  "bytes": 2248759,
+  "blocks": 550,
+  "chunks": 3844,
+  "deviceActions": false,
+  "v10TransferVerified": false
+}

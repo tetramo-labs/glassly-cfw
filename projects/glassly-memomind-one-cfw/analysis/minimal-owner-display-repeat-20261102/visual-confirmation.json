@@ -1,0 +1,26 @@
+{
+  "recorded_utc": "2026-11-02T23:26:23.918891+00:00",
+  "user_statement": "yes I see it",
+  "prompt_context": "Repeat GLASSLYCFW/1 and FLASH 256K / MSG 65535 text plus flash-backed checkerboard on black for five minutes",
+  "visible_output_confirmed": true,
+  "pixel_perfect_comparison": false,
+  "capture": "captures/swift-mac-minimal-owner-display-repeat-20261102-01",
+  "display_checkpoint": {
+    "appHeaderSHA256": "b12455279c0dba5bcd90d129440e8bf6d6c98f88b7d75d456524530bf1c3ec9e",
+    "assetBytesAccepted": 898,
+    "assetTransactions": 1,
+    "bootHeaderVerified": true,
+    "complete": false,
+    "flashAssetWritesStarted": true,
+    "flashBackedGlyphRenderAccepted": true,
+    "freeBeforeHex": "00057008",
+    "independentReadbackBytes": 898,
+    "nativeWriteReadbackRequired": true,
+    "physicalOutputConfirmed": false,
+    "release": "minimal-owner-flash-004",
+    "stage": "display",
+    "topologyAndBadmapVerified": true
+  },
+  "display_checkpoint_sha256": "17cb23153322e7f2b71d111326334afa6d07b9a482cfcef6fd5131adab757347",
+  "note": "Separate user confirmation; original sealed protocol result remains physicalOutputConfirmed:false. Repeat uses898 asset bytes;262144-byte capacity was verified in the earlier exercise."
+}

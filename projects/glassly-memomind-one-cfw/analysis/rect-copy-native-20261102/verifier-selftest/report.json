@@ -1,0 +1,11 @@
+{
+  "hardware_tested": false,
+  "synthetic_cases": 4,
+  "passed": true,
+  "checks": [
+    "valid fragmented request and correlated ACKs",
+    "duplicate reserved reply rejected",
+    "missing native completion rejected",
+    "incorrect expected pixels rejected"
+  ]
+}

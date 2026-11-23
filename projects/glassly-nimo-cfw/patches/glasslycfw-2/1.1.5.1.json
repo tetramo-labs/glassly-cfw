@@ -1,0 +1,35 @@
+{
+  "name": "GLASSLYCFW/2",
+  "purpose": "Glassly copy on the onboarding, waiting and no-phone screens (English and Chinese tables) on the mainline 1.1.5.1 firmware. String-only: every replacement is at most the original's byte length and NUL padded; no code, pointer, length or layout changes. The Bluetooth name prefix (Nimo-) is untouched.",
+  "source": {
+    "file": "ota-1.1.5.1-20261027111705-8e6f7a-vendor-app.bin",
+    "sha256": "baa41550d8af80b48a623c0b8bf006664804e83acee6520305bd9f4f341636bf",
+    "provenance": "Rebuilt byte for byte from the vendor app's OTA to Nimo-4026 (HCI capture 2026-11-09)"
+  },
+  "output": "ota-1.1.5.1-glasslycfw-2.bin",
+  "partition_type": 32,
+  "edits": [
+    {"what": "Build tag after FW-VERSION-, read back by getVersionDetail", "offset": "0x2607cf",
+     "old": "v1.1.5.1-20261027111705-8e6f7a-Debug", "new": "v1.1.5.1-20261027111705-GLASSLYCFW/2"},
+    {"what": "English welcome (first pair)", "offset": "0x1c8cc4",
+     "old": "Welcome to NIMO\nPair glasses in the app", "new": "Welcome to Glassly\nOpen the Glassly App"},
+    {"what": "English waiting for the app", "offset": "0x1c8cec",
+     "old": "Waiting for the NIMO app...", "new": "Waiting for the Glassly App"},
+    {"what": "English end of the touch tutorial", "offset": "0x1c8d48",
+     "old": "Basics complete\nContinue in the NIMO app", "new": "Basics done\nContinue in the Glassly App"},
+    {"what": "English no-phone widget title", "offset": "0x1c908c",
+     "old": "Phone not connected", "new": "Glassly: no phone"},
+    {"what": "English app-lost hint", "offset": "0x1c9420",
+     "old": "Reopen the NIMO app\nAllow background activity", "new": "Reopen the Glassly App\nAllow background use"},
+    {"what": "Chinese welcome (first pair)", "offset": "0x1c94c8",
+     "old": "欢迎来到Nimo，请在手机App上完成眼镜配对", "new": "欢迎使用Glassly，请在Glassly App中配对眼镜"},
+    {"what": "Chinese waiting for the app", "offset": "0x1c9500",
+     "old": "等待NIMO App连接...", "new": "等待Glassly App连接"},
+    {"what": "Chinese end of the touch tutorial", "offset": "0x1c9580",
+     "old": "你已经学会了基础操作，请回到手机APP继续", "new": "你已学会基础操作，请回到Glassly App继续"},
+    {"what": "Chinese no-phone widget title", "offset": "0x1c98a8",
+     "old": "未连接手机", "new": "Glassly 就绪"},
+    {"what": "Chinese waiting for the app (short form)", "offset": "0x1c9adc",
+     "old": "等待App连接...", "new": "等待Glassly..."}
+  ]
+}

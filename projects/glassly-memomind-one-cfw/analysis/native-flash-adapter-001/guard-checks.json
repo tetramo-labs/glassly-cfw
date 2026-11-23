@@ -1,0 +1,5 @@
+{
+  "existing_output_rejected_without_overwrite": true,
+  "disabled_assertions_rejected_before_compiler_or_native_calls": true,
+  "no_device_actions": true
+}

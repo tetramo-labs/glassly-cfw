@@ -1,0 +1,10 @@
+{
+  "template_sha256": "8c6bd0476df8a75d2deae71e9093b8a4551cf45213bf87887f1a5f070f69724c",
+  "blocks_sha256": [
+    "238f162b8fe8655037a48352b3b546bd0c9cd8db117693449e747cb27ced111d",
+    "f808d70ae26186c04956ed982c62a1f57b33a31d78ed20e8eaa2237dbd6df744",
+    "37f7effeca49ec9828ecc63a50131ce4ca559cb17fa1f18ee137bff7919e62b9",
+    "408c4ca7064635d0b2d70a2de4cc490d944aec53df65ddae0eae5a64b044a16f"
+  ],
+  "mocks": "jsonRequest returns local test bytes; save no-op; GM transport synthetic; no file/device operations in extracted functions"
+}

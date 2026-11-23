@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Check a Halliday G2 build 2279 AP image against its captured OTA."""
+
+import argparse
+import base64
+from email.parser import BytesParser
+import hashlib
+from pathlib import Path
+import sys
+from zipfile import BadZipFile, ZipFile
+
+from patch_about_label import NEW_LABEL, OFFSET, OLD_LABEL
+
+ROOT = Path(__file__).resolve().parents[1]
+STOCK_OTA = ROOT / "captures/initial-setup/ota/ota.zip"
+CANDIDATE = ROOT / "captures/patched-2279/nuttx_ap.bin"
+OTA_SHA256 = "c256001627be789a2ccff9e9665df9cee4cbec0733c08df4d879747fe0632e2a"
+
+
+def check(ota, image):
+    if hashlib.sha256(ota.read_bytes()).hexdigest() != OTA_SHA256:
+        raise ValueError("Unknown OTA. Select the captured Halliday G2 build 2279 ZIP.")
+    with ZipFile(ota) as archive:
+        stock = archive.read("nuttx_ap.bin")
+        manifest = archive.read("META-INF/MANIFEST.MF")
+    sections = [BytesParser().parsebytes(s) for s in manifest.split(b"\r\n\r\n")]
+    entry = next(s for s in sections if s.get("Name") == "nuttx_ap.bin")
+    expected = base64.b64decode(entry["SHA1-Digest"], validate=True)
+    if hashlib.sha1(stock).digest() != expected:
+        raise ValueError("The stock AP image fails the OTA manifest digest check.")
+    candidate = image.read_bytes()
+    print(f"Halliday G2 build 2279 | {image.name} | {len(candidate):,} bytes")
+    print(f"SHA-256 {hashlib.sha256(candidate).hexdigest()}")
+    if candidate == stock:
+        print("Stock AP image matches the captured OTA and its manifest.")
+        return 0
+    end = OFFSET + len(OLD_LABEL)
+    if candidate != stock[:OFFSET] + NEW_LABEL + stock[end:]:
+        raise ValueError("Unexpected image differences. Rebuild with patch_about_label.py.")
+    print(f'Only change: "{OLD_LABEL.decode()}" -> "{NEW_LABEL.decode()}" at {OFFSET:#x}.')
+    if hashlib.sha1(candidate).digest() != expected:
+        print("The stock manifest does not cover this image. Development loader required for hardware testing.")
+        return 2
+    raise ValueError("Unexpected manifest digest match for a modified image.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--ota", type=Path, default=STOCK_OTA)
+    parser.add_argument("--image", type=Path, default=CANDIDATE)
+    args = parser.parse_args()
+    try:
+        return check(args.ota, args.image)
+    except (ValueError, OSError, BadZipFile) as error:
+        print(error, file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

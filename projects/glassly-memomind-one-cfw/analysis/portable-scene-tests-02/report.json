@@ -1,0 +1,128 @@
+{
+  "format": "memomind-portable-scene-tests-v1",
+  "result": "failed",
+  "commands": [
+    {
+      "label": "generated-source-check",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/prepare_scene_port.py",
+        "--check"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-original-suites-port",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "-DMM_VECTOR_TESTING",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/scene/vector_host_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/test_scene"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "original-suites-port",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/test_scene",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "build-public-api",
+      "argv": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/tests/scene/public_api_test.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/scene.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/vector.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/test_public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "public-api",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/test_public_api"
+      ],
+      "returncode": 0
+    },
+    {
+      "label": "replay-vector-fixture",
+      "argv": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/test_scene",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/vector-fixture.bin"
+      ],
+      "returncode": -6
+    }
+  ],
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "hardware_tested": false,
+  "scope": "Production portable scene/cache/assets + portable geometry/vector, original full host assertion bodies",
+  "pending_boundary": "Native built-in font uses explicit callback; host retains unchanged upstream box-font stub",
+  "source_hashes_verified": 45,
+  "portable_source_sha256": {
+    "UPSTREAM.json": "7d733017d3b0f7984c6d04a1efdc95905abae16f03c3a28007dc70ee834981db",
+    "geometry.c": "f8f296b26b1373e4bc80ce494b818eb7c4b8e5b41c81dde8e3ee219bd70200b6",
+    "geometry.h": "2919054adac42c632e9a3c34cc12314b60a4cbe32e841e86d7cc8e8d65d54931",
+    "geometry_internal.h": "8461e811bdbcf64ca4bd9dc9a8dee84fea3c166cac5ed9454492e1b0570c52b9",
+    "rle.c": "945e57f8ed5996859eccd3598a19a953cd2f37132dcd5acf86ecac93d09f4158",
+    "rle.h": "b770902f55175ecb1fa156d73f32f1c8b9a541009589dea037de634d1d0d346f",
+    "scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "scene.h": "4eb5d6adb084ed55fb5fb1b807c2cfb5e2206530f03f9bd273867025c424953d",
+    "scene_assets.inc": "7184683f391c65346718218f652fc226bb9302ae38799a96ce862fe5b683fe9f",
+    "scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e",
+    "scene_internal.h": "8a9cb8c3327b271b0a0a5d84f67fbbe313f3bdbab05687ee340d2e3b868c257d",
+    "scene_shapes.inc": "027114c251fa9eecc3743be1eaff38fef4b2ba30047109e5e4ba2b7e0cc47ff0",
+    "tests/g2_reference.c": "52a919280797cdb32d5b5e5b67e5778c291e435a83c52b50afb3ca13dd334f98",
+    "tests/g2_rle_reference.c": "aaf1780151b58b3e4b3b5cdce447096fef39e230021c22f8bbd9f8c71d3497f4",
+    "tests/g2_vector_reference.c": "78aa6fc8cd3a9a650c554d880a1fbb7f969cad314b577300617dbadf602a98bd",
+    "tests/prepare_scene_port.py": "843ef3a5997152fe9ca7acf667a8d3d72fda746b17882c112730dcffff8a2e5a",
+    "tests/run_scene_tests.py": "8a72d3b2afcb2315cc138f2e2388220270ea0b7288af7ed19a8d9ed876208f12",
+    "tests/run_tests.py": "a92f3777dc07a2a76c64d70a5a4943a04fd418b2b09ee9cd236c255b89a31488",
+    "tests/run_vector_tests.py": "a1748b170d929069bd68031af832f08cda5c5c23e7447c229f83eeb50b63e672",
+    "tests/scene/layout.c": "d7a480e758d4fb6743b00088939542c82e9ec3dcc5f2081a410b570bf8149beb",
+    "tests/scene/platform.inc": "853c80ac36a9c0c047584b0c0f262d10be75ad1ff43d71b85b68b4281b53aa4c",
+    "tests/scene/public_api_test.c": "ff89098d0eb9af63e1799375b495dae155b352bc72f02a4e0a83cad6caea6304",
+    "tests/scene/shapes_host_test.c": "f6a1d4424c7bb595c84bc37557679a7fabdd6acbbc3e77ff1fc123bf61af984f",
+    "tests/scene/vector_host_test.c": "0e0b8fe2be653996cd5682d50ca4dc14ffa0c3b9d42377dba2df76ac2cec416d",
+    "tests/test_geometry.c": "342e590ddeeef289565754bb0f90bb39abc8d202265b1221b9448d893a63e889",
+    "tests/test_rle.c": "04fa7176d3d5a57a380486a8199126e6eeb61fe3f3b6de63c33d1abe1706d4ce",
+    "tests/test_vector.c": "3a28dc7286db2aad90b322a5211df71b42d07b06f54d1ee794c1fc24008921e9",
+    "tests/vector_path_check.c": "ec3e42f8371ed2f6c38468514f5991de370c514e3ac7c6e30d72a538fe5a00a0",
+    "vector.c": "35d7a6046079dddde8b01a0b191308813f982c05a68d97a224f41df394a5a4e6",
+    "vector.h": "09804832c94752c2607fd01c353cb3dedf14327a3498ebd9e710cefb219ff5ba"
+  },
+  "original_check_sites": {
+    "shapes_host_test.c": 334,
+    "vector_host_test.c": 90
+  },
+  "original_suite_result": "wrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/immediate.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/cache_f00.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/cache_f10.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/cache_reopen.pgm\nOK (0 failures)\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/path_evenodd.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/path_curves.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/rotation_halfway.pgm\nwrote /Users/fosse/dev/glassly-memomind-one-cfw/analysis/portable-scene-tests-02/path_transform.pgm\nvector suite: OK (0 failures), 0 live allocations\nportable original CHECK evaluations: 42466",
+  "public_api_result": "public scene API: independent600x350/601x175 stride320 owners,64/128KiB store limits, zero leaks; peak core bytes 167040/232576",
+  "fixture_replays": [],
+  "error": "replay-vector-fixture failed: see stdout/stderr"
+}

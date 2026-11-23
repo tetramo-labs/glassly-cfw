@@ -1,0 +1,16 @@
+CALL ram:0426000c FUNCTION ram:0425ffa0
+ram:0425fff2  c.beqz a0,0x0426001e
+ram:0425fff4  c.li a5,0x2
+ram:0425fff6  c.li a0,0x2
+ram:0425fff8  beq s1,a5,0x0426000c
+ram:0425fffc  c.li a0,0x0
+ram:0425fffe  beq s1,s2,0x0426000c
+ram:04260002  c.li a5,0x1
+ram:04260004  c.li a0,0x3
+ram:04260006  bne s1,a5,0x0426000c
+ram:0426000a  c.li a0,0x1
+ram:0426000c  jal ra,0x042ae172
+ram:04260010  c.lwsp s0,0x8(sp)
+ram:04260012  c.lwsp ra,0xc(sp)
+ram:04260014  c.lwsp s1,0x4(sp)
+ram:04260016  c.lwsp s2,0x0(sp)

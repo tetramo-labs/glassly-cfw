@@ -1,0 +1,2 @@
+import ghidra.app.script.GhidraScript;import java.nio.file.*;
+public class ListFunctionRange extends GhidraScript {public void run() throws Exception {var args=getScriptArgs();var end=toAddr(args[2]);var it=currentProgram.getFunctionManager().getFunctions(toAddr(args[1]),true);var s=new StringBuilder();while(it.hasNext()){var f=it.next();if(f.getEntryPoint().compareTo(end)>0)break;s.append(f.getEntryPoint()).append(" size ").append(f.getBody().getNumAddresses()).append('\n');}Files.writeString(Paths.get(args[0]),s.toString());}}

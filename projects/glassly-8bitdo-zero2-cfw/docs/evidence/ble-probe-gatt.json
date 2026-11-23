@@ -1,0 +1,243 @@
+{
+  "kind": "Live CoreBluetooth observations after verified BLE-visibility flash",
+  "usb_connected": true,
+  "same_peripheral_identifier_across_captures": true,
+  "identity_basis": "New 80EL candidate immediately after flash; expected FF10/FF13 profile; no independent radio-address-to-USB mapping",
+  "custom_button_stream_present": false,
+  "notifications_received": 0,
+  "captures": [
+    {
+      "local_directory": "build/hardware/20261105T200706.541341Z-ble-scan",
+      "source_sha256": {
+        "scripts/ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4",
+        "tools/probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c"
+      },
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.014849541243165731,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:07:06Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.09274004166945815,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -32,
+          "services": [],
+          "time": "2026-11-05T20:07:06Z"
+        },
+        {
+          "candidates": 1,
+          "discovery_complete": false,
+          "elapsed_seconds": 31.501183541491628,
+          "event": "complete",
+          "exit_code": 0,
+          "notifications": 0,
+          "reason": "Time limit; notification count is separate from subscription success",
+          "subscribed": false,
+          "time": "2026-11-05T20:07:38Z"
+        }
+      ],
+      "events_sha256": "6fd084d32d9df7271e8bef6ca9d122b97f4e910141780d198dc1b808c32262d9",
+      "exit_code": 0
+    },
+    {
+      "local_directory": "build/hardware/20261105T200717.442700Z-ble-inspect",
+      "source_sha256": {
+        "scripts/ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4",
+        "tools/probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c"
+      },
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.012797791510820389,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:07:17Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.057283499743789434,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -34,
+          "services": [],
+          "time": "2026-11-05T20:07:17Z"
+        },
+        {
+          "elapsed_seconds": 0.05751620838418603,
+          "event": "connecting",
+          "time": "2026-11-05T20:07:17Z"
+        },
+        {
+          "connected_seconds": 0.0002804999239742756,
+          "elapsed_seconds": 0.21694841654971242,
+          "event": "connected",
+          "time": "2026-11-05T20:07:17Z"
+        },
+        {
+          "connected_seconds": 0.4746015416458249,
+          "elapsed_seconds": 0.6912692915648222,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:07:18Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.5374541664496064,
+          "elapsed_seconds": 0.7541219163686037,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:07:18Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5943418750539422,
+          "elapsed_seconds": 0.8110097497701645,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:07:18Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.594486958347261,
+          "elapsed_seconds": 0.8111549997702241,
+          "event": "discovery_complete",
+          "time": "2026-11-05T20:07:18Z"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 0.5946187917143106,
+          "discovery_complete": true,
+          "elapsed_seconds": 0.8112868331372738,
+          "event": "complete",
+          "exit_code": 0,
+          "notifications": 0,
+          "reason": "GATT discovery finished",
+          "subscribed": false,
+          "time": "2026-11-05T20:07:18Z"
+        }
+      ],
+      "events_sha256": "2a5149679822e53743501594ecf5a6904c7e2503c945fe87e8796c226aa55c66",
+      "exit_code": 0
+    },
+    {
+      "local_directory": "build/hardware/20261105T200732.686379Z-ble-subscribe",
+      "source_sha256": {
+        "scripts/ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4",
+        "tools/probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c"
+      },
+      "events": [
+        {
+          "authorization": 3,
+          "elapsed_seconds": 0.012205416802316904,
+          "event": "bluetooth_state",
+          "state": 5,
+          "time": "2026-11-05T20:07:32Z"
+        },
+        {
+          "cached_name": "80EL",
+          "connectable": 1,
+          "elapsed_seconds": 0.05835200008004904,
+          "event": "advertisement",
+          "local_name": "80EL",
+          "manufacturer_hex": "",
+          "rssi": -35,
+          "services": [],
+          "time": "2026-11-05T20:07:32Z"
+        },
+        {
+          "elapsed_seconds": 0.05859104171395302,
+          "event": "connecting",
+          "time": "2026-11-05T20:07:32Z"
+        },
+        {
+          "connected_seconds": 0.002086833119392395,
+          "elapsed_seconds": 0.2633362915366888,
+          "event": "connected",
+          "time": "2026-11-05T20:07:33Z"
+        },
+        {
+          "connected_seconds": 0.39900270849466324,
+          "elapsed_seconds": 0.6602524584159255,
+          "event": "service",
+          "primary": true,
+          "time": "2026-11-05T20:07:33Z",
+          "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.45911741675809026,
+          "elapsed_seconds": 0.7203667499125004,
+          "event": "characteristic",
+          "properties": 24,
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:07:33Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "connected_seconds": 0.4610825418494642,
+          "elapsed_seconds": 0.7223322498612106,
+          "event": "subscription_requested",
+          "service": "FF10",
+          "time": "2026-11-05T20:07:33Z",
+          "uuid": "FF13"
+        },
+        {
+          "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+          "connected_seconds": 0.5201042918488383,
+          "elapsed_seconds": 0.7813526247628033,
+          "event": "descriptors",
+          "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+          "time": "2026-11-05T20:07:33Z",
+          "uuids": [
+            "2902"
+          ]
+        },
+        {
+          "connected_seconds": 0.5213086665607989,
+          "elapsed_seconds": 0.7825579582713544,
+          "event": "discovery_complete",
+          "time": "2026-11-05T20:07:33Z"
+        },
+        {
+          "connected_seconds": 0.5778257502242923,
+          "elapsed_seconds": 0.8390751667320728,
+          "enabled": true,
+          "event": "subscription",
+          "time": "2026-11-05T20:07:33Z",
+          "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+        },
+        {
+          "candidates": 1,
+          "connected_seconds": 94.23953149979934,
+          "discovery_complete": true,
+          "elapsed_seconds": 94.50078170839697,
+          "event": "complete",
+          "exit_code": 0,
+          "notifications": 0,
+          "reason": "Time limit; notification count is separate from subscription success",
+          "subscribed": true,
+          "time": "2026-11-05T20:09:07Z"
+        }
+      ],
+      "events_sha256": "243d867c3a500459a814dced821c7c8428fae7de78803539288120debddd0b90",
+      "exit_code": 0
+    }
+  ],
+  "limits": [
+    "No ATT numeric handle exposed by CoreBluetooth",
+    "No battery-only or reconnect result in these captures",
+    "Successful subscription does not prove radio delivery or CCC lifecycle ordering"
+  ]
+}

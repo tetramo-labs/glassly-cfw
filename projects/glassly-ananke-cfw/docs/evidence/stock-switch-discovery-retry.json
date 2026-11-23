@@ -1,0 +1,23 @@
+{
+  "requested_mode": "Switch: Pair + Up",
+  "usb_controller_present": false,
+  "bluetooth_powered_on": true,
+  "ble_scan_seconds": 40,
+  "ble_advertisers_seen": 108,
+  "ble_controller_candidates": 0,
+  "classic_inquiry_seconds": 12,
+  "classic_results": 4,
+  "classic_controller_candidates": 0,
+  "connections_made": 0,
+  "conclusion": "No matching controller found; physical pairing LED state still needs confirmation. Not proof that stock Switch mode lacks BLE.",
+  "files": [
+    {
+      "path": "research/stock-switch-scan-retry.log",
+      "sha256": "5551b16aaa9b3c7d8f9243bf31e3d9b4ae87943eb8e9d09dcef8e18e804e589e"
+    },
+    {
+      "path": "research/stock-switch-classic-retry.log",
+      "sha256": "81cd031520bdc128046db9654b9cfb8ad43d809802e70893ebd1007656a6d47d"
+    }
+  ]
+}

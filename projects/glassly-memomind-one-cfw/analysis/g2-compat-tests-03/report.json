@@ -1,0 +1,260 @@
+{
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "results": [
+    {
+      "name": "ported_shapes",
+      "scope": "MemoMind geometry API: 14 original geometric assertion sites",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_shapes.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03"
+      ],
+      "binary_sha256": "2b0fa60ad549a7e6780b8b0df6126e1767a0b2f3b6956dafaad6c5d7a1a96dd9"
+    },
+    {
+      "name": "ported_easing",
+      "scope": "portable copied algorithm; animation integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_easing.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_easing"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_easing"
+      ],
+      "binary_sha256": "01ac21eb8994a6bdc8b691f6cbbd0a339d8a5c6154bd5261e25913da19d80b8f"
+    },
+    {
+      "name": "ported_volume_gate",
+      "scope": "portable copied state machine; MemoMind audio integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/portable_algorithms",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/volume_gate_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_volume_gate"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/ported_volume_gate"
+      ],
+      "binary_sha256": "69b23c907fab6826d0f3188a6f709f99091e4291cef80039eafc8cbd6caea59e"
+    },
+    {
+      "name": "reference_ancs_relay",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/ancs_relay_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_ancs_relay"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_ancs_relay"
+      ],
+      "binary_sha256": "656723addeb058a47eebd8bdfbfe3882f7127416aed7de7cf4cc50c05553bfa8"
+    },
+    {
+      "name": "reference_upstream",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/upstream_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_upstream"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_upstream"
+      ],
+      "binary_sha256": "c3af9604acb25d2500553c6fe6b21fb79fa88de81933166c69a0074241322677"
+    },
+    {
+      "name": "reference_keyboard",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/keyboard_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_keyboard"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_keyboard"
+      ],
+      "binary_sha256": "1830d66051dbd675474e7790bd3df2eec76e01dec7f0d0a9ac64d2e9ce462484"
+    },
+    {
+      "name": "reference_transport",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/transport_host_test.c",
+        "-lz",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_transport"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_transport"
+      ],
+      "binary_sha256": "e45ec665ce45cef6a695221872aeacc64e804483f50b346186a59a154d5a0c7d"
+    },
+    {
+      "name": "reference_shapes",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/shapes_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03"
+      ],
+      "binary_sha256": "13a793ad82bf84c0c6b2841c7b3ceb081bfbf3fb8f48d33b19c7525ef991df44"
+    },
+    {
+      "name": "reference_vector",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/vector_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_vector"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-tests-03"
+      ],
+      "binary_sha256": "e35f5698c98666f6471f26c68717656a5db4451580636a07753f415c5e4287d6"
+    },
+    {
+      "name": "typescript",
+      "scope": "copied phone-side algorithms/protocol fixtures; G2-specific wire cases do not establish MemoMind routing",
+      "result": "passed",
+      "returncode": 0
+    },
+    {
+      "name": "keyboard_arm_emulator",
+      "scope": "ARM imports/compiled G2 image and g2emu pin required; RV32 equivalent absent",
+      "result": "platform-specific-not-run"
+    },
+    {
+      "name": "device_demos",
+      "scope": "require real G2 BLE/device hardware; no device actions permitted",
+      "result": "platform-specific-not-run"
+    }
+  ],
+  "hardware_tested": false,
+  "memo_full_suite_port_complete": false,
+  "skipped_or_unimplemented_count_as_pass": false
+}

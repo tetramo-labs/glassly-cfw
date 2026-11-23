@@ -1,0 +1,75 @@
+{
+  "version": "GLASSLYCFW/4",
+  "swiftTests": 135,
+  "swiftFailures": 0,
+  "pythonTests": 235,
+  "pythonFailures": 0,
+  "runtimeBytes": 96032,
+  "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3",
+  "imageSHA256": "424c0fe8574340199119cc5751bc6182d17e574adcd72a4a4e2d60f7a63675b8",
+  "reports": {
+    "tests-01/report.json": {
+      "reportSHA256": "e7c1d7f8b9d66c3da2531b1f6a1feefe2a92715dd7a8a3c418b0afaada232e00"
+    },
+    "rv32-02/report.json": {
+      "reportSHA256": "6cf9f1b9ffafde5f44289f928bacd2daade0da7395c0128b379a452bf7871781",
+      "passed": true,
+      "cases": [
+        "persistent dictionary and maximum record",
+        "every allocation failure disposes",
+        "missing dictionary, full output, malformed and finished stream poison",
+        "independent contexts and reset isolation",
+        "dynamic, fixed and Huffman-only blocks"
+      ],
+      "machineRuns": 12,
+      "maxObservedStackBytes": 320,
+      "singleContextAllocationCount": 3
+    },
+    "native-record-02.json": {
+      "reportSHA256": "4ebf7b85d33e981541e05e1ea38d100621d4a4a8291aa734cf4ce8f018d729fe",
+      "passed": true,
+      "groups": 4,
+      "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3",
+      "maxObservedStackBytes": 912
+    },
+    "wake-regression.json": {
+      "reportSHA256": "9cf175ccabe18b34e100fa44fa801f1807e96db62955a1ae0ff579da8596cdc7",
+      "passed": true,
+      "groups": 5,
+      "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3"
+    },
+    "notification-regression.json": {
+      "reportSHA256": "6cd0f852d4b7ae4d93f5fef820cb0f783ec589bc28a80e1a10b5ee4023c0ac3a",
+      "passed": true,
+      "groups": 3,
+      "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3",
+      "maxObservedStackBytes": 256
+    },
+    "notification-gates.json": {
+      "reportSHA256": "7768a257868bfd3458791e7571ed7916c334c986890d46348061d3457fdd5765",
+      "passed": true,
+      "serviceCases": 512,
+      "prestockCases": 14,
+      "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3"
+    },
+    "image-verification.json": {
+      "reportSHA256": "ccdcdb22c5ef421d9d36545f60bede0f0e13e7f0e49665e0d2c1dc3705c34327",
+      "passed": true,
+      "runtimeSHA256": "40b2b5d8a166039ad881ad48db733b8719df89d44b1ef514cfac5219a66960e3"
+    },
+    "session-host-01/report.json": {
+      "reportSHA256": "97cc62bd7d2a045b9853fb93df60734f8358d823e75490ce708887952b35ae0a",
+      "passed": true
+    },
+    "diagnostic-01/report.json": {
+      "reportSHA256": "84b4a365af3b2adc018262458aa5c52c87da4c21b9fc3d2c7c03ed389f598362",
+      "passed": true
+    },
+    "python-regression.json": {
+      "reportSHA256": "7210557ebb10ee4e0685df6e97cfa801e5379d57e2f5609e9f49b17d2d2f62da",
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "hardwareTested": false
+}

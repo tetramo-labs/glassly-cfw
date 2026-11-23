@@ -1,0 +1,1365 @@
+# G1 CFW MVP
+
+Current build: **G1CFW/48 on stock 1.6.3**, offline verified; see the
+[1.6.3 port](G1_CFW_163_PORT.md), [panel wake fix](G1_CFW_47_PANEL_WAKE.md) and [wear-off grace](G1_CFW_48_WEAR_GRACE.md). The new base has not been hardware-tested.
+
+The sessions below document the earlier 1.5.60 builds, which were flashed
+and read back on hardware.
+
+The first milestone is a stock-firmware patch that answers the existing Nordic
+UART `#t` diagnostic command with `G1CFW/1 net bt:` instead of `net build time:`.
+It proves the patch/sign/package/update/boot/readback path before introducing
+new executable code. It is not yet the G2 graphics runtime.
+
+## Scope
+
+Reuse the `~/dev/g2flash` approach: exact stock SHA-256, expected old bytes,
+committed replacement bytes, exact output SHA-256, and validation before upload.
+The implementation here is independent, uses G1 MCUboot images and Nordic
+MCUmgr SMP, and does not import G2 code or copy its offsets/protocol.
+
+Cut from this milestone: retained objects, vector rendering, compression,
+animation, custom command streams, new display ownership, sensor streaming,
+phone integration, and rebuilding the decompiled application.
+
+The marker is a same-length 15-byte replacement in read-only data. No executable
+instruction, reset vector, image header, memory layout, settings, radio image,
+bootloader, BLE name, or application version number changes. The SHA256 and
+RSA-PSS TLVs are replaced to authenticate the modified image. The output ZIP
+contains only `app_update.bin` and an application-only manifest.
+
+## Reproduce
+
+Python 3.11+:
+
+```sh
+./build_cfw.sh
+```
+
+An offline build accepts the exact original CDN archive:
+
+```sh
+.venv/bin/python build_cfw.py --stock /path/to/g1-stock-1.5.6.zip
+G1_STOCK_ZIP=/path/to/g1-stock-1.5.6.zip .venv/bin/python -m unittest discover -s tests -v
+```
+
+Outputs are under `build/g1-mvp/`: signed `app_update.bin`,
+`g1-cfw-marker.zip`, `stock-app_update.bin`, the original `stock-firmware.zip`,
+`flash-plans.json`, and `build-report.json`. The original stock application is
+kept for the restore path; its signature is not changed. Subsequent builds reuse
+the cached stock ZIP and verify its hash again. The committed profile includes the
+RSA signature, so normal builds do not need a private key and reproduce exactly.
+The stock binary is downloaded locally, not committed.
+
+## Offline flash plans
+
+Neither command below imports Bluetooth or contacts a device:
+
+```sh
+.venv/bin/python g1flash.py plan --firmware build/g1-mvp/app_update.bin
+.venv/bin/python g1flash.py plan --firmware build/g1-mvp/stock-app_update.bin
+```
+
+The selected binary determines the direction. The CFW binary requires the exact
+stock active hash; the stock binary requires the exact CFW active hash. Both
+paths validate the complete file hash and RSA signature before starting any
+Bluetooth worker. There is no arbitrary-firmware or force mode.
+
+Every hardware command writes a new JSONL journal under `build/logs/`, including
+the selected device, plan, observed state, and activation/reset checkpoints.
+`--log PATH` chooses a new file explicitly and refuses to overwrite an existing
+log. A separate worker process enforces a 90-second deadline (30 minutes for
+staging), even if native Bluetooth initialization blocks Python's event loop.
+A timeout after a reset request is ambiguous: inspect the log and reconnect to
+verify state rather than assuming the flash failed or repeating the reset.
+
+## On-device workflow
+
+Disconnect the phone's companion app, charge the glasses, and identify both
+temples. Run one temple through boot verification before touching the other.
+These commands require the target to advertise as `Even G1..._L_XXXXXX` or
+`Even G1..._R_XXXXXX`. No automatic first-device selection is provided.
+
+```sh
+.venv/bin/python g1flash.py scan
+.venv/bin/python g1flash.py probe --device LEFT_UUID --side L
+.venv/bin/python g1flash.py probe --device RIGHT_UUID --side R
+```
+
+`probe` sends only the stock `#t` diagnostic request and records the raw reply.
+The template's strings identify this particular stock build as
+`2025-03-21 11:38:43`, `ver 1.5.60`. Although the public firmware link is labelled
+**1.5.6**, the actual version constants are **1, 5, 60**. Never choose a firmware
+profile based only on a marketing/version label.
+
+SMP was observed in normal mode on 1.5.60, so DFU entry is not needed. The
+explicit local-temple DFU command remains available but untested:
+
+```sh
+.venv/bin/python g1flash.py enter-dfu --device LEFT_UUID --side L
+.venv/bin/python g1flash.py scan
+.venv/bin/python g1flash.py state --device LEFT_DFU_UUID --side L
+```
+
+DFU entry is inferred from decompiled `ble_process_req_dispatch` and
+`master_process_put_req`: `4a 01` requests the local reboot; bit 1 would also
+forward to the other temple. This has **not** been tested on hardware. A changed
+address/name must be inspected; the tool deliberately refuses unlabelled `DFU`
+devices. A missing characteristic, MTU, state/hash mismatch, or different name is
+a reason to gather evidence and adapt the transport, not bypass its checks.
+
+```sh
+# Rerun until it reports "uploaded"; each run resumes after the 30 s drop.
+.venv/bin/python g1flash.py stage --scan-seconds 30 --chunk-bytes 480 \
+  --device LEFT_UUID --side L --firmware build/g1-mvp/app_update.bin
+.venv/bin/python g1flash.py activate --scan-seconds 30 --device LEFT_UUID --side L \
+  --firmware build/g1-mvp/app_update.bin
+# Reconnect after reboot, with the current normal-mode UUID:
+.venv/bin/python g1flash.py verify --device LEFT_UUID --side L
+```
+
+`stage` checks the active application hash and confirmed flag, uploads image 0,
+and checks the inactive application's MCUboot digest and bootable flag. It does not mark it
+pending or reset. `activate` repeats the checks, requests a test boot, verifies
+the pending state, then requests reset. A reset ACK is not proof of boot success.
+`verify` must observe the CFW diagnostic marker on the selected temple.
+Use `state` to observe the new active image and its `confirmed` flag. If SMP
+remains available after the test boot, explicitly confirm the expected image:
+
+```sh
+.venv/bin/python g1flash.py confirm --device LEFT_UUID --side L \
+  --firmware build/g1-mvp/app_update.bin
+```
+
+`confirm` refuses any other active image and checks the response's confirmed
+flag. It is a no-op if already confirmed. If SMP is unavailable in normal mode,
+do **not** assume entering DFU again preserves an unconfirmed image: that
+transition reboots. Establish stock auto-confirm behavior first. The explicit
+`activate --permanent` option selects a permanent image before reset when that
+is the intended mode; it is never selected automatically. No automatic rollback
+is promised for either activation mode.
+
+Activation may resume an already pending **identical** image with the same
+permanence setting. If the target is already active, it reports that state
+without selecting or resetting again. Other pending images are refused.
+
+Verify display, pairing, charging, image confirmation, and another DFU connection
+before repeating on R.
+
+The active image must match the profile's **signed-region hash** exactly. A
+different installed firmware is refused; there is no downgrade/force switch.
+For a newer pair, first acquire its matching stock package and port the marker
+profile against that binary. The repo's 1.6.3 decompilation offsets are not valid
+for the 1.5.6 package.
+
+Do not assume test-boot rollback works: the repository's sample uses
+`CONFIG_BOOT_UPGRADE_ONLY=y`, but does not contain a verified production
+bootloader dump. Nor is wired recovery established. Do not run the upstream
+README's `west flash --recover` against the glasses: that instruction is for a
+development kit and erases flash.
+
+## Restore the exact stock application
+
+This is an OTA restore path for a functioning CFW installation, not a wired
+unbrick facility. It was exercised successfully on the left temple on 2026-10-28. It requires the same known target and a confirmed current
+image. Enter DFU as above if needed, then:
+
+```sh
+# Rerun until it reports "uploaded"; each run resumes after the 30 s drop.
+.venv/bin/python g1flash.py stage --scan-seconds 30 --chunk-bytes 480 \
+  --device LEFT_UUID --side L --firmware build/g1-mvp/stock-app_update.bin
+.venv/bin/python g1flash.py activate --scan-seconds 30 --device LEFT_UUID --side L \
+  --firmware build/g1-mvp/stock-app_update.bin
+# Wait about two minutes for the temple to re-advertise, then:
+.venv/bin/python g1flash.py verify --scan-seconds 30 --device LEFT_UUID --side L --expect stock
+# If a test boot needs confirmation and SMP is available:
+.venv/bin/python g1flash.py confirm --device LEFT_UUID --side L \
+  --firmware build/g1-mvp/stock-app_update.bin
+```
+
+Stock verification requires the full diagnostic build date/version and absence
+of the CFW marker. It is not satisfied by any arbitrary non-CFW reply. The network
+core and bootloader are not uploaded. The tool does not issue raw settings or
+calibration writes; stock firmware handles its own runtime-mode bookkeeping.
+
+## Offline acceptance
+
+`tests/test_pipeline.py` runs the production SMP framing/transport against a
+simulated GATT peripheral with fragmented notifications and signed MCUboot
+images. It covers install, test activation, confirmation, stock restore, lost
+upload acknowledgments, upload resumption, lost reset acknowledgments,
+corrupted uploads, refusal of unconfirmed/incorrect source images, pending-image
+resumption, wrong device selection, diagnostic fragmentation, and worker timeout.
+The original tests also validate the actual downloaded stock image and committed
+patch set. Simulation establishes host behavior, not G1 hardware compatibility.
+
+## Image evidence
+
+Source: [public G1 firmware link](https://github.com/AGiXT/mobile/blob/main/Even%20Realities%20G1%20BLE%20Protocol.txt),
+[vendor CDN archive](https://cdn.evenreal.co/firmware/3adb8ebbd35c2343409d6d0c9fe6cbb9.zip).
+
+| Input | SHA-256 |
+| --- | --- |
+| Stock ZIP | `40f5839def1c00da3e0ffea9274dc0e04f249596d31787bd0c497be363cf6f8f` |
+| Stock application | `1eba87bfb1df261d197ca42e0850cc4ff7e668a9e94e02a8be46369b3bfaf483` |
+| Stock network core | `523efcef45a657de827dce2120b5ab1314779e8c51767bee82654559614c2a1d` |
+| Stock application signed region | `f4cdaeac1cdecad243aaf1ec64fa778120e8b4f7e2eacf1b25411bcdeb0870f4` |
+| Patched application | `8719c710f78f9c4967f83a47e4617f9f9b3b10b69da0100c53a55616737f3177` |
+| Patched application signed region | `92c6dfcbced739d4a89b023a0dc2e1907bbcc6cebe78908a0892416acdecf32f` |
+
+The app is 976,509 bytes, with a 512-byte MCUboot header, 975,661-byte body,
+and 336-byte TLV area. The ZIP manifest gives vector/load address `0xc200`;
+the complete file maps from `0xc000`. The initial vector words are
+`SP=0x20031858`, `reset=0x00053e89` (Thumb).
+
+The stock application and network image both authenticate with the public
+[MCUboot v1.9.0 RSA development key](https://github.com/mcu-tools/mcuboot/blob/v1.9.0/root-rsa-2048.pem).
+The SHA-256 of its DER PKCS#1 public key is
+`fc5701dc6135e1323847bdc40f04d2e5bee5833b23c29f93593d00018cfa9994`.
+The match was confirmed by verifying the stock RSA-PSS signature, not only
+comparing the key-hash TLV. This proves the downloaded artifacts use that key;
+it does not prove an unseen device's current bootloader accepts this image.
+
+The stock diagnostic literal is at **file offset `0x95cf9` / CPU address
+`0xa1cf9`**. Its pointer is at file `0x3aa4`. Thumb disassembly confirms the `#t`
+handler at `0xf9b4` compares two bytes, formats the response at `0xf9f0`, and
+sends 200 bytes via the stock callback at `0xf9fa`. The format arguments and
+length are preserved. The marker is the only body change.
+
+To intentionally regenerate the profile, download that public development key,
+then run `tools/regenerate_marker.py --stock PATH --key PATH` in the venv.
+The tool pins the original key file and archive hashes. RSA-PSS uses random
+salt, so regeneration changes the signature/output hash; review and update the
+profile and this evidence together. Ordinary builds replay the committed bytes.
+
+## Hardware session on 2026-10-28
+
+Both temples were identified by scan and probed before any write:
+
+| Temple | Advertised name | Diagnostic |
+| --- | --- | --- |
+| L | `Even G1_26_L_C98EE7` | app build `2025-03-21 11:38:43`, `ver 1.5.60`, net build `2025-03-21 11:41:05` |
+| R | `Even G1_26_R_48D3D5` | identical |
+
+Both reported the stock signed-region hash `f4cdaeac…0870f4` as the active,
+confirmed image in slot 0, with no second slot listed. Battery was 100% on both.
+Note the reply ends in `\n\r`, not `\r\n`; the parser accepts it.
+
+Observed transport facts (these supersede the earlier inferences):
+
+- **SMP is exposed in normal mode.** The GATT table has the Nordic UART service
+  and the MCUmgr SMP service together, MTU 498. No `4a 01` DFU entry was needed
+  and none was sent.
+- **The firmware drops an unbonded central 30 s after connecting.** The first
+  connection attempt to each temple also timed out once before succeeding.
+  In `low_speed_peripheral_dispatch_thread`, the connect callback stamps
+  `field_0xae4` and the main loop calls `bt_conn_disconnect(conn, 0x13)` when
+  30,000 ms have elapsed, unless a bonded peer address is stored at `0x1080` or
+  the device is in DFU mode. Bonding the Mac would unpair the phone
+  (`on_pairing_complete` calls `bt_unpair` on a new address), so the tooling
+  does not bond. The "disconnect because invalid mac" guard did not fire because
+  the glasses were in the open case, which enables allow-bind mode.
+- **Uploads resume.** MCUmgr resumes by full-file SHA-256, so `stage` is simply
+  rerun after each 30 s drop. `g1flash.py` now records a `disconnected` event and
+  fails the pending request immediately instead of waiting out the SMP timeout.
+- **480-byte chunks are accepted.** The device negotiates MTU 498, matching the
+  `MCUMGR_BT_OTA_DFU_SPEEDUP` sample configuration. `stage --chunk-bytes 480`
+  moved about 170 KB per 30 s window; the default 128 moves about 45 KB.
+  The CFW staged in six windows (about 3.5 minutes wall clock).
+- **Rebooting takes about two minutes to re-advertise** after the reset ACK. A
+  scan that fails inside that window is not evidence of a failed boot.
+- **The production bootloader is overwrite-only with auto-confirm.** After a
+  non-permanent `activate`, the new image came up as active and `confirmed`
+  with slot 1 no longer listed. There is no test/revert state and no copy of
+  the previous application on the device; the only way back is the OTA restore.
+
+Left temple install result: `verify` observed
+`G1CFW/1 net bt: 2025-03-21 11:41:05, app build time 2025-03-21 11:38:43, ver 1.5.60`
+and `state` showed hash `92c6dfcb…decf32f` active and confirmed. Session logs
+are under `build/logs/` (`20261029T0358*` through `20261029T0405*`).
+
+Left temple restore result: the exact stock application was staged in seven
+windows, activated, and came back after about two minutes reporting
+`net build time: …, ver 1.5.60` with hash `f4cdaeac…0870f4` active and
+confirmed (`20261029T0406*` through `20261029T0412*`). The OTA restore path is
+therefore demonstrated on hardware, not only simulated.
+
+The CFW was then reinstalled on the left temple with the same loop (seven
+windows, `20261029T0413*` through `20261029T0418*`); `verify` again observed
+`G1CFW/1` and `state` showed the CFW hash active and confirmed.
+
+The right temple was installed in parallel with the left reinstall (seven
+windows, `20261029T0413*` through `20261029T0419*`) with the same result:
+`G1CFW/1` observed, CFW hash active and confirmed. Both temples still answer
+the stock battery query (`2c 01`) afterwards. Display, pairing with the phone,
+and charging behaviour were not observed from the host and remain for the user
+to check by eye.
+
+## Code injection (G1CFW/2 and later)
+
+The marker proved the signing/flash path. Later profiles append compiled code
+to the application image, g2flash-style, and hook one stock call site:
+
+- **Toolchain.** `tools/build_blob.py` compiles `cfw/src/g1cfw.c` with Apple
+  clang (`--target=thumbv8m.main-none-eabi -mcpu=cortex-m33 -Os -fropi`) to a
+  position-independent blob and resolves intra-blob branches and PC-relative
+  rodata references itself; any other relocation is an error, so stock entry
+  points are called through absolute addresses from `cfw/src/fw_abi.h`.
+- **Placement.** The primary slot is `0xc000..0xfc000` (flash map in the
+  image at file `0x826d0`). The stock image already ends at `0xfa67d`, and the
+  last sector is the MCUboot trailer, so the blob is appended at `0xfa530`
+  (word-aligned end of the signed body) with about 2.3 KB total headroom. The
+  header image size, SHA256 TLV, and RSA-PSS TLV are regenerated;
+  `cfw/image.py` enforces the budget and reproduces the committed output hash.
+- **Hook.** `0x2338e` in the BLE receive entry (`bl spec_ble_command_hook`)
+  becomes `bl cfw_rx`. Non-`0xF0` packets tail-call the stock hook with the
+  original arguments. Replies use the context send callback at `ctx+0xc` from
+  the getter at `0x1880c`, exactly as the stock `#t` reply does.
+- **Display.** `GlassesState` (getter `0x16d3c`) embeds the panel context at
+  `+0xb6c`; the frame pointer is at panel `+0x344`, panel origins at `+0x348`
+  and `+0x34c`, and the power flag at `+0x35c`. `_reflash_fb_data_to_lcd` is at
+  `0x4a22c`; `global_system_suspend`/`global_system_resume` (panel power with
+  the state byte at `+0xfea`) are at `0x2d78c`/`0x2d808`. See [docs/G1_CFW_PROTOCOL.md](G1_CFW_PROTOCOL.md) for the commands.
+- **Carving (G1CFW/7 and later).** Stock behaviour is not required, so the
+  blob now overwrites stock code instead of appending. `tools/g1map.py` sweeps
+  the binary for function prologues and names 354 functions from their own log
+  strings (`build/g1-1.5.60-functions.json`); `tools/g1carve.py LO HI` lists
+  every external way into a range (branches, pointer literals, movw/movt) so a
+  carve has an explicit stub list. `DashBoard_Reflash` (`0x399e0`, 15,828
+  bytes, called only from `ui_DashBoard_task`) is the first region: a 4-byte
+  `movs r0,#0; bx lr` stub at its entry and the blob at `0x399e4`, leaving the
+  image at the stock size. G1CFW/38 extends the region to `0x3e7a8` and
+  neutralises the five outside callers (see the G1CFW/38 entry below). Further candidates from the map: the UI task block
+  `0x399e0..0x42da8` (about 38 KB, 80 entry points), notification parsing
+  (about 10 KB), navigation map rendering (about 4 KB), factory tests (about
+  2 KB). The `gui_utf_*` text drawers (about 10 KB) are worth keeping for a
+  built-in-font text command.
+- **Regenerating.** `tools/gen_profile.py --carve dashboard --upgrade-from profiles/...`
+  needs clang and the public MCUboot development key (`build/keys/`), rebuilds
+  the blob, patches, signs, and writes `profiles/g1-1.5.6-cfw.json`.
+  `./build_cfw.sh` then replays every profile under `profiles/` without a
+  compiler into `build/<profile>/`. The profile lists older image hashes it may
+  be installed over, so `g1flash.py` accepts an upgrade from the marker CFW.
+- **Tests.** `tests/host/g1cfw_host_test.c` compiles the injected source for
+  the host with stubbed stock entry points and a guarded frame buffer under
+  AddressSanitizer/UBSan; `tests/test_cfw.py` checks the committed profile's
+  blob placement, hook encoding, and that nothing else in the body changed.
+- **Analysis.** `tools/g1dis.py` disassembles the exact 1.5.60 binary and finds
+  cross-references, which is how every address above was verified. The 1.6.3
+  decompilation under `src/` is reference material only; its addresses differ.
+
+### Hardware result for G1CFW/2 (2026-10-28)
+
+The ping-only profile (`profiles/g1-1.5.6-cfw2-ping.json`, 148-byte blob) was
+installed on the left temple over the marker image in seven windows, activated,
+and came back with image hash `c8c5683b…e3e2cb` active and confirmed. The stock
+`#t` reply still arrived through the hook (`G1CFW/2 net bt: …`), and
+`g1flash.py ping` received `f0 00 00 "G1CFW/2" 00 01 05 3c`: the appended code
+runs, the receive hook passes stock traffic through, and the reply callback
+convention is correct. Logs: `20261029T0444*` through `20261029T0452*`.
+
+### Hardware results for G1CFW/3 and G1CFW/4 (2026-10-28)
+
+- G1CFW/3 (display commands) installed over G1CFW/2 and answered PING with
+  `G1CFW/3`. INFO reported the frame buffer at `0x20059115`, column origin 0,
+  row origin 210, and the panel unpowered. A full-frame FILL and a 67-packet
+  1bpp test-pattern BLIT were accepted; FLUSH correctly refused with
+  `panel-off`, so the frame-buffer path works but nothing was visible while
+  docked. Logs `20261029T0452*` through `20261029T0501*`.
+- G1CFW/4 added PANEL via `global_system_suspend`/`global_system_resume`.
+  Suspend moved the stock power byte to 1 and resume back to 0, but the panel
+  flag at context `+0x35c` stayed 0: `panel_resume` only calls `panel_on` when
+  bit 8 of the flag halfword at state `+0x1070` is set, which the stock
+  firmware clears while the glasses are docked. Logs `20261029T0505*` through
+  `20261029T0512*`.
+- G1CFW/5 therefore adds PANEL modes 2/3 that call the panel context's own
+  `on`/`off` callbacks (`panel_on` at `0x49e48`, `panel_off` at `0x49d9c`),
+  bypassing the dock policy for development.
+
+### Hardware result for G1CFW/5 (2026-10-28)
+
+Installed over G1CFW/4 on the left temple while docked. PING answered
+`G1CFW/5`; `panel --force-on` returned the panel flag set (stock power byte
+still 1, i.e. the system considers itself suspended); `draw --clear` cleared
+the frame, sent the 67-packet 1bpp test pattern, and the full-frame FLUSH
+succeeded; INFO twenty seconds later still showed the panel powered. Host-side
+evidence ends at the SPI push; whether the pattern is visible on the lens
+needs a look at the glasses. Logs `20261029T0513*` through `20261029T0521*`.
+
+### Visual check and G1CFW/6 (2026-10-28)
+
+The user compared the left lens against a reference rendering of the same
+pattern: everything matched except the right edge of the border, which was
+cut off. Cause: `_reflash_fb_data_to_lcd` sends `x1/2 - x0/2` bytes per row,
+so its x1 is exclusive while y1 is inclusive; passing `x0 + w - 1` drops
+columns 638-639, exactly as the stock full-frame refresh does with `0x27f`.
+G1CFW/6 passes `x0 + w` (the routine clamps at `0x280`, so 640 is accepted).
+
+### Hardware result for the carve and display stubs, G1CFW/8 (2026-10-28)
+
+The left temple booted the carved build (blob at `0x399e4` inside the
+stubbed `DashBoard_Reflash`, plus stubs on `display_reflash_handler` and the
+whole-frame clear), answered PING with `G1CFW/8`, powered the panel and drew
+the full-width test pattern. The image is back to the stock size with 14.5 KB
+of room in the region. Note for the install loop: the stage command re-reads
+the firmware file on every reconnect, so a rebuild during a loop changes what
+is uploaded mid-way (the final hash check still guarantees a consistent image);
+copy the file before looping.
+
+### Hardware result for G1CFW/9: context, stream, RLE (2026-10-28)
+
+Left temple, docked, panel forced on, full-frame test pattern with clear and
+flush, measured by `g1flash.py draw` (host wall clock including replies):
+
+| Path | Packets | Bytes | Time |
+| --- | --- | --- | --- |
+| Per-packet BLIT with a reply each | 67 | 16,000 | 5.48 s |
+| STREAM, pipelined, 4 messages | 66 | 16,072 | 1.87 s |
+| STREAM with PackBits RLE, 2 messages | 22 | 5,152 | 0.43 s |
+
+STATS afterwards: 6 messages, 0 errors. Write-without-response packets sent
+back to back were not dropped by the stock receive path at this rate. The
+right temple then took G1CFW/9 the same way and drew the RLE frame in 0.65 s
+with 0 errors. Both temples are on G1CFW/9 (image hash `db29379a…4fdfb6`).
+
+### Hardware result for G1CFW/10: text (2026-10-28)
+
+Both temples took G1CFW/10 (image hash `5917e8e9…8491c4`). `text "Hello G1
+left"` in font 0 at (300,10)-(636,37) and `"12:47"` in font 1 at
+(300,60)-(636,100) returned ok on the left temple, `"Hello G1 right"` on the
+right, drawn over the RLE test pattern; STATS showed 0 errors. The left
+temple's first activation attempt missed its scan window after the staging
+disconnect, so the install loop now retries activation. Legibility of the
+glyphs is for the user to confirm by eye.
+
+### Hardware result for G1CFW/11: copy (2026-10-28)
+
+Left temple: `copy --rect 300,10,336,28 --to 300,110` returned ok after the
+text draw, so the text box should now appear twice (at y 10 and y 110);
+STATS 0 errors. The right temple did the same. Visual confirmation pending.
+
+### Hardware result for G1CFW/12: heap arena (2026-10-29)
+
+Both temples booted G1CFW/12 and every asset command returned `no-memory`:
+the stock `malloc` (0x7a15c) refused the 48 KB arena request, and ASSET_INFO
+showed nothing allocated. The heap already holds the 64 KB frame buffer and
+the stock upload queue. G1CFW/14 retries in 8 KB steps down to 8 KB and
+reports the size it obtained.
+
+### Hardware result for G1CFW/14: assets and shapes (2026-10-29)
+
+Both temples (left checked after): the stock heap granted a **16 KB** arena (48, 40, 32 and 24 KB
+were refused). A 16,000-byte 1bpp test-pattern asset uploaded in 4 stream
+messages, ASSET_DRAW blitted it, a 12-byte string asset rendered through
+ASSET_TEXT, ASSET_INFO showed 2 assets and 16,012 bytes used, and the 8-record
+`shapes --demo` drew (filled and outlined rectangles, circle and ring, two
+lines, filled and outlined triangles); the user confirmed the shapes look right on the lenses. STATS 0 errors. The arena is therefore
+one full frame; a larger store needs static RAM reclaimed from stubbed stock
+features rather than the heap.
+
+### Hardware result for G1CFW/16: retained objects (2026-10-29)
+
+Both temples: image, rect and text objects were defined, SHOWn in order with a
+clear and flush, and STATE reported revision 4 with 3 objects shown; 0 errors.
+G1CFW/15's PEEK had shown the reclaimed navigation-map RAM at `0x2001bf24`
+and the dashboard scratch at `0x20013b84` all zero after boot.
+
+### Hardware result for G1CFW/17: animation (2026-10-29)
+
+The stubbed `display_reflash_handler` now branches into `cfw_display_tick`.
+`obj anim --period 30 --move 4:600,80:40:1` glided a 40x40 square across the
+test pattern on the left temple: STATE's revision rose from 3 to 43, i.e. the
+display thread rendered all 40 frames by itself, re-posting the stock refresh
+message after each 30 ms sleep; a second ANIM with two glides (ease-out and
+linear) took it to 83. The right temple ran the first glide the same way.
+STATS 0 errors on both. Frame cost is a full-frame compose and push per tick,
+so 30 ms periods are a request, not a guarantee.
+
+### Animation frame rates, G1CFW/18 (2026-10-29)
+
+The user found the G1CFW/17 glides slow. G1CFW/18 pushes only the union of
+each moved object's old and new boxes and reports frames per second from
+ANIM_STATE ticks against host wall clock (40x40 square over the full-frame
+test pattern, left temple):
+
+| Period | Frames | Time | fps | full pushes |
+| --- | --- | --- | --- | --- |
+| 30 ms | 40 | 2.49 s | 16.1 | 0 |
+| 10 ms | 60 | 2.61 s | 23.0 | 0 |
+
+About 33 ms per frame remained after the sleep, which is the full-frame
+composition in RAM (clearing 64,000 bytes and expanding the 1bpp image).
+G1CFW/19 composes only the dirty rows.
+
+### Animation frame rates, G1CFW/19 (2026-10-29)
+
+Composing only the dirty rows (right temple, same scene):
+
+| Period | Frames | Time | fps | full pushes |
+| --- | --- | --- | --- | --- |
+| 10 ms | 40 | 0.81 s | 49.4 | 0 |
+| 1 ms | 60 | 0.75 s | 79.8 | 0 |
+
+Left temple: 24.3 fps at 30 ms, 48.7 at 10 ms, 83-87 at 1 ms. About 12 ms per
+frame remains at the floor: the SPI push of the dirty rows, the driver's 1 ms
+wait, and the display-thread round trip.
+
+### G1CFW/20: open link policy (2026-10-29)
+
+Two raw instruction patches remove the stock central policy: at `0x18c8e`
+in `ancs_connected` the `cbz` that only accepts the bonded phone's address
+becomes an unconditional branch to the accept path, and at `0x2c4be` the
+`bt_conn_disconnect` that drops an unbonded central after 30 s becomes two
+NOPs. Consequence: **any BLE central within range can connect to the glasses
+and drive the private protocol without pairing**. That is intended for this
+development firmware and is the only way to use the glasses outside the dock
+from the Mac; restore any older profile to get the stock policy back.
+`g1flash.py ping --hold 45` holds a connection past the old 30 s limit to
+verify it: on the left temple it answered `G1CFW/20` before and after a 45 s
+hold on one connection, 0 errors. The right temple is still on G1CFW/19
+pending the user's decision on the open policy.
+
+**Worn test passed.** With the glasses out of the case, lid closed, and on
+the user's head, the Mac connected to the left temple on the first attempt
+and PING answered `G1CFW/20` before and after a 20 s hold on one connection.
+The dock is no longer required for anything except installing over a
+pre-G1CFW/20 image (the right temple, until it is upgraded).
+
+### G1CFW/21: touch gestures (2026-10-29)
+
+Trace (1.5.60, `tools/g1dis.py`): the aw9320x IRQ sets the byte at
+`0x2001a22e` (1 press, 2 release) and gives the semaphore at state+0xb0;
+`touch_key_thread` (`0x2ba60`, 1.6.3 decomp `src/app/touch_key_thread.c`)
+times the presses, stores a gesture code in the word at `0x20007cb4` and
+calls the helper at `0x2ba48`, whose only callers are the three signal sites
+in that thread. The helper gives `__key_event_sem` (`0x20007cb8`, via the
+`k_sem_give` trampoline at `0x7ff68`) once the ready byte at `0x2001920c` is
+set by `__init_key_event_sem`. `key_event_thread` (`0x2af30`) then acts on
+the code. The profile's `input` group replaces the helper's first
+instruction with `b.w cfw_touch_event`; the blob re-implements the give and
+adds INPUT_CONTROL/INPUT_STATE/INPUT_EVENT (docs/G1_CFW_PROTOCOL.md). The
+CFW sends the event notification from the touch thread through the same
+synchronous Nordic UART notify the stock `#t` reply uses.
+
+**Hardware result (left temple, docked, 2026-10-29).** Installed over
+G1CFW/20 in one connection (stage 3 min, no drops), confirmed on reboot.
+`g1flash.py touch watch --seconds 70` received 13 INPUT_EVENTs while the
+user tapped: singles, a double, a triple, long-press start/end and one
+long-press timeout, each within a second of the touch. Some deliberate taps
+arrived as a `single` followed about half a second later by `long-start`;
+that is the stock classifier's own output (it is unchanged), not a CFW
+artefact. Stock handling stayed on (`swallow` off), so the dashboard reacted
+as before.
+
+### G1CFW/22: stock event tap (2026-10-29)
+
+Trace (1.5.60): `imu_fusion_thread` (`0xfec0`) logs "look up" / "bow head"
+and calls `0x28f38` with 2 / 3 (`0x10418`, `0x10642`); `check_work_mode`
+(`0x28fa4`, 1.6.3 decomp `src/app/check_work_mode.c`) calls it with 6 worn,
+7 taken off, 8 in open case, `0xb` case closed; 32 call sites in all. The
+poster (1.6.3 `FUN_00029774`) parks the code in the byte at `0x20003035`
+and either enqueues `[F5][code][CB]` through `enqueue_bt_data` (`0x184d8`)
+when ctx+0x248 or ctx+0x220 is set, or gives the semaphore at ctx+0x218 and
+sleeps 1 ms. The `input` hook group now also replaces the poster's entry
+with `b.w cfw_stock_event`, which re-implements that body after counting
+and optionally reporting the event. Note the Mac, as the connected central,
+already receives the stock `F5` notifications under the open link policy;
+the tap adds counters, the last wear/case state and an off switch. The IMU
+attitude words (`0x20007c40..0x20007c4c`, from the 1.5.60 `get_imu_info`
+literal pool) read as zero while docked; the fusion thread sleeps in work
+modes 1 and 8, so they need a worn test.
+
+**Hardware result (both temples, 2026-10-29).** G1CFW/22 installed on the
+left (over /21) and right (over /21, after the Mac's stale bond for the
+right temple was forgotten in System Settings; the stale record had made
+every connection fail with CoreBluetooth error 14 "Peer removed pairing
+information") in one upload pass each. `touch watch` on the left temple
+while docked with the lid open reported, right after connecting, `11`
+(bind check), 8 in-case-open, `0a` battery, 9 charging, `0e` case charging
+and `0f` case battery. With the user holding the glasses out of the case
+and then wearing them: `11`, 6 worn, `0a`, 9, then on docking 8, `0e`,
+`0f`. Counters persisted across watches (events 17, all forwarded to the
+stock path). No head-up/down event was produced during a short look up and
+down on the **left** watch. The right temple explained it: its counters
+showed 5 events with `head-down` last, and its attitude words were live
+(`0x20007c40..0x4c` = 166.23, 329.06, 13.25 degrees while docked). The IMU
+fusion thread runs on the master temple only (`update_imu_mode` returns
+unless `__is_master()`), and on this pair that is the right temple, so head
+events and attitude come from the right side while touch gestures come from
+whichever temple was tapped. `g1flash.py imu --samples N` reads the three
+words; the third is the pitch the head-up detector compares.
+
+**Right temple worn test (2026-10-29).** `touch watch` on the right temple
+while the user put the glasses on, looked up, looked down and docked them:
+`11` bind check, 6 worn, `0a` battery, 9 charging, then **2 head-up** at
+7.7 s, `12` (a stock UI event) and **3 head-down** at 9.8 s, then 8
+in-case-open, `0e` case charging, `0f` case battery on docking. All ten
+events were also forwarded to the stock path (counters matched).
+
+**Attitude while worn (right temple, 2026-10-29).** `g1flash.py imu
+--samples 60 --interval 0.5` with the glasses on and the user nodding:
+pitch (third word) swung between -71.9 and +38.0 degrees in time with the
+nods, the first word sat near 93 degrees (about 165 while the glasses lie
+in the case, so it is roll), and the second word drifted at about 2 degrees
+per second whether worn or docked (yaw, gyro-integrated, no magnetometer).
+A recording made while the glasses were still in the case was flat at
+pitch 14.6, which is the docked value; the fusion words only move with the
+sensor. Reading the three words through PEEK costs one round trip per
+sample; 2 Hz was comfortable.
+
+### G1CFW/23: view offsets and streamed IMU samples (2026-10-29)
+
+No new hooks. VIEW (`0x14`) adds an offset to the stock panel origins in
+`cfw_flush`; the stock mapping of the phone's height/depth gears was read
+from `cal_panel_canvas_coord` (1.5.60 `0x45678`): row origin
+`(8 - height_gear) * 35`, column shift table for depth gears 1..9 of 22, 8,
+0, -4, -8, -10, -12, -14, -16, negated on the master. The gears live at
+panel+0x354/+0x355 and INFO showed both temples at row 210 / col 0 (gear 2).
+IMU streaming reuses the animation tick: IMU_CONTROL posts the CFW refresh
+message if the tick is idle, and each tick sends one IMU_SAMPLE from the
+attitude words at `0x20007c40`, sleeps the period and re-posts.
+
+**Hardware result (2026-10-29).** Both temples installed in one pass. On the
+right temple `imu --stream --period-ms 50 --samples 40` delivered samples
+at the requested 20 Hz (39 received over 1.95 s; the first was lost in the
+host tool, which then gained a separate queue for unsolicited packets).
+
+### G1CFW/24-25: microphone control (2026-10-29)
+
+G1CFW/24 called `startAudioStreamRecord` (`0x3164c`): the start was
+accepted but no `F1` packet followed, because that routine only tells the
+quick-note *storage* thread to open a recording file. The 1.6.3 decomp of
+`do_pdm_transfer` and `main.c` gave the real mechanism, confirmed in
+1.5.60: the main thread (`0x17470`, the map calls it `component_init`)
+waits on the semaphore at state+0x68 and runs a capture session
+(`dmic_stream_start`, `0x30f68`) when bit 2 of the byte at state+0x1065 is
+set; the phone's `0E 01` handler sets that bit (1.6.3 `FUN_0008040c`) and
+`dmic_record_start` (`0x3e1f0`) does the same for quick notes. The session
+configures the PDM peripheral, reads blocks, LC3-encodes them
+(`app_codec_lc3_test`) and, while the byte at `0x20003036` is 0 and the
+word at `0x20007d14` is 0, queues them for the BLE dispatcher, which sends
+`[F1][seq][200 bytes]` (`send_dmic_msg`, `0x1a56a`). `0x30ea8` sets the
+byte to 1 to end the session (from `exit_mic_mode`); `0x30ecc` sets 0 or 2.
+G1CFW/25's MIC_CONTROL drives those three state items directly; no hooks.
+
+**Hardware result (2026-10-29).** Both temples installed in one pass. On the
+left temple, docked, `mic record --seconds 4` got its first `F1` packet
+0.12 s after the start and then 39 packets of 200 bytes with no sequence
+gaps (9.6 packets/s); stop returned the mode byte to 1. Decoding with
+liblc3: 20-byte frames at 10 ms give 3.90 s of audio for the 4 s capture
+with no decoder errors, so the stock stream is 16 kHz LC3 at 16 kbit/s,
+ten frames per chunk; 40-byte frames decode without errors too but yield
+half the duration, so they are wrong. The docked capture is loud noise
+(peak at full scale), to be judged against a spoken capture while worn.
+
+### G1CFW/26: depth as a content shift (2026-10-29)
+
+Worn test of G1CFW/23's VIEW: height gear 6 moved the pattern up on both
+lenses and they still fused (the tool now blanks the frame before a move,
+because the panel keeps the old rows); depth gear 7 as a column-origin
+offset fused into one image at a greater distance but cut off the left
+lens's left edge and wrapped the right lens's right edge onto its left
+side, so the panel's column space is exactly 640 wide. G1CFW/26 keeps the
+column origin and shifts the content inside `cfw_flush`: per row it saves
+the up to 2 * |dx| / 2 bytes the inverse move cannot restore (third CFW
+RAM region, `0x20013b84`, 200 x 24 bytes), moves the span, zeroes the
+uncovered strip, pushes the clipped panel span and restores the row. Host
+test covers both signs, an interior dirty rect and frame restoration.
+
+**Worn result (2026-10-29).** With G1CFW/26 on both temples, the pattern at
+height gear 6 and depth gear 7 fused as one image at a greater distance
+with no wrap-around; the outer 12 columns of each lens are cropped, which
+is inherent to the stock depth model (content must stay inside a margin of
+the largest shift used, 22 px per side at the nearest gear).
+
+**Microphone while worn (right temple, 2026-10-29).** `mic record
+--seconds 8` while the user spoke: first packet 0.15 s after start, 79
+packets, 15,800 bytes, no sequence gaps, 7.90 s decoded with no LC3
+errors. The 250 ms loudness envelope shows a start transient (the first
+quarter second is loud, probably the PDM filter settling) followed by
+speech-shaped levels with pauses. Note the panels did not power on when the
+glasses were worn: with the stock refresh pipeline stubbed nothing asks for
+the panel, so a host has to send PANEL force-on (mode 2) before drawing.
+
+### G1CFW/27: panel follows wear (2026-10-29)
+
+No new hooks: `cfw_stock_event` already sees the wear codes, so it calls
+the panel's on callback at 6 (worn) and the off callback at 7, 8 and `0b`,
+unless INPUT_CONTROL bit 4 hands panel power to the host. The on callback
+is the same one PANEL mode 2 uses, which worked while docked when the
+stock resume path refused.
+
+**Hardware result (2026-10-29).** Wrong mechanism. With both temples on
+/27 and the pattern lit, the user took the glasses off for five seconds and
+the lenses stayed on. The right temple's counters explained it: 4 events
+since the install reboot with `11` (bind check) last and no `7`, while the
+work-mode byte at state+1 read 3 (normal standby) and the wear state byte
+(1.5.60 `0x20003034`, 1.6.3 `DAT_20003050`) read `0xff`. `check_work_mode`
+resets that state machine whenever no central is connected (its third
+argument is the link flag; the reset path is `param_3 == 0`), and only posts
+`11` then the wear code on the first two passes after a connection. Stock
+gets away with it because the phone is always connected; the CFW host was
+not. The wear events are therefore a connected-only signal.
+
+### G1CFW/28: panel follows the work mode (2026-10-29)
+
+Trace (1.5.60): `check_work_mode` (`0x28fa4`) runs every pass of the
+200 ms low-speed thread and classifies the wear sensor word (1.6.3
+`DAT_20006bc8`): at or above `0x33` worn, below `0x28` not worn, with a
+debounce of 3 passes (no stock page), 10 or 60 (page up). It then calls
+`change_work_mode` (1.5.60 `0x16ee0`, 1.6.3 `0x169c0`) with 3 (normal
+standby) or 2 (normal run, when a stock page is showing) while worn, 4
+(normal low power) when taken off out of the case, 5/6 when charging in
+the case; `try_enter_low_power_mode` adds 8 (deep sleep after five minutes
+with the lid closed and no charger) and 9 (waking). None of this depends on
+a connection. `change_work_mode` itself only stores the byte at state+1 and
+reprograms the IMU, so the CFW detours its entry: the first four bytes
+(`push {r4, r5, r6, lr}; mov r4, r0`) become `b.w cfw_work_mode_entry`, a
+naked blob function that repeats them, calls `cfw_work_mode(mode)` and
+jumps back to `0x16ee4`. `cfw_work_mode` counts the change, records the
+mode for INPUT_STATE and switches the panel: on (callback, then a
+whole-frame push so the surviving frame buffer reappears on the blank
+panel) for 2 and 3, off for 4, 5, 6 and 8, nothing for 0, 1, 7 and 9. The
+stock-event path from /27 stays as a second, connected-only source; both
+check the powered flag first, so they never fight. Host test: the detour is
+`#ifdef __thumb__`, `cfw_work_mode` is called directly.
+
+**Hardware result (both temples, 2026-10-29).** G1CFW/28 installed over
+/27 on both temples in one pass each while worn. After the reboot the
+detour was live (INPUT_STATE: 2 mode changes, boot then normal standby,
+mode byte 3) but the panels were off again: `draw` answered `panel-off`
+and the state byte at +0xfea read 1 (suspended). The stock display-off
+path (`0x2a2f8`: page byte to 0, then `global_system_suspend` at
+`0x2d78c`, which sleeps 300 ms and calls the panel's suspend callback) had
+run with the mode already 3, so no mode change announced it. A mode-change
+hook alone is not enough; the stock also switches the panel on its own.
+
+### G1CFW/29: reconcile and refuse (2026-10-29)
+
+Two more entry detours in the same style. `check_work_mode` (`0x28fa4`,
+`push.w {r4-r8, sb, sl, lr}` displaced, r0-r2 preserved across the call)
+runs every 200 ms on the low-speed thread, so `cfw_work_mode_tick`
+reconciles panel power with the mode byte on every pass: whatever turned
+the panel off while worn, it is back within 200 ms with the frame buffer
+pushed again. `global_system_suspend` (`0x2d78c`, `push {r3, r4, r5, lr}`
+and `ldrb.w r3, [r0, #0xfea]` displaced) is gated by `cfw_suspend_gate`:
+while the CFW manages the panel the detour returns 0 to the caller without
+suspending, so the display-off path no longer blanks a worn pair and the
+paired `global_system_resume` stays a no-op. INPUT_STATE gained the two
+counters (checker passes, suspends refused) as low bytes; the reply is
+capped at 20 bytes, so the three counters are single bytes.
+
+**Hardware result.** Both temples boot G1CFW/29 with the panel up while
+worn: one refused suspend each (the stock display-off path), the test
+pattern flushes with no `panel-off`. Taking the glasses off still did not
+darken them. The wear word at `0x20006b88` sat at exactly 70 for a full
+minute of 0.4 s samples with no jitter, while the three words after it
+(ESB packet counters) advanced in steps about every six seconds. The word
+is written by `local_ipc_service_recv` case 7 (`IPC_RESP_CPUNET_ESB_PACKAGES`)
+from the network core and forced to `0x46` when the byte at state+0x109d
+is 0; that byte is the wear-detection user setting (1.6.3 state+0x10d4,
+byte 10 of the 0x2c-byte record at flash `0x134000`, 1 after
+`clear_user_settings`, 0 on both of these temples). So the stock firmware
+never saw a take-off either: the stock event trace earlier in the day went
+`worn` straight to `in case open`.
+
+### G1CFW/30: wear detection on (2026-10-29)
+
+`cfw_work_mode_tick` writes 1 to the wear-detection setting byte on every
+200 ms pass while the CFW manages the panel (INPUT_CONTROL bit 4 clear).
+The next ESB statistics message then carries the real link value and
+`check_work_mode` can move the mode to 4 when the glasses come off.
+No new reply fields: `g1flash.py touch state` peeks the wear word and the
+setting byte itself (`wear_word`, `wear_detect`), and `peek` gained
+`--samples/--interval` and repeatable `--addr` for traces like the one
+above.
+
+**Hardware result.** With the setting on the word reports a real value:
+25-26 folded in the case (mode 5, panel off), 62-74 on a head (mode 3,
+panel on, the frame buffer empty after the reboot so the lenses looked
+dark until the pattern was drawn again), and 47-50 lying unfolded on the
+table for minutes on end. The stock split (worn at 51 and up, not worn
+below 40) never resolves the table case, so the mode stays 3 and the
+lenses stay lit.
+
+### G1CFW/31: CFW wear thresholds (2026-10-29)
+
+While the stock mode says worn (2 or 3) the CFW classifies the radio-link
+word itself: panel on at or above `wear_on` (default 56), off at or below
+`wear_off` (default 53), unchanged in between, and a word of 0 (no
+statistics yet after boot) trusts the mode. INPUT_CONTROL takes the pair
+as two extra bytes and echoes it; `g1flash.py touch control --wear-on
+--wear-off`. The word is refreshed by the network core about every six
+seconds, so the lenses follow a take-off within roughly that.
+
+**Hardware result.** After the reboot the left temple read 39 on the table
+(stock low power, panel off) and the right 61 (normal standby, panel on):
+the two temples see different link values, each measuring what it hears
+from the other. Drawing to the left failed at its first flush with
+`panel-off`, two records in, leaving nothing for the panel to show when it
+comes on.
+
+### G1CFW/32: draws land while the panel is off (2026-10-29)
+
+A STREAM message no longer stops at a flush that meets the panel off: every
+record runs into the frame buffer, the reply carries `panel-off`, and the
+host reports the draw as deferred instead of failing. The frame goes out
+whole when the panel comes on (`cfw_auto_panel`), so a host can load the
+display of a pair lying on the table.
+
+**Hardware result.** With the pattern deferred into both frame buffers the
+CFW thresholds did their job: on the head the word read 60-74 and both
+panels powered on within a few seconds (right 13.8 s, left 9.6 s after the
+recording started), on the table it fell to 43-45 and both powered off
+within a second of the next statistics message. The lenses stayed dark
+throughout. `panel_on` (the on callback) powers the panel and runs
+`panel_init` but never programs the brightness register; the stock
+`panel_resume` follows its init with the register write (`0x49eac`) using
+the stored level at panel+0x369. Our path came up at the reset brightness.
+
+### G1CFW/33: brightness after power-on (2026-10-29)
+
+`cfw_auto_panel` writes the stored brightness level to the panel right after
+the on callback, before the frame push.
+
+**Hardware result.** Still dark. On the head the right temple powered on at
+11.7 s (word 62-63) and off again at 32.7 s on the table (word 42), with the
+brightness written, and nothing showed. The stock silent-mode exit never
+powers the panel: `enter_silent_mode` suspends it (`panel_suspend`, SPI deep
+power down, the rail stays up) and `exit_silent_mode` resumes it
+(`panel_resume` = `panel_init` + brightness); the on/off callbacks have no
+runtime caller in the stock image. Calling the stock `global_system_suspend`
+through PANEL `00` on the left temple (auto panel disabled so the gate let it
+through) rebooted the temple: every counter restarted, so that path is
+unusable under the CFW even for experiments.
+
+### G1CFW/34: suspend and resume callbacks (2026-10-29)
+
+The auto panel now uses the panel's own suspend and resume callbacks, the
+sequence stock uses for silent mode: off is `panel_suspend`, on is
+`panel_resume` followed by the frame push. `panel_resume` returns without
+doing anything when bit 8 of the halfword at panel+0x4fc is clear, so when
+the powered flag is still 0 afterwards the CFW falls back to `panel_on` plus
+the brightness write. PANEL gained codes `04` (suspend callback) and `05`
+(resume callback) for manual tests.
+
+**Hardware result.** Dark again, and the manual `PANEL 05` on the left
+temple returned with the powered flag still 0: `panel_resume` refused. The
+halfword it tests (state+0x1068, a bitfield of component-init flags) read
+`0x0cc0` on both temples, bit 8 clear, so the auto panel had taken the
+fallback every time, which is the rail path, and a panel brought up through
+`panel_on` is dark on hardware whatever is written afterwards. The flag at
+panel-0x48 that `panel_off` tests had also been set by the earlier
+`panel_on`, so `panel_suspend` was cutting the 1.8 V rail as well.
+
+Then the decisive experiment, suggested by the wearer: with G1CFW/34 on the
+right temple and the glasses on the head (panel brought up by the fallback
+path, word 56), a `draw` from the host two seconds and ten seconds later
+showed the test pattern. So the power-up path is fine and the frame buffer
+held the pattern; the one push the CFW makes right after power-up is what
+shows nothing.
+
+### G1CFW/35: push again after power-up (2026-10-29)
+
+The switching stays as in /34. After a power-up the CFW pushes the whole
+frame again on the third and sixth 200 ms tick (600 ms and 1.2 s later),
+while the panel is still powered. PANEL `06`/`07` expose the driver's own
+suspend/resume pair (`g1flash.py panel --sleep` / `--wake`) for experiments.
+
+Hardware: the automatic pushes at 0, 600 ms and 1.2 s showed nothing; a
+host `draw` seconds later showed. The buffer was then read after a take-off
+and put-on with the pattern known to be in it: the pointer was unchanged
+(`0x20059115`) and the buffer was all zero, so the buffer, not the push, is
+what fails. The 1.5.60 binary says why: `panel_init` (0x4a504, reached
+from both `jbd_panel_resume` and `panel_on`) calls 0x80d12, which memsets
+the 64000-byte frame buffer and pushes it in three parts. Every power-up
+wiped the frame before the CFW pushed it. The stock screen switcher
+(`__panel_related`, 0x37a2c) also clears the whole frame through the
+panel's clear callback (0x80b2e) before drawing a screen.
+
+Also seen: with the wear-detection setting on, the stock checker now moves
+to mode 4 `normal-low-power` a few seconds after a take-off (word 40 on
+the table) and back to 3 when worn again.
+
+### G1CFW/36: the frame survives the power-up (2026-10-29)
+
+Two more display stubs: 0x80d12 (the clear-and-push inside `panel_init`
+and the screen-exit path) and 0x80b2e (the panel clear callback). The
+panel now comes up with whatever the buffer holds, which is what the host
+drew last, including draws deferred while it was off (/32). Switching and
+the repeated pushes stay as in /35.
+
+Hardware: the pattern was drawn while the glasses lay on the table (panel
+off, deferred), and it lit up by itself when they were put on; the panel
+goes off on take-off and on again when worn, on both temples. The wear
+detection works end to end. Open: in the automatically pushed frame the
+first few and last few pixel rows of the pattern sit slightly left of the
+rest, and the whole display lights; a host `draw` right after (band pushes
+from the BLE handler) is the comparison for whether the whole-frame push
+from the 200 ms tick is what shifts them. Result: the band draw shows the
+same shift, so the frame and the push agree and the effect is in the panel
+or the optics at the canvas edges, not in the CFW. Also seen: the whole
+display lit above and below the canvas, because the stubbed routine was
+also what cleared the 480-row panel memory outside the canvas at power-up.
+
+### G1CFW/37: blank the panel margins at power-up (2026-10-29)
+
+After the panel comes on the CFW pushes one blanked frame row to each of
+the 280 panel rows outside the 200-row canvas (row origin plus the view
+`dy`), then the whole frame as before. Frame row 0 is saved behind the
+input state in the second RAM region and restored. A draw landing in row 0
+during those pushes (one stock push per row, about 1 ms each) is overwritten
+by the restore; that window is accepted.
+
+### G1CFW/38: the g2flash shape set, parameter tweens, a wider carve (2026-10-30)
+
+Parity pass with g2flash's shape rasterizer (`patches/shapes.c`), driven by
+the glassly shapes test suite (`tools/shapes_suite.py`, ported from
+`g2flash/demos/shapes-suite.ts`):
+
+- SHAPES and shapes assets take g2flash's 20-byte records, types 1-13:
+  lines with square-capped strokes, rounded rectangles (filled and
+  outlined), circles and rings, triangles and quads (filled and stroked),
+  quadratic and cubic beziers, arcs and pie sectors. The rasterizer is the
+  g2flash one in integer math: an integer square root scan-converts
+  circles and corners per row, an even-odd scanline filler in 1/16 pixel
+  units handles every polygon, and coordinates are clamped to +/-1024 so
+  products stay within 32 bits. Pixel-exact checks for every type are in
+  `tests/host/g1cfw_host_test.c`.
+- Object kind 4 holds one such record, so a shape's parameters, colour and
+  stroke width can be animated: OBJ_ANIM entries are tweens
+  `[id][mask][frames][easing][targets]` that start from the object's
+  current values and merge into the running set by id (a tween for one
+  object never cancels another's; a retarget restarts from the value
+  reached; `frames` 0 snaps). Kind 4 objects have a type-aware bounding box,
+  so their frames push only the union of the old and new boxes. A PUT or a
+  HIDE stops the object's tween. The old 8-byte glide entry is mask `0x03`.
+- VIEW set now blanks every panel row outside the new canvas and pushes
+  the whole frame when the panel is powered. Before this a host that moved
+  the canvas on connect (the dashboard height setting) left the stock boot
+  screens lit on the rows the canvas no longer covered; that was the
+  "the rest of the display never cleared" report against G1CFW/37.
+- Fix: G1CFW/37 parked frame row 0 during the margin blank at the address
+  of the view state (`cfw_input_state() + sizeof(cfw_input)`), wiping the
+  view, IMU and mic states on every panel power-up (the view fell back to
+  the stock origin). The row now has its own slot after the mic state and
+  the static assert covers the whole second RAM region.
+- Flash: the blob grew to 17,440 bytes, so the carve runs on from
+  `DashBoard_Reflash` through `ui_DashBoard_task`, `ui_QuickNote_task` and
+  the `dmic_record_start` helper only they call (`0x399e4..0x3e7a8`, 19,908
+  bytes, 2,468 left). `tools/g1carve.py 0x3d7a4 0x3e7a8` lists five `bl`
+  sites outside the range (three in `ui_raster_height_task`, two in
+  `ui_refalsh_warp`); `tools/gen_profile.py` rewrites each to
+  `movs r0, #0; nop` after decoding the branch and checking its target. The
+  cluster of two-byte callbacks at `0x3e882..0x3e912` referenced from the
+  hardware-id and SPI code is the hard stop for this region.
+- Not ported (yet): filled SVG paths (record type 18) and rotation (SHOW op
+  9), g2flash's `vector.c`; text colour tweens (the stock text drawer has no
+  level); cubic-bezier easing curves (the four easing codes stay).
+
+### G1CFW/39: filled SVG paths and rotation (2026-10-30)
+
+The rest of g2flash's vector contract (`patches/vector.c`), on the same
+object model:
+
+- Asset kind 3 is a path: the compiled Q4 command list (`demos/vector-protocol.ts`
+  `svgPath`, also what glassly's engine produces) is flattened on PUT into
+  at most 128 edges held in the arena; the workspace is the third CFW RAM
+  region, which the view shift only uses during a push. Object kind 5
+  draws a path asset translated, scaled (Q8) and filled nonzero or
+  even-odd. Rotation is three more tween values on kinds 4 and 5 (angle in
+  Q4 degrees, pivot x and y), so a SHOW-time snap and an eased spin are the
+  same OBJ_ANIM entry; rotated primitives are drawn as contours exactly as
+  g2flash does (`cv_shape_draw`), stroked ones edge by edge.
+- Differences from g2flash: angles are int16 Q4 (about +/-2047 degrees, 5
+  turns) instead of i32 Q8 with 100 turns; 128 edges per path instead of
+  512 and no scene-wide edge budget; rotation runs on the frame clock
+  (frames x period) like every other tween rather than on elapsed time; no
+  64-bit arithmetic (coordinates are clamped to +/-1024 px, which keeps the
+  Q4 products in 32 bits).
+- Flash: the blob is 22,036 bytes, so the carve now runs through
+  `ui_even_ai_task` and its two helpers (`0x399e4..0x3f7a0`, 23,996 bytes,
+  1,960 left). Every pointer `tools/g1carve.py` reports into those tasks is
+  an instruction word that happens to carry the Thumb bit (`mvn r0,#3` is
+  `0x0003f06f`, `orn r0,r1,r3` is `0x0003ea61`, `add.w r0,sb,r3` is
+  `0x0003eb09`...), checked one by one with `tools/g1dis.py`; the real entries
+  are two more `bl` sites in `ui_refalsh_warp`, neutralised like the others.
+  The next block (`not_disturb_sync_data`, the IPC helper at `0x3f858`) has
+  callers all over the firmware, so this is the end of the contiguous
+  region; further growth means trimming (COPY, PEEK, the state replies) or a
+  second blob segment.
+- Also in this revision: text objects scale the glyphs the stock drawer
+  wrote to their `level`, so captions fade like shapes (g2flash's inline
+  text colour), and OBJ_CONTROL ops 2 and 3 freeze or finish running
+  tweens (g2flash's FREEZE and FINISH ops). Flash after these: 1,492 bytes.
+- Host test: path compile and fill (even-odd hole, nonzero, half scale),
+  bad paths, a quarter-turn snap of a bar, an eased spin back, rotation of a
+  path, mask validation, text dimming, freeze and finish, and the lit area
+  of a ring at twelve angles (the first contour port cut a ring's inner
+  contour at the 128-edge workspace and filled it as a half disc; contours
+  now use 8-degree segments and a shape that still does not fit draws
+  nothing); `--replay` understands pixel probes (tag 4) and snapshots (tag
+  5) from the vector suite dump. `tools/vector_suite.py --dump` replays its
+  24 steps with every g2flash probe passing.
+- Pivot values in a tween entry apply at once: a glide that also moved the
+  pivot swung the shape in from the old pivot (found by the suite port).
+
+### G1CFW/40: cubic-bezier easing and the object inventory (2026-10-30)
+
+The last two protocol gaps against g2flash's object cache that fit the
+flash: an OBJ_ANIM entry may carry a CSS cubic-bezier (easing byte `80`
+followed by the four control bytes g2flash's `EASE` table uses), solved by
+bisection in Q10 integer math, so the phone's named easings land as the
+same curves on both glasses; and OBJ_STATE takes a page byte and lists the
+object table four entries at a time. The four easing codes stay valid.
+Blob 23,056 bytes, 940 left. Not ported, by choice: g2flash's request-id
+replay protection (the G1's STREAM replies are per message on a
+write-with-response link, so a lost reply is a failed write, not a replayed
+command), journal deltas (the phone keeps a mirror and the inventory page
+covers resynchronisation), and image or text records inside a shape list
+(objects cover both).
+
+### G1CFW/41: once-only messages (2026-10-30)
+
+g2flash acknowledges a repeated request id without running its motion twice.
+The G1 equivalent is STREAM flag bit 2 on the last packet: when the message's
+length and CRC match the message that ran last, the glasses answer with that
+message's status and record count and run nothing, so a phone whose reply
+notification was lost can resend a frame without restarting its glides.
+`g1flash.py`'s stream sender sets it. Journal deltas stay unported (the phone
+keeps a mirror; OBJ_STATE pages cover a resync). 928 bytes of flash left.
+
+### G1CFW/42: shape-list image and text records, a definition journal (2026-10-30)
+
+The last two g2flash object-cache features: SHAPES records 14 (image asset
+at x,y) and 15 (string asset in a box with a font) draw assets inside a shape
+list or as kind-4 objects, and OBJ_STATE `[FF][since]` replays the last ten
+definition changes (object put/drop/drop-all, asset put/clear) with their
+own revision counter, two per reply (the 20-byte notification cap), so a
+host that missed replies can catch up without re-reading the inventory. To
+fit, COPY left (406 bytes; nothing used it: retained objects glide instead).
+Blob 23,848 bytes, 148 left: the contiguous region is full. Anything further
+means trimming diagnostics (PEEK, STATS, the state replies) or a second
+blob segment. With this the g2flash drawing, object, animation and transport
+contract is ported except for lens-synchronised records (two connections on
+the G1) and the 64 KiB messages and zlib the G2 needs for its larger panel.
+
+### G1CFW/43: text boxes glide over odd columns (2026-10-30)
+
+First hardware run of the ported suites, on G1CFW/42 with both temples
+docked, lid open, panel forced on (`touch control --no-auto-panel`,
+`panel --force-on`): `tools/vector_suite.py` sent all 21 messages to both
+temples (worst ack 154 ms, no refusals; its checks are visual), and
+`tools/shapes_suite.py` passed 42 of 43 cases. `stage-4-text-animation`
+was refused with `bad-rect` at its third frame, 0 records done, and the
+host replay of the same dump passed. Replaying the frames by hand showed
+the refusal only when the frame arrived while the slide tweens were still
+running (1.0 s after the ANIM: refused; 2.0 s: accepted): the text drawer
+requires even x0 and x1 (two pixels per frame byte) and the scene encoder
+snaps static boxes, but a glide interpolates x on the glasses, so between
+frames the box sits on an odd column, `cfw_text` returns `bad-rect`, the
+tick path drops the status (the text flickers off for that frame) and a
+SHOW arriving mid-tween is refused with it. The host replay did tick the
+tweens but never looked at the render status, and the stage's 44-frame
+slides take longer than 33 ms a frame on the glasses, so the suite's
+2 s hold landed inside the tween there and after it on the host.
+
+G1CFW/43 widens a text object's box to whole byte columns and clips it to
+the frame before drawing; a box clipped away draws nothing, as the G2 clips
+its text. `cfw_anims` gains `render_errors` (object renders that returned a
+status while presenting) and the host replay reports any increase after a
+message or a wait, so a frame that an object refuses mid-tween fails the
+replay. The suite's reset commands accept `panel-off` like the phone does
+(the docked glasses write the frame and have nothing to show it on), and
+`g1flash.py` points its UART timeout hint at the case lid. Blob 23,852
+bytes, 144 left.
+
+**Hardware result (both temples, 2026-10-30).** With G1CFW/43 on both
+temples (docked, lid open, panel forced on) `tools/shapes_suite.py` passed
+all 43 cases on both temples, stage 4 included, and `tools/vector_suite.py`
+had all 21 messages acknowledged (worst ack 153 ms). The first /43 build
+still answered PING with `G1CFW/42` because the blob's `CFW_PROTOCOL`
+constant had not moved with the `#t` marker; the shipped /43 image
+(`b409b3e`) reports 43 on both. The repository now lives at
+`~/dev/glassly-g1-cfw` (github.com/tetramo-labs/glassly-g1-cfw, private);
+the original decompilation stays reachable as the `upstream` remote.
+
+### Hardware note: deep sleep silences the UART, not the firmware (2026-10-30)
+
+Flashing G1CFW/42 to both temples uploaded and activated cleanly (MCUmgr
+`state` showed the /42 hash active and confirmed on both), but neither
+temple answered `#t` or PING afterwards, and a held connection dropped
+after 31 s. Two things had changed since the morning's /37 cycle: the
+glasses had been paired to Glassly on the phone, and they were back in
+the case with the lid closed. The pairing cost one real failure first:
+the glasses' `on_pairing_complete` unpairs any other bond, so the Mac's
+stale record made every connect fail with CoreBluetooth error 14 "Peer
+removed pairing information" until the two `Even G1_26_*` entries were
+forgotten in System Settings (`blueutil --unpair` does not clear the LE
+record). The silence afterwards was not the bond and not /38–/42:
+/37 reflashed to the left temple and /38 to the right were equally
+silent, and the /39 carve's "pointer" hits into `0x3e882..0x3e912` decode
+as `stm`/`ldm` instruction words inside the `0x3e7a8` helper, as
+`gen_profile.py` says.
+
+The cause is the stock work mode. `ble_work_thread` (0x233a8) only
+dequeues commands while bit 7 of the halfword at context+0x1068 is set
+(`ldrh; lsls #24; bmi`, otherwise a 1 s sleep and retry); two other
+threads (0x19e18, 0x28238) wait on the same bit. `change_work_mode`
+(0x16ee0) sets that bit through the flag helper at 0x16de8 for modes 0–7
+and 9 and clears it for mode 8, deep sleep (lid closed, no charger).
+MCUmgr runs on its own thread, so SMP keeps answering, which is why the
+upload and `state` worked while every UART command went unanswered.
+Opening the lid (mode 9, then 5/6) or taking the glasses out brings the
+worker back; no bond is needed since G1CFW/20. `g1flash.py` now says so
+in its UART timeout hint.
+
+## References and remaining work
+
+- Decompilation pinned at `f571782aedb6fdefbcbfe2a4d1e309bb47143581` (1.6.3 reference;
+  https://github.com/JohnRThomas/even_realities_decomp/tree/repro163, the
+  `src/app` sources in this repo come from it).
+- Local g2flash inspected at `1a6db4fd75de202a96599cc8f9f12fa721e7c3ce`.
+- [MCUboot image format](https://docs.mcuboot.com/design.html#image-format).
+- [Zephyr SMP framing](https://docs.zephyrproject.org/latest/services/device_mgmt/smp_protocol.html)
+  and [image management](https://docs.zephyrproject.org/latest/services/device_mgmt/smp_groups/smp_group_1.html).
+- [G1 protocol wiki](https://github.com/JohnRThomas/EvenDemoApp/wiki/Even-Realities-G1-BLE-Protocol).
+- REA source consulted at `e79ad6ca8ebbf2e96b5095e7c2b8bfaf27ca7559`,
+  [raw import documentation](https://github.com/morluto/rea/blob/main/docs/raw-binary.md).
+  Its generic ARM mapping does not establish Cortex-M33/Thumb context; the
+  existing decompilation and explicit Thumb disassembly were enough for this
+  data-only patch. No REA engine installation was required.
+
+Both temples boot the marker CFW and the OTA restore path has been exercised
+on the left temple. Remaining acceptance work is visual: confirm the display,
+phone pairing, and charging behave as stock on both temples.
+
+After that, the smallest useful graphics backport is one bounded, opt-in bitmap
+command using the G1 panel path. Recover its addresses from the exact target
+binary, establish RAM/flash budgets, and exercise the handler under host tests
+before adding an injected code hook. G2's Apollo/FreeRTOS addresses, 4bpp shadow,
+and private SID framing cannot simply be used on G1's nRF5340/Zephyr image.
+
+### G1CFW/44: lit strips at the canvas edges (2026-11-02)
+
+Worn with Glassly connected, both lenses showed fully lit bars about 5 rows
+tall above and below the canvas and 2-3 columns wide on its right edge.
+Two causes, both in how the CFW talks to the panel.
+
+The rows: the panel memory powers up lit, and since /36 only the CFW blanks
+the 280 rows outside the canvas. It did so once, right after the wear
+switch's power-on, while the frame push after it is repeated at 600 ms and
+1.2 s because the panel may not take the first writes; and PANEL's power-on
+modes, which Glassly's silent-mode exit uses (5, falling back to 2), never
+blanked at all. The visible window reaches a few rows past the canvas, so
+those rows show. G1CFW/44 routes every power-up (wear switch and PANEL
+1, 2, 5, 7) through `cfw_panel_up`: blank, push the frame, and repeat both
+on the two later ticks.
+
+The columns: the stock row push (`0x4a22c`) builds its 5-byte SPI header
+(`02`, three address bytes, `ff`) in the 5 frame bytes before the row it
+sends, which for x0 = 0 are columns 630-639 of the row above, and puts them
+back after the per-row unlock. The CFW pushes from three threads (the BLE
+command worker, the display-thread animation tick and the 200 ms work-mode
+tick), so a push of the row above could send another push's header, and
+two overlapping pushes could save one header and restore it into the frame
+for good: columns 638-639 then stay at level 15. G1CFW/44 holds the stock
+LCD mutex (`0x2000a1fc`, through the lock helpers at `0x4a664`/`0x4a674`;
+Zephyr mutexes are recursive) around each whole CFW push, the depth-shift
+move and the margin blank included. The host test checks that every push
+runs under the lock. Blob 23,928 bytes, 68 left.
+
+### G1CFW/45: transport replies and panel bounds (2026-11-05)
+
+The [Scouter Kit comparison](SCOUTER_KIT_REVIEW.md) led to three fixes:
+keep ONCE's cached execution status independent of later transport errors;
+match host STREAM acknowledgements to the current packet sequences under one
+deadline; clip vertical VIEW pushes to the physical 480-row panel instead of
+letting stock mask out-of-range row addresses. The blob uses 23,984 bytes,
+leaving 12 bytes in the existing carve. The current signed profile preserves
+the /44 image and its accepted upgrade history. Offline verified only;
+not flashed or hardware-tested. The review records remaining panel-tail,
+case-link, microphone-lease and wake-latency investigations.
+
+### G1CFW/51: ANCS relay (2026-11-12)
+
+The user saw no iOS notifications on the CFW. The 1.6.3 decomp shows why:
+`bt_ancs_notification_source_handler` (0x19048) and
+`bt_ancs_data_source_handler` (0x18d40) drop every event while the current
+UI task (state+0xd5, the byte the display post copies to state+0xd4) is
+one of 9..0x14 except 0xd, and the CFW posts `FW_SCREEN_CFW = 0x10` (the
+Even AI slot its code is carved over) on every tick. Past the gate the
+request thread (`ble_ancs_data_req_thread`, 0x198d8, on the temple whose
+state byte 0 reads 2) fetched the attributes into the 0x1b4-byte record
+registered in `ancs_c_init` (app id 0x10, display name 0x30, title 0x50,
+subtitle 0x70, message 0x90 [256], date 0x190, event at 0x1b0) and
+`recv_ble_data` (0x1981c) applied the Even whitelist at 0x2001aefb
+(fail-closed for third-party apps; the phone never pushed one) and posted
+the stock popup task 4 through a synthetic `0x4B`.
+
+G1CFW/51 patches the two `cmp r3, #0x10` to `#0xff` (raw group `ancs`) and
+hooks `recv_ble_data` (`b.w cfw_ancs_recv`, hook group `ancs`): the record
+is dequeued with the stock `dequeue_ancs` (0x18ee8, pinned
+`FW_DEQUEUE_ANCS`) and, under a 90 s lease the phone renews with
+`35 01`, sent as `36` records in the G2 relay format so the phone's
+`G2AncsRelay` decoder is reused unchanged; without a lease it is dropped.
+The flags and category live only in the uid-queue entry at 0x20006c8c
+(`dequeue_uid` target), read when its uid matches. Actions are not
+implemented (no `bt_ancs_notification_action` in the image). The open link
+policy means any central subscribed to the UART gets the records, but
+ANCS only flows while the bonded phone is connected and the stock tracks
+one central (`DAT_20007ef4`). Blob 24,316 bytes, 540 left. Host test
+covers lease, drop, chunking and removal. Offline only at the time of
+writing; see the phone-side notes in the Glassly repo (`G1.swift`
+`startAncsRelay`).
+
+### G1CFW/52: the relay drives security and discovery itself (2026-11-14)
+
+A dev report on /51 showed both temples answering STATUS with the lease
+held and `sent=0 drops=0` for two minutes: the stock client had fetched
+nothing, so the hook was never reached. The decomp explains the gap. iOS
+exposes ANCS only on an encrypted link, and the stock subscribes from
+`ancs_security_changed` (0x185f4: level >= 2, `0x1088` set, bonded MAC at
+`0x1081` matching) or from the Even app's `14 01` (0x19c80, `discover_gattp`
+at once, no security check). The glasses raise the link to level 2 on their
+own only in `low_speed_peripheral_dispatch_thread` (0x2cd70,
+`bt_conn_set_security` 0x84c52) when state bytes 0xae2 and 0xae3 and the
+word at 0x9b4 are set, which nothing the Glassly phone sends is known to
+do; and the phone's `14 01` reply (`14 c9`) was not recognised as an ack,
+so it was retried four times per side. Nothing reported the link's
+security level or `ancs_discovery_flags` (0x20006c94: bit 0 running, bit 1
+handles assigned).
+
+G1CFW/52 pins `FUN_00019cec` (0x19cec, the client's connection),
+`bt_conn_get_security` (0x84cde), `bt_conn_set_security`, `discover_gattp`
+(0x183ec) and the flags in `fw_abi.h`. On ENABLE and RENEW, on the temple
+whose state byte 0 reads 2, `cfw_ancs_kick` requests level 2 when the
+connection is below it, else starts `discover_gattp` when neither flag bit
+is set; the phone re-arms every 45 s, so each step is retried. STATUS grows
+by eight bytes of diagnostics (protocol doc). Blob 24,504 bytes, 352 left.
+Host test covers the kick's three outcomes, the temple gate and QUERY.
+On hardware 2026-11-14 (dev report rep_01M7E35KG9HFYHECZ1927E2DRJ) the
+image lacked the ancs group (see /54) and the getter read a pointer (/53).
+
+### G1CFW/53: the security kick read a pointer, not a level (2026-11-14)
+
+The first /52 report (glasses flashed /51 -> /52 mid-session, iOS 27.2)
+answered STATUS with `security=168 discovery=2 notifyEnabled=1 connected=1
+notifications=0 kicks=0` on both temples: no notification ever reached the
+stock queue and the CFW never requested anything. 168 is not a level. The
+address /52 pinned as `bt_conn_get_security`, 0x84cde, is `adds r0,#0x90;
+bx lr`, i.e. `bt_conn_get_dst` returning a pointer into the connection
+(the same low byte on both temples). Being >= 2 it skipped the security
+request, and the `14 01` discovery then ran on the unencrypted link that a
+reboot leaves behind, so iOS never delivered a thing. The reader
+`ancs_security_changed` itself calls is 0x84c9a (`ldrb r0,[r0,#9]; bx lr`,
+`conn->sec_level`; `bt_conn_set_security` 0x84c52 writes the required level
+at byte 0xa and compares byte 0xd against 7, connected). None of the four
+ANCS entry points had a stock-byte guard, which is how the wrong address
+slipped through; `cfw/targets/g1-1.6.3.json` now guards all four.
+
+G1CFW/53 changes only `FW_CONN_GET_SECURITY`. With a real level the kick
+requests 2 on the first ENABLE after a reconnect; iOS re-encrypts the bonded
+link, `ancs_security_changed` clears the discovery flags and (with `0x1088`
+set and the bonded MAC matching) runs `discover_gattp`, or the next RENEW
+starts it. Expect `security=2 kicks=1|3` and a rising `notifications` count
+in STATUS. Verified on hardware 2026-11-14 (rep_01M7EB9MAYABXE9P7HYVK7KW6N:
+`security=2`), though the image still lacked the ancs group (see /54).
+
+### G1CFW/54: the ANCS hooks back, and an audit's fixes (2026-11-14)
+
+The /52 and /53 profiles were generated without `--stub ancs`, so neither
+carried the two gate patches (0x190d8, 0x18e12) nor the `b.w cfw_ancs_recv`
+at 0x1981c that /51 had (29 patches then, 26 since). On those builds the
+stock consumer ran, the stock gate dropped every event while screen 0x10 was
+up, and the STATUS `notifications` count, kept in `cfw_ancs_recv`, could not
+move whatever the security level. /54 is generated with `--stub ancs` again;
+the regeneration command in the port doc now names every group.
+
+A read-only audit of `g1cfw.c` found the rest; each has a host test:
+
+- **ANCS uid.** `bt_ancs_notification_source_handler` (0x19048) zeroes the
+  record and writes the uid at +8 only for a removal, and the data-source
+  handler (0x18d40) queues added and modified records without one;
+  `recv_ble_data` takes it from the uid-queue entry at 0x20006c8c. /51 read
+  +8, so every added or modified notification went out with uid 0 and no
+  flags, category or count. /54 takes the uid from the entry for events 0 and
+  1 and keeps +8 for removals.
+- **ANCS lease.** An expired lease is cleared when the relay or ANCS_CONTROL
+  finds it expired (a compare-and-swap, so a lease the BLE worker re-arms at
+  that moment survives); before, the signed tick difference read it as live
+  again 2^31 ticks (18.2 h) later. It can still revive if nothing checks it
+  in the 18 h after it expires (no notification fetched, no ANCS_CONTROL).
+- **Security kick.** `ancs_security_changed` counts failed security changes
+  in a row at 0x20006c14 (its only reference; literal 0x1871c, increment
+  and `cmp #9` at 0x186ae, both now guarded in the target), re-requests level
+  2 after each failure itself and reboots at ten; it clears the count on any
+  successful change, not on disconnect. The kick no longer requests security
+  while that count is non-zero.
+- **OBJ_CONTROL drop** left the id in the SHOW list, and OBJ_STATE then
+  dereferenced the missing object. A dropped object now leaves the list, so
+  a later PUT under its id does not bring it back into the scene either.
+- **Clock wrap.** The tween clock is `FW_TICKS32 >> 5`, 27 bits wide, but
+  differences were taken in 32 bits: at the 36-hour wrap a running glide
+  clamped to its start and never ended, frame times went wild and `cfw_kick`
+  posted a second tick chain. Differences are now taken modulo 2^27.
+- **Image objects** (kind 0 and image records) take x down to an even
+  column as text does and clip at every canvas edge, 1bpp left edges by a bit
+  offset; before, odd x failed BLIT's rectangle check (the image vanished on
+  about half the frames of an x glide) and x < 0, y < 0 or x + w > 640 drew
+  nothing. ASSET_DRAW keeps its strict rectangle.
+- **Dirty boxes.** A stroke's margin is `width + 2`: the square caps of
+  `rs_line_q4` reach 0.71 x width past the end of a long diagonal and up to a
+  whole width past the short segments of curves and arcs, where its integer
+  square root rounds the length down; `width / 2 + 2` left pixels behind.
+  Paths and rotated kind-4 shapes, which forced a whole-canvas compose and a
+  121,600-byte push on every frame, are now measured on the edges they are
+  drawn from. The host test checks every frame of a thick line, a moving and
+  turning path and ten primitives snapped through odd angles against a
+  whole-canvas push.
+- **Speed.** The band clear uses word stores after aligning (the stock
+  buffer is `malloc(64008) + 5`, `register_jdb_panel_context` at 0x4aab8, so
+  it is never word aligned) and the STREAM CRC-16 a 16-entry nibble table.
+
+To fit, `cfw_context` and `cfw_objects` are no longer inlined (112 bytes).
+Blob 24,788 bytes with the relocated helper, 68 left. Offline only at the
+time of writing.
+
+
+### G1CFW/55: relay records reached the dispatcher, not the phone (2026-11-14)
+
+With /54 installed, the first report in which a notification was sent showed
+STATUS `notifications 3 -> 4, sent 10 -> 20` while the phone logged no record
+at all. `enqueue_bt_data` (0x17fec) is the stock *inbound* queue:
+`bt_receive_cb` puts every packet the phone writes on it, `ble_work_thread`
+drains it into `FUN_00023d38` -> `spec_ble_command_hook` -> the stock
+dispatcher, which also forwards the stock's own event packets (F1/F4/F5) to
+the phone. The relay's `F0 36` records therefore came back into the CFW's own
+`cfw_rx`, whose default branch answered the phone `F0 36 <bad command>` with an
+empty body, which the phone's reassembler ignores. The STATUS reply never had
+the problem because `cfw_reply` sends through the context's send function.
+
+G1CFW/55 adds a `CFW_ANCS_RECORD` case to `cfw_rx` that sends the packet to
+the phone verbatim; the phone never sends 0x36, so anything arriving with it
+is the relay's own. Host test covers the loopback. Verified on hardware
+2026-11-14: rep_01M7EJVD6YEG226857M6A3A9VD relayed three notifications to the
+phone and the dashboard showed them.
+
+
+### G1CFW/56: power savings (2026-11-15)
+
+- **Changed boxes only.** OBJ_SHOW and OBJ_HIDE bit 2 push the union of the
+  boxes of what changed (see the protocol). The phone sets it from /56, so a
+  caption update recomposes and pushes its own rows instead of 380 rows of
+  121,600 bytes on each temple, and a frame that only glides sends no SHOW.
+- **Blank canvas.** INPUT_CONTROL bit 5 switches a worn panel off 1.6 s
+  after the canvas goes blank and back on the pass after content arrives;
+  bit 6 drops the two repeat pushes after a power-up. The repeats date from
+  /35, before /36 found that the buffer wipe, not the push, lost the frame.
+- **Phone gone.** The checker pass stops a capture as soon as no central is
+  connected and, after 30 s, drops the scene and switches the panel off.
+- **ANCS.** Attributes 4, 6 and 7 are no longer sent; the phone fills them in.
+
+`cfw_display_tick`, the contour builders and the tween helpers are now
+`CFW_COLD` to make room. Blob 24,652 bytes with the relocated helper, 204
+left. Offline only at the time of writing.

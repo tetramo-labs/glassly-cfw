@@ -1,0 +1,45 @@
+{
+  "result": "No static blocker identified for exact probe-003; stock path stack overhead removed. Live boot/execution still unverified by review.",
+  "blob_bytes": 208,
+  "blob_sha256": "e6d9edd7e761fcc0c661e4b441eb45a642b4ead4a8acdb690286ceec7f42726b",
+  "firmware_sha256": "ae04bec4649b685bf2a73265aa468ff8431e76a1371d584f35349e7de071de78",
+  "source_hashes_match_build": true,
+  "text_bytes": 100,
+  "elf_binary_disassembly_and_rodata_match": true,
+  "instruction_decoded_gate_for_all_256_commands": {
+    "command_0x7e_target": "0x0439beb6",
+    "every_other_command_target": "0x042e4680"
+  },
+  "stock_path_modified_registers": [
+    "t0"
+  ],
+  "stock_path_stack_bytes": 0,
+  "stock_path_preserved": [
+    "a0-a7",
+    "ra",
+    "sp",
+    "gp",
+    "tp",
+    "s0-s11",
+    "all FP registers"
+  ],
+  "ping_stack_bytes": 32,
+  "ping_modified_callee_saved": [
+    "s0 saved/restored on both return paths"
+  ],
+  "request_response_ownership": "unchanged and matches native contract",
+  "hook_target": "0x0439bea0",
+  "following_callback_store_preserved": true,
+  "actual_ota_tail_matches_blob": true,
+  "container_checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "limits": [
+    "Appended code executable access and expanded-image boot acceptance require live evidence",
+    "Ping path has32-byte frame; no live stack watermark measurement",
+    "If both response allocations fail, NULL yields no response"
+  ]
+}

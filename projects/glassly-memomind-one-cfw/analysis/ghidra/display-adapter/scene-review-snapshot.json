@@ -1,0 +1,18 @@
+{
+  "review": "Native scene ownership integration after allocation-header alignment correction",
+  "source_sha256": {
+    "runtime/graphics/graphics.c": "62c18ef061f0491a460996e6f071ec4dff9109b63804d7a1d679df996a43a7f1",
+    "runtime/graphics/graphics.h": "c21a1e3574c060060abd084e4a0d8f4007f6eb2f8d5bf8b983913fced3ed184a",
+    "runtime/graphics/scene_session.c": "f9181e0b8226725d9c3c86b32171c6b238e59acdcef2892c15be55fc2718c4e1",
+    "runtime/graphics/scene_session.h": "1e3b12dd8053ecad3eeab3cc48aaa5ca32d6fb120de50647f79490fabfb3fa62",
+    "runtime/graphics/native.c": "c8ef4626f35cc7a2e8b6b1452cf2d0ba38fc04b80ca1331d10a7decab8eaf7e7",
+    "runtime/graphics/native_text.c": "7971a929a8ba7b572d5669cd2310402ad341c8943bd44270d273a3ad5209204d",
+    "runtime/graphics/native_text.h": "dfdf659d613169bd16df7aa64631dd5e6f0602622f2ac33de9c257c464becc99",
+    "runtime/portable/scene.c": "a99e598e5a8349e00a21fe9b75347877181c531911b951a23200de1ef96cfecb",
+    "runtime/portable/scene_cache.inc": "a4b2884b412f24f5aca569a3bd34542bc470b0f9d6e276cb33c8bcc9f0c5274e"
+  },
+  "candidate_build": "runtime/build/scene-004/build.json",
+  "candidate_blob_sha256": "cd849a72ecd662a79327d01f792ddbe6b09cd5d7a2a683aa05440301dced2bbd",
+  "candidate_source_differences": [],
+  "device_actions": false
+}

@@ -1,0 +1,51 @@
+{
+  "scope": "Incomplete BR23 RAM diagnostic only; no flash backup or successful USB status",
+  "write_capture": {
+    "path": "research/device-backup-20261103-000327",
+    "metadata_sha256": "4324775e439f7f6ba1b699ca33f9e356f73ee85b458756623529282de395fb71",
+    "command": {
+      "cdb": "fb0600012000020000f4d3ffffffffff",
+      "cbw": "555342430200000000020000000010fb0600012000020000f4d3ffffffffff",
+      "tag": 2,
+      "direction": "out",
+      "size": 512,
+      "stage": "status",
+      "complete": false,
+      "csw": "55534253020000000002000000",
+      "signature": "55534253",
+      "returned_tag": 2,
+      "residue": 512,
+      "status": 0
+    }
+  },
+  "read_capture": {
+    "path": "research/ram-probe-20261103-001159",
+    "metadata_sha256": "929121190a07041a43d1a7cee44a49c2d6223f5c16b160232f0fae1b0752bdfa",
+    "command": {
+      "cdb": "fd07000120000200ffffffffffffffff",
+      "cbw": "555342430200000000020000800010fd07000120000200ffffffffffffffff",
+      "tag": 2,
+      "direction": "in",
+      "size": 512,
+      "stage": "status",
+      "complete": false,
+      "csw": "55534253020000000002000000",
+      "signature": "55534253",
+      "returned_tag": 2,
+      "residue": 512,
+      "status": 0
+    },
+    "data": {
+      "file": "ram-12000-incomplete.bin",
+      "bytes": 512,
+      "sha256": "dc02a47bf9202a8d4fbad161971be8cd046e1809413d1e8c63c77b95e89ec87f",
+      "expected_sha256": "dc02a47bf9202a8d4fbad161971be8cd046e1809413d1e8c63c77b95e89ec87f",
+      "matches_pinned_loader": true,
+      "usb_status_valid": false
+    }
+  },
+  "loader_sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+  "conclusion": "First pinned 512-byte loader block is present at RAM 0x12000; both write and read reported status 0 with residue 512. Supports a ROM residue-reporting quirk, but only these commands/block are evidenced.",
+  "backup_complete": false,
+  "transport_status_exception_enabled": false
+}

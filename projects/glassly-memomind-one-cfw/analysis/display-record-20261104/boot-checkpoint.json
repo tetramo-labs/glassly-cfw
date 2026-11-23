@@ -1,0 +1,9 @@
+{
+  "appHeaderSHA256" : "a05a4f16da4f48d3ddb10fd9705390cab743401f8448c3405fee6c5b6b42cc15",
+  "bootHeaderVerified" : true,
+  "complete" : false,
+  "flashAssetWritesStarted" : false,
+  "physicalOutputConfirmed" : false,
+  "release" : "first-run-owner-001",
+  "stage" : "after"
+}

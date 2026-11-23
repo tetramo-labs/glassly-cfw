@@ -1,0 +1,69 @@
+{
+  "version": "GLASSLYCFW/7",
+  "release": "microphone-owner-001",
+  "imageSHA256": "e43e0f1b2745774104f84d6d406092e49d97276d37eb94831a8c0c346aaa54cb",
+  "imageBytes": 2248764,
+  "containerHeaderSHA256": "ecc31323c1200c9c5081563b8b8d0d10d1322eef3b6767a58840adc1481e87e7",
+  "appHeaderSHA256": "0c5589c9dc9514ddedf6e9e1cc0f0b9269a8e4837712021b12fda69815e837f2",
+  "runtimeSHA256": "b8f3a970d51fd9ae9b18a11d2e2d00ac6c93d90cb7502a6ec1d1a402be9b5f9c",
+  "build": "build-07-03",
+  "image": "image-07-03",
+  "offlineChecks": {
+    "host-04/report.json": {
+      "passed": true,
+      "sha256": "f073c880ccc3b271f286f5d1d4335178dc425b83583bdb4d396b4bc73d5643b5"
+    },
+    "rv32-05.json": {
+      "passed": true,
+      "sha256": "2890bd92a8bf16404f6fbef1384940d17446433d07ebcfb5f2a9d22a5c387cb5"
+    },
+    "native-abi-01.json": {
+      "passed": true,
+      "sha256": "2c3d39c8d963b3fa6601c2c7af07e6cd3f3e171ebfb01c1e3a5e307eacf54b34"
+    },
+    "gates-03.json": {
+      "passed": true,
+      "sha256": "abb0ae3df072463679d386552c8018f04f1527c7f022b6409db674e9bfc51299"
+    },
+    "records-03.json": {
+      "passed": true,
+      "sha256": "26bbb11443280952e02cfeef2dce6126a2edd0be9ebcac93ab9f18294591e64d"
+    },
+    "image-verification-03.json": {
+      "passed": true,
+      "sha256": "beb02a7189efa73ff5d0c79f97fc60e1620aac9d9746931619455427d8b6e583"
+    }
+  },
+  "fullRegression": {
+    "passed": true,
+    "stages": 141,
+    "pythonTests": 235,
+    "swiftTests": 141,
+    "sourceDrift": [],
+    "evidence": "regression-verification.json"
+  },
+  "flashAttempted": false,
+  "bootVerified": false,
+  "microphoneHardwareVerified": false,
+  "installedVersionLastVerified": "GLASSLYCFW/6",
+  "appValidation": {
+    "macTests": 108,
+    "iosTests": 11,
+    "androidTests": 17,
+    "engineTests": 2
+  },
+  "remaining": [
+    "Native microphone hardware lifecycle and audio acceptance",
+    "Alternative microphone codecs/sources/channels",
+    "Compass/raw IMU/ALS adapters",
+    "BLE link control and wear status",
+    "Remaining original G2 integration suites"
+  ],
+  "connectionSearch": {
+    "seconds": 688.8040895420127,
+    "attempts": 21,
+    "found": false,
+    "transmitSubmissions": 0,
+    "evidence": "connection-verification.json"
+  }
+}

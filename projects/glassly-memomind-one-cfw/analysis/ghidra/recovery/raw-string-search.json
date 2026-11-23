@@ -1,0 +1,899 @@
+{
+  "pattern": "(?i)(boot|dfu|recovery|download|rollback|signatur|secure|efuse|otp|rsa|ecdsa|ed25519|public.?key|authentic|factory|reset|reboot)",
+  "strings": [
+    {
+      "file": "segment-6.body.bin",
+      "offset": "0x2da0",
+      "address": null,
+      "text": "im_sc_reboot"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd4dd0",
+      "address": null,
+      "text": "[auto]mcause: 0x%02x[cpu reset]"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd4f30",
+      "address": null,
+      "text": "boot as coredump double exception"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd53f4",
+      "address": null,
+      "text": "[crash]double exception, fast to reset"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd5464",
+      "address": null,
+      "text": "[crash]reset other core timeout"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd55cc",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad r/w (r=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd5610",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc recv guard hit (r=%u w=%u max=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd565c",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc msg header overflow (r=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd56a8",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad break_off len (len=%u size=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd56f8",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad inline len (r=%u len=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd574c",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc r not progressing (r=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-1.body.bin",
+      "offset": "0xd83fc",
+      "address": null,
+      "text": "reset_core"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b0ec",
+      "address": "0x435610c",
+      "text": "[auto]mcause: 0x%02x[cpu reset]"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b224",
+      "address": "0x4356244",
+      "text": "boot as coredump double exception"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b60c",
+      "address": "0x435662c",
+      "text": "[XGIMI] repeated boot crashes detected (>=%u), factory reset"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b64c",
+      "address": "0x435666c",
+      "text": "[XGIMI] settings factory reset failed"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b720",
+      "address": "0x4356740",
+      "text": "[crash]double exception, fast to reset"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16b7d0",
+      "address": "0x43567f0",
+      "text": "[crash]reset other core timeout"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16bc30",
+      "address": "0x4356c50",
+      "text": "[T:0x%08X][app_recordsv.c:309] [app_recordsv]  E:[RECORDSV] DCORE preprocess rollback incomplete, scene_ret=%d mode_ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16db34",
+      "address": "0x4358b54",
+      "text": "[T:0x%08X][recordsv_flash_ring_buf.c:192] [recordsv_ring_buf]  E:init failed: bootmap_get_image(CUS7) ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e27c",
+      "address": "0x435929c",
+      "text": "[factory_cali] export warn: IMU missing in OEM"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e2ac",
+      "address": "0x43592cc",
+      "text": "[factory_cali] export warn: JBD_OFFSET missing in OEM"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e2e4",
+      "address": "0x4359304",
+      "text": "[factory_cali] export warn: CANC_LUMA missing in OEM"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e31c",
+      "address": "0x435933c",
+      "text": "[factory_cali] === OEM factory calibration dump start ==="
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e358",
+      "address": "0x4359378",
+      "text": "[factory_cali] IMU: bb=%f kx=%f"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e37c",
+      "address": "0x435939c",
+      "text": "[factory_cali] JBD_OFFSET: leftX=%u leftY=%u rightX=%u rightY=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e3c0",
+      "address": "0x43593e0",
+      "text": "[factory_cali] CANC_LUMA:"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e3dc",
+      "address": "0x43593fc",
+      "text": "[factory_cali]   luma_left[0-4]: %u %u %u %u %u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e410",
+      "address": "0x4359430",
+      "text": "[factory_cali]   luma_left[5-9]: %u %u %u %u %u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e444",
+      "address": "0x4359464",
+      "text": "[factory_cali]   luma_right[0-4]: %u %u %u %u %u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e478",
+      "address": "0x4359498",
+      "text": "[factory_cali]   luma_right[5-9]: %u %u %u %u %u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e4ac",
+      "address": "0x43594cc",
+      "text": "[factory_cali] === OEM factory calibration dump end ==="
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e4e8",
+      "address": "0x4359508",
+      "text": "[factory_cali] BLOB_HEX print oom"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e50c",
+      "address": "0x435952c",
+      "text": "[factory_cali] BLOB len=%u magic=FCAG version=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e540",
+      "address": "0x4359560",
+      "text": "[factory_cali] BLOB_HEX=%s"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e55c",
+      "address": "0x435957c",
+      "text": "[factory_cali] BLOB_HEX+=%s"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e57c",
+      "address": "0x435959c",
+      "text": "[factory_cali] BLOB_HEX end (concat BLOB_HEX / BLOB_HEX+= lines for import payload)"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e5d4",
+      "address": "0x43595f4",
+      "text": "[factory_cali] export incomplete, BLOB_HEX skipped"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e608",
+      "address": "0x4359628",
+      "text": "[factory_cali] oem_data_lock fail ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e634",
+      "address": "0x4359654",
+      "text": "[factory_cali] import rollback skipped: no OEM snapshot"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e670",
+      "address": "0x4359690",
+      "text": "[factory_cali] import rollback stage=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e6e4",
+      "address": "0x4359704",
+      "text": "[factory_cali] import fail: bad length=%u expect=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e71c",
+      "address": "0x435973c",
+      "text": "[factory_cali] import fail: bad magic=0x%08X version=%u expect=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e760",
+      "address": "0x4359780",
+      "text": "[factory_cali] import fail: bad IMU bb=%f kx=%f"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e794",
+      "address": "0x43597b4",
+      "text": "[factory_cali] import fail: bad JBD left=%u,%u right=%u,%u max=%u,%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e7dc",
+      "address": "0x43597fc",
+      "text": "[factory_cali] import warn: OEM snapshot incomplete, rollback disabled"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e824",
+      "address": "0x4359844",
+      "text": "[factory_cali] import fail: oem_data_unlock ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e858",
+      "address": "0x4359878",
+      "text": "[factory_cali] import write IMU fail ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e888",
+      "address": "0x43598a8",
+      "text": "[factory_cali] import write CANC_LUMA fail ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e8bc",
+      "address": "0x43598dc",
+      "text": "[factory_cali] import apply JBD_OFFSET fail ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e8f0",
+      "address": "0x4359910",
+      "text": "[factory_cali] import ok, blob len=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x16e918",
+      "address": "0x4359938",
+      "text": "[factory_cali] import fail: CANC_LUMA out of range 1..%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1704c0",
+      "address": "0x435b4e0",
+      "text": "is_reboot:%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x170e20",
+      "address": "0x435be40",
+      "text": "2712 reset"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x170ebf",
+      "address": "0x435bedf",
+      "text": "C[T:0x%08X][bt_factory_test.c:680] factory_test E:Invalid %s length: %zu"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x170f08",
+      "address": "0x435bf28",
+      "text": "[T:0x%08X][bt_factory_test.c:685] factory_test E:OEM data unlock failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x170f58",
+      "address": "0x435bf78",
+      "text": "[T:0x%08X][bt_factory_test.c:690] factory_test E:Failed to allocate memory for OEM %s"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x170fb0",
+      "address": "0x435bfd0",
+      "text": "[T:0x%08X][bt_factory_test.c:698] factory_test E:Write OEM %s failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171000",
+      "address": "0x435c020",
+      "text": "[T:0x%08X][bt_factory_test.c:293] factory_test E:getCurrentLuma: %s luma[9]=%u < luma[8]=%u, force luma[9]=7109"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171070",
+      "address": "0x435c090",
+      "text": "[T:0x%08X][bt_factory_test.c:657] factory_test E:switch_more_device failed in factory msg, mode=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1710d4",
+      "address": "0x435c0f4",
+      "text": "[T:0x%08X][bt_factory_test.c:2520] factory_test E:log level get error,set default %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17112c",
+      "address": "0x435c14c",
+      "text": "[T:0x%08X][bt_factory_test.c:965] factory_test E:Response data too long: %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171178",
+      "address": "0x435c198",
+      "text": "[T:0x%08X][bt_factory_test.c:982] factory_test E:factory spp response send failed, len=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1711d4",
+      "address": "0x435c1f4",
+      "text": "[T:0x%08X][bt_factory_test.c:566] factory_test E:invalid imu event param, len=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171228",
+      "address": "0x435c248",
+      "text": "[T:0x%08X][bt_factory_test.c:881] factory_test E:Invalid report_event_id: 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17127c",
+      "address": "0x435c29c",
+      "text": "[T:0x%08X][bt_factory_test.c:887] factory_test E:CRC8 check failed: 0x%02X != 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1712e0",
+      "address": "0x435c300",
+      "text": "[T:0x%08X][bt_factory_test.c:2385] factory_test E:getCurrentLuma: Failed to read canc_luma from OEM, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17136c",
+      "address": "0x435c38c",
+      "text": "[T:0x%08X][bt_factory_test.c:268] factory_test E:[ft_flash] gm_ext_flash_init fail %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1713c4",
+      "address": "0x435c3e4",
+      "text": "[T:0x%08X][bt_factory_test.c:195] factory_test E:[ft_flash] read(initial) addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171424",
+      "address": "0x435c444",
+      "text": "[T:0x%08X][bt_factory_test.c:201] factory_test E:[ft_flash] erase(dirty preamble) addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17148c",
+      "address": "0x435c4ac",
+      "text": "[T:0x%08X][bt_factory_test.c:206] factory_test E:[ft_flash] read(post-erase) addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1714ec",
+      "address": "0x435c50c",
+      "text": "[T:0x%08X][bt_factory_test.c:210] factory_test E:[ft_flash] not clean after erase addr=0x%08X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17154c",
+      "address": "0x435c56c",
+      "text": "[T:0x%08X][bt_factory_test.c:216] factory_test E:[ft_flash] write fail addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1715a8",
+      "address": "0x435c5c8",
+      "text": "[T:0x%08X][bt_factory_test.c:223] factory_test E:[ft_flash] readback mismatch addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17160c",
+      "address": "0x435c62c",
+      "text": "[T:0x%08X][bt_factory_test.c:229] factory_test E:[ft_flash] final erase addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171668",
+      "address": "0x435c688",
+      "text": "[T:0x%08X][bt_factory_test.c:234] factory_test E:[ft_flash] read(post-final-erase) addr=0x%08X ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1716d0",
+      "address": "0x435c6f0",
+      "text": "[T:0x%08X][bt_factory_test.c:238] factory_test E:[ft_flash] not all 0xFF after final erase addr=0x%08X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171738",
+      "address": "0x435c758",
+      "text": "[T:0x%08X][bt_factory_test.c:274] factory_test E:[ft_flash] site %u FAIL addr=0x%08X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17179c",
+      "address": "0x435c7bc",
+      "text": "[T:0x%08X][bt_factory_test.c:715] factory_test E:Read OEM %s failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1717e8",
+      "address": "0x435c808",
+      "text": "[T:0x%08X][bt_factory_test.c:719] factory_test E:Invalid %s length: %u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171830",
+      "address": "0x435c850",
+      "text": "[T:0x%08X][bt_factory_test.c:1702] factory_test E:GLASS_CMD_WEAR_VALUE unsupported hardware_version=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171898",
+      "address": "0x435c8b8",
+      "text": "[T:0x%08X][bt_factory_test.c:1732] factory_test E:GLASS_CMD_SET_WEAR_POINT invalid len=%u, need 2"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1718fc",
+      "address": "0x435c91c",
+      "text": "[T:0x%08X][bt_factory_test.c:1756] factory_test E:GLASS_CMD_SET_WEAR_POINT unsupported hardware_version=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171968",
+      "address": "0x435c988",
+      "text": "[T:0x%08X][bt_factory_test.c:1915] factory_test E:GLASS_CMD_SET_OPTICAL_PIC, invalid pic_type=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1719cc",
+      "address": "0x435c9ec",
+      "text": "[T:0x%08X][bt_factory_test.c:1947] factory_test E:Invalid report_event_id: 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171a20",
+      "address": "0x435ca40",
+      "text": "[T:0x%08X][bt_factory_test.c:1957] factory_test E:param_count %d exceeds MAX_LUMA_PARAMS %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171a7c",
+      "address": "0x435ca9c",
+      "text": "[T:0x%08X][bt_factory_test.c:2012] factory_test E:Write canc_luma to OEM failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171ad4",
+      "address": "0x435caf4",
+      "text": "[T:0x%08X][bt_factory_test.c:2029] factory_test E:GLASS_CMD_GET_CONS_LUMA: Invalid report_event_id: 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171b40",
+      "address": "0x435cb60",
+      "text": "[T:0x%08X][bt_factory_test.c:2065] factory_test E:Read canc_luma from OEM failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171b9c",
+      "address": "0x435cbbc",
+      "text": "[T:0x%08X][bt_factory_test.c:2312] factory_test E:Failed to read canc_luma from OEM, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171bf8",
+      "address": "0x435cc18",
+      "text": "[T:0x%08X][bt_factory_test.c:2153] factory_test E:GLASS_CMD_CALC_LUMA: invalid data length %d, expected 2"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171c64",
+      "address": "0x435cc84",
+      "text": "[T:0x%08X][bt_factory_test.c:2172] factory_test E:GLASS_CMD_STRESS_NOTI, invalid is_noti=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171cc0",
+      "address": "0x435cce0",
+      "text": "[T:0x%08X][bt_factory_test.c:2209] factory_test E:GLASS_CMD_MIC_LOOPBACK_START, invalid mic_index=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x171d28",
+      "address": "0x435cd48",
+      "text": "[T:0x%08X][bt_factory_test.c:2273] factory_test E:post factory msg FT_SELF_MSG_DEFER_SWITCH_MORE_DEVICE failed, mode=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x172b6c",
+      "address": "0x435db8c",
+      "text": "[app_pm] shutdown failed, force reboot"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x172c3c",
+      "address": "0x435dc5c",
+      "text": "[T:0x%08X][app_pm.c:1671] [app_pm] E:Factory reset XGIMI KV reset failed, ret=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x173460",
+      "address": "0x435e480",
+      "text": "reset bcore cache"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1734dc",
+      "address": "0x435e4fc",
+      "text": "Factory reset, clear rtc"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1734f8",
+      "address": "0x435e518",
+      "text": "Boot reason:%d, wakeup_source:%d, flag:%d not clear rtc"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x175c3c",
+      "address": "0x4360c5c",
+      "text": "[T:0x%08X][display_adapter.c:1487] [display_adapter]  E:Failed to reset user JBD offset: %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x175cd4",
+      "address": "0x4360cf4",
+      "text": "[T:0x%08X][display_adapter.c:1718] [display_adapter]  E:factory pic mode, %s"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x175d24",
+      "address": "0x4360d44",
+      "text": "[T:0x%08X][display_adapter.c:1746] [display_adapter]  E:jbd013_set_factory_pic failed pic=%d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x177994",
+      "address": "0x43629b4",
+      "text": "icon_factory_reset"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x177df0",
+      "address": "0x4362e10",
+      "text": "boot_app"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x178a64",
+      "address": "0x4363a84",
+      "text": "im_sc_reboot"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x179d24",
+      "address": "0x4364d44",
+      "text": "[T:0x%08X][aging_test.c:653] [aging_test]  E:aging factory start level rejected mode=%d level=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17b320",
+      "address": "0x4366340",
+      "text": "First boot detected...."
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17d230",
+      "address": "0x4368250",
+      "text": "Device is bound, unpair it or factory reset."
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17d2b4",
+      "address": "0x43682d4",
+      "text": "Firmware is downloaded. Device will restart to install"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17d73c",
+      "address": "0x436875c",
+      "text": "Restoring factory settings. Please wait..."
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17dbac",
+      "address": "0x4368bcc",
+      "text": "Memo Conversation Simulation"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x17e2c4",
+      "address": "0x43692e4",
+      "text": "Complete Boot Wizard"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x184004",
+      "address": "0x436f024",
+      "text": "Firmware-Download abgeschlossen. Ger"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x185524",
+      "address": "0x4370544",
+      "text": "Boot-Assistent abschlie"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x186228",
+      "address": "0x4371248",
+      "text": "En conversation %02d:%02d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x187138",
+      "address": "0x4372158",
+      "text": "Conversation Memo Simulation"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1896a0",
+      "address": "0x43746c0",
+      "text": "Conversaci"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x18ba54",
+      "address": "0x4376a74",
+      "text": "Conversazione Memo Simulazione"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x18c814",
+      "address": "0x4377834",
+      "text": "Corsa finita"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x191c12",
+      "address": "0x437cc32",
+      "text": "o de conversa"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1992d0",
+      "address": "0x43842f0",
+      "text": "[T:0x%08X][jbd013_api.c:1277] [JBD013] E:invalid factory pic %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x199310",
+      "address": "0x4384330",
+      "text": "[T:0x%08X][jbd013_api.c:1190] [JBD013] E:factory pic unknown or bad asset %d"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a4c98",
+      "address": "0x438fcb8",
+      "text": "{\"event\":\"GlassCoreDump\",\"ts\":%u,\"commit_id\":\"%s\",\"core_id\":%u,\"reason\":%u,\"mcause\":%u,\"mepc\":%u,\"ra\":%u,\"mtval\":%u,\"tick\":%u,\"bt0\":%u,\"bt1\":%u,\"bt2\":%u,\"bt3\":%u,\"assert_file\":\"%s\",\"assert_line\":%u,\"backtrace\":%s,\"boot_reason\":%u,\"boot_source\":%u,\"boot_flag\":%u,\"diag_flags\":%u,\"wdt_id\":%u,\"wdt_feed_cnt\":%u,\"global_wdt_feed_cnt\":%u,\"current_task\":%u,\"current_task_name\":\"%s\",\"scheduler_state\":%u,\"crash_count\":%u}"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a4e38",
+      "address": "0x438fe58",
+      "text": "[T:0x%08X][app_exception_burypoint.c:249] [exception_bp]  E:[EXCEPTION_BP] coredump_boot pending core=%u mcause=0x%x mepc=0x%x ra=0x%x mtval=0x%x assert=%s:%u bt=%s boot_reason=%u source=%u flag=%u diag_flags=0x%x wdt_id=%u wdt_feed_cnt=%u global_wdt_feed_cnt=%u current_task=0x%x current_task_name=%s scheduler_state=%u crash_count=%u"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a594c",
+      "address": "0x439096c",
+      "text": "[T:0x%08X][bt_data_handler.c:4991] [bt_handler]  E:Unknown boot command: 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a599c",
+      "address": "0x43909bc",
+      "text": "unknown boot command"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a59c8",
+      "address": "0x43909e8",
+      "text": "[T:0x%08X][bt_data_handler.c:4908] [bt_handler]  E:Unknown boot command: 0x%02X"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a95c0",
+      "address": "0x43945e0",
+      "text": "[ipc_recv_drop] CORE%d ipc bad r/w (r=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a9604",
+      "address": "0x4394624",
+      "text": "[ipc_recv_drop] CORE%d ipc recv guard hit (r=%u w=%u max=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a9650",
+      "address": "0x4394670",
+      "text": "[ipc_recv_drop] CORE%d ipc msg header overflow (r=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a969c",
+      "address": "0x43946bc",
+      "text": "[ipc_recv_drop] CORE%d ipc bad break_off len (len=%u size=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a96ec",
+      "address": "0x439470c",
+      "text": "[ipc_recv_drop] CORE%d ipc bad inline len (r=%u len=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1a9740",
+      "address": "0x4394760",
+      "text": "[ipc_recv_drop] CORE%d ipc r not progressing (r=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1ab660",
+      "address": "0x4396680",
+      "text": "[T:0x%08X][gm_cap_wear.c:1132] cap_wear E:OEM wear calib: humidity_drift_oem=%u invalid (0=table preset, else 1..%u)"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1ab8d0",
+      "address": "0x43968f0",
+      "text": "WQ703XReset"
+    },
+    {
+      "file": "segment-3.body.bin",
+      "offset": "0x1abc7c",
+      "address": "0x4396c9c",
+      "text": "[T:0x%08X][gm_imu_icm42670.c:369] icm42670 E:IMU suspend failed: err=%d recovery=%d"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x7e5fc",
+      "address": null,
+      "text": "MOBVOI[I]: AEC reset"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x7e9d4",
+      "address": null,
+      "text": "MOBVOI[I]: ES reset"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8d360",
+      "address": null,
+      "text": "preset_mem.c"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8d550",
+      "address": null,
+      "text": "reset_core"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e60c",
+      "address": null,
+      "text": "[crash]reset other core timeout"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e6d8",
+      "address": null,
+      "text": "[crash]double exception, fast to reset"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e8d0",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad r/w (r=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e914",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc recv guard hit (r=%u w=%u max=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e960",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc msg header overflow (r=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e9ac",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad break_off len (len=%u size=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8e9fc",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc bad inline len (r=%u len=%u w=%u size=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8ea50",
+      "address": null,
+      "text": "[ipc_recv_drop] CORE%d ipc r not progressing (r=%u w=%u), reset r=w"
+    },
+    {
+      "file": "segment-2.body.bin",
+      "offset": "0x8f244",
+      "address": null,
+      "text": "[procedure] %s on %u reset"
+    }
+  ]
+}

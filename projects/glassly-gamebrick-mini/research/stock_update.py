@@ -1,0 +1,87 @@
+"""Build a device-layout image containing the unmodified OEM application."""
+from pathlib import Path
+import hashlib,json,struct,sys
+ROOT=Path(__file__).resolve().parent
+sys.path.insert(0,str(ROOT/'jl-misctools/firmware'))
+from jltech.cipher import jl_sfc_cipher
+from jltech.crc import jl_crc16
+from flash_layout import Layout,LAYOUTS
+from device_profile import NAME, BACKUP, ORIGINAL_SHA, STOCK_SHA, STOCK_OUT as OUT
+OEM_SHA='2fb44f4235bd4ed7183439f31ee2a31fb0052d19dd736e20d1d251fd5e1ff259'
+FACTORY_APP_SHA='902aedc30a84c9ae777e3cbdd12ff5737ac17b7ee3f5288f76c7aa86fe267c97'
+BASE=0x2020   # application area of the 2025 production layout; build() reads each image's own tables
+LIMIT=0x3e020
+KNOWN_APP_SIZES=(196224,198760,198824,199232)
+
+def require(ok,message):
+    if not ok: raise RuntimeError(message)
+def digest(data):return hashlib.sha256(data).hexdigest()
+def entry(data,off):
+    require(len(data)>=off+32,'Truncated entry')
+    e=struct.unpack_from('<HHIIBBH16s',data,off)
+    require(jl_crc16(data[off+2:off+32])==e[0],'Entry CRC mismatch')
+    return e
+def header_crc(data,off):struct.pack_into('<H',data,off,jl_crc16(data[off+2:off+32]))
+
+def build(original,replacement,original_sha=None):
+    require(len(original)==0x80000 and digest(original)==(original_sha or ORIGINAL_SHA),'Wrong original backup')
+    layout=Layout(original)
+    require(layout.fingerprint in LAYOUTS,'Unknown flash layout')
+    base,limit,key=layout.base,layout.limit,layout.key
+    plain=bytearray(original)
+    jl_sfc_cipher(plain,base,limit-base,base,key)
+    area=entry(plain,base);app=entry(plain,base+32);cfg=entry(plain,base+64)
+    # Factory (196224 or 198760), official update (198824) or Glassly custom (199232) application.
+    require(area[2]==0x1e00120 and app[2]==0x120 and app[3] in KNOWN_APP_SIZES,'Unexpected application layout')
+    require(app[-1].startswith(b'app.bin\0') and cfg[-1].startswith(b'cfg_tool.bin\0'),'Unexpected file table')
+    p11=entry(plain,base+area[3]);used=area[3]+p11[3]
+    require(p11[-1].startswith(b'p11_code.bin\0'),'Unexpected resource')
+    region=plain[base:base+used]
+    require(jl_crc16(region[32:area[3]])==area[1],'Application area CRC mismatch')
+    require(jl_crc16(region[app[2]:app[2]+app[3]])==app[1],'Application CRC mismatch')
+    require(cfg[2]==app[2]+app[3] and cfg[2]+cfg[3]==area[3],'Unexpected file gaps')
+    require(jl_crc16(region[cfg[2]:cfg[2]+cfg[3]])==cfg[1],'Configuration CRC mismatch')
+    require(jl_crc16(region[area[3]+32:used])==p11[1],'P11 CRC mismatch')
+    growth=len(replacement)-app[3]
+    require(base+used+growth<limit,'Update exceeds active area')
+    require(growth<=0 or all(b==0xff for b in original[base+used:base+used+growth]),'Application growth would overwrite non-erased bytes after the used area')
+    updated=region[:app[2]]+replacement+region[app[2]+app[3]:]
+    struct.pack_into('<H',updated,34,jl_crc16(replacement))
+    struct.pack_into('<I',updated,40,len(replacement));header_crc(updated,32)
+    struct.pack_into('<I',updated,68,cfg[2]+growth);header_crc(updated,64)
+    struct.pack_into('<I',updated,8,area[3]+growth)
+    struct.pack_into('<H',updated,2,jl_crc16(updated[32:area[3]+growth]));header_crc(updated,0)
+    require(updated[96:app[2]]==region[96:app[2]],'Partition entries changed')
+    require(updated[cfg[2]+growth:]==region[cfg[2]:],'Config or P11 changed')
+    output=bytearray(original);output[base:base+len(updated)]=updated
+    jl_sfc_cipher(output,base,len(updated),base,key)
+    # A smaller application frees the tail of the active area; leave it erased, as the factory image does.
+    if growth<0:
+        output[base+len(updated):base+used]=b'\xff'*-growth
+    end=base+max(len(updated),used)
+    require(output[:base]==original[:base] and output[end:]==original[end:],'Unrelated bytes changed')
+    return bytes(output)
+
+def prepare():
+    original=BACKUP.read_bytes()
+    require((BACKUP.parent/'flash-pass2.bin').read_bytes()==original,'Backup copies differ')
+    require((BACKUP.parent/'metadata.json').exists(),'Backup metadata missing')
+    installed=(BACKUP.parent/'unpacked/files/app.bin').read_bytes()
+    require(digest(installed)==FACTORY_APP_SHA,'Factory application differs from the analysed version')
+    require(build(original,installed)==original,'Original-image roundtrip failed')
+    replacement=(ROOT/'unpacked/files/app.bin').read_bytes()
+    require(digest(replacement)==OEM_SHA,'OEM application hash mismatch')
+    for name in ('cfg_tool.bin','p11_code.bin'):
+        require((ROOT/'unpacked/files'/name).read_bytes()==(BACKUP.parent/'unpacked/files'/name).read_bytes(),name+' differs')
+    for name in ('uboot.boot','isd_config.ini'):
+        require((ROOT/'unpacked/top'/name).read_bytes()==(BACKUP.parent/'unpacked/top'/name).read_bytes(),name+' differs')
+    output=build(original,replacement)
+    sectors=[a for a in range(0,len(original),4096) if original[a:a+4096]!=output[a:a+4096]]
+    require(digest(output)==STOCK_SHA,f'Stock image for {NAME} differs from its pinned hash {STOCK_SHA}: got {digest(output)}')
+    OUT.mkdir(parents=True,exist_ok=True)
+    (OUT/'stock-app-device-layout.bin').write_bytes(output)
+    report={'status':'PREPARED; hardware compatibility per unit recorded in docs','device':NAME,'original_sha256':ORIGINAL_SHA,'target_sha256':digest(output),'application_sha256':OEM_SHA,'application_bytes':len(replacement),'flash_bytes':len(output),'sector_bytes':4096,'changed_sectors':sectors,'changed_sector_count':len(sectors),'first_changed_byte':next(i for i,(a,b) in enumerate(zip(original,output)) if a!=b),'last_changed_byte':max(i for i,(a,b) in enumerate(zip(original,output)) if a!=b),'preserved':'Bootloader, top-level partition map, inactive slot, VM, Bluetooth data, user data, key/MAC, config and P11 payloads','method':'Unmodified official application; installed file table retained with updated sizes, offsets and CRCs; P11 relocated within active area'}
+    (OUT/'manifest.json').write_text(json.dumps(report,indent=2)+'\n')
+    print(f'Stock image for {NAME}: {len(sectors)} changed sectors, SHA256 {digest(output)}')
+    return original,output,report
+if __name__=='__main__':prepare()

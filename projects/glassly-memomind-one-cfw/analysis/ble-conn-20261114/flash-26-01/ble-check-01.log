@@ -1,0 +1,13 @@
+  0.011 central state 5
+  0.443 advert MemoMind One rssi -66 services (
+    9200
+)
+  1.352 connected
+  1.758 services ["9200", "9300", "9400"]
+  1.818 characteristics ["9401 props 30", "9402 props 30"]
+  1.939 notify 9401 true 
+  2.027 hello reply 8001001a030b
+  2.028 accepted; mtu write limit 509; sending GM heartbeat (service 1 command 1)
+  2.087 gm notify 14 B: fa00000e01010106000001000112
+  2.087 GM reply frame over BLE: fa00000e01010106000001000112
+  3.137 disconnected: requested accepted=true

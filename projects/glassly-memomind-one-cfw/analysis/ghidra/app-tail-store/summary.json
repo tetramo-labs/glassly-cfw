@@ -1,0 +1,71 @@
+{
+  "format": "memomind-app-tail-store-analysis-v1",
+  "read_only": true,
+  "candidate": {
+    "basis": "Stock partition record plus input-observer-001 final_bounds; no flash read or reservation performed",
+    "partition": {
+      "index": 2,
+      "type": 32,
+      "flash_start": 2011136,
+      "load_address": 69120032,
+      "body_size": 1773176,
+      "allocation_size": 2097152
+    },
+    "candidate_physical_start": "0x3ab000",
+    "candidate_physical_end_exclusive": "0x3eb000",
+    "candidate_xip_start": "0x43ab000",
+    "candidate_xip_end_exclusive": "0x43eb000",
+    "candidate_bytes": 262144,
+    "sector_count": 64,
+    "current_final_body_physical_end_exclusive": "0x3a7f00",
+    "gap_between_body_end_and_candidate": 12544,
+    "maximum_raw_app_bytes_before_overlap": 1835008,
+    "maximum_body_bytes_before_overlap": 1834976,
+    "candidate_currently_outside_declared_body": true,
+    "stock_ownership": "still within type0x20 application allocation; no new partition"
+  },
+  "format_crc_excludes_candidate": true,
+  "actual_reset_crc_range_proven": false,
+  "normal_compressed_ota_activation_erase_range_proven": false,
+  "app_staging_partition": [
+    4722688,
+    7204864
+  ],
+  "cache_survival_across_ota_required": false,
+  "no_known_direct_app_tail_references": true,
+  "exclusive_runtime_ownership_proven": false,
+  "native_store_excluded": {
+    "device": 1,
+    "offset_start": 5242880,
+    "offset_end_exclusive": 8388608,
+    "xip_start": 89128960
+  },
+  "readonly_acquisition": {
+    "address": "0x04329ad8",
+    "abi": "int(unsigned device,uint32_t physical_offset,void *destination,uint32_t bytes)",
+    "success": 0,
+    "chunk_max_proposed": 256,
+    "software_timeout_available": false,
+    "fixed_device0_ranges": [
+      [
+        0,
+        65536
+      ],
+      [
+        8372224,
+        8380416
+      ],
+      [
+        2011136,
+        2011168
+      ]
+    ],
+    "boot_flash_contents_verified": false
+  },
+  "safe_to_write_candidate": false,
+  "blocking_evidence": [
+    "Reset-time executable CRC coverage",
+    "Exclusive runtime ownership beyond direct references",
+    "Erase-aware store allocation and recovery design"
+  ]
+}

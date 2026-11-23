@@ -1,0 +1,62 @@
+{
+  "inputs": [
+    {
+      "path": "analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+      "bytes": 1773176,
+      "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8"
+    },
+    {
+      "path": "analysis/extracted/validated-1.0.3.127/segment-1.body.bin",
+      "bytes": 909644,
+      "sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f"
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/app-header.bin",
+      "bytes": 256,
+      "sha256": "643fd6b82cf02ac58295cfe68656fce52671de74e67d208d4172da000d24315f"
+    },
+    {
+      "path": "captures/flash-read-runtime-20261031/metadata/boot-maps.bin",
+      "bytes": 8192,
+      "sha256": "dc4cc0ff081b21ad25ef042086e8399971d1706a9a0b5dcbc35aacb4b304a35b"
+    },
+    {
+      "path": "analysis/ghidra/boot-validation/report.md",
+      "bytes": 10281,
+      "sha256": "1a7f3c14f5943ba1b9ad5b9270467c1f27ca20b88c426abb5a18d898a812aaf2"
+    },
+    {
+      "path": "analysis/ghidra/app-tail-store/report.md",
+      "bytes": 13259,
+      "sha256": "2d3ab9f197cd046897529511f147deca165a8554a36b4ea7d88c623469818306"
+    },
+    {
+      "path": "analysis/ghidra/native-store-capacity/report.md",
+      "bytes": 13538,
+      "sha256": "57bc01e5e355e0777e40c04b0fcb9201e99f936d517d2aa669adfbee8f0d3e0d"
+    },
+    {
+      "path": "analysis/ghidra/memory-capacity/report.md",
+      "bytes": 11422,
+      "sha256": "867884e29c94e3d905b684a6899a696b750df68dbab20577a11fe7ee5d051b59"
+    },
+    {
+      "path": "analysis/ghidra/external-reservation-review/rmw-caller-04201704.txt",
+      "bytes": 473,
+      "sha256": "dd3a521cc06aa823e13c468d332e45466e4095dcaee0ccf1c8ea845123d42e21"
+    },
+    {
+      "path": "analysis/ghidra/external-reservation-review/staging/functions.json",
+      "bytes": 1678,
+      "sha256": "11813a8d2562f39257f8a5cd341dd0df99d094f377e687c122487f9e850b67c6"
+    }
+  ],
+  "source_mutations": false,
+  "device_actions": false,
+  "analysis_access": "readOnly,noanalysis",
+  "early_unrelated_exports": [
+    "diagnostic/function-04330df6.c",
+    "diagnostic/function-04330e6a.c"
+  ],
+  "scope_note": "Recognized calls/references plus pinned metadata; no exhaustive indirect-call or ROM proof."
+}

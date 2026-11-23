@@ -1,0 +1,65 @@
+[
+  {
+    "address": "0x435a510",
+    "key": "0x5002",
+    "bytes": "02501e00000000004600000000000000",
+    "default": 30,
+    "maximum": 70,
+    "minimum": 0,
+    "type": 0
+  },
+  {
+    "address": "0x435a540",
+    "key": "0x5005",
+    "bytes": "05500f0000000000ff00000005000000",
+    "default": 15,
+    "maximum": 255,
+    "minimum": 5,
+    "type": 0
+  },
+  {
+    "address": "0x435a550",
+    "key": "0x5006",
+    "bytes": "06500100000000000500000001000000",
+    "default": 1,
+    "maximum": 5,
+    "minimum": 1,
+    "type": 0
+  },
+  {
+    "address": "0x435a590",
+    "key": "0x500a",
+    "bytes": "0a500100000000000100000000000000",
+    "default": 1,
+    "maximum": 1,
+    "minimum": 0,
+    "type": 0
+  },
+  {
+    "address": "0x435a700",
+    "key": "0x5202",
+    "bytes": "02520000000000000100000000000000",
+    "default": 0,
+    "maximum": 1,
+    "minimum": 0,
+    "type": 0
+  },
+  {
+    "address": "0x435a7a0",
+    "key": "0x520c",
+    "bytes": "0c520200000000000400000000000000",
+    "default": 2,
+    "maximum": 4,
+    "minimum": 0,
+    "type": 0
+  },
+  {
+    "address": "0x435aae0",
+    "key": "0x5904",
+    "bytes": "04590000000000000100000000000000",
+    "default": 0,
+    "maximum": 1,
+    "minimum": 0,
+    "type": 0
+  }
+]

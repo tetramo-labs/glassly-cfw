@@ -1,0 +1,243 @@
+{
+  "date": "2026-11-04",
+  "candidate_sha256": "574f6542ef749741721d8bf040aa0b45eb8837d9357b900865473400027d2c59",
+  "payload_bytes": 562,
+  "code_audit": {
+    "instruction_count": 204,
+    "branches": [
+      {
+        "address": 31796284,
+        "operation": "call",
+        "target": 6342
+      },
+      {
+        "address": 31796288,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796312,
+        "operation": "goto",
+        "target": 31796328
+      },
+      {
+        "address": 31796318,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796326,
+        "operation": "goto",
+        "target": 31796330
+      },
+      {
+        "address": 31796342,
+        "operation": "goto",
+        "target": 31796390
+      },
+      {
+        "address": 31796350,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796354,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796384,
+        "operation": "call",
+        "target": 31796608
+      },
+      {
+        "address": 31796388,
+        "operation": "goto",
+        "target": 31796394
+      },
+      {
+        "address": 31796390,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796410,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796414,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796422,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796434,
+        "operation": "goto",
+        "target": 31796450
+      },
+      {
+        "address": 31796442,
+        "operation": "call",
+        "target": 31549912
+      },
+      {
+        "address": 31796446,
+        "operation": "goto",
+        "target": 31796462
+      },
+      {
+        "address": 31796450,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796478,
+        "operation": "goto",
+        "target": 31796468
+      },
+      {
+        "address": 31796494,
+        "operation": "call",
+        "target": 31550196
+      },
+      {
+        "address": 31796500,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796504,
+        "operation": "call",
+        "target": 31549048
+      },
+      {
+        "address": 31796508,
+        "operation": "goto",
+        "target": 31796456
+      },
+      {
+        "address": 31796518,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796528,
+        "operation": "call",
+        "target": 31551864
+      },
+      {
+        "address": 31796548,
+        "operation": "goto",
+        "target": 13624
+      },
+      {
+        "address": 31796556,
+        "operation": "call",
+        "target": 13596
+      },
+      {
+        "address": 31796562,
+        "operation": "call",
+        "target": 31551566
+      },
+      {
+        "address": 31796578,
+        "operation": "call",
+        "target": 13624
+      },
+      {
+        "address": 31796616,
+        "operation": "goto",
+        "target": 31796652
+      },
+      {
+        "address": 31796618,
+        "operation": "goto",
+        "target": 31796652
+      },
+      {
+        "address": 31796624,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796628,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796634,
+        "operation": "goto",
+        "target": 31796660
+      },
+      {
+        "address": 31796640,
+        "operation": "goto",
+        "target": 31796786
+      },
+      {
+        "address": 31796650,
+        "operation": "goto",
+        "target": 31796832
+      },
+      {
+        "address": 31796658,
+        "operation": "goto",
+        "target": 31796782
+      },
+      {
+        "address": 31796752,
+        "operation": "goto",
+        "target": 31796782
+      },
+      {
+        "address": 31796792,
+        "operation": "goto",
+        "target": 31796812
+      },
+      {
+        "address": 31796832,
+        "operation": "goto",
+        "target": 31796686
+      },
+      {
+        "address": 31796840,
+        "operation": "goto",
+        "target": 31796782
+      }
+    ],
+    "all_payload_bytes_disassembled": true,
+    "direct_targets_on_instruction_boundaries": true,
+    "indirect_call": "ag_stream_poll callback; ag_scan_hook supplies send_packet",
+    "stack_proven": false
+  },
+  "previous_flash_sha256": "a93b93a788452026e2b155a8797805ef7d1d55be0af1e2eb7fcdd9fda49388d3",
+  "flashed": false,
+  "fix": "Call stock_bt_wake at 0x1e16678 after each ATT queue attempt, outside the critical section, including backpressure.",
+  "trace": {
+    "oem_dispatcher": "0x1e16cfe command 26 calls queue at 0x1e16ef6 then wake at 0x1e16f12",
+    "wake": "0x1e16678 posts to btstack via RAM 0x495e",
+    "task_name_address": "0x1e43b9e"
+  },
+  "incremental_sectors": [
+    "0x26000",
+    "0x35000",
+    "0x36000",
+    "0x55000",
+    "0x3000"
+  ],
+  "tests": "58 Python tests and sanitized stream/binding tests passed",
+  "hardware_validation_pending": true,
+  "source_hashes": {
+    "firmware/ananke_v0900.c": "b9ea97d353d1047f934d5649ce31f9344eaefcf223ca766629cf24c708dc0ea8",
+    "firmware/ananke_v0900.ld": "5e7edf5a74b37ee8ac006c918c173708bec94841cc590ada48f4b51b413497c1",
+    "research/build_candidate.py": "0a9d3f2ce8d1619f5989152680160dae99f16a8c61f20121f717406e9f072a71",
+    "research/flash_controller.py": "4104d50ac1fd46d274a71b004f79494ea679958e0c597f8884bbc48b03e90d63",
+    "research/test_ananke_binding.c": "6b0006e3204bec8e3678ac13aa67a05a6efa95a349001c9783b30dce57c3b15e"
+  }
+}

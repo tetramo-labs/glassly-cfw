@@ -1,0 +1,12 @@
+MemoMind One: restore. Backups and logs: ~/Library/Application Support/Glassly CFW Flasher/backups/memomind-restore-20261116-201503
+Looking for the glasses (switch them on and keep them close)
+Glasses paired with this computer: MemoMind One (4C:3C:8F:90:CC:C3).
+Connecting to the glasses (switch them on and keep them close)
+Glasses report model 'H001Y', hardware '2.1.2', front '1.3', firmware '1.0.3.127', MAC '4C:3C:8F:90:CC:C3'.
+The glasses run GLASSLYCFW/26; sending official firmware 1.0.3.127.
+Preparing the update
+Connecting for the update
+Sending official firmware 1.0.3.127 (keep the glasses switched on and close)
+Reboot acknowledged after 534 blocks (3735 chunks).
+Waiting for the glasses to restart (wake them if the display stays dark)
+The glasses answered as official firmware 1.0.3.127.

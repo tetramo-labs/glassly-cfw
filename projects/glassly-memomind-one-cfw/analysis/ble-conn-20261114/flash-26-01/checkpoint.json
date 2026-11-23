@@ -1,0 +1,60 @@
+{
+ "revision": 26,
+ "version": "GLASSLYCFW/26",
+ "release": "ble-link-002",
+ "imageSHA256": "e5b09e22634f2d2f996e4117b867809753e62adedac954845dd5b323149a5027",
+ "imageBytes": 2243927,
+ "runtimeSHA256": "b4312c32009f3764e2032731453dbe4d784bbf0b18230a94cde89323add49665",
+ "runtimeBytes": 84352,
+ "appHeaderSHA256": "d9ab83ca26fe739080b35491ab2a9b400a40e46197217a1ddcc68711ce64fb39",
+ "flashedWith": "memomind flash (macOS IOBluetooth RFCOMM)",
+ "device": {
+  "model": "H001Y",
+  "mac": "4C:3C:8F:90:CC:C3",
+  "stockVersion": "1.0.3.127"
+ },
+ "transfer": {
+  "startedUtc": "2026-11-15T01:17:01.197Z",
+  "completedUtc": "2026-11-15T01:20:18.921Z",
+  "range": [
+   18,
+   2243927
+  ],
+  "blocks": 548,
+  "chunks": 3835,
+  "state": "reboot acknowledged",
+  "traceRows": 8267,
+  "traceSHA256": "dcd0c9e748787da1356363dee696a85210e83e1a38280a19a0641cf10ec897ce"
+ },
+ "bootVerification": {
+  "method": "memomind ownership --seconds 5: capabilities 15/0x7E over Classic RFCOMM after reboot",
+  "version": "GLASSLYCFW/26",
+  "verifiedUtc": "2026-11-15T01:23Z",
+  "record": "ownership-01/result.json",
+  "probeTraceSHA256": "f978ff29dcc73753745898814b595b23b10174493d68504a32febd5d1fa7a105",
+  "ownershipTraceSHA256": "5a4067da4b550d933de96c2fabcba7dc2049daae23bc394b310667e54bdbdd45"
+ },
+ "hardwareChecks": {
+  "bleAdvertising": "0x9200 advert seen after reboot (rssi -64 to -66)",
+  "gattServices": [
+   "9200",
+   "9300",
+   "9400"
+  ],
+  "characteristics": {
+   "9401": "props 0x1e",
+   "9402": "props 0x1e"
+  },
+  "hello": "Mac central accepted at its first hello: 80 01 00 1a 03 0b (revision 26; flags bonded + update requested, not accepted; BT core rc 0x0b). The stock current-phone check matched the Mac right after its RFCOMM sessions (ble-check-01.log)",
+  "gmOverBle": "heartbeat (service 1 command 1) answered over 0x9401; round trips 42-234 ms (ble-control-check-01.log)",
+  "control02": "refused by the BT core: status 2, rc 0x0b for every parameter set tried after acceptance (12-24/0/400, 24-40/0/500, 40-80/0/600, 12-12/0/400, 6-6/0/100, 24-40/latency 4/500, all zeros), same as the link-up request (ble-control-check-01/02.log)",
+  "control03": "accepted: status 0, rc 0; nothing visible on the Mac (ble-control-check-01.log)",
+  "unbondedDrop": "the glasses dropped the LE-unbonded Mac about 8.5 s after connect (ble-control-check-02.log)",
+  "notChecked": [
+   "bonded iPhone acceptance and the ANCS prompt",
+   "whether the connection interval changes on any central",
+   "OTA over BLE"
+  ]
+ },
+ "openIssue": "opcode 0x27a (bt_service_le_conn_update_param_req) comes back 0x0b from 043199d2 whatever the parameters, at link-up and later, while 0x2bc with the same peer bytes is accepted; the fast-link request of this revision has no effect until that refusal is understood (LE connection record lookup at 0x10233c04, or the opcode is gated in the BT core)"
+}

@@ -1,0 +1,22 @@
+  | |   "locationID" = 0
+  | +-o Xbox 360 Controller@00100000  <class IOUSBHostDevice, id 0x1004355c0, registered, matched, active, busy 0 (227 ms), retain 36>
+  |       "kUSBSerialNumberString" = "Xbox 360 Controller"
+  |       "USB Serial Number" = "Xbox 360 Controller"
+  |       "USB Vendor Name" = "Xbox 360 Controller"
+  |       "kUSBProductString" = "Xbox 360 Controller"
+  |       "kUSBVendorString" = "Xbox 360 Controller"
+  |       "USB Product Name" = "Xbox 360 Controller"
+  |       "idVendor" = 17235
+  |       "idProduct" = 32780
+  |       "bcdDevice" = 256
+  |       "locationID" = 1048576
+  |       "bcdUSB" = 512
+  | |   "locationID" = 33554432
+  |       "USB Vendor Name" = "Google"
+  |       "USB Product Name" = "Pixel 9 Pro"
+  |       "idVendor" = 6353
+  |       "idProduct" = 20199
+  |       "bcdDevice" = 1537
+  |       "locationID" = 34603008
+  |       "bcdUSB" = 528
+        "locationID" = 16777216

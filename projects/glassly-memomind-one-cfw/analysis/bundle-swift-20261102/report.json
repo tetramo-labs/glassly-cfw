@@ -1,0 +1,68 @@
+{
+  "format": "memomind-swift-bundle-encoder-review-v1",
+  "status": "passed-offline",
+  "api": "RasterCommands.bundle(_ commands: [Data]) throws -> Data",
+  "wire": "[08][count:u8]([length:LE16][child])xcount",
+  "outer_mode": 8,
+  "maximum_count": 255,
+  "empty_bundle_allowed": true,
+  "maximum_command_bytes": 8192,
+  "allowed_base_modes": [
+    3,
+    6,
+    9,
+    19,
+    20,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "high_bit_policy": "Child mode&0x7f admission; raw bytes preserved.83/89 first-left; other child high bits ignored by planned native dispatcher. No88outer generated.",
+  "canonical_envelope_checks": {
+    "3": 8,
+    "83": 12,
+    "6": 3,
+    "86": 3,
+    "9": 17,
+    "89": 33,
+    "19": "exactly10",
+    "20": "11+byte10",
+    "36": 2,
+    "37": 5,
+    "38": 10,
+    "39": 7,
+    "40": 9,
+    "41": 6
+  },
+  "semantics": "Ordered sequential child execution with presentation deferred. Later failure can leave earlier mutations; no whole-bundle rollback. Final cache reply scratch only, not per-child replies.",
+  "not_validated": [
+    "RLE runs/decoded dimensions",
+    "Raw rectangle bounds",
+    "Variable shape records",
+    "Scene entries and asset existence",
+    "Epoch/state/lease/native capability"
+  ],
+  "checks": {
+    "swift_test_methods": 8,
+    "original_branch_mock_checks": 307,
+    "original_branch_source_sha256": "94722d8cace415d9e6edb160e282ea654befca75d6d376499d7aa1c627e3d3f6",
+    "original_branch_sha256": "4dc0b8db4518d6bb2a208db7e0fe8b6b16603ea75fd097b5791006056bf6acec",
+    "all_passed": true
+  },
+  "upstream_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "scene_source_sha256": "3792ddb1b2b42814d9e77aeabc60cf6ed4b53e05a17cef54d46075cf733d1b5f",
+  "source_sha256": {
+    "swift/MemoMindKit/Sources/MemoMindCore/BundleCommand.swift": "3c5d9791e09efd0b4d716579d1d94d13240810f77b7ad54ac49ea9c3b1fd6a86",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/BundleCommandTests.swift": "51c853477ed8fdde24b67d4354c6bac236202768ead3f467928f979e09135c22",
+    "swift/MemoMindKit/Tests/MemoMindCoreTests/BundleReferenceVectors.swift": "7ae776f56e22d1f983f3d702b3863a4c83530ea9633dd34ab7da9b0ff6f858ac"
+  },
+  "hardware_operations": false,
+  "existing_source_edits": false,
+  "commands": [
+    "python3 analysis/bundle-swift-20261102/generate_reference.py",
+    "swift test --package-path swift/MemoMindKit --scratch-path /tmp/mm-swift-bundle-tests --filter BundleCommandTests"
+  ]
+}

@@ -1,0 +1,1473 @@
+{
+  "format": "memomind-swift-internal-catalog-provenance-v1",
+  "runtime_trust_source": "Compiled literals in Sources/MemoMindCore/FirmwareImage.swift; this JSON is never loaded by the validator",
+  "swift_validation": [
+    "Explicit expected SHA256 syntax and fixed internal catalog membership",
+    "Exact whole-image size and SHA256",
+    "ME version, inner magic and payload length",
+    "Outer payload, compression table and combined compressed-stream CRC32",
+    "Seven bounded streams with exact trailer boundary",
+    "LZMA properties/dictionary and declared unpacked length only",
+    "Pinned150-byte header SHA256 and every compressed-stream size/address/hash"
+  ],
+  "not_implemented_in_swift": [
+    "LZMA decompression",
+    "Decoded partition metadata and component header/body CRC validation",
+    "Firmware patch construction or reconstruction",
+    "Signature-policy validation or general modified-image eligibility"
+  ],
+  "prior_decoded_validation": {
+    "script": "scripts/memomind_ota.py",
+    "script_sha256": "cdf0dc7a772473c90b203fe4998060abc320ee116bc417a793b9768ed72969b3",
+    "method": "unpack_ota on the exact catalog bytes; no modified input"
+  },
+  "entries": [
+    {
+      "release_name": "stock-1.0.3.127-jhv3-release",
+      "path": "captures/firmware/ota-1.0.3.127-jhv3_release.bin",
+      "sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+      "bytes": 2185697,
+      "modified": false,
+      "profile": "H001Y-1.0.3.127",
+      "header_sha256": "f3d52497fd45144f8f5b3dac06c04e20ecfa1fb8ec99e2c67770cece9a4c1579",
+      "outer_payload_crc32": "07c720bd",
+      "table_crc32": "47369cf6",
+      "compressed_streams_crc32": "151568cd",
+      "decoded_validation": {
+        "source_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+        "source_size": 2185697,
+        "profile": "observed-MemoMind-ME-WuQi-six-component",
+        "inner_version_word": 268447871,
+        "metadata_header_words": [
+          0,
+          16,
+          0,
+          33980416,
+          0,
+          65536
+        ],
+        "partitions": [
+          {
+            "index": 0,
+            "type": 48,
+            "flash_start": 65536,
+            "load_address": 335609888,
+            "body_size": 909644,
+            "allocation_size": 1126400
+          },
+          {
+            "index": 1,
+            "type": 112,
+            "flash_start": 1191936,
+            "load_address": 637534208,
+            "body_size": 695480,
+            "allocation_size": 819200
+          },
+          {
+            "index": 2,
+            "type": 32,
+            "flash_start": 2011136,
+            "load_address": 69120032,
+            "body_size": 1773176,
+            "allocation_size": 2097152
+          },
+          {
+            "index": 3,
+            "type": 144,
+            "flash_start": 4108288,
+            "load_address": 0,
+            "body_size": 284268,
+            "allocation_size": 614400
+          },
+          {
+            "index": 4,
+            "type": 4,
+            "flash_start": 4722688,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 2482176
+          },
+          {
+            "index": 5,
+            "type": 197,
+            "flash_start": 7204864,
+            "load_address": 0,
+            "body_size": 81562,
+            "allocation_size": 102400
+          },
+          {
+            "index": 6,
+            "type": 196,
+            "flash_start": 7307264,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 7,
+            "type": 195,
+            "flash_start": 7831552,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 8,
+            "type": 194,
+            "flash_start": 7839744,
+            "load_address": 0,
+            "body_size": 3584,
+            "allocation_size": 8192
+          },
+          {
+            "index": 9,
+            "type": 7,
+            "flash_start": 7847936,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 10,
+            "type": 8,
+            "flash_start": 8372224,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 11,
+            "type": 2,
+            "flash_start": 8380416,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 12,
+            "type": 9,
+            "flash_start": 8384512,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 13,
+            "type": 198,
+            "flash_start": 16777216,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4194304
+          },
+          {
+            "index": 14,
+            "type": 199,
+            "flash_start": 20971520,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 1048576
+          },
+          {
+            "index": 15,
+            "type": 200,
+            "flash_start": 22020096,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 3145728
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "offset": 150,
+            "packed_size": 166,
+            "unpacked_size": 344,
+            "packed_sha256": "bf19868459ff0a657c781745d1efaa9f0352d296ecaae19ab301f1d1af9fdebe",
+            "unpacked_sha256": "45d887da5b90937595fd94385a586fb265b919d1511d565223b586f7c9a18f28",
+            "flash_start": null,
+            "flash_end": null
+          },
+          {
+            "index": 1,
+            "offset": 316,
+            "packed_size": 481265,
+            "unpacked_size": 909676,
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1",
+            "unpacked_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "flash_start": 65536,
+            "flash_end": 1191936,
+            "image_header_words": [
+              2766445079,
+              909644,
+              134414463,
+              335609888,
+              3720467535,
+              0,
+              270921728,
+              0
+            ],
+            "body_sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+            "body_crc32": 3720467535,
+            "load_address_candidate": 335609888,
+            "auxiliary_address_unknown": 270921728,
+            "partition_index": 0,
+            "partition_type": 48
+          },
+          {
+            "index": 2,
+            "offset": 481581,
+            "packed_size": 437783,
+            "unpacked_size": 695512,
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0",
+            "unpacked_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "flash_start": 1191936,
+            "flash_end": 2011136,
+            "image_header_words": [
+              2766445079,
+              695480,
+              134414463,
+              637534208,
+              2702189733,
+              0,
+              642250752,
+              0
+            ],
+            "body_sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea",
+            "body_crc32": 2702189733,
+            "load_address_candidate": 637534208,
+            "auxiliary_address_unknown": 642250752,
+            "partition_index": 1,
+            "partition_type": 112
+          },
+          {
+            "index": 3,
+            "offset": 919364,
+            "packed_size": 914600,
+            "unpacked_size": 1773208,
+            "packed_sha256": "341de3742ff50cc25bc6c4cbea489d5f6c2cbebb085b56374e2c75f70be95694",
+            "unpacked_sha256": "5b5a5a33bb88271c687736a34b41b3c150e1f8ca852741c4869f0279cd6735ed",
+            "flash_start": 2011136,
+            "flash_end": 4108288,
+            "image_header_words": [
+              2766445079,
+              1773176,
+              134414463,
+              69120032,
+              3518602790,
+              0,
+              34598400,
+              0
+            ],
+            "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+            "body_crc32": 3518602790,
+            "load_address_candidate": 69120032,
+            "auxiliary_address_unknown": 34598400,
+            "partition_index": 2,
+            "partition_type": 32
+          },
+          {
+            "index": 4,
+            "offset": 1833964,
+            "packed_size": 283737,
+            "unpacked_size": 284300,
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c",
+            "unpacked_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "flash_start": 4108288,
+            "flash_end": 4722688,
+            "image_header_words": [
+              2766445079,
+              284268,
+              0,
+              0,
+              3286447855,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262",
+            "body_crc32": 3286447855,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 3,
+            "partition_type": 144
+          },
+          {
+            "index": 5,
+            "offset": 2117701,
+            "packed_size": 986,
+            "unpacked_size": 3616,
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee",
+            "unpacked_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "flash_start": 7839744,
+            "flash_end": 7847936,
+            "image_header_words": [
+              2766445079,
+              3584,
+              0,
+              0,
+              2462732108,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57",
+            "body_crc32": 2462732108,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 8,
+            "partition_type": 194
+          },
+          {
+            "index": 6,
+            "offset": 2118687,
+            "packed_size": 67006,
+            "unpacked_size": 81594,
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca",
+            "unpacked_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "flash_start": 7204864,
+            "flash_end": 7307264,
+            "image_header_words": [
+              2766445079,
+              81562,
+              0,
+              0,
+              2634680369,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e",
+            "body_crc32": 2634680369,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 5,
+            "partition_type": 197
+          }
+        ],
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "unaccounted_bytes": 0,
+        "limitations": [
+          "Uninterpreted header words are retained, not assigned invented semantics.",
+          "CRC validity does not prove modified firmware is accepted or safe to boot.",
+          "No standalone signature block is identified; enforcement remains unknown."
+        ]
+      },
+      "classification": "captured-stock"
+    },
+    {
+      "release_name": "exclusive-store-reader-001",
+      "path": "captures/firmware/exclusive-store-reader-001/firmware.bin",
+      "sha256": "270dfe85438e6ff0f904a09215e15419292e16b8c7bbc36aafec50543c780c55",
+      "bytes": 2223753,
+      "modified": true,
+      "profile": "H001Y-1.0.3.127-full-store-read-v1",
+      "header_sha256": "6d15986b6b44e8717e948c424e57dc7aff06eb351faa71f0ba53f57c2523417e",
+      "outer_payload_crc32": "5ad4b843",
+      "table_crc32": "4d6e034f",
+      "compressed_streams_crc32": "107d5b0a",
+      "decoded_validation": {
+        "source_sha256": "270dfe85438e6ff0f904a09215e15419292e16b8c7bbc36aafec50543c780c55",
+        "source_size": 2223753,
+        "profile": "observed-MemoMind-ME-WuQi-six-component",
+        "inner_version_word": 268447871,
+        "metadata_header_words": [
+          0,
+          16,
+          0,
+          33980416,
+          0,
+          65536
+        ],
+        "partitions": [
+          {
+            "index": 0,
+            "type": 48,
+            "flash_start": 65536,
+            "load_address": 335609888,
+            "body_size": 909644,
+            "allocation_size": 1126400
+          },
+          {
+            "index": 1,
+            "type": 112,
+            "flash_start": 1191936,
+            "load_address": 637534208,
+            "body_size": 695480,
+            "allocation_size": 819200
+          },
+          {
+            "index": 2,
+            "type": 32,
+            "flash_start": 2011136,
+            "load_address": 69120032,
+            "body_size": 1827200,
+            "allocation_size": 2097152
+          },
+          {
+            "index": 3,
+            "type": 144,
+            "flash_start": 4108288,
+            "load_address": 0,
+            "body_size": 284268,
+            "allocation_size": 614400
+          },
+          {
+            "index": 4,
+            "type": 4,
+            "flash_start": 4722688,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 2482176
+          },
+          {
+            "index": 5,
+            "type": 197,
+            "flash_start": 7204864,
+            "load_address": 0,
+            "body_size": 81562,
+            "allocation_size": 102400
+          },
+          {
+            "index": 6,
+            "type": 196,
+            "flash_start": 7307264,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 7,
+            "type": 195,
+            "flash_start": 7831552,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 8,
+            "type": 194,
+            "flash_start": 7839744,
+            "load_address": 0,
+            "body_size": 3584,
+            "allocation_size": 8192
+          },
+          {
+            "index": 9,
+            "type": 7,
+            "flash_start": 7847936,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 10,
+            "type": 8,
+            "flash_start": 8372224,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 11,
+            "type": 2,
+            "flash_start": 8380416,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 12,
+            "type": 9,
+            "flash_start": 8384512,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 13,
+            "type": 198,
+            "flash_start": 16777216,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4194304
+          },
+          {
+            "index": 14,
+            "type": 199,
+            "flash_start": 20971520,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 1048576
+          },
+          {
+            "index": 15,
+            "type": 200,
+            "flash_start": 22020096,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 3145728
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "offset": 150,
+            "packed_size": 171,
+            "unpacked_size": 344,
+            "packed_sha256": "1cde823a8502f402e158c6f5ed89c06ea0a9346f169164ebbaa5b6f3d0b0f73f",
+            "unpacked_sha256": "4b1de06e8d87fd057ee64dc4479ac8562c96dc38272d5fbacad89b8c0e45cea5",
+            "flash_start": null,
+            "flash_end": null
+          },
+          {
+            "index": 1,
+            "offset": 321,
+            "packed_size": 481265,
+            "unpacked_size": 909676,
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1",
+            "unpacked_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "flash_start": 65536,
+            "flash_end": 1191936,
+            "image_header_words": [
+              2766445079,
+              909644,
+              134414463,
+              335609888,
+              3720467535,
+              0,
+              270921728,
+              0
+            ],
+            "body_sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+            "body_crc32": 3720467535,
+            "load_address_candidate": 335609888,
+            "auxiliary_address_unknown": 270921728,
+            "partition_index": 0,
+            "partition_type": 48
+          },
+          {
+            "index": 2,
+            "offset": 481586,
+            "packed_size": 437783,
+            "unpacked_size": 695512,
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0",
+            "unpacked_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "flash_start": 1191936,
+            "flash_end": 2011136,
+            "image_header_words": [
+              2766445079,
+              695480,
+              134414463,
+              637534208,
+              2702189733,
+              0,
+              642250752,
+              0
+            ],
+            "body_sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea",
+            "body_crc32": 2702189733,
+            "load_address_candidate": 637534208,
+            "auxiliary_address_unknown": 642250752,
+            "partition_index": 1,
+            "partition_type": 112
+          },
+          {
+            "index": 3,
+            "offset": 919369,
+            "packed_size": 952651,
+            "unpacked_size": 1827232,
+            "packed_sha256": "4dd18a43b2e1612fdc5f342d31a684f4df7510ff97bc3d61ba5be71ed75be31f",
+            "unpacked_sha256": "cb79f289a6ea28649cd50cd4e2ff79ed45b8f5953b64dc77b6bbe2a69e5aa41a",
+            "flash_start": 2011136,
+            "flash_end": 4108288,
+            "image_header_words": [
+              2766445079,
+              1827200,
+              134414463,
+              69120032,
+              2453704578,
+              0,
+              34598400,
+              0
+            ],
+            "body_sha256": "7ed426a8c638d0d560780b0f3b068afa5e63a062e78c82d38040512dc28bacd2",
+            "body_crc32": 2453704578,
+            "load_address_candidate": 69120032,
+            "auxiliary_address_unknown": 34598400,
+            "partition_index": 2,
+            "partition_type": 32
+          },
+          {
+            "index": 4,
+            "offset": 1872020,
+            "packed_size": 283737,
+            "unpacked_size": 284300,
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c",
+            "unpacked_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "flash_start": 4108288,
+            "flash_end": 4722688,
+            "image_header_words": [
+              2766445079,
+              284268,
+              0,
+              0,
+              3286447855,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262",
+            "body_crc32": 3286447855,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 3,
+            "partition_type": 144
+          },
+          {
+            "index": 5,
+            "offset": 2155757,
+            "packed_size": 986,
+            "unpacked_size": 3616,
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee",
+            "unpacked_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "flash_start": 7839744,
+            "flash_end": 7847936,
+            "image_header_words": [
+              2766445079,
+              3584,
+              0,
+              0,
+              2462732108,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57",
+            "body_crc32": 2462732108,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 8,
+            "partition_type": 194
+          },
+          {
+            "index": 6,
+            "offset": 2156743,
+            "packed_size": 67006,
+            "unpacked_size": 81594,
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca",
+            "unpacked_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "flash_start": 7204864,
+            "flash_end": 7307264,
+            "image_header_words": [
+              2766445079,
+              81562,
+              0,
+              0,
+              2634680369,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e",
+            "body_crc32": 2634680369,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 5,
+            "partition_type": 197
+          }
+        ],
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "unaccounted_bytes": 0,
+        "limitations": [
+          "Uninterpreted header words are retained, not assigned invented semantics.",
+          "CRC validity does not prove modified firmware is accepted or safe to boot.",
+          "No standalone signature block is identified; enforcement remains unknown."
+        ]
+      },
+      "classification": "historically-boot-verified-exclusive-reader",
+      "provenance_files": {
+        "captures/firmware/exclusive-store-reader-001/manifest.json": "01a8b035f1330724733314b8f6893edaa0ee8a409604490b34445e31fa8f8a9d",
+        "captures/firmware/exclusive-store-reader-001/verification.json": "a4d873d9ac35c908745309d078f13d1a28de18df155e1fe6233de900c3b8221f",
+        "captures/firmware/exclusive-store-reader-001/expected-app-header.bin": "117219ae77258054a768244fac70014ad96c77f88ed3ee116dce45ec32aa6167",
+        "captures/exclusive-store-runtime-20261101/flash-command.json": "f604ffc8c39161cdb0ebf2b9345ebdcaaa683eb1dfcfabc2b764c1984b41b318",
+        "captures/exclusive-store-runtime-20261101/preflight-after-02/manifest.json": "0c75cce81a2befd9ba6efe8b05ebc3383f29eadcb92f8fcf60ae76c41afe1ef3",
+        "captures/exclusive-store-runtime-20261101/preflight-after-02/app-header.bin": "117219ae77258054a768244fac70014ad96c77f88ed3ee116dce45ec32aa6167"
+      },
+      "boot_evidence": {
+        "expected_header_prefix_bytes": 256,
+        "captured_app_header_matches_prefix": true,
+        "scope": "Historical successful OTA followed by native read/profile/header preflight; not a future boot or current-device guarantee"
+      }
+    },
+    {
+      "release_name": "flash-canary-001",
+      "path": "captures/firmware/flash-canary-001/firmware.bin",
+      "sha256": "79a4158c5d82b97c248d0dd2b7e366df03206393c1c2a7275677b8985d81398a",
+      "bytes": 2226788,
+      "modified": true,
+      "profile": "H001Y-1.0.3.127-flash-canary-v1",
+      "header_sha256": "40a000fa3a707aff2a1376857bf88f62fd5db453caec3827f757c51768887993",
+      "outer_payload_crc32": "88c147e9",
+      "table_crc32": "0f88eb54",
+      "compressed_streams_crc32": "ac615f28",
+      "decoded_validation": {
+        "source_sha256": "79a4158c5d82b97c248d0dd2b7e366df03206393c1c2a7275677b8985d81398a",
+        "source_size": 2226788,
+        "profile": "observed-MemoMind-ME-WuQi-six-component",
+        "inner_version_word": 268447871,
+        "metadata_header_words": [
+          0,
+          16,
+          0,
+          33980416,
+          0,
+          65536
+        ],
+        "partitions": [
+          {
+            "index": 0,
+            "type": 48,
+            "flash_start": 65536,
+            "load_address": 335609888,
+            "body_size": 909644,
+            "allocation_size": 1126400
+          },
+          {
+            "index": 1,
+            "type": 112,
+            "flash_start": 1191936,
+            "load_address": 637534208,
+            "body_size": 695480,
+            "allocation_size": 819200
+          },
+          {
+            "index": 2,
+            "type": 32,
+            "flash_start": 2011136,
+            "load_address": 69120032,
+            "body_size": 1832768,
+            "allocation_size": 2097152
+          },
+          {
+            "index": 3,
+            "type": 144,
+            "flash_start": 4108288,
+            "load_address": 0,
+            "body_size": 284268,
+            "allocation_size": 614400
+          },
+          {
+            "index": 4,
+            "type": 4,
+            "flash_start": 4722688,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 2482176
+          },
+          {
+            "index": 5,
+            "type": 197,
+            "flash_start": 7204864,
+            "load_address": 0,
+            "body_size": 81562,
+            "allocation_size": 102400
+          },
+          {
+            "index": 6,
+            "type": 196,
+            "flash_start": 7307264,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 7,
+            "type": 195,
+            "flash_start": 7831552,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 8,
+            "type": 194,
+            "flash_start": 7839744,
+            "load_address": 0,
+            "body_size": 3584,
+            "allocation_size": 8192
+          },
+          {
+            "index": 9,
+            "type": 7,
+            "flash_start": 7847936,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 10,
+            "type": 8,
+            "flash_start": 8372224,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 11,
+            "type": 2,
+            "flash_start": 8380416,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 12,
+            "type": 9,
+            "flash_start": 8384512,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 13,
+            "type": 198,
+            "flash_start": 16777216,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4194304
+          },
+          {
+            "index": 14,
+            "type": 199,
+            "flash_start": 20971520,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 1048576
+          },
+          {
+            "index": 15,
+            "type": 200,
+            "flash_start": 22020096,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 3145728
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "offset": 150,
+            "packed_size": 171,
+            "unpacked_size": 344,
+            "packed_sha256": "e5a3cc0e3836694bb98e295d89620ec76550daa276491758f87beb58830a557b",
+            "unpacked_sha256": "c7d8dcaec1b197decd82e4f43c2cae259ff6d895cb33c7f5936827ad6f0b2e23",
+            "flash_start": null,
+            "flash_end": null
+          },
+          {
+            "index": 1,
+            "offset": 321,
+            "packed_size": 481265,
+            "unpacked_size": 909676,
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1",
+            "unpacked_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "flash_start": 65536,
+            "flash_end": 1191936,
+            "image_header_words": [
+              2766445079,
+              909644,
+              134414463,
+              335609888,
+              3720467535,
+              0,
+              270921728,
+              0
+            ],
+            "body_sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+            "body_crc32": 3720467535,
+            "load_address_candidate": 335609888,
+            "auxiliary_address_unknown": 270921728,
+            "partition_index": 0,
+            "partition_type": 48
+          },
+          {
+            "index": 2,
+            "offset": 481586,
+            "packed_size": 437783,
+            "unpacked_size": 695512,
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0",
+            "unpacked_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "flash_start": 1191936,
+            "flash_end": 2011136,
+            "image_header_words": [
+              2766445079,
+              695480,
+              134414463,
+              637534208,
+              2702189733,
+              0,
+              642250752,
+              0
+            ],
+            "body_sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea",
+            "body_crc32": 2702189733,
+            "load_address_candidate": 637534208,
+            "auxiliary_address_unknown": 642250752,
+            "partition_index": 1,
+            "partition_type": 112
+          },
+          {
+            "index": 3,
+            "offset": 919369,
+            "packed_size": 955686,
+            "unpacked_size": 1832800,
+            "packed_sha256": "e4bbda6bea9c13e830b82e50bcc071385039ee9b06395ec8001dc38942509299",
+            "unpacked_sha256": "d4814499fa4ed146d629e3db60f5c6ab7276f6cac9ece7f4a647c81a3760bb84",
+            "flash_start": 2011136,
+            "flash_end": 4108288,
+            "image_header_words": [
+              2766445079,
+              1832768,
+              134414463,
+              69120032,
+              3863565832,
+              0,
+              34598400,
+              0
+            ],
+            "body_sha256": "7d2cc8f08e6dc9adcbf82339d268600ae51d8681dc89b72b06c3f96e53202f52",
+            "body_crc32": 3863565832,
+            "load_address_candidate": 69120032,
+            "auxiliary_address_unknown": 34598400,
+            "partition_index": 2,
+            "partition_type": 32
+          },
+          {
+            "index": 4,
+            "offset": 1875055,
+            "packed_size": 283737,
+            "unpacked_size": 284300,
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c",
+            "unpacked_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "flash_start": 4108288,
+            "flash_end": 4722688,
+            "image_header_words": [
+              2766445079,
+              284268,
+              0,
+              0,
+              3286447855,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262",
+            "body_crc32": 3286447855,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 3,
+            "partition_type": 144
+          },
+          {
+            "index": 5,
+            "offset": 2158792,
+            "packed_size": 986,
+            "unpacked_size": 3616,
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee",
+            "unpacked_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "flash_start": 7839744,
+            "flash_end": 7847936,
+            "image_header_words": [
+              2766445079,
+              3584,
+              0,
+              0,
+              2462732108,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57",
+            "body_crc32": 2462732108,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 8,
+            "partition_type": 194
+          },
+          {
+            "index": 6,
+            "offset": 2159778,
+            "packed_size": 67006,
+            "unpacked_size": 81594,
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca",
+            "unpacked_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "flash_start": 7204864,
+            "flash_end": 7307264,
+            "image_header_words": [
+              2766445079,
+              81562,
+              0,
+              0,
+              2634680369,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e",
+            "body_crc32": 2634680369,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 5,
+            "partition_type": 197
+          }
+        ],
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "unaccounted_bytes": 0,
+        "limitations": [
+          "Uninterpreted header words are retained, not assigned invented semantics.",
+          "CRC validity does not prove modified firmware is accepted or safe to boot.",
+          "No standalone signature block is identified; enforcement remains unknown."
+        ]
+      },
+      "classification": "reviewed-offline-canary-hardware-untested",
+      "hardware_tested": false,
+      "device_boot_verified": false,
+      "provenance_files": {
+        "scripts/build_memomind_flash_canary.py": "ad178810720a3d93755f9d8422a8a657f8a4d1ddabd86c7e79046536b6a24077",
+        "scripts/build_memomind_exclusive_storage.py": "9d6278a74d0d933477ddc084a0e294b3f33e8f834e513b4f1ddc1600fd76b61d",
+        "scripts/build_memomind_graphics.py": "725bc870e0a8a659f90d64c6970408c2000bb10f0c684d334d6b655e72b17f84",
+        "scripts/memomind_ota.py": "cdf0dc7a772473c90b203fe4998060abc320ee116bc417a793b9768ed72969b3",
+        "captures/firmware/flash-canary-001/manifest.json": "c868c333ba74eeb61493ef70720e4e4f8634dd10e0717afae972bc43414a5138",
+        "captures/firmware/flash-canary-001/verification.json": "f70393bf8ca2f09717ddef708649d0655508a2ab7e5425d635e2b8615438e723",
+        "captures/firmware/flash-canary-001/expected-app-header.bin": "516c270a7eff42b70744cf26bc68bb1e4568eefab4b371fb85884b08cb6727d8",
+        "captures/firmware/flash-canary-001/runtime.bin": "c30da32f8759627aa85247757d0ccae67466a730b5802827246fe2d91a699992",
+        "runtime/build/flash-canary-004/build.json": "fef3fe40bef1f77545c643f66800b82592b7ea8609f86922e1d75c2a256f6b2d",
+        "analysis/flash-canary/report.json": "556abd7a7cfb6f0f78c865e5504bf454bad398cda0250b7a88aa0607e4e13202"
+      },
+      "offline_reconstruction": {
+        "call": "build_memomind_flash_canary.verify_canary(source, blob, manifest)",
+        "source_path": "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+        "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+        "runtime_blob_sha256": "c30da32f8759627aa85247757d0ccae67466a730b5802827246fe2d91a699992",
+        "runtime_blob_bytes": 59584,
+        "byte_identical_to_fixture": true,
+        "manifest_exactly_reconstructed": true,
+        "stored_verification_exactly_reproduced": true,
+        "registry_edit_span_bytes": 12,
+        "unchanged_component_indices": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        "performed_without_device_access": true
+      },
+      "limitations": [
+        "Catalog admission authorizes only these exact reviewed bytes; it does not assert successful hardware boot or canary execution.",
+        "Swift does not decompress or reconstruct this image; offline constructor proof and decoded checks are prior development-time evidence.",
+        "A native flash writer is present: canary start is a distinct explicit operation with separate backup/preflight and device authorization requirements.",
+        "Native task/flash waits can block or assert; mock/ABI tests do not establish hardware timing, ownership or general mutable scene-store integration."
+      ]
+    },
+    {
+      "release_name": "raster-commands-001",
+      "path": "captures/firmware/raster-commands-001/firmware.bin",
+      "sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261",
+      "bytes": 2227971,
+      "modified": true,
+      "profile": "H001Y-1.0.3.127-flash-canary-v1",
+      "header_sha256": "5c86bd35693aba72250297f0e63fc568579d6f572cc3a1a93d7eaa3d9f65f85c",
+      "outer_payload_crc32": "74491a44",
+      "table_crc32": "ac4cefab",
+      "compressed_streams_crc32": "fb17fce9",
+      "decoded_validation": {
+        "source_sha256": "b89a6adab63bb8e09c2b05a261af4ae9b80f5b7fc4e81c15c016dc457dfba261",
+        "source_size": 2227971,
+        "profile": "observed-MemoMind-ME-WuQi-six-component",
+        "inner_version_word": 268447871,
+        "metadata_header_words": [
+          0,
+          16,
+          0,
+          33980416,
+          0,
+          65536
+        ],
+        "partitions": [
+          {
+            "index": 0,
+            "type": 48,
+            "flash_start": 65536,
+            "load_address": 335609888,
+            "body_size": 909644,
+            "allocation_size": 1126400
+          },
+          {
+            "index": 1,
+            "type": 112,
+            "flash_start": 1191936,
+            "load_address": 637534208,
+            "body_size": 695480,
+            "allocation_size": 819200
+          },
+          {
+            "index": 2,
+            "type": 32,
+            "flash_start": 2011136,
+            "load_address": 69120032,
+            "body_size": 1834576,
+            "allocation_size": 2097152
+          },
+          {
+            "index": 3,
+            "type": 144,
+            "flash_start": 4108288,
+            "load_address": 0,
+            "body_size": 284268,
+            "allocation_size": 614400
+          },
+          {
+            "index": 4,
+            "type": 4,
+            "flash_start": 4722688,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 2482176
+          },
+          {
+            "index": 5,
+            "type": 197,
+            "flash_start": 7204864,
+            "load_address": 0,
+            "body_size": 81562,
+            "allocation_size": 102400
+          },
+          {
+            "index": 6,
+            "type": 196,
+            "flash_start": 7307264,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 7,
+            "type": 195,
+            "flash_start": 7831552,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 8,
+            "type": 194,
+            "flash_start": 7839744,
+            "load_address": 0,
+            "body_size": 3584,
+            "allocation_size": 8192
+          },
+          {
+            "index": 9,
+            "type": 7,
+            "flash_start": 7847936,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 524288
+          },
+          {
+            "index": 10,
+            "type": 8,
+            "flash_start": 8372224,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 8192
+          },
+          {
+            "index": 11,
+            "type": 2,
+            "flash_start": 8380416,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 12,
+            "type": 9,
+            "flash_start": 8384512,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4096
+          },
+          {
+            "index": 13,
+            "type": 198,
+            "flash_start": 16777216,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 4194304
+          },
+          {
+            "index": 14,
+            "type": 199,
+            "flash_start": 20971520,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 1048576
+          },
+          {
+            "index": 15,
+            "type": 200,
+            "flash_start": 22020096,
+            "load_address": 0,
+            "body_size": 0,
+            "allocation_size": 3145728
+          }
+        ],
+        "streams": [
+          {
+            "index": 0,
+            "offset": 150,
+            "packed_size": 171,
+            "unpacked_size": 344,
+            "packed_sha256": "07c6f9bb617f88b29367641c0abdfbd669e62710449a0b8c0c88eba41d4c62c2",
+            "unpacked_sha256": "12b126bdbedca76294b0ddf277e366674cff0413a3a8a53f0bdb01feb2dc0633",
+            "flash_start": null,
+            "flash_end": null
+          },
+          {
+            "index": 1,
+            "offset": 321,
+            "packed_size": 481265,
+            "unpacked_size": 909676,
+            "packed_sha256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1",
+            "unpacked_sha256": "9af5658c68c5e0ba3bb6a0cd4d6cc4024b0c71c6590f07190e3480cfeee982db",
+            "flash_start": 65536,
+            "flash_end": 1191936,
+            "image_header_words": [
+              2766445079,
+              909644,
+              134414463,
+              335609888,
+              3720467535,
+              0,
+              270921728,
+              0
+            ],
+            "body_sha256": "f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f",
+            "body_crc32": 3720467535,
+            "load_address_candidate": 335609888,
+            "auxiliary_address_unknown": 270921728,
+            "partition_index": 0,
+            "partition_type": 48
+          },
+          {
+            "index": 2,
+            "offset": 481586,
+            "packed_size": 437783,
+            "unpacked_size": 695512,
+            "packed_sha256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0",
+            "unpacked_sha256": "cd0e1380411d8f4538c7c6f27c2191367e8df7d50a9606cfad6115ccd1b4716d",
+            "flash_start": 1191936,
+            "flash_end": 2011136,
+            "image_header_words": [
+              2766445079,
+              695480,
+              134414463,
+              637534208,
+              2702189733,
+              0,
+              642250752,
+              0
+            ],
+            "body_sha256": "be16d15046d19d1601da354f958907fca5f2f615fcb05a03455b3e3e0fb3b7ea",
+            "body_crc32": 2702189733,
+            "load_address_candidate": 637534208,
+            "auxiliary_address_unknown": 642250752,
+            "partition_index": 1,
+            "partition_type": 112
+          },
+          {
+            "index": 3,
+            "offset": 919369,
+            "packed_size": 956869,
+            "unpacked_size": 1834608,
+            "packed_sha256": "750f7970025f86d4721ce3095139121254ca7969577f0fbbe5020eb22bb18cc3",
+            "unpacked_sha256": "d0ff92fd993b77be7c703c38c863a86e8b794556de218c8c9c8f3c1125a09870",
+            "flash_start": 2011136,
+            "flash_end": 4108288,
+            "image_header_words": [
+              2766445079,
+              1834576,
+              134414463,
+              69120032,
+              4225200236,
+              0,
+              34598400,
+              0
+            ],
+            "body_sha256": "21363d1afdc0f82c2e6572a29f2d6a5d7a611b1f0326b4f006f8618967d41b09",
+            "body_crc32": 4225200236,
+            "load_address_candidate": 69120032,
+            "auxiliary_address_unknown": 34598400,
+            "partition_index": 2,
+            "partition_type": 32
+          },
+          {
+            "index": 4,
+            "offset": 1876238,
+            "packed_size": 283737,
+            "unpacked_size": 284300,
+            "packed_sha256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c",
+            "unpacked_sha256": "5d23c582973727d6768320ff6cb32dc6bb1d6c76a610bebc9f0ffdfff7c30c82",
+            "flash_start": 4108288,
+            "flash_end": 4722688,
+            "image_header_words": [
+              2766445079,
+              284268,
+              0,
+              0,
+              3286447855,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "e3cec69decffac42e04a4b3ae0865d519315d66da0ca8f4bbbce47ff9cfc4262",
+            "body_crc32": 3286447855,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 3,
+            "partition_type": 144
+          },
+          {
+            "index": 5,
+            "offset": 2159975,
+            "packed_size": 986,
+            "unpacked_size": 3616,
+            "packed_sha256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee",
+            "unpacked_sha256": "be1fe311e06fdf71ed9df5e998d6c2932fa11ac2f0fa68d4bf827bb6f35e0c24",
+            "flash_start": 7839744,
+            "flash_end": 7847936,
+            "image_header_words": [
+              2766445079,
+              3584,
+              0,
+              0,
+              2462732108,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "43292aa516c73f02bd46ff7df81302dfddec7510e484dc489f9f3f4d0efade57",
+            "body_crc32": 2462732108,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 8,
+            "partition_type": 194
+          },
+          {
+            "index": 6,
+            "offset": 2160961,
+            "packed_size": 67006,
+            "unpacked_size": 81594,
+            "packed_sha256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca",
+            "unpacked_sha256": "b208b08a6de163a2d97bc897efec924de58e395d2fe00706fba1382ddf4b4203",
+            "flash_start": 7204864,
+            "flash_end": 7307264,
+            "image_header_words": [
+              2766445079,
+              81562,
+              0,
+              0,
+              2634680369,
+              0,
+              0,
+              0
+            ],
+            "body_sha256": "ac8b5a06b6068ba253501910ef792aa4943cb37a862ce44edf41bd0677f06c6e",
+            "body_crc32": 2634680369,
+            "load_address_candidate": 0,
+            "auxiliary_address_unknown": 0,
+            "partition_index": 5,
+            "partition_type": 197
+          }
+        ],
+        "checksums": {
+          "outer_payload_crc32": "verified",
+          "compression_table_crc32": "verified",
+          "packed_streams_crc32": "verified",
+          "component_body_crc32": "verified-all-six"
+        },
+        "unaccounted_bytes": 0,
+        "limitations": [
+          "Uninterpreted header words are retained, not assigned invented semantics.",
+          "CRC validity does not prove modified firmware is accepted or safe to boot.",
+          "No standalone signature block is identified; enforcement remains unknown."
+        ]
+      },
+      "classification": "reviewed-offline-raster-commands-hardware-untested",
+      "hardware_tested": false,
+      "device_boot_verified": false,
+      "provenance_files": {
+        "scripts/build_memomind_flash_canary.py": "ad178810720a3d93755f9d8422a8a657f8a4d1ddabd86c7e79046536b6a24077",
+        "scripts/build_memomind_exclusive_storage.py": "9d6278a74d0d933477ddc084a0e294b3f33e8f834e513b4f1ddc1600fd76b61d",
+        "scripts/build_memomind_graphics.py": "725bc870e0a8a659f90d64c6970408c2000bb10f0c684d334d6b655e72b17f84",
+        "scripts/memomind_ota.py": "cdf0dc7a772473c90b203fe4998060abc320ee116bc417a793b9768ed72969b3",
+        "captures/firmware/raster-commands-001/manifest.json": "e77bddfd6d8c0e79c757f1b77fb368d569b47ae4747698120101472e693bd6cd",
+        "captures/firmware/raster-commands-001/verification.json": "43d7583add49165b8e2951d38d072bb67be3c99d40b56457b5999b04214caabf",
+        "captures/firmware/raster-commands-001/expected-app-header.bin": "6a82b165c2b839a3a8f4b235074a78d0dc118388acb5a169d647fa4f05046ca8",
+        "captures/firmware/raster-commands-001/runtime.bin": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328",
+        "runtime/build/raster-commands-001/build.json": "3fd6e6f8badc3daa1fe69043c6058ad3bf3954c2f35bfac0f570d8abe37ab949",
+        "analysis/raster-commands-001/report.json": "8f0518545184acac4499bf657638a72b1a55d37fff2c9d4451e7a8edfafe6f13"
+      },
+      "offline_reconstruction": {
+        "call": "build_memomind_flash_canary.verify_canary(source, blob, manifest)",
+        "source_path": "captures/firmware/ota-1.0.3.127-glassly-text.bin",
+        "source_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+        "runtime_blob_sha256": "4f4d211d885560a65da97c4a5d0b6a7d34231a254e7c8181507e3f2a9aaa5328",
+        "runtime_blob_bytes": 61392,
+        "byte_identical_to_fixture": true,
+        "manifest_exactly_reconstructed": true,
+        "stored_verification_exactly_reproduced": true,
+        "registry_edit_span_bytes": 12,
+        "unchanged_component_indices": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        "performed_without_device_access": true
+      },
+      "retained_features": [
+        "Six fixed CUS8 owner-refusal gates",
+        "Three exact heap/boot-clear edits reserving256B private registry",
+        "Input observer, full-store bounded reader, storage diagnostics and one-shot fixed-sector canary"
+      ],
+      "added_feature": "Optional modes3/6, first-left bounding-box policy, existing8192-byte ingress and64KiB RAM scene limits",
+      "limitations": [
+        "Hardware boot and raster behavior of this exact image have not been tested at catalog admission.",
+        "Swift pins compressed container bytes and does not perform LZMA decoding or patch reconstruction.",
+        "The retained canary native writer is a separately authorized explicit operation; catalog eligibility does not start it.",
+        "Mocked native instruction tests do not establish complete stock task timing/stack or full G2 command parity."
+      ]
+    }
+  ]
+}

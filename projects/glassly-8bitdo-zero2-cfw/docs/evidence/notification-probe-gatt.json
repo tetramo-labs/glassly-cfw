@@ -1,0 +1,241 @@
+{
+  "kind": "Live BLE notifications from custom firmware",
+  "usb_connected": true,
+  "firmware_package_sha256": "3a92dd60565e136a810fd0dc0148418c7b13cdb678eae66a5d5a8e2634369ed3",
+  "local_directory": "build/hardware/20261105T205544.013517Z-ble-echo",
+  "source_sha256": {
+    "scripts/ble_probe.py": "3ec9a01475da27e1bbf1d8caae5f2bad26c9a3aadca1e9c493568cb9bf39a2e9",
+    "tools/probe_zero2.swift": "2c82cc3fada477aca796f2f113ebeea3bc5010de81d894ae57d1905876f67fcb"
+  },
+  "events_sha256": "6630939d5b211b2fc5b4e806d4b5249a8cb3daf9ee9899dd374dbc3b94e4a3f8",
+  "events": [
+    {
+      "authorization": 3,
+      "elapsed_seconds": 0.014044249895960093,
+      "event": "bluetooth_state",
+      "state": 5,
+      "time": "2026-11-05T20:55:44Z"
+    },
+    {
+      "cached_name": "80EL",
+      "connectable": 1,
+      "elapsed_seconds": 0.6888419585302472,
+      "event": "advertisement",
+      "local_name": "80EL",
+      "manufacturer_hex": "",
+      "rssi": -47,
+      "services": [],
+      "time": "2026-11-05T20:55:45Z"
+    },
+    {
+      "elapsed_seconds": 0.6893489584326744,
+      "event": "connecting",
+      "time": "2026-11-05T20:55:45Z"
+    },
+    {
+      "connected_seconds": 0.0024260831996798515,
+      "elapsed_seconds": 0.9828817085362971,
+      "event": "connected",
+      "time": "2026-11-05T20:55:45Z"
+    },
+    {
+      "connected_seconds": 0.40238783322274685,
+      "elapsed_seconds": 1.3828432499431074,
+      "event": "service",
+      "primary": true,
+      "time": "2026-11-05T20:55:45Z",
+      "uuid": "0000FF10-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.4622216667048633,
+      "elapsed_seconds": 1.4426757916808128,
+      "event": "characteristic",
+      "properties": 24,
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:45Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.4630374168045819,
+      "elapsed_seconds": 1.4434927082620561,
+      "event": "subscription_requested",
+      "service": "FF10",
+      "time": "2026-11-05T20:55:45Z",
+      "uuid": "FF13"
+    },
+    {
+      "characteristic": "0000FF13-0000-1000-8000-00805F9B34FB",
+      "connected_seconds": 0.5209998749196529,
+      "elapsed_seconds": 1.5014541251584888,
+      "event": "descriptors",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:45Z",
+      "uuids": [
+        "2902"
+      ]
+    },
+    {
+      "connected_seconds": 0.5214949999935925,
+      "elapsed_seconds": 1.5019503752700984,
+      "event": "discovery_complete",
+      "time": "2026-11-05T20:55:45Z"
+    },
+    {
+      "connected_seconds": 0.5804650415666401,
+      "elapsed_seconds": 1.5609206249937415,
+      "enabled": true,
+      "event": "subscription",
+      "time": "2026-11-05T20:55:45Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.5810083751566708,
+      "elapsed_seconds": 1.5614642081782222,
+      "event": "echo_write_requested",
+      "hex": "31",
+      "index": 0,
+      "time": "2026-11-05T20:55:45Z"
+    },
+    {
+      "connected_seconds": 0.6719904583878815,
+      "elapsed_seconds": 1.652443166822195,
+      "event": "echo_write_acknowledged",
+      "index": 0,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 0.6724871248006821,
+      "elapsed_seconds": 1.6529430001974106,
+      "event": "notification",
+      "hex": "31",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:46Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 0.6728226249106228,
+      "elapsed_seconds": 1.653278541751206,
+      "event": "echo_verified",
+      "hex": "31",
+      "index": 0,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 0.935931958258152,
+      "elapsed_seconds": 1.9163870415650308,
+      "event": "echo_write_requested",
+      "hex": "a5",
+      "index": 1,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.0004770415835083,
+      "elapsed_seconds": 1.9809287916868925,
+      "event": "echo_write_acknowledged",
+      "index": 1,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.0047790417447686,
+      "elapsed_seconds": 1.9852346666157246,
+      "event": "notification",
+      "hex": "a5",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:46Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 1.0057671666145325,
+      "elapsed_seconds": 1.986222458537668,
+      "event": "echo_verified",
+      "hex": "a5",
+      "index": 1,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.2680098335258663,
+      "elapsed_seconds": 2.248465583194047,
+      "event": "echo_write_requested",
+      "hex": "00",
+      "index": 2,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.3302941247820854,
+      "elapsed_seconds": 2.310745833441615,
+      "event": "echo_write_acknowledged",
+      "index": 2,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.3315950417891145,
+      "elapsed_seconds": 2.3120507085695863,
+      "event": "notification",
+      "hex": "00",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:46Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 1.332075166516006,
+      "elapsed_seconds": 2.312530833296478,
+      "event": "echo_verified",
+      "hex": "00",
+      "index": 2,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.5955563331954181,
+      "elapsed_seconds": 2.576011416502297,
+      "event": "echo_write_requested",
+      "hex": "ff",
+      "index": 3,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.6324033332057297,
+      "elapsed_seconds": 2.6128561669029295,
+      "event": "echo_write_acknowledged",
+      "index": 3,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "connected_seconds": 1.6328800418414176,
+      "elapsed_seconds": 2.6133357915095985,
+      "event": "notification",
+      "hex": "ff",
+      "service": "0000FF10-0000-1000-8000-00805F9B34FB",
+      "time": "2026-11-05T20:55:46Z",
+      "uuid": "0000FF13-0000-1000-8000-00805F9B34FB"
+    },
+    {
+      "connected_seconds": 1.6333481664769351,
+      "elapsed_seconds": 2.613803875166923,
+      "event": "echo_verified",
+      "hex": "ff",
+      "index": 3,
+      "time": "2026-11-05T20:55:46Z"
+    },
+    {
+      "candidates": 1,
+      "connected_seconds": 1.6337660001590848,
+      "discovery_complete": true,
+      "echoes_verified": 4,
+      "elapsed_seconds": 2.6142217917367816,
+      "event": "complete",
+      "exit_code": 0,
+      "keepalive_writes_acknowledged": 0,
+      "notifications": 4,
+      "reason": "All four notification echoes and write acknowledgements verified",
+      "subscribed": true,
+      "subscription_transitions": 1,
+      "time": "2026-11-05T20:55:46Z"
+    }
+  ],
+  "proven": "Four one-byte FF13 notifications match four characteristic writes; custom tail echo code executed",
+  "limits": [
+    "No button/GPIO notifications or background Glassly behavior tested",
+    "Only one-byte command-09 payload data tested; no FIFO saturation, radio errors or CCC reset ordering proved",
+    "Battery idle behavior requires separate test without host value writes"
+  ]
+}

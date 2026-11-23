@@ -1,0 +1,641 @@
+{
+  "kind": "Offline execution of stock idle guard and threshold setter",
+  "hardware_accessed": false,
+  "stock_plaintext_sha256": "e661156ba9871167ab0ab7e40d05ee573a07581e5c5157c6e195ff3a5c4823b0",
+  "guards": [
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 0,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 0,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 2,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 5999,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "flag_201b8": 1,
+      "mode_20181": 3,
+      "idle_counter": 6000,
+      "threshold": 6000,
+      "reaches_pre_power_call": false
+    }
+  ],
+  "thresholds": [
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 5,
+      "threshold": 36000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 10,
+      "threshold": 18000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 20,
+      "threshold": 9000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 5,
+      "threshold": 18000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 10,
+      "threshold": 18000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 20,
+      "threshold": 18000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 5,
+      "threshold": 180000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 20,
+      "threshold": 45000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 5,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 0,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 20,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 5,
+      "threshold": 180000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 0,
+      "scale": 20,
+      "threshold": 45000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 5,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 0,
+      "mode_201b4": 3,
+      "scale": 20,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 5,
+      "threshold": 180000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 0,
+      "scale": 20,
+      "threshold": 45000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 5,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 10,
+      "threshold": 90000,
+      "counter_reset": true
+    },
+    {
+      "ble_state": 2,
+      "hid_state": 2,
+      "mode_201b4": 3,
+      "scale": 20,
+      "threshold": 90000,
+      "counter_reset": true
+    }
+  ],
+  "instruction_stubs": [],
+  "stop_before_io": "0x01020350 called with argument 10",
+  "limits": [
+    "Synthetic state does not establish the active live threshold or mode",
+    "No power I/O executed; reaching the boundary is not an observed shutdown",
+    "No wall-clock cadence simulated; no duration inferred from counter values"
+  ],
+  "source_sha256": "1ca20a71eee939db039469a083e5a27898348252f76affaf95501de22111e54f"
+}

@@ -1,0 +1,16 @@
+# Vendor firmware, captures, extracted images, toolchains and build output stay local.
+captures/
+analysis/extracted/
+analysis/ghidra/
+.tools/
+runtime/build/
+__pycache__/
+*.pyc
+*.o
+*.elf
+*.bin
+*.apk
+*.btsnoop
+*.dSYM/
+.DS_Store
+tools/nimo-mac/.build/

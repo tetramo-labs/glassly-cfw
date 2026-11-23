@@ -1,0 +1,20 @@
+{
+  "format": "memomind-native-mac-full-backup-verification-v1",
+  "complete": true,
+  "capture": "captures/swift-mac-full-backup-20261101-01",
+  "bytes": 3145728,
+  "chunks": 12288,
+  "sha256": "908b6cfc9aef496dd5ab5c5540d80c6383ed6e92f86044574c996315381bc064",
+  "all_ff": true,
+  "matches_pre_reset_backup": true,
+  "raw_application_frames_independently_parsed_and_correlated": true,
+  "native_submissions_completed": true,
+  "profile_and_read_replies_strictly_validated": true,
+  "app_header_full256_matches": true,
+  "topology_before_after_equal": true,
+  "topology_and_badmap_match_pre_reset": true,
+  "badmap_source": "native-defined-absent-default",
+  "flash_mutations": 0,
+  "automatic_retries": 0,
+  "trace_sha256": "eebb0b88a201ba82c94f13daba986be322a91f625722857a1eb8d489460f1624"
+}

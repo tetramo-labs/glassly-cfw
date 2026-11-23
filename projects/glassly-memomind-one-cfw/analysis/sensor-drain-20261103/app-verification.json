@@ -1,0 +1,26 @@
+{
+  "version": "GLASSLYCFW/10",
+  "passed": true,
+  "macTests": 120,
+  "iosSimulatorTests": 12,
+  "androidTests": 26,
+  "engineTests": 2,
+  "androidSuites": {
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorBatchTest": 4,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorsTest": 2,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindWireTest": 15,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindRecordsTest": 3,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindMicrophoneTest": 2
+  },
+  "logSHA256": {
+    "app-mac-02.log": "2a475b99fdb063b5e229e1a0dfaada9f5e7c42f38b2031d1a98c2b9196e5c489",
+    "app-ios-02.log": "a0ba04319a464b67fda1d7fd67304e19eea1b74ae59069763ca1c77aaa2c7ad0",
+    "app-android-02.log": "a63c4f72f246156ca544e1e562cc77d4a2a8548dc77713969d58373dc4d081e0",
+    "app-engine-01.log": "cc22ea27d2f624f47df3221555b07ea47035b355f8a247f59c081cfe9cbf6022"
+  },
+  "appHardwareTested": false,
+  "limitations": [
+    "Passive native sensor units; active power control and calibrated compass unresolved.",
+    "No V10 OTA, boot or hardware drain acceptance."
+  ]
+}

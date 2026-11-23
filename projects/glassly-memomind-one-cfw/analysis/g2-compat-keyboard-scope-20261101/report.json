@@ -1,0 +1,346 @@
+{
+  "keyboard_reference_requested": false,
+  "excluded_features": [
+    "Bluetooth keyboard/HOGP accessory support"
+  ],
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "results": [
+    {
+      "name": "ported_shapes",
+      "scope": "MemoMind geometry API: 14 original geometric assertion sites",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_shapes.c",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/runtime/portable/geometry.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101"
+      ],
+      "binary_sha256": "7d863692bf5fac2c9569f32cdff95ef33850345c70b129f6e41dcd4907d10475",
+      "parity_required": true
+    },
+    {
+      "name": "ported_easing",
+      "scope": "portable copied algorithm; animation integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/ported_easing.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_easing"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_easing"
+      ],
+      "binary_sha256": "4e7c3a00a50876037875c7db1c2b7215a78fdcbe670a8e8c2445f1833eb9a211",
+      "parity_required": true
+    },
+    {
+      "name": "ported_volume_gate",
+      "scope": "portable copied state machine; MemoMind audio integration unimplemented",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/portable_algorithms",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/volume_gate_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_volume_gate"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/ported_volume_gate"
+      ],
+      "binary_sha256": "2c6828e9edd084eb8098df10071009ceb24310772c43010c5d41cebd2fc7754e",
+      "parity_required": true
+    },
+    {
+      "name": "reference_ancs_relay",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/ancs_relay_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_ancs_relay"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_ancs_relay"
+      ],
+      "binary_sha256": "0dafdeb0b1ce59548154bc61d9eed26d4a2443c5fabecda62494315ce322297a",
+      "parity_required": true
+    },
+    {
+      "name": "reference_upstream",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/upstream_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_upstream"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_upstream"
+      ],
+      "binary_sha256": "fb201465bc4c7100bfdc25e0dff118e7c1e3599d24d938be87dc1ba36e272844",
+      "parity_required": true
+    },
+    {
+      "name": "reference_transport",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/transport_host_test.c",
+        "-lz",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_transport"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_transport"
+      ],
+      "binary_sha256": "d53bfa25b4a9f3b714bf8a8f1eac882524f4fe7e0b65b14343c7e79d8f63b7f9",
+      "parity_required": true
+    },
+    {
+      "name": "reference_shapes",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/shapes_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_shapes"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_shapes",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101"
+      ],
+      "binary_sha256": "c9c0fcad922d853c6ba0a432f989faf8f69ac06ef34d2dc2f5418d9cb1ac4832",
+      "parity_required": true
+    },
+    {
+      "name": "reference_vector",
+      "scope": "G2 reference baseline only; not a MemoMind feature pass",
+      "result": "passed",
+      "returncode": 0,
+      "build_command": [
+        "clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-function",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches",
+        "-I/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/tests/g2_compat/upstream/patches/host/vector_host_test.c",
+        "-o",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_vector"
+      ],
+      "test_command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101"
+      ],
+      "binary_sha256": "63d3e9f16c60fd24249ca9093f27acf9c10a7b9a70d7d4e156e0bcfdf6677d12",
+      "parity_required": true
+    },
+    {
+      "name": "typescript",
+      "scope": "copied phone-side algorithms/protocol fixtures; G2-specific wire cases do not establish MemoMind routing",
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "typecheck_vector",
+      "scope": "Unchanged upstream TypeScript type check",
+      "command": [
+        "bun",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.vector.json"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "vector_fixture_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/vector-fixture.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "vector_fixture_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/vector_fixture-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/vector-fixture.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "gif_300_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--bad-apple",
+        "--frames",
+        "300",
+        "--gif",
+        "/Users/fosse/dev/g2flash/demos/bad_apple_quarter.gif",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/gif-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "gif_300_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/gif_300-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/gif-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "svg_300_generate",
+      "scope": "Upstream phone-side offline fixture generator; no Bluetooth access",
+      "command": [
+        "bun",
+        "vector-suite.ts",
+        "--svg-video",
+        "/Users/fosse/dev/g2flash/demos/.cache/bad-apple/smooth/video.json",
+        "--frames",
+        "300",
+        "--dump",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/svg-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "svg_300_replay",
+      "scope": "Generated upstream fixture replay against G2 reference runtime; production MemoMind scene/path replays run in the separate scene/session stages",
+      "command": [
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/reference_vector",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/svg_300-replay",
+        "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/g2-compat-keyboard-scope-20261101/svg-300.bin"
+      ],
+      "result": "passed",
+      "returncode": 0,
+      "parity_required": true
+    },
+    {
+      "name": "keyboard_arm_emulator",
+      "scope": "Optional historical keyboard reference; excluded from required parity, not a pass",
+      "result": "excluded-not-run",
+      "parity_required": false
+    },
+    {
+      "name": "device_demos",
+      "scope": "require real G2 BLE/device hardware; no device actions permitted",
+      "result": "platform-specific-not-run",
+      "parity_required": true
+    }
+  ],
+  "hardware_tested": false,
+  "memo_full_suite_port_complete": false,
+  "skipped_or_unimplemented_count_as_pass": false
+}

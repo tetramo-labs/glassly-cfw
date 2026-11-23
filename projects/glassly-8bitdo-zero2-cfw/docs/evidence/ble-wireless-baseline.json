@@ -1,0 +1,46 @@
+{
+  "kind": "Hardware BLE scan baseline; not evidence of absence of all BLE advertising",
+  "user_report": "USB unplugged; controller on, Select held three seconds, LED blinking rapidly",
+  "expected_installed_image": "Previously verified name-only probe; not reread during this scan",
+  "local_scan_path": "build/hardware/20261105T200355.858765Z-ble-scan",
+  "local_usb_observation_path": "build/hardware/20261105T200356.590116Z",
+  "requested_seconds": 45,
+  "bluetooth_state": {
+    "authorization": 3,
+    "elapsed_seconds": 0.025167124811559916,
+    "event": "bluetooth_state",
+    "state": 5,
+    "time": "2026-11-05T20:03:56Z"
+  },
+  "outcome": {
+    "candidates": 0,
+    "discovery_complete": false,
+    "elapsed_seconds": 47.25214633299038,
+    "event": "complete",
+    "exit_code": 3,
+    "notifications": 0,
+    "reason": "Time limit; notification count is separate from subscription success",
+    "subscribed": false,
+    "time": "2026-11-05T20:04:43Z"
+  },
+  "candidate_filter": "Zero 2 name (spaces removed), exact 80EL name, or advertised FF10 service",
+  "usb_target_devices_observed": [],
+  "source_sha256": {
+    "scripts/ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4",
+    "tools/probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c"
+  },
+  "evidence_sha256": {
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe_zero2.swift": "2681941653926995a552b47edbed9deaf9beba78b9aa33dc7f880aad27c7238c",
+    "plan.json": "1fd9bfb1b9209bb08a9e75659f476382f3350e44f2318db95723f8efbb7a8f1e",
+    "result.json": "448fcb0f4f23c66931783f59ba2eeb0476d1beba09fa9379d729aa397d7122b3",
+    "events.jsonl": "18fddc151caaaa21116c58601559e3abee9b347b843fcd0689aa1f185d9c9ebb",
+    "ble_probe.py": "ad5d33c6a1a380da5e3e1a3db42c7fa03fd2ffa86a6694a42b1c73be24b240f4"
+  },
+  "limits": [
+    "Only filtered candidates are logged",
+    "No GATT connection or subscription attempted",
+    "No characteristic writes or firmware commands sent",
+    "No BLE probe firmware flashed yet"
+  ]
+}

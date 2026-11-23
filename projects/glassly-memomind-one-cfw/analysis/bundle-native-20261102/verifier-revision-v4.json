@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-02T06:05:31.024857+00:00",
+  "reason": "Attempt05 also contains a probe-time service1 command33 notification, before the helper installs its callback.",
+  "scope": "Independent verifier only; no firmware or live helper changes",
+  "policy": "Before custom commands, preserve framed nonprivate unsolicited notification bodies without interpreting them; reject unsolicited handshake/device-info replies. After custom commands, require exact correspondence with helper native-service-notification logs. Private service15 remains strictly correlated.",
+  "verifier": {
+    "path": "analysis/bundle-native-20261102/verify-smoke-v4.py",
+    "bytes": 10998,
+    "sha256": "6f1ea9ddd767dc042f498fb077be124d591c6101a04cf95ec12a3bed54fdcf9f"
+  },
+  "synthetic_cases": 31,
+  "synthetic_report": "analysis/bundle-swift-20261102/verifier-review/run-007/report.json",
+  "verified_live_capture": "captures/swift-mac-bundle-smoke-20261102-05"
+}

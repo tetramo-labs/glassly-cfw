@@ -1,0 +1,135 @@
+{
+  "searchSeconds": 688.8040895420127,
+  "connectionAttempts": 21,
+  "found": false,
+  "flashAttempted": false,
+  "transmitSubmissions": 0,
+  "attempts": [
+    {
+      "capture": "captures/microphone-owner-20261103-before-01",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "44706ebdcc8c269a693cff679b205e9c1b407cc278786e4e99bd60b041867f6c",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-02",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "7e6fd3cbae5aa1b89208e7cb2a813f3034f78a5f1f27bb123dd0da6a3a3e32bb",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-03",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "b5533782e485dd3ca87c06f37f6f8e100f8f2ae80c9463774607da8493fb0abd",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-04",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "79727960832b9dadcbf635192bafbe831f658f6e7296be64414e3491954b11e6",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-05",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "1ea21ab5f3a7f4a68a086ab3bbb96ecfc4336dbdfcd32afc2bde0be388493060",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-06",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "8293da65dbafa12cad6d13cf22dcc93946a799cf9e7663bae2368c8512de4cda",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-07",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "0f4682946fed927ef95e4cc7b9af713ce5a857b3824cd177a8a9f3fde59b0a58",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-08",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "245b9cd631b0f7dac5663508ce25ce650fed477d22c5ad95b8d8c24cf2fb1026",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-09",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "11d75966b65d62d185c80d4b2d27d4efac5d948c1b0d0dfe86f38189d7ddc8fe",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-10",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "88511373bd02c780b56ff24674cb032aa77bf8b7aa822feae3e3226cbcc5199d",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-11",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "f254a262d45ac2b4524fc223ad8e18705900c0e27b3561deb1f12a92f893c604",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-12",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "68f6617f45c19f3036ffee8863558d267dd574c079dfb37df555985c8ae77c9a",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-13",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "b4083a0c6a1b8f3b6acf2eab701fe6b57ecbb91527cbac7a93086836da87df04",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-14",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "727075a3995199132d3ced8526e374b376096dc51c8595b76ec7730d04cf204d",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-15",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "eae7e8a1c44e8a8f95bb25d362baf531130116028d0e0ae26f9a700fe1f5b260",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-16",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "57ee9eb2da383940dce133d4437e53f2c73c2924eb15ccd0039ccc2f7518ab20",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-17",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "64c58120d5d864a90736a77d9ae77994cb541dd833250e6bf8925b29b93855f9",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-18",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "8f5bda1666487b8834c8ff8fe0d47a2ce9073fc2794136b4efe4d4a06fff1906",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-19",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "9dd05e733bb9739da8c306da3db15c94ac0167078e46a1fd499627b06ae321bd",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-20",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "db2f5db8594681faceec82fee6e0ef7f00b9438f4c19a2486cab47d1d4f9dfae",
+      "transmitSubmissions": 0
+    },
+    {
+      "capture": "captures/microphone-owner-20261103-before-21",
+      "error": "RFCOMM open timed out",
+      "traceSHA256": "e6df254121e220aefd4876eb8bce9a53735c3a7c1c2fdf6a2da3657b7ffb4cf2",
+      "transmitSubmissions": 0
+    }
+  ]
+}

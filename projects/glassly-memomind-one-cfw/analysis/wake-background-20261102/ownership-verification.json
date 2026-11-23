@@ -1,0 +1,291 @@
+{
+  "automaticRetries": 0,
+  "buttonEvents": 15,
+  "capture": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/swift-mac-background-ownership-20261102-03",
+  "cleanupVerified": true,
+  "command": "ownership",
+  "complete": true,
+  "flashMutations": 0,
+  "framePreservedPast35Seconds": true,
+  "leasesExpired": true,
+  "mode": "native macOS IOBluetooth RFCOMM",
+  "physicalOutputConfirmed": false,
+  "wakeHandshakes": 5,
+  "traceSHA256": "35594e093ed25c0d66e8e78dfb5277174198d57a15839c97a76fe5fd23d6c955",
+  "events": [
+    {
+      "elapsedSinceDrawSeconds": 35.03045683330856,
+      "event": "ownership-frame-preserved",
+      "screenOn": true,
+      "uptimeSeconds": 2016284.4773451667,
+      "utc": "2026-11-03T00:24:01.048Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016297.6381014169,
+      "utc": "2026-11-03T00:24:14.209Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016297.915525125,
+      "utc": "2026-11-03T00:24:14.486Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 1,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 1,
+        "pending": true,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016298.3563635417,
+      "utc": "2026-11-03T00:24:14.927Z"
+    },
+    {
+      "event": "ownership-handshake-complete",
+      "nonce": 1,
+      "uptimeSeconds": 2016298.9674163752,
+      "utc": "2026-11-03T00:24:15.538Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016302.1137177919,
+      "utc": "2026-11-03T00:24:18.684Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016302.4162887917,
+      "utc": "2026-11-03T00:24:18.987Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 1,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 1,
+        "pending": true,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016302.8750387086,
+      "utc": "2026-11-03T00:24:19.446Z"
+    },
+    {
+      "event": "ownership-handshake-complete",
+      "nonce": 1,
+      "uptimeSeconds": 2016303.4734002084,
+      "utc": "2026-11-03T00:24:20.044Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016304.3077547085,
+      "utc": "2026-11-03T00:24:20.878Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016304.5913404168,
+      "utc": "2026-11-03T00:24:21.162Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 1,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 1,
+        "pending": true,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016305.02758325,
+      "utc": "2026-11-03T00:24:21.598Z"
+    },
+    {
+      "event": "ownership-handshake-complete",
+      "nonce": 1,
+      "uptimeSeconds": 2016305.681708417,
+      "utc": "2026-11-03T00:24:22.252Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016318.5546670835,
+      "utc": "2026-11-03T00:24:35.125Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016318.7301915835,
+      "utc": "2026-11-03T00:24:35.301Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 1,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 1,
+        "pending": true,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016319.31966475,
+      "utc": "2026-11-03T00:24:35.890Z"
+    },
+    {
+      "event": "ownership-handshake-complete",
+      "nonce": 1,
+      "uptimeSeconds": 2016319.91155975,
+      "utc": "2026-11-03T00:24:36.482Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016320.9424329584,
+      "utc": "2026-11-03T00:24:37.513Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 4,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 0,
+        "pending": false,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016321.2485864584,
+      "utc": "2026-11-03T00:24:37.819Z"
+    },
+    {
+      "event": "ownership-button",
+      "state": {
+        "event": 1,
+        "frameLease": true,
+        "framePresented": true,
+        "nonce": 1,
+        "pending": true,
+        "powerBlocked": false,
+        "screenOn": true,
+        "wakeLease": true
+      },
+      "uptimeSeconds": 2016321.5894847084,
+      "utc": "2026-11-03T00:24:38.160Z"
+    },
+    {
+      "event": "ownership-handshake-complete",
+      "nonce": 1,
+      "uptimeSeconds": 2016322.1410193334,
+      "utc": "2026-11-03T00:24:38.712Z"
+    }
+  ],
+  "physicalTextConfirmed": true,
+  "physicalRefreshConfirmed": true,
+  "physicalBackgroundConfirmed": false,
+  "userReports": [
+    "I now see the glasslycfw/1 wake / frame lease text",
+    "double pressing seems to refresh the display"
+  ],
+  "limitations": [
+    "Background color was not explicitly confirmed after the fix.",
+    "A preceding attempt was refused while the minimal launcher was inactive; a later attempt after button input succeeded.",
+    "Mac RFCOMM reconnection required a target-only link disconnect."
+  ]
+}

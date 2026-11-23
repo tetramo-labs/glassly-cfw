@@ -1,0 +1,76 @@
+{
+  "review": "read-only arithmetic; no bound changes adopted",
+  "current_ota": {
+    "path": "captures/firmware/rect-copy-001/firmware.bin",
+    "bytes": 2228668,
+    "sha256": "680163e3789831cd3eda89a60b208cb0e85eaa61c46067dbd6d59ff26cee1885",
+    "staging_payload_bytes": 2228650,
+    "staging_rounded_bytes": 2232320,
+    "staging_capacity": 2482176
+  },
+  "current_runtime": {
+    "bytes": 62240,
+    "sha256": "c2c702f42d92e0b1dccc99e647f4038c391305e0b1ec642ded205c1a6c30dca7",
+    "matches_app_tail": true
+  },
+  "app": {
+    "header_physical": 2011136,
+    "body_physical": 2011168,
+    "allocation_end": 4108288,
+    "allocation_bytes": 2097152,
+    "append_physical": 3784352,
+    "append_xip": 70893216,
+    "append_offset": 1773184,
+    "current_body_bytes": 1835424,
+    "current_body_end": 3846592,
+    "current_erase_end": 3850240,
+    "max_physical_append_bytes": 323936
+  },
+  "hypothetical_budgets": [
+    {
+      "blob_bytes": 62240,
+      "body_bytes": 1835424,
+      "raw_image_bytes": 1835456,
+      "end_physical": "0x3ab1c0",
+      "end_xip": "0x43ab1c0",
+      "erase_end_physical": "0x3ac000",
+      "remaining_raw_allocation": 261696,
+      "remaining_after_erase": 258048,
+      "overlaps_historical_proposed_tail_003ab000": true
+    },
+    {
+      "blob_bytes": 65536,
+      "body_bytes": 1838720,
+      "raw_image_bytes": 1838752,
+      "end_physical": "0x3abea0",
+      "end_xip": "0x43abea0",
+      "erase_end_physical": "0x3ac000",
+      "remaining_raw_allocation": 258400,
+      "remaining_after_erase": 258048,
+      "overlaps_historical_proposed_tail_003ab000": true
+    },
+    {
+      "blob_bytes": 98304,
+      "body_bytes": 1871488,
+      "raw_image_bytes": 1871520,
+      "end_physical": "0x3b3ea0",
+      "end_xip": "0x43b3ea0",
+      "erase_end_physical": "0x3b4000",
+      "remaining_raw_allocation": 225632,
+      "remaining_after_erase": 225280,
+      "overlaps_historical_proposed_tail_003ab000": true
+    }
+  ],
+  "source_sha256": {
+    "runtime/graphics/graphics.ld": "4ef8aeefd2d412c1a436e994d7a59ad463e33ce64b404a5ec03479a3c6333732",
+    "scripts/compile_memomind_graphics.py": "d633d82bff272027cde9bc7997021666a248e4c8f90a54df1efdb85ac5f9ee2c",
+    "scripts/build_memomind_graphics.py": "725bc870e0a8a659f90d64c6970408c2000bb10f0c684d334d6b655e72b17f84",
+    "scripts/append_memomind_app.py": "904bca9a802ef2a2d98498ac6e118fb1eabebec738eb44a107caadbe34b76142",
+    "scripts/build_memomind_exclusive_storage.py": "9d6278a74d0d933477ddc084a0e294b3f33e8f834e513b4f1ddc1600fd76b61d",
+    "scripts/build_memomind_flash_canary.py": "ad178810720a3d93755f9d8422a8a657f8a4d1ddabd86c7e79046536b6a24077",
+    "scripts/memomind_flasher.py": "7287bc20833bdbd538aab43714edcedfe1a507b954cb875f4b98d81230caecb0",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "5bb12d3c66d8fdba9ded7c21e9abbd92c9991964151388bfaf69d1d6536651d3",
+    "runtime/build/rect-copy-001/build.json": "47ca60e03529286879ad8426a3153e5d0665722dcde475f136a3c2f3697b104c",
+    "captures/firmware/rect-copy-001/manifest.json": "5ce4e9718f0e49a1234294a3d00c3558273cf544909ef3a48a0f482f75808d25"
+  }
+}

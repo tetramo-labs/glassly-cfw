@@ -1,0 +1,40 @@
+{
+  "artifact": "/Users/fosse/dev/glassly-memomind-one-cfw/analysis/extracted/validated-1.0.3.127/segment-3.body.bin",
+  "sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "size": 1773176,
+  "load_address": "0x041eb020",
+  "load_basis": "Image header word12 and partition metadata, corroborated by decoded startup",
+  "gp": "0x02011688",
+  "gp_basis": "AUIPC+ADDI at0x041eb03e/0x041eb042",
+  "startup_ram_code": {
+    "source_file_offset": 100,
+    "length": 63668,
+    "target": "0x02000000",
+    "target_end_exclusive": "0x0200f8b4"
+  },
+  "startup_ram_data": {
+    "source": "0x04399fc8",
+    "source_file_offset": 1765288,
+    "length": 7800,
+    "target": "0x0200f8b8",
+    "target_end_exclusive": "0x02011730"
+  },
+  "crc_table": {
+    "address": "0x043984a0",
+    "entries": 256,
+    "polynomial": "0xedb88320",
+    "all_entries_match": true
+  },
+  "host_interface": {
+    "address": "0x0436609c",
+    "struct_size": 112,
+    "abi": "0x0100",
+    "capabilities": "0xff",
+    "display_info_function": "0x04299704"
+  },
+  "limitations": [
+    "Mappings inferred from captured bytes, no device memory read",
+    "Generic Ghidra RV32 default uses ilp32d; official plugin toolchain declares ilp32f; floating-point semantics not verified",
+    "Raw RISC-V unsupported through current REA; these are direct Ghidra observations"
+  ]
+}

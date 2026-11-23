@@ -1,0 +1,31 @@
+{
+  "offline_only": true,
+  "source_sha256": "08ff64abb1fc66c12779bbc2f34d44eeabf8a9433bb0089ca842245b64acf712",
+  "output_sha256": "941022530ba1e091af2a65983e6c51d9e9d077fb606b631f2892b05d9eea6876",
+  "source_bytes": 2185697,
+  "output_bytes": 2185415,
+  "changes": [
+    {
+      "component": 3,
+      "body_offset": 1562384,
+      "length": 22,
+      "before": "426c7565746f6f746820646973636f6e6e6563746564",
+      "after": "476c6173736c79206669726d77617265207265616479",
+      "reason": "Replace only the English Bluetooth-disconnected LVGL toast; retain original string length, terminator, code, layout, version and all other components."
+    }
+  ],
+  "original_checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "rebuilt_checksums": {
+    "outer_payload_crc32": "verified",
+    "compression_table_crc32": "verified",
+    "packed_streams_crc32": "verified",
+    "component_body_crc32": "verified-all-six"
+  },
+  "device_acceptance": "untested",
+  "boot_safety": "unestablished"
+}

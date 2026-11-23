@@ -1,0 +1,215 @@
+{
+  "utc": "2026-11-02T06:05:31.024857+00:00",
+  "user_requirement": "Port ~/dev/g2flash test suite; Bluetooth keyboard/HOGP excluded; reference passes do not establish MemoMind implementation parity",
+  "source_commit": "1a6db4fd75de202a96599cc8f9f12fa721e7c3ce",
+  "source_files_compared": 96,
+  "source_snapshot_matches_local_checkout": true,
+  "inventory_check_passed": true,
+  "inventory": {
+    "path": "tests/g2_compat/inventory.json",
+    "bytes": 451835,
+    "sha256": "dcc15d1d9e09341567e25b51d327612f4dc06c8a0d809545d462fe42f0d4cd29"
+  },
+  "required_host_scenarios": 40,
+  "required_host_assertion_sites": 660,
+  "required_bun_cases": 11,
+  "full_suite_port_complete": false,
+  "remaining_required_entries": [
+    {
+      "upstream_file": "patches/host/ancs_relay_host_test.c",
+      "status": "platform-specific",
+      "counterpart": "runtime/portable/notifications.c + runtime/portable/tests/notifications/ancs_relay_host_test.c",
+      "dependencies": [
+        "host Clang ASan/UBSan",
+        "portable production notification sources",
+        "explicit platform callbacks",
+        "test-only G2 ABI shim"
+      ]
+    },
+    {
+      "upstream_file": "patches/host/run_vector_tests.py",
+      "status": "unimplemented",
+      "counterpart": "tests/g2_compat/run_tests.py",
+      "dependencies": [
+        "Bun",
+        "TypeScript",
+        "g2-kit/protobuf",
+        "host cc/zlib",
+        "GIF and prepared SVG video fixtures",
+        "G2 Thumb builder; replace for MemoMind"
+      ]
+    },
+    {
+      "upstream_file": "patches/host/transport_host_test.c",
+      "status": "platform-specific",
+      "counterpart": "runtime/portable/transport.c + runtime/portable/tests/transport/transport_host_test.c",
+      "dependencies": [
+        "host Clang ASan/UBSan",
+        "host zlib",
+        "portable production record parser",
+        "test-only G2 outer-frame/topology shim"
+      ]
+    },
+    {
+      "upstream_file": "patches/host/upstream_host_test.c",
+      "status": "platform-specific",
+      "counterpart": "runtime/portable/upstream.c + runtime/portable/tests/upstream/upstream_host_test.c",
+      "dependencies": [
+        "host Clang ASan/UBSan",
+        "portable production protocol/policy sources",
+        "explicit typed inputs/callbacks",
+        "test-only G2 native-layout shim"
+      ]
+    },
+    {
+      "upstream_file": "demos/vector-protocol.test.ts",
+      "status": "platform-specific",
+      "counterpart": "tests/g2_compat/upstream/demos/vector-protocol.test.ts",
+      "dependencies": [
+        "Bun",
+        "copied installed g2-kit e8530502419bed4f5fb02c370c522208117c01d2 dependency tree",
+        "@bufbuild/protobuf"
+      ]
+    },
+    {
+      "upstream_file": "send_message_probe.py",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/bad-apple-tests.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/cache-probe.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/head-up-test.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/ring-touch-test.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/sound-test.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/video-test.sh",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "build_cfw.sh",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/vector-suite.ts",
+      "status": "unimplemented",
+      "counterpart": null,
+      "dependencies": [
+        "Bun/dependency tree",
+        "GIF or prepared SVG video corpus",
+        "ffmpeg/Potrace for preparation",
+        "Native MemoMind live scene/device verification"
+      ]
+    },
+    {
+      "upstream_file": "demos/shapes-suite.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/video-bench.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/prepare-bad-apple.ts",
+      "status": "unimplemented",
+      "counterpart": null,
+      "dependencies": [
+        "Bun/dependency tree",
+        "GIF or prepared SVG video corpus",
+        "ffmpeg/Potrace for preparation",
+        "Native MemoMind live scene/device verification"
+      ]
+    },
+    {
+      "upstream_file": "demos/card-demo.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/shapes-demo.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/detect-cfw.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    },
+    {
+      "upstream_file": "demos/ble-mode.ts",
+      "status": "platform-specific",
+      "counterpart": null,
+      "dependencies": [
+        "real G2 BLE/device and matching firmware/features; or G2 image/build environment"
+      ]
+    }
+  ],
+  "acceptance": [
+    "Preserve original assertions and fixtures; map each to production MemoMind code or explicitly identify unfinished native adapter.",
+    "Keep reference runs, portable implementation tests, RV32 execution and live checks separately labeled.",
+    "Retain aggregate --require-complete failure until every required suite is implemented.",
+    "Do not delete mixed settings/ring/notification/transport cases under the keyboard exclusion."
+  ]
+}

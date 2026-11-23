@@ -1,0 +1,95 @@
+{
+  "format": "memomind-native-mac-canary-hardware-v1",
+  "utc": "2026-11-02T03:10:34.972291+00:00",
+  "state": "boot verified; one fixed erase/program/full-sector-verify/erase-restore passed; independent target and neighbor readback match erased preimage",
+  "firmware": {
+    "path": "captures/firmware/flash-canary-001/firmware.bin",
+    "bytes": 2226788,
+    "sha256": "79a4158c5d82b97c248d0dd2b7e366df03206393c1c2a7275677b8985d81398a"
+  },
+  "runtime": {
+    "path": "runtime/build/flash-canary-004/graphics.bin",
+    "bytes": 59584,
+    "sha256": "c30da32f8759627aa85247757d0ccae67466a730b5802827246fe2d91a699992"
+  },
+  "current_installed_profile": "H001Y-1.0.3.127-flash-canary-v1",
+  "transfer_verified": true,
+  "transfer_verification": "analysis/native-mac-canary-20261101/trace-verification.json",
+  "boot_verified": true,
+  "preflight_verification": "analysis/native-mac-canary-20261101/preflight-verification.json",
+  "canary_started": true,
+  "canary_passed": true,
+  "canary_start_requests": 1,
+  "run_verification": "analysis/native-mac-canary-20261101/run-verification.json",
+  "after_verification": "analysis/native-mac-canary-20261101/after-verification.json",
+  "target_device": 1,
+  "target_offset": 8384512,
+  "neighbor_offset": 8380416,
+  "sector_bytes": 4096,
+  "program_bytes": 256,
+  "independent_readback_bytes": 8192,
+  "target_and_neighbor_equal_preimage": true,
+  "target_and_neighbor_sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f",
+  "terminal_status": {
+    "glassly": "flash-canary",
+    "abi": 1,
+    "result": "ok",
+    "state": "passed",
+    "operation": 2,
+    "phase": 8,
+    "error": 0,
+    "nativeStatus": 0,
+    "mapSource": 2,
+    "mutationStarted": true,
+    "restored": true,
+    "neighborVerified": true,
+    "device": 1,
+    "offset": 8384512,
+    "neighbor": 8380416,
+    "sectorBytes": 4096
+  },
+  "automatic_retries": 0,
+  "current_backup": "analysis/native-mac-backup-20261101/verification.json",
+  "backup_bytes": 3145728,
+  "pre_canary_backup_matches_pre_reset": true,
+  "regression_at_canary_source_freeze": "analysis/regression-20261101-06/report.json",
+  "offline_stages_passed_at_freeze": 66,
+  "python_tests_passed_at_freeze": 219,
+  "swift_tests_passed": 46,
+  "source_snapshot": "analysis/native-mac-canary-20261101/source-snapshot/manifest.json",
+  "general_mutable_store_enabled": false,
+  "full_g2_parity": false,
+  "limitations": [
+    "Fixed test on one sector, not broad endurance/performance or every-sector health evidence.",
+    "Application trace and device status, not independent flash-bus instrumentation.",
+    "Full backup was acquired before canary; subsequent independent readback covers the target and neighbor only.",
+    "Native full-capacity scene storage and remaining command parity are unfinished."
+  ],
+  "source_and_binary_pins": [
+    {
+      "path": "analysis/native-mac-canary-20261101/run.swift",
+      "bytes": 5908,
+      "sha256": "f10e4f67331c582d09478b3a41e149cff5b4844ad7adab4bb0af97887a53687b"
+    },
+    {
+      "path": "analysis/native-mac-canary-20261101/run",
+      "bytes": 584288,
+      "sha256": "1fb22ab0d9fc63282ad293b2f2e8eca354054c8275cdcb54487c425a6c17ba52"
+    },
+    {
+      "path": "analysis/native-mac-canary-20261101/preflight.swift",
+      "bytes": 5494,
+      "sha256": "e93088dd46fe9787d35ed982a8565d072c10d19ca630626428e7139f6db1b02f"
+    },
+    {
+      "path": "analysis/native-mac-canary-20261101/preflight",
+      "bytes": 622328,
+      "sha256": "64890486d7a040cdaf02cc2e095ac46e799b2d07dbba5dee80d8a7ce79433631"
+    },
+    {
+      "path": "swift/MemoMindKit/.build/release/memomind",
+      "bytes": 590344,
+      "sha256": "402c801a77472bb76ebf22b2b34ff0f571a2aa9e55b1c296cd046ad52c8a9afa"
+    }
+  ]
+}

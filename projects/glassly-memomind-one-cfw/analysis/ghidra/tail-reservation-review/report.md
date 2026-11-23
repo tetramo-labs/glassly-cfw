@@ -1,0 +1,57 @@
+# App-tail reservation: runtime owners and bounded canary review
+
+**A fixed one-sector canary is a feasible guarded next experiment; a full256KiB persistent reservation is not yet established.** The captured bootloader removes the full-allocation reset-verification concern on the inspected ordinary path. This pass closes the recognized app-side flash callers to concrete partitions or explicit update/diagnostic operations. It finds no normal runtime store assigned to `[003ab000,003eb000)`, but the range remains part of the app allocation and there is no hardware or native-API ownership barrier protecting it.
+
+No source/runtime/device changes were made. Shared app and isolated B-core projects were used only with `-readOnly -noanalysis`. The original body files and captured artifacts were not changed. Output scope is this directory. [Native ABI](abi.md), [canary proposal](canary-design.md), [machine-readable profile](profile.json), and the evidence manifest accompany this report.
+
+## Current ranges and source pins
+
+The latest captured header/map agree: app physical`001eb000`, body start`001eb020`, body length`1bd540`, body end`003a8560`, allocation end`003eb000`. The acquired bootloader's ordinary valid compressed-OTA erase end is`003a9000`. Proposed tail`[003ab000,003eb000)` has an8KiB gap after that erase boundary and10,912 bytes after the declared body. These current values supersede older input-observer arithmetic in the historical app-tail/memory reports.
+
+[partition-overlap-audit.json](partition-overlap-audit.json) checks all17 records of the selected live map: **only type20 (the app itself) intersects the candidate**. The next type90 resource begins exactly`003eb000`; it is not part of the candidate. [Boot verification](../boot-validation/report.md) establishes conditional RSA/SHA256 coverage of the declared body and ordinary compressed-activation erase/program bounds. It does not prove first-stage ROM/factory paths or runtime ownership.
+
+Static native code is stock1.0.3.127 body SHA256`81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8`, base`041eb020`. The parent separately verified that the acquired app header matches its current50,880-byte appended runtime candidate. No new live state is inferred merely from the stock analysis database.
+
+## Recognized flash writers and their computed ranges
+
+The retained searches enumerate12 references to program`04329b1e`,6 to range erase`04329a14`,4 to sector erase`043299aa`, and7 to erase/read-modify-write`04329b90`. They include recognized computed calls; raw CUS8 callbacks without defined Ghidra functions are covered by the earlier callback disassembly. Lower page-splitter`043296c8` references resolve only to the public program and RMW interfaces. Recognized SRAM sector-wrapper references resolve to range/sector erase and RMW. This is a static recognized-reference inventory, not an assertion that every computed pointer in the firmware was recovered.
+
+| Owner/path | Native witnesses | Computed destination and consequence |
+|---|---|---|
+| XGIMI KV | `04235554`, `042355e8`, `04235694` | Gets type`c4` base, live physical`006f8000`; converts XIP to physical by subtracting`04000000`. Configured count`04234a06()` is128, mode1/2 chooses4/8KiB units. Even its larger modeled span is above the tail. Program wrapper bounds its start; erase relies on the KV caller. These are not generic ownership guards. |
+| Generic KV | `0433f504`, `0433f55a`, `0433f60e`, `0433f6be` | Gets type7 base, live physical`0077c000` (same fallback); count`0433ee98()` is4 and mode1/2 determines4/8KiB units. No tail extent is selected. |
+| Bootmap state commit | `043169ce` | Alternates exact sectors`007fc000/007fd000`, writes header, existing20B records and CRC. Cannot reach the tail through this function's address selection. |
+| Type2 configuration | `0434c958` | Obtains type2 physical`007fe000`; checks serialized record length+16 against map allocation, then calls RMW. Separate from app tail. |
+| Typec3 diagnostic/config | `04201704`, `04201758`, `04202208`, getters`04340df6/04340e6a -> 04340dc8` | Base comes from typec3 physical`00778000`; second getter adds`200`. Sole recognized caller of generic offset helper`04201704` supplies offset0 and asserts32-byte length. Handler`04202208` uses16-bit offset and length. Even its maximal nonwrapping arithmetic is far above the app tail; it does not offer a safe general store API. The handler's complete packet validation was not audited here. |
+| ANC parameter copies/diagnostics | `042f423a`, `0420295c`, `04202f08`, `042f87e4/042f8812` | Types`c1/c0`, body offset+32. Indexed setters use`(index&127)*460` and compare against native allocation getter. Neither partition is present in the captured map; missing base returns`fc000000`, so these helpers must not be repurposed. Normal absent-map rejection and malformed diagnostic behavior are not a tail reservation mechanism. |
+| Ordinary compressed OTA reception | `04341560`, `04341602`, `04341926` | Type4 staging physical`00481000..006df000`; receive writes/rounded erases stay in staging under their checks. Activation is the separately acquired bootloader path. |
+| Single-component OTA | `04240060`, `042400b6` | Selected partition record supplies address and **whole allocation** erase. If directed to type20, this is an explicit owner capable of erasing the candidate. Do not run it during a canary; cache survival across this update mode is not promised. |
+| Device1 resources/recording/CUS8 | `043413ae/043414a6`, `0420fd64/0420fe3e`, raw`042a40c4/042a411e` and reset`0423e8b4` | Explicit device1 calls. Typec6 resources, c7 recording, c8 managed package store are separate physical SPI namespaces; same-looking low24-bit offsets do not make them device0 app-tail owners. |
+
+Evidence is under `owners/`, `followup/`, `diagnostic/`, caller text files, and linked historical[app-tail](../app-tail-store/report.md)/[CUS8](../native-store-capacity/report.md) reports. The two final c3 getter exports and offset0/32B caller witness were produced by the collaborating read-only scan and copied to `diagnostic/` with provenance in the manifest. Early exports of`04330df6/04330e6a` were address-selection mistakes and are unrelated GPIO routines; they are retained as such and **not used as owner evidence**.
+
+The partition lookup reference scan also covers resource readers: tone loader`042f3bb4` iterates types90..97 and uses header/resource lengths, rather than claiming bytes before type90. Typec5 font/resource loading and c6 external-resource setup are map-directed. No separate app-tail allocator, journal or hidden partition is established by those paths.
+
+## Startup and other processors
+
+The app startup copies declared SRAM code/data and clears BSS, as established in[memory-capacity](../memory-capacity/report.md); it does not initialize the proposed flash tail. Cross-core loader`041fb3d2` selects a partition from table`04355f24`, checks magic, and copies **map body_length** where the target is not already XIP. [cross-core-load-table.json](cross-core-load-table.json) preserves the raw table: core indices0..4 map to types20,30,31,21,70 with aliases04000000,14000000,14000000,08000000,26200000. The type70 DSP container path copies its own subimages. This startup route does not allocate the rest of the app partition to a secondary core.
+
+The isolated B-core database uses the actual type30 body SHA256`f45213d4f98f48fb45af137689989a7c29e785d79a2bd94b2519e8bcc7dacf1f`, XIPbase14010020, startup-derived SRAM mappings. Bounded searches found no recognized references into candidate physical addresses, app XIP alias, B-core XIP alias, or the inspected SPI FIFO candidate range`01104000..0110bfff`. Printable-string scan found no flash/erase/key_value/SPI strings. Empty results are retained under`bcore/`; **they do not establish absence of arithmetic addressing, RPC requests, every controller register, other-core firmware, or ROM services**. No other-core flash mutation was performed.
+
+## Separate sector-mapped OTA backend
+
+The collaborating external-store scan found another write route outside the public`04329xxx` interfaces: `04345f4c -> 043470c8` supplies table`02010c6c`, with read`04346784`, program`04346c82` and init`04346966`. The native source filename is `gm_flash_py25q256lc.c`; init uses general SPI0 through`04320432/043206f0`, four-byte addressing, and commands13/12 through`04346714 -> 04320d9a`. See the[staging exports](../external-reservation-review/staging/functions.json). This is a distinct software/controller path from the XIP flash API examined above. Its physical pin/bus/chip isolation is not fully proved; it must not be silently counted as an excluded device0 owner merely because the APIs differ. The canary excludes concurrent OTA activity, and the final ownership claim retains this physical-topology boundary. No unrelated3MiB logical OTA capacity constants should be patched as part of an app-tail reservation.
+
+## Native write semantics and practical admission
+
+[abi.md](abi.md) provides the exact public signatures, return preservation, locking, cache order and command evidence. Program/erase are already used by native device0 KV and bootmap writers, so task-context device0 writes are an existing platform operation. Public program and erase each use48-byte frames; source staging and flash launch execute through existing SRAM helpers. There is no need to execute our own SRAM program routine or modify protection/driver initialization.
+
+Important limits remain concrete: public wrappers have no partition bounds; source/length must be validated independently; hardware/controller and flash-busy loops lack a cancellable deadline; zero return is followed by explicit readback because final polling checks busy, not complete data integrity. The app mutex serializes participating app calls but is not a demonstrated cross-core logical transaction lock. Cache invalidation ordering differs between erase and program, so use the public wrappers as implemented and verify through the public reader. Do not hold a custom critical section or flash lock across them.
+
+## Decision and next action
+
+The bounded static finding is **no recognized ordinary runtime owner of the tail**, with known whole-component OTA overwrite and unresolved indirect/other-core/factory scope. That is sufficient to design a small empirical test, not to claim mathematical exclusivity or allocate the full cache now.
+
+The recommended next step is read-only inventory of the whole tail, followed—only if the chosen sector is stable and all`ff`, layout checks pass, and the fixed-range candidate is reviewed—by the[canary sequence](canary-design.md) at`003d1000`: erase4KiB, program256-byte pattern from owned RAM, verify complete sector and neighboring guards, ordinary reset, verify persistence, restore all`ff`, reset and verify again. It does not alter declared app code, image CRC fields or bootmaps. Failure or non-erased content stops escalation to a store.
+
+A pass narrows the actual reset/controller/observed-workload risk for that sector. It does not grant256KiB logical capacity, prove wear/power-loss recovery, preserve data across updates, or cover unexercised stock functions. A permanent reservation must be enforced by all future image constructors, with explicit cache identity/invalidation and transactional backend design. The original2MiB image-size check alone is no longer sufficient once bytes are reserved.

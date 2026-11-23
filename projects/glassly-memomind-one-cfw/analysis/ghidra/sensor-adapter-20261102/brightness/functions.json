@@ -1,0 +1,68 @@
+[
+  {
+    "requested": "042612ec",
+    "address": "ram:042612ec",
+    "incoming_references": [
+      "ram:0425bde8 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04261400",
+    "address": "ram:04261400",
+    "incoming_references": [
+      "ram:0423316c UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04261410",
+    "address": "ram:04261410",
+    "incoming_references": [
+      "ram:0423315c UNCONDITIONAL_CALL",
+      "ram:0428953e UNCONDITIONAL_CALL",
+      "ram:04289562 UNCONDITIONAL_CALL",
+      "ram:042ea360 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04299f3c",
+    "address": "ram:04299f3c",
+    "incoming_references": [
+      "ram:043660cc DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04299efc",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "04299e26",
+    "error": "No function at selected address"
+  },
+  {
+    "requested": "043470f4",
+    "address": "ram:043470f4",
+    "incoming_references": [
+      "ram:04229f06 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "043471c8",
+    "address": "ram:043471c8",
+    "incoming_references": [
+      "ram:0422a64e COMPUTED_CALL",
+      "ram:04229ff2 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

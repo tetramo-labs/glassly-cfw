@@ -1,0 +1,11 @@
+{
+  "current_release": "diagnostic-commands-001",
+  "device_operations_running": false,
+  "latest_capture": "captures/swift-mac-diagnostics-smoke-20261102-02",
+  "latest_capture_complete_and_cleared": true,
+  "visual_question_pending": true,
+  "if_user_confirms": "Save exact reply and question to new visual-confirmation.json with confirmed:true and UTC. Do not write finish-requested because helper already finished. Create versioned finalize-hardware-v2.py from draft finalize-hardware.py, adapting README replacements to current diagnostics hardware checkpoint link and current pending-visual paragraph before running. Preserve old draft as pinned by awaiting-visual evidence.",
+  "if_user_missed": "Use frozen smoke-v2 binary and a NEW capture directory; preserve both earlier attempts. Ask visual question only after pattern-visible log. Verify new completed trace independently with verify-smoke-v2.py and NEW report path.",
+  "evidence": "analysis/evidence/diagnostics-awaiting-visual-20261102.json",
+  "scope": "Compass/raw IMU/ALS and single button required; keyboard/HOGP, ring battery and gesture recognition/control excluded.19 required suite/integration entries remain incomplete."
+}

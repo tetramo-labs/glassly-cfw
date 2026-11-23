@@ -1,0 +1,52 @@
+{
+  "version": "GLASSLYCFW/6",
+  "release": "record-memory-001",
+  "imageSHA256": "5a6f8984773318a651f2703838672e9220615051fa36709ea591ed47e3b2e019",
+  "runtimeSHA256": "71c13a1fbd3b337ec7be875ce171c934363cdbada0cabae84860c074c0f25868",
+  "appHeaderSHA256": "d65d7e3e761e4ee754e359a5921034d775267e1d0374c006e70de30cdba48f68",
+  "imageBytes": 2248759,
+  "runtimeBytes": 96128,
+  "flashed": true,
+  "bootVerified": true,
+  "hardwareCommandsVerified": true,
+  "physicalOutputConfirmed": false,
+  "appBundleDoesNotWaitForHardware": true,
+  "pending": [
+    "Physical display confirmation",
+    "Matched record-session RAM measurement"
+  ],
+  "connectionSearch": {
+    "attempts": 22,
+    "elapsedSecondsAtLastAttempt": 651.5701022080611,
+    "successfulPreflights": 0,
+    "completed": true,
+    "transferStarted": false
+  },
+  "glasslyCommit": "09fb43a97a",
+  "finalPreflight": {
+    "capture": "captures/record-memory-20261103-before-23",
+    "exitCode": 1,
+    "result": "RFCOMM open timed out",
+    "transferStarted": false
+  },
+  "transferVerified": true,
+  "rebootAcknowledged": true,
+  "flashCapture": "captures/record-memory-20261103-flash-01",
+  "blocks": 550,
+  "chunks": 3844,
+  "automaticRetries": 0,
+  "preflightCapture": "captures/record-memory-20261103-before-24",
+  "postRebootAttempts": [
+    {
+      "capture": "captures/record-memory-20261103-after-01",
+      "result": "RFCOMM open timed out",
+      "bootVerified": false
+    },
+    {
+      "capture": "captures/record-memory-20261103-after-02",
+      "result": "complete",
+      "bootVerified": true
+    }
+  ],
+  "bootCapture": "captures/record-memory-20261103-after-02"
+}

@@ -1,0 +1,54 @@
+{
+  "version": "GLASSLYCFW/8",
+  "release": "sensor-capture-001",
+  "imageBytes": 2246211,
+  "imageSHA256": "5658977cd0653d3c8722aa0751024eedf57c227425d9bec031ec00c0f6a0e00f",
+  "containerHeaderSHA256": "1f801d0c3a32088091c02e16dfa63119e3a47e450f134e15447370c6c4aa0c39",
+  "appHeaderSHA256": "d3cb9b9a0e20d3f37ef291c8daa1b897b0528899187601b7379e61dfb4a66ad7",
+  "runtimeBytes": 94608,
+  "runtimeSHA256": "e2f8edfeaa28e7190196e5e4e4003dd97cafdfe345812ece025f3bf06a5b1a3d",
+  "streams": [
+    {
+      "index": 0,
+      "packedBytes": 171,
+      "rawBytes": 344,
+      "packedSHA256": "1c66b3b0d03e0b7ad4a542b35a1d62c3768ced14ef6e5336eed7ff9ca976338d"
+    },
+    {
+      "index": 1,
+      "packedBytes": 481265,
+      "rawBytes": 909676,
+      "packedSHA256": "ba0207d664287ede74c2a51612220e2848bd00df362defd22bf5488c65a8f3e1"
+    },
+    {
+      "index": 2,
+      "packedBytes": 437783,
+      "rawBytes": 695512,
+      "packedSHA256": "939ee004a8185d84d643ee6cf992fad437a5e8ab356cdaaf29ce7a01acd1bba0"
+    },
+    {
+      "index": 3,
+      "packedBytes": 975109,
+      "rawBytes": 1867824,
+      "packedSHA256": "8d617160324d390b885b376d8c53039879b0094c6e9293e1e09fb3a2bf7db304"
+    },
+    {
+      "index": 4,
+      "packedBytes": 283737,
+      "rawBytes": 284300,
+      "packedSHA256": "8cd2c6c484d9ce80c7f21d7875b56cc4b9e61885ecda9d0e6a952541491b084c"
+    },
+    {
+      "index": 5,
+      "packedBytes": 986,
+      "rawBytes": 3616,
+      "packedSHA256": "69c8e1e73137ab5c9c818d422ba256166b32c116d4116098f18907efbbfbd4ee"
+    },
+    {
+      "index": 6,
+      "packedBytes": 67006,
+      "rawBytes": 81594,
+      "packedSHA256": "b697fbbf3145b2c0ecdf110eeaf0ecaef2320c6c6ed6d8f89078832aa5cc3bca"
+    }
+  ]
+}

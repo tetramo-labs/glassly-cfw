@@ -1,0 +1,846 @@
+{
+  "format": "memomind-exclusive-store-native-callers-v1",
+  "all_passed": true,
+  "device_actions": 0,
+  "cases": [
+    {
+      "name": "install refused after real null-context teardown",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            4,
+            33554742
+          ]
+        }
+      ],
+      "heap_frees": [
+        0,
+        0
+      ],
+      "mocks": [
+        "heap_free",
+        "heap_free"
+      ],
+      "native_instructions": 125,
+      "max_observed_stack_bytes": 80,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install tears down synthetic old allocations then refuses",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            4,
+            33554742
+          ]
+        }
+      ],
+      "heap_frees": [
+        100679680,
+        100671488
+      ],
+      "mocks": [
+        "heap_free",
+        "heap_free"
+      ],
+      "native_instructions": 125,
+      "max_observed_stack_bytes": 80,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install native busy guard",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -3,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 38,
+      "max_observed_stack_bytes": 64,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install nonbusy existing runtime pointer",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            4,
+            33554742
+          ]
+        }
+      ],
+      "heap_frees": [
+        0,
+        0
+      ],
+      "mocks": [
+        "heap_free",
+        "heap_free"
+      ],
+      "native_instructions": 126,
+      "max_observed_stack_bytes": 80,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install invalid ABI",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -8,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 41,
+      "max_observed_stack_bytes": 64,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install null descriptor",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -8,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 37,
+      "max_observed_stack_bytes": 64,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "install null output",
+      "entry": "0x42a4598",
+      "expected_return_or_job_status": -8,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 38,
+      "max_observed_stack_bytes": 64,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "query refused output unchanged",
+      "entry": "0x42a4628",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            1,
+            1,
+            0,
+            256
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 37,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "query existing store context guard",
+      "entry": "0x42a4628",
+      "expected_return_or_job_status": -3,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 30,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "query invalid ABI",
+      "entry": "0x42a4628",
+      "expected_return_or_job_status": -8,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 26,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "query null descriptor",
+      "entry": "0x42a4628",
+      "expected_return_or_job_status": -1,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 18,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "query null output",
+      "entry": "0x42a4628",
+      "expected_return_or_job_status": -1,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 21,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "select refused before touching name",
+      "entry": "0x42a4994",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 20,
+      "max_observed_stack_bytes": 32,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "select null name still refuses mount",
+      "entry": "0x42a4994",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 20,
+      "max_observed_stack_bytes": 32,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "remove refused before touching argument",
+      "entry": "0x42a49e2",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 32,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "remove native busy guard",
+      "entry": "0x42a49e2",
+      "expected_return_or_job_status": -3,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 30,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "remove nonbusy runtime pointer",
+      "entry": "0x42a49e2",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 33,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "clear refused before touching argument",
+      "entry": "0x42a4a2c",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 29,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "clear native busy guard",
+      "entry": "0x42a4a2c",
+      "expected_return_or_job_status": -3,
+      "passed": true,
+      "gate_calls": [],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 27,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "clear nonbusy runtime pointer",
+      "entry": "0x42a4a2c",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 30,
+      "max_observed_stack_bytes": 48,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "ordinary reset wrapper forwards failure",
+      "entry": "0x423eb42",
+      "expected_return_or_job_status": -1,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x423e8b4",
+          "arguments": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 10,
+      "max_observed_stack_bytes": 16,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "forced reset wrapper forwards failure",
+      "entry": "0x423eb52",
+      "expected_return_or_job_status": -1,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x423e8b4",
+          "arguments": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [],
+      "native_instructions": 10,
+      "max_observed_stack_bytes": 16,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 0,
+      "delays": [],
+      "completed_worker_jobs": 0,
+      "callee_saved_and_stack_checked": true
+    },
+    {
+      "name": "worker reset, enqueue failures 0",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x423e8b4",
+          "arguments": [
+            0,
+            50462492,
+            0,
+            178
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "tick",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 82,
+      "max_observed_stack_bytes": 256,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 1,
+      "delays": [],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    },
+    {
+      "name": "worker reset, enqueue failures 2",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x423e8b4",
+          "arguments": [
+            0,
+            50462492,
+            0,
+            178
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "tick",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 106,
+      "max_observed_stack_bytes": 256,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 3,
+      "delays": [
+        10,
+        10
+      ],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    },
+    {
+      "name": "worker install, enqueue failures 0",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            4,
+            33554742
+          ]
+        }
+      ],
+      "heap_frees": [
+        0,
+        0
+      ],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "heap_free",
+        "heap_free",
+        "tick",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 753,
+      "max_observed_stack_bytes": 320,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 1,
+      "delays": [],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    },
+    {
+      "name": "worker install, enqueue failures 2",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            0,
+            0,
+            4,
+            33554742
+          ]
+        }
+      ],
+      "heap_frees": [
+        0,
+        0
+      ],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "heap_free",
+        "heap_free",
+        "tick",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 777,
+      "max_observed_stack_bytes": 320,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 3,
+      "delays": [
+        10,
+        10
+      ],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    },
+    {
+      "name": "worker query, enqueue failures 0",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            1,
+            1,
+            4,
+            256
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "tick",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 847,
+      "max_observed_stack_bytes": 288,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 1,
+      "delays": [],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    },
+    {
+      "name": "worker query, enqueue failures 2",
+      "entry": "0x42a90ba",
+      "expected_return_or_job_status": -5,
+      "passed": true,
+      "gate_calls": [
+        {
+          "entry": "0x42a43c8",
+          "arguments": [
+            1,
+            1,
+            4,
+            256
+          ]
+        }
+      ],
+      "heap_frees": [],
+      "mocks": [
+        "queue_receive_owned_job",
+        "tick",
+        "tick",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer",
+        "task_delay",
+        "display_enqueue_copy_pointer"
+      ],
+      "native_instructions": 871,
+      "max_observed_stack_bytes": 288,
+      "flash_calls": 0,
+      "kv_calls": 0,
+      "allocations": 0,
+      "enqueue_attempts": 3,
+      "delays": [
+        10,
+        10
+      ],
+      "completed_worker_jobs": 1,
+      "callee_saved_and_stack_checked": false
+    }
+  ],
+  "provenance": {
+    "tests/rv32/exclusive_storage_callers_emulator_test.py": "5e35f9ceab060abe0bfa502cf19459899a9621ae32622b80446a5a1d9121b94a",
+    "scripts/build_memomind_exclusive_storage.py": "9d6278a74d0d933477ddc084a0e294b3f33e8f834e513b4f1ddc1600fd76b61d",
+    "analysis/extracted/validated-1.0.3.127/segment-3.body.bin": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+    "analysis/exclusive-store-review-20261101/report.md": "7ec33d8d7746581b15a237533a5a3b487ac5956c5dc7df6364be8d1fa4cd2654"
+  },
+  "limitations": [
+    "Actual pinned callers and production gates, not whole boot or hardware execution.",
+    "Heap frees, queue receive, ticks, completion enqueue and delay are explicit mocks.",
+    "Worker stops on next receive after completion; downstream display/GM reply is not executed.",
+    "Synthetic old-context teardown does not prove safe cancellation of a running plugin.",
+    "No real mutex contention, native allocator, power loss, other raw owners or full boot coverage.",
+    "Read/program/erase/badmap gates are applied but unreachable from refused mounts; direct gates have a separate test.",
+    "Observed native stack is not a worst-case task/interrupt stack budget."
+  ],
+  "unicorn": "2.1.4",
+  "gated_body_sha256": "f1663eec992aeb8ad62debe5dec875e9819555b652427dbb124cb09372a85c93",
+  "production_gate_edits": [
+    {
+      "address": 69878728,
+      "body_offset": 758696,
+      "before": "1971a2dc",
+      "after": "6d558280",
+      "return_code": -5,
+      "purpose": "CUS8 mount/repair/format unavailable"
+    },
+    {
+      "address": 69877280,
+      "body_offset": 757248,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 read callback unavailable"
+    },
+    {
+      "address": 69877956,
+      "body_offset": 757924,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 program callback unavailable"
+    },
+    {
+      "address": 69878046,
+      "body_offset": 758014,
+      "before": "b7073000",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 erase callback unavailable"
+    },
+    {
+      "address": 69462196,
+      "body_offset": 342164,
+      "before": "61712324811a",
+      "after": "7d5582800100",
+      "return_code": -1,
+      "purpose": "CUS8 whole-store reset unavailable"
+    },
+    {
+      "address": 69901780,
+      "body_offset": 781748,
+      "before": "757122c5",
+      "after": "7d558280",
+      "return_code": -1,
+      "purpose": "CUS8 badmap saver unavailable"
+    }
+  ],
+  "startup_mapping": {
+    "sram_code_source": "041eb084",
+    "sram_code_destination": "02000000",
+    "data_source": "04399fc8",
+    "data_destination": "0200f8b8",
+    "gp": "0x2011688"
+  },
+  "case_count": 28,
+  "max_observed_stack_bytes": 320
+}

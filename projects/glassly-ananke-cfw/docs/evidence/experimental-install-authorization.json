@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-04",
+  "user_instruction": "no, but flash it anyways, I can just buy another one if need be",
+  "independent_recovery_demonstrated": false,
+  "recovery_requirement_waived_by_user": true,
+  "candidate_sha256": "a93b93a788452026e2b155a8797805ef7d1d55be0af1e2eb7fcdd9fda49388d3",
+  "target_location": "0x02100000",
+  "loader_sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+  "decoded_loader_sha256": "a9cd22324afec23743bc0241534a5eeb53ecffc80dd434fd1fd1f2725ab94f50",
+  "decode": "MengLi stream reset for each 512-byte ROM transfer",
+  "review": {
+    "command_dispatch": "0x12a52; FB01 handler 0x12ca6; FB04 handler 0x12d0c",
+    "sector_erase": "FB01 -> ioctl 200 -> erase type 2 -> SPI opcode 0x20 at 0x13e12",
+    "page_program": "0x13db0 splits at 256-byte boundaries; 0x13d76 issues configured opcode 0x02",
+    "busy_wait": "0x1338c polls SPI status bit 0; read path 0x1360e invokes it before readback",
+    "usb_residue": "Pinned hook uses ROM data callbacks and returns handled; full residue expected as measured for reads. New write commands still require exact status and readback.",
+    "protection": "No host protection register, fuse or whole-chip erase command allowed. Erase/program failures stop without unlocking."
+  },
+  "tests": "57 Python tests passed, including 8 installer tests",
+  "flashed": false,
+  "sources": {
+    "flash_controller.py": "d429e4c130848f00912351f11d17565b00e66928e9e9594ee81dc1d87a4ccc9e",
+    "test_flash_controller.py": "3b7365d7101f7622b440d815fdea55610b3a6865a00c76287cfa70ac1474c7f5",
+    "usb_transport.py": "a66db4854feece846df4660fb41f9ee7d23cf058838f80dde02b9f166685ccc7"
+  }
+}

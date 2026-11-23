@@ -1,0 +1,14 @@
+{
+  "format": "memomind-user-visual-confirmation-v1",
+  "recorded_utc": "2026-11-02T04:48:22.840206+00:00",
+  "capture": "captures/swift-mac-rect-copy-smoke-20261102-02",
+  "question": "The pattern is showing again now and will stay for three minutes. Can you see two \u201cRLE\u201d/checkerboard groups, with the copy to the right, on a black background?",
+  "answer": "yes I see both",
+  "source": "user message in this conversation",
+  "copied_pattern_visible": true,
+  "background_requested_gray4": 0,
+  "background_separately_confirmed": false,
+  "hardware_pixel_readback": false,
+  "pixel_perfect_comparison": false,
+  "earlier_attempt": "visual-attempt-01.json"
+}

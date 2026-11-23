@@ -1,0 +1,111 @@
+{
+  "selected_map": "7fc000",
+  "candidate": [
+    "003ab000",
+    "003eb000"
+  ],
+  "entries": [
+    {
+      "type": "0x10",
+      "start": "0x0",
+      "end": "0x10000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x30",
+      "start": "0x10000",
+      "end": "0x123000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x70",
+      "start": "0x123000",
+      "end": "0x1eb000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x20",
+      "start": "0x1eb000",
+      "end": "0x3eb000",
+      "intersects_candidate": true
+    },
+    {
+      "type": "0x90",
+      "start": "0x3eb000",
+      "end": "0x481000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x4",
+      "start": "0x481000",
+      "end": "0x6df000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc5",
+      "start": "0x6df000",
+      "end": "0x6f8000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc4",
+      "start": "0x6f8000",
+      "end": "0x778000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc3",
+      "start": "0x778000",
+      "end": "0x77a000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc2",
+      "start": "0x77a000",
+      "end": "0x77c000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x7",
+      "start": "0x77c000",
+      "end": "0x7fc000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x8",
+      "start": "0x7fc000",
+      "end": "0x7fe000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x2",
+      "start": "0x7fe000",
+      "end": "0x7ff000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0x9",
+      "start": "0x7ff000",
+      "end": "0x800000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc6",
+      "start": "0x1000000",
+      "end": "0x1400000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc7",
+      "start": "0x1400000",
+      "end": "0x1500000",
+      "intersects_candidate": false
+    },
+    {
+      "type": "0xc8",
+      "start": "0x1500000",
+      "end": "0x1800000",
+      "intersects_candidate": false
+    }
+  ]
+}

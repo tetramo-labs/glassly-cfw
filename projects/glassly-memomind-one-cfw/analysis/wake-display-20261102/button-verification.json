@@ -1,0 +1,48 @@
+{
+  "result": "passed",
+  "capture": "captures/swift-mac-buttons-20261102-01",
+  "traceSHA256": "5f775517963201171d167f91094b1ea6085d699a356cdff7d6d58b4e57821e58",
+  "outcome": {
+    "automaticRetries": 0,
+    "capture": "/Users/fosse/dev/glassly-memomind-one-cfw/captures/swift-mac-buttons-20261102-01",
+    "command": "buttons",
+    "complete": true,
+    "drops": 0,
+    "flashMutations": 0,
+    "mode": "native macOS IOBluetooth RFCOMM",
+    "physicalActionsConfirmed": false,
+    "recordsSaved": 4,
+    "subscriptionStopped": true
+  },
+  "events": [
+    {
+      "utc": "2026-11-02T23:32:39.202Z",
+      "identifier": 8063,
+      "sequence": 1,
+      "tick": 458376
+    },
+    {
+      "utc": "2026-11-02T23:32:39.493Z",
+      "identifier": 8059,
+      "sequence": 2,
+      "tick": 458819
+    },
+    {
+      "utc": "2026-11-02T23:32:45.416Z",
+      "identifier": 8061,
+      "sequence": 3,
+      "tick": 464750
+    },
+    {
+      "utc": "2026-11-02T23:32:46.021Z",
+      "identifier": 8063,
+      "sequence": 4,
+      "tick": 465327
+    }
+  ],
+  "userStatement": "done",
+  "requestedActions": "single press, wait five seconds, hold about one second and release",
+  "physicalActionCorrelationConfirmed": true,
+  "displayOrPowerChangeReported": false,
+  "firmwareChanged": false
+}

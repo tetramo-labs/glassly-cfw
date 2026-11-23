@@ -1,0 +1,58 @@
+{
+  "body_base": "0x41eb020",
+  "body_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "table_clear_flag": {
+    "address": "0x0436618c",
+    "bytes": "e4d82c04",
+    "target": "0x042cd8e4"
+  },
+  "entries": {
+    "0x42cd8e4": {
+      "body_offset": "0xe28c4",
+      "first16": "397122dc26da4ad84ed606de80002e89"
+    },
+    "0x42cf6fa": {
+      "body_offset": "0xe46da",
+      "first16": "011122cc26ca4ac806ce4ec600102a89"
+    },
+    "0x42a6dc6": {
+      "body_offset": "0xbbda6",
+      "first16": "05c5411106c622c426c20008aa84ef80"
+    },
+    "0x42cb8ec": {
+      "body_offset": "0xe08cc",
+      "first16": "5d7186c6a2c4a6c28008cac04ede52dc"
+    }
+  },
+  "exports_sha256": {
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cd8e4.asm": "38d1ea25dc3ead32b5fac082a00d7f858bd6e2c4925357fbdea672d7124d74a5",
+    "analysis/diagnostics-cleanup-review-20261102/native/move-index-callers.txt": "533d76817b13cd9d946ad1010ec15de01f63fdadebe0dc89edab23e19533f2d5",
+    "analysis/diagnostics-cleanup-review-20261102/native/index-callers.txt": "da628b5cb12d103757514a61be4d8c64d9a243fcb50400ee802f5e5b12389774",
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cf44e.c": "830c13af50f58ba5116f3809cc60e13fb12e5febd48c5c2b8432c35f7b82cc33",
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cd8e4.c": "b729a55c54a4e5d6ed33b73b7b776a2b893ddd1e99870a1991532ef83e6a7c4e",
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cf47a.asm": "cedaca7413bbd6d6a93940f1bf3e816f08e4f14fac23e299416f675ea72376ff",
+    "analysis/diagnostics-cleanup-review-20261102/native/object-functions.txt": "0a14a5f58e751fbb9b0653603f2cbdaa9841b4c3c77f45176cd82e2b0c8897bf",
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cf47a.c": "6eda9ccde2987e877460cbd7d305aabc10b190c518070c454e7c9a8f5505a666",
+    "analysis/diagnostics-cleanup-review-20261102/native/function-042cf44e.asm": "e646355b7418a53f5fe0e624739f0730c862a733d3ad3903b9c0dc02b7bbe1ed",
+    "analysis/diagnostics-cleanup-review-20261102/native/functions.json": "d0072a7821a471bb3e39888fda369614a2a7e2c801c9dbe5e23764dd78148ca5",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf2fa.asm": "a4f82aab834ddaa1e5be5e0bba923efa04e06c15114ceebba0d3eb2b48876f74",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf3ae.asm": "ef24971acf13d1bf9c2de4151667f1d85288a96f8568e2dffca8a4b31b9b3efa",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf2fa.c": "27a5224ef48676726eb2839d50959cce9c364f5af35ced48fbecb3e21a79e8c7",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf29c.c": "091af1525e462d69cc3b985f90b72b9c799443dc30f55723953f8737d5928728",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf29c.asm": "cf40097a8d00e64857a8d5c9c27634bdb2bd9cee9ace784ec079343f3b37b6d2",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf3c4.c": "15549e94e54af86fb8cac1398763b70ca0876f687e5e02a9a11bd44a53f288ef",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf3ae.c": "c1dea04fc1d438d10ceda70e12ccfd167d78d781d79b4362d9667529bf437781",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf48e.asm": "21321bf3e2c4aafaa91d4f2ad761cba5f0aafca1a4005e0091cf6760821c1d3e",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf48e.c": "7066ac165d9b1668f2fa2e5e16179d6f21babfbc3bae2d059c0dfd4470ffed03",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/functions.json": "989072691db5229adf79f97e79fd15aabbb6b7bd7ff243ca891c41e34346e036",
+    "analysis/diagnostics-cleanup-review-20261102/native/order/function-042cf3c4.asm": "14e53649110f426af7cbd02ddaf52a71d1a3fc8a77e77b128f80a9b58e24bf26",
+    "analysis/diagnostics-cleanup-review-20261102/native/order2/function-042cf6fa.asm": "251c136ab081621599f80e02175635e11840848b1f4245e1e173e61fdaee46fb",
+    "analysis/diagnostics-cleanup-review-20261102/native/order2/function-042cf6fa.c": "9103eb61a8d4a98fc7d2cf023e479f5d575ad9e6b9fb5d41e63b7a220820771a",
+    "analysis/diagnostics-cleanup-review-20261102/native/order2/function-042cf7b4.c": "a913089ad6362281eb60ab077be6fe4f378bbe996a3c2e54212a72a459356729",
+    "analysis/diagnostics-cleanup-review-20261102/native/order2/functions.json": "152d0c68a061e9af977f8ae1b03548247988061baece5b6ece00419da3b0e7b9",
+    "analysis/diagnostics-cleanup-review-20261102/native/order2/function-042cf7b4.asm": "60bb8609aaf7815f91c97a580aae42ad0de179e8f42b9c60a9492746b4623670",
+    "analysis/diagnostics-cleanup-review-20261102/native/order3/function-042cb8ec.asm": "1476fd55fbae7dbb5716b3e557c1e6bb02a495d3191ca3bbb2459bc5f13e2684",
+    "analysis/diagnostics-cleanup-review-20261102/native/order3/function-042cb8ec.c": "38df976553f82cfd371ee830c38a690cbdc0e8a82a7d37e114d3987d48bb50df",
+    "analysis/diagnostics-cleanup-review-20261102/native/order3/functions.json": "cd164825195512d5ff78b1e126c5d0eb7344cd9980444e2507ae81989ea11b78"
+  }
+}

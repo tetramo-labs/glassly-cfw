@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-31T19:55:24.561979+00:00",
+  "properties_before": {
+    "persist.bluetooth.btsnooplogmode": "",
+    "ro.build.fingerprint": "google/caiman/caiman:16/CP1A.260505.005/15081906:user/release-keys"
+  },
+  "preserved_hci": "captures/input-preflight-20261031.btsnoop",
+  "bytes": 9597802,
+  "sha256": "b272e84738ea3f88c9877339d7cfd58d04af5bc9a10adfd8a313267d37453c15",
+  "property_read_caveat": "Initial unprivileged property read was blank; it does not establish prior root property value. Full mode was reasserted and verified by root before collector startup.",
+  "root_logging_mode_verified": "full"
+}

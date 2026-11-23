@@ -1,0 +1,253 @@
+{
+  "base": "nuttx_ap.bin (Strix OS 1.0.4.12)",
+  "revision": "GLASSLYCFW-IO/15",
+  "ap_load_base": "0x10190000",
+  "partition_capacity": "0x9f0000",
+  "size_ceiling_bytes": 9600000,
+  "build_info_footer": "1d3457be00001930",
+  "module_va": "0x10a972c0",
+  "module_bytes": 79048,
+  "ap_sha256": "4be6aec53995ad702e79778ef22b62fec82dc4f112b35aadf20ec4b3b33084b1",
+  "hooks": [
+    {
+      "site_va": "0x106d9d1a",
+      "file_offset": "0x549d1a",
+      "length": 10,
+      "displaced": "00241f48204b84610360",
+      "new": "c3f387fd00bf00bf00bf",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "LinkMonitor::registerLinkCallback -> cfw_register_shim (registers the 0xF0 receiver)"
+    },
+    {
+      "site_va": "0x10702e7e",
+      "file_offset": "0x572e7e",
+      "length": 4,
+      "displaced": "fff7a7fd",
+      "new": "9af3e5fc",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "NotificationMessageHandler::handleMessage: bl handleAncsNotificationReceived -> cfw_ancs_hook (ANCS relay)"
+    },
+    {
+      "site_va": "0x106ebcae",
+      "file_offset": "0x55bcae",
+      "length": 4,
+      "displaced": "fff715fc",
+      "new": "b0f3f5fd",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "LauncherThreadMsgHandler::handleMessage -> cfw_head_hook (relay before stock rebond gate)"
+    },
+    {
+      "site_va": "0x10755db2",
+      "file_offset": "0x5c5db2",
+      "length": 4,
+      "displaced": "fef73ff9",
+      "new": "47f3e1fd",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "rayneo_pandisp_exec @0x10755db2: bl rayneo_lcdc_layer_update -> cfw_lcdc_hook (display present)"
+    },
+    {
+      "site_va": "0x10755e68",
+      "file_offset": "0x5c5e68",
+      "length": 4,
+      "displaced": "fef7e4f8",
+      "new": "47f386fd",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "rayneo_pandisp_exec @0x10755e68: bl rayneo_lcdc_layer_update -> cfw_lcdc_hook (display present)"
+    },
+    {
+      "site_va": "0x10794c2a",
+      "file_offset": "0x604c2a",
+      "length": 4,
+      "displaced": "45f0e1f9",
+      "new": "09f313fa",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "DisconnectView::ensureHintLabel: bl I18nManager::GetText -> cfw_disconnect_hint (connect screen text)"
+    },
+    {
+      "site_va": "0x10794c7e",
+      "file_offset": "0x604c7e",
+      "length": 4,
+      "displaced": "45f0bffc",
+      "new": "09f3fffa",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "DisconnectView::ensureHintLabel: bl I18nManager::RegisterLabel -> cfw_hint_unregistered (keep our text)"
+    },
+    {
+      "site_va": "0x10841ee6",
+      "file_offset": "0x6b1ee6",
+      "length": 4,
+      "displaced": "98f783f8",
+      "new": "5cf2b5f8",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint1: bl I18nManager::GetText -> cfw_disconnect_hint"
+    },
+    {
+      "site_va": "0x10841f42",
+      "file_offset": "0x6b1f42",
+      "length": 4,
+      "displaced": "98f75dfb",
+      "new": "5cf29df9",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint1: bl I18nManager::RegisterLabel -> cfw_hint_unregistered"
+    },
+    {
+      "site_va": "0x10841fe4",
+      "file_offset": "0x6b1fe4",
+      "length": 4,
+      "displaced": "98f704f8",
+      "new": "5cf236f8",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint2: bl I18nManager::GetText -> cfw_disconnect_hint"
+    },
+    {
+      "site_va": "0x1084203c",
+      "file_offset": "0x6b203c",
+      "length": 4,
+      "displaced": "98f7e0fa",
+      "new": "5cf220f9",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint2: bl I18nManager::RegisterLabel -> cfw_hint_unregistered"
+    },
+    {
+      "site_va": "0x10842050",
+      "file_offset": "0x6b2050",
+      "length": 4,
+      "displaced": "97f7ceff",
+      "new": "5cf200f8",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint3: bl I18nManager::GetText -> cfw_disconnect_hint"
+    },
+    {
+      "site_va": "0x108420a8",
+      "file_offset": "0x6b20a8",
+      "length": 4,
+      "displaced": "98f7aafa",
+      "new": "5cf2eaf8",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init hint3: bl I18nManager::RegisterLabel -> cfw_hint_unregistered"
+    },
+    {
+      "site_va": "0x1084216a",
+      "file_offset": "0x6b216a",
+      "length": 4,
+      "displaced": "97f741ff",
+      "new": "5bf273ff",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init disconnect: bl I18nManager::GetText -> cfw_disconnect_hint"
+    },
+    {
+      "site_va": "0x108421c4",
+      "file_offset": "0x6b21c4",
+      "length": 4,
+      "displaced": "98f71cfa",
+      "new": "5cf25cf8",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "SetupView::init disconnect: bl I18nManager::RegisterLabel -> cfw_hint_unregistered"
+    },
+    {
+      "site_va": "0x1083f87c",
+      "file_offset": "0x6af87c",
+      "length": 4,
+      "displaced": "c1f540fa",
+      "new": "5ef2f7fc",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "BondView::updateDeviceNameLabel: bl lv_label_set_text -> cfw_bond_name_label (title)"
+    },
+    {
+      "site_va": "0x1083f83c",
+      "file_offset": "0x6af83c",
+      "length": 4,
+      "displaced": "c1f560fa",
+      "new": "5ef217fd",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "BondView::updateStep1GlassName: bl lv_label_set_text -> cfw_bond_name_label (title)"
+    },
+    {
+      "site_va": "0x1083f904",
+      "file_offset": "0x6af904",
+      "length": 4,
+      "displaced": "fff7daff",
+      "new": "5ef232fc",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "BondView::getLocalizedText: bl getActiveTextLanguage -> cfw_bond_language (no language carousel)"
+    },
+    {
+      "site_va": "0x1083f910",
+      "file_offset": "0x6af910",
+      "length": 4,
+      "displaced": "9af76efb",
+      "new": "5ef22efc",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "BondView::getLocalizedText: bl I18nManager::GetText -> cfw_bond_text (English, Glassly wording)"
+    },
+    {
+      "site_va": "0x106baf2c",
+      "file_offset": "0x52af2c",
+      "length": 2,
+      "displaced": "0020",
+      "new": "0120",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "StateMonitorAdapter::isRemoteAudioStreamAllowed: movs r0,#0 -> movs r0,#1 (remote mic stream allowed)"
+    },
+    {
+      "site_va": "0x10a972b8",
+      "file_offset": "0x9072b8",
+      "length": 8,
+      "displaced": "1d3457be00001930",
+      "new": "0000000000000000",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "zero the old build-info footer slot before the appended module"
+    },
+    {
+      "site_va": "0x10a972c0",
+      "file_offset": "0x9072c0",
+      "length": 79056,
+      "displaced": "",
+      "new": "<79056 bytes; see cfw_patches.json>",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "append CFW module (79048 B) 32-aligned at 0x10a972c0 + relocated footer"
+    },
+    {
+      "site_va": "0x107a1b76",
+      "file_offset": "0x611b76",
+      "length": 4,
+      "displaced": "f8f705fe",
+      "new": "fcf284fb",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "ViewManager::onEnterState: bl AppListView::show -> cfw_applist_show (launcher app list hidden while a phone is linked)"
+    },
+    {
+      "site_va": "0x107a1ab4",
+      "file_offset": "0x611ab4",
+      "length": 4,
+      "displaced": "9af006f8",
+      "new": "fcf2fefb",
+      "verified": true,
+      "verification": "build.py stock-byte/size/footer checks and apply_patches.py --verify passed",
+      "purpose": "ViewManager::onEnterState: bl BoardView::show -> cfw_board_show (launcher board hidden while a phone is linked)"
+    }
+  ]
+}

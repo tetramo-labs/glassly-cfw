@@ -1,0 +1,227 @@
+{
+  "format": "nimo-hardware-steps-v1",
+  "revision": 5,
+  "firmware": "GLASSLYCFW/5",
+  "image": "captures/firmware/ota-1.1.5.1-glasslycfw-5.bin",
+  "prepare": [
+    "python3 -I scripts/scene_packets.py demo captures/scenes/demo-geometry.bin",
+    "python3 -I scripts/scene_packets.py retained captures/scenes"
+  ],
+  "notes": [
+    "Every request is [cmd 7e][key][len LE16][payload]; replies are [status][data...].",
+    "expect_reply_hex is the whole reply and expect_reply_prefix_hex its first bytes, status included.",
+    "Unsolicited settled notices arrive as key 24 with [00][tag LE16]; do not match them as replies.",
+    "Only the master arm replies; both arms run every command."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "title": "Identity",
+      "cmd": "7e",
+      "key": "01",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "version": "GLASSLYCFW/5",
+        "revision": 5,
+        "platform": "nimo",
+        "base": "1.1.5.1",
+        "max_message": 12284,
+        "owned": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "Nothing changes on the glasses. Note which arm answered (arm, eye)."
+    },
+    {
+      "step": 2,
+      "title": "Status before the lease",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 0,
+        "session": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "Record heap_free and heap_largest (a full scene needs about 250 KB: 75.6 KB canvas + up to 170 KB scene) and panel_brightness (the level the restore step sends)."
+    },
+    {
+      "step": 3,
+      "title": "Echo",
+      "cmd": "7e",
+      "key": "02",
+      "payload_hex": "676c6173736c79",
+      "expect_status": 0,
+      "expect_reply_hex": "00676c6173736c79",
+      "hold_seconds": 0,
+      "look_for": "Reply repeats the payload."
+    },
+    {
+      "step": 4,
+      "title": "1200-byte chunk checksum",
+      "cmd": "7e",
+      "key": "03",
+      "payload_hex": "030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f900070e151c232a31383f464d545b626970777e858c939aa1a8afb6bdc4cbd2d9e0e7eef5fc030a11181f262d343b424950575e656c737a81888f969da4abb2b9c0c7ced5dce3eaf1f8ff060d141b222930373e454c535a61686f767d848b9299a0a7aeb5bcc3cad1d8dfe6edf4fb020910171e252c333a41484f565d646b727980878e959ca3aab1b8bfc6cdd4dbe2e9f0f7fe050c131a21282f363d444b525960676e757c838a91989fa6adb4bbc2c9d0d7dee5ecf3fa01080f161d242b323940474e555c636a71787f868d949ba2a9b0b7bec5cc",
+      "expect_status": 0,
+      "expect_reply_hex": "00b00400004d6ecdb7",
+      "hold_seconds": 0,
+      "look_for": "Length 1200 and the zlib CRC-32 of the payload: the multi-chunk transfer arrived intact."
+    },
+    {
+      "step": 5,
+      "title": "Acquire the display",
+      "cmd": "7e",
+      "key": "21",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0000",
+      "hold_seconds": 3,
+      "look_for": "Both eyes go black: the stock UI is gone and stays gone. Reply byte 1 is the flush result (0 sent), byte 2 display on, byte 3 the answering arm's eye."
+    },
+    {
+      "step": 6,
+      "title": "Status while owned",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "session": 1,
+        "flush_errors": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "heap_free is about 77 KB lower than before the lease; gate_skips grows when the stock UI tries to draw."
+    },
+    {
+      "step": 7,
+      "title": "Demo geometry frame (mode 36)",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/demo-geometry.bin",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: a rounded border at the panel edge, two diagonals, a row of eight filled circles from dark to bright across the middle and a large ring around the centre."
+    },
+    {
+      "step": 8,
+      "title": "Retained scene with a glide",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-retained.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026030000354e",
+      "hold_seconds": 4,
+      "look_for": "Both eyes: rounded border, filled circle in the centre, a diagonal line, and a small box that slides from the top left to the top right over about 2 s. A settled notice (key 24, tag 03 00) follows the slide."
+    },
+    {
+      "step": 9,
+      "title": "Scene holds without auto-off",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 1,
+        "rejected": 0,
+        "flush_errors": 0
+      },
+      "hold_seconds": 40,
+      "look_for": "The scene stays up for the whole 40 s on both eyes: no auto-off, no stock UI flashing through, no flicker."
+    },
+    {
+      "step": 10,
+      "title": "Per-eye objects",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-eyes.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026050000354e",
+      "hold_seconds": 5,
+      "look_for": "Close each eye in turn: the left eye has a block at the bottom left, the right eye a block at the bottom right; neither eye sees the other's block. The geometry stays in both."
+    },
+    {
+      "step": 11,
+      "title": "SHOW for the right eye only",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-right.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026060000354e",
+      "hold_seconds": 5,
+      "look_for": "Right eye: only the circle. Left eye: unchanged (geometry plus its block)."
+    },
+    {
+      "step": 12,
+      "title": "SHOW for the left eye only",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-left.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026070000354e",
+      "hold_seconds": 5,
+      "look_for": "Left eye: only the border. Right eye: still only the circle."
+    },
+    {
+      "step": 13,
+      "title": "SHOW for both eyes",
+      "cmd": "7e",
+      "key": "20",
+      "payload_file": "captures/scenes/scene-show-both.bin",
+      "expect_status": 0,
+      "expect_reply_prefix_hex": "0026080000354e",
+      "hold_seconds": 4,
+      "look_for": "Both eyes show the geometry scene again (border, circle, line, box at its slid position)."
+    },
+    {
+      "step": 14,
+      "title": "Brightness low",
+      "cmd": "7e",
+      "key": "23",
+      "payload_hex": "04",
+      "expect_status": 0,
+      "expect_reply_hex": "0000",
+      "hold_seconds": 4,
+      "look_for": "Both eyes dim clearly."
+    },
+    {
+      "step": 15,
+      "title": "Brightness restore",
+      "cmd": "7e",
+      "key": "23",
+      "payload_hex": "10",
+      "expect_status": 0,
+      "expect_reply_hex": "0000",
+      "hold_seconds": 3,
+      "look_for": "Both eyes return to a normal level. The payload is 16 of 32; send the panel_brightness value step 2 reported instead if it differs. Not persisted: a reboot or a stock brightness change sets the user level again."
+    },
+    {
+      "step": 16,
+      "title": "Release the display",
+      "cmd": "7e",
+      "key": "22",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_reply_hex": "00",
+      "hold_seconds": 3,
+      "look_for": "The stock UI repaints on both eyes within about a second; nothing from the scene remains."
+    },
+    {
+      "step": 17,
+      "title": "Status after release",
+      "cmd": "7e",
+      "key": "04",
+      "payload_hex": "",
+      "expect_status": 0,
+      "expect_json": {
+        "owned": 0,
+        "session": 0,
+        "flush_errors": 0
+      },
+      "hold_seconds": 0,
+      "look_for": "heap_free is back near the step 2 value; gate_skips stays as it was from here on."
+    }
+  ]
+}

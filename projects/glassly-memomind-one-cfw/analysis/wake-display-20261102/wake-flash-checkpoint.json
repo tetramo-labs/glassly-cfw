@@ -1,0 +1,45 @@
+{
+  "release": "wake-control-002",
+  "pins": {
+    "release": "wake-control-002",
+    "version": "GLASSLYCFW/1",
+    "image_sha256": "c4274e2eb92fa57d30a5d3f82779b6a36fcbbb25b113f5f7196f87e9e7f624c2",
+    "image_bytes": 2236085,
+    "header150_sha256": "e2a9582ab34372725d2293efafe9ac0448256f24ed1bf3498f38578158acf1e1",
+    "app_header256_sha256": "a4fa75d1038957f3925539dcbf87c8aee069fa25110630477a3d9837d3b6f8d1",
+    "metadata_bytes": 171,
+    "metadata_sha256": "59085caced14283f4b6cd4c3f553b9211904c883c11120f54ba398743c79892e",
+    "app_packed_bytes": 964983,
+    "app_raw_bytes": 1848112,
+    "app_sha256": "e985d21d52ce088fd0ec7bb58cf7d9726b6f31243fb718e857f29d7bffb4f9ee",
+    "runtime_sha256": "18e0e3a4e371fea5f967b70deb4bb94560486a41faa02de5933c16c5cc00ea43",
+    "runtime_bytes": 74896
+  },
+  "transfer": {
+    "verified": true,
+    "report": "wake-ota-verification.json",
+    "rebootAcknowledged": true
+  },
+  "boot": {
+    "verified": true,
+    "capture": "captures/swift-mac-wake-boot-20261102-02",
+    "result": {
+      "appHeaderSHA256": "a4fa75d1038957f3925539dcbf87c8aee069fa25110630477a3d9837d3b6f8d1",
+      "bootHeaderVerified": true,
+      "complete": true,
+      "flashAssetWritesStarted": false,
+      "freeBeforeHex": "00056ebc",
+      "physicalOutputConfirmed": false,
+      "release": "wake-control-002",
+      "stage": "after",
+      "topologyAndBadmapVerified": true
+    },
+    "firstAttempt": "Front version unknown immediately after reboot; strict verifier stopped. Subsequent fresh probe returned expected identity and passed."
+  },
+  "hardware": {
+    "ownershipExercise": "pending",
+    "panelBackground": "User reports whole panel lights on wake since GLASSLYCFW/1; unintended, cause under investigation.",
+    "buttonAndMicrophone": "Previously verified; microphone listening confirmed by user."
+  },
+  "offline": "wake-offline-checkpoint.json"
+}

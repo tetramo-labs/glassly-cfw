@@ -1,0 +1,36 @@
+{
+  "kind": "Experimental one-byte FF13 notification echo and BLE-connected idle policy; no button stream",
+  "package_sha256": "3a92dd60565e136a810fd0dc0148418c7b13cdb678eae66a5d5a8e2634369ed3",
+  "plaintext_sha256": "940d562d4552a35d70fa25538ef452708cd1fbed6e930eeb43d8eae720373aa5",
+  "baseline_plaintext_sha256": "2c86e745cfadb4df8692c58bb1747bd9e957ecfc999f6501cd6450cd2b83fe22",
+  "hooks": {
+    "0x1918": {
+      "before": "09f0cafc",
+      "after": "10f074f9"
+    },
+    "0x3e36": {
+      "before": "03f00bf8",
+      "after": "0df043ff"
+    }
+  },
+  "tail_offset": "0x11c04",
+  "tail_used_bytes": 220,
+  "idle_offset": "0x11cc0",
+  "persistent_ram_bytes": 0,
+  "echo_local_frame_bytes": 48,
+  "idle_local_frame_bytes": 8,
+  "gd32_and_headers_unchanged": true,
+  "startup_ram_unchanged": true,
+  "assembly_sha256": "8d34c87084fab3e457c0e6f2d62fe5668fd7ace2185d9ec0de4aea0780c73303",
+  "limits": [
+    "Radio command-09 handle-prefix semantics are the experiment, not yet proven on Zero 2",
+    "Echo drops requests if radio sleep flag is nonzero or IPC capacity is insufficient",
+    "No transport ACK queue or retry; no custom CCC callback",
+    "Any BLE connection suppresses idle shutdown, even when unsubscribed",
+    "Tail execution and complete device behavior require hardware validation"
+  ],
+  "source_sha256": {
+    "firmware/notify_probe.s": "8d34c87084fab3e457c0e6f2d62fe5668fd7ace2185d9ec0de4aea0780c73303",
+    "tools/build_notify_probe.py": "426f46685d9baeb3b796fbe7134f1b3399c7983144ac3fd5116a57e7b948bad9"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "format": "memomind-dashboard-ram-v1",
+  "source_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "output_sha256": "c6adcbfbba6ea0f340670daa495f4d8db354fcf3362036af90402897e9eb6c08",
+  "output_body_sha256": "68ace5eb193f2c7f23ce196ae49fdc23642d11d6ce7afe963bc403a5b52814a5",
+  "edits": [
+    {
+      "address": 69619494,
+      "body_offset": 499462,
+      "before": "011122cc",
+      "after": "01458280",
+      "purpose": "card subtree constructor"
+    },
+    {
+      "address": 69619808,
+      "body_offset": 499776,
+      "before": "011122cc",
+      "after": "01458280",
+      "purpose": "card layout setter without null owner guard"
+    },
+    {
+      "address": 69620456,
+      "body_offset": 500424,
+      "before": "83a7416a",
+      "after": "01458280",
+      "purpose": "card visibility setter without null owner guard"
+    },
+    {
+      "address": 69661378,
+      "body_offset": 541346,
+      "before": "411122c4",
+      "after": "80820100",
+      "purpose": "status subtree constructor"
+    },
+    {
+      "address": 69632822,
+      "body_offset": 512790,
+      "before": "011106ce",
+      "after": "80820100",
+      "purpose": "DND header content constructor"
+    },
+    {
+      "address": 69633008,
+      "body_offset": 512976,
+      "before": "411122c6",
+      "after": "80820100",
+      "purpose": "DND header content update"
+    }
+  ],
+  "cold_boot_required": true,
+  "requested_base_allocations_avoided_bytes": 1440,
+  "measured_heap_saving_bytes": null,
+  "hardware_validated": false,
+  "live_admission": "Separate exact native Swift catalog entry required"
+}

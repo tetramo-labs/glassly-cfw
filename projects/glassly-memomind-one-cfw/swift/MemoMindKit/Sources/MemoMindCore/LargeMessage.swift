@@ -1,0 +1,117 @@
+import Foundation
+
+/// Bounded carrier for one raw G2 command. Assembly is volatile and owned by the
+/// glasses' display lease. Commit consumes the token before command execution;
+/// a lost commit response is ambiguous and must never be retried automatically.
+public struct LargeMessage {
+    public static let maximumBytes = 65535
+    public static let chunkBytes = 1024
+    public let token: UInt32
+    public let packets: [Data]
+    /// Chunks below the advertised 1024 bytes are valid; the firmware only
+    /// requires in-order offsets. Use them to keep each packet in one GM frame.
+    public init(command: Data, token: UInt32, chunkBytes: Int = Self.chunkBytes) throws {
+        try requireProtocol(token != 0 && !command.isEmpty && command.count <= Self.maximumBytes,
+                            "Large message requires a nonzero token and 1...65535 command bytes")
+        try requireProtocol((1...Self.chunkBytes).contains(chunkBytes), "Large-message chunks must be 1...1024 bytes")
+        try requireProtocol(command.first != 127, "Nested large-message carriers are invalid")
+        self.token = token
+        func header(_ operation: UInt8) -> Data {
+            Data([127, operation] + (0..<4).map { UInt8(truncatingIfNeeded: token >> ($0 * 8)) })
+        }
+        func little16(_ n: Int) -> Data { Data([UInt8(truncatingIfNeeded: n), UInt8(truncatingIfNeeded: n >> 8)]) }
+        var result = [header(0) + little16(command.count)]
+        for offset in stride(from: 0, to: command.count, by: chunkBytes) {
+            let start = command.startIndex + offset
+            result.append(header(1) + little16(offset) + command[start..<min(start + chunkBytes, command.endIndex)])
+        }
+        let crc = OTACodec.crc32(command)
+        result.append(header(2) + Data((0..<4).map { UInt8(truncatingIfNeeded: crc >> ($0 * 8)) }))
+        packets = result
+    }
+    public var abort: Data { Data([127, 3] + (0..<4).map { UInt8(truncatingIfNeeded: token >> ($0 * 8)) }) }
+}
+
+public extension GMSession {
+    /// Caller serializes this session and supplies fresh nonzero tokens. Returns
+    /// the actual command reply after all chunks have been acknowledged. Does
+    /// not retry, abort after timeout, or interpret a queued frame as completion.
+    /// `carrierVerified` skips the capability probe; pass it only when this
+    /// connection's capabilities already advertised the same carrier.
+    /// Up to `window` single-frame packets are on the wire before their replies
+    /// are read; replies are matched by event, and a chunk that is not accepted
+    /// stops further writes. After each reply `pause` is consulted: when it asks,
+    /// no more chunks are written until the in-flight ones have replied, then
+    /// `paused` runs with the link free (a wake claim must not wait out a
+    /// transfer). Packets that need fragment ACKs are always sent alone.
+    func sendLargeGraphicsMessage(_ command: Data, token: UInt32, event: inout UInt8,
+                                  chunkBytes: Int = LargeMessage.chunkBytes,
+                                  carrierVerified: Bool = false, window: Int = 1,
+                                  pause: (() -> Bool)? = nil, paused: (() throws -> Void)? = nil) throws -> GMMessage {
+        heldReplies.removeAll()
+        defer { heldReplies.removeAll() }
+        let transfer = try LargeMessage(command: command, token: token, chunkBytes: chunkBytes)
+        func json(_ message: GMMessage) throws -> Data {
+            try requireProtocol(message.tlvs.count == 1 && message.tlvs[0].kind == 5, "Expected one JSON response")
+            var data = message.tlvs[0].value
+            while data.last == 0 { data.removeLast() }
+            return data
+        }
+        if !carrierVerified {
+            event = event == 255 ? 1 : event + 1
+            let probe = try request(event: event, service: 15, command: 0x7e)
+            struct Capability: Decodable {
+                let version: String
+                let maxMessageBytes: Int
+                let largeMessage: Carrier
+                struct Carrier: Decodable { let mode: Int; let chunkBytes: Int; let crc: String }
+            }
+            let cap = try JSONDecoder().decode(Capability.self, from: json(probe))
+            let revision = cap.version.split(separator: "/", omittingEmptySubsequences: false)
+            try requireProtocol(revision.count == 2 && revision[0] == "GLASSLYCFW" &&
+                                !revision[1].isEmpty && revision[1].utf8.allSatisfy { (48...57).contains($0) } &&
+                                cap.maxMessageBytes == 65535 && cap.largeMessage.mode == 127 &&
+                                cap.largeMessage.chunkBytes == 1024 && cap.largeMessage.crc == "crc32-ieee",
+                                "Firmware does not advertise the bounded large-message carrier")
+        }
+        let filter: (GMMessage) throws -> Bool = { message in
+            struct Result: Decodable { let result: String }
+            return try JSONDecoder().decode(Result.self, from: json(message)).result != "settled"
+        }
+        let accepted = Data("{\"glassly\":\"large-message\",\"abi\":1,\"result\":\"accepted\"}".utf8)
+        /// The commit reply, or nil for an accepted chunk.
+        func check(_ reply: GMMessage, _ index: Int) throws -> GMMessage? {
+            if index == transfer.packets.count - 1 { return reply }
+            try requireProtocol(json(reply) == accepted, "Large-message chunk was not accepted")
+            return nil
+        }
+        let depth = max(1, min(8, window))
+        var inFlight: [(event: UInt8, index: Int)] = []
+        var next = 0
+        while next < transfer.packets.count || !inFlight.isEmpty {
+            var writing = inFlight.isEmpty || pause?() != true
+            while writing, next < transfer.packets.count, inFlight.count < depth {
+                let body = try GMTLV(kind: 1, value: transfer.packets[next]).encoded()
+                if depth == 1 || body.count > 642 {
+                    guard inFlight.isEmpty else { writing = false; break }
+                    event = event == 255 ? 1 : event + 1
+                    let reply = try request(event: event, service: 15, command: 0x7d, body: body, responseFilter: filter)
+                    if let commit = try check(reply, next) { return commit }
+                    next += 1
+                    continue
+                }
+                event = event == 255 ? 1 : event + 1
+                try transport.write(GMCodec.frames(event: event, service: 15, command: 0x7d, body: body, fragmentPayload: 642)[0])
+                inFlight.append((event, next))
+                next += 1
+            }
+            guard let head = inFlight.first else { continue }
+            let reply = try awaitReply(event: head.event, among: inFlight.map(\.event), service: 15, command: 0x7d,
+                                       responseFilter: filter)
+            inFlight.removeFirst()
+            if let commit = try check(reply, head.index) { return commit }
+            if inFlight.isEmpty, pause?() == true { try paused?() }
+        }
+        throw MemoMindProtocolError.invalid("Missing commit response")
+    }
+}

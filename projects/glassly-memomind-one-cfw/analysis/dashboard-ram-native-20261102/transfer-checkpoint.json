@@ -1,0 +1,26 @@
+{
+  "time": "2026-11-02T21:25:30.516703+00:00",
+  "release": "dashboard-ram-002",
+  "state": "Full OTA verified and reboot acknowledged; post-reboot connection timed out; awaiting wake for boot/header and RAM measurement",
+  "image_sha256": "f56376fde20515c0ad2a421eb352f774b4c21f274cda2d38f012a0d008c6d14a",
+  "ota_bytes_verified": 2230671,
+  "blocks": 545,
+  "chunks": 3812,
+  "ota_capture": "captures/swift-mac-dashboard-ram-flash-20261102-02",
+  "transfer_verification": "analysis/dashboard-ram-native-20261102/trace-verification.json",
+  "boot_verified": false,
+  "measured_ram_saving_bytes": null,
+  "requested_base_allocations_avoided_bytes": 1440,
+  "baseline_free_range": [
+    333980,
+    334108
+  ],
+  "measurement_attempt": "captures/swift-mac-ram-after-20261102-01",
+  "next_measurement_capture": "captures/swift-mac-ram-after-20261102-02",
+  "next_action": "Wake, measure and verify header; DO NOT repeat flash",
+  "limits": [
+    "Application TX/RX trace, not independent HCI capture.",
+    "Reboot ACK does not establish successful boot.",
+    "Post-reboot heap delta must distinguish reboot/cache state from allocation-specific saving."
+  ]
+}

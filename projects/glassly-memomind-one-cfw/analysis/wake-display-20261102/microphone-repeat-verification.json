@@ -1,0 +1,27 @@
+{
+  "result": "passed",
+  "capture": "captures/swift-mac-microphone-20261102-02",
+  "traceSHA256": "3a5f79f290945d8ad0f14a70a2081c6f530255ee076b5e3ac567d81aa6dd1b08",
+  "referenceCodecSHA256": "0b98b0e9d84f514af94186394ff3119db48330e4b68c6a83b2d80363ccbaf832",
+  "rawReceiveMatchesSavedPackets": true,
+  "controlHex": [
+    "521300312800",
+    "5211000002b8"
+  ],
+  "packets": 17,
+  "opusFrames": 136,
+  "packetChannels": [
+    1
+  ],
+  "outputSampleRate": 16000,
+  "samplesPerFrame": 320,
+  "sampleCount": 43520,
+  "decodedSeconds": 2.72,
+  "peakAbsolutePCM": 2897,
+  "quietSecondsBeforeClose": 1.017189416801557,
+  "stopDrainSeconds": 1.002255583414808,
+  "physicalAudioContentConfirmed": false,
+  "stopAcknowledgmentExists": false,
+  "losslessContinuityProven": false,
+  "firmwareChanged": false
+}

@@ -1,0 +1,61 @@
+{
+  "candidate_sha256": "0317abeac1d8b545216152b2d14220bdb91b99a14f5293c8444696769fa1af39",
+  "app_body_bytes": 1838640,
+  "raw_pointer_matches": [
+    {
+      "from": "0x4363130",
+      "to": "0x42711a4"
+    },
+    {
+      "from": "0x4363138",
+      "to": "0x4270f98"
+    },
+    {
+      "from": "0x4363140",
+      "to": "0x4270dd2"
+    },
+    {
+      "from": "0x4363148",
+      "to": "0x4270dd2"
+    },
+    {
+      "from": "0x4363150",
+      "to": "0x4270c82"
+    },
+    {
+      "from": "0x4363158",
+      "to": "0x4270c82"
+    },
+    {
+      "from": "0x4363160",
+      "to": "0x4270ace"
+    },
+    {
+      "from": "0x4363168",
+      "to": "0x42708e2"
+    },
+    {
+      "from": "0x4363170",
+      "to": "0x42708e2"
+    }
+  ],
+  "raw_interior_pointer_matches": [],
+  "live_validator_rejections": [
+    {
+      "attempt": "bare",
+      "rejected": true,
+      "reason": "Unsupported image: modified images require a verified manifest and source"
+    },
+    {
+      "attempt": "own_manifest",
+      "rejected": true,
+      "reason": "Runtime requires exact visually verified text-patch source"
+    },
+    {
+      "attempt": "false_live_authority",
+      "rejected": true,
+      "reason": "Runtime requires exact visually verified text-patch source"
+    }
+  ],
+  "caveat": "Literal LE32 scan does not prove computed/split-immediate or cross-image reachability."
+}

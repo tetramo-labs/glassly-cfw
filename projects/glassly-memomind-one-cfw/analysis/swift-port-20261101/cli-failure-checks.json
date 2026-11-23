@@ -1,0 +1,49 @@
+{
+  "format": "memomind-swift-cli-failure-checks-v1",
+  "all_passed": true,
+  "binary_sha256": "9e6bcbba8ba958dcdc5ca516d1ca39b14682ccd361c46af4af690ff309837558",
+  "cases": [
+    {
+      "case": "flash-without-write-flag",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Only flash requires --confirm-write\")"
+    },
+    {
+      "case": "check-with-write-flag",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Only flash requires --confirm-write\")"
+    },
+    {
+      "case": "duplicate-option",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Unknown, duplicate or missing-value option: --address\")"
+    },
+    {
+      "case": "unknown-option",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Unknown, duplicate or missing-value option: --retry\")"
+    },
+    {
+      "case": "bad-address",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: CLIError(message: \"Address must have six colon-separated hexadecimal bytes\")"
+    },
+    {
+      "case": "unknown-image",
+      "returncode": 1,
+      "capture_created": false,
+      "error": "memomind: Firmware SHA-256 is not in the internal trusted release catalog"
+    },
+    {
+      "case": "existing-output-rejected-before-connect",
+      "returncode": 1,
+      "existing_files_unchanged": true,
+      "error": "memomind: CLIError(message: \"Cannot create new capture directory: File exists\")"
+    }
+  ]
+}

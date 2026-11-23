@@ -1,0 +1,39 @@
+[
+  {
+    "requested": "04239a66",
+    "address": "ram:04239a66",
+    "incoming_references": [
+      "ram:0435d920 DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04239ea4",
+    "address": "ram:04239ea4",
+    "incoming_references": [
+      "ram:0435d91c DATA"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0432fd8e",
+    "address": "ram:0432fd8e",
+    "incoming_references": [
+      "ram:04320232 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0432fe34",
+    "address": "ram:0432fe34",
+    "incoming_references": [
+      "ram:043264c4 UNCONDITIONAL_CALL",
+      "ram:04326312 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

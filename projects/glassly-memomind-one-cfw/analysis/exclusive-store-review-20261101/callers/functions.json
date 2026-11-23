@@ -1,0 +1,30 @@
+[
+  {
+    "requested": "0423d4ea",
+    "address": "ram:0423d4ea",
+    "incoming_references": [
+      "ram:0423e62c UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0423e1a0",
+    "address": "ram:0423e1a0",
+    "incoming_references": [
+      "ram:0423a84c PARAM"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "042105d4",
+    "address": "ram:042105d4",
+    "incoming_references": [
+      "ram:0420f332 UNCONDITIONAL_CALL",
+      "ram:0420f5ae UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

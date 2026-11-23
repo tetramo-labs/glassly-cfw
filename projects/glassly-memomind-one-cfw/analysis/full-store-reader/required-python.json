@@ -1,0 +1,9 @@
+{
+  "format": "memomind-required-python-tests-v1",
+  "tests_run": 202,
+  "failures": 0,
+  "errors": 0,
+  "skipped": [],
+  "all_required_tests_passed": true,
+  "hardware_tested": false
+}

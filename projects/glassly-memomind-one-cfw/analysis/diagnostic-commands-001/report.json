@@ -1,0 +1,117 @@
+{
+  "format": "memomind-diagnostic-commands-offline-v1",
+  "passed": true,
+  "frozen": true,
+  "hardware_tested": false,
+  "runtime": "runtime/build/diagnostic-commands-001/graphics.bin",
+  "build_manifest": "runtime/build/diagnostic-commands-001/build.json",
+  "blob_bytes": 65456,
+  "blob_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+  "elf_sha256": "b12485e4c72ef30b9c5dc900d14a5e92f1ff8bcd9fb01b3a3bf1edd00c13593c",
+  "source_drift": [],
+  "changed_source_sha256": {
+    "runtime/graphics/diagnostics.c": "b947c5f31dedb48416ff365e416b0c8e1407c4665a8fb7a1fa356c71ca3714c4",
+    "runtime/graphics/diagnostics.h": "d5e9f8f8e4e0694c82ae5b69b4ef6e6bfee6eab550dc085f554508a6b71da7f5",
+    "runtime/graphics/graphics.c": "3dc3d26385afb58d85ebb450c88785296d3e7cf2613b7f582950986d6fe6fed2",
+    "runtime/graphics/native.c": "44272642ed0a38b0c20535bff925b796408b300d3b1a564ceb903c488c7f5834",
+    "runtime/graphics/input.c": "77654846c285158b8644f46b1f3ff56590bb2fca44a1a344416573f55cce0cda",
+    "runtime/graphics/input.h": "46a75e7f6ec4e91dc6b109851c11cc5badc657ba1af6d1d9873ff38d68ccbefd",
+    "runtime/graphics/scene_session.c": "7c099eecd361136a42eabf5f508b8a1be6ed2adcad0e66b4db903be009ed6b44",
+    "runtime/graphics/scene_session.h": "c8b3b183a2d3e70f72b3f9c59a11aaa4e47befb576052642464fad8ca6de265b",
+    "scripts/compile_memomind_graphics.py": "50c5a6cbe92726e51da3a98787477426eb2561dda2d401f369ac1a3ff96d904e",
+    "runtime/graphics/tests/test_diagnostic_commands.c": "9f3b532253cecd4147318758f3239c821f917a14c3712aa294f58efbbdb3fe4f",
+    "runtime/graphics/tests/run_diagnostic_command_tests.py": "0b8d300c209e8a5385728efc72863b4659c5c8a669e62bf561e91cc52da3717a",
+    "tests/rv32/diagnostic_command_runtime_emulator_test.py": "ddc62147e8bd246324a7c3ecbeb20481555df98e56c65589b1f8156839c6a1d1",
+    "tests/rv32/diagnostic_command_existing_runtime_emulator_test.py": "34457a27ce555a78b8975efbcb6d5eb1c1d6a2fd1139559e483356f008ac1f61"
+  },
+  "unchanged_blob_limit": 65536,
+  "remaining_blob_bytes": 80,
+  "size_experiments": [
+    {
+      "diagnostics": "-Os",
+      "graphics": "-O2",
+      "link_bytes": 66256,
+      "admitted": false
+    },
+    {
+      "diagnostics": "-Oz",
+      "graphics": "-O2",
+      "link_bytes": 66256,
+      "admitted": false
+    },
+    {
+      "diagnostics": "-Oz",
+      "graphics": "-Os only diagnostic_commands",
+      "link_bytes": 65456,
+      "admitted": true
+    }
+  ],
+  "legacy_text_byte_identical": {
+    "verified": true,
+    "bytes": 63648,
+    "sha256": "ab0f32b5a96264b8ee1c9f5faa4122a09b52c0d48d9f6404394c3ed927feded7",
+    "manifest": "legacy-text-build.json"
+  },
+  "host_original_fid_transitions": 100000,
+  "host_report": "host/report.json",
+  "actual_rv32_groups": 4,
+  "actual_rv32_calls": 152,
+  "observed_stack_bytes": {
+    "display": 1120,
+    "BT": 80
+  },
+  "gate_cases": 7955,
+  "retained_suite_groups": {
+    "canary": 10,
+    "reader": 12,
+    "input": 6,
+    "scene": 8,
+    "bundle": 7,
+    "text": 5
+  },
+  "strict_contract_reports": [
+    "canary-contract.json",
+    "reader-contract.json"
+  ],
+  "compiler_guard_tests": 9,
+  "independent_review": "analysis/diagnostics-cleanup-review-20261102",
+  "native_firmware_mocked": true,
+  "wire": {
+    "mode7": "7/87;missing/unknownsub successnoop;trailingignored;0reset,1hide,2show;noimmediatepresent",
+    "mode11": "11/8b;trailingignored;clears implemented graphics/input;hidesoverlay;retainscurrent-screenmetadata",
+    "snapshot": "native-v1 20littleendianbytes in stateHex",
+    "snapshot_fields": {
+      "0": "flags bit0reorder/bit1skip/bit2duplicate",
+      "1": "hidden",
+      "2": "seen",
+      "3": "resync",
+      "4": "last u16",
+      "6": "high u16",
+      "8": "executed scene-dispatch failures u32",
+      "12": "token-workspace allocation refusals u32",
+      "16": "lastfailedrawmode u8",
+      "17": "reserved0",
+      "18": "savedsceneepoch u16"
+    }
+  },
+  "ownership": {
+    "metadata": "hidden source-less screenchild, oneownedblockwithhistory/privateoverlaypixels; parentdestruction frees",
+    "overlay": "visiblechildofCFWgraphicsimage; ownDELETEclearsmetadataweakpointer; metadataDELETE firstdeletesoverlay; noforegroundreorder API",
+    "scope": "allstate serializeddisplaytask, no writableglobal/canaryregistry reuse"
+  },
+  "limitations": [
+    "Metadata/history/epoch lifetime is current screenobject, notG2boot singleton",
+    "Epoch persistence best-effort ifnewmetadata allocationfails; cleanup stillreleases graphics/input",
+    "Failure counters collectedonlywhenmetadataexists and fromexecuted scene-dispatch/token-workspace failures; noBTadmission/nativeJSON/owner-create/allocationcoverage",
+    "NoNACK/gate/DWT/calibration/latestRX metricsfabricated; tiny3x5hex overlay isnotG2Terminus/fontlayout parity",
+    "Mode11 doesnotimplement/cancel futurecompass/rawIMU/ALS/audio/notificationcontrollers oractivecanaryworker",
+    "NativeAPIs/childeventtree/scheduler mocked; nohardware/panel/timing/radiodelivery orwhole-taskstack guarantee",
+    "Native8192 ingress/64KiBscene assetcapacity unchanged"
+  ],
+  "not_changed": [
+    "oldprofile flags/binaries",
+    "64KiBguard",
+    "Swift/catalog/aggregate/status bythisagent",
+    "device state"
+  ]
+}

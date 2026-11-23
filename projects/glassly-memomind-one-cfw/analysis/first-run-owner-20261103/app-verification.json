@@ -1,0 +1,25 @@
+{
+  "version": "GLASSLYCFW/11",
+  "passed": true,
+  "macTests": 120,
+  "iosSimulatorTests": 12,
+  "androidTests": 26,
+  "androidSuites": {
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorBatchTest": 4,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindSensorsTest": 2,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindWireTest": 15,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindRecordsTest": 3,
+    "com.glassly.bluetoothsdk.sgcs.memomind.MemoMindMicrophoneTest": 2
+  },
+  "logSHA256": {
+    "app-mac.log": "d1942bbae48df44ba88578ce517dd7ca016e844bce22d5394c900153661559f9",
+    "app-ios.log": "3f2a0eb198bba618d86090cafc244ae85be2016c42cd51ff45dc301b2c648e25",
+    "app-android.log": "256318e41c41ef500d48d082fe8f65148bb67c645e65f75a2e57002c77603c5f",
+    "app-android-packaging.log": "dcd241af5e1084feff6bcc56c8e6ebc8fb34e7b8ee5c4ad5169cbbb1afa9487d",
+    "graphify.log": "29ce65e0e750b03c9990fb774adbfd746c0577edc1ce7121edd2dc3883acd383"
+  },
+  "mobileHardwareTested": false,
+  "engineSourceChanged": false,
+  "androidFinalPackagingTests": 1,
+  "graphifyUpdated": true
+}

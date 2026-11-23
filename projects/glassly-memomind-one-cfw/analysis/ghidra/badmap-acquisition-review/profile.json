@@ -1,0 +1,80 @@
+{
+  "native_app_sha256": "81346c77371a91544dd0b79dd7f108f553f60d5459a3e7e797ebffbebbda5ba8",
+  "device_actions": false,
+  "runtime_edits": false,
+  "getter": {
+    "address": "04235032",
+    "args": [
+      "uint32 fixedkey6009",
+      "owned_out116",
+      "uint32capacity116",
+      "uint32*actual_length"
+    ],
+    "mutex": "02011af0",
+    "own_frame": 64,
+    "observed_chain_stack_with_mock_locks": 128,
+    "statuses": {
+      "0": "copied, validate record",
+      "7": "absent",
+      "2": "uninitialized",
+      "4": "KV corrupt",
+      "13": "invalid/short capacity"
+    },
+    "allocation": false,
+    "persistent_mutation": false,
+    "copy_under_lock": true,
+    "lazy_base_cache_ram_mutation_possible": true
+  },
+  "loader": {
+    "address": "042a9d0a",
+    "args": [
+      "ignored context",
+      "ownedout96",
+      "length96"
+    ],
+    "returns": {
+      "0": "valid or absent-default",
+      "-1": "invalid/error"
+    },
+    "own_frame": 144,
+    "observed_chain_stack_with_mock_locks": 272
+  },
+  "validation": {
+    "record_bytes": 116,
+    "magic": "474d4231",
+    "version": 1,
+    "unified_physical_base": "01500000",
+    "physical_bytes": "00300000",
+    "bitmap_offset": 16,
+    "bitmap_bytes": 96,
+    "crc_offset": 112,
+    "crc_input_bytes": 112,
+    "crc_function": "042a9c84",
+    "crc_frame": 16,
+    "bitmap_function": "042a9cca",
+    "bitmap_returns": {
+      "1": "valid",
+      "0": "invalid"
+    },
+    "bitmap_frame": 16,
+    "directory_bits_required_zero": [
+      0,
+      15
+    ],
+    "remaining_genuine_bits_preserved": [
+      16,
+      767
+    ]
+  },
+  "recommended": "one getter snapshot then exact headers plus native pure validators; preserve status7 vs0; never second loader read",
+  "emulation": {
+    "artifact": "emulation.json",
+    "passed": true,
+    "cases": 43,
+    "executed_by": "parent agent compatible Unicorn environment",
+    "rtos_locks_mocked": true,
+    "real_kv_data": false,
+    "no_allocator_or_mutator_entries": true
+  },
+  "scope": "read-only live diagnostic prerequisites proven; no real map acquired"
+}

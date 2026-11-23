@@ -1,0 +1,14 @@
+{
+  "format": "memomind-native-mac-raster-preflight-v1",
+  "capture": "captures/swift-mac-diagnostics-preflight-20261102-01",
+  "complete": true,
+  "app_header_full256_matches": true,
+  "target_and_neighbor_all_ff": true,
+  "topology_and_badmap_match_backup": true,
+  "raw_application_frames_independently_parsed_and_correlated": true,
+  "native_submissions_completed": true,
+  "current_full_backup_verification": "analysis/native-mac-backup-20261101/verification.json",
+  "flash_mutations": 0,
+  "automatic_retries": 0,
+  "trace_sha256": "0af2bb3117b5f0c870c73f0c9af22faea71e22787ba2e281c4556494f543f27e"
+}

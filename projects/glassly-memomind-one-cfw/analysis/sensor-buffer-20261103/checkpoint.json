@@ -1,0 +1,50 @@
+{
+  "version": "GLASSLYCFW/9",
+  "release": "sensor-buffer-001",
+  "imageBytes": 2247245,
+  "imageSHA256": "fa230c0c893d9b810d0901dcfec2798dc4a78f043069aef865a07c94b883eb86",
+  "containerHeaderSHA256": "fd93ed4c6da4f0aa3dbcfa1f923cf708c5de55677f8256d2debba6162a3834e8",
+  "appHeaderSHA256": "a42704b87745317f61c13b3e9d4125453cd768125ba06621bdfd5166e64666bc",
+  "runtimeBytes": 96208,
+  "runtimeSHA256": "18637d02b9e48326778a49f82b02e6898b498856071bf470f355103ce9f68965",
+  "build": "build-09-02",
+  "image": "image-09-02",
+  "offlineChecks": "targeted-verification.json",
+  "imageVerification": "image-verification.json",
+  "flashAttempted": false,
+  "transferVerified": false,
+  "rebootAcknowledged": false,
+  "bootVerified": false,
+  "sensorHardwareVerified": false,
+  "installedVersionLastVerified": "GLASSLYCFW/6",
+  "appBundleDoesNotWaitForHardware": true,
+  "appValidation": {
+    "macTests": 115,
+    "iosSimulatorTests": 12,
+    "androidTests": 23,
+    "engineTests": 2
+  },
+  "connectionAttempt": {
+    "evidence": "connection-attempt.json",
+    "capture": "captures/sensor-buffer-20261103-probe-01",
+    "elapsedSeconds": 45.01310379197821,
+    "transmitSubmissions": 0,
+    "result": "Host Bluetooth connection stalled before traffic"
+  },
+  "remaining": [
+    "Live buffered sensor sampling, cadence and watchdog scheduling acceptance",
+    "Active native sensor power ownership and calibrated units",
+    "Compass source and G2 sensor command semantics",
+    "Microphone lifecycle/audio hardware acceptance and broader profiles",
+    "BLE link control and wear status",
+    "Remaining original G2 integration suites"
+  ],
+  "fullRegression": {
+    "passed": true,
+    "stages": 144,
+    "pythonTests": 235,
+    "swiftTests": 149,
+    "sourceDrift": [],
+    "evidence": "regression-verification.json"
+  }
+}

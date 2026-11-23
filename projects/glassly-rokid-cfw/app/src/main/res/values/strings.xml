@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Glassly</string>
+    <string name="link_channel">Glassly link</string>
+    <string name="link_notification">Connected to the Glassly App</string>
+</resources>

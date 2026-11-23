@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "device_actions": false,
+  "unchanged_from_frozen_regression": {
+    "scripts/memomind_flasher.py": "7287bc20833bdbd538aab43714edcedfe1a507b954cb875f4b98d81230caecb0",
+    "swift/MemoMindKit/Sources/MemoMindCore/FirmwareImage.swift": "7aab9ae7e60e870e9dfa9fe4b81014778f203d1c5188e5544b53acfc44b56240",
+    "runtime/graphics/graphics.ld": "4ef8aeefd2d412c1a436e994d7a59ad463e33ce64b404a5ec03479a3c6333732"
+  },
+  "linker_only_length_changed": true,
+  "python_live_manifest_rejections": {
+    "original": "First diagnostic blob must contain 16-aligned length, 16..4096 bytes",
+    "claimed_live": "First diagnostic blob must contain 16-aligned length, 16..4096 bytes",
+    "claimed_128k": "First diagnostic blob must contain 16-aligned length, 16..4096 bytes"
+  },
+  "historical_runtime_sha256": "c1d8a1ffdd4f2799de4149d2e113527b29716886f6530549e56f68f61333d3b3",
+  "historical_ota_sha256": "a9c9b36e062066e5b363b625c9205c18753b905624708068b79da5b912b8d917",
+  "caveat": "Identical already-catalogued bytes retain existing eligibility; no new RX96 profile or larger image admitted."
+}

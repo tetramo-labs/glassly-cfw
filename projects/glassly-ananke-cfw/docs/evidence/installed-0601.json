@@ -1,0 +1,210 @@
+{
+  "backup": "research/device-backup-20261103-174931",
+  "flash_bytes": 1048576,
+  "flash_sha256": "da281f118ea0e3dc412b2298ce27c1b73a9cf6bca795814708e900a20a9538bc",
+  "metadata_sha256": "c3caa88d12d125ebf63d00f0ded5fa6387f9239534478f052e2ca362cc3cd520",
+  "inspector_sha256": "bb0c2bc21862469eb0e7a9fb997833a57251d51386ed72c762df8fd41bd9f8e5",
+  "decoded_sha256": "9a17e2c8c4f8577d16d21ed44ff4a08dd466529e8985afa982bb75fafc3d9e06",
+  "top_entries": [
+    {
+      "header_offset": 32,
+      "name": "uboot.boot",
+      "encoded_offset": 192,
+      "size": 8168,
+      "flags": 0,
+      "index": 0,
+      "data_crc16": 2396,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 64,
+      "name": "isd_config.ini",
+      "encoded_offset": 8360,
+      "size": 137,
+      "flags": 2,
+      "index": 0,
+      "data_crc16": 58254,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 96,
+      "name": "app_dir_head",
+      "encoded_offset": 12320,
+      "size": 12288,
+      "flags": 129,
+      "index": 0,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 128,
+      "name": "app_dir_head2",
+      "encoded_offset": 503840,
+      "size": 503808,
+      "flags": 129,
+      "index": 0,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 160,
+      "name": "key_mac",
+      "encoded_offset": 1044480,
+      "size": 4096,
+      "flags": 18,
+      "index": 65535,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    }
+  ],
+  "application_area": {
+    "header_offset": 12320,
+    "name": "app_area_head",
+    "encoded_offset": 31457568,
+    "size": 344412,
+    "flags": 131,
+    "index": 1,
+    "data_crc16": 14793,
+    "header_crc_valid": true
+  },
+  "application_entries": [
+    {
+      "header_offset": 12352,
+      "name": "app.bin",
+      "encoded_offset": 288,
+      "size": 343208,
+      "flags": 130,
+      "index": 0,
+      "data_crc16": 55548,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 12384,
+      "name": "cfg_tool.bin",
+      "encoded_offset": 343496,
+      "size": 916,
+      "flags": 130,
+      "index": 0,
+      "data_crc16": 21661,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 12416,
+      "name": "VM",
+      "encoded_offset": 995328,
+      "size": 8192,
+      "flags": 18,
+      "index": 0,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 12448,
+      "name": "PRCT",
+      "encoded_offset": 0,
+      "size": 995328,
+      "flags": 146,
+      "index": 0,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 12480,
+      "name": "BTIF",
+      "encoded_offset": 1003520,
+      "size": 4096,
+      "flags": 146,
+      "index": 0,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    },
+    {
+      "header_offset": 12512,
+      "name": "USERIF",
+      "encoded_offset": 1007616,
+      "size": 36864,
+      "flags": 146,
+      "index": 1,
+      "data_crc16": 65535,
+      "header_crc_valid": true
+    }
+  ],
+  "verified_files": [
+    {
+      "name": "uboot.boot",
+      "bytes": 8168,
+      "sha256": "b319dbb4e8ad85c39a68e4aea6f078bcdc25bfde21af6fdc3a49e47073fb6d30",
+      "crc_valid": true,
+      "matches_v0900": true
+    },
+    {
+      "name": "isd_config.ini",
+      "bytes": 137,
+      "sha256": "3828b68b451df8ddd2dc987a7e15517d32bb5f9e4f0e1e126760571a8ebc888e",
+      "crc_valid": true,
+      "matches_v0900": false
+    },
+    {
+      "name": "app.bin",
+      "bytes": 343208,
+      "sha256": "3c52fc8cef33ee1d0d402f68dc9a92ed819d406b5e99a9033f8304de69cfdc6f",
+      "crc_valid": true,
+      "matches_v0900": false
+    },
+    {
+      "name": "cfg_tool.bin",
+      "bytes": 916,
+      "sha256": "21334ccee5588a3e72bd871ce0cc3eb2ad3c333f79927842279855fed87f1ec8",
+      "crc_valid": true,
+      "matches_v0900": true
+    }
+  ],
+  "gatt_profiles": [
+    {
+      "file_offset": 310189,
+      "end_exclusive": 311134,
+      "sha256": "c8cde854121eddb4ca0ddd996e3f0b40b1ca8744605bab6e0f9651cad2aa3aa1",
+      "attribute_count": 91,
+      "vendor_characteristics": [
+        {
+          "service_uuid": 44608,
+          "uuid": 44609,
+          "properties": 4,
+          "declaration_handle": 81,
+          "value_handle": 82,
+          "ccc_handle": null
+        },
+        {
+          "service_uuid": 44608,
+          "uuid": 44610,
+          "properties": 16,
+          "declaration_handle": 83,
+          "value_handle": 84,
+          "ccc_handle": 85
+        },
+        {
+          "service_uuid": 44544,
+          "uuid": 44545,
+          "properties": 4,
+          "declaration_handle": 129,
+          "value_handle": 130,
+          "ccc_handle": null
+        },
+        {
+          "service_uuid": 44544,
+          "uuid": 44546,
+          "properties": 16,
+          "declaration_handle": 131,
+          "value_handle": 132,
+          "ccc_handle": 133
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Reserved-area offsets are encoded fields, not approved write ranges.",
+    "The unpacker does not implement reserved-area semantics.",
+    "No installable image or application-independent restore has been validated.",
+    "Static GATT records do not establish stock button notifications or iOS background behavior."
+  ]
+}

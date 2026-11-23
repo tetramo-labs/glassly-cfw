@@ -1,0 +1,30 @@
+[
+  {
+    "requested": "0420ff1a",
+    "address": "ram:0420ff1a",
+    "incoming_references": [
+      "ram:0420eeea UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "0420fe3e",
+    "address": "ram:0420fe3e",
+    "incoming_references": [
+      "ram:0421024e UNCONDITIONAL_CALL",
+      "ram:04210278 UNCONDITIONAL_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  },
+  {
+    "requested": "04341354",
+    "address": "ram:04341354",
+    "incoming_references": [
+      "ram:0423e2a4 COMPUTED_CALL"
+    ],
+    "completed": true,
+    "error": ""
+  }
+]

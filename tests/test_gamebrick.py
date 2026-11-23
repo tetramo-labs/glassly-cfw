@@ -1,6 +1,6 @@
 """Gamebrick Mini planning, programming and run() against fake devices. No USB access.
 
-Tests marked with FIXTURES use the unit backups in a local glassly-gamebrick-mini checkout and
+Tests marked with FIXTURES use the unit backups under projects/gamebrick-mini and
 skip when it is absent."""
 import contextlib
 import io
@@ -18,7 +18,7 @@ from glassly_flasher.devices.gamebrick.layout import (APPLICATIONS, LAYOUTS, Lay
 from glassly_flasher.devices.gamebrick.transport import PAGE, SECTOR, SIZE, program_image, program_with_plan
 from glassly_flasher.devices.jieli.link import INQUIRY
 
-RESEARCH = Path('/Users/fosse/dev/glassly-gamebrick-mini/research')
+RESEARCH = Path(__file__).resolve().parents[1]/'projects/gamebrick-mini/research'
 FACTORY = RESEARCH/'device-backup-20261028-192851/flash-pass1.bin'
 UNIT1 = RESEARCH/'device-backup-20261022-233350/flash-pass1.bin'
 CUSTOM = RESEARCH/'custom-prepared/unit2/custom-device-layout.bin'

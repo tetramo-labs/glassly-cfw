@@ -22,7 +22,7 @@ from glassly_flasher.devices.memomind.protocol import (OTA_MAGIC, GmSession, GmS
                                                        installed_revision)
 from glassly_flasher.devices.memomind.rfcomm import LinkError, PairedDevice
 
-RESEARCH = Path('/Users/fosse/dev/glassly-memomind-one-cfw')
+RESEARCH = Path(__file__).resolve().parents[1]/'projects/memomind-one'
 INSTALL_25 = RESEARCH / 'captures/mac-install-25-20261111/trace.jsonl'
 INSTALL_25_SHA = 'd42cba52a0989b4ad0e048edd214e1611f1aa8274654a5e7f83c2e303934271c'
 IMAGE_25 = RESEARCH / 'analysis/ble-link-20261110/image-25-01/firmware.bin'

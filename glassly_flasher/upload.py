@@ -105,7 +105,7 @@ def submit(entries, session_context, description, opener=None):
 def post(body, opener=None):
     data = json.dumps(body).encode('utf-8')
     request = urllib.request.Request(f'{CORE_URL}/api/tools/reports', data=data, method='POST', headers={
-        'content-type': 'application/json', 'user-agent': f'glassly-cfw-flasher/{__version__}'})
+        'content-type': 'application/json', 'user-agent': f'glassly-flash-tool/{__version__}'})
     try:
         with (opener or default_opener)(request) as response:
             reply = json.loads(response.read().decode('utf-8'))

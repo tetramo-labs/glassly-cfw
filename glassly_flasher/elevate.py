@@ -8,7 +8,7 @@ import sys
 from .devices.base import FlashError
 
 ROOT = Path(__file__).resolve().parent.parent
-PROMPT = 'Glassly CFW Flasher needs administrator access to talk to the controller over USB.'
+PROMPT = 'Glassly Flash Tool needs administrator access to talk to the controller over USB.'
 
 
 def is_admin():

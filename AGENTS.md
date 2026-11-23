@@ -1,8 +1,8 @@
 # Working instructions
 
-This is the end-user flasher for the Glassly controller firmware. The firmware itself is developed
-in the per-controller repositories; this repo bundles their hardware-verified images and ports
-their flashers. Read README.md first.
+This repository contains the desktop flasher and the device firmware projects. Read README.md first.
+Device sources and research live in projects/. Read the device README and its AGENTS.md when present.
+The desktop app bundles hardware-verified images from firmware/.
 
 ## Rules that exist because of the 2026-11-13 Gamebrick incident
 

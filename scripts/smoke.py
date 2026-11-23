@@ -14,8 +14,8 @@ from glassly_flasher.devices import DEVICES  # noqa: E402
 def executable():
     built = ROOT / 'dist/pyinstaller'
     if sys.platform == 'darwin':
-        return built / 'Glassly CFW Flasher.app/Contents/MacOS/Glassly CFW Flasher'
-    return built / ('Glassly-CFW-Flasher.exe' if sys.platform == 'win32' else 'Glassly-CFW-Flasher')
+        return built / 'Glassly Flash Tool.app/Contents/MacOS/Glassly Flash Tool'
+    return built / ('Glassly-Flash-Tool.exe' if sys.platform == 'win32' else 'Glassly-Flash-Tool')
 
 
 def main():

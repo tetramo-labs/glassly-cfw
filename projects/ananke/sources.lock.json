@@ -1,0 +1,179 @@
+{
+  "reference_repo": {
+    "path": "../gamebrick-mini",
+    "commit": "9d51cdf93e5bc4be71bbc7e05fe8984130838033"
+  },
+  "jl_uboot_tool": {
+    "url": "https://github.com/kagaimiq/jl-uboot-tool.git",
+    "commit": "adb3f18889e88ac512ce0a3c4d8cc3d3cb30696a"
+  },
+  "bd19_loader": {
+    "path": "research/deps/bd19loader.bin",
+    "bytes": 23040,
+    "sha256": "faa1b519a3ff1b082f11ccafac8c73d31150161ac972ef9f1934002bcbb8df4f",
+    "status": "Only usable after SCSI identity confirms BD19 / UBOOT1.00; not yet identified on Ananke."
+  },
+  "reference_files": [
+    {
+      "path": "research/native-usb.m",
+      "sha256": "8e89f912ca4c73dc558849a3f5fda1a5c1a019426a4dcb6a61ade4b534ab0a4a"
+    },
+    {
+      "path": "research/usb_transport.py",
+      "sha256": "bddcc0dc02537b9840a6c708f26e1aee8a1a6e7e0f112c3f917929ec7809640f"
+    },
+    {
+      "path": "research/query-stock.py",
+      "sha256": "342c40308906aba228e45c242a6f65014b48cefef68f408ac7138d109083fbd5"
+    },
+    {
+      "path": "research/stock_protocol.py",
+      "sha256": "ec4b28cf9ccc3d7ba41dc4eac6cdf1d6ef210a16fa0cb13a30f25e9f151c9fdc"
+    }
+  ],
+  "public_downloads": [
+    {
+      "local_ignored_path": "research/iine-firmware-directory.html",
+      "url": "https://u5tqxzj1yb.jiandaoyun.com/dash/645b138d99c8b800089e8fc5",
+      "sha256": "8d65b220a6e048b855df4042bb02dc27d8d2b1c96f30466f0a51a7daef85bf42"
+    }
+  ],
+  "user_supplied_manual": {
+    "source": "User downloaded to ~/Downloads/iine-plus.pdf after the manuals.plus URL was supplied",
+    "local_path": "research/manual-l1254-l1255.pdf",
+    "bytes": 8570849,
+    "sha256": "bf4160920fc1158a50d20485eb70a327402e02ca8f169099778bc743f4040987",
+    "pdf_pages": 1,
+    "printed_panels_per_language": 18,
+    "languages": [
+      "Chinese",
+      "English"
+    ],
+    "models": [
+      "L1254",
+      "L1255"
+    ],
+    "inspection": "All panels visually inspected using macOS PDFKit rendering; image-only PDF, no text layer",
+    "firmware_update_entry_documented": false
+  },
+  "oem_artifacts": [
+    {
+      "path": "research/Ananke_Gen_2_Firmware_PC_Update_Manual.pdf",
+      "bytes": 239047,
+      "sha256": "ca36af1adb5290902b23ff031a440ff00761a6f46d76256760b10bf0a4eedf9f",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/Firmware_Upgrade_Utility_1.4.40.exe",
+      "bytes": 6078288,
+      "sha256": "1d4ad683c7229e954a993491f4c11777021a1d40fe26e742f489e067c1cd11b5",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/IG05_V0900.ufw",
+      "bytes": 613472,
+      "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    },
+    {
+      "path": "research/IG05_V0901.ufw",
+      "bytes": 613472,
+      "sha256": "32ddddfb2bc436cdba3597d74f6c409cf697656d8c9c1b02bb6946bcebd9d7d9",
+      "source": "User-supplied official Ananke firmware package in ~/Downloads"
+    }
+  ],
+  "jl_misctools": {
+    "url": "https://github.com/kagaimiq/jl-misctools.git",
+    "commit": "0a5b12db0ef38f3042acffbe2452730a37fd2405"
+  },
+  "br23_loader_review": {
+    "path": "research/deps/br23loader.bin",
+    "bytes": 11264,
+    "sha256": "7384429e33ee1f340fbffe46aa928a0099c163e1374a40f6f9f27468a6f16ddf",
+    "address": "0x12000",
+    "chunk_size": 512,
+    "argument": 1,
+    "status": "All 22 RAM blocks verified on hardware; exact BR23 jump and measured 1 MiB flash identity verified; two matching full reads completed 2026-11-03.",
+    "source": "jl-uboot-tool data/usb-loaders.yaml and data/chips.yaml at pinned revision"
+  },
+  "selected_cfw_base": {
+    "file": "research/IG05_V0900.ufw",
+    "sha256": "64f9dd8390ccfb5b63cba971f73f09228fbd0a3cdba13eab7dcdd502757e0fd3",
+    "variants": [
+      "L1254",
+      "L1255",
+      "L1277"
+    ],
+    "user_confirmation": "Purple/Gray/Cream Yellow group; exact SKU/color not specified",
+    "policy": "Use latest official release for this variant as CFW base; V0900 is the supplied matching release. Preserve factory backup first and verify installed layout independently."
+  },
+  "jieli_sdk_analysis_reference": {
+    "url": "https://github.com/Jieli-Tech/fw-AC63_BT_SDK.git",
+    "commit": "fdc018de81629e21e594d677cf05f87d288be0f0",
+    "local_path": "../gamebrick-mini/research/sdk",
+    "scope": "Record format, AE42 sender/CCC source leads and BR23 compiler target only; not an Ananke firmware build or proof of runtime behavior.",
+    "files": [
+      {
+        "path": "apps/hid/modules/bt/ble_hogp_profile.h",
+        "sha256": "d22961c102b228e91fe61ee267ae73b72908b151985c0039af107d3c6cc23f9b"
+      },
+      {
+        "path": "apps/hid/modules/bt/ble_hogp.c",
+        "sha256": "353c4ed726e8dd8ea69bfb8a2f7b97accbed9a142100cf32854cec5d1b1b111a"
+      },
+      {
+        "path": "apps/hid/board/br23/AC635N_hid.cbp",
+        "sha256": "0d3f2b771ec6ba9348263adae650e24a68bb0dc350917c4b580df08b068c2562"
+      }
+    ]
+  },
+  "jieli_pi32v2_toolchain": {
+    "url": "https://jl-update.oss-cn-shenzhen.aliyuncs.com/jieli-linux-toolchains-20260730.1.tar.xz",
+    "archive_sha256": "a1545cddbc451a06bac43eb5cd96d831470c42a97c5c0b1f98879a20fc7647bd",
+    "local_path": "../gamebrick-mini/.tools/jieli/jieli-linux-toolchains-20260730.1",
+    "target": "pi32v2",
+    "cpu": "r3",
+    "elf_machine": 241,
+    "docker_image": "debian@sha256:cba95a21c96c1f5fc2470081829363eed57706634f7dc26e8c6712934303d57a",
+    "files": [
+      {
+        "path": "common/bin/clang",
+        "sha256": "c45189ee624de0430deb0db02e6dce171fb5538e7fe323e3964dc8ac6236240f"
+      },
+      {
+        "path": "common/bin/objdump",
+        "sha256": "f7e449e2c8001d5ed4493a45d1f5f304c8910418e4074acdc8715079ef64e08a"
+      },
+      {
+        "path": "pi32v2/bin/ld",
+        "sha256": "fd61aff15616bb6f6b58fd2e9ede7af741c7bf05facb3e0cb3d3c9817c268fd9"
+      }
+    ]
+  },
+  "liteemf_analysis_reference": {
+    "url": "https://github.com/LiteEMF/LiteEMF.git",
+    "commit": "9abcfb35d50262d1652b1627efa624b00636323e",
+    "files": [
+      {
+        "path": "app/app_key.c",
+        "sha256": "97a1170d5cbc42a0788d125294d976a7f729fa6504c711ab74a8adcdfca42fff"
+      },
+      {
+        "path": "app/app_key.h",
+        "sha256": "45c33d0f9f430496781b542dbf037a957e842fa607e5ca783225b4e6a40b2898"
+      },
+      {
+        "path": "app/key_typedef.h",
+        "sha256": "3ad18c33368cb8015bdc83167fcb2999c049441c3d464ce86a7b32d894b84480"
+      }
+    ],
+    "scope": "Algorithm and bit-name comparison only; physical mapping and debounce unvalidated."
+  },
+  "installed_extraction": {
+    "tool_revision": "0a5b12db0ef38f3042acffbe2452730a37fd2405",
+    "tool": "firmware/fwunpack_newfw.py",
+    "tool_sha256": "b263277648102eb259fd658f974a3d30ed6f15f6b0bff307de186fab040820af",
+    "source_backup_sha256": "da281f118ea0e3dc412b2298ce27c1b73a9cf6bca795814708e900a20a9538bc",
+    "status": "Analysis extraction only; reserved-area semantics not implemented by upstream tool."
+  }
+}

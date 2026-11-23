@@ -1,6 +1,6 @@
 """Ananke Gen 2 residue gates, sector writer, plans and run() against fake devices. No USB access.
 
-Tests marked with FIXTURES use the unit backup in a local glassly-ananke-cfw checkout and skip
+Tests marked with FIXTURES use the unit backup under projects/ananke and skip
 when it is absent."""
 import binascii
 import contextlib
@@ -22,7 +22,7 @@ from glassly_flasher.devices.base import FlashError, Reporter
 from glassly_flasher.devices.jieli import loader_blob
 from glassly_flasher.devices.jieli.link import INQUIRY, LinkError
 
-ANANKE = Path('/Users/fosse/dev/glassly-ananke-cfw')
+ANANKE = Path(__file__).resolve().parents[1]/'projects/ananke'
 ORIGINAL = ANANKE/'research/device-backup-20261103-174931/flash-pass1.bin'
 FIXTURES = unittest.skipUnless(ORIGINAL.exists(), 'Ananke unit backup unavailable')
 VERIFIED_INSTALL_SHA = '574f6542ef749741721d8bf040aa0b45eb8837d9357b900865473400027d2c59'

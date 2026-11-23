@@ -2,10 +2,10 @@ Installs the Glassly firmware on the 8BitDo Zero 2, 8BitDo Micro, IINE Gamebrick
 
 | Computer | Download |
 | --- | --- |
-| Mac with Apple silicon | `Glassly-CFW-Flasher-macOS-AppleSilicon.dmg` |
-| Mac with Intel | `Glassly-CFW-Flasher-macOS-Intel.dmg` |
-| Windows 10/11, 64-bit | `Glassly-CFW-Flasher-Windows-x64.exe` |
-| Linux, x86_64 | `Glassly-CFW-Flasher-Linux-x86_64` (`chmod +x` it, then run it) |
+| Mac with Apple silicon | `Glassly-Flash-Tool-macOS-AppleSilicon.dmg` |
+| Mac with Intel | `Glassly-Flash-Tool-macOS-Intel.dmg` |
+| Windows 10/11, 64-bit | `Glassly-Flash-Tool-Windows-x64.exe` |
+| Linux, x86_64 | `Glassly-Flash-Tool-Linux-x86_64` (`chmod +x` it, then run it) |
 
 First launch: on macOS use **System Settings > Privacy & Security > Open Anyway**; on Windows choose **More info > Run anyway**. Neither build is code-signed yet.
 

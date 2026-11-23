@@ -1,1 +1,0 @@
-../../../../../glassly/mobile/modules/bluetooth-sdk/ios/Source/sgcs/RayNeoIOProtocol.swift

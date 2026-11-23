@@ -7,7 +7,7 @@ import sys
 from .devices.base import FlashError
 
 ROOT = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parent.parent))
-APP_NAME = 'Glassly CFW Flasher'
+BACKUP_DIRECTORY_NAME = 'Glassly CFW Flasher'
 
 
 def resource(relative):
@@ -29,9 +29,9 @@ def firmware(relative):
 
 def backups_dir():
     if sys.platform == 'darwin':
-        base = Path.home() / 'Library/Application Support' / APP_NAME
+        base = Path.home() / 'Library/Application Support' / BACKUP_DIRECTORY_NAME
     elif sys.platform == 'win32':
-        base = Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData/Local')) / APP_NAME
+        base = Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData/Local')) / BACKUP_DIRECTORY_NAME
     else:
         base = Path(os.environ.get('XDG_DATA_HOME', Path.home() / '.local/share')) / 'glassly-cfw-flasher'
     return base / 'backups'

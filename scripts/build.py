@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
-NAME = 'Glassly CFW Flasher'
+NAME = 'Glassly Flash Tool'
 
 
 def run(*command):
@@ -26,7 +26,7 @@ def main():
             '-framework', 'IOBluetooth', '-framework', 'CoreBluetooth', 'native/memomind_rfcomm.m',
             '-o', 'native/libmemomind_rfcomm.dylib')
     run(sys.executable, '-m', 'PyInstaller', '--noconfirm', '--clean', '--distpath', 'dist/pyinstaller',
-        '--workpath', 'build/pyinstaller', 'packaging/glassly-cfw-flasher.spec')
+        '--workpath', 'build/pyinstaller', 'packaging/glassly-flash-tool.spec')
     built = ROOT / 'dist/pyinstaller'
     machine = platform.machine().lower()
     if sys.platform == 'darwin':
@@ -38,14 +38,14 @@ def main():
         shutil.copytree(app, staging / app.name, symlinks=True)
         os.symlink('/Applications', staging / 'Applications')
         label = 'AppleSilicon' if machine == 'arm64' else 'Intel'
-        artifact = out / f'Glassly-CFW-Flasher-macOS-{label}.dmg'
+        artifact = out / f'Glassly-Flash-Tool-macOS-{label}.dmg'
         run('hdiutil', 'create', '-volname', NAME, '-srcfolder', staging, '-ov', '-format', 'UDZO', artifact)
     elif sys.platform == 'win32':
-        artifact = out / 'Glassly-CFW-Flasher-Windows-x64.exe'
-        shutil.copy2(built / 'Glassly-CFW-Flasher.exe', artifact)
+        artifact = out / 'Glassly-Flash-Tool-Windows-x64.exe'
+        shutil.copy2(built / 'Glassly-Flash-Tool.exe', artifact)
     else:
-        artifact = out / f'Glassly-CFW-Flasher-Linux-{"arm64" if machine == "aarch64" else "x86_64"}'
-        shutil.copy2(built / 'Glassly-CFW-Flasher', artifact)
+        artifact = out / f'Glassly-Flash-Tool-Linux-{"arm64" if machine == "aarch64" else "x86_64"}'
+        shutil.copy2(built / 'Glassly-Flash-Tool', artifact)
         artifact.chmod(0o755)
     digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
     print(f'{digest}  {artifact.name}')

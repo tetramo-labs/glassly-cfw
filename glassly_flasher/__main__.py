@@ -29,7 +29,7 @@ def cli(argv):
     from .devices import DEVICES
     from .worker import main as worker
 
-    parser = argparse.ArgumentParser(prog='glassly-cfw-flasher --cli',
+    parser = argparse.ArgumentParser(prog='glassly-flash-tool --cli',
                                      description='Flash from a terminal. IINE controllers, and every controller on '
                                                  'Linux, need sudo (Administrator on Windows).')
     parser.add_argument('device', choices=sorted(DEVICES))

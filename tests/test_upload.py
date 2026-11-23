@@ -78,7 +78,7 @@ class SubmitTests(unittest.TestCase):
         request = opener.requests[0]
         self.assertEqual(request.full_url, f'{upload.CORE_URL}/api/tools/reports')
         self.assertEqual(request.get_method(), 'POST')
-        self.assertEqual(request.get_header('User-agent'), f'glassly-cfw-flasher/{__version__}')
+        self.assertEqual(request.get_header('User-agent'), f'glassly-flash-tool/{__version__}')
         body = opener.bodies()[0]
         self.assertEqual(body['tool']['name'], 'cfw_flasher')
         self.assertEqual(body['tool']['version'], __version__)

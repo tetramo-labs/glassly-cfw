@@ -137,7 +137,7 @@ int mm_paired(char *out, int capacity) {
     if (!NSThread.isMainThread) return fail(@"IOBluetooth calls must come from the main thread");
     CBManagerAuthorization access = CBManager.authorization;
     if (access == CBManagerAuthorizationDenied || access == CBManagerAuthorizationRestricted) {
-      return fail(@"macOS does not allow this app to use Bluetooth. Turn it on for Glassly CFW Flasher in System "
+      return fail(@"macOS does not allow this app to use Bluetooth. Turn it on for Glassly Flash Tool in System "
                   @"Settings > Privacy & Security > Bluetooth, then start again.");
     }
     return writeDevices([IOBluetoothDevice pairedDevices], out, capacity);

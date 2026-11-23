@@ -1,1 +1,0 @@
-../../../../../glassly/mobile/modules/bluetooth-sdk/ios/Source/utils/BinaryCodec.swift

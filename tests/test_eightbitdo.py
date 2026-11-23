@@ -8,8 +8,8 @@ from glassly_flasher.devices.eightbitdo import (BASE, META_BASE, META_SIZE, crc1
                                                 load_image, packet, session)
 from glassly_flasher.devices.eightbitdo import micro, zero2
 
-ZERO2_HARDWARE = Path('/Users/fosse/dev/glassly-8bitdo-zero2-cfw/build/hardware')
-MICRO_HARDWARE = Path('/Users/fosse/dev/glassly-8bitdo-micro/build/hardware')
+ZERO2_HARDWARE = Path(__file__).resolve().parents[1]/'projects/8bitdo-zero2/build/hardware'
+MICRO_HARDWARE = Path(__file__).resolve().parents[1]/'projects/8bitdo-micro/build/hardware'
 
 
 class QuietReporter(Reporter):

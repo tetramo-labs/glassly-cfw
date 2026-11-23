@@ -18,7 +18,7 @@ def give_back(folder, uid):
 
 
 def main(argv):
-    parser = argparse.ArgumentParser(prog='glassly-cfw-flasher --worker')
+    parser = argparse.ArgumentParser(prog='glassly-flash-tool --worker')
     parser.add_argument('device', choices=sorted(DEVICES))
     parser.add_argument('mode', choices=['install', 'restore', 'backup', 'restore-backup'])
     parser.add_argument('--backup', type=Path)

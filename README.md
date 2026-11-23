@@ -1,4 +1,4 @@
-# Glassly CFW Flasher
+# Glassly Flash Tool
 
 One desktop app that installs the Glassly button firmware on four game controllers, so they work as
 controllers in the Glassly App on iOS and Android. It can also put the official firmware back. The same
@@ -22,20 +22,20 @@ itself, on macOS. Every Windows and Linux path has not yet been run against a re
 
 ## Download
 
-Get the file for your computer from the [latest release](https://github.com/tetramo-labs/glassly-cfw-flasher/releases/latest):
+Earlier releases use the filename prefix `Glassly-CFW-Flasher`. Get the file for your computer from the [latest release](https://github.com/tetramo-labs/glassly-cfw-flasher/releases/latest):
 
 | Computer | File |
 | --- | --- |
-| Mac with Apple silicon (M1 or later) | `Glassly-CFW-Flasher-macOS-AppleSilicon.dmg` |
-| Mac with an Intel processor | `Glassly-CFW-Flasher-macOS-Intel.dmg` |
-| Windows 10 or 11, 64-bit | `Glassly-CFW-Flasher-Windows-x64.exe` |
-| Linux, x86_64 | `Glassly-CFW-Flasher-Linux-x86_64` |
+| Mac with Apple silicon (M1 or later) | `Glassly-Flash-Tool-macOS-AppleSilicon.dmg` |
+| Mac with an Intel processor | `Glassly-Flash-Tool-macOS-Intel.dmg` |
+| Windows 10 or 11, 64-bit | `Glassly-Flash-Tool-Windows-x64.exe` |
+| Linux, x86_64 | `Glassly-Flash-Tool-Linux-x86_64` |
 
 `SHA256SUMS.txt` in the release lists the checksum of each file.
 
 ### macOS
 
-Open the `.dmg` and drag **Glassly CFW Flasher** into Applications. The app is not notarized, so macOS
+Open the `.dmg` and drag **Glassly Flash Tool** into Applications. The app is not notarized, so macOS
 blocks the first launch: open **System Settings > Privacy & Security**, find the message about Glassly CFW
 Flasher and click **Open Anyway**. For the IINE controllers, macOS asks for your password when you press
 Start, because capturing a USB device needs administrator rights. The 8BitDo controllers need no password.
@@ -49,8 +49,8 @@ only allows to administrators. No driver install is needed for any controller.
 ### Linux
 
 ```sh
-chmod +x Glassly-CFW-Flasher-Linux-x86_64
-./Glassly-CFW-Flasher-Linux-x86_64
+chmod +x Glassly-Flash-Tool-Linux-x86_64
+./Glassly-Flash-Tool-Linux-x86_64
 ```
 
 Pressing Start asks for your password through polkit (`pkexec`), which every mainstream desktop has. Without
@@ -143,7 +143,7 @@ devices this computer saw. Firmware backups are never sent. `GLASSLY_CORE_URL` p
 4. Press the button on the glasses five times and hold it: the glasses reset.
 5. Keep them close to the computer and press Start. The flasher searches for them itself over Bluetooth Classic
    (no pairing is needed on macOS); if a pair of MemoMind glasses is paired with the computer, that pair is used.
-   The first time you press Start on a Mac, macOS asks whether Glassly CFW Flasher may use Bluetooth; allow it.
+   The first time you press Start on a Mac, macOS asks whether Glassly Flash Tool may use Bluetooth; allow it.
 
 Only one pair of MemoMind glasses should be switched on nearby: the flasher refuses when more than one answers, and
 waits up to ten minutes for one to answer. On Windows and Linux (not yet tried on glasses) the search uses the
@@ -198,12 +198,12 @@ byte for byte. Windows and Linux Bluetooth have not been tried on glasses.
 The same app runs without a window. On Linux:
 
 ```sh
-sudo ./Glassly-CFW-Flasher-Linux-x86_64 --cli <zero2|micro|gamebrick|ananke> <install|restore|backup> --i-accept-the-risk
+sudo ./Glassly-Flash-Tool-Linux-x86_64 --cli <zero2|micro|gamebrick|ananke> <install|restore|backup> --i-accept-the-risk
 ```
 
 The MemoMind One glasses (`memomind`, `install`, `restore` or `backup`) need no `sudo` on any system.
 
-On macOS the executable is `/Applications/Glassly CFW Flasher.app/Contents/MacOS/Glassly CFW Flasher`; it
+On macOS the executable is `/Applications/Glassly Flash Tool.app/Contents/MacOS/Glassly Flash Tool`; it
 needs `sudo` only for the IINE controllers. The Windows build has no console, so on Windows run the command
 line from a source checkout (`python -m glassly_flasher --cli ...` in an Administrator terminal).
 
@@ -233,14 +233,18 @@ each one, and publishes them with `SHA256SUMS.txt`.
 
 ## Where the firmware comes from
 
-Each `firmware/<controller>/manifest.json` records the size, SHA256 and source commit of every bundled file.
-The firmware is developed in:
+Each `firmware/<controller>/manifest.json` records the size, SHA256 and source commit of each bundled file.
+Device development lives under [projects/](projects/). Start with the device README for its build instructions, local artifacts and hardware status.
 
-- [glassly-8bitdo-zero2-cfw](https://github.com/tetramo-labs/glassly-8bitdo-zero2-cfw)
-- [glassly-8bitdo-micro](https://github.com/tetramo-labs/glassly-8bitdo-micro)
-- [glassly-gamebrick-mini-cfw](https://github.com/tetramo-labs/glassly-gamebrick-mini-cfw)
-- [glassly-ananke-cfw](https://github.com/tetramo-labs/glassly-ananke-cfw)
-- [glassly-memomind-one-cfw](https://github.com/tetramo-labs/glassly-memomind-one-cfw)
+| Controllers | Smart glasses |
+| --- | --- |
+| [8BitDo Micro](projects/8bitdo-micro/README.md) | [Even Realities G1](projects/even-g1/README.md) |
+| [8BitDo Zero 2](projects/8bitdo-zero2/README.md) | [Even Realities G2](projects/even-g2/README.md) |
+| [CRKD ATOM+](projects/crkd-atom-plus/README.md) | [Halliday G2](projects/halliday-g2/README.md) |
+| [IINE Ananke](projects/ananke/README.md) | [MemoMind One](projects/memomind-one/README.md) |
+| [IINE Gamebrick Mini](projects/gamebrick-mini/README.md) | [NIMO](projects/nimo/README.md) |
+| | [RayNeo iO](projects/rayneo-io/README.md) |
+| | [Rokid](projects/rokid/README.md) |
 
 The IINE USB code uses parts of kagaimiq's MIT-licensed [jl-misctools](https://github.com/kagaimiq/jl-misctools)
 and [jl-uboot-tool](https://github.com/kagaimiq/jl-uboot-tool), vendored under `third_party/` with their

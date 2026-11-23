@@ -50,4 +50,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: >
           gh release create "$GITHUB_REF_NAME" release/* --repo "$GITHUB_REPOSITORY"
-          --title "Glassly CFW Flasher $GITHUB_REF_NAME" --notes-file packaging/release-notes.md
+          --title "Glassly Flash Tool $GITHUB_REF_NAME" --notes-file packaging/release-notes.md

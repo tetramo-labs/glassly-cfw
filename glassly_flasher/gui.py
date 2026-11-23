@@ -28,7 +28,7 @@ class App:
         self.process = None
         self.temp = None
         self.output = None
-        root.title('Glassly CFW Flasher')
+        root.title('Glassly Flash Tool')
         root.minsize(640, 720)
         root.protocol('WM_DELETE_WINDOW', self.close)
         bold = font.nametofont('TkDefaultFont').copy()
@@ -44,7 +44,7 @@ class App:
 
         frame = ttk.Frame(root, padding=16)
         frame.pack(fill='both', expand=True)
-        ttk.Label(frame, text='Glassly CFW Flasher', font=bold).pack(anchor='w')
+        ttk.Label(frame, text='Glassly Flash Tool', font=bold).pack(anchor='w')
         ttk.Label(frame, text=f'Version {__version__}. Installs Glassly button firmware on supported game controllers '
                               'so they work with the Glassly App.', wraplength=WRAP).pack(anchor='w', pady=(2, 10))
 
@@ -164,7 +164,7 @@ class App:
         self.log.configure(state='normal')
         self.log.delete('1.0', 'end')
         self.log.configure(state='disabled')
-        self.transcript = [(upload.now_ms(), 'status', f'{device.name}: {mode} with Glassly CFW Flasher {__version__}')]
+        self.transcript = [(upload.now_ms(), 'status', f'{device.name}: {mode} with Glassly Flash Tool {__version__}')]
         self.result.set('')
         self.status.set('Starting')
         self.bar.configure(mode='indeterminate')
@@ -302,7 +302,7 @@ class App:
 
     def close(self):
         if self.running():
-            messagebox.showwarning('Glassly CFW Flasher', 'The flasher is still working. Closing it now could leave the '
+            messagebox.showwarning('Glassly Flash Tool', 'The flasher is still working. Closing it now could leave the '
                                    'controller unusable. Wait for it to finish, or press Cancel while it is waiting '
                                    'for the controller.')
             return

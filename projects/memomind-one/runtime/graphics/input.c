@@ -7,6 +7,13 @@
  */
 #include "input.h"
 #define IP mm_graphics_native
+/* The stock head-raise detector's state byte: 0 level, 3 raised, 4 dropping below
+ * its threshold. The detector ends a raise without a gesture unless the head dips
+ * under -10 degrees, and the stock worker reports no second raise until its raise
+ * timeout, so the observer reports the state's own transitions. */
+#ifndef MM_INPUT_HEAD_STATE
+#define MM_INPUT_HEAD_STATE (*(const volatile uint8_t *)(uintptr_t)0x0200f9d4u)
+#endif
 #define INPUT_MAGIC UINT32_C(0x474c4932)
 typedef struct {
     uint32_t tick,sequence;
@@ -16,7 +23,7 @@ typedef struct {
 typedef struct {
     uint32_t magic,renewed,nonce,sequence,ack,drops;
     void *parent,*image,*timer;
-    uint8_t head,count,mask,exhausted;
+    uint8_t head,count,mask,exhausted,raised;
     input_record records[MM_INPUT_CAPACITY];
 } input_owner;
 _Static_assert(sizeof(input_record)==12,"Bounded record layout");
@@ -48,13 +55,29 @@ static void input_deleted(void *event) {
 static int input_expired(const input_owner *o,uint32_t now) {
     return (uint32_t)(now-o->renewed)>=MM_INPUT_LEASE_TICKS;
 }
+static void input_drop(input_owner *o) {if (o->drops!=UINT32_MAX) o->drops++;}
+static void input_push(input_owner *o,unsigned cls,unsigned id,uint32_t now) {
+    if (o->sequence==UINT32_MAX) {o->exhausted=1;input_drop(o);return;}
+    if (o->count==MM_INPUT_CAPACITY) {
+        o->head=(uint8_t)((o->head+1u)%MM_INPUT_CAPACITY);o->count--;input_drop(o);
+    }
+    input_record *r=&o->records[(o->head+o->count)%MM_INPUT_CAPACITY];
+    r->tick=now;r->sequence=++o->sequence;r->id=(uint16_t)id;r->class_id=(uint8_t)cls;r->reserved=0;
+    if (o->sequence==UINT32_MAX) o->exhausted=1;
+    o->count++;
+}
 static void input_tick(void *timer) {
     input_owner *o=IP.timer_userdata(timer);
     if (!o || o->magic!=INPUT_MAGIC) return;
-    if (IP.screen()!=o->parent || input_expired(o,IP.now())) {
+    uint32_t now=IP.now();
+    if (IP.screen()!=o->parent || input_expired(o,now)) {
         IP.image_delete(o->image); /* DELETE owns timer and owner destruction. */
         return;
     }
+    if (!(o->mask&2u)) return;
+    unsigned state=MM_INPUT_HEAD_STATE,raised=state==3u || state==4u;
+    if (raised==o->raised) return;
+    o->raised=(uint8_t)raised;input_push(o,3,raised ? 2u:3u,now);
 }
 static input_owner *input_find(void *parent) {
     input_owner *o=parent ? IP.find_owner(parent,input_deleted):0;
@@ -77,7 +100,8 @@ static input_owner *input_create(void *parent,uint8_t mask,uint32_t nonce,uint32
     if (!o->timer) {IP.image_delete(o->image);return 0;}
     return o;
 }
-static void input_drop(input_owner *o) {if (o->drops!=UINT32_MAX) o->drops++;}
+/* Stock head raise (2) and lower (3) repeat what the tick already reported and its
+ * raise timeout (5) is not a lowered head: each is recorded only as a state change. */
 void glassly_input_observe(const void *envelope) {
     const uint8_t *e=envelope;
     if (!e || e[6] || e[7]) return;
@@ -93,14 +117,11 @@ void glassly_input_observe(const void *envelope) {
     if (!o || !(o->mask&mask)) return;
     uint32_t now=IP.now();
     if (input_expired(o,now)) return; /* Observer never deletes or renews. */
-    if (o->sequence==UINT32_MAX) {o->exhausted=1;input_drop(o);return;}
-    if (o->count==MM_INPUT_CAPACITY) {
-        o->head=(uint8_t)((o->head+1u)%MM_INPUT_CAPACITY);o->count--;input_drop(o);
+    if (cls==3) {
+        if (id==5 || (id==2 && o->raised) || (id==3 && !o->raised)) return;
+        if (id==2 || id==3) o->raised=id==2;
     }
-    input_record *r=&o->records[(o->head+o->count)%MM_INPUT_CAPACITY];
-    r->tick=now;r->sequence=++o->sequence;r->id=(uint16_t)id;r->class_id=(uint8_t)cls;r->reserved=0;
-    if (o->sequence==UINT32_MAX) o->exhausted=1;
-    o->count++;
+    input_push(o,cls,id,now);
 }
 /* Bounded integer-only JSON; no printf import, no writable static storage. */
 typedef struct {char *text;size_t used;int failed;} input_writer;

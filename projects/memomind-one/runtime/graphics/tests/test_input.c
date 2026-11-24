@@ -1,6 +1,9 @@
 /* Host ownership/scheduling tests. Native routines are explicit mocks, not an
  * assertion that stock LVGL handles OOM gracefully. ASan/UBSan catch lifetimes. */
 #include "graphics.h"
+#include <stdint.h>
+static uint8_t head_state;
+#define MM_INPUT_HEAD_STATE head_state
 #include "../input.c" /* Production TU included for explicit sequence-exhaustion boundary injection. */
 #include <assert.h>
 #include <stdlib.h>
@@ -191,12 +194,13 @@ static void filter_and_masks(void) {
     subscribe(123,3,"ok");assert(images->hidden && !images->source && own_allocations==1);
     input_owner *o=current();assert(o && !o->count && !o->sequence);
     now_value=99;
-    /* All class byte/id combinations: only92 combinations admitted, including
-     * the four high-bit aliases of each known low-six-bit class. */
+    /* All class byte/id combinations: only 88 combinations admitted, including
+     * the four high-bit aliases of each known low-six-bit class; the raise
+     * timeout (class 3 id 5) of each alias is not. */
     for(unsigned cls=0;cls<256;cls++) for(unsigned id=0;id<65536;id++) observe(cls,id,0);
-    assert(o->sequence==92 && o->count==32 && o->drops==60 && o->ack==0);
+    assert(o->sequence==88 && o->count==32 && o->drops==56 && o->ack==0);
     for(unsigned cls=2;cls<=3;cls++) for(unsigned len=1;len<65536;len++) observe(cls,cls==2?0x1f7b:1,len);
-    assert(o->sequence==92);
+    assert(o->sequence==88);
     assert(o->records[o->head].tick==99);
     stop(123,"ok");assert(!images && !timers && !own_allocations);
     for(unsigned mask=1;mask<=2;mask++) {
@@ -204,6 +208,25 @@ static void filter_and_masks(void) {
         o=current();assert(o->sequence==1 && o->records[o->head].class_id==(mask==1?2:3));
         stop(123,"ok");
     }
+}
+static unsigned last_id(const input_owner *o) {
+    return o->records[(o->head+o->count-1u)%MM_INPUT_CAPACITY].id;
+}
+static void head_state_transitions(void) {
+    head_state=0;subscribe(9,2,"ok");input_owner *o=current();
+    tick_once();assert(o->sequence==0);
+    observe(3,2,0);assert(o->sequence==1 && last_id(o)==2);
+    observe(3,2,0);head_state=3;tick_once();assert(o->sequence==1);
+    head_state=4;tick_once();assert(o->sequence==1);
+    observe(3,5,0);assert(o->sequence==1);
+    head_state=0;tick_once();assert(o->sequence==2 && last_id(o)==3);
+    observe(3,3,0);tick_once();assert(o->sequence==2);
+    head_state=3;tick_once();assert(o->sequence==3 && last_id(o)==2);
+    observe(3,3,0);assert(o->sequence==4 && last_id(o)==3);
+    tick_once();assert(o->sequence==5 && last_id(o)==2);
+    head_state=0;stop(9,"ok");
+    head_state=3;subscribe(9,1,"ok");o=current();tick_once();assert(o->sequence==0);
+    head_state=0;stop(9,"ok");assert(!images && !timers && !own_allocations);
 }
 static void acknowledgements_and_sessions(void) {
     subscribe(0xaabbccdd,3,"ok");input_owner *o=current();
@@ -284,7 +307,7 @@ static void malformed_worker_envelopes(void) {
     glassly_input_display(0);glassly_graphics_display(0);
 }
 int main(void) {
-    passive_and_validation();filter_and_masks();clear_all();acknowledgements_and_sessions();
+    passive_and_validation();filter_and_masks();clear_all();head_state_transitions();clear_all();acknowledgements_and_sessions();
     overflow_and_sequence_exhaustion();clear_all();lifecycle_and_failures();malformed_worker_envelopes();clear_all();
     assert(source_calls==0 && input_sends==sends);
     printf("PASS input: strict copied requests; all16777216 class/id pairs; ACK retention, overflow, exhaustion, wrap, hidden lifecycle and failures; %u replies\n",sends);

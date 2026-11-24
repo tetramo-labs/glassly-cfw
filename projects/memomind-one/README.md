@@ -1,5 +1,23 @@
 # MemoMind One firmware investigation
 
+Revision 28 (`head-lower-001`) makes the input observer report the head coming
+back down. The stock detector (`0422a20e`, state byte 0x0200f9d4: 0 level, 3
+raised, 4 below its threshold) ends a raise without a gesture unless the head
+dips under -10 degrees, and the stock worker (`04227eca`) reports no second
+raise until its raise timeout, so a phone saw one head raise and then only the
+15 s raise timeout. An observer subscribed to IMU gestures now reads that state
+byte on its 20-tick timer and records a head raise (class 3 id 2) when the state
+enters 3 or 4 and a head lower (id 3) when it returns to 0. The stock raise and
+lower events are recorded only when they change that state, and the stock raise
+timeout (id 5) is no longer recorded. The wire format and the phone protocol are
+unchanged. Runtime 84,848 B (13,456 B free). Host test
+`runtime/graphics/tests/test_input.c` and emulator test
+`tests/rv32/input_runtime_emulator_test.py` cover the transitions, and the offline
+regression passes all 147 suites (`regression-28-01`; its report flags the catalog
+entry that was added while it ran); records in `analysis/head-lower-20261123/`. Built 2026-11-23, not yet flashed: the state
+byte's address and the transitions are from static analysis of 1.0.3.127 and
+have not been observed on glasses.
+
 Revision 27 (`latency-001`) takes work off the scene path. The flash store
 keeps the logical sector a transaction is writing in its 4 KiB workspace: the
 per-line TEXT_INLINE, PATH and PUT_ASSET chunk writes into one sector cost one

@@ -40,6 +40,7 @@ NATIVES = {
 FRAMEBUFFER_STRIDE, FRAMEBUFFER_ROWS = 320, 350
 # Stock JBD013 panel-enable byte: bit 4 panel 1 (right eye), bit 5 panel 2 (left).
 PANEL_ENABLE = 0x02010318
+HEAD_STATE = 0x0200f9d4  # stock head-raise detector state the input observer's tick reads
 RESULTS = []
 
 
@@ -78,6 +79,10 @@ class Machine:
         except u.UcError:
             pass
         self.uc.mem_write(PANEL_ENABLE, bytes([0x30]))
+        try:
+            self.uc.mem_map(HEAD_STATE & ~4095, 4096, u.UC_PROT_READ | u.UC_PROT_WRITE)
+        except u.UcError:
+            pass
         self.request_releases = []
         self.now, self.free_bytes, self.low_water = 100, 0x80000, 0x40000
         self.free_values = []
@@ -114,6 +119,8 @@ class Machine:
             return "flash"
         if address == PANEL_ENABLE and size == 1:
             return "panel-enable"
+        if not writing and address == HEAD_STATE and size == 1:
+            return "head-state"
         for pointer, block in self.allocations.items():
             if block["live"] and pointer <= address and address+size <= pointer+block["size"]:
                 assert not writing or block["writable"], f"Write to immutable {block['tag']}"

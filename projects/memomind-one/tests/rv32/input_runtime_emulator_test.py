@@ -107,7 +107,7 @@ class InputMachine(graphics.Machine):
     def owner(self):
         assert len(self.images) == 1
         owner = next(iter(self.images.values()))['owner']
-        assert self.word(owner) == 0x474c4932 and self.allocations[owner]['size'] == 424
+        assert self.word(owner) == 0x474c4932 and self.allocations[owner]['size'] == 428
         return owner
 
     def tick(self, now):
@@ -178,10 +178,23 @@ class InputRuntimeTests(unittest.TestCase):
         m.execute(subscribe()); m.tick(69999); self.assertTrue(m.images)
         m.tick(70000); m.assert_stopped()
 
+    def test_head_state_transitions_report_raise_and_lower(self):
+        m = InputMachine(); m.execute(subscribe(mask=2))
+        m.tick(100); self.assertEqual(m.execute(poll())['records'], [])
+        m.observe(3, 2); m.observe(3, 2); m.observe(3, 5)
+        m.uc.mem_write(graphics.HEAD_STATE, b'\x04'); m.tick(120)
+        m.uc.mem_write(graphics.HEAD_STATE, b'\x00'); m.tick(140); m.observe(3, 3)
+        m.uc.mem_write(graphics.HEAD_STATE, b'\x03'); m.tick(160)
+        records = m.execute(poll())['records']
+        self.assertEqual([(x['class'], x['id'], x['tick']) for x in records], [(3, 2, 100), (3, 3, 140), (3, 2, 160)])
+        m.execute(stop()); m.execute(subscribe(mask=1)); m.tick(180)
+        self.assertEqual(m.execute(poll())['records'], [])
+        m.uc.mem_write(graphics.HEAD_STATE, b'\x00'); m.execute(stop()); m.assert_stopped()
+
     def test_actual_native_failure_paths_and_queue_lifetime(self):
         for failure in ('owner', 'image', 'event', 'timer', 'headroom', 'screen'):
             m = InputMachine()
-            if failure == 'owner': m.fail_alloc_sizes.add(424)
+            if failure == 'owner': m.fail_alloc_sizes.add(428)
             if failure == 'image': m.fail_image = True
             if failure == 'event': m.fail_event = True
             if failure == 'timer': m.fail_timer = True

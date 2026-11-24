@@ -13,8 +13,9 @@ timeout (id 5) is no longer recorded. The wire format and the phone protocol are
 unchanged. Runtime 84,848 B (13,456 B free). Host test
 `runtime/graphics/tests/test_input.c` and emulator test
 `tests/rv32/input_runtime_emulator_test.py` cover the transitions, and the offline
-regression passes all 147 suites (`regression-28-01`; its report flags the catalog
-entry that was added while it ran); records in `analysis/head-lower-20261123/`. Built 2026-11-23, not yet flashed: the state
+regression passes all 147 suites (`regression-28-02`; `regression-28-01` passed
+them too but flags the catalog entry that was added while it ran); records in
+`analysis/head-lower-20261123/`. Built 2026-11-23, not yet flashed: the state
 byte's address and the transitions are from static analysis of 1.0.3.127 and
 have not been observed on glasses.
 

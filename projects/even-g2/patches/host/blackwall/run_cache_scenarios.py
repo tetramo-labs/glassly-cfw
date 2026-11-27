@@ -97,6 +97,9 @@ ASSET_ID, OBJECT_ID = 0x00000101, 0x00000201
 CHUNKED_ASSET_ID = 0x00000102
 TEXT = 'CACHE 53'
 TEXT_X, TEXT_Y = 220, 220
+BAND_ASSET_ID, BAND_OBJECT_ID = 0x00000103, 0x00000202
+BAND_X, BAND_Y, BAND_W, BAND_H = 300, 120, 16, 16
+BAND_TEXT_INK = 0x10
 
 
 def sha256(data):
@@ -169,6 +172,25 @@ def put_chunk(epoch, request, offset, data):
             + u32(8) + u32(offset) + u16(len(data)) + data)
 
 
+def put_band(epoch, request):
+    """A phone-drawn text band the way the phone sends one: a 16x16 image asset of full-ink
+    pixels (RLE4) and an IMAGE object that takes its ink from the options nibble, here 0."""
+    data = bytes((BAND_W, BAND_H, 0x0f, 255, 0x1f))
+    asset = bytes((0,)) + u32(BAND_ASSET_ID) + u32(1) + bytes((0,)) + u32(len(data)) + u32(0) + u16(len(data)) + data
+    record = bytes((14, 1, BAND_TEXT_INK, 0)) + struct.pack('<hh', BAND_X, BAND_Y) + u32(BAND_ASSET_ID)
+    return bytes((37,)) + u16(epoch) + u16(request) + asset + bytes((1,)) + u32(BAND_OBJECT_ID) + u32(1) + record
+
+
+def show_band(epoch, request, ink=None):
+    """A presenting SHOW of the band; with `ink`, a two-frame TWEEN of x, y and the options byte to it."""
+    ops = b''
+    if ink is not None:
+        ops = (bytes((5,)) + u32(BAND_OBJECT_ID) + u16(0x103) + bytes((2, 0, 0, 255, 255))
+               + struct.pack('<hhh', BAND_X, BAND_Y, BAND_TEXT_INK | ink))
+    return (bytes((38,)) + u16(epoch) + u16(request) + bytes((1, 0, 0)) + u16(1) + u32(BAND_OBJECT_ID) + u32(1)
+            + ops)
+
+
 def cfw_revision():
     source = (HERE.parents[1] / 'settings_ext.c').read_text()
     return int(re.search(r'caps\[\] = "GLASSLYCFW/(\d+)"', source).group(1))
@@ -226,6 +248,8 @@ def build_plan(symbols, lenses, layout):
     cfw('put', put_text(EPOCH, 2))
     cfw('show', show(EPOCH, 3, 0))
     cfw('stale', show(EPOCH - 1, 4, 0))
+    settings('fb-renew', 5)
+    cfw('renewed-show', show(EPOCH, 30, 0))
     settings('fb-release', 6)
     cfw('released-state', state(EPOCH))
     cfw('released-show', show(EPOCH, 5, 0))
@@ -247,6 +271,9 @@ def build_plan(symbols, lenses, layout):
     cfw('present-show', show(PRESENT_EPOCH, 12, 1), settle_ms=150, framebuffer=True)
     cfw('repeat-id-show', show_nothing(PRESENT_EPOCH, 12), settle_ms=150, framebuffer=True)
     cfw('fresh-id-show', show_nothing(PRESENT_EPOCH, 13), settle_ms=150, framebuffer=True)
+    cfw('band-put', put_band(PRESENT_EPOCH, 23))
+    cfw('band-dark-show', show_band(PRESENT_EPOCH, 14), settle_ms=60, framebuffer=True)
+    cfw('band-fade-show', show_band(PRESENT_EPOCH, 15, ink=15), settle_ms=150, framebuffer=True)
     plan = dict(
         steps=steps, entry=symbols['cfw_receive_packet'], scratch=SCRATCH, borrow_pc=STOCK['ui_callback'],
         tcb_slot=STOCK['tcb_slot'], tcb_name_offset=0x34, os_tick=STOCK['os_tick'],
@@ -420,6 +447,19 @@ def scenario_checks(ev):
         return ok, describe(answer) + f'; revision unchanged {same_revision}, ctx epoch {epochs}, presents {presents}'
     yield 'Old epoch is answered STALE and changes nothing', ('show', 'stale'), stale
 
+    def renew():
+        before, after = ev.steps['stale']['context'], ev.steps['fb-renew']['context']
+        shown, again = ev.answer('show'), ev.answer('renewed-show')
+        same_revision = bool(shown[0] and again[0] and shown[0]['revision'] == again[0]['revision'])
+        ok = (len(ev.hits('fb-renew', TAG_LOSE)) == 0 and after.get('epoch') == EPOCH
+              and after.get('lease_deadline', 0) > before.get('lease_deadline', 0)
+              and is_reply(again, 38, 'APPLIED', 30, EPOCH) and same_revision)
+        return ok, (f"lease deadline {before.get('lease_deadline')} -> {after.get('lease_deadline')}, "
+                    f"ctx epoch 0x{after.get('epoch', 0):04x}; SHOW after the renewal {describe(again)}, "
+                    f'revision unchanged {same_revision}')
+    yield 'FB_ACQUIRE while the lease is held renews it and keeps the epoch and the cache', (
+        'show', 'stale', 'fb-renew', 'renewed-show'), renew
+
     def release():
         lost = ev.hits('fb-release', TAG_LOSE)
         ctx = ev.steps['fb-release']['context']
@@ -505,6 +545,26 @@ def scenario_checks(ev):
                     f'new id: {describe(fresh)}, lit box -> {after_fresh}')
     yield 'A different SHOW reusing the last applied request id is acknowledged and not applied', (
         'present-show', 'repeat-id-show', 'fresh-id-show'), repeated_request
+
+
+    def band_fade():
+        put, dark, fade = ev.answer('band-put'), ev.answer('band-dark-show'), ev.answer('band-fade-show')
+        dark_fb, lit_fb = ev.framebuffer('band-dark-show'), ev.framebuffer('band-fade-show')
+        if lit_fb:
+            framebuffer_png(lit_fb, ev.output / 'band-fade-show.png')
+        dark_box = lit_box(dark_fb) if dark_fb else 'no framebuffer'
+        box = lit_box(lit_fb) if lit_fb else None
+        tile = (BAND_X, BAND_Y, BAND_X + BAND_W - 1, BAND_Y + BAND_H - 1)
+        level = None
+        if lit_fb and box == tile:
+            byte = lit_fb[(BAND_Y + BAND_H // 2) * (PANEL_W // 2) + (BAND_X + BAND_W // 2) // 2]
+            level = byte >> 4
+        ok = (is_reply(put, 37, 'APPLIED', 23, PRESENT_EPOCH) and is_reply(dark, 38, 'APPLIED', 14, PRESENT_EPOCH)
+              and dark_box is None and is_reply(fade, 38, 'APPLIED', 15, PRESENT_EPOCH) and box == tile and level == 15)
+        return ok, (f'PUT {describe(put)}; at ink 0 lit box {dark_box}; after the TWEEN to ink 15 lit box {box} '
+                    f'(the tile is {tile}), gray level {level}')
+    yield 'One full-ink image asset is dark at ink 0 and fades to full ink by a TWEEN of its options, with no new upload', (
+        'fresh-id-show', 'band-put', 'band-dark-show', 'band-fade-show'), band_fade
 
 
 def evaluate(ev):

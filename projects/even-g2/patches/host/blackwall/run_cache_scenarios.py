@@ -12,8 +12,10 @@ stock BLE notification sender, frames at the physical 640x480 framebuffer.
 
 The board model covers about 1.65 s of virtual time after the first stock frame:
 then the display task writes MSPI0 (0x40060000), which the model refuses, and
-the machine stops. Scenarios share that budget (the runner prints what it used),
-and the presenting SHOW runs last. Lease expiry is forced by moving the lease
+the machine stops. The scenarios of a plan share that budget (the runner prints
+what it used), so there are two plans, each its own boot: `cache` (the session,
+the lease and presenting, with the presenting SHOWs last) and `eviction` (the
+order assets are freed in). Lease expiry is forced by moving the lease
 deadline to the current OS tick; the expiry handling that follows is unmodified.
 The emulated board is the right lens, so packets carry the right-lens bit.
 
@@ -100,6 +102,7 @@ TEXT_X, TEXT_Y = 220, 220
 BAND_ASSET_ID, BAND_OBJECT_ID = 0x00000103, 0x00000202
 BAND_X, BAND_Y, BAND_W, BAND_H = 300, 120, 16, 16
 BAND_TEXT_INK = 0x10
+FILLER_ASSET_ID, FILLER_BATCH, FILLER_BATCHES = 0x00001000, 32, 9
 
 
 def sha256(data):
@@ -161,9 +164,9 @@ def show(epoch, request, flags):
     return bytes((38,)) + u16(epoch) + u16(request) + bytes((flags, 0, 0)) + u16(1) + u32(OBJECT_ID) + u32(1)
 
 
-def show_nothing(epoch, request):
-    """A presenting SHOW of no objects: applied, it blanks the panel."""
-    return bytes((38,)) + u16(epoch) + u16(request) + bytes((1, 0, 0)) + u16(0)
+def show_nothing(epoch, request, present=True):
+    """A SHOW of no objects: presenting, it blanks the panel; either way every object leaves the active list."""
+    return bytes((38,)) + u16(epoch) + u16(request) + bytes((1 if present else 0, 0, 0)) + u16(0)
 
 
 def put_chunk(epoch, request, offset, data):
@@ -189,6 +192,16 @@ def show_band(epoch, request, ink=None):
                + struct.pack('<hhh', BAND_X, BAND_Y, BAND_TEXT_INK | ink))
     return (bytes((38,)) + u16(epoch) + u16(request) + bytes((1, 0, 0)) + u16(1) + u32(BAND_OBJECT_ID) + u32(1)
             + ops)
+
+
+def put_fillers(epoch, request, batch):
+    """One PUT of FILLER_BATCH one-byte string assets no object references (a message applies at
+    most 32 asset chunks). FILLER_BATCHES of them need more asset descriptors than the cache's
+    256, so the last ones make the glasses evict."""
+    first = FILLER_ASSET_ID + batch * FILLER_BATCH
+    entries = b''.join(bytes((0,)) + u32(first + i) + u32(1) + bytes((2,)) + u32(1) + u32(0) + u16(1) + b'x'
+                       for i in range(FILLER_BATCH))
+    return bytes((37,)) + u16(epoch) + u16(request) + entries
 
 
 def cfw_revision():
@@ -233,7 +246,12 @@ class Stream:
         return [(bytes((0xaa, 0x21, self.settings_sequence, len(body), 1, 1, 0x09, 0x20)) + body).hex()]
 
 
-def build_plan(symbols, lenses, layout):
+PLANS = ('cache', 'eviction')
+FILL_STEPS = tuple(f'fill-{batch}' for batch in range(FILLER_BATCHES))
+EVICTION_STEPS = ('fill-reset', 'fill-put', 'fill-hide') + FILL_STEPS + ('held-show',)
+
+
+def build_plan(symbols, lenses, layout, which='cache'):
     stream = Stream(lenses)
     steps = [dict(name='idle', op='run', ms=20, framebuffer=True)]
 
@@ -244,6 +262,14 @@ def build_plan(symbols, lenses, layout):
         steps.append(dict(name=name, op='inject', packets=stream.settings(op), settle_ms=40, ack_peer=True))
 
     settings('fb-acquire', 5)
+    if which == 'eviction':
+        cfw('fill-reset', control_reset(PRESENT_EPOCH, 1))
+        cfw('fill-put', put_text(PRESENT_EPOCH, 2))
+        cfw('fill-hide', show_nothing(PRESENT_EPOCH, 3, present=False))
+        for batch, name in enumerate(FILL_STEPS):
+            cfw(name, put_fillers(PRESENT_EPOCH, 40 + batch, batch))
+        cfw('held-show', show(PRESENT_EPOCH, 16, 0))
+        return plan_of(steps, symbols, layout)
     cfw('reset', control_reset(EPOCH, 1))
     cfw('put', put_text(EPOCH, 2))
     cfw('show', show(EPOCH, 3, 0))
@@ -274,6 +300,10 @@ def build_plan(symbols, lenses, layout):
     cfw('band-put', put_band(PRESENT_EPOCH, 23))
     cfw('band-dark-show', show_band(PRESENT_EPOCH, 14), settle_ms=60, framebuffer=True)
     cfw('band-fade-show', show_band(PRESENT_EPOCH, 15, ink=15), settle_ms=150, framebuffer=True)
+    return plan_of(steps, symbols, layout)
+
+
+def plan_of(steps, symbols, layout):
     plan = dict(
         steps=steps, entry=symbols['cfw_receive_packet'], scratch=SCRATCH, borrow_pc=STOCK['ui_callback'],
         tcb_slot=STOCK['tcb_slot'], tcb_name_offset=0x34, os_tick=STOCK['os_tick'],
@@ -567,9 +597,26 @@ def scenario_checks(ev):
         'fresh-id-show', 'band-put', 'band-dark-show', 'band-fade-show'), band_fade
 
 
-def evaluate(ev):
+    def held_asset_survives():
+        hidden, shown = ev.answer('fill-hide'), ev.answer('held-show')
+        fills = [ev.answer(name) for name in FILL_STEPS]
+        applied = all(is_reply(answer, 37, 'APPLIED', 40 + batch, PRESENT_EPOCH) for batch, answer in enumerate(fills))
+        evicted = [int(answer[0]['extra'][:2] or '0', 16) if answer[0] else 0 for answer in fills]
+        overflow = 1 + FILLER_BATCH * FILLER_BATCHES - 256
+        ok = (is_reply(hidden, 38, 'APPLIED', 3, PRESENT_EPOCH) and applied and sum(evicted) >= overflow
+              and is_reply(shown, 38, 'APPLIED', 16, PRESENT_EPOCH))
+        return ok, (f'{FILLER_BATCH * FILLER_BATCHES} unreferenced assets after the text asset: every PUT applied {applied}, '
+                    f'evictions per PUT {evicted} (at least {overflow} needed); '
+                    f'SHOW of the older cached text object {describe(shown)}')
+    yield 'Evicting for unreferenced assets spares an older asset a cached, off-screen object holds', (
+        'fill-put', 'fill-hide') + FILL_STEPS + ('held-show',), held_asset_survives
+
+
+def evaluate(ev, which='cache'):
     verdicts = []
     for name, needs, check in scenario_checks(ev):
+        if (needs[-1] in EVICTION_STEPS) != (which == 'eviction') and needs != ('fb-acquire',):
+            continue
         if not ev.ran(*needs):
             missing = [n for n in needs if n not in ev.steps]
             verdicts.append((name, 'INCONCLUSIVE', f'steps not reached: {missing or needs}'))
@@ -589,8 +636,18 @@ def main():
     parser.add_argument('--blackwall', type=Path, default=Path.home() / 'dev/blackwall')
     parser.add_argument('--runs', type=Path, default=Path.home() / 'dev/blackwall-runs')
     parser.add_argument('--evaluate', type=Path, help='re-evaluate an existing run directory without running Renode')
+    parser.add_argument('--plan', choices=PLANS + ('all',), default='all',
+                        help='cache: the session, lease and present scenarios; eviction: the asset eviction order. '
+                             'Each is its own boot, since the board model stops soon after the first frame.')
     args = parser.parse_args()
+    if args.evaluate and args.plan == 'all':
+        raise SystemExit('--evaluate needs --plan cache or --plan eviction: a run directory holds one plan')
+    codes = [run_plan(args, which) for which in (PLANS if args.plan == 'all' else (args.plan,))]
+    return 1 if any(codes) else 0
 
+
+def run_plan(args, which):
+    print(f'== plan {which}')
     if args.evaluate:
         output = args.evaluate.resolve()
         meta = json.loads((output / 'runner.json').read_text())
@@ -598,8 +655,8 @@ def main():
         image = args.image.read_bytes()
         body = main_body(image)
         symbols, base = cfw_symbols(body)
-        plan = build_plan(symbols, RIGHT_LENS, context_layout())
-        output = (args.runs / time.strftime('cache-%Y%m%d-%H%M%S')).resolve()
+        plan = build_plan(symbols, RIGHT_LENS, context_layout(), which)
+        output = (args.runs / time.strftime(f'{which}-%Y%m%d-%H%M%S')).resolve()
         if not outside_git(output.parent):
             raise SystemExit('--runs must be outside every git repository (the run copies firmware)')
         stage(output, args.blackwall, body, plan)
@@ -643,7 +700,7 @@ def main():
     print('  tasks: ' + '; '.join(f"{name} on {', '.join(sorted(tasks[tag]))}" for tag, name, *_ in WATCHES
                                   if tag in tasks and tag not in (TAG_SEND, TAG_BRIDGE)))
     failed = 0
-    for name, outcome, detail in evaluate(ev):
+    for name, outcome, detail in evaluate(ev, which):
         print(f'{"PASS" if outcome == "VERIFIED" else "FAIL"} [{outcome}] {name}: {detail}')
         failed += outcome != 'VERIFIED'
     return 1 if failed else 0
